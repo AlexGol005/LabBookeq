@@ -10,7 +10,7 @@ from jouViscosity.models import VG, VGrange, LotVG, CvDensityDinamicVG
 from metods import get_avg, get_acc_measurement
 from formuls import mrerrow, numberDigits
 
-from viscosimeters.models import Viscosimeters, Kalibration
+from viscosimeters.models import Viscosimeters
 from .j_constants import *
 
 

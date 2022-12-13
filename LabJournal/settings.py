@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG') == 'True'
+DEBUG = os.getenv('DEBUG') == "true"
 
 ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS').split(',')]
 
@@ -47,16 +47,10 @@ INSTALLED_APPS = [
     'kinematicviscosity',
     'users.apps.UsersConfig',
     'rest_framework',
-    'api',
     'crispy_forms',
     'equipment',
     'jouViscosity',
     'dinamicviscosity',
-    'clorinesalts',
-    'jouPetroleumChlorineImpurityWater',
-    'jouChlorineOilProducts',
-    'jougascondensate',
-    'clorinesaltsprod',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

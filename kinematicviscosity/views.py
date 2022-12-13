@@ -46,20 +46,10 @@ class RegView(RegView):
     def form_valid(self, form):
         order = form.save(commit=False)
         """вставка начало"""
-        get_id_actualconstant1 = Kalibration.objects.select_related('id_Viscosimeter'). \
-            filter(id_Viscosimeter__exact=order.ViscosimeterNumber1). \
-            values('id_Viscosimeter').annotate(id_actualkonstant=Max('id')).values('id_actualkonstant')
-        list1_ = list(get_id_actualconstant1)
-        set1 = list1_[0].get('id_actualkonstant')
-        aktualkalibration1 = Kalibration.objects.get(id=set1)
-        get_id_actualconstant2 = Kalibration.objects.select_related('id_Viscosimeter'). \
-            filter(id_Viscosimeter__exact=order.ViscosimeterNumber2). \
-            values('id_Viscosimeter').annotate(id_actualkonstant=Max('id')).values('id_actualkonstant')
-        list2_ = list(get_id_actualconstant2)
-        set2 = list2_[0].get('id_actualkonstant')
-        aktualkalibration2 = Kalibration.objects.get(id=set2)
-        order.Konstant1 = aktualkalibration1.konstant
-        order.Konstant2 = aktualkalibration2.konstant
+        konstant1 = Viscosimeters.objects.get(equipmentSM__equipment__lot=order.ViscosimeterNumber1.equipmentSM.equipment.lot)
+        konstant2 = Viscosimeters.objects.get(equipmentSM__equipment__lot=order.ViscosimeterNumber2.equipmentSM.equipment.lot)
+        order.Konstant1 = konstant1.konstant
+        order.Konstant2 = konstant2.konstant
         try:
             oldvalue = CvKinematicviscosityVG.objects.get(namelot__nameVG__name=order.name, namelot__lot=order.lot)
             if order.temperature == 20:

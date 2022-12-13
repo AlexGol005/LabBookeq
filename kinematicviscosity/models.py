@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from decimal import *
 
 from equipment.models import MeasurEquipment, Rooms
-from viscosimeters.models import Viscosimeters, Kalibration
+from viscosimeters.models import Viscosimeters
 from jouViscosity.models import LotVG, VGrange, VG, CvKinematicviscosityVG
 from formuls import mrerrow, numberDigits
 from metods import get_sec, get_avg, get_acc_measurement

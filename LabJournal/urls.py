@@ -11,14 +11,8 @@ urlpatterns = [
     path('attestationJ/kinematicviscosity/', include('kinematicviscosity.urls')),
     path('attestationJ/dinamicviscosity/', include('dinamicviscosity.urls')),
     path('', include('users.urls')),
-    path('api/', include('api.urls')),
     path('equipment/', include('equipment.urls')),
     path('CertifiedValueJ/', include('jouViscosity.urls')),
-    path('CertifiedValueJ/', include('jouChlorineOilProducts.urls')),
-    # path('CertifiedValueJ/', include('jouPetroleumChlorineImpurityWater.urls')),
-    # path('CertifiedValueJ/', include('jougascondensate.urls')),
-    path('attestationJ/clorinesalts/', include('clorinesalts.urls')),
-    path('productionJ/clorinesaltsprod/', include('clorinesaltsprod.urls')),
 ]
 
 if settings.DEBUG:
