@@ -1,4 +1,4 @@
-from kinematicviscosity.j_constants import *
+from kinematicviscosity.constants import *
 from django import template
 
 register = template.Library()

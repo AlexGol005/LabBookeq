@@ -1,35 +1,34 @@
+"""
+Модуль проекта LabJournal, приложения kinematicviscosity.
+Приложение kinematicviscosity это журнал фиксации
+лабораторных записей по измерению кинематической вязкости нефтепродуктов
+(Лабортаорный журнал измерения кинематической вязкости).
+
+Данный модуль admin.py выводит таблицы приложения в административной части сайта.
+"""
+
 from django.contrib import admin
 from .models import *
 
 
-# admin.site.register(ViscosityMJL)
-
-@admin.register(ViscosityMJL)  # связываем админку с моделью
+@admin.register(ViscosityMJL)
 class NoteAdmin(admin.ModelAdmin):
-    # exclude = ('performer',)  # скрыть performer поле, чтобы оно не отображалось в форме изменений
+    """Выводит в админ-панель таблицу ViscosityMJL (Измерение кинематической вязкости)"""
 
     def save_model(self, request, obj, form, change):
+        """Функция сигнал для автозаполнения: автор записи = авторизованный пользователь"""
+
         if not obj.pk:
             obj.performer = request.user
         super().save_model(request, obj, form, change)
-    # вычисляемое поле - но как его отобразить при просмотре заполненных??
-    # def test(self, obj: ViscosityMJL) -> str:
-    #     return f"{(obj.pairNumber + obj.diameter)}$"
-
-    # list_display = ('total',)
-    # fields = ('total',)
-
-    # readonly_fields = ('create_at', 'update_at')
-    # # разрешить редактирование
-    # # list_editable = ("is_available",)
-    # # Поиск по выбранным полям
-    # search_fields = ['diameter', 'type', ]
-    # list_filter = ['diameter', 'type', 'viscosity1000']
 
 
-@admin.register(Comments)  # связываем админку с моделью
+@admin.register(Comments)
 class NoteAdmin(admin.ModelAdmin):
+    """Выводит в админ-панель таблицу Comments (Комментарий к измерению кинематики)"""
+
     def save_model(self, request, obj, form, change):
+        """Функция сигнал для автозаполнения: автор комментария = авторизованный пользователь"""
         if not obj.pk:
             obj.author = request.user
         super().save_model(request, obj, form, change)

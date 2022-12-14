@@ -1,12 +1,10 @@
-
-
 from django.db import models
 from PIL import Image
 from django.contrib.auth.models import User
 from decimal import *
 
 from django.urls import reverse
-from django.utils.datetime_safe import datetime
+
 
 CHOICES = (
         ('Э', 'Экс.'),

@@ -1,8 +1,5 @@
-from datetime import timedelta, datetime
-
 from django.db import models
 from django.contrib.auth.models import User
-
 
 
 CHOICES = (
@@ -10,7 +7,6 @@ CHOICES = (
         ('12', '12'),
         ('24', '24'),
     )
-
 
 
 class VG(models.Model):

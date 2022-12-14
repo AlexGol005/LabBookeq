@@ -1,7 +1,15 @@
+"""
+Модуль проекта LabJournal, приложения kinematicviscosity.
+Приложение kinematicviscosity это журнал фиксации
+лабораторных записей по измерению кинематической вязкости нефтепродуктов
+(Лабортаорный журнал измерения кинематической вязкости).
+
+Данный модуль admin.py выводит таблицы приложения в административной части сайта.
+"""
+
 from datetime import timedelta, date
 
 from django.db import models
-from django.db.models import Max
 from django.urls import reverse
 from django.contrib.auth.models import User
 from decimal import *
@@ -9,9 +17,8 @@ from decimal import *
 from equipment.models import MeasurEquipment, Rooms
 from viscosimeters.models import Viscosimeters
 from jouViscosity.models import LotVG, VGrange, VG, CvKinematicviscosityVG
-from formuls import mrerrow, numberDigits
-from metods import get_sec, get_avg, get_acc_measurement
-from .j_constants import *
+from functstandart import mrerrow, numberDigits, get_avg, get_acc_measurement, get_sec
+from .constants import *
 
 
 
@@ -248,8 +255,8 @@ class ViscosityMJL(models.Model):
         return reverse('kinematicviscositystr', kwargs={'pk': self.pk})
 
     class Meta:
-        verbose_name = 'Кинематика: расчёт АЗ'
-        verbose_name_plural = 'Кинематика: расчёт АЗ'
+        verbose_name = 'Измерение кинематической вязкости'
+        verbose_name_plural = 'Журнал измерений кинематической вязкости'
 
 
 class Comments(models.Model):
@@ -268,6 +275,6 @@ class Comments(models.Model):
         return reverse('kinematicviscositycomm', kwargs={'pk': self.forNote.pk})
 
     class Meta:
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
+        verbose_name = 'Комментарий к измерению кинематики'
+        verbose_name_plural = 'Комментарии к измерениям кинематики'
         ordering = ['-pk']

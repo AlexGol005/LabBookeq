@@ -7,8 +7,7 @@ from decimal import *
 
 from equipment.models import MeasurEquipment, Rooms
 from jouViscosity.models import VG, VGrange, LotVG, CvDensityDinamicVG
-from metods import get_avg, get_acc_measurement
-from formuls import mrerrow, numberDigits
+from functstandart import mrerrow, numberDigits, get_avg, get_acc_measurement
 
 from viscosimeters.models import Viscosimeters
 from .j_constants import *

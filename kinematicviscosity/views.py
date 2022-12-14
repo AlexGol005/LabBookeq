@@ -4,19 +4,29 @@ import xlwt
 from django.db.models import Value
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
+"""
+Модуль проекта LabJournal, приложения kinematicviscosity.
+Приложение kinematicviscosity это журнал фиксации 
+лабораторных записей по измерению кинематической вязкости нефтепродуктов
+(Лабортаорный журнал измерения кинематической вязкости).
+
+Данный модуль admin.py выводит таблицы приложения в административной части сайта. 
+"""
+
+
 from django.shortcuts import render
 from django.db.models.functions import Concat
 from xlwt import Borders, Alignment
 
 # этот блок нужен для всех журналов
 from equipment.models import CompanyCard
-from metods import get_dateformat
+from functstandart import get_dateformat
 from .forms import *
-from utils_forms import*
+from formstandart import*
 from .models import *
 
-from .j_constants import *
-from utils import *
+from .constants import *
+from viewstandart import *
 
 MODEL = ViscosityMJL
 COMMENTMODEL = Comments

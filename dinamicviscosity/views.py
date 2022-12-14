@@ -14,11 +14,11 @@ from kinematicviscosity.models import ViscosityMJL
 # этот блок нужен для всех журналов
 from equipment.models import CompanyCard
 from .forms import *
-from utils_forms import*
+from formstandart import*
 from .models import *
 
 from .j_constants import *
-from utils import *
+from viewstandart import *
 
 MODEL = Dinamicviscosity
 COMMENTMODEL = CommentsDinamicviscosity

@@ -7,8 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponse, HttpRequest
-from datetime import datetime, timedelta
+from django.http import HttpResponse
 from django.db.models import Max, Q, Value, CharField
 from django.db.models.functions import Upper, Concat, Extract, ExtractYear
 from django.shortcuts import get_object_or_404, render, redirect
@@ -19,7 +18,7 @@ from xlwt import Alignment, Borders
 
 from equipment.forms import*
 from equipment.models import*
-from metods import get_dateformat
+from functstandart import get_dateformat
 from users.models import Profile
 
 URL = 'equipment'

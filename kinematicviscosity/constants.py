@@ -1,3 +1,12 @@
+"""
+Модуль проекта LabJournal, приложения kinematicviscosity.
+Приложение kinematicviscosity это журнал фиксации
+лабораторных записей по измерению кинематической вязкости нефтепродуктов
+(Лабортаорный журнал измерения кинематической вязкости).
+
+Данный модуль admin.py выводит таблицы приложения в административной части сайта.
+"""
+from kinematicviscosity.models import ViscosityMJL, Comments
 from main.models import AttestationJ
 
 
@@ -20,6 +29,8 @@ JOURNAL = AttestationJ
 journal = 'attestationJ'
 URL = 'kinematicviscosity'
 NAME = 'кинематика'
+MODEL = ViscosityMJL
+COMMENTMODEL = Comments
 
 
 # для выгрузок exel
