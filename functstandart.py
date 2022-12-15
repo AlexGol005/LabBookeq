@@ -1,9 +1,16 @@
+"""
+Модуль проекта LabJournal, корневые модули.
+Данный модуль funcstandart.py содержит функции и константы для всего проекта.
+"""
+
+
 from decimal import *
 
-K = 2  #(двойка из правила двойки)
+K = 2  #(двойка из правила округления двойки)
 
 def rounder(value: Decimal, m: str) -> Decimal:
-    '''каскадно округляет числа с неизвестным количесвом знаков после точки(запятой)(value) до указанного количества знаков (m)'''
+    '''каскадно округляет числа с неизвестным количесвом знаков после точки(запятой)(value)
+    до указанного количества знаков (m)'''
     st = str(value)
     index = st.find(".")
     frac_abserror = st[index + 1:]
@@ -99,9 +106,16 @@ def get_abserror(x_avg: Decimal, relerror: Decimal) -> Decimal:
 
 
 def get_dateformat(date):
+    """переводит дату из формата гггг-мм-дд в дд.мм.гггг"""
     dateformat = str(date)
     day = dateformat[8:]
     month = dateformat[5:7]
     year = dateformat[:4]
     rdate = f'{day}.{month}.{year}'
     return rdate
+
+def get_round_signif_digit(x_avg: Decimal, numdig: Decimal) -> Decimal: # todo
+    """округляет число x_avg до числа значащих цифр numdig"""
+    return x_avg
+
+

@@ -4,7 +4,7 @@
 лабораторных записей по измерению кинематической вязкости нефтепродуктов
 (Лабортаорный журнал измерения кинематической вязкости).
 
-Данный модуль admin.py выводит таблицы приложения в административной части сайта.
+Данный модуль model.py содержит классы для формирования таблиц в базе данных sqlite.
 """
 
 from datetime import timedelta, date
@@ -17,43 +17,51 @@ from decimal import *
 from equipment.models import MeasurEquipment, Rooms
 from viscosimeters.models import Viscosimeters
 from jouViscosity.models import LotVG, VGrange, VG, CvKinematicviscosityVG
-from functstandart import mrerrow, numberDigits, get_avg, get_acc_measurement, get_sec
+from functstandart import mrerrow, numberDigits, get_avg, get_acc_measurement, get_sec, get_round_signif_digit
 from .constants import *
-
 
 
 class ViscosityMJL(models.Model):
     """уникальный класс, хранит первичные данные измерения и вычисляет результаты"""
-    # поля для всех моделей
+    # поля которые будут во всех подобных моделях
+    # идентификационная информация о пробе
     performer = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     date = models.DateField('Дата', auto_now_add=True, db_index=True)
     name = models.CharField('Наименование', max_length=100, default='0', null=True)
     lot = models.CharField('Партия', max_length=100, null=True)
+    cipher = models.CharField('Шифр', max_length=100, null=True)
+    sowner = models.CharField('Владелец пробы', max_length=100, null=True)
+    constit = models.CharField(max_length=300, choices=CHOICES, default='Прочие нефтепродукты', null=True)
+    # методика и ее метрологические характеристики
     ndocument = models.CharField('Метод испытаний', max_length=100, choices=ndocumentoptional,
-                                 default=ndocumentoptional[0][0],
+                                 default=ndocumentoptional[0][1],
                                  blank=True, null=True)
-    relerror = models.DecimalField('Относительная  погрешность', max_digits=3, decimal_places=1, null=True,
-                                   default=RELERROR)
-    fixation = models.BooleanField(verbose_name='Внесен ли результат в Журнал аттестованных значений?', default=False,
+    relerror = models.DecimalField('Относительная  погрешность', max_digits=3, decimal_places=1, null=True)
+    repeatability = models.CharField('Повторяемость', max_length=100, choices=REPEATABILITY,
+                                 default=REPEATABILITY[0][1],
+                                 blank=True, null=True)
+    # фиксация результатов в журнале измерений
+    fixation = models.BooleanField(verbose_name='Внесен ли результат в Журнал измерений?', default=False,
                                    null=True)
-    for_lot_and_name = models.ForeignKey(LotVG, verbose_name='Измерение для: ГСО и партия', on_delete=models.PROTECT, blank=True, null=True)
+    for_lot_and_name = models.ForeignKey(LotVG, verbose_name='Измерение для', on_delete=models.PROTECT, blank=True,
+                                         null=True)
     exp = models.IntegerField('Срок годности, месяцев',  blank=True, null=True)
     date_exp = models.DateField('Годен до', blank=True, null=True)
-    # вычисляемые поля для всех моделей
+    # автовычисляемые поля для всех моделей
     kriteriy = models.DecimalField('Критерий приемлемости измерений', max_digits=2, decimal_places=2, null=True)
     accMeasurement = models.DecimalField('Оценка приемлемости измерений', max_digits=5, decimal_places=2, null=True)
     resultMeas = models.CharField('Результат измерений уд/неуд', max_length=100, default='неудовлетворительно',
                                   null=True)
     cause = models.CharField('Причина', max_length=100, default='', null=True, blank=True)
     abserror = models.CharField('Абсолютная  погрешность',  max_length=100, null=True)
-    certifiedValue = models.DecimalField('Аттестованное значение', max_digits=100, decimal_places=10, null=True)
+    certifiedValue = models.DecimalField('Среденее из измерений', max_digits=100, decimal_places=10, null=True)
     certifiedValue_text = models.CharField(max_length=300, default='', null=True)
-    # уникальные поля (первичные данные)
-    oldCertifiedValue = models.CharField('Предыдущее аттестованное значение',  null=True, blank=True, max_length=300, default='')
+    # дополнительно
+    oldCertifiedValue = models.CharField('Предыдущее измерение',  null=True, blank=True, max_length=300, default='')
     termostatition = models.BooleanField(verbose_name='Термостатировано не менее 20 минут', blank=True, null=True)
     temperatureCheck = models.BooleanField(verbose_name='Температура контролируется внешним поверенным термометром',
                                            blank=True, null=True)
-    constit = models.CharField(max_length=300, choices=CHOICES, default='Проба содержит октол/нефть', null=True)
+    # условия и приборы
     temperature = models.DecimalField('Температура, ℃', max_digits=5, decimal_places=2, default='0', null=True)
     ViscosimeterNumber1 = models.ForeignKey(Viscosimeters, verbose_name='Заводской номер вискозиметра № 1',
                                             on_delete=models.PROTECT, related_name='k1', blank=True)
@@ -63,6 +71,7 @@ class ViscosityMJL(models.Model):
                                             on_delete=models.PROTECT, related_name='k2', blank=True)
     Konstant2 = models.DecimalField('Константа вискозиметра № 2', max_digits=20, decimal_places=6, default='0',
                                     null=True, blank=True)
+    # результат наблюдений
     plustimeminK1T1 = models.DecimalField('Время истечения K1T1, + мин', max_digits=3, decimal_places=0, null=True)
     plustimesekK1T1 = models.DecimalField('Время истечения K1T1, + cек', max_digits=5, decimal_places=2, null=True)
     plustimeminK1T2 = models.DecimalField('Время истечения K1T2, + мин', max_digits=3, decimal_places=0, null=True)
@@ -71,7 +80,7 @@ class ViscosityMJL(models.Model):
     plustimesekK2T1 = models.DecimalField('Время истечения K2T1, + cек', max_digits=5, decimal_places=2, null=True)
     plustimeminK2T2 = models.DecimalField('Время истечения K2T2, + мин', max_digits=3, decimal_places=0, null=True)
     plustimesekK2T2 = models.DecimalField('Время истечения K2T2, + cек', max_digits=5, decimal_places=2, null=True)
-    # уникальные вычисляемые поля (расчёты)
+    # расчёты
     timeK1T1_sec = models.DecimalField('Время истечения K1T1, в секундах', max_digits=7, decimal_places=2, default=0.00,
                                        null=True)
     timeK1T2_sec = models.DecimalField('Время истечения K1T2, в секундах', max_digits=7, decimal_places=2, default=0.00,
@@ -94,7 +103,7 @@ class ViscosityMJL(models.Model):
                                                  max_digits=10, decimal_places=2, null=True, blank=True)
     resultWarning = models.CharField(max_length=300, default='', null=True,  blank=True)
 
-    #  поля для записи - помещения, оборудования - для подготовки протокола анализа
+    #  дополнительно условия и приборы - для подготовки протокола анализа
     room = models.ForeignKey(Rooms, verbose_name='Номер комнаты', null=True,
                                             on_delete=models.PROTECT,  blank=True)
     equipment1 = models.ForeignKey(MeasurEquipment, verbose_name='Секундомер', null=True,
@@ -106,15 +115,9 @@ class ViscosityMJL(models.Model):
     equipment4 = models.ForeignKey(MeasurEquipment, verbose_name='Термометр', null=True,
                                    on_delete=models.PROTECT, blank=True, related_name='equipment4kinematic')
 
-
     def save(self, *args, **kwargs):
-    # срок годности зависит от диапазона ВЖ
-        if self.name[0:2] == 'ВЖ':
-            if int(self.name[8:-1]) <= 10:
-                self.exp = 6
-            if int(self.name[8:-1]) > 10:
-                self.exp = 12
-    # переводим минуты в секунды
+        # в блоке ниже находим средний результат для разного количества измерений (1, 2, 4 измерения)
+        # переводим минуты в секунды, усредняем секунды, округляем результат (по 2 измерения на 2 вискозиметрах)
         if (self.plustimeminK1T2 and self.plustimesekK1T2 and self.plustimeminK2T1 and self.plustimesekK2T1
                 and self.plustimeminK2T2 and self.plustimesekK2T2 and self.plustimeminK1T1 and self.plustimesekK1T1):
             self.timeK1T1_sec = get_sec(self.plustimeminK1T1, self.plustimesekK1T1)
@@ -123,10 +126,12 @@ class ViscosityMJL(models.Model):
             self.timeK2T2_sec = get_sec(self.plustimeminK2T2, self.plustimesekK2T2)
             self.timeK1_avg = get_avg(self.timeK1T1_sec, self.timeK1T2_sec, 3)
             self.timeK2_avg = get_avg(self.timeK2T1_sec, self.timeK2T2_sec, 3)
+            # рассчитываем кинематическую вязкость Х1 и Х2
             self.viscosity1 = (self.Konstant1 * self.timeK1_avg).quantize(Decimal('1.00000'), ROUND_HALF_UP)
             self.viscosity2 = (self.Konstant2 * self.timeK2_avg).quantize(Decimal('1.00000'), ROUND_HALF_UP)
-    # стандартные вычисления среднего
+            # вычисляем среднее измеренное значение кинематической вязкости
             self.viscosityAVG = get_avg(self.viscosity1, self.viscosity2, 5)
+        # переводим минуты в секунды, усредняем секунды, округляем результат (1 измерение на 1 вискозиметре)
         if (self.plustimeminK1T1 and self.plustimesekK1T1) and not (self.plustimeminK1T2
                                                                     and self.plustimesekK1T2 and self.plustimeminK2T2
                                                                     and self.plustimesekK2T2 and self.plustimeminK2T2
@@ -137,6 +142,7 @@ class ViscosityMJL(models.Model):
             self.viscosityAVG = self.viscosity1
             self.resultMeas = 'экспрес оценка вязкости'
             self.cause = 'не в условиях повторяемости'
+        # переводим минуты в секунды, усредняем секунды, округляем результат (по 1 измерению на 2 вискозиметрах)
         if (self.plustimeminK1T1 and self.plustimesekK1T1 and self.plustimeminK2T1 and self.plustimesekK2T1) \
                 and not (self.plustimeminK1T2 and self.plustimesekK1T2 and self.plustimeminK2T2 and
                          self.plustimesekK2T2):
@@ -147,103 +153,115 @@ class ViscosityMJL(models.Model):
             self.viscosity1 = (self.Konstant1 * self.timeK1_avg).quantize(Decimal('1.00000'), ROUND_HALF_UP)
             self.viscosity2 = (self.Konstant2 * self.timeK2_avg).quantize(Decimal('1.00000'), ROUND_HALF_UP)
             self.viscosityAVG = get_avg(self.viscosity1, self.viscosity2, 5)
+
+        # оценка повторяемости измерений между вискозиметрами (по нормативному документу)
+        # находим повторяемость, она зависит от состава пробы
         self.accMeasurement = get_acc_measurement(Decimal(self.viscosity1), Decimal(self.viscosity2))
-        if self.constit == 'да':
-            self.kriteriy = Decimal(0.30)
-        if self.constit == 'нет':
-            self.kriteriy = Decimal(0.20)
-        if self.constit == 'другое':
-            self.kriteriy = Decimal(0.30)
-        if self.constit == 'по ГОСТ 33':
-            self.kriteriy = Decimal(0.35)
+        self.kriteriy = REPEATABILITY[self.constit][1]
+
+        # сравниваем среднее с повторяемостью и делаем выводы
         if self.accMeasurement <= self.kriteriy:
             self.resultMeas = 'удовлетворительно'
             self.cause = ''
         if self.accMeasurement > self.kriteriy:
             self.resultMeas = 'неудовлетворительно'
             self.cause = ':  Δ > r'
+
+        # если результаты удовлетворительны, то полученное среднее значение округляем и выдаем результат измерений
         if self.resultMeas == 'удовлетворительно':
-            self.abserror = mrerrow((Decimal(self.relerror) * self.viscosityAVG) / Decimal(100))
-            self.certifiedValue = numberDigits(self.viscosityAVG, self.abserror)
-            self.certifiedValue_text = self.certifiedValue
+            # способ округления зависит от выбранного нормативного документа
+            if self.name == 'ГОСТ 33-2016':
+                self.relerror = RELEERROR
+                self.abserror = mrerrow((Decimal(self.relerror) * self.viscosityAVG) / Decimal(100))
+                self.certifiedValue = numberDigits(self.viscosityAVG, self.abserror)
+                self.certifiedValue_text = self.certifiedValue
+            if self.name == 'ГОСТ 33768-2015':
+                self.certifiedValue = get_round_signif_digit(self.viscosityAVG, Decimal(4))
+                self.certifiedValue_text = self.certifiedValue
+            if self.name == 'ГОСТ 33768-2015':
+                self.certifiedValue = self.viscosityAVG
+                self.certifiedValue_text = self.certifiedValue
+
+        # если есть с чем сравнить измеренное значение, то сравниваем
         if self.oldCertifiedValue and self.certifiedValue:
             self.oldCertifiedValue = self.oldCertifiedValue.replace(',', '.')
             self.deltaOldCertifiedValue = \
                 get_acc_measurement(Decimal(self.oldCertifiedValue), self.certifiedValue, 2)
             if self.deltaOldCertifiedValue:
-                if self.deltaOldCertifiedValue > Decimal(0.7):
-                    self.resultWarning = 'Результат отличается от предыдущего > 0,7 %. Рекомендовано измерить повторно.'
-    # срок годности
-        if self.name[0:2] == 'ВЖ':
+                self.resultWarning = f'Результат отличается от указанного на {self.deltaOldCertifiedValue} %'
+
+    # срок годности измерения рассчитываем если указан срок годности (в месяцах)
+        if self.exp:
             self.date_exp = date.today() + timedelta(days=30*self.exp)
 
-    # связь с конкретной партией
-        if self.name[0:2] == 'ВЖ':
-            pk_VG = VG.objects.get(name=self.name[0:7])
-            a = VGrange.objects.get_or_create(rangeindex=int(self.name[8:-1]), nameSM=pk_VG)
-            b = a[0]
-            LotVG.objects.get_or_create(lot=self.lot, nameVG=b)
-            self.for_lot_and_name = LotVG.objects.get(lot=self.lot, nameVG=b)
+        # связь с конкретной партией, если есть таковые в списке партий  #todo
+        pk_VG = VG.objects.get(name=self.name)
+        a = VGrange.objects.get_or_create(rangeindex=int(self.name[8:-1]), nameSM=pk_VG)
+        b = a[0]
+        LotVG.objects.get_or_create(lot=self.lot, nameVG=b)
+        self.for_lot_and_name = LotVG.objects.get(lot=self.lot, nameVG=b)
 
-    # вносим АЗ в ЖАЗ
-            if self.name[0:2] == 'ВЖ' and self.fixation:
-                a = CvKinematicviscosityVG.objects.get_or_create(namelot=self.for_lot_and_name)
-                note = a[0]
-                note = CvKinematicviscosityVG.objects.get(namelot=note.namelot)
-                if self.temperature == 20:
-                    note.cvt20 = self.certifiedValue_text
-                    note.cvt20date = self.date
-                    note.cvt20exp = self.exp
-                    note.cvt20dead = self.date + timedelta(days=30*self.exp)
-                    note.save()
-                if self.temperature == 25:
-                    note.cvt25 = self.certifiedValue_text
-                    note.cvt25date = self.date
-                    note.cvt25exp = self.exp
-                    note.cvt25dead = self.date + timedelta(days=30 * self.exp)
-                    note.save()
-                if self.temperature == 40:
-                    note.cvt40 = self.certifiedValue_text
-                    note.cvt40date = self.date
-                    note.cvt40exp = self.exp
-                    note.cvt40dead = self.date + timedelta(days=30 * self.exp)
-                    note.save()
-                if self.temperature == 50:
-                    note.cvt50 = self.certifiedValue_text
-                    note.cvt50date = self.date
-                    note.cvt50exp = self.exp
-                    note.cvt50dead = self.date + timedelta(days=30 * self.exp)
-                    note.save()
-                if self.temperature == 60:
-                    note.cvt60 = self.certifiedValue_text
-                    note.cvt60date = self.date
-                    note.cvt60exp = self.exp
-                    note.cvt60dead = self.date + timedelta(days=30 * self.exp)
-                    note.save()
-                if self.temperature == 80:
-                    note.cvt80 = self.certifiedValue_text
-                    note.cvt80date = self.date
-                    note.cvt80exp = self.exp
-                    note.cvt80dead = self.date + timedelta(days=30 * self.exp)
-                    note.save()
-                if self.temperature == 100:
-                    note.cvt100 = self.certifiedValue_text
-                    note.cvt100date = self.date
-                    note.cvt100exp = self.exp
-                    note.cvt100dead = self.date + timedelta(days=30 * self.exp)
-                    note.save()
-                if self.temperature == 150:
-                    note.cvt150 = self.certifiedValue_text
-                    note.cvt150date = self.date
-                    note.cvt150exp = self.exp
-                    note.cvt150dead = self.date + timedelta(days=30 * self.exp)
-                    note.save()
-                if self.temperature == -20:
-                    note.cvtminus20 = self.certifiedValue_text
-                    note.cvtminus20date = self.date
-                    note.cvtminus20exp = self.exp
-                    note.cvtminus20dead = self.date + timedelta(days=30 * self.exp)
-                    note.save()
+    # вносим измерение в журнал с результататами измерений
+        if self.fixation:
+            if not self.exp:
+                self.exp = 100
+            a = CvKinematicviscosityVG.objects.get_or_create(name=self.name, lot=self.lot)
+            note = a[0]
+            note = CvKinematicviscosityVG.objects.get(namelot=note.namelot)
+            if self.temperature == 20:
+                note.cvt20 = self.certifiedValue_text
+                note.cvt20date = self.date
+                note.cvt20exp = self.exp
+                note.cvt20dead = self.date + timedelta(days=30*self.exp)
+                note.save()
+            if self.temperature == 25:
+                note.cvt25 = self.certifiedValue_text
+                note.cvt25date = self.date
+                note.cvt25exp = self.exp
+                note.cvt25dead = self.date + timedelta(days=30 * self.exp)
+                note.save()
+            if self.temperature == 40:
+                note.cvt40 = self.certifiedValue_text
+                note.cvt40date = self.date
+                note.cvt40exp = self.exp
+                note.cvt40dead = self.date + timedelta(days=30 * self.exp)
+                note.save()
+            if self.temperature == 50:
+                note.cvt50 = self.certifiedValue_text
+                note.cvt50date = self.date
+                note.cvt50exp = self.exp
+                note.cvt50dead = self.date + timedelta(days=30 * self.exp)
+                note.save()
+            if self.temperature == 60:
+                note.cvt60 = self.certifiedValue_text
+                note.cvt60date = self.date
+                note.cvt60exp = self.exp
+                note.cvt60dead = self.date + timedelta(days=30 * self.exp)
+                note.save()
+            if self.temperature == 80:
+                note.cvt80 = self.certifiedValue_text
+                note.cvt80date = self.date
+                note.cvt80exp = self.exp
+                note.cvt80dead = self.date + timedelta(days=30 * self.exp)
+                note.save()
+            if self.temperature == 100:
+                note.cvt100 = self.certifiedValue_text
+                note.cvt100date = self.date
+                note.cvt100exp = self.exp
+                note.cvt100dead = self.date + timedelta(days=30 * self.exp)
+                note.save()
+            if self.temperature == 150:
+                note.cvt150 = self.certifiedValue_text
+                note.cvt150date = self.date
+                note.cvt150exp = self.exp
+                note.cvt150dead = self.date + timedelta(days=30 * self.exp)
+                note.save()
+            if self.temperature == -20:
+                note.cvtminus20 = self.certifiedValue_text
+                note.cvtminus20date = self.date
+                note.cvtminus20exp = self.exp
+                note.cvtminus20dead = self.date + timedelta(days=30 * self.exp)
+                note.save()
 
         super(ViscosityMJL, self).save(*args, **kwargs)
 
@@ -251,7 +269,6 @@ class ViscosityMJL(models.Model):
         return f' {self.name}  п.{self.lot};  {self.temperature} t ℃;   {self.date}; pk={self.pk}'
 
     def get_absolute_url(self):
-        """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
         return reverse('kinematicviscositystr', kwargs={'pk': self.pk})
 
     class Meta:
