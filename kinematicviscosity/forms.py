@@ -15,6 +15,8 @@ from crispy_forms.layout import Layout, Submit, Row, Column
 from .models import *
 from .constants import *
 
+MODEL = ViscosityMJL
+COMMENTMODEL = Comments
 
 class StrJournalCreationForm(forms.ModelForm):
     """форма для внесения записи в журнал кинематической вязкости"""

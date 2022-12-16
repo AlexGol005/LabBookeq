@@ -6,7 +6,7 @@
 
 Данный модуль constants.py содержит константы характерные для данного приложения (журнала).
 """
-from kinematicviscosity.models import ViscosityMJL, Comments
+
 from main.models import AttestationJ
 
 # критерий округления результата
@@ -50,8 +50,7 @@ JOURNAL = AttestationJ
 journal = 'attestationJ'
 URL = 'kinematicviscosity'
 NAME = 'кинематика'
-MODEL = ViscosityMJL
-COMMENTMODEL = Comments
+
 
 
 # для выгрузок протоколов в exel

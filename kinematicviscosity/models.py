@@ -18,7 +18,8 @@ from equipment.models import MeasurEquipment, Rooms
 from viscosimeters.models import Viscosimeters
 from jouViscosity.models import LotVG, VGrange, VG, CvKinematicviscosityVG
 from functstandart import mrerrow, numberDigits, get_avg, get_acc_measurement, get_sec, get_round_signif_digit
-from .constants import *
+
+from .constants import CHOICES, REPEATABILITY, RELEERROR, ndocumentoptional, ROUND
 
 
 class ViscosityMJL(models.Model):
