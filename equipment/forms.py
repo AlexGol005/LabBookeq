@@ -915,9 +915,9 @@ class LabelEquipmentform(forms.Form):
 
 class DateForm(forms.Form):
     """форма для указания даты"""
-    date = forms.DateField(label='Дата',
+    date = forms.DateField(label='Дата в формате гггг-мм-дд',
                            widget=forms.DateInput(
-                               attrs={'class': 'form-control', 'placeholder': ''}),
+                               attrs={'class': 'form-control', 'placeholder': '2022-12-18'}),
                            input_formats=(
                                '%Y-%m-%d',
                                '%m/%d/%Y',
