@@ -1,23 +1,21 @@
 from datetime import timedelta, date
 
-import xlwt
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, TemplateView
 
 from dinamicviscosity.models import Dinamicviscosity
 from jouViscosity.forms import SearchKinematicaForm
-from jouViscosity.models import CvKinematicviscosityVG, CvDensityDinamicVG
-from kinematicviscosity.models import ViscosityMJL
+from jouViscosity.models import ViscosityKinematicResult, ViscosityDinamicResult
+from kinematicviscosity.models import ViscosityKinematic
 
-NAME = 'ВЖ-ПА АЗ'
-NAME2 = 'Плотность и динамика АЗ'
+NAME = 'Вязкость'
+NAME2 = 'Плотность и динамика'
 
-TABLENAME = 'Кинематическая вязкость ВЖ-2-ПА (мм<sup>2</sup>/с)'
-TABLENAME2 = 'Плотность/Динамическая вязкость  ВЖ-2-ПА (г/мл)/(Па*с)'
-MODEL = CvKinematicviscosityVG
-MODEL2 = CvDensityDinamicVG
+TABLENAME = 'Кинематическая вязкость (мм<sup>2</sup>/с)'
+TABLENAME2 = 'Плотность/Динамическая вязкость (г/мл)/(Па*с)'
+MODEL = ViscosityKinematicResult
+MODEL2 = ViscosityDinamicResult
 
 
 class AllKinematicviscosityView(ListView):
@@ -98,9 +96,9 @@ class DetailKinematicView(View):
     """ выводит историю измерений кинематической вязкости для партии """
     def get(self, request, path, int, str, *args, **kwargs):
         try:
-            objects = ViscosityMJL.objects.filter(fixation=True).filter(name=path).\
+            objects = ViscosityKinematic.objects.filter(fixation=True).filter(name=path).\
                 filter(lot=int).filter(temperature=str)
-            name = ViscosityMJL.objects.filter(fixation=True, name=path, lot=int, temperature=str)[0]
+            name = ViscosityKinematic.objects.filter(fixation=True, name=path, lot=int, temperature=str)[0]
             template = 'jouViscosity/detailkinematicviscosity.html'
             context = {
                 'objects': objects,
@@ -141,14 +139,13 @@ class AllDinamicviscosityView(ListView):
 
 
 class SearchDinamicResultView(TemplateView):
-    """ Представление, которое выводит результаты поиска на странице со всеми записями журнала АЗ динамической
+    """ Представление, которое выводит результаты поиска на странице со всеми записями журнала резульатов динамической
      вязкости. """
     """нестандартное"""
 
     template_name = 'jouViscosity/dinamicviscosityvalues.html'
 
     def get_context_data(self, **kwargs):
-        context = super(SearchDinamicResultView, self).get_context_data(**kwargs)
         name = self.request.GET['name']
         lot = self.request.GET['lot']
         context = super(SearchDinamicResultView, self).get_context_data(**kwargs)
@@ -197,4 +194,3 @@ class DetailDinamicView(View):
                 'objects': objects,
             }
             return render(request, template, context)
-

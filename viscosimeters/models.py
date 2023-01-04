@@ -6,7 +6,7 @@ from equipment.models import Manufacturer, Equipment, MeasurEquipment
 
 
 class ViscosimeterType(models.Model):
-    """Создает в бд таблицу базовых типов вискозиметров (по диапазонам измерений/диаметрам"""
+    """Создает в бд таблицу базовых типов вискозиметров (по диапазонам измерений/диаметрам)"""
     pairNumber = models.CharField('Номер пары', max_length=100)
     diameter = models.CharField('Диаметр', max_length=5, unique=True)
     viscosity1000 = models.CharField('Вязкость за 1000 сек, сСт', max_length=30)
@@ -38,4 +38,3 @@ class Viscosimeters(models.Model):
     class Meta:
         verbose_name = 'Вискозиметр'
         verbose_name_plural = 'Вискозиметры'
-

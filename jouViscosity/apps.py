@@ -4,5 +4,5 @@ from django.utils.translation import gettext_lazy as _
 class JournalcertvaluesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'jouViscosity'
-    verbose_name = _('ЖАЗ: ВЖ-ПА')
+    verbose_name = _('Журнал результатов измерений кинематической и динамической вязкости')
 

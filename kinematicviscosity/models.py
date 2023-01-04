@@ -2,7 +2,7 @@
 Модуль проекта LabJournal, приложения kinematicviscosity.
 Приложение kinematicviscosity это журнал фиксации
 лабораторных записей по измерению кинематической вязкости нефтепродуктов
-(Лабортаорный журнал измерения кинематической вязкости).
+(Лабораторный журнал измерения кинематической вязкости).
 
 Данный модуль model.py содержит классы для формирования таблиц в базе данных sqlite.
 """
@@ -15,14 +15,15 @@ from django.contrib.auth.models import User
 from decimal import *
 
 from equipment.models import MeasurEquipment, Rooms
+from jouViscosity.models import ViscosityKinematicResult
 from viscosimeters.models import Viscosimeters
-from jouViscosity.models import LotVG, VGrange, VG, CvKinematicviscosityVG
+# from jouViscosity.models import ViscosityKinematicResult
 from functstandart import mrerrow, numberDigits, get_avg, get_acc_measurement, get_sec, get_round_signif_digit
 
-from .constants import CHOICES, REPEATABILITY, RELEERROR, ndocumentoptional, ROUND
+from .constants import CHOICES, REPEATABILITY, RELEERROR, ndocumentoptional
 
 
-class ViscosityMJL(models.Model):
+class ViscosityKinematic(models.Model):
     """уникальный класс, хранит первичные данные измерения и вычисляет результаты"""
     # поля которые будут во всех подобных моделях
     # идентификационная информация о пробе
@@ -39,13 +40,11 @@ class ViscosityMJL(models.Model):
                                  blank=True, null=True)
     relerror = models.DecimalField('Относительная  погрешность', max_digits=3, decimal_places=1, null=True)
     repeatability = models.CharField('Повторяемость', max_length=100, choices=REPEATABILITY,
-                                 default=REPEATABILITY[0][1],
-                                 blank=True, null=True)
+                                     default=REPEATABILITY[0][1],
+                                     blank=True, null=True)
     # фиксация результатов в журнале измерений
     fixation = models.BooleanField(verbose_name='Внесен ли результат в Журнал измерений?', default=False,
                                    null=True)
-    for_lot_and_name = models.ForeignKey(LotVG, verbose_name='Измерение для', on_delete=models.PROTECT, blank=True,
-                                         null=True)
     exp = models.IntegerField('Срок годности, месяцев',  blank=True, null=True)
     date_exp = models.DateField('Годен до', blank=True, null=True)
     # автовычисляемые поля для всех моделей
@@ -106,9 +105,9 @@ class ViscosityMJL(models.Model):
 
     #  дополнительно условия и приборы - для подготовки протокола анализа
     room = models.ForeignKey(Rooms, verbose_name='Номер комнаты', null=True,
-                                            on_delete=models.PROTECT,  blank=True)
+                             on_delete=models.PROTECT,  blank=True)
     equipment1 = models.ForeignKey(MeasurEquipment, verbose_name='Секундомер', null=True,
-                             on_delete=models.PROTECT, blank=True, related_name='equipment1kinematic')
+                                   on_delete=models.PROTECT, blank=True, related_name='equipment1kinematic')
     equipment2 = models.ForeignKey(MeasurEquipment, verbose_name='Вискозиметр1', null=True,
                                    on_delete=models.PROTECT, blank=True, related_name='equipment2kinematic')
     equipment3 = models.ForeignKey(MeasurEquipment, verbose_name='Вискозиметр2', null=True,
@@ -158,13 +157,13 @@ class ViscosityMJL(models.Model):
         # оценка повторяемости измерений между вискозиметрами (по нормативному документу)
         # находим повторяемость, она зависит от состава пробы
         self.accMeasurement = get_acc_measurement(Decimal(self.viscosity1), Decimal(self.viscosity2))
-        self.kriteriy = REPEATABILITY[self.constit][1]
+        self.kriteriy = REPEATABILITY[int(self.constit)][1]
 
         # сравниваем среднее с повторяемостью и делаем выводы
-        if self.accMeasurement <= self.kriteriy:
+        if self.accMeasurement <= Decimal(self.kriteriy):
             self.resultMeas = 'удовлетворительно'
             self.cause = ''
-        if self.accMeasurement > self.kriteriy:
+        if self.accMeasurement > Decimal(self.kriteriy):
             self.resultMeas = 'неудовлетворительно'
             self.cause = ':  Δ > r'
 
@@ -191,24 +190,17 @@ class ViscosityMJL(models.Model):
             if self.deltaOldCertifiedValue:
                 self.resultWarning = f'Результат отличается от указанного на {self.deltaOldCertifiedValue} %'
 
-    # срок годности измерения рассчитываем если указан срок годности (в месяцах)
+        # срок годности измерения рассчитываем если указан срок годности (в месяцах)
         if self.exp:
             self.date_exp = date.today() + timedelta(days=30*self.exp)
 
-        # связь с конкретной партией, если есть таковые в списке партий  #todo
-        pk_VG = VG.objects.get(name=self.name)
-        a = VGrange.objects.get_or_create(rangeindex=int(self.name[8:-1]), nameSM=pk_VG)
-        b = a[0]
-        LotVG.objects.get_or_create(lot=self.lot, nameVG=b)
-        self.for_lot_and_name = LotVG.objects.get(lot=self.lot, nameVG=b)
-
-    # вносим измерение в журнал с результататами измерений
+        # вносим измерение в журнал с результататами измерений
         if self.fixation:
             if not self.exp:
                 self.exp = 100
-            a = CvKinematicviscosityVG.objects.get_or_create(name=self.name, lot=self.lot)
-            note = a[0]
-            note = CvKinematicviscosityVG.objects.get(namelot=note.namelot)
+            a = ViscosityKinematicResult.objects.get_or_create(name=self.name, lot=self.lot, cipher=self.cipher)
+            a.save()
+            note = ViscosityKinematicResult.objects.get(name=self.name, lot=self.lot, cipher=self.cipher)
             if self.temperature == 20:
                 note.cvt20 = self.certifiedValue_text
                 note.cvt20date = self.date
@@ -264,7 +256,7 @@ class ViscosityMJL(models.Model):
                 note.cvtminus20dead = self.date + timedelta(days=30 * self.exp)
                 note.save()
 
-        super(ViscosityMJL, self).save(*args, **kwargs)
+        super(ViscosityKinematic, self).save(*args, **kwargs)
 
     def __str__(self):
         return f' {self.name}  п.{self.lot};  {self.temperature} t ℃;   {self.date}; pk={self.pk}'
@@ -281,7 +273,7 @@ class Comments(models.Model):
     """стандартнрый класс для комментариев, поменять только get_absolute_url"""
     date = models.DateField('Дата', auto_now_add=True, db_index=True)
     name = models.TextField('Содержание', max_length=1000, default='')
-    forNote = models.ForeignKey(ViscosityMJL, verbose_name='К странице аттестации', on_delete=models.CASCADE,
+    forNote = models.ForeignKey(ViscosityKinematic, verbose_name='К странице аттестации', on_delete=models.CASCADE,
                                 related_name='comments')
     author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
 

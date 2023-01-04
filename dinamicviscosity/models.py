@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from decimal import *
 
 from equipment.models import MeasurEquipment, Rooms
-from jouViscosity.models import VG, VGrange, LotVG, CvDensityDinamicVG
+from jouViscosity.models import ViscosityDinamicResult
 from functstandart import mrerrow, numberDigits, get_avg, get_acc_measurement
 
 from viscosimeters.models import Viscosimeters
@@ -14,15 +14,15 @@ from .j_constants import *
 
 
 class Dinamicviscosity(models.Model):
-    for_lot_and_name = models.ForeignKey(LotVG, verbose_name='Измерение для: ГСО и партия', on_delete=models.PROTECT,
-                                         blank=True, null=True)
+    name = models.CharField('Наименование', max_length=100, default='0', blank=True, null=True)
+    lot = models.CharField('Партия', max_length=100, blank=True, null=True)
+    cipher = models.CharField('Шифр', max_length=100, blank=True, null=True)
+    sowner = models.CharField('Владелец пробы', max_length=100, null=True)
     exp = models.IntegerField('Срок годности плотности, месяцев', blank=True, null=True)
     date_exp = models.DateField('плотность годна до', blank=True, null=True)
     date = models.DateField('Дата', auto_now_add=True, db_index=True, blank=True)
     performer = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='performer', blank=True)
     performerdensity = models.ForeignKey(User, verbose_name='Плотность измерил', on_delete=models.CASCADE, null=True, related_name='performerdensity', blank=True)
-    name = models.CharField('Наименование', max_length=100, default='0', null=True, blank=True)
-    lot = models.CharField('Партия', max_length=100, null=True, blank=True)
     constit = models.CharField('Состав пробы', max_length=300, choices=CHOICES, default='Проба содержит октол/нефть', null=True,  blank=True)
     ndocument = models.CharField('Метод испытаний', max_length=100, choices=DOCUMENTS, default='МИ-02-2018', blank=True)
     temperature = models.DecimalField('Температура, ℃', max_digits=5, decimal_places=2, default='0', null=True,
@@ -170,9 +170,9 @@ class Dinamicviscosity(models.Model):
         super(Dinamicviscosity, self).save(*args, **kwargs)
         # вносим АЗ в ЖАЗ
         if self.name[0:2] == 'ВЖ' and self.fixation:
-            a = CvDensityDinamicVG.objects.get_or_create(namelot=self.for_lot_and_name)
+            a = ViscosityDinamicResult.objects.get_or_create(namelot=self.for_lot_and_name)
             note = a[0]
-            note = CvDensityDinamicVG.objects.get(namelot=note.namelot)
+            note = ViscosityDinamicResult.objects.get(namelot=note.namelot)
             if self.temperature == 20:
                 note.cvt20 = self.density_avg
                 note.cvtdinamic20 = self.certifiedValue

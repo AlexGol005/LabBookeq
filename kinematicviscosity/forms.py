@@ -15,7 +15,7 @@ from crispy_forms.layout import Layout, Submit, Row, Column
 from .models import *
 from .constants import *
 
-MODEL = ViscosityMJL
+MODEL = ViscosityKinematic
 COMMENTMODEL = Comments
 
 class StrJournalCreationForm(forms.ModelForm):
@@ -36,11 +36,16 @@ class StrJournalCreationForm(forms.ModelForm):
                                                         'placeholder': 'Партия'
                                                         }
                                                  ))
+    cipher = forms.CharField(label='Шифр пробы', max_length=100, required=True,
+                          widget=forms.TextInput(attrs={'class': 'form-control',
+                                                        'placeholder': 'Шифр пробы'
+                                                        }
+                                                 ))
     temperature = forms.DecimalField(label='Температура, ℃', max_digits=5, decimal_places=2, required=True,
                                      widget=forms.TextInput(attrs={'class': 'form-control',
                                                                    'placeholder': 'Температура'}
                                                             ))
-    termostatition = forms.BooleanField(label='Термостатировано не менее 20 минут', required=True)
+    termostatition = forms.BooleanField(label='Термостатировано не менее 30 минут', required=True)
     temperatureCheck = forms.BooleanField(label='Температура контролируется внешним поверенным термометром',
                                           required=True)
     ViscosimeterNumber1 = forms.ModelChoiceField(label='вискозиметр № 1', required=True,
@@ -108,7 +113,7 @@ class StrJournalCreationForm(forms.ModelForm):
             Row(
                 Column('name', css_class='form-group col-md-4 mb-0'),
                 Column('lot', css_class='form-group col-md-4 mb-0'),
-                Column('temperature', css_class='form-group col-md-4 mb-0'),
+                Column('cipher', css_class='form-group col-md-4 mb-0'),
                 css_class='form-row'
             ),
             Row(
@@ -119,6 +124,7 @@ class StrJournalCreationForm(forms.ModelForm):
             ),
             Row(
                 Column('constit', css_class='form-group col-md-6 mb-0'),
+                Column('temperature', css_class='form-group col-md-4 mb-0'),
                 css_class='form-row'
             ),
             Row(

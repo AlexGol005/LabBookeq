@@ -11,7 +11,7 @@ from django.contrib import admin
 from .models import *
 
 
-@admin.register(ViscosityMJL)
+@admin.register(ViscosityKinematic)
 class NoteAdmin(admin.ModelAdmin):
     """Выводит в админ-панель таблицу ViscosityMJL (Измерение кинематической вязкости)"""
 

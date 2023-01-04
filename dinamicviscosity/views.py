@@ -8,8 +8,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from xlwt import Alignment, Borders
 
-from jouViscosity.models import CvKinematicviscosityVG
-from kinematicviscosity.models import ViscosityMJL
+from jouViscosity.models import ViscosityKinematicResult
+from kinematicviscosity.models import ViscosityKinematic
 
 # этот блок нужен для всех журналов
 from equipment.models import CompanyCard
@@ -54,7 +54,7 @@ class RegView(RegView):
         order = form.save(commit=False)
         """вставка начало"""
         try:
-            olddencity = CvDensityDinamicVG.objects.get(namelot__nameVG__name=order.name, namelot__lot=order.lot)
+            olddencity = ViscosityKinematicResult.objects.get(namelot__nameVG__name=order.name, namelot__lot=order.lot)
             if order.temperature == 20:
                 order.olddensity = olddencity.cvt20
 
@@ -85,7 +85,7 @@ class RegView(RegView):
             pass
 
         try:
-            kinematicviscosity = CvKinematicviscosityVG.objects.get(namelot__nameVG__name=order.name,
+            kinematicviscosity = ViscosityKinematicResult.objects.get(namelot__nameVG__name=order.name,
                                                                     namelot__lot=order.lot)
             if order.temperature == 20:
                 if kinematicviscosity.cvt20dead >= date.today():
@@ -754,7 +754,7 @@ def export_protocol_xls(request, pk):
                                         )).\
         get(date__exact=note.date, roomnumber__roomnumber__exact=note.room)
 
-    kinematic = ViscosityMJL.objects.filter(name=note.name, lot=note.lot, temperature=note.temperature).last()
+    kinematic = ViscosityKinematic.objects.filter(name=note.name, lot=note.lot, temperature=note.temperature).last()
 
 
 

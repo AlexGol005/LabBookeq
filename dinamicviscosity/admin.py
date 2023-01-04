@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import*
 
-# admin.site.register(ViscosityMJL)
+
 
 @admin.register(Dinamicviscosity)
 class NoteAdmin(admin.ModelAdmin):

@@ -2,18 +2,11 @@ from django.contrib import admin
 from .models import*
 
 
-admin.site.register(VG)
-
-admin.site.register(VGrange)
-
-@admin.register(LotVG)  # связываем админку с моделью
+@admin.register(ViscosityKinematicResult)  # связываем админку с моделью
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id',)
 
-@admin.register(CvKinematicviscosityVG)  # связываем админку с моделью
-class NoteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'namelot')
 
-@admin.register(CvDensityDinamicVG)  # связываем админку с моделью
+@admin.register(ViscosityDinamicResult)  # связываем админку с моделью
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ('id', 'namelot')
+    list_display = ('id',)

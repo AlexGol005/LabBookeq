@@ -4,6 +4,9 @@ import xlwt
 from django.db.models import Value
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
+
+from jouViscosity.models import ViscosityKinematicResult
+
 """
 Модуль проекта LabJournal, приложения kinematicviscosity.
 Приложение kinematicviscosity это журнал фиксации 
@@ -28,7 +31,7 @@ from .models import *
 from .constants import *
 from viewstandart import *
 
-MODEL = ViscosityMJL
+MODEL = ViscosityKinematic
 COMMENTMODEL = Comments
 
 
@@ -61,7 +64,7 @@ class RegView(RegView):
         order.Konstant1 = konstant1.konstant
         order.Konstant2 = konstant2.konstant
         try:
-            oldvalue = CvKinematicviscosityVG.objects.get(namelot__nameVG__name=order.name, namelot__lot=order.lot)
+            oldvalue = ViscosityKinematicResult.objects.get(name=order.name, lot=order.lot, cipher=order.cipher)
             if order.temperature == 20:
                 order.oldCertifiedValue = oldvalue.cvt20
 
@@ -662,7 +665,7 @@ def export_me_xls(request, pk):
 def export_protocol_xls(request, pk):
     """представление для выгрузки протокола испытаний в ексель"""
     company = CompanyCard.objects.get(pk=1)
-    note = ViscosityMJL.objects.\
+    note = ViscosityKinematic.objects.\
         annotate(name_rm=Concat(Value('СО '), 'name', Value(' п. '), 'lot')).\
         annotate(performer_rm=Concat('performer__profile__userposition', Value(' '), 'performer__username')). \
         annotate(equipment_set=Concat('equipment1__charakters__name',
@@ -814,10 +817,10 @@ def export_protocol_xls(request, pk):
 
     row_num = 4
     columns = [
-        sertificat9001,
-        sertificat9001,
-        sertificat9001,
-        sertificat9001,
+        'sertificat9001',
+        'sertificat9001',
+        'sertificat9001',
+        'sertificat9001',
         '',
         affirmationprod,
         affirmationprod,
