@@ -557,9 +557,10 @@ class MeteorologicalParameters(models.Model):
 class CompanyCard(models.Model):
     """Карточка Петроаналитики """
     name = models.CharField('Название', max_length=90, blank=True, null=True)
-    sertificat9001 = models.CharField('Сертификат 9001', max_length=500, blank=True, null=True)
-    affirmationproduction = models.CharField('Утверждаю начальник производства', max_length=90, blank=True, null=True)
-    affirmationcompanyboss = models.CharField('Утверждаю генеральный директор', max_length=90, blank=True, null=True)
+    sertificat = models.TextField('Документ сертификата', blank=True, null=True)
+    sertificat9001 = models.CharField('Номер сертификата', max_length=500, blank=True, null=True)
+    affirmationproduction = models.CharField('Утверждаю начальник производства', max_length=190, blank=True, null=True)
+    affirmationcompanyboss = models.CharField('Утверждаю генеральный директор', max_length=190, blank=True, null=True)
     adress = models.CharField('Юридический адрес', max_length=500, blank=True, null=True)
     prohibitet = models.TextField('Запрет на тираж протокола',  blank=True, null=True)
     imglogoadress = models.ImageField('Картинка логотип с адресом', upload_to='user_images', blank=True, null=True,

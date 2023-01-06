@@ -8,18 +8,18 @@
 
 
 {% block content %}
-{#кнопки#}
-{#нестандартная#}
-<a href="/attestationJ/{{ URL }}/" class="btn btn-info mt-3 mr-3">перейти в журнал</a>
-<a href="{% url 'konstv' %}" class="btn btn-info mt-3 mr-3" target="blank">константы вискозиметров</a>
-<a href="/CertifiedValueJ/kinematicviscosityvalues/"
-class="btn btn-info mt-3 mr-3" target="blank">Список АЗ</a>
-{#конец кнопок#}
+    {#кнопки#}
+    {#нестандартная#}
+    <a href="/attestationJ/kinematicviscosity/" class="btn btn-info mt-3 mr-3">перейти в журнал</a>
+    <a href="{% url 'konstv' %}" class="btn btn-info mt-3 mr-3" target="blank">константы вискозиметров</a>
+    <a href="/CertifiedValueJ/kinematicviscosityvalues/"
+    class="btn btn-info mt-3 mr-3" target="blank">журнал результатов</a>
+    {#конец кнопок#}
 
-{#форма регистрации#}
-{#стандартная#}
-<form method="post" class="form-register">
-    {% csrf_token %}
-    {% crispy form %}
-</form>
+    {#форма регистрации#}
+    {#стандартная#}
+    <form method="post" class="form-register">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
 {% endblock %}

@@ -114,8 +114,46 @@ def get_dateformat(date):
     rdate = f'{day}.{month}.{year}'
     return rdate
 
-def get_round_signif_digit(x_avg: Decimal, numdig: Decimal) -> Decimal: # todo
-    """округляет число x_avg до числа значащих цифр numdig"""
-    return x_avg
+def get_round_signif_digit(x_avg: Decimal, numdig: int) -> Decimal:
+    """округляет число x_avg до числа значащих цифр numdig для чисел соизмеримых со значением вязкости"""
+    aa = x_avg.quantize(Decimal('1.000000000000'), ROUND_HALF_UP)
+    a = str(aa)
+    if int(a[0]) != 0:
+        index1 = numdig + 2
+        b = a[0:index1]
+        index2 = a.find('.')
+        if len(a[0:index2]) <= numdig - 1:
+            c = b[index2::]
+            numfrac = len(c) - 2
+            k = '1.' + numfrac * '0'
+            x_res = x_avg.quantize(Decimal(k), ROUND_HALF_UP)
+        if len(a[0:index2]) == numdig:
+            x_res = x_avg.quantize(Decimal(1), ROUND_HALF_UP)
+        if len(a[0:index2]) > numdig:
+            d = a[0:index2]
+            e = f'{d[:4]}.{d[4:]}'
+            f = Decimal(e).quantize(Decimal(1), ROUND_HALF_UP)
+            g = str(f) + '0' * (len(d) - 4)
+            x_res = Decimal(g)
+    if int(a[0]) == 0:
+        h = str(x_avg)
+        i = 2
+        while True:
+            if int(h[i]) == 0:
+                i += 1
+            else:
+                break
+        numfrac = i + 2
+        k = '1.' + numfrac * '0'
+        x_res = x_avg.quantize(Decimal(k), ROUND_HALF_UP)
+    return x_res
+
+
+
+
+
+
+
+
 
 

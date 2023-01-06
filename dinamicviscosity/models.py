@@ -136,7 +136,8 @@ class Dinamicviscosity(models.Model):
                     self.cause = ''
                     self.density_avg = get_avg(self.density1, self.density2, 4)
                     if not self.kinematicviscosity:
-                        self.resultWarningkinematic = 'Нет актуального значения кинематической вязкости. Динамика не рассчитана. ' \
+                        self.resultWarningkinematic = 'Нет актуального значения кинематической вязкости. ' \
+                                                      'Динамика не рассчитана. ' \
                                                       'Измерьте динамику и заполните новую форму'
                     if self.kinematicviscosity:
                         self.dinamicviscosity_not_rouned = Decimal(self.kinematicviscosity) * self.density_avg

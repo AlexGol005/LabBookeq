@@ -1,250 +1,226 @@
 {% extends 'main/superbase.html' %}
 
 {% block title %}
-{{ NAME }}
+    {{ NAME }}
 {% endblock %}
 
 {#кнопки слева странички#}
 {% block content %}
-<div class="row">
-<div class="col-md-2">
-    {#кнопка печать #}
-    <div class="noprint">
-    <a href="/attestationJ/{{ URL }}/registration/" class="btn btn-warning mt-3 mr-5">&nbsp&nbspвнести&nbsp&nbsp&nbsp ещё </a>
-    <a href='/attestationJ/{{ URL }}/' class="btn btn-warning mt-3">В  журнал</a>
-    <a href='/attestationJ/{{ URL }}/attestation/' class="btn btn-warning mt-3">Все записи</a>
+    <div class="row">
+        <div class="col-md-2">
+        {#кнопка печать #}
+        <div class="noprint">
+            <a href="/attestationJ/{{ URL }}/registration/" class="btn btn-warning mt-3 mr-5">&nbsp&nbspвнести&nbsp&nbsp&nbsp ещё </a>
+            <a href='/attestationJ/{{ URL }}/' class="btn btn-warning mt-3">В  журнал</a>
+            <a href='/attestationJ/{{ URL }}/attestation/' class="btn btn-warning mt-3">Все записи</a>
         </div>
-</div>
+    </div>
 
 {#уникальная таблица#}
 {#полустандартный верх таблицы#}
-<div class="col-md-4 mt-1" >
-    <table class="table table-bordered background-color">
-	<tbody>
-        <tr>
-			<th colspan="9"><div style="text-align: center;">Атт.-ВЖ-(МИ № 02-2018)-{{ note.date|date:"Y"}}
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-{#                № записи {{ note.id}}#}
-                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspСтр.&nbsp&nbsp&nbsp&nbsp </div></th>
-		</tr>
-		<tr>
-			<th colspan="9">Определение кинематической вязкости, метод: {{ note.ndocument }} </th>
-		</tr>
-		<tr>
-			<th>Дата измерения</th>
-			<th colspan="2">Наименование</th>
-			<th colspan="2">Номер&nbsp&nbspпартии</th>
-			<th colspan="2">Т&nbsp&nbsp°C</th>
-			<th>Термост. 20 мин</th>
-			<th>Сод.&nbspнефть <br> или октол</th>
-		</tr>
-		<tr>
-			<td>{{ note.date|date:"d.m.Y" }}</td>
-			<td colspan="2">{{ note.name}}</td>
-			<td colspan="2">{{ note.lot}}</td>
-			<td colspan="2">{{ note.temperature}}</td>
-			<td>V </td>
-			<td>{{ note.constit}}</td>
-		</tr>
+    <div class="col-md-4 mt-1" >
+        <table class="table table-bordered background-color">
+	    <tbody>
+            <tr>
+                <th colspan="9">
+                    <div style="text-align: center;">
+                        Журнал измерения кинематической вязкости_{{ note.date|date:"Y"}}
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        № записи: {{ note.id}}
+                    </div>
+                </th>
+		    </tr>
+            <tr>
+                <th colspan="9">
+                    Определение кинематической вязкости: {{ note.ndocument }}
+                </th>
+            </tr>
+            <tr>
+                <th colspan="2">Дата измерения</th>
+                <th colspan="2">Наименование пробы</th>
+                <th colspan="2">Номер&nbsp&nbspпартии</th>
+                <th colspan="2">Шифр&nbsp&nbsp&nbsp&nbspпробы</th>
+                <th colspan="1">Т&nbsp&nbsp°C</th>
+            </tr>
+            <tr>
+                <td colspan="2">{{ note.date|date:"d.m.Y" }}</td>
+                <td colspan="2">{{ note.name}}</td>
+                <td colspan="2">{{ note.lot}}</td>
+                <td colspan="2">{{ note.cipher}}</td>
+                <td colspan="1">{{ note.temperature}}</td>
+            </tr>
 {# конец полустандартного верха таблицы#}
 {# совсем уникальная часть таблицы#}
-		<tr>
-			<th colspan="9"><div style="text-align: center;">Проведение измерений</div></th>
-		</tr>
-		<tr>
-			<th><div style="text-align: center;">№ виск-ра</div></th>
-			<td colspan="4"><div style="text-align: center;">{{ note.ViscosimeterNumber1}}</div></td>
-			<td colspan="4"><div style="text-align: center;">{{ note.ViscosimeterNumber2}}</div></td>
-		</tr>
-		<tr>
-			<th rowspan="2"><div style="text-align: center;">Константа вискозиметра, мм<sup>2</sup>/с<sup>2</sup></div></th>
-			<th colspan="4"><div style="text-align: center;">К<sub>1</sub></div></th>
-			<th colspan="4"><div style="text-align: center;">К<sub>2</sub></div></th>
-		</tr>
-		<tr>
-			<td colspan="4"><div style="text-align: center;">{{ note.Konstant1}}</div></td>
-			<td colspan="4"><div style="text-align: center;">{{ note.Konstant2|default_if_none:" "}}</div></td>
-		</tr>
-		<tr>
-			<th rowspan="2"><div style="text-align: center;">Время истечения 1, τ<sub>1</sub></div></th>
-			<th colspan="3"><div style="text-align: center;">τ<sub>11</sub>, минут</div></th>
-			<th><div style="text-align: center;">τ<sub>11</sub>, секунд</div></th>
-            <th colspan="3"><div style="text-align: center;">τ<sub>21</sub>, минут</div></th>
-			<th><div style="text-align: center;">τ<sub>21</sub>, секунд</div></th>
-		</tr>
-		<tr>
-			<td colspan="3"><div style="text-align: center;">{{ note.plustimeminK1T1}}:{{ note.plustimesekK1T1}}</div></td>
-			<td><div style="text-align: center;">{{ note.timeK1T1_sec|default:" "}}</div></td>
-            <td colspan="3"><div style="text-align: center;">{{ note.plustimeminK2T1|default_if_none:" "}}:{{ note.plustimesekK2T1|default_if_none:" "}}</div></td>
-            <td><div style="text-align: center;">{{ note.timeK2T1_sec|default:" "}}</div></td>
-		</tr>
-		<tr>
-			<th rowspan="2"><div style="text-align: center;">Время истечения 2, τ<sub>2</sub></div></th>
-			<th colspan="3"><div style="text-align: center;">τ<sub>21</sub>, минут</div></th>
-			<th><div style="text-align: center;">τ<sub>21</sub>, секунд</div></th>
-            <th colspan="3"><div style="text-align: center;">τ<sub>22</sub>, минут</div></th>
-			<th><div style="text-align: center;">τ<sub>22</sub>, секунд</div></th>
-		</tr>
-		<tr>
-			<td colspan="3"><div style="text-align: center;">{{ note.plustimeminK1T2|default_if_none:" "}}:{{ note.plustimesekK1T2|default_if_none:" "}}</div></td>
-			<td><div style="text-align: center;">{{ note.timeK1T2_sec|default:" "}}</div></td>
-            <td colspan="3"><div style="text-align: center;">{{ note.plustimeminK2T2|default_if_none:" "}}:{{ note.plustimesekK2T2|default_if_none:" "}}</div></td>
-            <td><div style="text-align: center;">{{ note.timeK2T2_sec|default:" "}}</div></td>
-		</tr>
-		<tr>
-			<th rowspan="2"><div style="text-align: center;">Время истечения среднее</div></th>
-            <th colspan="4"><div style="text-align: center;">τ<sub>1</sub>, секунд</div></th>
-            <th colspan="4"><div style="text-align: center;">τ<sub>2</sub>, секунд</div></th>
-		</tr>
-		<tr>
-			<td colspan="4"><div style="text-align: center;">{{ note.timeK1_avg }}</div></td>
-            <td colspan="4"><div style="text-align: center;">{{ note.timeK2_avg|default:" " }}</div></td>
-		</tr>
-		<tr>
-			<th rowspan="2"><div style="text-align: center;"> Вязкость кинематическая  ν<sub>i</sub> = К<sub>i</sub> * τ<sub>i</sub>   </div></th>
-            <th colspan="4"><div style="text-align: center;">ν<sub>1</sub>, мм<sup>2</sup>/с</div></th>
-            <th colspan="4"><div style="text-align: center;">ν<sub>2</sub>, мм<sup>2</sup>/с</div></th>
-		</tr>
-		<tr>
-		<td colspan="4"><div style="text-align: center;">{{ note.viscosity1 }}</div></td>
-            <td colspan="4"><div style="text-align: center;">{{ note.viscosity2|default:" " }}</div></td>
-		</tr>
-		<tr>
-			<th colspan="9"><div style="text-align: center;">Обработка результатов</div></th>
-		</tr>
-		<tr>
-			<th colspan="2"><div style="text-align: center;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                ν<sub>сред</sub> = (ν<sub>1</sub> + ν<sub>2</sub>)/2</div></th>
-			<th colspan="5"><div style="text-align: center;">Оценка приемл. изм.
-                Δ = (|ν<sub>1</sub> - ν<sub>2</sub>|/ν<sub>сред</sub>) * 100 %</div></th>
-			<th colspan="2"><div style="text-align: center;">Критерий приемлемости измерений, r  </div></th>
-		</tr>
-		<tr>
-			<td colspan="2"><div style="text-align: center;">{{ note.viscosityAVG }}</div></td>
-			<td colspan="5"><div style="text-align: center;">{{ note.accMeasurement|default_if_none:" "|striptags }}</div></td>
-			<td colspan="2"><div style="text-align: center;">{{ note.kriteriy|default:" " }}</div></td>
-		</tr>
+            <tr>
+                <th colspan="9"><div style="text-align: center;">Проведение измерений</div></th>
+            </tr>
+            <tr>
+                <th colspan="1">№ виск-ра</th>
+                <td colspan="4">{{ note.ViscosimeterNumber1}}</td>
+                <td colspan="4">{{ note.ViscosimeterNumber2}}</td>
+            </tr>
+            <tr>
+                <th rowspan="2"><div style="text-align: center;">Константа вискозиметра, мм<sup>2</sup>/с<sup>2</sup></div></th>
+                <th colspan="4"><div style="text-align: center;">К<sub>1</sub></div></th>
+                <th colspan="4"><div style="text-align: center;">К<sub>2</sub></div></th>
+            </tr>
+            <tr>
+                <td colspan="4"><div style="text-align: center;">{{ note.Konstant1}}</div></td>
+                <td colspan="4"><div style="text-align: center;">{{ note.Konstant2|default_if_none:" "}}</div></td>
+            </tr>
+            <tr>
+                <th rowspan="2">Время истечения 1, τ<sub>1</sub></th>
+                <th colspan="3">τ<sub>11</sub>, минут</th>
+                <th>τ<sub>11</sub>, секунд</th>
+                <th colspan="3">τ<sub>21</sub>, минут</th>
+                <th colspan="3">τ<sub>21</sub>, секунд</th>
+            </tr>
+            <tr>
+                <td colspan="3"><div style="text-align: center;">{{ note.plustimeminK1T1}}:{{ note.plustimesekK1T1}}</div></td>
+                <td><div style="text-align: center;">{{ note.timeK1T1_sec|default:" "}}</div></td>
+                <td colspan="3"><div style="text-align: center;">{{ note.plustimeminK2T1|default_if_none:" "}}:{{ note.plustimesekK2T1|default_if_none:" "}}</div></td>
+                <td><div style="text-align: center;">{{ note.timeK2T1_sec|default:" "}}</div></td>
+            </tr>
+            <tr>
+                <th rowspan="2"><div style="text-align: center;">Время истечения 2, τ<sub>2</sub></div></th>
+                <th colspan="3"><div style="text-align: center;">τ<sub>21</sub>, минут</div></th>
+                <th><div style="text-align: center;">τ<sub>21</sub>, секунд</div></th>
+                <th colspan="3"><div style="text-align: center;">τ<sub>22</sub>, минут</div></th>
+                <th><div style="text-align: center;">τ<sub>22</sub>, секунд</div></th>
+            </tr>
+            <tr>
+                <td colspan="3"><div style="text-align: center;">{{ note.plustimeminK1T2|default_if_none:" "}}:{{ note.plustimesekK1T2|default_if_none:" "}}</div></td>
+                <td><div style="text-align: center;">{{ note.timeK1T2_sec|default:" "}}</div></td>
+                <td colspan="3"><div style="text-align: center;">{{ note.plustimeminK2T2|default_if_none:" "}}:{{ note.plustimesekK2T2|default_if_none:" "}}</div></td>
+                <td><div style="text-align: center;">{{ note.timeK2T2_sec|default:" "}}</div></td>
+            </tr>
+            <tr>
+                <th rowspan="2"><div style="text-align: center;">Время истечения среднее</div></th>
+                <th colspan="4"><div style="text-align: center;">τ<sub>1</sub>, секунд</div></th>
+                <th colspan="4"><div style="text-align: center;">τ<sub>2</sub>, секунд</div></th>
+            </tr>
+            <tr>
+                <td colspan="4"><div style="text-align: center;">{{ note.timeK1_avg }}</div></td>
+                <td colspan="4"><div style="text-align: center;">{{ note.timeK2_avg|default:" " }}</div></td>
+            </tr>
+            <tr>
+                <th rowspan="2"><div style="text-align: center;"> Вязкость кинематическая  ν<sub>i</sub> = К<sub>i</sub> * τ<sub>i</sub>   </div></th>
+                <th colspan="4"><div style="text-align: center;">ν<sub>1</sub>, мм<sup>2</sup>/с</div></th>
+                <th colspan="4"><div style="text-align: center;">ν<sub>2</sub>, мм<sup>2</sup>/с</div></th>
+            </tr>
+            <tr>
+            <td colspan="4"><div style="text-align: center;">{{ note.viscosity1 }}</div></td>
+                <td colspan="4"><div style="text-align: center;">{{ note.viscosity2|default:" " }}</div></td>
+            </tr>
+            <tr>
+                <th colspan="9"><div style="text-align: center;">Обработка результатов</div></th>
+            </tr>
+            <tr>
+                <th colspan="2"><div style="text-align: center;">
+                    ν<sub>сред</sub> = (ν<sub>1</sub>&nbsp+&nbspν<sub>2</sub>)/2</div></th>
+                <th colspan="5"><div style="text-align: center;">Оценка приемлемости измерений <br>
+                    Δ&nbsp=&nbsp(|ν<sub>1</sub> - ν<sub>2</sub>|/ν<sub>сред</sub>) * 100 %</div></th>
+                <th colspan="2"><div style="text-align: center;">Критерий приемлемости измерений, r, %  </div></th>
+            </tr>
+            <tr>
+                <td colspan="2"><div style="text-align: center;">{{ note.viscosityAVG }}</div></td>
+                <td colspan="5"><div style="text-align: center;">{{ note.accMeasurement|default_if_none:" "|striptags }}</div></td>
+                <td colspan="2"><div style="text-align: center;">{{ note.kriteriy|default:" " }}</div></td>
+            </tr>
 {# блок оценки результатов #}
-		<tr>
-			<tr>
-			<td colspan="9">
-                {% if note.resultMeas == 'неудовлетворительно' %}
-                <div class="TransactionAmount Badresult">
-                {% else %}
-                <div class="TransactionAmount Goodresult">
-                {% endif %}
-                Результат измерений: <b>{{ note.resultMeas }} </b> {{ note.cause }}
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                </div>
-            </td>
-		    </tr>
+            <tr>
+                <tr>
+                <td colspan="9">
+                    {% if note.resultMeas == 'неудовлетворительно' %}
+                    <div class="TransactionAmount Badresult">
+                    {% else %}
+                    <div class="TransactionAmount Goodresult">
+                    {% endif %}
+                    Результат измерений: <b>{{ note.resultMeas }} </b> {{ note.cause }}
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    </div>
+                </td>
+                </tr>
 {# конец блока оценки результатов #}
-        <tr>
-			<th colspan="9"><div style="text-align: center;">Фиксация результатов</div></th>
-		</tr>
-		<tr>
-			<th colspan="1">АЗ  мм<sup>2</sup>/с</th>
-			<th colspan="3">Абс.&nbspпогр.&nbsp(ν<sub>сред</sub> * 0,3)/ 100</th>
-			<th colspan="2">Пред. знач. вязкости ν<sub>пред</sub>, мм<sup>2</sup>/с</th>
-			<th colspan="3">Разница с ν<sub>пред  </sub>
-                &nbsp&nbsp&nbsp&nbsp&nbsp
-                Δν<sub>пред</sub> = (|ν<sub>1</sub> - ν<sub>2</sub>|/ν<sub>сред</sub>) * 100 %</th>
-		</tr>
-		<tr>
-			<td colspan="1"><div style="text-align: center;">{{ note.certifiedValue_text }}</div></td>
-			<td colspan="3"><div style="text-align: center;">{{ note.abserror|default_if_none:" "|striptags }}</div></td>
-			<td colspan="2"><div style="text-align: center;">{{ note.oldCertifiedValue|default:" " }}</div></td>
-            <td colspan="3"><div style="text-align: center;">{{ note.deltaOldCertifiedValue|default_if_none:" "|striptags }}</div></td>
-		</tr>
-        <tr>
-        <td colspan="9">
-                <div class="TransactionAmount Badresult">
-                  <b>{{ note.resultWarning }}</b>
-                </div>
-        </td>
-		</tr>
+            <tr>
+                <th colspan="9"><div style="text-align: center;">Фиксация результатов</div></th>
+            </tr>
+            <tr>
+                <th colspan="1">ν мм<sup>2</sup>/с</th>
+                <th colspan="3">Предыдущее ν<sub>пред</sub>, мм<sup>2</sup>/с</th>
+                <th colspan="2">Разница с ν<sub>пред</sub>, % </th>
+                <th colspan="3">Состав пробы</th>
+            </tr>
+            <tr>
+                <td colspan="1"><div style="text-align: center;">{{ note.result|default_if_none:" "|striptags }}</div></td>
+                <td colspan="3"><div style="text-align: center;"></div>{{ note.oldresult|default_if_none:" "|striptags}}</td>
+                <td colspan="2"><div style="text-align: center;"></div>{{ note.deltaoldresult|default_if_none:" "|striptags}}</td>
+                <td colspan="3"><div style="text-align: center;">{{ note.get_constit_display }}</div></td>
+            </tr>
+            <tr>
+                <td colspan="9">
+                    <div class="TransactionAmount Badresult">
+                      <b>{{ note.resultWarning }}</b>
+                    </div>
+                </td>
+            </tr>
 {#конец уникальной части таблицы #}
 
 {# полустандартный низ таблицы с формой фиксации АЗ и кнопкой "комментарии" #}
-        <tr>
-			<th colspan="1">Исполнитель </th>
-            <th colspan="2"><div style="text-align: center;">отпр.</div></th>
-            <th colspan="3"><div style="text-align: center;">внесено</div></th>
-            <th colspan="2">ОТК</th>
-            <th colspan="1">комментарии</th>
-		</tr>
-		<tr>
-			<th colspan="1">{{ note.performer }} </th>
-            <td colspan="2"></td>
-            <td colspan="3">
-                {% if note.resultMeas == 'удовлетворительно' and not note.fixation %}
-                <form method="post" >
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button class="btn btn-outline-warning" type="submit">Подтвердить</button>
-                </form>
-                {% elif note.resultMeas == 'удовлетворительно' and  note.fixation %}
-
-<a href="/CertifiedValueJ/kinematicviscosityvalues/" target="blank"> АЗ записано в ЖАЗ сайта </a>
-                {% else %}
-                нет АЗ
-                {% endif %}
-           </td>
-            <td colspan="2"><div style="text-align: center;">
-            </div></td>
-            <th colspan="1">
-            {% if not counter %}
-                <a href="/attestationJ/{{ URL }}/attestation/{{ note.id }}/comments/"  class="btn btn-outline-warning mt-3">комментировать</a>
-                {% elif counter %}
-                <a href="/attestationJ/{{ URL }}/attestation/{{ note.id }}/comments/"  class="btn btn-outline-warning mt-3">смотреть комментарии</a></th>
-                {% endif %}
+            <tr>
+                <th colspan="2">Исполнитель </th>
+                <th colspan="4">внесено</th>
+                <th colspan="3">комментарии</th>
+            </tr>
+            <tr>
+                <td colspan="2">{{ note.performer }} </td>
+                <td colspan="4">
+                    {% if note.resultMeas == 'удовлетворительно' and not note.fixation %}
+                        <form method="post" >
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button class="btn btn-outline-warning" type="submit">Подтвердить</button>
+                        </form>
+                    {% elif note.resultMeas == 'удовлетворительно' and  note.fixation %}
+                        <a href="/CertifiedValueJ/kinematicviscosityvalues/" target="blank">  в журнал результатов </a>
+                    {% else %}
+                        нет АЗ
+                    {% endif %}
+                </td>
+                <td colspan="3">
+                    {% if not counter %}
+                        <a href="/attestationJ/{{ URL }}/attestation/{{ note.id }}/comments/"  class="btn btn-outline-warning mt-3">комментировать</a>
+                    {% elif counter %}
+                        <a href="/attestationJ/{{ URL }}/attestation/{{ note.id }}/comments/"  class="btn btn-outline-warning mt-3">смотреть </a>
+                    {% endif %}
+                </td>
             </tr>
 {# конец низа #}
-	</tbody>
-</table>
-</div>
+	        </tbody>
+        </table>
+    </div>
 {#конец  таблицы#}
-</div>
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    </div>
+
 {#кнопка печать #}
-   {#кнопка печать #}
-    <div class="noprint">
 
-    <a href="{% url 'export_kinematicviscosity_xls' note.pk %}"  class="btn btn-warning ml-5 mt-1">Распечатать</a>
+    <div class="noprint mt-20" style="text-align: center;">
 
-        {% if note.room %}
-    <a href="{% url 'kinematicviscosityprotocolbutton' note.pk %}"  class="btn btn-warning ml-5 mt-1">
-        Сформировать протокол испытаний</a>
-        {% else %}
-    <a href="{% url 'kinematicviscosityprotocolroom' note.pk %}"  class="btn btn-warning ml-5 mt-1">
-        Сформировать протокол испытаний</a>
-        {% endif %}
-    <br>
-    <br>
+        <a href="{% url 'export_kinematicviscosity_xls' note.pk %}"  class="btn btn-warning ml-5 mt-1">Распечатать</a>
+
+            {% if note.room %}
+        <a href="{% url 'kinematicviscosityprotocolbutton' note.pk %}"  class="btn btn-warning ml-5 mt-1">
+            Сформировать протокол испытаний</a>
+            {% else %}
+        <a href="{% url 'kinematicviscosityprotocolroom' note.pk %}"  class="btn btn-warning ml-5 mt-1">
+            Сформировать протокол испытаний</a>
+            {% endif %}
+        <br>
+        <br>
     </div>
 {% endblock %}
