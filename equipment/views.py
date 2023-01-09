@@ -1,31 +1,189 @@
-import http
+"""
+Модуль проекта LabJournal, приложения equipment.
+Приложение equipment это обширное приложение, включает все про лабораторное оборудование и лабораторные помещения
+Данный модуль views.py выводит формы для внесения данных пользователями в пользовательской части сайта.
+Список блоков:
+блок 1 - заглавные страницы с кнопками, структурирующие разделы. (Самая верхняя страница - записана в приложении main)
+блок 2 - списки: комнаты, поверители, персоны поверители, производители
+блок 3 - списки: Все оборудование, СИ, ИО, ВО, госреестры, характеристики ИО, характеристики ВО
+блок 4 - формы регистрации и обновления: комнаты, поверители, персоны поверители, производители, контакты поверителей
+блок 5 - микроклимат: журналы, формы регистрации
+блок 6 - регистрация госреестры, характеристики, ЛО - внесение, обновление
+блок 7 - все поисковики
+блок 8 - принадлежности к оборудованию
+блок 9 - внесение и обновление поверка и аттестация
+блок 10 - индивидуальные страницы СИ ИО ВО их поверок и аттестаций
+блок 11 - все комментарии ко всему
+блок 12 - вывод списков и форм  для метрологического обеспечения
+блок 13 - выгрузка данных в формате ексель
+"""
+
 
 import xlwt
 import pytils.translit
-from datetime import timedelta, date
+from datetime import date
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
-from django.db.models import Max, Q, Value, CharField
-from django.db.models.functions import Upper, Concat, Extract, ExtractYear
+from django.db.models import Max, Q, Value, CharField, Count, Sum
+from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template.context_processors import request
 from django.views import View
-from django.views.generic import ListView, TemplateView, FormView, CreateView, UpdateView
+from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from xlwt import Alignment, Borders
 
 from equipment.forms import*
 from equipment.models import*
+from formstandart import YearForm
 from functstandart import get_dateformat
 from users.models import Profile
 
 URL = 'equipment'
 now = date.today()
 
+# блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
+
+
+class MeteorologicalParametersView(TemplateView):
+    """Выводит страницу с кнопками для добавления помещений, микроклимата и вывода журнала микроклимата"""
+    template_name = URL + '/meteo.html'
+
+
+class MetrologicalEnsuringView(TemplateView):
+    """Выводит заглавную страницу для Этикетки о поверке/аттестации и списки на поверку/аттестацию """
+    template_name = URL + '/metro.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(MetrologicalEnsuringView, self).get_context_data(**kwargs)
+        context['form'] = DateForm()
+        return context
+
+
+class ReportsView(TemplateView):
+    """Выводит страницу с кнопками для вывода планов и отчётов по оборудованию"""
+    template_name = URL + '/reports.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ReportsView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['form'] = YearForm()
+        return context
+
+
+# блок 2 - списки: комнаты, поверители, персоны поверители, производители
+
+
+class VerificatorsView(ListView):
+    """ Выводит список всех организаций поверителей """
+    model = Verificators
+    template_name = 'main/plainlist.html'
+    context_object_name = 'objects'
+
+
+class VerificatorsPersonsView(ListView):
+    """ Выводит список всех сотрудников поверителей """
+    model = VerificatorPerson
+    template_name = 'equipment/verpersonlist.html'
+    context_object_name = 'objects'
+
+
+class ManufacturerView(ListView):
+    """ Выводит список всех производителей """
+    model = Manufacturer
+    template_name = URL + '/manufacturerlist.html'
+    context_object_name = 'objects'
+    ordering = ['companyName']
+    paginate_by = 12
+
+
+# блок 3 - списки: Все оборудование, СИ, ИО, ВО, госреестры, характеристики ИО, характеристики ВО
+
+
+class EquipmentView(ListView):
+    """ Выводит список Всего ЛО """
+    model = Equipment
+    template_name = URL + '/equipmentlist.html'
+    context_object_name = 'objects'
+    ordering = ['exnumber']
+    paginate_by = 12
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(EquipmentView, self).get_context_data(**kwargs)
+        context['company'] = CompanyCard.objects.get(pk=1).name
+        return context
+
+
+class MeasurEquipmentCharaktersView(ListView):
+    """ Выводит список госреестров """
+    model = MeasurEquipmentCharakters
+    template_name = URL + '/measurequipmentcharacterslist.html'
+    context_object_name = 'objects'
+    ordering = ['reestr']
+    paginate_by = 12
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(MeasurEquipmentCharaktersView, self).get_context_data(**kwargs)
+        context['form'] = Searchreestrform()
+        return context
+
+
+class TestingEquipmentCharaktersView(ListView):
+    """ Выводит список характеристик ИО """
+    model = TestingEquipmentCharakters
+    template_name = URL + '/testingequipmentcharacterslist.html'
+    context_object_name = 'objects'
+    ordering = ['name']
+    paginate_by = 12
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TestingEquipmentCharaktersView, self).get_context_data(**kwargs)
+        context['form'] = Searchtestingform()
+        return context
+
+
+class MeasurEquipmentView(ListView):
+    """Выводит список средств измерений"""
+    template_name = URL + '/measureequipment.html'
+    context_object_name = 'objects'
+    ordering = ['charakters_name']
+    paginate_by = 12
+
+    def get_queryset(self):
+        queryset = MeasurEquipment.objects.exclude(equipment__status='С')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(MeasurEquipmentView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['form'] = SearchMEForm()
+        return context
+
+
+class TestingEquipmentView(ListView):
+    """ Выводит список испытательного оборудования """
+    template_name = URL + '/testingequipment.html'
+    context_object_name = 'objects'
+    ordering = ['charakters__name']
+    paginate_by = 12
+
+    def get_queryset(self):
+        queryset = TestingEquipment.objects.exclude(equipment__status='С')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(TestingEquipmentView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['form'] = SearchMEForm()
+        return context
+
+
+# блок 4 - формы регистрации и обновления: комнаты, поверители, персоны поверители, производители, контакты поверителей
+
 class ContactsVerregView(LoginRequiredMixin, CreateView):
-    """ выводит форму регистрации контактов поверителей"""
+    """ выводит форму добавления контактов поверителей"""
     form_class = ContactsVerForm
     template_name = 'equipment/personverreg.html'
 
@@ -47,151 +205,6 @@ class ContactsVerregView(LoginRequiredMixin, CreateView):
                 return redirect(f'/equipment/measureequipment/verification/{self.kwargs["str"]}')
             if order.equipment.kategory == 'ИО':
                 return redirect(f'/equipment/testingequipment/attestation/{self.kwargs["str"]}')
-
-
-# флаг1
-class SearchMustVerView(ListView):
-    """ выводит список СИ у которых дата заказа поверки совпадает с указанной либо раньше неё"""
-
-    template_name = URL + '/measureequipment.html'
-    context_object_name = 'objects'
-    ordering = ['charakters_name']
-
-    def get_context_data(self, **kwargs):
-        context = super(SearchMustVerView, self).get_context_data(**kwargs)
-        context['URL'] = URL
-        context['form'] = SearchMEForm()
-        return context
-
-    def get_queryset(self):
-        serdate = self.request.GET['date']
-        queryset_get = Verificationequipment.objects.filter(haveorder=False).\
-            select_related('equipmentSM').values('equipmentSM'). \
-            annotate(id_actual=Max('id')).values('id_actual')
-        b = list(queryset_get)
-        set = []
-        for i in b:
-            a = i.get('id_actual')
-            set.append(a)
-        queryset_get1 = Verificationequipment.objects.filter(id__in=set).\
-            filter(dateorder__lte=serdate).values('equipmentSM__id')
-        b = list(queryset_get1)
-        set1 = []
-        for i in b:
-            a = i.get('equipmentSM__id')
-            set1.append(a)
-        queryset = MeasurEquipment.objects.filter(id__in=set1).filter(equipment__status='Э')
-        return queryset
-
-class SearchNotVerView(ListView):
-    """ выводит список СИ у которых дата окончания поверки совпадает с указанной либо раньше неё"""
-
-    template_name = URL + '/measureequipment.html'
-    context_object_name = 'objects'
-    ordering = ['charakters_name']
-
-    def get_context_data(self, **kwargs):
-        context = super(SearchNotVerView, self).get_context_data(**kwargs)
-        context['URL'] = URL
-        context['form'] = SearchMEForm()
-        return context
-
-    def get_queryset(self):
-        serdate = self.request.GET['date']
-        queryset_get = Verificationequipment.objects.\
-            select_related('equipmentSM').values('equipmentSM'). \
-            annotate(id_actual=Max('id')).values('id_actual')
-        b = list(queryset_get)
-        set = []
-        for i in b:
-            a = i.get('id_actual')
-            set.append(a)
-        queryset_get1 = Verificationequipment.objects.filter(id__in=set).\
-            filter(datedead__lte=serdate).values('equipmentSM__id')
-        b = list(queryset_get1)
-        set1 = []
-        for i in b:
-            a = i.get('equipmentSM__id')
-            set1.append(a)
-        queryset = MeasurEquipment.objects.filter(id__in=set1).exclude(equipment__status='C')
-        return queryset
-
-
-class LastNewEquipmentView(ListView):
-    """ выводит список 10 приборов, которые были добавлены последними"""
-
-    template_name = URL + '/equipmentlist.html'
-    context_object_name = 'objects'
-    ordering = ['charakters_name']
-
-    def get_context_data(self, **kwargs):
-        context = super(LastNewEquipmentView, self).get_context_data(**kwargs)
-        context['URL'] = URL
-        return context
-
-    def get_queryset(self):
-        Total = Equipment.objects.count()
-        queryset = Equipment.objects.filter()[Total-10:Total]
-        return queryset
-
-
-class SearchMustOrderView(ListView):
-    """ выводит список СИ у которых месяц заказа поверки совпадает с указанным либо раньше него"""
-
-    template_name = URL + '/measureequipment.html'
-    context_object_name = 'objects'
-    ordering = ['charakters_name']
-
-    def get_context_data(self, **kwargs):
-        context = super(SearchMustOrderView, self).get_context_data(**kwargs)
-        context['URL'] = URL
-        context['form'] = SearchMEForm()
-        return context
-
-    def get_queryset(self):
-        serdate = self.request.GET['date']
-        queryset_get = Verificationequipment.objects.filter(haveorder=False).\
-            select_related('equipmentSM').values('equipmentSM'). \
-            annotate(id_actual=Max('id')).values('id_actual')
-        b = list(queryset_get)
-        set = []
-        for i in b:
-            a = i.get('id_actual')
-            set.append(a)
-        queryset_get1 = Verificationequipment.objects.filter(id__in=set).\
-            filter(dateordernew__lte=serdate).values('equipmentSM__id')
-        b = list(queryset_get1)
-        set1 = []
-        for i in b:
-            a = i.get('equipmentSM__id')
-            set1.append(a)
-        queryset = MeasurEquipment.objects.filter(id__in=set1).filter(equipment__status='Э')
-        return queryset
-
-
-class MeteorologicalParametersView(TemplateView):
-    """ Представление, которое выводит формы для метеопараметров """
-    template_name = URL + '/meteo.html'
-
-
-class MetrologicalEnsuringView(TemplateView):
-    """выводит заглавную страницу для вывода данных по поверке и аттестации, списков в ексель и пр """
-    template_name = URL + '/metro.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(MetrologicalEnsuringView, self).get_context_data(**kwargs)
-        context['form'] = DateForm()
-        return context
-
-
-class VerificationLabelsView(TemplateView):
-    """выводит форму для ввода внутренних номеров для распечатки этикеток о метрологическом обслуживании приборов """
-    template_name = URL + '/labels.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(VerificationLabelsView, self).get_context_data(**kwargs)
-        context['form'] = LabelEquipmentform()
-        return context
 
 
 class RoomsCreateView(SuccessMessageMixin, CreateView):
@@ -233,488 +246,6 @@ class VerificatorPersonCreationView(SuccessMessageMixin, CreateView):
         return context
 
 
-class ManufacturerRegView(SuccessMessageMixin, CreateView):
-    """ выводит форму добавления производителя """
-    template_name = URL + '/reg.html'
-    form_class = ManufacturerCreateForm
-    success_url = '/equipment/manufacturerlist/'
-    success_message = "Производитель успешно добавлен"
-
-    def get_context_data(self, **kwargs):
-        context = super(ManufacturerRegView, self).get_context_data(**kwargs)
-        context['title'] = 'Добавить производителя ЛО'
-        return context
-
-
-class MeteorologicalParametersCreateView(SuccessMessageMixin, CreateView):
-    """ выводит форму добавления метеопараметров """
-    template_name = URL + '/reg.html'
-    form_class = MeteorologicalParametersRegForm
-    success_url = '/equipment/meteo/'
-    success_message = "Условия окружающей среды успешно добавлены"
-
-    def get_context_data(self, **kwargs):
-        context = super(MeteorologicalParametersCreateView, self).get_context_data(**kwargs)
-        context['title'] = 'Добавить условия окружающей среды'
-        return context
-
-
-class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
-    """ выводит форму внесения госреестра. """
-    template_name = URL + '/reg.html'
-    form_class = MeasurEquipmentCharaktersCreateForm
-    success_url = '/equipment/measurequipmentcharacterslist/'
-    success_message = "Госреестр успешно добавлен"
-
-    def get_context_data(self, **kwargs):
-        context = super(MeasurEquipmentCharaktersRegView, self).get_context_data(**kwargs)
-        context['title'] = 'Добавить госреестр'
-        context['dopin'] = 'equipment/measurequipmentcharacterslist'
-        return context
-
-def MeasurEquipmentCharaktersUpdateView(request, str):
-    """выводит форму для обновления данных о госреестре"""
-    if request.method == "POST":
-        form = MeasurEquipmentCharaktersCreateForm(request.POST,  instance=MeasurEquipmentCharakters.objects.get(pk=str))
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.save()
-            return redirect('measurequipmentcharacterslist')
-    else:
-        form = MeasurEquipmentCharaktersCreateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
-    data = {'form': form,
-            }
-    return render(request, 'equipment/reg.html', data)
-
-
-class TestingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
-    """ выводит форму внесения характеристик ИО. """
-    template_name = URL + '/reg.html'
-    form_class = TestingEquipmentCharaktersCreateForm
-    success_url = '/equipment/testingequipmentcharacterslist/'
-    success_message = "Характеристики ИО успешно добавлены"
-
-    def get_context_data(self, **kwargs):
-        context = super(TestingEquipmentCharaktersRegView, self).get_context_data(**kwargs)
-        context['title'] = 'Добавить характеристики ИО'
-        context['dopin'] = 'equipment/testingequipmentcharacterslist'
-        return context
-
-
-def TestingEquipmentCharaktersUpdateView(request, str):
-    """выводит форму для обновления данных о характеристиках ИО"""
-    if request.method == "POST":
-        form = TestingEquipmentCharaktersCreateForm(request.POST,  instance=TestingEquipmentCharakters.objects.get(pk=str))
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.save()
-            return redirect('testingequipmentcharacterslist')
-    else:
-        form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
-    data = {'form': form,
-            }
-    return render(request, 'equipment/reg.html', data)
-
-
-class MeasureequipmentregView(LoginRequiredMixin, CreateView):
-    """ выводит форму регистрации СИ на основе ЛО и Госреестра """
-    form_class = MeasurEquipmentCreateForm
-    template_name = 'equipment/reg.html'
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
-
-    def get_context_data(self, **kwargs):
-        context = super(MeasureequipmentregView, self).get_context_data(**kwargs)
-        context['title'] = 'Зарегистрировать СИ'
-        context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
-        return context
-
-    def form_valid(self, form):
-        user = User.objects.get(username=self.request.user)
-        if user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                order.save()
-                return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
-        else:
-            messages.success(request, f'Регистрировать может только ответственный за поверку приборов')
-            return redirect(reverse('measureequipmentreg', kwargs={'str': self.kwargs['str']}))
-
-
-class TestingequipmentregView(LoginRequiredMixin, CreateView):
-    """ выводит форму регистрации ИО на основе ЛО и характеристик ИО """
-    form_class = TestingEquipmentCreateForm
-    template_name = 'equipment/reg.html'
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
-
-    def get_context_data(self, **kwargs):
-        context = super(TestingequipmentregView, self).get_context_data(**kwargs)
-        context['title'] = 'Зарегистрировать ИО'
-        context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
-        return context
-
-    def form_valid(self, form):
-        user = User.objects.get(username=self.request.user)
-        if user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                order.save()
-                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
-        else:
-            messages.success(request, f'Регистрировать может только ответственный за метрологическое обеспечение приборов')
-            return redirect(reverse('testequipmentreg', kwargs={'str': self.kwargs['str']}))
-
-
-
-# class MeasureequipmentregView(View):
-#     """ выводит форму регистрации СИ на основе ЛО и Госреестра """
-#     def get(self, request, str):
-#         form = MeasurEquipmentCreateForm()
-#         title = 'Зарегистрировать СИ'
-#         dop = Equipment.objects.get(exnumber=str)
-#         data = {
-#                 'title': title,
-#                 'dop': dop,
-#                 'form': form,
-#                 }
-#         return render(request, 'equipment/reg.html', data)
-#     def post(self, request, str, *args, **kwargs):
-#         form = MeasurEquipmentCreateForm(request.POST)
-#         if request.user.is_superuser:
-#             if form.is_valid():
-#                 order = form.save(commit=False)
-#                 order.equipment = Equipment.objects.get(exnumber=str)
-#                 try:
-#                     order.save()
-#                 except:
-#                     messages.success(request, f'Такой прибор уже есть')
-#                 return redirect(f'/equipment/measureequipment/{str}')
-#         else:
-#             messages.success(request, f'Регистрировать может только ответственный за поверку приборов')
-#             return redirect(reverse('measureequipmentreg', kwargs={'str': str}))
-
-
-class EquipmentView(ListView):
-    """ Выводит список Всего ЛО """
-    model = Equipment
-    template_name = URL + '/equipmentlist.html'
-    context_object_name = 'objects'
-    ordering = ['exnumber']
-    paginate_by = 12
-
-
-class VerificatorsView(ListView):
-    """ Выводит список всех организаций поверителей """
-    model = Verificators
-    template_name = 'main/plainlist.html'
-    context_object_name = 'objects'
-
-
-class VerificatorsPersonsView(ListView):
-    """ Выводит список всех сотрудников поверителей """
-    model = VerificatorPerson
-    template_name = 'equipment/verpersonlist.html'
-    context_object_name = 'objects'
-
-
-class ManufacturerView(ListView):
-    """ Выводит список всех производителей """
-    model = Manufacturer
-    template_name = URL + '/manufacturerlist.html'
-    context_object_name = 'objects'
-    ordering = ['companyName']
-    paginate_by = 12
-
-
-class MeasurEquipmentCharaktersView(ListView):
-    """ Выводит список госреестров """
-    model = MeasurEquipmentCharakters
-    template_name = URL + '/measurequipmentcharacterslist.html'
-    context_object_name = 'objects'
-    ordering = ['reestr']
-    paginate_by = 12
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(MeasurEquipmentCharaktersView, self).get_context_data(**kwargs)
-        context['form'] = Searchreestrform()
-        return context
-
-
-class TestingEquipmentCharaktersView(ListView):
-    """ Выводит список характеристик ИО """
-    model = TestingEquipmentCharakters
-    template_name = URL + '/testingequipmentcharacterslist.html'
-    context_object_name = 'objects'
-    ordering = ['name']
-    paginate_by = 12
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(TestingEquipmentCharaktersView, self).get_context_data(**kwargs)
-        context['form'] = Searchtestingform()
-        return context
-
-
-class ReestrsearresView(TemplateView):
-    """ Представление, которое выводит результаты поиска по списку госреестров """
-
-    template_name = URL + '/measurequipmentcharacterslist.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ReestrsearresView, self).get_context_data(**kwargs)
-        name = self.request.GET['name']
-        reestr = self.request.GET['reestr']
-        if self.request.GET['name']:
-            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
-        reestr = self.request.GET['reestr']
-        if name and not reestr:
-            objects = MeasurEquipmentCharakters.objects.\
-            filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
-            context['objects'] = objects
-        if reestr and not name:
-            objects = MeasurEquipmentCharakters.objects.filter(reestr__icontains=reestr)
-            context['objects'] = objects
-        if reestr and  name:
-            objects = MeasurEquipmentCharakters.objects.filter(reestr__icontains=reestr).\
-                filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
-            context['objects'] = objects
-        context['form'] = Searchreestrform(initial={'name': name, 'reestr': reestr})
-        context['URL'] = URL
-        return context
-
-
-class ChromatoView(TemplateView):
-    """ Представление, которое выводит список принадлежностей для хроматографа """
-    template_name = URL + '/chromato.html'
-
-
-class MeasurEquipmentView(ListView):
-    """Выводит список средств измерений"""
-    template_name = URL + '/measureequipment.html'
-    context_object_name = 'objects'
-    ordering = ['charakters_name']
-    paginate_by = 12
-
-    def get_queryset(self):
-        queryset = MeasurEquipment.objects.exclude(equipment__status='С')
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super(MeasurEquipmentView, self).get_context_data(**kwargs)
-        context['URL'] = URL
-        context['form'] = SearchMEForm()
-        return context
-
-
-class TestingEquipmentView(ListView):
-    """ Выводит список испытательного оборудования """
-    template_name = URL + '/testingequipment.html'
-    context_object_name = 'objects'
-    ordering = ['charakters__name']
-    paginate_by = 12
-
-    def get_queryset(self):
-        queryset = TestingEquipment.objects.exclude(equipment__status='С')
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super(TestingEquipmentView, self).get_context_data(**kwargs)
-        context['URL'] = URL
-        context['form'] = SearchMEForm()
-        return context
-
-
-class HaveorderVerView(UpdateView):
-    """ выводит форму добавления инфо о заказе поверки """
-    template_name = 'equipment/reg.html'
-    form_class = OrderMEUdateForm
-
-    def get_object(self, queryset=None):
-        queryset_get = Verificationequipment.objects. \
-            select_related('equipmentSM').values('equipmentSM'). \
-            annotate(id_actual=Max('id')).values('id_actual')
-        b = list(queryset_get)
-        set = []
-        for i in b:
-            a = i.get('id_actual')
-            set.append(a)
-        q = Verificationequipment.objects.filter(id__in=set). \
-            get(equipmentSM_id=self.kwargs['pk'])
-        return q
-
-
-    def get_context_data(self, **kwargs):
-        context = super(HaveorderVerView, self).get_context_data(**kwargs)
-        context['title'] = "Заказана поверка или новое СИ"
-        return context
-
-    def form_valid(self, form):
-        user = User.objects.get(username=self.request.user)
-        if user.is_superuser:
-            order = form.save(commit=False)
-            order.save()
-            return redirect(f"/equipment/measureequipmentall/")
-        else:
-            return redirect(f"/equipment/measureequipmentall/")
-
-
-class HaveorderAttView(UpdateView):
-    """ выводит форму добавления инфо о заказе поверки """
-    template_name = 'equipment/reg.html'
-    form_class = OrderMEUdateForm
-
-    def get_object(self, queryset=None):
-        queryset_get = Attestationequipment.objects. \
-            select_related('equipmentSM').values('equipmentSM'). \
-            annotate(id_actual=Max('id')).values('id_actual')
-        b = list(queryset_get)
-        set = []
-        for i in b:
-            a = i.get('id_actual')
-            set.append(a)
-        q = Attestationequipment.objects.filter(id__in=set). \
-            get(equipmentSM_id=self.kwargs['pk'])
-        return q
-
-
-    def get_context_data(self, **kwargs):
-        context = super(HaveorderAttView, self).get_context_data(**kwargs)
-        context['title'] = "Заказана аттестация или новое ИО"
-        return context
-
-    def form_valid(self, form):
-        user = User.objects.get(username=self.request.user)
-        if user.is_superuser:
-            order = form.save(commit=False)
-            order.save()
-            return redirect(f"/equipment/testingequipmentall/")
-        else:
-            return redirect(f"/equipment/testingequipmentall/")
-
-
-class StrMeasurEquipmentView(View):
-    """ выводит отдельную страницу СИ """
-    def get(self, request, str):
-        note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
-        obj = get_object_or_404(MeasurEquipment, equipment__exnumber=str)
-        context = {
-            'obj': obj,
-            'note': note,
-        }
-        return render(request, URL + '/equipmentstr.html', context)
-
-
-class StrTestEquipmentView(View):
-    """ выводит отдельную страницу ИО """
-    def get(self, request, str):
-        note = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
-        obj = get_object_or_404(TestingEquipment, equipment__exnumber=str)
-        context = {
-            'obj': obj,
-            'note': note,
-        }
-        return render(request, URL + '/testingequipmentstr.html', context)
-
-
-class CommentsView(View):
-    """ выводит комментарии к оборудованию и форму для добавления комментариев """
-    form_class = NoteCreationForm
-    initial = {'key': 'value'}
-    template_name = 'equipment/comments.html'
-
-    def get(self, request, str):
-        note = CommentsEquipment.objects.filter(forNote__exnumber=str).order_by('-pk')
-        title = Equipment.objects.get(exnumber=str)
-        form = NoteCreationForm()
-        return render(request, 'equipment/comments.html', {'note': note, 'title': title, 'form': form, 'URL': URL})
-
-    def post(self, request, str, *args, **kwargs):
-        form = NoteCreationForm(request.POST, request.FILES)
-        if form.is_valid():
-            order = form.save(commit=False)
-            if request.user and not order.author:
-                order.author = request.user
-            if not request.user and order.author:
-                order.author = order.author
-            order.forNote = Equipment.objects.get(exnumber=str)
-            order.save()
-            messages.success(request, f'Запись добавлена!')
-            return redirect(order)
-
-
-def EquipmentUpdate(request, str):
-    """выводит форму для обновления разрешенных полей оборудования ответственному за оборудование"""
-    title = Equipment.objects.get(exnumber=str)
-    try:
-        get_pk = title.personchange_set.latest('pk').pk
-        person = Personchange.objects.get(pk=get_pk).person
-    except:
-        person = 1
-
-    if person == request.user or request.user.is_superuser:
-        if request.method == "POST":
-            form = EquipmentUpdateForm(request.POST, request.FILES,  instance=Equipment.objects.get(exnumber=str))
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.save()
-                if title.kategory == 'СИ':
-                    return redirect(reverse('measureequipment', kwargs={'str': str}))
-                if title.kategory == 'ИО':
-                    return redirect(reverse('testequipment', kwargs={'str': str}))
-                if title.kategory == 'ВО':
-                    return redirect(reverse('supequipment', kwargs={'str': str}))
-    if person != request.user and not request.user.is_superuser:
-        messages.success(request, f' Для внесения записей о приборе нажмите на кнопку ниже:'
-                                  f' "Внести запись о приборе и смотреть записи (для всех пользователей)"'
-                                  f'. Добавить особенности работы или поменять статус может только ответственный '
-                                  f'за прибор или поверку.')
-
-        if title.kategory == 'СИ':
-            return redirect(reverse('measureequipment', kwargs={'str': str}))
-        if title.kategory == 'ИО':
-            return redirect(reverse('testequipment', kwargs={'str': str}))
-        if title.kategory == 'ВО':
-            return redirect(reverse('supequipment', kwargs={'str': str}))
-    else:
-        form = EquipmentUpdateForm(instance=Equipment.objects.get(exnumber=str))
-    data = {'form': form, 'title': title
-            }
-    return render(request, 'equipment/individuality.html', data)
-
-
-def EquipmentMetrologyUpdate(request, str):
-    """выводит форму для обновления постоянных особенностей поверки"""
-    title = Equipment.objects.get(exnumber=str)
-    try:
-        get_pk = title.personchange_set.latest('pk').pk
-        person = Personchange.objects.get(pk=get_pk).person
-    except:
-        person = 1
-
-    if person == request.user or request.user.is_superuser:
-        if request.method == "POST":
-            form = MetrologyUpdateForm(request.POST, instance=Equipment.objects.get(exnumber=str))
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.save()
-                if title.kategory == 'СИ':
-                    return redirect(reverse('measureequipmentver', kwargs={'str': str}))
-                if title.kategory == 'ИО':
-                    return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
-    if person != request.user and not request.user.is_superuser:
-        messages.success(request, f'. поменять статус может только ответственный за поверку.')
-        return redirect(reverse('measureequipmentver', kwargs={'str': str}))
-    else:
-        form = MetrologyUpdateForm(instance=Equipment.objects.get(exnumber=str))
-    data = {'form': form, 'title': title
-            }
-    return render(request, 'equipment/metrologyindividuality.html', data)
-
-
 def VerificatorUpdate(request, str):
     """выводит форму для обновления данных о сотруднике поверителе"""
     if request.method == "POST":
@@ -730,209 +261,17 @@ def VerificatorUpdate(request, str):
     return render(request, 'equipment/personverreg.html', data)
 
 
-class VerificationequipmentView(View):
-    """ выводит историю поверок и форму для добавления комментария к истории поверок """
-    def get(self, request, str):
-        note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
-        note2 = ContactsVer.objects.filter(equipment__exnumber=str).order_by('-pk')
-        try:
-            strreg = note.latest('pk').equipmentSM.equipment.exnumber
-        except:
-            strreg = Equipment.objects.get(exnumber=str).exnumber
-        try:
-            calinterval = note.latest('pk').equipmentSM.charakters.calinterval
-        except:
-            calinterval = '-'
-        title = Equipment.objects.get(exnumber=str)
-        try:
-            dateorder = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).last().dateorder
-        except:
-            dateorder = 'не поверен'
-        now = date.today()
-        try:
-            comment = CommentsVerificationequipment.objects.filter(forNote__exnumber=str).last().note
-        except:
-            comment = ''
-        form = CommentsVerificationCreationForm(initial={'comment': comment})
-        data = {'note': note,
-                'note2': note2,
-                'title': title,
-                'calinterval': calinterval,
-                'now': now,
-                'dateorder': dateorder,
-                'form': form,
-                'comment': comment,
-                'strreg': strreg,
-                }
-        return render(request, 'equipment/verification.html', data)
-    def post(self, request, str, *args, **kwargs):
-        form = CommentsVerificationCreationForm(request.POST)
-        if request.user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.author = request.user
-                order.forNote = Equipment.objects.get(exnumber=str)
-                order.save()
-                return redirect(order)
-        else:
-            messages.success(request, f'Комментировать может только ответственный за поверку приборов')
-            return redirect(reverse('measureequipmentver', kwargs={'str': str}))
+class ManufacturerRegView(SuccessMessageMixin, CreateView):
+    """ выводит форму добавления производителя """
+    template_name = URL + '/reg.html'
+    form_class = ManufacturerCreateForm
+    success_url = '/equipment/manufacturerlist/'
+    success_message = "Производитель успешно добавлен"
 
-
-class AttestationequipmentView(View):
-    """ выводит историю аттестаций и форму для добавления комментария к истории аттестаций """
-    def get(self, request, str):
-        note = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
-        note2 = ContactsVer.objects.filter(equipment__exnumber=str).order_by('-pk')
-        try:
-            strreg = note.latest('pk').equipmentSM.equipment.exnumber
-        except:
-            strreg = Equipment.objects.get(exnumber=str).exnumber
-        try:
-            calinterval = note.latest('pk').equipmentSM.charakters.calinterval
-        except:
-            calinterval = '-'
-        title = Equipment.objects.get(exnumber=str)
-        try:
-            dateorder = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=str).last().dateorder
-        except:
-            dateorder = 'не аттестован'
-        now = date.today()
-        try:
-            comment = CommentsAttestationequipment.objects.filter(forNote__exnumber=str).last().note
-        except:
-            comment = ''
-        form = CommentsAttestationequipmentForm(initial={'comment': comment})
-        data = {'note': note,
-                'note2': note2,
-                'title': title,
-                'calinterval': calinterval,
-                'now': now,
-                'dateorder': dateorder,
-                'form': form,
-                'comment': comment,
-                'strreg': strreg,
-                }
-        return render(request, 'equipment/attestation.html', data)
-
-    def post(self, request, str, *args, **kwargs):
-        form = CommentsAttestationequipmentForm(request.POST)
-        if request.user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.author = request.user
-                order.forNote = Equipment.objects.get(exnumber=str)
-                order.save()
-                return redirect(order)
-        else:
-            messages.success(request, f'Комментировать может только ответственный за поверку приборов')
-            return redirect(reverse('testingequipmentattestation', kwargs={'str': str}))
-
-
-@login_required
-def VerificationReg(request, str):
-    """выводит форму для внесения сведений о поверке"""
-    title = Equipment.objects.get(exnumber=str)
-    if request.user.is_superuser:
-        if request.method == "POST":
-            form = VerificationRegForm(request.POST, request.FILES)
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipmentSM = MeasurEquipment.objects.get(equipment__exnumber=str)
-                order.save()
-                return redirect(order)
-    if not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
-        return redirect(reverse('measureequipmentver', kwargs={'str': str}))
-    else:
-        form = VerificationRegForm()
-    data = {
-        'form': form,
-        'title': title
-            }
-    return render(request, 'equipment/verificationreg.html', data)
-
-@login_required
-def AttestationReg(request, str):
-    """выводит форму для внесения сведений об аттестации"""
-    title = Equipment.objects.get(exnumber=str)
-    if request.user.is_superuser:
-        if request.method == "POST":
-            form = AttestationRegForm(request.POST, request.FILES)
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipmentSM = TestingEquipment.objects.get(equipment__exnumber=str)
-                order.save()
-                return redirect(order)
-    if not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
-        return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
-    else:
-        form = AttestationRegForm()
-    data = {
-        'form': form,
-        'title': title
-            }
-    return render(request, 'equipment/attestationreg.html', data)
-
-
-@login_required
-def EquipmentReg(request):
-    """выводит форму для регистрации  ЛО"""
-    if request.user.is_superuser:
-        if request.method == "POST":
-            form = EquipmentCreateForm(request.POST, request.FILES)
-            if form.is_valid():
-                order = form.save(commit=False)
-                try:
-                    a = Equipment.objects.filter(exnumber__startswith=order.exnumber).last().exnumber
-                    b = int(str(a)[-3::]) + 1
-                    c = str(b).rjust(3, '0')
-                    d = str(order.exnumber) + c
-                    order.exnumber = d
-                except:
-                    order.exnumber = str(order.exnumber) + '001'
-                order.save()
-                if order.kategory == 'СИ':
-                    return redirect(f'/equipment/measureequipmentreg/{order.exnumber}/')
-                if order.kategory == 'ИО':
-                    return redirect(f'/equipment/testequipmentreg/{order.exnumber}/')
-                else:
-                    return redirect('equipmentlist')
-    if not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
-        return redirect('equipmentreg')
-    else:
-        form = EquipmentCreateForm()
-        form2 = ManufacturerCreateForm(request.POST)
-        # form3 = VerificatorPersonCreationForm(request.POST)
-        content = {
-            'form': form,
-                }
-        return render(request, 'equipment/equipmentreg.html', content)
-
-
-class DocsConsView(View):
-    """ выводит список принадлежностей прибора и форму для добавления принадлежности """
-    def get(self, request, str):
-        template_name = 'equipment/docsconslist.html'
-        form = DocsConsCreateForm()
-        title = Equipment.objects.get(exnumber=str)
-        objects = DocsCons.objects.filter(equipment__exnumber=str).order_by('pk')
-        context = {
-                'title': title,
-                'form': form,
-                'objects': objects,
-                }
-        return render(request, template_name, context)
-
-    def post(self, request, str, *args, **kwargs):
-        form = DocsConsCreateForm(request.POST)
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.equipment = Equipment.objects.get(exnumber=str)
-            order.save()
-            return redirect(f'/equipment/docsreg/{str}')
+    def get_context_data(self, **kwargs):
+        context = super(ManufacturerRegView, self).get_context_data(**kwargs)
+        context['title'] = 'Добавить производителя ЛО'
+        return context
 
 
 class PersonchangeFormView(View):
@@ -994,6 +333,243 @@ class RoomschangeFormView(View):
         else:
             messages.success(request, f'Раздел для ответственного за поверку приборов')
             return redirect(f'/equipment/measureequipment/{str}')
+
+
+# блок 5 - микроклимат: журналы, формы регистрации
+class MeteorologicalParametersCreateView(SuccessMessageMixin, CreateView):
+    """ выводит форму добавления метеопараметров """
+    template_name = URL + '/reg.html'
+    form_class = MeteorologicalParametersRegForm
+    success_url = '/equipment/meteo/'
+    success_message = "Условия окружающей среды успешно добавлены"
+
+    def get_context_data(self, **kwargs):
+        context = super(MeteorologicalParametersCreateView, self).get_context_data(**kwargs)
+        context['title'] = 'Добавить условия окружающей среды'
+        return context
+
+
+# блок 6 - регистрация госреестры, характеристики, ЛО - внесение, обновление
+
+
+@login_required
+def EquipmentReg(request):
+    """выводит форму для регистрации  ЛО"""
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = EquipmentCreateForm(request.POST, request.FILES)
+            if form.is_valid():
+                order = form.save(commit=False)
+                try:
+                    a = Equipment.objects.filter(exnumber__startswith=order.exnumber).last().exnumber
+                    b = int(str(a)[-3::]) + 1
+                    c = str(b).rjust(3, '0')
+                    d = str(order.exnumber) + c
+                    order.exnumber = d
+                except:
+                    order.exnumber = str(order.exnumber) + '001'
+                order.save()
+                if order.kategory == 'СИ':
+                    return redirect(f'/equipment/measureequipmentreg/{order.exnumber}/')
+                if order.kategory == 'ИО':
+                    return redirect(f'/equipment/testequipmentreg/{order.exnumber}/')
+                else:
+                    return redirect('equipmentlist')
+    if not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect('equipmentreg')
+    else:
+        form = EquipmentCreateForm()
+        form2 = ManufacturerCreateForm(request.POST)
+        # form3 = VerificatorPersonCreationForm(request.POST)
+        content = {
+            'form': form,
+                }
+        return render(request, 'equipment/equipmentreg.html', content)
+
+
+class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
+    """ выводит форму внесения госреестра. """
+    template_name = URL + '/reg.html'
+    form_class = MeasurEquipmentCharaktersCreateForm
+    success_url = '/equipment/measurequipmentcharacterslist/'
+    success_message = "Госреестр успешно добавлен"
+
+    def get_context_data(self, **kwargs):
+        context = super(MeasurEquipmentCharaktersRegView, self).get_context_data(**kwargs)
+        context['title'] = 'Добавить госреестр'
+        context['dopin'] = 'equipment/measurequipmentcharacterslist'
+        return context
+
+
+def MeasurEquipmentCharaktersUpdateView(request, str):
+    """выводит форму для обновления данных о госреестре"""
+    if request.method == "POST":
+        form = MeasurEquipmentCharaktersCreateForm(request.POST,
+                                                   instance=MeasurEquipmentCharakters.objects.get(pk=str))
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.save()
+            return redirect('measurequipmentcharacterslist')
+    else:
+        form = MeasurEquipmentCharaktersCreateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
+    data = {'form': form,
+            }
+    return render(request, 'equipment/reg.html', data)
+
+
+class TestingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
+    """ выводит форму внесения характеристик ИО. """
+    template_name = URL + '/reg.html'
+    form_class = TestingEquipmentCharaktersCreateForm
+    success_url = '/equipment/testingequipmentcharacterslist/'
+    success_message = "Характеристики ИО успешно добавлены"
+
+    def get_context_data(self, **kwargs):
+        context = super(TestingEquipmentCharaktersRegView, self).get_context_data(**kwargs)
+        context['title'] = 'Добавить характеристики ИО'
+        context['dopin'] = 'equipment/testingequipmentcharacterslist'
+        return context
+
+
+def TestingEquipmentCharaktersUpdateView(request, str):
+    """выводит форму для обновления данных о характеристиках ИО"""
+    if request.method == "POST":
+        form = TestingEquipmentCharaktersCreateForm(request.POST,
+                                                    instance=TestingEquipmentCharakters.objects.get(pk=str))
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.save()
+            return redirect('testingequipmentcharacterslist')
+    else:
+        form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
+    data = {'form': form,
+            }
+    return render(request, 'equipment/reg.html', data)
+
+
+class MeasureequipmentregView(LoginRequiredMixin, CreateView):
+    """ выводит форму регистрации СИ на основе ЛО и Госреестра """
+    form_class = MeasurEquipmentCreateForm
+    template_name = 'equipment/reg.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
+
+    def get_context_data(self, **kwargs):
+        context = super(MeasureequipmentregView, self).get_context_data(**kwargs)
+        context['title'] = 'Зарегистрировать СИ'
+        context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
+        return context
+
+    def form_valid(self, form):
+        user = User.objects.get(username=self.request.user)
+        if user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
+                order.save()
+                return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
+        else:
+            messages.success(request, f'Регистрировать может только ответственный за поверку приборов')
+            return redirect(reverse('measureequipmentreg', kwargs={'str': self.kwargs['str']}))
+
+
+class TestingequipmentregView(LoginRequiredMixin, CreateView):
+    """ выводит форму регистрации ИО на основе ЛО и характеристик ИО """
+    form_class = TestingEquipmentCreateForm
+    template_name = 'equipment/reg.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
+
+    def get_context_data(self, **kwargs):
+        context = super(TestingequipmentregView, self).get_context_data(**kwargs)
+        context['title'] = 'Зарегистрировать ИО'
+        context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
+        return context
+
+    def form_valid(self, form):
+        user = User.objects.get(username=self.request.user)
+        if user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
+                order.save()
+                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+        else:
+            messages.success(request, f'Регистрировать может только ответственный за метрологическое '
+                                      f'обеспечение приборов')
+            return redirect(reverse('testequipmentreg', kwargs={'str': self.kwargs['str']}))
+
+
+def EquipmentUpdate(request, str):
+    """выводит форму для обновления разрешенных полей оборудования ответственному за оборудование"""
+    title = Equipment.objects.get(exnumber=str)
+    try:
+        get_pk = title.personchange_set.latest('pk').pk
+        person = Personchange.objects.get(pk=get_pk).person
+    except:
+        person = 1
+    if person == request.user or request.user.is_superuser:
+        if request.method == "POST":
+            form = EquipmentUpdateForm(request.POST, request.FILES,  instance=Equipment.objects.get(exnumber=str))
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                if title.kategory == 'СИ':
+                    return redirect(reverse('measureequipment', kwargs={'str': str}))
+                if title.kategory == 'ИО':
+                    return redirect(reverse('testequipment', kwargs={'str': str}))
+                if title.kategory == 'ВО':
+                    return redirect(reverse('supequipment', kwargs={'str': str}))
+    if person != request.user and not request.user.is_superuser:
+        messages.success(request, f' Для внесения записей о приборе нажмите на кнопку ниже:'
+                                  f' "Внести запись о приборе и смотреть записи (для всех пользователей)"'
+                                  f'. Добавить особенности работы или поменять статус может только ответственный '
+                                  f'за прибор или поверку.')
+
+        if title.kategory == 'СИ':
+            return redirect(reverse('measureequipment', kwargs={'str': str}))
+        if title.kategory == 'ИО':
+            return redirect(reverse('testequipment', kwargs={'str': str}))
+        if title.kategory == 'ВО':
+            return redirect(reverse('supequipment', kwargs={'str': str}))
+    else:
+        form = EquipmentUpdateForm(instance=Equipment.objects.get(exnumber=str))
+    data = {'form': form, 'title': title
+            }
+    return render(request, 'equipment/individuality.html', data)
+
+
+# блок 7 - все поисковики
+
+class ReestrsearresView(TemplateView):
+    """ Представление, которое выводит результаты поиска по списку госреестров """
+
+    template_name = URL + '/measurequipmentcharacterslist.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ReestrsearresView, self).get_context_data(**kwargs)
+        name = self.request.GET['name']
+        reestr = self.request.GET['reestr']
+        if self.request.GET['name']:
+            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
+        reestr = self.request.GET['reestr']
+        if name and not reestr:
+            objects = MeasurEquipmentCharakters.objects.\
+            filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
+            context['objects'] = objects
+        if reestr and not name:
+            objects = MeasurEquipmentCharakters.objects.filter(reestr__icontains=reestr)
+            context['objects'] = objects
+        if reestr and  name:
+            objects = MeasurEquipmentCharakters.objects.filter(reestr__icontains=reestr).\
+                filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
+            context['objects'] = objects
+        context['form'] = Searchreestrform(initial={'name': name, 'reestr': reestr})
+        context['URL'] = URL
+        return context
 
 
 class SearchResultMeasurEquipmentView(TemplateView):
@@ -1203,12 +779,477 @@ class SearchResultTestingEquipmentView(TemplateView):
         return context
 
 
+# блок 8  принадлежности к оборудованию
+
+
+class DocsConsView(View):
+    """ выводит список принадлежностей прибора и форму для добавления принадлежности """
+    def get(self, request, str):
+        template_name = 'equipment/docsconslist.html'
+        form = DocsConsCreateForm()
+        title = Equipment.objects.get(exnumber=str)
+        objects = DocsCons.objects.filter(equipment__exnumber=str).order_by('pk')
+        context = {
+                'title': title,
+                'form': form,
+                'objects': objects,
+                }
+        return render(request, template_name, context)
+
+    def post(self, request, str, *args, **kwargs):
+        form = DocsConsCreateForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.equipment = Equipment.objects.get(exnumber=str)
+            order.save()
+            return redirect(f'/equipment/docsreg/{str}')
+
+
+class ChromatoView(TemplateView):
+    """ Представление, которое выводит список принадлежностей для хроматографа """
+    template_name = URL + '/chromato.html'
+
+
+# блок 9 - внесение и обновление поверка и аттестация
+
+
+@login_required
+def VerificationReg(request, str):
+    """выводит форму для внесения сведений о поверке"""
+    title = Equipment.objects.get(exnumber=str)
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = VerificationRegForm(request.POST, request.FILES)
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipmentSM = MeasurEquipment.objects.get(equipment__exnumber=str)
+                order.save()
+                return redirect(order)
+    if not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect(reverse('measureequipmentver', kwargs={'str': str}))
+    else:
+        form = VerificationRegForm()
+    data = {
+        'form': form,
+        'title': title
+    }
+    return render(request, 'equipment/verificationreg.html', data)
+
+
+@login_required
+def AttestationReg(request, str):
+    """выводит форму для внесения сведений об аттестации"""
+    title = Equipment.objects.get(exnumber=str)
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = AttestationRegForm(request.POST, request.FILES)
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipmentSM = TestingEquipment.objects.get(equipment__exnumber=str)
+                order.save()
+                return redirect(order)
+    if not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
+    else:
+        form = AttestationRegForm()
+    data = {
+        'form': form,
+        'title': title
+    }
+    return render(request, 'equipment/attestationreg.html', data)
+
+
+def EquipmentMetrologyUpdate(request, str):
+    """выводит форму для обновления постоянных особенностей поверки"""
+    title = Equipment.objects.get(exnumber=str)
+    try:
+        get_pk = title.personchange_set.latest('pk').pk
+        person = Personchange.objects.get(pk=get_pk).person
+    except:
+        person = 1
+
+    if person == request.user or request.user.is_superuser:
+        if request.method == "POST":
+            form = MetrologyUpdateForm(request.POST, instance=Equipment.objects.get(exnumber=str))
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                if title.kategory == 'СИ':
+                    return redirect(reverse('measureequipmentver', kwargs={'str': str}))
+                if title.kategory == 'ИО':
+                    return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
+    if person != request.user and not request.user.is_superuser:
+        messages.success(request, f'. поменять статус может только ответственный за поверку.')
+        return redirect(reverse('measureequipmentver', kwargs={'str': str}))
+    else:
+        form = MetrologyUpdateForm(instance=Equipment.objects.get(exnumber=str))
+    data = {'form': form, 'title': title
+            }
+    return render(request, 'equipment/metrologyindividuality.html', data)
+
+
+class VerificationequipmentView(View):
+    """ выводит историю поверок и форму для добавления комментария к истории поверок """
+
+    def get(self, request, str):
+        note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
+        note2 = ContactsVer.objects.filter(equipment__exnumber=str).order_by('-pk')
+        try:
+            strreg = note.latest('pk').equipmentSM.equipment.exnumber
+        except:
+            strreg = Equipment.objects.get(exnumber=str).exnumber
+        try:
+            calinterval = note.latest('pk').equipmentSM.charakters.calinterval
+        except:
+            calinterval = '-'
+        title = Equipment.objects.get(exnumber=str)
+        try:
+            dateorder = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).last().dateorder
+        except:
+            dateorder = 'не поверен'
+        now = date.today()
+        try:
+            comment = CommentsVerificationequipment.objects.filter(forNote__exnumber=str).last().note
+        except:
+            comment = ''
+        form = CommentsVerificationCreationForm(initial={'comment': comment})
+        data = {'note': note,
+                'note2': note2,
+                'title': title,
+                'calinterval': calinterval,
+                'now': now,
+                'dateorder': dateorder,
+                'form': form,
+                'comment': comment,
+                'strreg': strreg,
+                }
+        return render(request, 'equipment/verification.html', data)
+
+    def post(self, request, str, *args, **kwargs):
+        form = CommentsVerificationCreationForm(request.POST)
+        if request.user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.author = request.user
+                order.forNote = Equipment.objects.get(exnumber=str)
+                order.save()
+                return redirect(order)
+        else:
+            messages.success(request, f'Комментировать может только ответственный за поверку приборов')
+            return redirect(reverse('measureequipmentver', kwargs={'str': str}))
+
+
+class AttestationequipmentView(View):
+    """ выводит историю аттестаций и форму для добавления комментария к истории аттестаций """
+
+    def get(self, request, str):
+        note = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
+        note2 = ContactsVer.objects.filter(equipment__exnumber=str).order_by('-pk')
+        try:
+            strreg = note.latest('pk').equipmentSM.equipment.exnumber
+        except:
+            strreg = Equipment.objects.get(exnumber=str).exnumber
+        try:
+            calinterval = note.latest('pk').equipmentSM.charakters.calinterval
+        except:
+            calinterval = '-'
+        title = Equipment.objects.get(exnumber=str)
+        try:
+            dateorder = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=str).last().dateorder
+        except:
+            dateorder = 'не аттестован'
+        now = date.today()
+        try:
+            comment = CommentsAttestationequipment.objects.filter(forNote__exnumber=str).last().note
+        except:
+            comment = ''
+        form = CommentsAttestationequipmentForm(initial={'comment': comment})
+        data = {'note': note,
+                'note2': note2,
+                'title': title,
+                'calinterval': calinterval,
+                'now': now,
+                'dateorder': dateorder,
+                'form': form,
+                'comment': comment,
+                'strreg': strreg,
+                }
+        return render(request, 'equipment/attestation.html', data)
+
+    def post(self, request, str, *args, **kwargs):
+        form = CommentsAttestationequipmentForm(request.POST)
+        if request.user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.author = request.user
+                order.forNote = Equipment.objects.get(exnumber=str)
+                order.save()
+                return redirect(order)
+        else:
+            messages.success(request, f'Комментировать может только ответственный за поверку приборов')
+            return redirect(reverse('testingequipmentattestation', kwargs={'str': str}))
+
+
+class HaveorderVerView(UpdateView):
+    """ выводит форму добавления инфо о заказе поверки """
+    template_name = 'equipment/reg.html'
+    form_class = OrderMEUdateForm
+
+    def get_object(self, queryset=None):
+        queryset_get = Verificationequipment.objects. \
+            select_related('equipmentSM').values('equipmentSM'). \
+            annotate(id_actual=Max('id')).values('id_actual')
+        b = list(queryset_get)
+        set = []
+        for i in b:
+            a = i.get('id_actual')
+            set.append(a)
+        q = Verificationequipment.objects.filter(id__in=set). \
+            get(equipmentSM_id=self.kwargs['pk'])
+        return q
+
+
+    def get_context_data(self, **kwargs):
+        context = super(HaveorderVerView, self).get_context_data(**kwargs)
+        context['title'] = "Заказана поверка или новое СИ"
+        return context
+
+    def form_valid(self, form):
+        user = User.objects.get(username=self.request.user)
+        if user.is_superuser:
+            order = form.save(commit=False)
+            order.save()
+            return redirect(f"/equipment/measureequipmentall/")
+        else:
+            return redirect(f"/equipment/measureequipmentall/")
+
+
+class HaveorderAttView(UpdateView):
+    """ выводит форму добавления инфо о заказе аттестации """
+    template_name = 'equipment/reg.html'
+    form_class = OrderMEUdateForm
+
+    def get_object(self, queryset=None):
+        queryset_get = Attestationequipment.objects. \
+            select_related('equipmentSM').values('equipmentSM'). \
+            annotate(id_actual=Max('id')).values('id_actual')
+        b = list(queryset_get)
+        set = []
+        for i in b:
+            a = i.get('id_actual')
+            set.append(a)
+        q = Attestationequipment.objects.filter(id__in=set). \
+            get(equipmentSM_id=self.kwargs['pk'])
+        return q
+
+    def get_context_data(self, **kwargs):
+        context = super(HaveorderAttView, self).get_context_data(**kwargs)
+        context['title'] = "Заказана аттестация или новое ИО"
+        return context
+
+    def form_valid(self, form):
+        user = User.objects.get(username=self.request.user)
+        if user.is_superuser:
+            order = form.save(commit=False)
+            order.save()
+            return redirect(f"/equipment/testingequipmentall/")
+        else:
+            return redirect(f"/equipment/testingequipmentall/")
+
+# блок 10 - индивидуальные страницы СИ ИО ВО их поверок и аттестаций
+
+
+class StrMeasurEquipmentView(View):
+    """ выводит отдельную страницу СИ """
+    def get(self, request, str):
+        note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
+        obj = get_object_or_404(MeasurEquipment, equipment__exnumber=str)
+        context = {
+            'obj': obj,
+            'note': note,
+        }
+        return render(request, URL + '/equipmentstr.html', context)
+
+
+class StrTestEquipmentView(View):
+    """ выводит отдельную страницу ИО """
+    def get(self, request, str):
+        note = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
+        obj = get_object_or_404(TestingEquipment, equipment__exnumber=str)
+        context = {
+            'obj': obj,
+            'note': note,
+        }
+        return render(request, URL + '/testingequipmentstr.html', context)
+
+
+# блок 11 - все комментарии ко всему
+
+class CommentsView(View):
+    """ выводит комментарии к оборудованию и форму для добавления комментариев """
+    form_class = NoteCreationForm
+    initial = {'key': 'value'}
+    template_name = 'equipment/comments.html'
+
+    def get(self, request, str):
+        note = CommentsEquipment.objects.filter(forNote__exnumber=str).order_by('-pk')
+        title = Equipment.objects.get(exnumber=str)
+        form = NoteCreationForm()
+        return render(request, 'equipment/comments.html', {'note': note, 'title': title, 'form': form, 'URL': URL})
+
+    def post(self, request, str, *args, **kwargs):
+        form = NoteCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            order = form.save(commit=False)
+            if request.user and not order.author:
+                order.author = request.user
+            if not request.user and order.author:
+                order.author = order.author
+            order.forNote = Equipment.objects.get(exnumber=str)
+            order.save()
+            messages.success(request, f'Запись добавлена!')
+            return redirect(order)
+
+
+# блок 12 - вывод списков и форм  для метрологического обеспечения
+class SearchMustVerView(ListView):
+    """ выводит список СИ у которых дата заказа поверки совпадает с указанной либо раньше неё"""
+
+    template_name = URL + '/measureequipment.html'
+    context_object_name = 'objects'
+    ordering = ['charakters_name']
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchMustVerView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['form'] = SearchMEForm()
+        return context
+
+    def get_queryset(self):
+        serdate = self.request.GET['date']
+        queryset_get = Verificationequipment.objects.filter(haveorder=False).\
+            select_related('equipmentSM').values('equipmentSM'). \
+            annotate(id_actual=Max('id')).values('id_actual')
+        b = list(queryset_get)
+        set = []
+        for i in b:
+            a = i.get('id_actual')
+            set.append(a)
+        queryset_get1 = Verificationequipment.objects.filter(id__in=set).\
+            filter(dateorder__lte=serdate).values('equipmentSM__id')
+        b = list(queryset_get1)
+        set1 = []
+        for i in b:
+            a = i.get('equipmentSM__id')
+            set1.append(a)
+        queryset = MeasurEquipment.objects.filter(id__in=set1).filter(equipment__status='Э')
+        return queryset
+
+
+class SearchNotVerView(ListView):
+    """ выводит список СИ у которых дата окончания поверки совпадает с указанной либо раньше неё"""
+
+    template_name = URL + '/measureequipment.html'
+    context_object_name = 'objects'
+    ordering = ['charakters_name']
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchNotVerView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['form'] = SearchMEForm()
+        return context
+
+    def get_queryset(self):
+        serdate = self.request.GET['date']
+        queryset_get = Verificationequipment.objects.\
+            select_related('equipmentSM').values('equipmentSM'). \
+            annotate(id_actual=Max('id')).values('id_actual')
+        b = list(queryset_get)
+        set = []
+        for i in b:
+            a = i.get('id_actual')
+            set.append(a)
+        queryset_get1 = Verificationequipment.objects.filter(id__in=set).\
+            filter(datedead__lte=serdate).values('equipmentSM__id')
+        b = list(queryset_get1)
+        set1 = []
+        for i in b:
+            a = i.get('equipmentSM__id')
+            set1.append(a)
+        queryset = MeasurEquipment.objects.filter(id__in=set1).exclude(equipment__status='C')
+        return queryset
+
+
+class LastNewEquipmentView(ListView):
+    """ выводит список 10 приборов, которые были добавлены последними"""
+
+    template_name = URL + '/equipmentlist.html'
+    context_object_name = 'objects'
+    ordering = ['charakters_name']
+
+    def get_context_data(self, **kwargs):
+        context = super(LastNewEquipmentView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        return context
+
+    def get_queryset(self):
+        Total = Equipment.objects.count()
+        queryset = Equipment.objects.filter()[Total-10:Total]
+        return queryset
+
+
+class SearchMustOrderView(ListView):
+    """ выводит список СИ у которых месяц заказа поверки совпадает с указанным либо раньше него"""
+
+    template_name = URL + '/measureequipment.html'
+    context_object_name = 'objects'
+    ordering = ['charakters_name']
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchMustOrderView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['form'] = SearchMEForm()
+        return context
+
+    def get_queryset(self):
+        serdate = self.request.GET['date']
+        queryset_get = Verificationequipment.objects.filter(haveorder=False).\
+            select_related('equipmentSM').values('equipmentSM'). \
+            annotate(id_actual=Max('id')).values('id_actual')
+        b = list(queryset_get)
+        set = []
+        for i in b:
+            a = i.get('id_actual')
+            set.append(a)
+        queryset_get1 = Verificationequipment.objects.filter(id__in=set).\
+            filter(dateordernew__lte=serdate).values('equipmentSM__id')
+        b = list(queryset_get1)
+        set1 = []
+        for i in b:
+            a = i.get('equipmentSM__id')
+            set1.append(a)
+        queryset = MeasurEquipment.objects.filter(id__in=set1).filter(equipment__status='Э')
+        return queryset
+
+
+class VerificationLabelsView(TemplateView):
+    """выводит форму для ввода внутренних номеров для распечатки этикеток о метрологическом обслуживании приборов """
+    template_name = URL + '/labels.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(VerificationLabelsView, self).get_context_data(**kwargs)
+        context['form'] = LabelEquipmentform()
+        return context
+
+
 # -------------------
 
-# блок выгрузок данных в формате ексель
+# блок 13 - выгрузка данных в формате ексель
 
 
-# запросы к БД для выгрузо списков СИ
+# запросы к БД для выгрузок списков СИ
 get_id_room = Roomschange.objects.select_related('equipment').values('equipment'). \
         annotate(id_actual=Max('id')).values('id_actual')
 list_ = list(get_id_room)
@@ -1237,15 +1278,8 @@ setatt = []
 for n in list_:
     setatt.append(n.get('id_actual'))
 
-# get_id_comver = CommentsVerificationequipment.objects.select_related('forNote').values('forNote'). \
-#     annotate(id_actual=Max('id')).values('id_actual')
-# list_ = list(get_id_comver)
-# setcomver = []
-# for n in list_:
-#     setcomver.append(n.get('id_actual'))
-# setcomver = setcomver.append(None)
 
-# флаг2
+
 def export_mustver_xls(request):
     """представление для выгрузки СИ требующих поверки"""
     # выборка из ексель по поиску по дате
@@ -1359,205 +1393,6 @@ def export_mustver_xls(request):
             ws.write(row_num, col_num, row[col_num], style20)
             ws.row(row_num).height_mismatch = True
             ws.row(row_num).height = 1500
-
-    wb.save(response)
-    return response
-
-# флаг график поверки и аттестации
-def export_me_xls(request):
-    '''представление для выгрузки графика поверки и аттестации'''
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="equipment.xls"'
-
-    wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('График поверки СИ', cell_overwrite_ok=True)
-    ws1 = wb.add_sheet('График аттестации ИО', cell_overwrite_ok=True)
-
-    # ширина столбцов графика поверки
-    ws.col(0).width = 3000
-    ws.col(1).width = 3000
-    ws.col(2).width = 4500
-    ws.col(3).width = 3000
-    ws.col(4).width = 4200
-    ws.col(8).width = 4200
-    ws.col(9).width = 3000
-    ws.col(10).width = 4200
-    ws.col(12).width = 4200
-    ws.col(13).width = 4200
-    ws.col(14).width = 3000
-    ws.col(15).width = 3000
-    ws.col(16).width = 3000
-    ws.col(17).width = 3000
-
-    # ширина столбцов графика аттестации
-    ws1.col(0).width = 3000
-    ws1.col(1).width = 4500
-    ws1.col(2).width = 3500
-    ws1.col(3).width = 4200
-    ws1.col(7).width = 4200
-    ws1.col(8).width = 4200
-    ws1.col(9).width = 4200
-    ws1.col(11).width = 4200
-    ws1.col(12).width = 3000
-    ws1.col(13).width = 3000
-    ws1.col(14).width = 3000
-    ws1.col(17).width = 8500
-
-    # стили
-    al10 = Alignment()
-    al10.horz = Alignment.HORZ_CENTER
-    al10.vert = Alignment.VERT_CENTER
-    al10.wrap = 1
-
-    b1 = Borders()
-    b1.left = 1
-    b1.right = 1
-    b1.top = 1
-    b1.bottom = 1
-
-    style10 = xlwt.XFStyle()
-    style10.font.bold = True
-    style10.font.name = 'Times New Roman'
-    style10.borders = b1
-    style10.alignment = al10
-
-    style20 = xlwt.XFStyle()
-    style20.font.name = 'Times New Roman'
-    style20.borders = b1
-    style20.alignment = al10
-
-    style30 = xlwt.XFStyle()
-    style30.font.name = 'Times New Roman'
-    style30.borders = b1
-    style30.alignment = al10
-    style30.num_format_str = 'DD.MM.YYYY'
-
-    # заголовки графика поверки, первый ряд
-    row_num = 0
-    columns = [
-                'Внутренний  номер',
-                'Номер в госреестре',
-                'Наименование',
-                'Тип/Модификация',
-                'Заводской номер',
-                'Год выпуска',
-                'Новый или б/у',
-                'Год ввода в эксплуатацию',
-                'Страна, наименование производителя',
-                'Место установки или хранения',
-                'Ответственный за СИ',
-                'Статус',
-                'Ссылка на сведения о поверке',
-                'Номер свидетельства',
-                'Дата поверки/калибровки',
-                'Дата окончания свидетельства',
-                'Дата заказа поверки/калибровки',
-                'Дата заказа замены',
-                'Периодичность поверки /калибровки (месяцы)',
-                'Инвентарный номер',
-               ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style10)
-
-    rows = MeasurEquipment.objects.all().\
-        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
-    manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
-        filter(equipment__roomschange__in=setroom).\
-        filter(equipment__personchange__in=setperson).\
-        filter(equipmentSM_ver__in=setver).\
-        exclude(equipment__status='C').\
-        values_list(
-            'equipment__exnumber',
-            'charakters__reestr',
-            'charakters__name',
-            'mod_type',
-            'equipment__lot',
-            'equipment__yearmanuf',
-            'equipment__new',
-            'equipment__yearintoservice',
-            'manuf_country',
-            'equipment__roomschange__roomnumber__roomnumber',
-            'equipment__personchange__person__username',
-            'equipment__status',
-            'equipmentSM_ver__arshin',
-            'equipmentSM_ver__certnumber',
-            'equipmentSM_ver__date',
-            'equipmentSM_ver__datedead',
-            'equipmentSM_ver__dateorder',
-            'equipmentSM_ver__dateordernew',
-            'charakters__calinterval',
-            'equipment__invnumber',
-        )
-    for row in rows:
-        row_num += 1
-        for col_num in range(0, 14):
-            ws.write(row_num, col_num, row[col_num], style20)
-        for col_num in range(14, 18):
-            ws.write(row_num, col_num, row[col_num], style30)
-        for col_num in range(18, len(row)):
-            ws.write(row_num, col_num, row[col_num], style20)
-
-        # заголовки графика аттестации, первый ряд
-    row_num = 0
-    columns = [
-        'Внутренний  номер',
-        'Наименование',
-        'Тип/Модификация',
-        'Заводской номер',
-        'Год выпуска',
-        'Новый или б/у',
-        'Год ввода в эксплуатацию',
-        'Страна, наименование производителя',
-        'Место установки или хранения',
-        'Ответственный за ИО',
-        'Статус',
-        'Номер аттестата',
-        'Дата аттестации',
-        'Дата окончания аттестации',
-        'Дата заказа аттестации',
-        'Периодичность аттестации',
-        'Инвентарный номер',
-        'Аттестован на методики',
-    ]
-    for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style10)
-
-    rows = TestingEquipment.objects.all(). \
-        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
-                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
-                                      'equipment__manufacturer__companyName')). \
-        filter(equipment__roomschange__in=setroom). \
-        filter(equipment__personchange__in=setperson). \
-        filter(equipmentSM_att__in=setatt). \
-        exclude(equipment__status='C'). \
-        values_list(
-        'equipment__exnumber',
-        'charakters__name',
-        'mod_type',
-        'equipment__lot',
-        'equipment__yearmanuf',
-        'equipment__new',
-        'equipment__yearintoservice',
-        'manuf_country',
-        'equipment__roomschange__roomnumber__roomnumber',
-        'equipment__personchange__person__username',
-        'equipment__status',
-        'equipmentSM_att__certnumber',
-        'equipmentSM_att__date',
-        'equipmentSM_att__datedead',
-        'equipmentSM_att__dateorder',
-        'charakters__calinterval',
-        'equipment__invnumber',
-        'equipmentSM_att__ndocs',
-    )
-    for row in rows:
-        row_num += 1
-        for col_num in range(0, 12):
-            ws1.write(row_num, col_num, row[col_num], style20)
-        for col_num in range(12, 15):
-            ws1.write(row_num, col_num, row[col_num], style30)
-        for col_num in range(15, len(row)):
-            ws1.write(row_num, col_num, row[col_num], style20)
 
     wb.save(response)
     return response
@@ -4166,3 +4001,985 @@ def export_exvercardteste_xls(request, pk):
 
     wb.save(response)
     return response
+
+
+# флаг ексели отчёты и планы по приборам
+# Набор вьюшек для выгрузки планов и отчетов по оборудованию в exel
+# Так как планы и отчеты имеют сходную структуру. Они разделены на страницы для СИ, ИО, ВО,
+# а также на помесячные суммы, то
+# вначале идет общая базовая  функция.
+# В ней объединено все общее для всех планов и отчетов. Базовая функция  выполняется в индивидуальных функциях
+
+
+def base_planreport_xls(request, exel_file_name,
+                               measure_e, testing_e, helping_e,
+                               measure_e_months, testing_e_months, helping_e_months,
+                               u_headers_me, u_headers_te, u_headers_he,
+                               str1, str2, str3, str4, str5, str6):
+    """базовое шаблон представление для выгрузки планов и отчетов по СИ, ИО, ВО
+    к которому обращаются частные представления"""
+
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="{exel_file_name}.xls"'
+
+
+
+
+    # стили
+    al10 = Alignment()
+    al10.horz = Alignment.HORZ_CENTER
+    al10.vert = Alignment.VERT_CENTER
+    al10.wrap = 1
+
+    b1 = Borders()
+    b1.left = 1
+    b1.right = 1
+    b1.top = 1
+    b1.bottom = 1
+
+    # заголовки жирным шрифтом, с границами ячеек
+    style_headers = xlwt.XFStyle()
+    style_headers.font.bold = True
+    style_headers.font.name = 'Times New Roman'
+    style_headers.borders = b1
+    style_headers.alignment = al10
+
+    # обычные ячейки, с границами ячеек
+    style_plain = xlwt.XFStyle()
+    style_plain.font.name = 'Times New Roman'
+    style_plain.borders = b1
+    style_plain.alignment = al10
+
+    # обычные ячейки с датами, с границами ячеек
+    style_date = xlwt.XFStyle()
+    style_date.font.name = 'Times New Roman'
+    style_date.borders = b1
+    style_date.alignment = al10
+    style_date.num_format_str = 'DD.MM.YYYY'
+
+
+    # добавляем книгу и страницы
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws1 = wb.add_sheet(f'{str1}', cell_overwrite_ok=True)
+    ws2 = wb.add_sheet(f'{str2}', cell_overwrite_ok=True)
+    ws3 = wb.add_sheet(f'{str3}', cell_overwrite_ok=True)
+    ws4 = wb.add_sheet(f'{str4}', cell_overwrite_ok=True)
+    ws5 = wb.add_sheet(f'{str5}', cell_overwrite_ok=True)
+    ws6 = wb.add_sheet(f'{str6}', cell_overwrite_ok=True)
+
+    # убираем колонтитулы
+    ws1.header_str = b' '
+    ws1.footer_str = b' '
+    ws2.header_str = b' '
+    ws2.footer_str = b' '
+    ws3.header_str = b' '
+    ws3.footer_str = b' '
+    ws4.header_str = b' '
+    ws4.footer_str = b' '
+    ws5.header_str = b' '
+    ws5.footer_str = b' '
+    ws6.header_str = b' '
+    ws6.footer_str = b' '
+
+    # ширина столбцов СИ
+    ws1.col(0).width = 3000
+    ws1.col(1).width = 3000
+    ws1.col(2).width = 4500
+    ws1.col(3).width = 3000
+    ws1.col(4).width = 2000
+    ws1.col(6).width = 2600
+    ws1.col(7).width = 3000
+    ws1.col(8).width = 3000
+
+    # ширина столбцов ИО
+    ws2.col(0).width = 3000
+    ws2.col(1).width = 4500
+    ws2.col(2).width = 3500
+    ws2.col(3).width = 4200
+    ws2.col(4).width = 3000
+    ws2.col(5).width = 2600
+    ws2.col(6).width = 3000
+    ws2.col(7).width = 3000
+
+    # ширина столбцов ВО
+    ws3.col(0).width = 3000
+    ws3.col(1).width = 4500
+    ws3.col(2).width = 3500
+    ws3.col(3).width = 4200
+    ws3.col(4).width = 2000
+    ws3.col(5).width = 2600
+    ws3.col(6).width = 3000
+    ws3.col(7).width = 3000
+
+    # колонки для разбиивок по месяцам
+    columns_month = [
+        'Месяц',
+        'Количество единиц оборудования',
+        'Сумма, руб',
+    ]
+
+    # записываем страницу 1 - СИ
+    # заголовки СИ
+    row_num = 0
+    columns = [
+        'Внутренний номер',
+        'Номер в госреестре',
+        'Наименование',
+        'Тип/Модификация',
+        'Заводской номер',
+    ]
+
+    columns = columns + u_headers_me
+
+    datecolumnme = []
+
+    # запись заголовков СИ
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_headers)
+        if 'Дата' in str(columns[col_num]) or 'дата' in str(columns[col_num]):
+            datecolumnme.append(col_num)
+
+    # данные СИ и их запись
+    rows = measure_e
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            if col_num in datecolumnme:
+                ws1.write(row_num, col_num, row[col_num], style_date)
+            else:
+                ws1.write(row_num, col_num, row[col_num], style_plain)
+
+    # записываем страницу 2 - ИО
+    # заголовки ИО
+    row_num = 0
+    columns = [
+        'Внутренний номер',
+        'Наименование',
+        'Тип/Модификация',
+        'Заводской номер',
+    ]
+
+    columns = columns + u_headers_te
+
+    datecolumnte = []
+
+    # запись заголовков ИО
+    for col_num in range(len(columns)):
+        ws2.write(row_num, col_num, columns[col_num], style_headers)
+        if 'Дата' in str(columns[col_num]) or 'дата' in str(columns[col_num]):
+            datecolumnte.append(col_num)
+
+    # данные ИО и их запись
+    rows = testing_e
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            if col_num in datecolumnte:
+                ws2.write(row_num, col_num, row[col_num], style_date)
+            else:
+                ws2.write(row_num, col_num, row[col_num], style_plain)
+
+    # записываем страницу 3 - ВО
+    # заголовки ВО
+    row_num = 0
+    columns = [
+        'Внутренний номер',
+        'Наименование',
+        'Тип/Модификация',
+        'Заводской номер',
+    ]
+
+    columns = columns + u_headers_he
+
+    datecolumnhe = []
+
+    # запись заголовков ВО
+    for col_num in range(len(columns)):
+        ws3.write(row_num, col_num, columns[col_num], style_headers)
+        if 'Дата' in str(columns[col_num]) or 'дата' in str(columns[col_num]):
+            datecolumnhe.append(col_num)
+
+    # данные ВО и их запись
+    rows = helping_e
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            if col_num in datecolumnhe:
+                ws3.write(row_num, col_num, row[col_num], style_date)
+            else:
+                ws3.write(row_num, col_num, row[col_num], style_plain)
+
+    # записываем страницу 4 - подсчёт по месяцам для СИ (ПСИ)
+    # заголовки ПСИ
+    row_num = 0
+
+    # запись заголовков ПСИ
+    for col_num in range(len(columns_month)):
+        ws4.write(row_num, col_num, columns_month[col_num], style_headers)
+
+    # данные ПСИ и их запись
+    rows = measure_e_months
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws4.write(row_num, col_num, row[col_num], style_plain)
+
+    # записываем страницу 5 - подсчёт по месяцам для ИО (ПИО)
+    # заголовки ПИО
+    row_num = 0
+
+    # запись заголовков ПИО
+    for col_num in range(len(columns_month)):
+        ws5.write(row_num, col_num, columns_month[col_num], style_headers)
+
+    # данные ПИО и их запись
+    rows = testing_e_months
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws5.write(row_num, col_num, row[col_num], style_plain)
+
+    # записываем страницу 6 - подсчёт по месяцам для ВО (ПВО)
+    # заголовки ПВО
+    row_num = 0
+
+    # запись заголовков ПВО
+    for col_num in range(len(columns_month)):
+        ws6.write(row_num, col_num, columns_month[col_num], style_headers)
+
+    # данные ПВО и их запись
+    rows = helping_e_months
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws6.write(row_num, col_num, row[col_num], style_plain)
+
+    # все сохраняем
+    wb.save(response)
+    return response
+
+
+# флаг гафик поверки и аттестации новыйграфик кошка
+def export_me_xls(request):
+    """представление для выгрузки плана закупки по поверке и аттестации на указанный год"""
+    exel_file_name = f'ver_att_schedule.xls'
+    str1 = 'СИ'
+    str2 = 'ИО'
+    str3 = 3
+    str4 = 4
+    str5 = 5
+    str6 = 6
+
+
+    u_headers_me = [
+                'Год выпуска',
+                'Новый или б/у',
+                'Год ввода в эксплуатацию',
+                'Страна, наименование производителя',
+                'Место установки или хранения',
+                'Ответственный за СИ',
+                'Статус',
+                'Ссылка на сведения о поверке',
+                'Номер свидетельства',
+                'Дата поверки/калибровки',
+                'Дата окончания свидетельства',
+                'Дата заказа поверки/калибровки',
+                'Дата заказа замены',
+                'Периодичность поверки /калибровки (месяцы)',
+                'Инвентарный номер',
+               ]
+
+    measure_e = MeasurEquipment.objects.all().\
+        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+    manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
+        filter(equipment__roomschange__in=setroom).\
+        filter(equipment__personchange__in=setperson).\
+        filter(equipmentSM_ver__in=setver).\
+        exclude(equipment__status='C').\
+        values_list(
+            'equipment__exnumber',
+            'charakters__reestr',
+            'charakters__name',
+            'mod_type',
+            'equipment__lot',
+            'equipment__yearmanuf',
+            'equipment__new',
+            'equipment__yearintoservice',
+            'manuf_country',
+            'equipment__roomschange__roomnumber__roomnumber',
+            'equipment__personchange__person__username',
+            'equipment__status',
+            'equipmentSM_ver__arshin',
+            'equipmentSM_ver__certnumber',
+            'equipmentSM_ver__date',
+            'equipmentSM_ver__datedead',
+            'equipmentSM_ver__dateorder',
+            'equipmentSM_ver__dateordernew',
+            'charakters__calinterval',
+            'equipment__invnumber',
+        )
+
+    u_headers_te = [
+        'Год выпуска',
+        'Новый или б/у',
+        'Год ввода в эксплуатацию',
+        'Страна, наименование производителя',
+        'Место установки или хранения',
+        'Ответственный за ИО',
+        'Статус',
+        'Номер аттестата',
+        'Дата аттестации',
+        'Дата окончания аттестации',
+        'Дата заказа аттестации',
+        'Периодичность аттестации',
+        'Инвентарный номер',
+        'Аттестован на методики',
+    ]
+
+    testing_e = TestingEquipment.objects.all(). \
+        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipmentSM_att__in=setatt). \
+        exclude(equipment__status='C'). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipment__yearmanuf',
+        'equipment__new',
+        'equipment__yearintoservice',
+        'manuf_country',
+        'equipment__roomschange__roomnumber__roomnumber',
+        'equipment__personchange__person__username',
+        'equipment__status',
+        'equipmentSM_att__certnumber',
+        'equipmentSM_att__date',
+        'equipmentSM_att__datedead',
+        'equipmentSM_att__dateorder',
+        'charakters__calinterval',
+        'equipment__invnumber',
+        'equipmentSM_att__ndocs',
+    )
+
+    u_headers_he = []
+    helping_e = []
+    measure_e_months = []
+    testing_e_months = []
+    helping_e_months = []
+
+    return base_planreport_xls(request, exel_file_name,
+                               measure_e, testing_e, helping_e,
+                               measure_e_months, testing_e_months, helping_e_months,
+                               u_headers_me, u_headers_te, u_headers_he,
+                               str1, str2, str3, str4, str5, str6
+                               )
+
+# флаг отчёты по поверке
+def export_metroyearcust_xls(request):
+    """Список СИ и ИО прошедших поверку/аттестацию в указанном году, исключая ЛО купленное с поверкой/аттестацией"""
+    serdate = request.GET['date']
+    exel_file_name = f'report_inner_metro {serdate}'
+    str1 = 'СИ'
+    str2 = 'ИО'
+    str3 = 3
+    str4 = 'СИ - поверено единиц в месяц'
+    str5 = 'ИО - аттестовано единиц в месяц'
+    str6 = 6
+
+
+    u_headers_me = ['Номер свидетельства',
+                    'Стоимость поверки, руб.',
+                    'Дата поверки/калибровки',
+                    'Дата окончания свидетельства',
+                    ]
+
+    measure_e = MeasurEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_ver__in=setver). \
+        filter(equipmentSM_ver__date__year=serdate). \
+        exclude(equipmentSM_ver__cust=True). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__reestr',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipmentSM_ver__certnumber',
+        'equipmentSM_ver__price',
+        'equipmentSM_ver__date',
+        'equipmentSM_ver__datedead',
+    ).order_by('equipmentSM_ver__date')
+
+    u_headers_te = ['Номер аттестата',
+                    'Стоимость аттестации, руб.',
+                    'Дата аттестации',
+                    'Дата окончания аттестации',
+                    ]
+
+    testing_e = TestingEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_att__in=setatt). \
+        filter(equipmentSM_att__date__year=serdate). \
+        exclude(equipmentSM_att__cust=True). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipmentSM_att__certnumber',
+        'equipmentSM_att__price',
+        'equipmentSM_att__date',
+        'equipmentSM_att__datedead'
+    ).order_by('equipmentSM_att__date')
+
+    u_headers_he = []
+    helping_e = []
+
+    measure_e_months = MeasurEquipment.objects. \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_ver__in=setver). \
+        filter(equipmentSM_ver__date__year=serdate). \
+        filter(equipmentSM_ver__price__isnull=False). \
+        exclude(equipmentSM_ver__cust=True). \
+        values('equipmentSM_ver__date__month'). \
+        annotate(dcount=Count('equipmentSM_ver__date__month'), s=Sum('equipmentSM_ver__price')). \
+        order_by(). \
+        values_list(
+        'equipmentSM_ver__date__month',
+        'dcount',
+        's',
+    )
+
+    testing_e_months = TestingEquipment.objects. \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_att__in=setatt). \
+        filter(equipmentSM_att__date__year=serdate). \
+        filter(equipmentSM_att__price__isnull=False). \
+        exclude(equipmentSM_att__cust=True). \
+        values('equipmentSM_att__date__month'). \
+        annotate(dcount1=Count('equipmentSM_att__date__month'), s1=Sum('equipmentSM_att__price')). \
+        order_by(). \
+        values_list(
+        'equipmentSM_att__date__month',
+        'dcount1',
+        's1',
+    )
+
+    helping_e_months = []
+
+    return base_planreport_xls(request, exel_file_name,
+                        measure_e, testing_e, helping_e,
+                       measure_e_months, testing_e_months, helping_e_months,
+                        u_headers_me, u_headers_te, u_headers_he,
+                               str1, str2, str3, str4, str5, str6
+                               )
+
+def export_metroyearprice_xls(request):
+    """представление для выгрузки - Список СИ и ИО прошедших поверку в указанном году только те где
+    Список СИ и ИО прошедших поверку в указанном году только где указана стоимость"""
+    serdate = request.GET['date']
+    exel_file_name = f'report_all_withprice_metro {serdate}'
+    str1 = 'СИ'
+    str2 = 'ИО'
+    str3 = 3
+    str4 = 'СИ - поверено единиц в месяц'
+    str5 = 'ИО - аттестовано единиц в месяц'
+    str6 = 6
+
+
+    u_headers_me = ['Номер свидетельства',
+                    'Стоимость поверки, руб.',
+                    'Дата поверки/калибровки',
+                    'Дата окончания свидетельства',
+                    ]
+
+    measure_e = MeasurEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_ver__in=setver). \
+        filter(equipmentSM_ver__date__year=serdate). \
+        filter(equipmentSM_ver__price__isnull=False). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__reestr',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipmentSM_ver__certnumber',
+        'equipmentSM_ver__price',
+        'equipmentSM_ver__date',
+        'equipmentSM_ver__datedead',
+    ).order_by('equipmentSM_ver__date')
+
+    u_headers_te = ['Номер аттестата',
+                    'Стоимость аттестации, руб.',
+                    'Дата аттестации',
+                    'Дата окончания аттестации',
+                    ]
+
+    testing_e = TestingEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipmentSM_att__in=setatt). \
+        filter(equipmentSM_att__date__year=serdate). \
+        filter(equipmentSM_att__price__isnull=False). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipmentSM_att__certnumber',
+        'equipmentSM_att__price',
+        'equipmentSM_att__date',
+        'equipmentSM_att__datedead'
+    ).order_by('equipmentSM_att__date')
+
+    u_headers_he = []
+    helping_e = []
+
+    measure_e_months = MeasurEquipment.objects. \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_ver__in=setver). \
+        filter(equipmentSM_ver__date__year=serdate). \
+        filter(equipmentSM_ver__price__isnull=False).\
+        values('equipmentSM_ver__date__month').\
+        annotate(dcount=Count('equipmentSM_ver__date__month'), s=Sum('equipmentSM_ver__price')).\
+        order_by().\
+        values_list(
+        'equipmentSM_ver__date__month',
+        'dcount',
+        's',
+    )
+
+    testing_e_months = TestingEquipment.objects. \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_att__in=setatt). \
+        filter(equipmentSM_att__date__year=serdate). \
+        filter(equipmentSM_att__price__isnull=False). \
+        values('equipmentSM_att__date__month'). \
+        annotate(dcount1=Count('equipmentSM_att__date__month'), s1=Sum('equipmentSM_att__price')). \
+        order_by(). \
+        values_list(
+        'equipmentSM_att__date__month',
+        'dcount1',
+        's1',
+    )
+
+    helping_e_months = []
+
+    return base_planreport_xls(request, exel_file_name,
+                        measure_e, testing_e, helping_e,
+                       measure_e_months, testing_e_months, helping_e_months,
+                        u_headers_me, u_headers_te, u_headers_he,
+                               str1, str2, str3, str4, str5, str6
+                               )
+
+def export_metroyear_xls(request):
+    """Список СИ и ИО прошедших поверку/аттестацию в указанном году, включая ЛО купленное с поверкой/аттестацие"""
+    serdate = request.GET['date']
+    exel_file_name = f'report_all_metro {serdate}'
+    str1 = 'СИ'
+    str2 = 'ИО'
+    str3 = 3
+    str4 = 4
+    str5 = 5
+    str6 = 6
+
+
+    u_headers_me = ['Номер свидетельства',
+                    'Стоимость поверки, руб.',
+                    'Дата поверки/калибровки',
+                    'Дата окончания свидетельства',
+                    ]
+
+    measure_e = MeasurEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_ver__in=setver). \
+        filter(equipmentSM_ver__date__year=serdate). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__reestr',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipmentSM_ver__certnumber',
+        'equipmentSM_ver__price',
+        'equipmentSM_ver__date',
+        'equipmentSM_ver__datedead',
+    ).order_by('equipmentSM_ver__date')
+
+    u_headers_te = ['Номер аттестата',
+                    'Стоимость аттестации, руб.',
+                    'Дата аттестации',
+                    'Дата окончания аттестации',
+                    ]
+
+    testing_e = TestingEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipmentSM_att__in=setatt). \
+        filter(equipmentSM_att__date__year=serdate). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipmentSM_att__certnumber',
+        'equipmentSM_att__price',
+        'equipmentSM_att__date',
+        'equipmentSM_att__datedead'
+    ).order_by('equipmentSM_att__date')
+
+    u_headers_he = []
+    helping_e = []
+
+    measure_e_months = []
+
+    testing_e_months = []
+
+    helping_e_months = []
+
+    return base_planreport_xls(request, exel_file_name,
+                        measure_e, testing_e, helping_e,
+                       measure_e_months, testing_e_months, helping_e_months,
+                        u_headers_me, u_headers_te, u_headers_he,
+                               str1, str2, str3, str4, str5, str6
+                               )
+
+# флаг отчёты по закупке
+def export_metronewyear_xls(request):
+    """представление для выгрузки -
+    Список купленного (введенного в эксплуатацию) СИ и ИО в указанном году"""
+    serdate = request.GET['date']
+    exel_file_name = f'purchased_equipment_{serdate}'
+    str1 = 'СИ'
+    str2 = 'ИО'
+    str3 = 'ВО'
+    str4 = 'Количество СИ в месяц'
+    str5 = 'Количество ИО в месяц'
+    str6 = 'Количество ВО в месяц'
+
+
+    u_headers_me = ['Стоимость',
+                    ]
+
+    measure_e = MeasurEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_ver__in=setver). \
+        filter(equipment__yearintoservice=serdate). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__reestr',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipment__price',
+    ).order_by('equipment__date')
+
+    u_headers_te = ['Стоимость',
+                    ]
+
+    testing_e = TestingEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipmentSM_att__in=setatt). \
+        filter(equipment__yearintoservice=serdate). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipment__price',
+    ).order_by('equipment__date')
+
+    u_headers_he = ['Стоимость',]
+    helping_e = HelpingEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__yearintoservice=serdate). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipment__price',
+    ).order_by('equipment__date')
+
+    measure_e_months = MeasurEquipment.objects. \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_ver__in=setver). \
+        filter(equipment__yearintoservice=serdate). \
+        values('equipment__date__month'). \
+        annotate(dcount=Count('equipment__date__month'), s=Sum('equipment__price')). \
+        order_by(). \
+        values_list(
+        'equipment__date__month',
+        'dcount',
+        's',
+    )
+
+    testing_e_months = qt1 = TestingEquipment.objects. \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipmentSM_att__in=setatt). \
+        filter(equipment__yearintoservice=serdate). \
+        values('equipment__date__month'). \
+        annotate(dcount1=Count('equipment__date__month'), s1=Sum('equipment__price')). \
+        order_by(). \
+        values_list(
+        'equipment__date__month',
+        'dcount1',
+        's1',
+    )
+
+    helping_e_months = HelpingEquipment.objects. \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__yearintoservice=serdate). \
+        values('equipment__date__month'). \
+        annotate(dcount2=Count('equipment__date__month'), s2=Sum('equipment__price')). \
+        order_by(). \
+        values_list(
+        'equipment__date__month',
+        'dcount2',
+        's2',
+    )
+
+    return base_planreport_xls(request, exel_file_name,
+                        measure_e, testing_e, helping_e,
+                       measure_e_months, testing_e_months, helping_e_months,
+                        u_headers_me, u_headers_te, u_headers_he,
+                               str1, str2, str3, str4, str5, str6
+                               )
+# флаг план по поверке
+def export_planmetro_xls(request):
+    """представление для выгрузки плана поверки и аттестации на указанный год"""
+    serdate = request.GET['date']
+    exel_file_name = f'planmetro {serdate}'
+    str1 = 'СИ'
+    str2 = 'ИО'
+    str3 = 3
+    str4 = 'СИ-количество поверок в месяц'
+    str5 = 'ИО-кол-во аттестаций в месяц'
+    str6 = 6
+
+
+    u_headers_me = ['Номер текущего свидетельства',
+                    'Стоимость последней поверки, руб. (при наличии)',
+                    'Месяц заказа поверки',
+                    ]
+
+    measure_e = MeasurEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+                                filter(equipment__roomschange__in=setroom). \
+                                filter(equipment__personchange__in=setperson). \
+                                filter(equipmentSM_ver__in=setver). \
+                                filter(equipmentSM_ver__dateorder__year=serdate). \
+                                values_list(
+                                'equipment__exnumber',
+                                'charakters__reestr',
+                                'charakters__name',
+                                'mod_type',
+                                'equipment__lot',
+                                'equipmentSM_ver__certnumber',
+                                'equipmentSM_ver__price',
+                                'equipmentSM_ver__dateorder__month',
+                            ).order_by('equipmentSM_ver__dateorder__month')
+
+    u_headers_te = ['Номер текущего аттестата',
+                    'Стоимость последней аттестации, руб. (при наличии)',
+                    'Месяц заказа аттестации',
+                    ]
+
+    testing_e = TestingEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipmentSM_att__in=setatt). \
+        filter(equipmentSM_att__dateorder__year=serdate). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipmentSM_att__certnumber',
+        'equipmentSM_att__price',
+        'equipmentSM_att__dateorder__month',
+    ).order_by('equipmentSM_att__dateorder__month')
+
+    u_headers_he = []
+    helping_e = []
+    measure_e_months = MeasurEquipment.objects.\
+        filter(equipment__personchange__in=setperson).\
+        filter(equipmentSM_ver__dateorder__year=serdate).\
+        values('equipmentSM_ver__dateorder__month').\
+        annotate(dcount=Count('equipmentSM_ver__dateorder__month'), s=Sum('equipmentSM_ver__price')). \
+        order_by().\
+        values_list(
+        'equipmentSM_ver__dateorder__month',
+        'dcount',
+        's',
+    )
+
+    testing_e_months = TestingEquipment.objects.\
+        filter(equipment__personchange__in=setperson).\
+        filter(equipmentSM_att__dateorder__year=serdate).\
+        values('equipmentSM_att__dateorder__month').\
+        annotate(dcount=Count('equipmentSM_att__dateorder__month'), s=Sum('equipmentSM_att__price')). \
+        order_by().\
+        values_list(
+        'equipmentSM_att__dateorder__month',
+        'dcount',
+        's',
+    )
+    helping_e_months = []
+
+    return base_planreport_xls(request, exel_file_name,
+                               measure_e, testing_e, helping_e,
+                               measure_e_months, testing_e_months, helping_e_months,
+                               u_headers_me, u_headers_te, u_headers_he,
+                               str1, str2, str3, str4, str5, str6
+                               )
+
+# флаг план закупки по поверке
+def export_plan_purchaesing_xls(request):
+    """представление для выгрузки плана закупки по поверке и аттестации на указанный год"""
+    serdate = request.GET['date']
+    exel_file_name = f'plan_purchaesing_{serdate}'
+    str1 = 'СИ'
+    str2 = 'ИО'
+    str3 = 3
+    str4 = 'СИ-количество в месяц'
+    str5 = 'ИО-кол-во в месяц'
+    str6 = 6
+
+
+    u_headers_me = ['Номер текущего свидетельства',
+                    'Стоимость оборудования',
+                    'Месяц заказа замены',
+                    ]
+
+    measure_e = MeasurEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+                                filter(equipment__roomschange__in=setroom). \
+                                filter(equipment__personchange__in=setperson). \
+                                filter(equipmentSM_ver__dateordernew__year=serdate). \
+                                filter(equipmentSM_ver__haveorder=False). \
+                                values_list(
+                                'equipment__exnumber',
+                                'charakters__reestr',
+                                'charakters__name',
+                                'mod_type',
+                                'equipment__lot',
+                                'equipmentSM_ver__certnumber',
+                                'equipment__price',
+                                'equipmentSM_ver__dateordernew__month',
+                            ).order_by('equipmentSM_ver__dateordernew__month')
+
+    u_headers_te = ['Номер текущего аттестата',
+                    'Стоимость оборудования',
+                    'Месяц заказа замены',
+                    ]
+
+    testing_e = TestingEquipment.objects. \
+        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipmentSM_att__dateordernew__year=serdate). \
+        filter(equipmentSM_att__haveorder=False). \
+        values_list(
+        'equipment__exnumber',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipmentSM_att__certnumber',
+        'equipment__price',
+        'equipmentSM_att__dateordernew__month',
+    ).order_by('equipmentSM_att__dateordernew__month')
+
+    u_headers_he = []
+    helping_e = []
+    measure_e_months = MeasurEquipment.objects.\
+        filter(equipment__personchange__in=setperson).\
+        filter(equipmentSM_ver__dateordernew__year=serdate). \
+        filter(equipmentSM_ver__haveorder=False). \
+        values('equipmentSM_ver__dateordernew__month').\
+        annotate(dcount=Count('equipmentSM_ver__dateordernew__month'), s=Sum('equipment__price')). \
+        order_by().\
+        values_list(
+        'equipmentSM_ver__dateordernew__month',
+        'dcount',
+        'dcount',
+        's',
+    )
+
+    testing_e_months = TestingEquipment.objects.\
+        filter(equipment__personchange__in=setperson).\
+        filter(equipmentSM_att__dateordernew__year=serdate).\
+        values('equipmentSM_att__dateordernew__month').\
+        annotate(dcount=Count('equipmentSM_att__dateordernew__month'), s=Sum('equipment__price')). \
+        filter(equipmentSM_att__haveorder=False). \
+        order_by().\
+        values_list(
+        'equipmentSM_att__dateordernew__month',
+        'dcount',
+        's',
+    )
+    helping_e_months = []
+
+    return base_planreport_xls(request, exel_file_name,
+                               measure_e, testing_e, helping_e,
+                               measure_e_months, testing_e_months, helping_e_months,
+                               u_headers_me, u_headers_te, u_headers_he,
+                               str1, str2, str3, str4, str5, str6
+                               )
+
+

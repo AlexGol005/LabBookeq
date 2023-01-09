@@ -356,6 +356,8 @@ class Verificationequipment(models.Model):
                                     blank=True, null=True)
     haveorder = models.BooleanField(verbose_name='Заказана следующая поверка (или новое СИ)', default=False,
                                     blank=True)
+    cust = models.BooleanField(verbose_name='Поверку организует Поставщик', default=False,
+                                    blank=True)
 
     def __str__(self):
         try:
@@ -431,6 +433,8 @@ class Attestationequipment(models.Model):
     dateordernew = models.DateField('Дата заказа нового оборудования (если аттестовывать не выгодно)',
                                     blank=True, null=True)
     haveorder = models.BooleanField(verbose_name='Заказана следующая аттестация (или новое СИ)', default=False,
+                                    blank=True)
+    cust = models.BooleanField(verbose_name='Аттестацию организует Поставщик', default=False,
                                     blank=True)
 
     def __str__(self):
@@ -594,3 +598,45 @@ class ContactsVer(models.Model):
     class Meta:
         verbose_name = 'Контакты поверителей для прибора'
         verbose_name_plural = 'Контакты поверителей для прибора'
+
+
+class HelpingEquipmentCharakters(models.Model):
+    name = models.CharField('Название прибора', max_length=100, default='')
+    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
+    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
+    measurydiapason = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
+    aim = models.CharField('Назначение',
+                            max_length=500, blank=True, null=True)
+    ndoc = models.CharField('Методики испытаний', max_length=500, blank=True, null=True)
+    power = models.BooleanField('Работает от сети', default=False, blank=True)
+    voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
+    frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
+    temperature = models.CharField('температура', max_length=100, default='', blank=True, null=True)
+    humidicity = models.CharField('влажность', max_length=100, default='', blank=True, null=True)
+    pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
+    setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
+    needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
+    complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
+    expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
+
+    def __str__(self):
+        return f'{self.name}  {self.modificname}'
+
+    class Meta:
+        verbose_name = 'Вспомогательное оборудование, характеристики'
+        verbose_name_plural = 'Вспомогательное оборудование, характеристики'
+        unique_together = ('name', 'modificname', 'typename')
+
+
+class HelpingEquipment(models.Model):
+    charakters = models.ForeignKey(HelpingEquipmentCharakters,  on_delete=models.PROTECT,
+                                   verbose_name='Характеристики ВО', blank=True, null=True)
+    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+                                  verbose_name='Оборудование')
+
+    def __str__(self):
+        return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} - pk {self.pk}'
+
+    class Meta:
+        verbose_name = 'Вспомогательное оборудование'
+        verbose_name_plural = 'Вспомогательное оборудование'

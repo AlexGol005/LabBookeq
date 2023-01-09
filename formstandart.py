@@ -28,3 +28,18 @@ class SearchDateForm(forms.Form):
                 Row(Column('datestart', css_class='form-group col-md-9 mb-1 ml-4')),
                 Row(Column('datefinish', css_class='form-group col-md-9 mb-1 ml-4')),
                 Row(Submit('submit', 'Найти', css_class='btn  btn-info col-md-9 mb-3 mt-4 ml-4')))
+
+class YearForm(forms.Form):
+    """форма для поиска записей по году"""
+    date = forms.DateField(label='Год в формате ГГГГ',
+                           widget=forms.DateInput(
+                               attrs={'class': 'form-control', 'placeholder': '2022'}))
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('date', css_class='form-group col-md-4 mb-0'),
+                Submit('submit', 'сформировать', css_class='btn  btn-info col-md-6 mb-3 mt-4 ml-4')))

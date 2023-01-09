@@ -56,4 +56,11 @@ urlpatterns = [
     path('haveorder/<int:pk>/', views.HaveorderVerView.as_view(), name='haveorder'),
     path('haveorderatt/<int:pk>/', views.HaveorderAttView.as_view(), name='haveorderatt'),
     path('lasttenequipment/', views.LastNewEquipmentView.as_view(), name='lasttenequipment'),
+    path('reports/', views.ReportsView.as_view(), name='reports'),
+    path(r'^export70/xls/$', views.export_metroyear_xls, name='export_metroyear_xls'),
+    path(r'^export71/xls/$', views.export_metroyearprice_xls, name='export_metroyearprice_xls'),
+    path(r'^export72/xls/$', views.export_metroyearcust_xls, name='export_metroyearcust_xls'),
+    path(r'^export73/xls/$', views.export_metronewyear_xls, name='export_metronewyear_xls'),
+    path(r'^export74/xls/$', views.export_planmetro_xls, name='export_planmetro_xls'),
+    path(r'^export75/xls/$', views.export_plan_purchaesing_xls, name='export_plan_purchaesing_xls'),
 ]
