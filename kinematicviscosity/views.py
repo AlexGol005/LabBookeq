@@ -225,7 +225,7 @@ class SearchResultView(Constants, TemplateView):
 
 
 def filterview(request, pk):
-    """ Фильтры записей об измерениях по дате, АЗ, мои записи и пр """
+    """ Фильтры записей об измерениях по дате, значению, мои записи и пр """
     """Стандартная"""
     objects = MODEL.objects.all()
     formSM = SearchForm()

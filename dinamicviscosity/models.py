@@ -7,70 +7,87 @@ from decimal import *
 
 from equipment.models import MeasurEquipment, Rooms
 from jouViscosity.models import ViscosityDinamicResult
-from functstandart import mrerrow, numberDigits, get_avg, get_acc_measurement
+from functstandart import get_avg, get_acc_measurement, get_round_signif_digit
 
 from viscosimeters.models import Viscosimeters
-from .j_constants import *
+from .constants import *
 
 
 class Dinamicviscosity(models.Model):
-    name = models.CharField('Наименование', max_length=100, default='0', blank=True, null=True)
-    lot = models.CharField('Партия', max_length=100, blank=True, null=True)
+    # поля которые будут во всех подобных моделях
+    # идентификационная информация о пробе
+    performer = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    performerdensity = models.ForeignKey(User, verbose_name='Плотность измерил', on_delete=models.CASCADE, null=True,
+                                         related_name='performerdensity', blank=True)
+    date = models.DateField('Дата', auto_now_add=True, db_index=True)
+    name = models.CharField('Наименование', max_length=100,   blank=True, null=True)
+    lot = models.CharField('Партия', max_length=100,  blank=True, null=True)
     cipher = models.CharField('Шифр', max_length=100, blank=True, null=True)
-    sowner = models.CharField('Владелец пробы', max_length=100, null=True)
-    exp = models.IntegerField('Срок годности плотности, месяцев', blank=True, null=True)
-    date_exp = models.DateField('плотность годна до', blank=True, null=True)
-    date = models.DateField('Дата', auto_now_add=True, db_index=True, blank=True)
-    performer = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='performer', blank=True)
-    performerdensity = models.ForeignKey(User, verbose_name='Плотность измерил', on_delete=models.CASCADE, null=True, related_name='performerdensity', blank=True)
-    constit = models.CharField('Состав пробы', max_length=300, choices=CHOICES, default='Проба содержит октол/нефть', null=True,  blank=True)
-    ndocument = models.CharField('Метод испытаний', max_length=100, choices=DOCUMENTS, default='МИ-02-2018', blank=True)
-    temperature = models.DecimalField('Температура, ℃', max_digits=5, decimal_places=2, default='0', null=True,
-                                      blank=True)
+    sowner = models.CharField('Владелец пробы', max_length=500, blank=True, null=True)
+    constit = models.CharField(max_length=300, choices=CHOICES, default='Прочие нефтепродукты', null=True)
+
+    # методика и ее метрологические характеристики
+    ndocument = models.CharField('Метод испытаний', max_length=100, choices=ndocumentoptional,
+                                 default=ndocumentoptional[0][1],
+                                 blank=True, null=True)
+    equipment = models.CharField('Способ измерения плотности', max_length=300, choices=DENSITYE, default='денсиметром',
+                                 null=True, blank=True)
+    # фиксация результатов в журнале измерений
+    fixation = models.BooleanField(verbose_name='Внесен ли результат в Журнал измерений?', default=False,
+                                   null=True)
+    exp = models.IntegerField('Срок годности, месяцев',  blank=True, null=True)
+    date_exp = models.DateField('Годен до', blank=True, null=True)
+    # дополнительно
+    oldresult = models.CharField('Предыдущее измерение',  null=True, blank=True, max_length=300, default='')
+    termostatition = models.BooleanField(verbose_name='Термостатировано не менее 20 минут', blank=True, null=True)
+    temperatureCheck = models.BooleanField(verbose_name='Температура контролируется внешним поверенным термометром',
+                                           blank=True, null=True)
+    # условия и приборы
+    temperature = models.DecimalField('Температура, ℃', max_digits=5, decimal_places=2, default='0', null=True)
     piknometer_volume = models.DecimalField('Объём пикнометра, мл', max_digits=7, decimal_places=4, null=True,
                                             blank=True)
+
+    # результат наблюдений
     piknometer_mass1 = models.DecimalField('Масса пикнометра 1, г', max_digits=7, decimal_places=4, null=True,
                                            blank=True)
     piknometer_mass2 = models.DecimalField('Масса пикнометра 2, г', max_digits=7, decimal_places=4, null=True,
                                            blank=True)
-    piknometer_plus_SM_mass1 = models.DecimalField('Масса пикнометра + СО -  1, г', max_digits=7, decimal_places=4,
+    piknometer_plus_SM_mass1 = models.DecimalField('Масса пикнометра + пробы -  1, г', max_digits=7, decimal_places=4,
                                                    null=True, blank=True)
-    piknometer_plus_SM_mass2 = models.DecimalField('Масса пикнометра + СО -  2, г', max_digits=7, decimal_places=4,
+    piknometer_plus_SM_mass2 = models.DecimalField('Масса пикнометра + пробы -  2, г', max_digits=7, decimal_places=4,
                                                    null=True, blank=True)
-    SM_mass1 = models.DecimalField('Масса СО -  1, г', max_digits=7, decimal_places=4, null=True, blank=True)
-    SM_mass2 = models.DecimalField('Масса СО -  2, г', max_digits=7, decimal_places=4, null=True, blank=True)
+
+    # расчёты
+    SM_mass1 = models.DecimalField('Масса пробы -  1, г', max_digits=7, decimal_places=4, null=True, blank=True)
+    SM_mass2 = models.DecimalField('Масса пробы -  2, г', max_digits=7, decimal_places=4, null=True, blank=True)
     density1 = models.DecimalField('плотность 1, г/мл', max_digits=7, decimal_places=5, null=True, blank=True)
     density2 = models.DecimalField('плотность 2, г/мл', max_digits=7, decimal_places=5, null=True, blank=True)
     density_avg = models.DecimalField('средняя плотность, г/мл', max_digits=7, decimal_places=4, null=True, blank=True)
     delta = models.CharField('Не превышает Δ', max_length=100, null=True, blank=True)
-    kriteriy = models.DecimalField('Критерий приемлемости измерений', max_digits=2, decimal_places=1, null=True,
+    kriteriy = models.DecimalField('Критерий приемлемости измерений', max_digits=7, decimal_places=4, null=True,
                                    blank=True)
-    kinematicviscosity = models.CharField('Кинематическая вязкость при температуре измерений сСт', max_length=300, null=True,
-                                           blank=True)
+    kinematicviscosity = models.CharField('Кинематическая вязкость при температуре измерений сСт', max_length=300,
+                                          null=True, blank=True)
     dinamicviscosity_not_rouned = models.DecimalField('Динамическая вязкость неокругленная', max_digits=20,
                                                       decimal_places=6, null=True, blank=True)
-    relerror = models.DecimalField('Относительная  погрешность', max_digits=3, decimal_places=1, null=True,  blank=True,
-                                   default=RELERROR)
-    certifiedValue = models.CharField('Аттестованное значение динамической вязкости', null=True,
-                                         blank=True, max_length=300)
+    result = models.CharField('Результат измерений динамической вязкости', null=True,
+                              blank=True, max_length=300)
     resultMeas = models.CharField('Результат измерений уд/неуд', max_length=100, default='неудовлетворительно',
                                   null=True, blank=True)
     cause = models.CharField('Причина', max_length=100, default='', null=True, blank=True)
-    accMeasurement = models.DecimalField('Оценка приемлемости измерений плотности', max_digits=5, decimal_places=1, null=True,
-                                         blank=True)
-    abserror = models.CharField('Абсолютная  погрешность', null=True, blank=True, max_length=300)
+    accMeasurement = models.DecimalField('Оценка приемлемости измерений плотности', max_digits=7, decimal_places=4,
+                                         null=True, blank=True)
     olddensity = models.CharField('Предыдущее значение плотности', max_length=300, null=True, default='', blank=True)
     deltaolddensity = models.DecimalField('Оценка разницы с предыдущим значением плотности',
-                                                 max_digits=10, decimal_places=2, null=True, blank=True)
+                                          max_digits=10, decimal_places=4, null=True, blank=True)
     resultWarning = models.CharField(max_length=300, default='', null=True, blank=True)
-    fixation = models.BooleanField(verbose_name='Внесен ли результат в Журнал аттестованных значений?', default=False,
-                                   null=True, blank=True)
-    equipment = models.CharField('Способ измерения плотности', max_length=300, choices=DENSITYE, default='денсиметром', null=True,  blank=True)
     resultWarningkinematic = models.CharField('Если нет кинематики', max_length=300, null=True,  blank=True)
     kinematicviscositydead = models.DateField('кинематика годна до:', blank=True, null=True)
-    havedensity = models.BooleanField(verbose_name='Есть значение плотности, измеренное ранее', default=False, blank=True)
+    havedensity = models.BooleanField(verbose_name='Есть значение плотности, измеренное ранее',
+                                      default=False, blank=True)
     densitydead = models.DateField('Плотность, измеренная ранее, годна до:', null=True, blank=True)
-    #  поля для записи - помещения, оборудования - для подготовки протокола анализа
+
+    #  дополнительно условия и приборы - для подготовки протокола анализа
     room = models.ForeignKey(Rooms, verbose_name='Номер комнаты', null=True,
                              on_delete=models.PROTECT, blank=True)
     equipment1 = models.ForeignKey(MeasurEquipment, verbose_name='Секундомер', null=True,
@@ -84,54 +101,28 @@ class Dinamicviscosity(models.Model):
     equipment5 = models.ForeignKey(MeasurEquipment, verbose_name='Весы', null=True,
                                    on_delete=models.PROTECT, blank=True, related_name='equipment5dinamic')
 
-
     def save(self, *args, **kwargs):
+        self.kriteriy = Decimal(REPEATABILITY)
+        if not self.exp:
+            self.exp = 100
         if self.havedensity and self.density_avg and self.densitydead:
             self.resultMeas = 'плотность измерена ранее'
             if not self.kinematicviscosity:
-                self.resultWarningkinematic = 'Нет актуального значения кинематической вязкости. Динамика не рассчитана. ' \
+                self.resultWarningkinematic = 'Нет актуального значения кинематической вязкости. ' \
+                                              'Динамика не рассчитана. ' \
                                               'Измерьте динамику и заполните новую форму'
             if self.kinematicviscosity:
                 self.dinamicviscosity_not_rouned = Decimal(self.kinematicviscosity) * self.density_avg
-                self.abserror = mrerrow((Decimal(self.relerror) * self.dinamicviscosity_not_rouned) / Decimal(100))
-                self.certifiedValue = numberDigits(self.dinamicviscosity_not_rouned, self.abserror)
+                self.result = get_round_signif_digit(self.dinamicviscosity_not_rouned, 4)
         if not self.havedensity and not self.density_avg and not self.densitydead:
             if not (self.density1 and self.density2):
                 self.SM_mass1 = self.piknometer_plus_SM_mass1 - self.piknometer_mass1
                 self.SM_mass2 = self.piknometer_plus_SM_mass2 - self.piknometer_mass2
                 self.density1 = self.SM_mass1 / self.piknometer_volume
                 self.density2 = self.SM_mass2 / self.piknometer_volume
-                if self.constit == 'да':
-                    self.kriteriy = Decimal(0.3)
-                if self.constit == 'нет':
-                    self.kriteriy = Decimal(0.2)
-                if self.constit == 'другое':
-                    self.kriteriy = Decimal(0.3)
-                self.accMeasurement = get_acc_measurement(self.density1, self.density2)
-                if self.accMeasurement < self.kriteriy:
-                    self.resultMeas = 'удовлетворительно'
-                    self.cause = ''
-                    self.density_avg = get_avg(self.density1, self.density2, 4)
-                    if not self.kinematicviscosity:
-                        self.resultWarningkinematic = 'Нет актуального значения кинематической вязкости. Динамика не рассчитана. ' \
-                                                      'Измерьте динамику и заполните новую форму'
-                    if self.kinematicviscosity:
-                        self.dinamicviscosity_not_rouned = Decimal(self.kinematicviscosity) * self.density_avg
-                        self.abserror = mrerrow(
-                            (Decimal(self.relerror) * self.dinamicviscosity_not_rouned) / Decimal(100))
-                        self.certifiedValue = numberDigits(self.dinamicviscosity_not_rouned, self.abserror)
-                if self.accMeasurement > self.kriteriy:
-                    self.resultMeas = 'неудовлетворительно'
-                    self.cause = 'Δ > r'
-            if self.density1 and self.density2:
-                if self.constit == 'да':
-                    self.kriteriy = Decimal(0.3)
-                if self.constit == 'нет':
-                    self.kriteriy = Decimal(0.2)
-                if self.constit == 'другое':
-                    self.kriteriy = Decimal(0.3)
-                self.accMeasurement = get_acc_measurement(self.density1, self.density2)
-                if self.accMeasurement < self.kriteriy:
+                self.accMeasurement = ((self.density1 - self.density2).copy_abs()).\
+                    quantize(Decimal(1.0000), ROUND_HALF_UP)
+                if self.accMeasurement <= self.kriteriy:
                     self.resultMeas = 'удовлетворительно'
                     self.cause = ''
                     self.density_avg = get_avg(self.density1, self.density2, 4)
@@ -141,42 +132,43 @@ class Dinamicviscosity(models.Model):
                                                       'Измерьте динамику и заполните новую форму'
                     if self.kinematicviscosity:
                         self.dinamicviscosity_not_rouned = Decimal(self.kinematicviscosity) * self.density_avg
-                        self.abserror = mrerrow(
-                            (Decimal(self.relerror) * self.dinamicviscosity_not_rouned) / Decimal(100))
-                        self.certifiedValue = numberDigits(self.dinamicviscosity_not_rouned, self.abserror)
+                        self.result = get_round_signif_digit(self.dinamicviscosity_not_rouned, 4)
                 if self.accMeasurement > self.kriteriy:
                     self.resultMeas = 'неудовлетворительно'
                     self.cause = 'Δ > r'
-            if self.name[0:2] == 'ВЖ':
-                if int(self.name[8:-1]) <= 10:
-                    self.exp = 6
-                if 1000 > int(self.name[8:-1]) > 10:
-                    self.exp = 12
-                if int(self.name[8:-1]) >= 1000:
-                    self.exp = 24
+            if self.density1 and self.density2:
+                self.accMeasurement = (self.density1 - self.density2).copy_abs()
+                if self.accMeasurement <= self.kriteriy:
+                    self.resultMeas = 'удовлетворительно'
+                    self.cause = ''
+                    self.density_avg = get_avg(self.density1, self.density2, 4)
+                    if not self.kinematicviscosity:
+                        self.resultWarningkinematic = 'Нет актуального значения кинематической вязкости. ' \
+                                                      'Динамика не рассчитана. ' \
+                                                      'Измерьте динамику и заполните новую форму'
+                    if self.kinematicviscosity:
+                        self.dinamicviscosity_not_rouned = Decimal(self.kinematicviscosity) * self.density_avg
+                        self.result = get_round_signif_digit(self.dinamicviscosity_not_rouned, 4)
+                if self.accMeasurement > self.kriteriy:
+                    self.resultMeas = 'неудовлетворительно'
+                    self.cause = 'Δ > r'
         if self.olddensity and self.density_avg:
             self.olddensity = self.olddensity.replace(',', '.')
             self.deltaolddensity = get_acc_measurement(Decimal(self.olddensity), self.density_avg)
-            if self.deltaolddensity > Decimal(0.7):
-                self.resultWarning = 'плотность отличается от предыдущей на > 0,7 %. Рекомендовано измерить повторно'
+            if self.deltaolddensity > self.kriteriy:
+                self.resultWarning = f'плотность отличается от предыдущей на {self.deltaolddensity}'
         if not self.havedensity:
             self.date_exp = date.today() + timedelta(days=30 * self.exp)
-        # связь с конкретной партией
-        if self.name[0:2] == 'ВЖ':
-            pk_VG = VG.objects.get(name=self.name[0:7])
-            a = VGrange.objects.get_or_create(rangeindex=int(self.name[8:-1]), nameSM=pk_VG)
-            b = a[0]
-            LotVG.objects.get_or_create(lot=self.lot, nameVG=b)
-            self.for_lot_and_name = LotVG.objects.get(lot=self.lot, nameVG=b)
-        super(Dinamicviscosity, self).save(*args, **kwargs)
-        # вносим АЗ в ЖАЗ
-        if self.name[0:2] == 'ВЖ' and self.fixation:
-            a = ViscosityDinamicResult.objects.get_or_create(namelot=self.for_lot_and_name)
-            note = a[0]
-            note = ViscosityDinamicResult.objects.get(namelot=note.namelot)
+
+        # вносим измерение в журнал с результататами измерений
+        if self.fixation:
+            if not self.exp:
+                self.exp = 100
+            ViscosityDinamicResult.objects.get_or_create(name=self.name, lot=self.lot, cipher=self.cipher)
+            note = ViscosityDinamicResult.objects.get(name=self.name, lot=self.lot, cipher=self.cipher)
             if self.temperature == 20:
                 note.cvt20 = self.density_avg
-                note.cvtdinamic20 = self.certifiedValue
+                note.cvtdinamic20 = self.result
                 if not self.havedensity:
                     note.cvt20date = self.date
                     note.cvt20exp = self.exp
@@ -187,7 +179,7 @@ class Dinamicviscosity(models.Model):
                 note.save()
             if self.temperature == 25:
                 note.cvt25 = self.density_avg
-                note.cvtdinamic25 = self.certifiedValue
+                note.cvtdinamic25 = self.result
                 if not self.havedensity:
                     note.cvt25date = self.date
                     note.cvt25exp = self.exp
@@ -198,7 +190,7 @@ class Dinamicviscosity(models.Model):
                 note.save()
             if self.temperature == 40:
                 note.cvt40 = self.density_avg
-                note.cvtdinamic40 = self.certifiedValue
+                note.cvtdinamic40 = self.result
                 if not self.havedensity:
                     note.cvt40date = self.date
                     note.cvt40exp = self.exp
@@ -209,7 +201,7 @@ class Dinamicviscosity(models.Model):
                 note.save()
             if self.temperature == 50:
                 note.cvt50 = self.density_avg
-                note.cvtdinamic50 = self.certifiedValue
+                note.cvtdinamic50 = self.result
                 if not self.havedensity:
                     note.cvt50date = self.date
                     note.cvt50exp = self.exp
@@ -220,7 +212,7 @@ class Dinamicviscosity(models.Model):
                 note.save()
             if self.temperature == 60:
                 note.cvt60 = self.density_avg
-                note.cvtdinamic60 = self.certifiedValue
+                note.cvtdinamic60 = self.result
                 if not self.havedensity:
                     note.cvt60date = self.date
                     note.cvt60exp = self.exp
@@ -231,7 +223,7 @@ class Dinamicviscosity(models.Model):
                 note.save()
             if self.temperature == 80:
                 note.cvt80 = self.density_avg
-                note.cvtdinamic80 = self.certifiedValue
+                note.cvtdinamic80 = self.result
                 if not self.havedensity:
                     note.cvt80date = self.date
                     note.cvt80exp = self.exp
@@ -242,7 +234,7 @@ class Dinamicviscosity(models.Model):
                 note.save()
             if self.temperature == 100:
                 note.cvt100 = self.density_avg
-                note.cvtdinamic100 = self.certifiedValue
+                note.cvtdinamic100 = self.result
                 if not self.havedensity:
                     note.cvt100date = self.date
                     note.cvt100exp = self.exp
@@ -253,7 +245,7 @@ class Dinamicviscosity(models.Model):
                 note.save()
             if self.temperature == 150:
                 note.cvt150 = self.density_avg
-                note.cvtdinamic150 = self.certifiedValue
+                note.cvtdinamic150 = self.result
                 if not self.havedensity:
                     note.cvt150date = self.date
                     note.cvt150exp = self.exp
@@ -264,7 +256,7 @@ class Dinamicviscosity(models.Model):
                 note.save()
             if self.temperature == -20:
                 note.cvtminus20 = self.density_avg
-                note.cvtdinamicminus20 = self.certifiedValue
+                note.cvtdinamicminus20 = self.result
                 if not self.havedensity:
                     note.cvtminus20date = self.date
                     note.cvtminus20exp = self.exp
@@ -273,18 +265,17 @@ class Dinamicviscosity(models.Model):
                     note.cvtminus20dead = self.densitydead
                 note.kinematicviscosityfordinamicdeadminus20 = self.kinematicviscositydead
                 note.save()
-
+        super(Dinamicviscosity, self).save(*args, **kwargs)
 
     def __str__(self):
         return f' {self.name}  п.{self.lot};  {self.temperature} t ℃;  {self.date}'
 
     def get_absolute_url(self):
-        """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
         return reverse('dinamicviscositystr', kwargs={'pk': self.pk})
 
     class Meta:
-        verbose_name = 'Динамика и плотность: Расчёт АЗ'
-        verbose_name_plural = 'Динамика и плотность: Расчёт АЗ'
+        verbose_name = 'Измерение плотности и расчёт динаммической вязкости'
+        verbose_name_plural = 'Измерение плотности и расчёт динаммической вязкости'
 
 
 class CommentsDinamicviscosity(models.Model):

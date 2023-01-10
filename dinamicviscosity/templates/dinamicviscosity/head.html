@@ -1,10 +1,16 @@
 {% extends 'main/Journal.html' %}
 {% load static %}
+
 {% block uniccontent %}
-<br>
-<div style="text-align: center;"><a href="/CertifiedValueJ/kinematicviscosityvalues/" class="btn btn-info mr-5 mt-3" style="width: 600px">
-Полный список АЗ</a></div>
-<br>
-<br>
-<div style="text-align: center;"><img src="{% static 'main/img/dinamicviscosity.jpg' %}"  alt="ВЖ ДИН"></div>
+    <br>
+    <div style="text-align: center;">
+        <h4> Информация </h4>
+    </div>
+    <div style="text-align: center;">
+        <a href="https://internet-law.ru/gosts/gost/64422/" class="btn btn-info mt-4" style="width: 250px" target="blank"> ГОСТ 33 </a>
+        <a href="https://internet-law.ru/gosts/gost/63170/" class="btn btn-info mt-4" style="width: 250px" target="blank"> ГОСТ 3900 </a>
+    </div>
+    <br>
+    <br>
+    <div style="text-align: center;"><img src="{% static 'main/img/dinamicviscosity.jpg' %}"  alt="ВЖ ДИН"></div>
 {% endblock %}

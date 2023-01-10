@@ -55,6 +55,7 @@ style_headers = xlwt.XFStyle()
 style_headers.font.bold = True
 style_headers.font.name = 'Times New Roman'
 style_headers.font.height = 20 * 8
+style_headers.font.height = 20 * 8
 style_headers.borders = b1
 style_headers.alignment = al10
 
@@ -66,7 +67,7 @@ style_plain.borders = b1
 style_plain.alignment = al10
 
 # обычные ячейки, с толстыми границами ячеек
-style_plain_bb = style_plain
+style_plain_bb = xlwt.XFStyle()
 style_plain_bb.font.name = 'Times New Roman'
 style_plain_bb.font.height = 20 * 8
 style_plain_bb.borders = b2
@@ -144,7 +145,7 @@ def export_protocolbase_xls(request, pk, MODEL, parameter, extrainfo, get_for_co
 
     # формируем источники данных
     company = CompanyCard.objects.get(pk=1)
-    note = MODEL.objects. \
+    q = MODEL.objects. \
         annotate(name_rm=Concat('name', Value(' п. '), 'lot')). \
         annotate(performer_rm=Concat('performer__profile__userposition', Value(' '), 'performer__username')). \
         annotate(equipment_set=Concat('equipment1__charakters__name',
@@ -169,9 +170,19 @@ def export_protocolbase_xls(request, pk, MODEL, parameter, extrainfo, get_for_co
                                        Value(' тип '), 'equipment4__charakters__typename',
                                        Value(', свидетельство о поверке № '), 'equipment4__newcertnumber',
                                        Value(' от '), 'equipment4__newdate',
-                                       Value(' действительно до '), 'equipment4__newdatedead',
-                                       )). \
-        get(pk=pk)
+                                       Value(' действительно до '), 'equipment4__newdatedead'))
+
+    note = q.get(pk=pk)
+    try:
+        if note.equipment5:
+            q = q.annotate(equipment_set3=Concat(    'equipment5__charakters__name',
+                           Value(' тип '), 'equipment5__charakters__typename',
+                           Value(', свидетельство о поверке № '), 'equipment5__newcertnumber',
+                           Value(' от '), 'equipment5__newdate',
+                           Value(' действительно до '), 'equipment5__newdatedead'))
+    except:
+        pass
+
 
     meteo = MeteorologicalParameters.objects. \
         annotate(equipment_meteo=Concat('equipment1__charakters__name',
@@ -561,6 +572,30 @@ def export_protocolbase_xls(request, pk, MODEL, parameter, extrainfo, get_for_co
         ws.merge(row_num, row_num, 2, 7, style_plain)
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 1000
+
+    try:
+        if note.equipment_set3:
+            row_num += 1
+            columns = [
+                '  ',
+                '  ',
+                note.equipment_set2,
+                note.equipment_set2,
+                note.equipment_set2,
+                note.equipment_set2,
+                note.equipment_set2,
+                note.equipment_set2,
+            ]
+            for col_num in range(2):
+                ws.write(row_num, col_num, columns[col_num], style_headers)
+                ws.merge(row_num, row_num, 0, 1, style_headers)
+            for col_num in range(2, len(columns)):
+                ws.write(row_num, col_num, columns[col_num], style_plain)
+                ws.merge(row_num, row_num, 2, 7, style_plain)
+            ws.row(row_num).height_mismatch = True
+            ws.row(row_num).height = 1000
+    except:
+        pass
 
     row_num += 1
     columns = [
@@ -1052,6 +1087,396 @@ def export_base_kinematicviscosity_xls(request, pk, MODEL):
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style_plain_nobor_r)
         ws.merge(row_num, row_num, 0, 5, style_plain_nobor_r)
+
+    wb.save(response)
+    return response
+
+def export_base_dinamicviscosity_xls(request, pk, MODEL):
+    """динамическая вязкость - выгрузка страницы журнала"""
+    # источник данных
+    note = MODEL.objects.get(pk=pk)
+
+    # создаем выгрузку
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="viscosity_din_str_{note.pk}.xls"'
+
+    # добавляем книгу и страницу с названием
+    wb = xlwt.Workbook(encoding='utf-8')
+    nn = str(note.name)[:18]
+    nl = str(note.lot)[:6]
+    ws = wb.add_sheet(f'{nn}, п. {nl}, t {note.temperature}', cell_overwrite_ok=True)
+    ws.header_str = b''
+    ws.footer_str = b''
+
+    # высота строк
+    for i in range(0, 21):
+        ws.row(i).height_mismatch = True
+        ws.row(i).height = 600
+    ws.row(21).height_mismatch = True
+    ws.row(21).height = 800
+    for i in range(22, 25):
+        ws.row(i).height_mismatch = True
+        ws.row(i).height = 600
+
+    # ширина столбцов
+    ws.col(0).width = 4000
+    ws.col(1).width = 4000
+    ws.col(2).width = 4000
+    ws.col(3).width = 2700
+    ws.col(4).width = 6500
+
+
+    # строчка 1 и далее все строки последовательно
+    row_num = 0
+    columns = [
+                 f'{AttestationJ.objects.get(id=1).name}_{note.date.year}'
+               ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain_nobor_r)
+        ws.merge(row_num, row_num, 0, 5, style_plain_nobor_r)
+
+    row_num += 2
+    columns = [
+        'Дата измерения',
+        'Название',
+        'Номер партии',
+        'Шифр',
+        'Шифр',
+        'Т, °C',
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_headers)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 800
+        ws.merge(row_num, row_num, 3, 4, style_headers)
+
+    row_num += 1
+    columns = [
+        note.date,
+        note.name,
+        note.lot,
+        note.cipher,
+        note.cipher,
+        note.temperature,
+    ]
+    for col_num in range(1):
+        ws.write(row_num, col_num, columns[col_num], style_date)
+    for col_num in range(1, 4):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+    for col_num in range(4, len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_2dp)
+        ws.merge(row_num, row_num, 3, 4, style_plain)
+
+    row_num += 1
+    columns = [
+        f'Проведение испытаний по {note.ndocument}'
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_headers)
+        ws.merge(row_num, row_num, 0, 5, style_headers)
+
+    row_num += 1
+    columns = [
+        f'Измерение плотности {note.equipment}'
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(4, 4, 0, 4, style_plain)
+
+    if note.equipment == 'денсиметром':
+        note.piknometer_volume = '-'
+        note.piknometer_mass1 = '-'
+        note.piknometer_mass2 = '-'
+        note.piknometer_plus_SM_mass1 = '-'
+        note.piknometer_plus_SM_mass2 = '-'
+        note.SM_mass1 = '-'
+        note.SM_mass2 = '-'
+
+    row_num += 1
+    columns = [
+        'V(пикн.), см3',
+        note.piknometer_volume,
+        'Измерение 1',
+        'Измерение 2',
+        'Измерение 2',
+    ]
+    for col_num in range(1):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+    for col_num in range(1, 2):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 2, 3, style_plain)
+    for col_num in range(2, len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+
+    row_num += 1
+    columns = [
+        'm(пикн.), г',
+        'm(пикн.), г',
+        note.piknometer_mass1,
+        note.piknometer_mass2,
+        note.piknometer_mass2,
+    ]
+    for col_num in range(1):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 1, style_plain)
+    for col_num in range(2, len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 2, 3, style_plain)
+
+    row_num += 1
+    columns = [
+        'm(СО + пикн.), г',
+        'm(СО + пикн.), г',
+        note.piknometer_plus_SM_mass1,
+        note.piknometer_plus_SM_mass2,
+        note.piknometer_plus_SM_mass2,
+    ]
+    for col_num in range(1):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 1, style_plain)
+    for col_num in range(2, len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 2, 3, style_plain)
+
+    row_num += 1
+    columns = [
+        'm(СО), г',
+        'm(СО), г',
+        note.SM_mass1,
+        note.SM_mass2,
+        note.SM_mass2,
+    ]
+    for col_num in range(1):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 1, style_plain)
+    for col_num in range(2, len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 2, 3, style_plain)
+
+    row_num += 1
+    columns = [
+        'ρ1, г/см3',
+        'ρ1, г/см3',
+        note.density1,
+        note.density1,
+        note.density1,
+
+    ]
+    for col_num in range(1):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 1, style_plain)
+    for col_num in range(2, len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 2, 4, style_plain)
+
+    row_num += 1
+    columns = [
+        'ρ2, г/см3',
+        'ρ2, г/см3',
+        note.density2,
+        note.density2,
+        note.density2,
+
+    ]
+    for col_num in range(1):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 1, style_plain)
+    for col_num in range(2, len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 2, 4, style_plain)
+
+    try:
+        row_num += 1
+        columns = [
+            'плотность измерил',
+            'плотность измерил',
+            note.performerdensity.username,
+            note.performerdensity.username,
+            note.performerdensity.username,
+        ]
+        for col_num in range(1):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 0, 1, style_plain)
+        for col_num in range(2, len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 2, 4, style_plain)
+    except:
+        row_num += 1
+        columns = [
+            'плотность измерил',
+            'плотность измерил',
+            ' ',
+            ' ',
+            ' ',
+        ]
+        for col_num in range(1):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 0, 1, style_plain)
+        for col_num in range(2, len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 2, 4, style_plain)
+
+
+    row_num += 1
+    columns = [
+        'Обработка результатов'
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 4, style_plain)
+
+    row_num += 1
+    columns = [
+        'ρ сред., г/см3',
+        'Оценка приемлемости измерений   \n Δ = (|ρ1 - ρ2|/ρ сред.) * 100 %',
+        'Оценка приемлемости измерений   \n Δ = (|ρ1 - ρ2|/ρ сред.) * 100 %',
+        'Оценка приемлемости измерений   \n Δ = (|ρ1 - ρ2|/ρ сред.) * 100 %',
+         'Критерий приемл. измерений, r',
+    ]
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 1, 3, style_plain)
+
+    row_num += 1
+    columns = [
+         note.density_avg,
+         note.accMeasurement,
+         note.accMeasurement,
+         note.accMeasurement,
+         note.kriteriy,
+    ]
+    for col_num in range(1):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+    for col_num in range(1, len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 1, 3, style_plain)
+
+    row_num += 1
+    columns = [
+        f'Результат измерений: {note.resultMeas}'
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 4, style_plain)
+
+    row_num = 16
+    columns = [
+        'Расчёт динамической вязкости'
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 4, style_plain)
+
+    row_num += 1
+    columns = [
+        'Вязкость кинематическая при температуре измерений, ν, мм2/с',
+        'Вязкость кинематическая при температуре измерений, ν, мм2/с',
+        'Вязкость динамическая, νдин = ν * ρсред , Па*с',
+        'Вязкость динамическая, νдин = ν * ρсред , Па*с',
+        'Вязкость динамическая, νдин = ν * ρсред , Па*с',
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 1, style_plain)
+        ws.merge(row_num, row_num, 2, 4, style_plain)
+
+    note.kinematicviscosity = str(note.kinematicviscosity).replace('.', ',')
+
+    row_num += 1
+    columns = [
+       note.kinematicviscosity,
+       note.kinematicviscosity,
+       note.dinamicviscosity_not_rouned,
+       note.dinamicviscosity_not_rouned,
+       note.dinamicviscosity_not_rouned,
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 1, style_plain)
+        ws.merge(row_num, row_num, 2, 4, style_plain)
+
+
+    row_num += 1
+    columns = [
+       ' Результат испытаний'
+    ]
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 4, style_plain)
+
+    row_num += 1
+    columns = [
+        'Динамическая вязкость, Па * с',
+        'Динамическая вязкость, Па * с',
+        'Динамическая вязкость, Па * с',
+        'Динамическая вязкость, Па * с',
+        'Динамическая вязкость, Па * с',
+        'Динамическая вязкость, Па * с',
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+
+    note.certifiedValue = str(note.certifiedValue).replace('.', ',')
+    note.abserror = str(note.abserror).replace('.', ',')
+    note.olddensity = str(note.olddensity).replace('.', ',')
+
+    if not note.olddensity:
+        note.deltaolddensity = '-'
+        note.olddensity = '-'
+        note.resultWarning = '-'
+    if note.resultWarning == '' and not note.olddensity:
+        note.resultWarning = '-'
+    if note.resultWarning == '' and note.olddensity:
+        note.resultWarning = 'да'
+    if note.resultWarning == '' and not note.olddensity:
+        note.resultWarning = 'нет'
+
+    row_num += 1
+    columns = [
+        note.certifiedValue,
+        note.abserror,
+        note.olddensity,
+        note.deltaolddensity,
+        note.resultWarning,
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+
+    row_num += 1
+    columns = [
+        'Исполнитель',
+        'Исполнитель',
+        'Исполнитель',
+        'ОТК',
+        'ОТК',
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 2, style_plain)
+        ws.merge(row_num, row_num, 3, 4, style_plain)
+
+    row_num += 1
+    columns = [
+        str(note.performer),
+        str(note.performer),
+        str(note.performer),
+        '',
+        '',
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 2, style_plain)
+        ws.merge(row_num, row_num, 3, 4, style_plain)
+
+    row_num += 1
+    columns = [
+        f'Страница № {note.pk}',
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 0, 4, style_plain)
 
     wb.save(response)
     return response

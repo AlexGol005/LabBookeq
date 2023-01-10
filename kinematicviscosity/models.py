@@ -38,7 +38,6 @@ class ViscosityKinematic(models.Model):
     ndocument = models.CharField('Метод испытаний', max_length=100, choices=ndocumentoptional,
                                  default=ndocumentoptional[0][1],
                                  blank=True, null=True)
-    relerror = models.DecimalField('Относительная  погрешность', max_digits=3, decimal_places=1, null=True)
     repeatability = models.CharField('Повторяемость', max_length=100, choices=REPEATABILITY,
                                      default=REPEATABILITY[0][1],
                                      blank=True, null=True)

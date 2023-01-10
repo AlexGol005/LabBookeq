@@ -1,14 +1,21 @@
-import datetime
+"""
+Модуль проекта LabJournal, приложения dinamicviscosity.
+Приложение dinamicviscosity это журнал фиксации
+лабораторных записей по измерению динамической вязкости нефтепродуктов
+(Лабортаорный журнал измерения динамической вязкости).
+
+Данный модуль forms.py выводит формы для внесения данных пользователями в пользовательской части сайта.
+"""
+
 from django import forms
-from django.contrib.auth.models import User
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
 from django.db.models import Q
 
-from equipment.models import Rooms, MeasurEquipment
+
 from .models import*
-from .j_constants import *
+from .constants import *
 
 MODEL = Dinamicviscosity
 COMMENTMODEL = CommentsDinamicviscosity
@@ -16,25 +23,27 @@ COMMENTMODEL = CommentsDinamicviscosity
 
 class StrJournalCreationForm(forms.ModelForm):
     """форма для внесения записи в журнал"""
-    """поменять: fields"""
     ndocument = forms.ChoiceField(label='Метод испытаний', required=True,
-                                  choices=DOCUMENTS,
+                                  choices=ndocumentoptional,
                                   widget=forms.Select(attrs={'class': 'form-control'}))
-    name = forms.CharField(initial='ВЖ-2-ПА(100)', label='Наименование пробы', max_length=100, required=True,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': 'Наименование пробы'}
-                                                  ))
+    name = forms.CharField(initial='РЭВ-100', label='Наименование пробы', max_length=100, required=True,
+                           widget=forms.TextInput(attrs={
+                               'class': 'form-control',
+                               'placeholder': 'Наименование пробы'}))
     lot = forms.CharField(label='Партия', max_length=100, required=True,
                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': 'Партия'}
-                                                 ))
+                                                        'placeholder': 'Партия'}))
+    cipher = forms.CharField(label='Шифр пробы', max_length=100, required=True,
+                             widget=forms.TextInput(attrs={'class': 'form-control',
+                                                           'placeholder': 'Шифр пробы'}))
+    sowner = forms.CharField(label='Владелец пробы', max_length=100, required=False,
+                             widget=forms.TextInput(attrs={'class': 'form-control',
+                                                           'placeholder': 'Владелец пробы'}))
     temperature = forms.DecimalField(label='Температура, ℃', max_digits=5, decimal_places=2, required=True,
                                      widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                   'placeholder': 'Температура'}
-                                                            ))
-
-    constit = forms.ChoiceField(label='Состав пробы', widget=forms.RadioSelect, choices=CHOICES, required=True)
-
+                                                                   'placeholder': 'Температура'}))
+    constit = forms.ChoiceField(label='Состав пробы', choices=CHOICES,
+                                widget=forms.Select(attrs={'class': 'form-control'}))
     olddensity = forms.CharField(label='Предыдущее аттестованное значение плотности, г/мл', required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control',
                                                                'placeholder': 'АЗ через точку'}
@@ -65,12 +74,12 @@ class StrJournalCreationForm(forms.ModelForm):
                                           widget=forms.TextInput(attrs={'class': 'form-control',
                                                                         'placeholder': '0.0000'}
                                                                  ))
-    piknometer_plus_SM_mass1 = forms.DecimalField(label='Масса пикнометра + СО 1, г', max_digits=7, decimal_places=4,
+    piknometer_plus_SM_mass1 = forms.DecimalField(label='Масса пикнометра + пробы 1, г', max_digits=7, decimal_places=4,
                                                   required=False,
                                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                                 'placeholder': '0.0000'}
                                                                          ))
-    piknometer_plus_SM_mass2 = forms.DecimalField(label='Масса пикнометра + СО 2, г', max_digits=7, decimal_places=4,
+    piknometer_plus_SM_mass2 = forms.DecimalField(label='Масса пикнометра + пробы 2, г', max_digits=7, decimal_places=4,
                                                   required=False,
                                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                                 'placeholder': '0.0000'}
@@ -78,10 +87,6 @@ class StrJournalCreationForm(forms.ModelForm):
 
     equipment = forms.ChoiceField(label='Способ измерения плотности', choices=DENSITYE,
                                   widget=forms.Select(attrs={'class': 'form-control'}))
-    kinematicviscosity = forms.CharField(label='Кинемат. вязк. при T измерений', required=False,
-                                          widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                        'placeholder': 'АЗ через точку'}
-                                                                 ))
     density_avg = forms.DecimalField(label='Плотность(если измерена ранее)', max_digits=7, decimal_places=5,
                                   required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
@@ -103,18 +108,21 @@ class StrJournalCreationForm(forms.ModelForm):
             Row(
                 Column('name', css_class='form-group col-md-4 mb-0'),
                 Column('lot', css_class='form-group col-md-4 mb-0'),
-                Column('temperature', css_class='form-group col-md-4 mb-0'),
+                Column('cipher', css_class='form-group col-md-4 mb-0'),
 
                 css_class='form-row'
             ),
             Row(
-                Column('ndocument', css_class='form-group col-md-6 mb-0'),
-
+                Column('sowner', css_class='form-group col-md-8 mb-0'),
+                Column('ndocument', css_class='form-group col-md-8 mb-0'),
                 css_class='form-row'
             ),
-
             Row(
                 Column('constit', css_class='form-group col-md-6 mb-0'),
+                Column('temperature', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
                 Column('havedensity', css_class='form-group col-md-6 mb-0'),
                 css_class='form-row'
             ),
@@ -160,12 +168,10 @@ class StrJournalCreationForm(forms.ModelForm):
                   'piknometer_volume',
                   'piknometer_mass1', 'piknometer_mass2',
                   'equipment', 'piknometer_plus_SM_mass1', 'piknometer_plus_SM_mass2',
-                  'density_avg', 'densitydead', 'havedensity'
+                  'density_avg', 'densitydead', 'havedensity',
+                  'sowner',
+                  'cipher',
                   ]
-
-
-
-
 
 
 class CommentCreationForm(forms.ModelForm):
@@ -179,28 +185,6 @@ class CommentCreationForm(forms.ModelForm):
         model = COMMENTMODEL
         fields = ['name']
 
-
-class SearchForm(forms.Form):
-    "форма для поиска по полям журнала ГСО, партия, температура"
-    "при копировании поменять поля на нужные"
-    name = forms.CharField(label='Название', initial='ВЖ-2-ПА(100)',
-                           help_text='введите название в форме: ВЖ-2-ПА(100)',
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': 'ВЖ-2-ПА(100)'}))
-    lot = forms.CharField(label='Партия', initial='1', required=False)
-    temperature = forms.CharField(label='Температура', initial='20', required=False)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            Row(
-                Column('name', css_class='form-group col-md-4 mb-0'),
-                Column('lot', css_class='form-group col-md-2 mb-0'),
-                Column('temperature', css_class='form-group col-md-3 mb-0'),
-                Submit('submit', 'Найти', css_class='btn  btn-info col-md-2 mb-3 mt-4 ml-4'),
-                css_class='form-row'
-            ))
 
 class StrJournalProtocolUdateForm(forms.ModelForm):
     """форма для  обновления записи в журнале: поля модели оборудование для протокола"""
@@ -264,6 +248,27 @@ class StrJournalProtocolRoomUdateForm(forms.ModelForm):
             'room'
         ]
 
+class SearchForm(forms.Form):
+    """форма для поиска по полям журнала проба, партия, температура, шифр"""
+
+    name = forms.CharField(label='Название', required=False,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+    lot = forms.CharField(label='Партия', initial='1', required=False)
+    cipher = forms.CharField(label='Шифр', initial='1', required=False)
+    temperature = forms.CharField(label='Температура', initial='20', required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('name', css_class='form-group col-md-3 mb-0'),
+                Column('lot', css_class='form-group col-md-2 mb-0'),
+                Column('cipher', css_class='form-group col-md-2 mb-0'),
+                Column('temperature', css_class='form-group col-md-2 mb-0'),
+                Submit('submit', 'Найти', css_class='btn  btn-info col-md-2 mb-3 mt-4 ml-4'),
+                css_class='form-row'
+            ))
 
 
 

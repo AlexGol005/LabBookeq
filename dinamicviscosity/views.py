@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from xlwt import Alignment, Borders
 
+from exelbase import export_base_dinamicviscosity_xls
 from jouViscosity.models import ViscosityKinematicResult
 from kinematicviscosity.models import ViscosityKinematic
 
@@ -17,7 +18,7 @@ from .forms import *
 from formstandart import*
 from .models import *
 
-from .j_constants import *
+from .constants import *
 from viewstandart import *
 
 MODEL = Dinamicviscosity
@@ -54,7 +55,7 @@ class RegView(RegView):
         order = form.save(commit=False)
         """вставка начало"""
         try:
-            olddencity = ViscosityKinematicResult.objects.get(namelot__nameVG__name=order.name, namelot__lot=order.lot)
+            olddencity = ViscosityDinamicResult.objects.get(name=order.name, lot=order.lot, cipher=order.cipher)
             if order.temperature == 20:
                 order.olddensity = olddencity.cvt20
 
@@ -85,8 +86,8 @@ class RegView(RegView):
             pass
 
         try:
-            kinematicviscosity = ViscosityKinematicResult.objects.get(namelot__nameVG__name=order.name,
-                                                                    namelot__lot=order.lot)
+            kinematicviscosity = ViscosityKinematicResult.objects.get(name=order.name,
+                                                                      lot=order.lot, cipher=order.cipher)
             if order.temperature == 20:
                 if kinematicviscosity.cvt20dead >= date.today():
                     order.kinematicviscosity = kinematicviscosity.cvt20
@@ -187,7 +188,7 @@ class DateSearchResultView(Constants, DateSearchResultView):
 
 
 # блок  'View' для различных поисков (не унаследованные)
-class SearchResultView(TemplateView):
+class SearchResultView(Constants, TemplateView):
     """ Представление, которое выводит результаты поиска на странице со всеми записями журнала. """
     """нестандартное"""
     template_name = URL + '/journal.html'
@@ -196,21 +197,68 @@ class SearchResultView(TemplateView):
         context = super(SearchResultView, self).get_context_data(**kwargs)
         name = self.request.GET['name']
         lot = self.request.GET['lot']
+        cipher = self.request.GET['cipher']
         temperature = self.request.GET['temperature']
-        if name and lot and temperature:
-            objects = MODEL.objects.filter(name=name).filter(lot=lot).filter(temperature=temperature).filter(fixation=True).order_by('-pk')
+        if name and lot and temperature and not cipher:
+            objects = MODEL.objects.filter(name=name).filter(lot=lot).filter(temperature=temperature).\
+                filter(fixation=True).order_by('-pk')
             context['objects'] = objects
-        if name and lot and not temperature:
+        if name and lot and not temperature and not cipher:
             objects = MODEL.objects.filter(name=name).filter(lot=lot).filter(fixation=True).order_by('-pk')
             context['objects'] = objects
-        if name and not lot and not temperature:
+        if name and not lot and not temperature and not cipher:
             objects = MODEL.objects.filter(name=name).filter(fixation=True).order_by('-pk')
             context['objects'] = objects
-        if name and temperature and not lot:
-            objects = MODEL.objects.filter(name=name).filter(temperature=temperature).filter(fixation=True).order_by('-pk')
+        if name and temperature and not lot and not cipher:
+            objects = MODEL.objects.filter(name=name).filter(temperature=temperature).\
+                filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if name and temperature and lot and cipher:
+            objects = MODEL.objects.filter(name=name).filter(temperature=temperature).filter(cipher=cipher).\
+                        filter(lot=lot).filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if name and temperature and not lot and cipher:
+            objects = MODEL.objects.filter(name=name).filter(temperature=temperature).filter(cipher=cipher).\
+                        filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if name and not temperature and lot and cipher:
+            objects = MODEL.objects.filter(name=name).filter(cipher=cipher).\
+                        filter(lot=lot).filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if name and not temperature and not lot and cipher:
+            objects = MODEL.objects.filter(name=name).filter(cipher=cipher).\
+                        filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if not name and not temperature and not lot and cipher:
+            objects = MODEL.objects.filter(cipher=cipher).\
+                        filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if not name and not temperature and lot and not cipher:
+            objects = MODEL.objects.\
+                        filter(lot=lot).filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if not name and temperature and not lot and not cipher:
+            objects = MODEL.objects.filter(temperature=temperature).\
+                        filter(lot=lot).filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if name and temperature and lot and cipher:
+            objects = MODEL.objects.filter(name=name).filter(temperature=temperature).filter(cipher=cipher).\
+                        filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if not name and temperature and lot and cipher:
+            objects = MODEL.objects.filter(temperature=temperature).filter(cipher=cipher).filter(lot=lot).\
+                        filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if not name and not temperature and lot and cipher:
+            objects = MODEL.objects.filter(cipher=cipher).\
+                        filter(lot=lot).filter(fixation=True).order_by('-pk')
+            context['objects'] = objects
+        if not name and temperature and not lot and cipher:
+            objects = MODEL.objects.filter(temperature=temperature).filter(cipher=cipher).\
+                       filter(fixation=True).order_by('-pk')
             context['objects'] = objects
         context['journal'] = JOURNAL.objects.filter(for_url=URL)
-        context['formSM'] = SearchForm(initial={'name': name, 'lot': lot, 'temperature': temperature})
+        context['formSM'] = SearchForm(initial={'name': name, 'lot': lot, 'temperature': temperature, 'cipher': cipher})
         context['formdate'] = SearchDateForm()
         context['URL'] = URL
         return context
@@ -246,452 +294,11 @@ def filterview(request, pk):
 
 
 # ---------------------------------------------
-# блок выгрузок данных в формате ексель (не унаследованные)
-# вспомогательная общая информация
-b1 = Borders()
-b1.left = 1
-b1.right = 1
-b1.top = 1
-b1.bottom = 1
-
-b2 = Borders()
-b2.left = 6
-b2.right = 6
-b2.bottom = 6
-b2.top = 6
-
-al1 = Alignment()
-al1.horz = Alignment.HORZ_CENTER
-al1.vert = Alignment.VERT_CENTER
-
-al2 = Alignment()
-al2.horz = Alignment.HORZ_RIGHT
-al2.vert = Alignment.VERT_CENTER
-
-al3 = Alignment()
-al3.horz = Alignment.HORZ_LEFT
-al3.vert = Alignment.VERT_CENTER
+# блок выгрузок данных в формате ексель (вызывают стандартизированные функции)
 
 def export_me_xls(request, pk):
     '''представление для выгрузки отдельной странички журнала в ексель'''
-    note = MODEL.objects.get(pk=pk)
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="{note.pk}.xls"'
-    wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet(f'{note.name}, п. {note.lot},{note.temperature}', cell_overwrite_ok=True)
-    ws.header_str = b''
-    ws.footer_str = b''
-
-
-    for i in range(26):
-        ws.row(i).height_mismatch = True
-        ws.row(i).height = 600
-
-    ws.row(22).height_mismatch = True
-    ws.row(22).height = 800
-
-    for i in range(22, 25):
-        ws.row(i).height_mismatch = True
-        ws.row(i).height = 600
-
-
-    # ширина столбцов
-    ws.col(0).width = 4000
-    ws.col(1).width = 4000
-    ws.col(2).width = 4000
-    ws.col(3).width = 2700
-    ws.col(4).width = 6500
-
-    # стили
-    style1 = xlwt.XFStyle()
-    style1.font.bold = True
-    style1.font.name = 'Times New Roman'
-    style1.borders = b1
-    style1.alignment = al1
-    style1.alignment.wrap = 1
-
-    style2 = xlwt.XFStyle()
-    style2.font.name = 'Times New Roman'
-    style2.borders = b1
-    style2.alignment = al1
-
-    style3 = xlwt.XFStyle()
-    style3.font.name = 'Times New Roman'
-    style3.borders = b1
-    style3.alignment = al1
-    style3.num_format_str = 'DD.MM.YYYY'
-
-    style4 = xlwt.XFStyle()
-    style4.font.name = 'Times New Roman'
-    style4.borders = b1
-    style4.alignment = al1
-    style4.num_format_str = '0.00'
-
-    style5 = xlwt.XFStyle()
-    style5.font.name = 'Times New Roman'
-    style5.borders = b1
-    style5.alignment = al1
-    style5.num_format_str = '0.00000'
-
-    style6 = xlwt.XFStyle()
-    style6.font.name = 'Times New Roman'
-    style6.alignment = al1
-
-    style7 = xlwt.XFStyle()
-    style7.font.name = 'Times New Roman'
-    style7.alignment = al2
-    style7.alignment = al1
-
-    style8 = xlwt.XFStyle()
-    style8.font.name = 'Times New Roman'
-    style8.borders = b1
-    style8.alignment = al1
-    style8.num_format_str = '0.0000'
-
-
-    row_num = 0
-    columns = [
-        f'{AttestationJ.objects.get(id=1).name}_{note.date.year}'
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style6)
-        ws.merge(row_num, row_num, 0, 4, style6)
-
-    row_num = 2
-    columns = [
-        'Дата измерения',
-        'Индекс СО',
-        'Номер внутренней партии',
-        'Т, °C',
-        'Сод. нефть или октол',
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.row(row_num).height_mismatch = True
-        ws.row(row_num).height = 800
-
-
-    row_num = 3
-    columns = [
-        note.date,
-        note.name,
-        note.lot,
-        note.temperature,
-        note.constit,
-    ]
-    for col_num in range(1, 4):
-        ws.write(row_num, col_num, columns[col_num], style2)
-    for col_num in range(1):
-        ws.write(row_num, col_num, columns[col_num], style3)
-    for col_num in range(3, len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style4)
-
-    row_num = 4
-    columns = [
-        f'Измерение плотности {note.equipment}'
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(4, 4, 0, 4, style1)
-
-    if note.equipment == 'денсиметром':
-        note.piknometer_volume = '-'
-        note.piknometer_mass1 = '-'
-        note.piknometer_mass2 = '-'
-        note.piknometer_plus_SM_mass1 = '-'
-        note.piknometer_plus_SM_mass2 = '-'
-        note.SM_mass1 = '-'
-        note.SM_mass2 = '-'
-
-    row_num = 5
-    columns = [
-        'V(пикн.), см3',
-        note.piknometer_volume,
-        'Измерение 1',
-        'Измерение 2',
-        'Измерение 2',
-    ]
-    for col_num in range(1):
-        ws.write(row_num, col_num, columns[col_num], style1)
-    for col_num in range(1, 2):
-        ws.write(row_num, col_num, columns[col_num], style2)
-        ws.merge(5, 5, 2, 3, style2)
-    for col_num in range(2, len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style2)
-
-    row_num = 6
-    columns = [
-        'm(пикн.), г',
-        'm(пикн.), г',
-        note.piknometer_mass1,
-        note.piknometer_mass2,
-        note.piknometer_mass2,
-    ]
-    for col_num in range(1):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(6, 6, 0, 1, style1)
-    for col_num in range(2, len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style8)
-        ws.merge(6, 6, 2, 3, style2)
-
-    row_num = 7
-    columns = [
-        'm(СО + пикн.), г',
-        'm(СО + пикн.), г',
-        note.piknometer_plus_SM_mass1,
-        note.piknometer_plus_SM_mass2,
-        note.piknometer_plus_SM_mass2,
-    ]
-    for col_num in range(1):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(7, 7, 0, 1, style1)
-    for col_num in range(2, len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style8)
-        ws.merge(7, 7, 2, 3, style8)
-
-    row_num = 8
-    columns = [
-        'm(СО), г',
-        'm(СО), г',
-        note.SM_mass1,
-        note.SM_mass2,
-        note.SM_mass2,
-    ]
-    for col_num in range(1):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(8, 8, 0, 1, style1)
-    for col_num in range(2, len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style8)
-        ws.merge(8, 8, 2, 3, style8)
-
-    row_num = 9
-    columns = [
-        'ρ1, г/см3',
-        'ρ1, г/см3',
-        note.density1,
-        note.density1,
-        note.density1,
-
-    ]
-    for col_num in range(1):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(9, 9, 0, 1, style1)
-    for col_num in range(2, len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style2)
-        ws.merge(9, 9, 2, 4, style2)
-
-    row_num = 10
-    columns = [
-        'ρ2, г/см3',
-        'ρ2, г/см3',
-        note.density2,
-        note.density2,
-        note.density2,
-
-    ]
-    for col_num in range(1):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(10, 10, 0, 1, style1)
-    for col_num in range(2, len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style2)
-        ws.merge(10, 10, 2, 4, style2)
-
-    try:
-        row_num = 11
-        columns = [
-            'плотность измерил',
-            'плотность измерил',
-            note.performerdensity.username,
-            note.performerdensity.username,
-            note.performerdensity.username,
-        ]
-        for col_num in range(1):
-            ws.write(row_num, col_num, columns[col_num], style1)
-            ws.merge(11, 11, 0, 1, style1)
-        for col_num in range(2, len(columns)):
-            ws.write(row_num, col_num, columns[col_num], style2)
-            ws.merge(11, 11, 2, 4, style2)
-    except:
-        row_num = 11
-        columns = [
-            'плотность измерил',
-            'плотность измерил',
-            ' ',
-            ' ',
-            ' ',
-        ]
-        for col_num in range(1):
-            ws.write(row_num, col_num, columns[col_num], style1)
-            ws.merge(11, 11, 0, 1, style1)
-        for col_num in range(2, len(columns)):
-            ws.write(row_num, col_num, columns[col_num], style2)
-            ws.merge(11, 11, 2, 4, style2)
-
-
-    row_num = 12
-    columns = [
-        'Обработка результатов'
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(12, 12, 0, 4, style1)
-
-    row_num = 13
-    columns = [
-        'ρ сред., г/см3',
-        'Оценка приемлемости измерений   \n Δ = (|ρ1 - ρ2|/ρ сред.) * 100 %',
-        'Оценка приемлемости измерений   \n Δ = (|ρ1 - ρ2|/ρ сред.) * 100 %',
-        'Оценка приемлемости измерений   \n Δ = (|ρ1 - ρ2|/ρ сред.) * 100 %',
-         'Критерий приемл. измерений, r',
-    ]
-
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(13, 13, 1, 3, style1)
-
-    row_num = 14
-    columns = [
-         note.density_avg,
-         note.accMeasurement,
-         note.accMeasurement,
-         note.accMeasurement,
-         note.kriteriy,
-    ]
-    for col_num in range(1):
-        ws.write(row_num, col_num, columns[col_num], style7)
-    for col_num in range(1, len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style2)
-        ws.merge(14, 14, 1, 3, style2)
-
-    row_num = 15
-    columns = [
-        f'Результат измерений: {note.resultMeas}'
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(15, 15, 0, 4, style1)
-
-    row_num = 16
-    columns = [
-        'Расчёт динамической вязкости'
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(16, 16, 0, 4, style1)
-
-    row_num = 17
-    columns = [
-        'Вязкость кинематическая при температуре измерений, ν, мм2/с',
-        'Вязкость кинематическая при температуре измерений, ν, мм2/с',
-        'Вязкость динамическая, νдин = ν * ρсред , Па*с',
-        'Вязкость динамическая, νдин = ν * ρсред , Па*с',
-        'Вязкость динамическая, νдин = ν * ρсред , Па*с',
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(17, 17, 0, 1, style1)
-        ws.merge(17, 17, 2, 4, style1)
-
-    note.kinematicviscosity = str(note.kinematicviscosity).replace('.', ',')
-
-    row_num = 18
-    columns = [
-       note.kinematicviscosity,
-       note.kinematicviscosity,
-       note.dinamicviscosity_not_rouned,
-       note.dinamicviscosity_not_rouned,
-       note.dinamicviscosity_not_rouned,
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style2)
-        ws.merge(18, 18, 0, 1, style2)
-        ws.merge(18, 18, 2, 4, style2)
-
-
-    row_num = 19
-    columns = [
-       ' Результат испытаний'
-    ]
-
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(19, 19, 0, 4, style1)
-
-    row_num = 20
-    columns = [
-        'АЗ, Дин. вязк., Па * с',
-        'Абс. погр.  (νдин сред. * 0,3)/ 1000',
-        'Пред. зн. плот., ρпред, г/см3 ',
-        'Разница с ρпред, %',
-        'Разница с ρпред <= 0,7%',
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style1)
-
-    note.certifiedValue = str(note.certifiedValue).replace('.', ',')
-    note.abserror = str(note.abserror).replace('.', ',')
-    note.olddensity = str(note.olddensity).replace('.', ',')
-
-    if not note.olddensity:
-        note.deltaolddensity = '-'
-        note.olddensity = '-'
-        note.resultWarning = '-'
-    if note.resultWarning == '' and not note.olddensity:
-        note.resultWarning = '-'
-    if note.resultWarning == '' and note.olddensity:
-        note.resultWarning = 'да'
-    if note.resultWarning == '' and not note.olddensity:
-        note.resultWarning = 'нет'
-
-    row_num = 21
-    columns = [
-        note.certifiedValue,
-        note.abserror,
-        note.olddensity,
-        note.deltaolddensity,
-        note.resultWarning,
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style2)
-
-
-    row_num = 22
-    columns = [
-        'Исполнитель',
-        'Исполнитель',
-        'Исполнитель',
-        'ОТК',
-        'ОТК',
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style1)
-        ws.merge(row_num, row_num, 0, 2, style1)
-        ws.merge(row_num, row_num, 3, 4, style1)
-
-    row_num = 23
-    columns = [
-        str(note.performer),
-        str(note.performer),
-        str(note.performer),
-        '',
-        '',
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style2)
-        ws.merge(row_num, row_num, 0, 2, style1)
-        ws.merge(row_num, row_num, 3, 4, style1)
-
-    row_num = 26
-    columns = [
-        'Страница №           ',
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style7)
-        ws.merge(row_num, row_num, 0, 4, style7)
-
-    wb.save(response)
-    return response
-
+    export_base_dinamicviscosity_xls(request, pk, MODEL)
 
 
 def export_protocol_xls(request, pk):

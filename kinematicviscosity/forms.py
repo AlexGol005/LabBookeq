@@ -20,8 +20,7 @@ COMMENTMODEL = Comments
 
 
 class StrJournalCreationForm(forms.ModelForm):
-    """форма для внесения записи в журнал кинематической вязкости"""
-    """Форма стандартная, для друго журнала надо поменять: fields, initial"""
+    """форма для внесения записи в журнал"""
     ndocument = forms.ChoiceField(label='Метод испытаний', required=True,
                                   choices=ndocumentoptional,
                                   widget=forms.Select(attrs={'class': 'form-control'}))
@@ -41,6 +40,8 @@ class StrJournalCreationForm(forms.ModelForm):
     temperature = forms.DecimalField(label='Температура, ℃', max_digits=5, decimal_places=2, required=True,
                                      widget=forms.TextInput(attrs={'class': 'form-control',
                                                                    'placeholder': 'Температура'}))
+    constit = forms.ChoiceField(label='Состав пробы', choices=CHOICES,
+                                widget=forms.Select(attrs={'class': 'form-control'}))
     termostatition = forms.BooleanField(label='Термостатировано не менее 30 минут', required=True)
     temperatureCheck = forms.BooleanField(label='Температура контролируется внешним поверенным термометром',
                                           required=True)
@@ -88,8 +89,6 @@ class StrJournalCreationForm(forms.ModelForm):
                                          max_digits=5, decimal_places=2, required=False,
                                          widget=forms.TextInput(attrs={'class': 'form-control',
                                                                        'placeholder': 'сс.сс'}))
-    constit = forms.ChoiceField(label='Состав пробы', choices=CHOICES,
-                                widget=forms.Select(attrs={'class': 'form-control'}))
     oldresult = forms.CharField(label='Предыдущее аттестованное значение', required=False,
                                         widget=forms.TextInput(attrs={'class': 'form-control',
                                                                       'placeholder': 'АЗ через точку'}))

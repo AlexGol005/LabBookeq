@@ -111,6 +111,7 @@ class Rooms(models.Model):
 
 
 class Equipment(models.Model):
+    date = models.DateField(auto_now_add=True, blank=True, null=True)
     exnumber = models.CharField('Внутренний номер', max_length=100, default='', blank=True, null=True, unique=True)
     lot = models.CharField('Заводской номер', max_length=100, default='')
     yearmanuf = models.IntegerField('Год выпуска', default='', blank=True, null=True)
@@ -160,8 +161,6 @@ class Equipment(models.Model):
                 resize = (1000, 1000)
                 image3.thumbnail(resize)
                 image3.save(self.imginstruction3.path)
-        # Personchange.objects.create(equipment=self, person=User.objects.get(pk=1))
-        # Roomschange.objects.create(equipment=self, roomnumber=Rooms.objects.get(pk=1))
         super(Equipment, self).save(*args, **kwargs)
 
     # def get_absolute_url(self):

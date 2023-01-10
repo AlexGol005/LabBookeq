@@ -80,10 +80,6 @@ class EquipmentCreateForm(forms.ModelForm):
     status = forms.ChoiceField(label='Статус', initial='Эксплуатация',
                                choices=CHOICES,
                                widget=forms.Select(attrs={'class': 'form-control'}))
-
-    yearintoservice = forms.CharField(label='Год ввода в эксплуатацию', max_length=10000, initial=datetime.now().year,
-                                widget=forms.TextInput(attrs={'class': 'form-control'}))
-
     new = forms.ChoiceField(label='Новый или б/у', initial='новый',
                                choices=(
                                         ('новый', 'новый'),
@@ -114,7 +110,7 @@ class EquipmentCreateForm(forms.ModelForm):
         model = Equipment
         fields = [
             'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status',
-            'yearintoservice', 'new', 'invnumber', 'kategory', 'individuality', 'notemaster',
+            'new', 'invnumber', 'kategory', 'individuality', 'notemaster',
             'imginstruction2', 'imginstruction1',
             'imginstruction3', 'video', 'price'
         ]
@@ -134,7 +130,7 @@ class EquipmentCreateForm(forms.ModelForm):
                 Column('new', css_class='form-group col-md-4 mb-0')),
             Row(
                 Column('status', css_class='form-group col-md-6 mb-0'),
-                Column('yearintoservice', css_class='form-group col-md-6 mb-0')),
+                ),
             Row(
                 Column('imginstruction1', css_class='form-group col-md-12 mb-0')),
             Row(
@@ -249,7 +245,7 @@ class VerificationRegForm(forms.ModelForm):
                                   widget=forms.TextInput(attrs={'class': 'form-control'}))
     certnumber = forms.CharField(label='№ свидетельства о поверке', max_length=10000,
                                   widget=forms.TextInput(attrs={'class': 'form-control'}))
-    price = forms.DecimalField(label='Стоимость данной поверки', max_digits=10, decimal_places=2, required=False,
+    price = forms.DecimalField(label='Стоимость данной поверки', max_digits=10, decimal_places=2,
                               widget=forms.TextInput(attrs={'class': 'form-control',
                                                             'placeholder': '0000.00'}))
     statusver = forms.ChoiceField(label='Результат поверки',
@@ -265,6 +261,7 @@ class VerificationRegForm(forms.ModelForm):
     place = forms.ChoiceField(label='Место поверки',
                              choices=CHOICESPLACE,
                                widget=forms.Select(attrs={'class': 'form-control'}))
+    cust = forms.BooleanField(label='Поверка заказана поставщиком', required=False)
     img = forms.ImageField(label='Сертификат', widget=forms.FileInput, required=False)
     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
                                    help_text='Укажите, если поверка не выгодна',
@@ -282,7 +279,8 @@ class VerificationRegForm(forms.ModelForm):
         fields = ['date', 'datedead', 'dateorder', 'arshin', 'certnumber',
                   'price', 'statusver',  'verificator', 'verificatorperson',
                   'place', 'year',
-                  'dateordernew'
+                  'dateordernew',
+                  'cust',
                   ]
 
     def __init__(self, *args, **kwargs):
@@ -305,6 +303,7 @@ class VerificationRegForm(forms.ModelForm):
                 Column('verificator', css_class='form-group col-md-4 mb-0'),
                 Column('verificatorperson', css_class='form-group col-md-4 mb-0'),
                 Column('place', css_class='form-group col-md-4 mb-0'),
+                Column('cust', css_class='form-group col-md-4 mb-0'),
             ),
             Row(
                 Column('img', css_class='form-group col-md-6 mb-1'),
@@ -346,7 +345,7 @@ class AttestationRegForm(forms.ModelForm):
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
     certnumber = forms.CharField(label='№ аттестата', max_length=10000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control'}))
-    price = forms.DecimalField(label='Стоимость данной атт.', max_digits=10, decimal_places=2, required=False,
+    price = forms.DecimalField(label='Стоимость данной атт.', max_digits=10, decimal_places=2,
                               widget=forms.TextInput(attrs={'class': 'form-control',
                                                             'placeholder': '0000.00'}))
     statusver = forms.ChoiceField(label='Результат аттестации',
@@ -362,6 +361,7 @@ class AttestationRegForm(forms.ModelForm):
     place = forms.ChoiceField(label='Место аттестации',
                              choices=CHOICESPLACE, initial='В ПА',
                                widget=forms.Select(attrs={'class': 'form-control'}))
+    cust = forms.BooleanField(label='Аттестация заказана поставщиком', required=False)
     img = forms.ImageField(label='Аттестат', widget=forms.FileInput, required=False)
     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
                                    help_text='Укажите, если аттестации не выгодна',
@@ -383,7 +383,8 @@ class AttestationRegForm(forms.ModelForm):
                   'price', 'statusver',  'verificator', 'verificatorperson',
                   'place',
                   'year',
-                  'dateordernew'
+                  'dateordernew',
+                  'cust',
                   ]
 
     def __init__(self, *args, **kwargs):
@@ -406,6 +407,7 @@ class AttestationRegForm(forms.ModelForm):
                 Column('verificator', css_class='form-group col-md-4 mb-0'),
                 Column('verificatorperson', css_class='form-group col-md-4 mb-0'),
                 Column('place', css_class='form-group col-md-4 mb-0'),
+                Column('cust', css_class='form-group col-md-4 mb-0'),
             ),
             Row(
                 Column('img', css_class='form-group col-md-6 mb-1'),

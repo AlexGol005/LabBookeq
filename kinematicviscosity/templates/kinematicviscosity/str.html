@@ -157,10 +157,10 @@
                 <th colspan="3">Состав пробы</th>
             </tr>
             <tr>
-                <td colspan="1"><div style="text-align: center;">{{ note.result|default_if_none:" "|striptags }}</div></td>
-                <td colspan="3"><div style="text-align: center;"></div>{{ note.oldresult|default_if_none:" "|striptags}}</td>
-                <td colspan="2"><div style="text-align: center;"></div>{{ note.deltaoldresult|default_if_none:" "|striptags}}</td>
-                <td colspan="3"><div style="text-align: center;">{{ note.get_constit_display }}</div></td>
+                <td colspan="1">{{ note.result|default_if_none:" "|striptags }}</td>
+                <td colspan="3">{{ note.oldresult|default_if_none:" "|striptags}}</td>
+                <td colspan="2">{{ note.deltaoldresult|default_if_none:" "|striptags}}</td>
+                <td colspan="3">{{ note.get_constit_display }}</td>
             </tr>
             <tr>
                 <td colspan="9">
@@ -171,7 +171,7 @@
             </tr>
 {#конец уникальной части таблицы #}
 
-{# полустандартный низ таблицы с формой фиксации АЗ и кнопкой "комментарии" #}
+{# полустандартный низ таблицы с формой фиксации результатов и кнопкой "комментарии" #}
             <tr>
                 <th colspan="2">Исполнитель </th>
                 <th colspan="4">внесено</th>
@@ -189,7 +189,7 @@
                     {% elif note.resultMeas == 'удовлетворительно' and  note.fixation %}
                         <a href="/CertifiedValueJ/kinematicviscosityvalues/" target="blank">  в журнал результатов </a>
                     {% else %}
-                        нет АЗ
+                        неудовлетворительный результат
                     {% endif %}
                 </td>
                 <td colspan="3">
