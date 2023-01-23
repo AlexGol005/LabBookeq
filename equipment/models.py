@@ -240,10 +240,10 @@ class MeasurEquipmentCharakters(models.Model):
     needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
     complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
     expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
-
-
-
-
+    service0 = models.TextField('ТО 0', default='', blank=True, null=True)
+    service1 = models.TextField('ТО 1', default='', blank=True, null=True)
+    service2 = models.TextField('ТО 2', default='', blank=True, null=True)
+    servicecomment = models.TextField('ТО примечание', default='', blank=True, null=True)
 
     def __str__(self):
         return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
@@ -275,6 +275,10 @@ class TestingEquipmentCharakters(models.Model):
     needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
     complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
     expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
+    service0 = models.TextField('ТО 0', default='', blank=True, null=True)
+    service1 = models.TextField('ТО 1', default='', blank=True, null=True)
+    service2 = models.TextField('ТО 2', default='', blank=True, null=True)
+    servicecomment = models.TextField('ТО примечание', default='', blank=True, null=True)
 
     def __str__(self):
         return f'{self.name}  {self.modificname}'
@@ -560,6 +564,10 @@ class MeteorologicalParameters(models.Model):
 class CompanyCard(models.Model):
     """Карточка Петроаналитики """
     name = models.CharField('Название', max_length=90, blank=True, null=True)
+    nameboss = models.CharField('ФИО руководителя организации', max_length=90, blank=True, null=True)
+    positionboss = models.CharField('Должность руководителя организации', max_length=90, blank=True, null=True)
+    namemetrologequipment = models.CharField('ФИО инжененера по оборудованию', max_length=90, blank=True, null=True)
+    positionmetrologequipment = models.CharField('Должность инжененера по оборудованию', max_length=90, blank=True, null=True)
     sertificat = models.TextField('Документ сертификата', blank=True, null=True)
     sertificat9001 = models.CharField('Номер сертификата', max_length=500, blank=True, null=True)
     affirmationproduction = models.CharField('Утверждаю начальник производства', max_length=190, blank=True, null=True)
@@ -617,6 +625,12 @@ class HelpingEquipmentCharakters(models.Model):
     needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
     complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
     expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
+    service0 = models.TextField('ТО 0', default='', blank=True, null=True)
+    service1 = models.TextField('ТО 1', default='', blank=True, null=True)
+    service2 = models.TextField('ТО 2', default='', blank=True, null=True)
+    servicecomment = models.TextField('ТО примечание', default='', blank=True, null=True)
+    kvasyattestation = models.BooleanField('применяется внутренняя аттестация (проверка зарактеристик)',
+                                           default=False, blank=True)
 
     def __str__(self):
         return f'{self.name}  {self.modificname}'
@@ -639,3 +653,153 @@ class HelpingEquipment(models.Model):
     class Meta:
         verbose_name = 'Вспомогательное оборудование'
         verbose_name_plural = 'Вспомогательное оборудование'
+
+
+class ServiceEquipmentME(models.Model):
+    """Техобслуживание СИ"""
+    charakters = models.ForeignKey(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
+                                   verbose_name='Характеристики СИ')
+
+    equipment = models.ForeignKey(Equipment, on_delete=models.SET_NULL, blank=True, null=True,
+                                  verbose_name='Оборудование')
+
+    commentservice = models.TextField('Примечание к ТОиР', default='')
+
+    # ТО 0
+    descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
+
+    # ТО 1
+    descriptiont1 = models.TextField('Объем технического обслуживания ТО 1',  default='', blank=True)
+
+    # ТО 2
+    descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
+    t2month1 = models.BooleanField('ТО 2 в месяце 1', default=False)
+    t2month2 = models.BooleanField('ТО 2 в месяце 2', default=False)
+    t2month3 = models.BooleanField('ТО 2 в месяце 3', default=False)
+    t2month4 = models.BooleanField('ТО 2 в месяце 4', default=False)
+    t2month5 = models.BooleanField('ТО 2 в месяце 5', default=False)
+    t2month6 = models.BooleanField('ТО 2 в месяце 6', default=False)
+    t2month7 = models.BooleanField('ТО 2 в месяце 7', default=False)
+    t2month8 = models.BooleanField('ТО 2 в месяце 8', default=False)
+    t2month9 = models.BooleanField('ТО 2 в месяце 9', default=False)
+    t2month10 = models.BooleanField('ТО 2 в месяце 10', default=False)
+    t2month11 = models.BooleanField('ТО 2 в месяце 11', default=False)
+    t2month12 = models.BooleanField('ТО 2 в месяце 12', default=False)
+
+
+    def __str__(self):
+        return f'{self.charakters.name}, pk = {self.pk}'
+
+
+    class Meta:
+        verbose_name = 'Техобслуживание СИ'
+        verbose_name_plural = 'Техобслуживание СИ'
+
+
+class ServiceEquipmentTE(models.Model):
+    """Техобслуживание ИО"""
+    charakters = models.ForeignKey(TestingEquipmentCharakters, on_delete=models.PROTECT,
+                                   verbose_name='Характеристики ИО')
+
+    equipment = models.ForeignKey(Equipment, on_delete=models.SET_NULL, blank=True, null=True,
+                                  verbose_name='Оборудование')
+
+    commentservice = models.TextField('Примечание к ТОиР', default='')
+
+    # ТО 0
+    descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
+
+    # ТО 1
+    descriptiont1 = models.TextField('Объем технического обслуживания ТО 1',  default='', blank=True)
+
+    # ТО 2
+    descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
+    t2month1 = models.BooleanField('ТО 2 в месяце 1', default=False)
+    t2month2 = models.BooleanField('ТО 2 в месяце 2', default=False)
+    t2month3 = models.BooleanField('ТО 2 в месяце 3', default=False)
+    t2month4 = models.BooleanField('ТО 2 в месяце 4', default=False)
+    t2month5 = models.BooleanField('ТО 2 в месяце 5', default=False)
+    t2month6 = models.BooleanField('ТО 2 в месяце 6', default=False)
+    t2month7 = models.BooleanField('ТО 2 в месяце 7', default=False)
+    t2month8 = models.BooleanField('ТО 2 в месяце 8', default=False)
+    t2month9 = models.BooleanField('ТО 2 в месяце 9', default=False)
+    t2month10 = models.BooleanField('ТО 2 в месяце 10', default=False)
+    t2month11 = models.BooleanField('ТО 2 в месяце 11', default=False)
+    t2month12 = models.BooleanField('ТО 2 в месяце 12', default=False)
+
+    def __str__(self):
+        return self.charakters.name
+
+    class Meta:
+        verbose_name = 'Техобслуживание ИО'
+        verbose_name_plural = 'Техобслуживание ИО'
+
+
+class ServiceEquipmentHE(models.Model):
+    """Техобслуживание ВО"""
+    charakters = models.ForeignKey(HelpingEquipmentCharakters, on_delete=models.PROTECT,
+                                   verbose_name='Характеристики ВО')
+
+    equipment = models.ForeignKey(Equipment, on_delete=models.SET_NULL, blank=True, null=True,
+                                  verbose_name='Оборудование')
+
+    commentservice = models.TextField('Примечание к ТОиР', default='')
+
+    # ТО 0
+    descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
+
+    # ТО 1
+    descriptiont1 = models.TextField('Объем технического обслуживания ТО 1',  default='', blank=True)
+
+    # ТО 2
+    descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
+    t2month1 = models.BooleanField('ТО 2 в месяце 1', default=False)
+    t2month2 = models.BooleanField('ТО 2 в месяце 2', default=False)
+    t2month3 = models.BooleanField('ТО 2 в месяце 3', default=False)
+    t2month4 = models.BooleanField('ТО 2 в месяце 4', default=False)
+    t2month5 = models.BooleanField('ТО 2 в месяце 5', default=False)
+    t2month6 = models.BooleanField('ТО 2 в месяце 6', default=False)
+    t2month7 = models.BooleanField('ТО 2 в месяце 7', default=False)
+    t2month8 = models.BooleanField('ТО 2 в месяце 8', default=False)
+    t2month9 = models.BooleanField('ТО 2 в месяце 9', default=False)
+    t2month10 = models.BooleanField('ТО 2 в месяце 10', default=False)
+    t2month11 = models.BooleanField('ТО 2 в месяце 11', default=False)
+    t2month12 = models.BooleanField('ТО 2 в месяце 12', default=False)
+
+    def __str__(self):
+        return self.charakters.name
+
+    class Meta:
+        verbose_name = 'Техобслуживание ВО'
+        verbose_name_plural = 'Техобслуживание ВО'
+
+
+class Checkequipment(models.Model):
+    equipmentSM = models.ForeignKey(HelpingEquipment, verbose_name='ИО',
+                                    on_delete=models.PROTECT, related_name='equipmentSM_att', blank=True, null=True)
+    date = models.DateField('Дата проверки', blank=True, null=True)
+    datedead = models.DateField('Дата окончания срока проверки', blank=True, null=True)
+    dateorder = models.DateField('Дата следующей проверки план', blank=True, null=True)
+    certnumber = models.CharField('Номер протокола проверки', max_length=90, blank=True, null=True)
+
+
+    def __str__(self):
+        return f'Проверка характеристик {self.equipmentSM.charakters.name} вн № {self.equipmentSM.equipment.exnumber}'
+
+    def get_absolute_url(self):
+        """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
+        return reverse('helpingequipmentcheck', kwargs={'str': self.equipmentSM.equipment.exnumber})
+
+    @staticmethod
+    def get_dateformat(dateneed):
+        dateformat = str(dateneed)
+        day = dateformat[8:]
+        month = dateformat[5:7]
+        year = dateformat[:4]
+        rdate = f'{day}.{month}.{year}'
+        return rdate
+
+
+    class Meta:
+        verbose_name = 'Проверка характеристик ВО'
+        verbose_name_plural = 'Проверка характеристик ВО'

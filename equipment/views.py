@@ -36,6 +36,7 @@ from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from xlwt import Alignment, Borders
 
+from equipment.constants import servicedesc0
 from equipment.forms import*
 from equipment.models import*
 from formstandart import YearForm
@@ -541,6 +542,33 @@ def EquipmentUpdate(request, str):
     data = {'form': form, 'title': title
             }
     return render(request, 'equipment/individuality.html', data)
+
+
+class HelpingequipmentregView(LoginRequiredMixin, CreateView):
+    """ выводит форму регистрации ВО на основе ЛО и характеристик ВО """
+    form_class = HelpingEquipmentCreateForm
+    template_name = 'equipment/reg.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
+
+    def get_context_data(self, **kwargs):
+        context = super(HelpingequipmentregView, self).get_context_data(**kwargs)
+        context['title'] = 'Зарегистрировать ВО'
+        context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
+        return context
+
+    def form_valid(self, form):
+        user = User.objects.get(username=self.request.user)
+        if user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
+                order.save()
+                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+        else:
+            messages.success(request, f'Регистрировать может только ответственный за метрологическое обеспечение приборов')
+            return redirect(reverse('helpequipmentreg', kwargs={'str': self.kwargs['str']}))
 
 
 # блок 7 - все поисковики
@@ -1298,13 +1326,17 @@ def base_planreport_xls(request, exel_file_name,
                                measure_e, testing_e, helping_e,
                                measure_e_months, testing_e_months, helping_e_months,
                                u_headers_me, u_headers_te, u_headers_he,
-                               str1, str2, str3, str4, str5, str6):
-    """базовое шаблон представление для выгрузки планов и отчетов по СИ, ИО, ВО
-    к которому обращаются частные представления"""
+                               str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE):
+    """базовое шаблон представление для выгрузки планов и отчетов по СИ, ИО, ВО к которому обращаются частные представления"""
+
+    # для выгрузки реквизитов организации
+    company = CompanyCard.objects.get(pk=1)
+    affirmation = f'УТВЕРЖДАЮ \n{company.positionboss}\n{company.name}\n____________/{company.nameboss}/\n«__» ________20__ г.'
 
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="{exel_file_name}.xls"'
 
+    serdate = request.GET['date']
     # стили
     al10 = Alignment()
     al10.horz = Alignment.HORZ_CENTER
@@ -1368,8 +1400,8 @@ def base_planreport_xls(request, exel_file_name,
     ws1.col(3).width = 3000
     ws1.col(4).width = 2000
     ws1.col(6).width = 2600
-    ws1.col(7).width = 3000
-    ws1.col(8).width = 3000
+    ws1.col(7).width = 4500
+    ws1.col(8).width = 4500
 
     # ширина столбцов ИО
     ws2.col(0).width = 3000
@@ -1378,8 +1410,8 @@ def base_planreport_xls(request, exel_file_name,
     ws2.col(3).width = 4200
     ws2.col(4).width = 3000
     ws2.col(5).width = 2600
-    ws2.col(6).width = 3000
-    ws2.col(7).width = 3000
+    ws2.col(6).width = 4500
+    ws2.col(7).width = 4500
 
     # ширина столбцов ВО
     ws3.col(0).width = 3000
@@ -1388,8 +1420,8 @@ def base_planreport_xls(request, exel_file_name,
     ws3.col(3).width = 4200
     ws3.col(4).width = 2000
     ws3.col(5).width = 2600
-    ws3.col(6).width = 3000
-    ws3.col(7).width = 3000
+    ws3.col(6).width = 4500
+    ws3.col(7).width = 4500
 
     # колонки для разбиивок по месяцам
     columns_month = [
@@ -1398,25 +1430,67 @@ def base_planreport_xls(request, exel_file_name,
         'Сумма, руб',
     ]
 
-    # записываем страницу 1 - СИ
-    # заголовки СИ
-    row_num = 0
-    columns = [
+    # заголовки СИ (вынесены сюда для подсчёта длины строк ексель)
+    columnsME = [
         'Внутренний номер',
         'Номер в госреестре',
         'Наименование',
         'Тип/Модификация',
         'Заводской номер',
     ]
+    columnsME = columnsME + u_headers_me
+    lennME = len(columnsME)
 
-    columns = columns + u_headers_me
+    # заголовки ИО (вынесены сюда для подсчёта длины строк ексель)
+    columnsTE = [
+        'Внутренний номер',
+        'Наименование',
+        'Тип/Модификация',
+        'Заводской номер',
+    ]
+    columnsTE = columnsTE + u_headers_te
+    lennTE = len(columnsTE)
 
+    # заголовки ВО (вынесены сюда для подсчёта длины строк ексель)
+    columnsHE = [
+        'Внутренний номер',
+        'Наименование',
+        'Тип/Модификация',
+        'Заводской номер',
+    ]
+    columnsHE = columnsHE + u_headers_he
+    lennHE = len(columnsHE)
+
+    # записываем страницу 1 - СИ
+    row_num = 0
+    c = [''] * (lennME - 3)
+    columns = c + [
+        affirmation,
+    ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain_nobor_r)
+        ws1.merge(row_num, row_num, lennME - 3, lennME - 1, style_plain_nobor_r)
+        ws1.row(row_num).height_mismatch = True
+        ws1.row(row_num).height = 1900
+
+    row_num += 2
+    columns = [
+        f'{nameME}'
+    ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain_nobor_bold)
+        ws1.merge(row_num, row_num, 0, lennME-1, style_plain_nobor_bold)
+        ws2.row(row_num).height_mismatch = True
+        ws2.row(row_num).height = 800
+
+    # заголовки СИ
+    row_num += 2
     datecolumnme = []
 
     # запись заголовков СИ
-    for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_headers)
-        if 'Дата' in str(columns[col_num]) or 'дата' in str(columns[col_num]):
+    for col_num in range(len(columnsME)):
+        ws1.write(row_num, col_num, columnsME[col_num], style_headers)
+        if 'Дата' in str(columnsME[col_num]) or 'дата' in str(columnsME[col_num]):
             datecolumnme.append(col_num)
 
     # данные СИ и их запись
@@ -1429,24 +1503,49 @@ def base_planreport_xls(request, exel_file_name,
             else:
                 ws1.write(row_num, col_num, row[col_num], style_plain)
 
-    # записываем страницу 2 - ИО
-    # заголовки ИО
-    row_num = 0
+    # подпись СИ
+    row_num += 2
     columns = [
-        'Внутренний номер',
-        'Наименование',
-        'Тип/Модификация',
-        'Заводской номер',
+        f'Разработал: \n{company.positionmetrologequipment} _____________ /{company.namemetrologequipment}/'
     ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain_nobor_l)
+        ws1.merge(row_num, row_num, 0, lennME-1, style_plain_nobor_l)
+        ws1.row(row_num).height_mismatch = True
+        ws1.row(row_num).height = 1000
 
-    columns = columns + u_headers_te
 
+    # записываем страницу 2 - ИО
+    # Шапка утверждаю
+    row_num = 0
+    c = [''] * (lennTE - 2)
+    columns = c + [
+        affirmation,
+    ]
+    for col_num in range(len(columns)):
+        ws2.write(row_num, col_num, columns[col_num], style_plain_nobor_r)
+        ws2.merge(row_num, row_num, lennTE - 2, lennTE - 1, style_plain_nobor_r)
+        ws2.row(row_num).height_mismatch = True
+        ws2.row(row_num).height = 1900
+
+    row_num += 2
+    columns = [
+        f'{nameTE}'
+    ]
+    for col_num in range(len(columns)):
+        ws2.write(row_num, col_num, columns[col_num], style_plain_nobor_bold)
+        ws2.merge(row_num, row_num, 0, lennTE-1, style_plain_nobor_bold)
+        ws2.row(row_num).height_mismatch = True
+        ws2.row(row_num).height = 800
+
+    # заголовки ИО
+    row_num += 2
     datecolumnte = []
 
     # запись заголовков ИО
-    for col_num in range(len(columns)):
-        ws2.write(row_num, col_num, columns[col_num], style_headers)
-        if 'Дата' in str(columns[col_num]) or 'дата' in str(columns[col_num]):
+    for col_num in range(len(columnsTE)):
+        ws2.write(row_num, col_num, columnsTE[col_num], style_headers)
+        if 'Дата' in str(columnsTE[col_num]) or 'дата' in str(columnsTE[col_num]):
             datecolumnte.append(col_num)
 
     # данные ИО и их запись
@@ -1454,29 +1553,52 @@ def base_planreport_xls(request, exel_file_name,
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
-            if col_num in datecolumnte:
+            if col_num in datecolumnme:
                 ws2.write(row_num, col_num, row[col_num], style_date)
             else:
                 ws2.write(row_num, col_num, row[col_num], style_plain)
 
-    # записываем страницу 3 - ВО
-    # заголовки ВО
-    row_num = 0
+    # подпись ИО
+    row_num += 2
     columns = [
-        'Внутренний номер',
-        'Наименование',
-        'Тип/Модификация',
-        'Заводской номер',
+        f'Разработал: \n{company.positionmetrologequipment} _____________ /{company.namemetrologequipment}/'
     ]
+    for col_num in range(len(columns)):
+        ws2.write(row_num, col_num, columns[col_num], style_plain_nobor_l)
+        ws2.merge(row_num, row_num, 0, lennTE-1, style_plain_nobor_l)
+        ws2.row(row_num).height_mismatch = True
+        ws2.row(row_num).height = 1000
 
-    columns = columns + u_headers_he
+    # записываем страницу 3 - ВО
+    row_num = 0
+    c = [''] * (lennHE - 2)
+    columns = c + [
+        affirmation,
+    ]
+    for col_num in range(len(columns)):
+        ws3.write(row_num, col_num, columns[col_num], style_plain_nobor_r)
+        ws3.merge(row_num, row_num, lennHE - 2, lennHE - 1, style_plain_nobor_r)
+        ws3.row(row_num).height_mismatch = True
+        ws3.row(row_num).height = 1900
 
+    row_num += 2
+    columns = [
+        f'{nameHE}'
+    ]
+    for col_num in range(len(columns)):
+        ws3.write(row_num, col_num, columns[col_num], style_plain_nobor_bold)
+        ws3.merge(row_num, row_num, 0, lennHE-1, style_plain_nobor_bold)
+        ws3.row(row_num).height_mismatch = True
+        ws3.row(row_num).height = 800
+
+    # заголовки ВО
+    row_num += 2
     datecolumnhe = []
 
     # запись заголовков ВО
-    for col_num in range(len(columns)):
-        ws3.write(row_num, col_num, columns[col_num], style_headers)
-        if 'Дата' in str(columns[col_num]) or 'дата' in str(columns[col_num]):
+    for col_num in range(len(columnsHE)):
+        ws3.write(row_num, col_num, columnsHE[col_num], style_headers)
+        if 'Дата' in str(columnsHE[col_num]) or 'дата' in str(columnsHE[col_num]):
             datecolumnhe.append(col_num)
 
     # данные ВО и их запись
@@ -1484,10 +1606,21 @@ def base_planreport_xls(request, exel_file_name,
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
-            if col_num in datecolumnhe:
+            if col_num in datecolumnme:
                 ws3.write(row_num, col_num, row[col_num], style_date)
             else:
                 ws3.write(row_num, col_num, row[col_num], style_plain)
+
+    # подпись ВО
+    row_num += 2
+    columns = [
+        f'Разработал: \n{company.positionmetrologequipment} _____________ /{company.namemetrologequipment}/'
+    ]
+    for col_num in range(len(columns)):
+        ws3.write(row_num, col_num, columns[col_num], style_plain_nobor_l)
+        ws3.merge(row_num, row_num, 0, lennHE-1, style_plain_nobor_l)
+        ws3.row(row_num).height_mismatch = True
+        ws3.row(row_num).height = 1000
 
     # записываем страницу 4 - подсчёт по месяцам для СИ (ПСИ)
     # заголовки ПСИ
@@ -1650,12 +1783,17 @@ def export_me_xls(request):
     measure_e_months = []
     testing_e_months = []
     helping_e_months = []
+    serdate = request.GET['date']
+    company = CompanyCard.objects.get(pk=1)
+    nameME = f'Средства измерений - план поверки в {company.name} за {serdate} год'
+    nameTE = f'Испытательное оборудование - план аттестации в {company.name} за {serdate} год'
+    nameHE = f'Вспомогательное оборудование - план проверки технических характеристик в {company.name} за {serdate} год'
 
     return base_planreport_xls(request, exel_file_name,
                                measure_e, testing_e, helping_e,
                                measure_e_months, testing_e_months, helping_e_months,
                                u_headers_me, u_headers_te, u_headers_he,
-                               str1, str2, str3, str4, str5, str6
+                               str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE
                                )
 
 # флаг отчёты по поверке
@@ -1760,12 +1898,17 @@ def export_metroyearcust_xls(request):
     )
 
     helping_e_months = []
+    serdate = request.GET['date']
+    company = CompanyCard.objects.get(pk=1)
+    nameME = f'Средства измерений - отчет по поверке в {company.name} за {serdate} год'
+    nameTE = f'Испытательное оборудование - отчет по аттестации в {company.name} за {serdate} год'
+    nameHE = ''
 
     return base_planreport_xls(request, exel_file_name,
                         measure_e, testing_e, helping_e,
                        measure_e_months, testing_e_months, helping_e_months,
                         u_headers_me, u_headers_te, u_headers_he,
-                               str1, str2, str3, str4, str5, str6
+                               str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE
                                )
 
 def export_metroyearprice_xls(request):
@@ -1868,12 +2011,17 @@ def export_metroyearprice_xls(request):
     )
 
     helping_e_months = []
+    serdate = request.GET['date']
+    company = CompanyCard.objects.get(pk=1)
+    nameME = f'Средства измерений - отчет по поверке в {company.name} за {serdate} год (только те, где известна стоимость)'
+    nameTE = f'Испытательное оборудование - отчет по аттестации в {company.name} за {serdate} год (только те, где известна стоимость)'
+    nameHE = ''
 
     return base_planreport_xls(request, exel_file_name,
                         measure_e, testing_e, helping_e,
                        measure_e_months, testing_e_months, helping_e_months,
                         u_headers_me, u_headers_te, u_headers_he,
-                               str1, str2, str3, str4, str5, str6
+                               str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE
                                )
 
 def export_metroyear_xls(request):
@@ -1947,12 +2095,17 @@ def export_metroyear_xls(request):
     testing_e_months = []
 
     helping_e_months = []
+    serdate = request.GET['date']
+    company = CompanyCard.objects.get(pk=1)
+    nameME = f'Средства измерений - отчет по поверке в {company.name} за {serdate} год (включая купленное с поверкой)'
+    nameTE = f'Испытательное оборудование - отчет по аттестации в {company.name} за {serdate} год (включая купленное с аттестацией)'
+    nameHE = ''
 
     return base_planreport_xls(request, exel_file_name,
                         measure_e, testing_e, helping_e,
                        measure_e_months, testing_e_months, helping_e_months,
                         u_headers_me, u_headers_te, u_headers_he,
-                               str1, str2, str3, str4, str5, str6
+                               str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE
                                )
 
 # флаг отчёты по закупке
@@ -2064,12 +2217,17 @@ def export_metronewyear_xls(request):
         'dcount2',
         's2',
     )
+    serdate = request.GET['date']
+    company = CompanyCard.objects.get(pk=1)
+    nameME = f'Средства измерений введенные в эксплуатацию в {company.name} за {serdate} год'
+    nameTE = f'Испытательное оборудование введенное в эксплуатацию  в {company.name} за {serdate} год'
+    nameHE = f'Вспомогательное оборудование введенное в эксплуатацию  в {company.name} за {serdate} год'
 
     return base_planreport_xls(request, exel_file_name,
                         measure_e, testing_e, helping_e,
                        measure_e_months, testing_e_months, helping_e_months,
                         u_headers_me, u_headers_te, u_headers_he,
-                               str1, str2, str3, str4, str5, str6
+                               str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE
                                )
 # флаг план по поверке
 def export_planmetro_xls(request):
@@ -2157,17 +2315,22 @@ def export_planmetro_xls(request):
         's',
     )
     helping_e_months = []
+    serdate = request.GET['date']
+    company = CompanyCard.objects.get(pk=1)
+    nameME = f'План поверки средств измерений в {company.name} на {serdate} год'
+    nameTE = f'План аттестации испытательного оборудования в {company.name} за {serdate} год'
+    nameHE = f'План проверки характеристик вспомогательного оборудования в {company.name} за {serdate} год'
 
     return base_planreport_xls(request, exel_file_name,
                                measure_e, testing_e, helping_e,
                                measure_e_months, testing_e_months, helping_e_months,
                                u_headers_me, u_headers_te, u_headers_he,
-                               str1, str2, str3, str4, str5, str6
+                               str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE
                                )
 
 # флаг план закупки по поверке
 def export_plan_purchaesing_xls(request):
-    """представление для выгрузки плана закупки по поверке и аттестации на указанный год"""
+    """представление для выгрузки плана закупки ЛО по поверке и аттестации на указанный год"""
     serdate = request.GET['date']
     exel_file_name = f'plan_purchaesing_{serdate}'
     str1 = 'СИ'
@@ -2254,12 +2417,15 @@ def export_plan_purchaesing_xls(request):
         's',
     )
     helping_e_months = []
+    nameME = ''
+    nameTE = ''
+    nameHE = ''
 
     return base_planreport_xls(request, exel_file_name,
                                measure_e, testing_e, helping_e,
                                measure_e_months, testing_e_months, helping_e_months,
                                u_headers_me, u_headers_te, u_headers_he,
-                               str1, str2, str3, str4, str5, str6
+                               str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE
                                )
 
 
@@ -2369,12 +2535,16 @@ def export_mustver_xls(request):
     helping_e_months = []
     testing_e_months = []
     u_headers_he = []
+    nameME = 'СИ требуют поверки'
+    nameTE = 'ИО требует аттестации'
+    nameHE = ''
+
 
     return base_planreport_xls(request, exel_file_name,
                                measure_e, testing_e, helping_e,
                                measure_e_months, testing_e_months, helping_e_months,
                                u_headers_me, u_headers_te, u_headers_he,
-                               str1, str2, str3, str4, str5, str6
+                               str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE
                                )
 
 
@@ -4986,3 +5156,906 @@ def export_exvercardteste_xls(request, pk):
     return response
 
 
+# Ниже будут быгрузки ексель для переноса в LabBook
+# Поэтому: для удобства стили все далаем заново. В лаббуке стили с такими же названиями вынесены в файл exelbase
+# но! кроме размера шрифта - он 11!
+
+# блок стилей
+al100 = Alignment()
+al100.horz = Alignment.HORZ_CENTER
+al100.vert = Alignment.VERT_CENTER
+al100.rota = Alignment.ROTATION_STACKED
+
+al10 = Alignment()
+al10.horz = Alignment.HORZ_CENTER
+al10.vert = Alignment.VERT_CENTER
+al10.wrap = 1
+
+al1 = Alignment()
+al1.horz = Alignment.HORZ_CENTER
+al1.vert = Alignment.VERT_CENTER
+
+al2 = Alignment()
+al2.horz = Alignment.HORZ_RIGHT
+al2.vert = Alignment.VERT_CENTER
+
+al20 = Alignment()
+al20.horz = Alignment.HORZ_RIGHT
+al20.vert = Alignment.VERT_CENTER
+al20.wrap = 1
+
+al3 = Alignment()
+al3.horz = Alignment.HORZ_LEFT
+al3.vert = Alignment.VERT_CENTER
+al3.wrap = 1
+
+b1 = Borders()
+b1.left = 1
+b1.right = 1
+b1.top = 1
+b1.bottom = 1
+
+b2 = Borders()
+b2.left = 6
+b2.right = 6
+b2.bottom = 6
+b2.top = 6
+
+# размер шрифта
+size = 11
+# заголовки жирным шрифтом, с границами ячеек
+style_headers = xlwt.XFStyle()
+style_headers.font.bold = True
+style_headers.font.name = 'Times New Roman'
+style_headers.font.height = 20 * size
+style_headers.borders = b1
+style_headers.alignment = al10
+
+# обычные ячейки, с границами ячеек
+style_plain = xlwt.XFStyle()
+style_plain.font.name = 'Times New Roman'
+style_plain.font.height = 20 * size
+style_plain.borders = b1
+style_plain.alignment = al10
+
+# обычные ячейки, с границами ячеек повернут на 90 градусов
+style_plain_90 = xlwt.XFStyle()
+style_plain_90.font.name = 'Times New Roman'
+style_plain_90.font.height = 20 * size
+style_plain_90.borders = b1
+style_plain_90.alignment = al100
+
+
+xlwt.easyxf('align: rotation 90')
+
+# обычные ячейки, с толстыми границами ячеек
+style_plain_bb = xlwt.XFStyle()
+style_plain_bb.font.name = 'Times New Roman'
+style_plain_bb.font.height = 20 * size
+style_plain_bb.borders = b2
+style_plain_bb.alignment = al10
+
+# обычные ячейки с датами, с границами ячеек == style3
+style_date = xlwt.XFStyle()
+style_date.font.name = 'Times New Roman'
+style_date.font.height = 20 * size
+style_date.borders = b1
+style_date.alignment = al10
+style_date.num_format_str = 'DD.MM.YYYY г'
+
+# обычные ячейки, с границами ячеек, c форматом чисел '0.00'  == style4
+style_2dp = xlwt.XFStyle()
+style_2dp.font.name = 'Times New Roman'
+style_2dp.font.height = 20 * size
+style_2dp.borders = b1
+style_2dp.alignment = al1
+style_2dp.num_format_str = '0.00'
+
+# обычные ячейки, с границами ячеек, c форматом чисел '0.00000'  == style5
+style_5dp = xlwt.XFStyle()
+style_5dp.font.name = 'Times New Roman'
+style_5dp.font.height = 20 * size
+style_5dp.borders = b1
+style_5dp.alignment = al1
+style_5dp.num_format_str = '0.00000'
+
+# обычные ячейки, с границами ячеек, c форматом чисел '0.0000'
+style_4dp = xlwt.XFStyle()
+style_4dp.font.name = 'Times New Roman'
+style_4dp.font.height = 20 * size
+style_4dp.borders = b1
+style_4dp.alignment = al1
+style_4dp.num_format_str = '0.0000'
+
+# обычные ячейки, без границ  == style6
+style_plain_nobor = xlwt.XFStyle()
+style_plain_nobor.font.name = 'Times New Roman'
+style_plain_nobor.font.height = 20 * size
+style_plain_nobor.alignment = al10
+
+# обычные ячейки, без границ  жирный шрифт размер больше на 1
+style_plain_nobor_bold = xlwt.XFStyle()
+style_plain_nobor_bold.font.bold = True
+style_plain_nobor_bold.font.name = 'Times New Roman'
+style_plain_nobor_bold.font.height = 20 * (size + 1)
+style_plain_nobor_bold.alignment = al10
+
+# обычные ячейки, без границ, сдвинуто вправо  == style7
+style_plain_nobor_r = xlwt.XFStyle()
+style_plain_nobor_r.font.name = 'Times New Roman'
+style_plain_nobor_r.font.height = 20 * size
+style_plain_nobor_r.alignment = al20
+
+# обычные ячейки, без границ, сдвинуто влево
+style_plain_nobor_l = xlwt.XFStyle()
+style_plain_nobor_l.font.name = 'Times New Roman'
+style_plain_nobor_l.font.height = 20 * size
+style_plain_nobor_l.alignment = al3
+
+# обычные ячейки, без границ, сдвинуто влево, c датовым форматом
+style_plain_nobor_l_date = xlwt.XFStyle()
+style_plain_nobor_l_date.font.name = 'Times New Roman'
+style_plain_nobor_l_date.font.height = 20 * size
+style_plain_nobor_l_date.alignment = al3
+style_plain_nobor_l_date.num_format_str = 'DD.MM.YYYY г.'
+
+# обычные ячейки, с границами, сдвинуто вправо  == style7
+style_plain_r = xlwt.XFStyle()
+style_plain_r.font.name = 'Times New Roman'
+style_plain_r.font.height = 20 * size
+style_plain_r.alignment.wrap = 1
+
+pattern_black = xlwt.Pattern()
+pattern_black.pattern = xlwt.Pattern.SOLID_PATTERN
+pattern_black.pattern_fore_colour = 0
+
+# чёрные ячейки
+style_black = xlwt.XFStyle()
+style_black.pattern = pattern_black
+
+def get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search):
+
+    row_num += 1
+    columns = [
+        f'{equipment_type}'
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_headers)
+        ws.merge(row_num, row_num, 0, 19, style_headers)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 600
+
+    for note in MODEL:
+        try:
+            person = Personchange.objects.filter(equipment__pk=note.equipment.pk).order_by('pk').last().person.username
+        except:
+            person = 'Ответственный за метрологическое обеспечение'
+
+        try:
+            note2 = MODEL2.objects.get(charakters__pk=note.charakters.pk)
+            descriptiont0 = note2.descriptiont0
+            descriptiont1 = note2.descriptiont1
+            descriptiont2 = note2.descriptiont2
+            commentservice = note2.commentservice
+            if note2.descriptiont0:
+                to0_shed = 'ежедневно'
+            else:
+                to0_shed = ' '
+            if note2.descriptiont1:
+                to1_shed = 'ежемесячно'
+            else:
+                to1_shed = ' '
+            if note2.t2month1 == True:
+                t2month1 = 'V'
+            else:
+                t2month1 = ' '
+            if note2.t2month2 == True:
+                t2month2 = 'V'
+            else:
+                t2month2 = ' '
+            if note2.t2month3 == True:
+                t2month3 = 'V'
+            else:
+                t2month3 = ' '
+            if note2.t2month4 == True:
+                t2month4 = 'V'
+            else:
+                t2month4 = ' '
+            if note2.t2month5 == True:
+                t2month5 = 'V'
+            else:
+                t2month5 = ' '
+            if note2.t2month6 == True:
+                t2month6 = 'V'
+            else:
+                t2month6 = ' '
+            if note2.t2month7 == True:
+                t2month7 = 'V'
+            else:
+                t2month7 = ' '
+            if note2.t2month8 == True:
+                t2month8 = 'V'
+            else:
+                t2month8 = ' '
+            if note2.t2month9 == True:
+                t2month9 = 'V'
+            else:
+                t2month9 = ' '
+            if note2.t2month10 == True:
+                t2month10 = 'V'
+            else:
+                t2month10 = ' '
+            if note2.t2month11 == True:
+                t2month11 = 'V'
+            else:
+                t2month11 = ' '
+            if note2.t2month12 == True:
+                t2month12 = 'V'
+            else:
+                t2month12 = ' '
+
+        except:
+            descriptiont0 = ' '
+            descriptiont1 = ' '
+            descriptiont2 = ' '
+            commentservice = ' '
+            t2month1 = ''
+            t2month2 = ''
+            t2month3 = ''
+            t2month4 = ''
+            t2month5 = ''
+            t2month6 = ''
+            t2month7 = ''
+            t2month8 = ''
+            t2month9 = ''
+            t2month10 = ''
+            t2month11 = ''
+            t2month12 = ''
+            to0_shed = ''
+            to1_shed = ''
+
+        t3month1 = ''
+        t3month2 = ''
+        t3month3 = ''
+        t3month4 = ''
+        t3month5 = ''
+        t3month6 = ''
+        t3month7 = ''
+        t3month8 = ''
+        t3month9 = ''
+        t3month10 = ''
+        t3month11 = ''
+        t3month12 = ''
+        t3month1f = ''
+        t3month2f = ''
+        t3month3f = ''
+        t3month4f = ''
+        t3month5f = ''
+        t3month6f = ''
+        t3month7f = ''
+        t3month8f = ''
+        t3month9f = ''
+        t3month10f = ''
+        t3month11f = ''
+        t3month12f = ''
+
+        # подставляем месяц плана поверки/аттестации/проверки
+        try:
+            note3 = MODEL3.objects.filter(equipmentSM__equipment__pk=note.equipment.pk).exclude(
+                dateorder__isnull=True)
+
+            q = note3.get(dateorder__year=year_search)
+            t3month = int(q.dateorder.month)
+
+            if t3month == 1:
+                t3month1 = 'V'
+            if t3month == 2:
+                t3month2 = 'V'
+            if t3month == 3:
+                t3month3 = 'V'
+            if t3month == 4:
+                t3month4 = 'V'
+            if t3month == 5:
+                t3month5 = 'V'
+            if t3month == 6:
+                t3month6 = 'V'
+            if t3month == 7:
+                t3month7 = 'V'
+            if t3month == 8:
+                t3month8 = 'V'
+            if t3month == 9:
+                t3month9 = 'V'
+            if t3month == 10:
+                t3month10 = 'V'
+            if t3month == 11:
+                t3month11 = 'V'
+            if t3month == 12:
+                t3month12 = 'V'
+        except:
+            t3month1 = ''
+            t3month2 = ''
+            t3month3 = ''
+            t3month4 = ''
+            t3month5 = ''
+            t3month6 = ''
+            t3month7 = ''
+            t3month8 = ''
+            t3month9 = ''
+            t3month10 = ''
+            t3month11 = ''
+            t3month12 = ''
+
+        #  подставляем месяц факта поверки/аттестации/проверки
+        try:
+            note3 = MODEL3.objects.filter(equipmentSM__equipment__pk=note.equipment.pk).exclude(
+                date__isnull=True)
+            q = note3.get(date__year=year_search)
+            t3monthf = int(q.date.month)
+
+            if t3monthf == 1:
+                t3month1f = 'V'
+            if t3monthf == 2:
+                t3month2f = 'V'
+            if t3monthf == 3:
+                t3month3f = 'V'
+            if t3monthf == 4:
+                t3month4f = 'V'
+            if t3monthf == 5:
+                t3month5f = 'V'
+            if t3monthf == 6:
+                t3month6f = 'V'
+            if t3monthf == 7:
+                t3month7f = 'V'
+            if t3monthf == 8:
+                t3month8f = 'V'
+            if t3monthf == 9:
+                t3month9f = 'V'
+            if t3monthf == 10:
+                t3month10f = 'V'
+            if t3monthf == 11:
+                t3month11f = 'V'
+            if t3monthf == 12:
+                t3month12f = 'V'
+        except:
+            t3month1f = ''
+            t3month2f = ''
+            t3month3f = ''
+            t3month4f = ''
+            t3month5f = ''
+            t3month6f = ''
+            t3month7f = ''
+            t3month8f = ''
+            t3month9f = ''
+            t3month10f = ''
+            t3month11f = ''
+            t3month12f = ''
+
+        row_num += 1
+        columns = [
+            '',
+            f'{note.charakters.name}, {note.charakters.modificname}, {note.charakters.typename}',
+            f'{note.charakters.name}, {note.charakters.modificname}, {note.charakters.typename}',
+            f'{note.equipment.exnumber}',
+            f'{note.equipment.lot}',
+            '',
+            'январь',
+            'февраль',
+            'март',
+            'апрель',
+            'май',
+            'июнь',
+            'июль',
+            'август',
+            'сентябрь',
+            'октябрь',
+            'ноябрь',
+            'декабрь',
+            f'{person}',
+            f'{commentservice}',
+        ]
+        for col_num in range(7):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 1, 2, style_plain)
+            ws.merge(row_num, row_num + 1, 6, 6, style_plain)
+        for col_num in range(6, 18):
+            ws.write(row_num, col_num, columns[col_num], style_plain_90)
+            ws.merge(row_num, row_num + 1, 7, 7, style_plain_90)
+            ws.merge(row_num, row_num + 1, 8, 8, style_plain_90)
+            ws.merge(row_num, row_num + 1, 9, 9, style_plain_90)
+            ws.merge(row_num, row_num + 1, 10, 10, style_plain_90)
+            ws.merge(row_num, row_num + 1, 11, 11, style_plain_90)
+            ws.merge(row_num, row_num + 1, 12, 12, style_plain_90)
+            ws.merge(row_num, row_num + 1, 13, 13, style_plain_90)
+            ws.merge(row_num, row_num + 1, 14, 14, style_plain_90)
+            ws.merge(row_num, row_num + 1, 15, 15, style_plain_90)
+            ws.merge(row_num, row_num + 1, 16, 16, style_plain_90)
+            ws.merge(row_num, row_num + 1, 17, 17, style_plain_90)
+        for col_num in range(18, len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num + 4, 18, 18, style_plain)
+            ws.merge(row_num, row_num + 6, 19, 19, style_plain)
+            ws.merge(row_num, row_num + 4, 5, 5, style_plain)
+            ws.merge(row_num, row_num + 6, 0, 0, style_plain)
+            ws.row(row_num).height_mismatch = True
+            ws.row(row_num).height = 2400
+
+
+        row_num += 1
+        columns = [
+            '',
+            'Тип ТО',
+            'Объем технического обслуживания',
+            '',
+            '',
+            '',
+            'январь',
+            'февраль',
+            'март',
+            'апрель',
+            'май',
+            'июнь',
+            'июль',
+            'август',
+            'сентябрь',
+            'октябрь',
+            'ноябрь',
+            'декабрь',
+            f'{person}',
+            f'{commentservice}',
+        ]
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 2, 4, style_plain)
+            ws.row(row_num).height_mismatch = True
+            ws.row(row_num).height = 500
+
+        row_num += 1
+        columns = [
+            '',
+            f'ТО 0',
+            f'{descriptiont0}',
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            to0_shed,
+            f'{person}',
+            f'{commentservice}',
+        ]
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 2, 4, style_plain)
+            ws.merge(row_num, row_num, 6, 17, style_plain)
+            ws.row(row_num).height_mismatch = True
+            ws.row(row_num).height = 2500
+
+        row_num += 1
+        columns = [
+            '',
+            f'ТО 1',
+            f'{descriptiont1}',
+            '',
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            to1_shed,
+            f'{person}',
+            f'{commentservice}',
+        ]
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 2, 4, style_plain)
+            ws.merge(row_num, row_num, 6, 17, style_plain)
+            ws.row(row_num).height_mismatch = True
+            ws.row(row_num).height = 2500
+
+        row_num += 1
+        columns = [
+            '',
+            f'ТО 2',
+            f'{descriptiont2}',
+            f'{descriptiont2}',
+            f'{descriptiont2}',
+            '',
+            t2month1,
+            t2month2,
+            t2month3,
+            t2month4,
+            t2month5,
+            t2month6,
+            t2month7,
+            t2month8,
+            t2month9,
+            t2month10,
+            t2month11,
+            t2month12,
+            f'{person}',
+            f'{commentservice}',
+        ]
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 2, 4, style_plain)
+            ws.row(row_num).height_mismatch = True
+            ws.row(row_num).height = 2500
+
+        row_num += 1
+        columns = [
+            '',
+            f'ТО 3',
+            f'{to3}',
+            f'{to3}',
+            f'{to3}',
+            'план',
+            t3month1,
+            t3month2,
+            t3month3,
+            t3month4,
+            t3month5,
+            t3month6,
+            t3month7,
+            t3month8,
+            t3month9,
+            t3month10,
+            t3month11,
+            t3month12,
+            f'Ответственный за метрологическое обеспечение',
+            f'{commentservice}',
+        ]
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 2, 4, style_plain)
+            ws.merge(row_num, row_num + 1, 1, 1, style_plain)
+            ws.merge(row_num, row_num + 1, 2, 4, style_plain)
+            ws.merge(row_num, row_num + 1, 18, 18, style_plain)
+            ws.row(row_num).height_mismatch = True
+            ws.row(row_num).height = 1300
+
+        row_num += 1
+        columns = [
+            '',
+            f'ТО 3',
+            f'{to3}',
+            f'{to3}',
+            f'{to3}',
+            'факт',
+            t3month1f,
+            t3month2f,
+            t3month3f,
+            t3month4f,
+            t3month5f,
+            t3month6f,
+            t3month7f,
+            t3month8f,
+            t3month9f,
+            t3month10f,
+            t3month11f,
+            t3month12f,
+            f'Ответственный за метрологическое обеспечение',
+            f'{commentservice}',
+        ]
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 2, 4, style_plain)
+            ws.row(row_num).height_mismatch = True
+            ws.row(row_num).height = 1300
+
+        row_num += 1
+        columns = [
+            ''
+        ]
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_black)
+            ws.merge(row_num, row_num, 0, 19, style_black)
+            ws.row(row_num).height_mismatch = True
+            ws.row(row_num).height = 40
+    return row_num
+
+# график тоир техобслуживания
+def export_maintenance_schedule_xls(request):
+    """представление для выгрузки графика ТО на указанную дату"""
+
+    # получаем дату от пользователя
+    serdate = request.GET['date']
+    year_search = str(serdate)[0:4]
+
+    # создаем выгрузку
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="TO_{serdate}.xls"'
+
+    # добавляем книгу и страницу с названием
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet(f'ТОиР СИ, ИО, ВО {serdate}', cell_overwrite_ok=True)
+    ws.header_str = b''
+    ws.footer_str = b''
+
+    # ширина столбцов
+    ws.col(0).width = 200
+    ws.col(1).width = 2000
+    ws.col(2).width = 4000
+    ws.col(3).width = 2000
+    ws.col(4).width = 3000
+    ws.col(5).width = 2000
+    ws.col(6).width = 1200
+    ws.col(7).width = 1200
+    ws.col(8).width = 1200
+    ws.col(9).width = 1200
+    ws.col(10).width = 1200
+    ws.col(11).width = 1200
+    ws.col(12).width = 1200
+    ws.col(13).width = 1200
+    ws.col(14).width = 1200
+    ws.col(15).width = 1200
+    ws.col(16).width = 1200
+    ws.col(17).width = 1200
+    ws.col(18).width = 4500
+    ws.col(19).width = 4000
+
+    # шапка
+    company = CompanyCard.objects.get(pk=1)
+    affirmation = f'УТВЕРЖДАЮ \n{company.positionboss}\n{company.name}\n____________/{company.nameboss}/\n«__» ________20__ г.'
+    row_num = 2
+    columns = [
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        affirmation,
+        affirmation,
+        affirmation,
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain_nobor_r)
+        ws.merge(row_num, row_num + 6, 17, 19, style_plain_nobor_r)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 2000
+
+    row_num += 8
+    columns = [
+        f'График технического обслуживания и ремонта лабораторного оборудования'
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain_nobor_bold)
+        ws.merge(row_num, row_num, 0, 19, style_plain_nobor_bold)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 600
+
+
+    # заголовки ТОиР
+    row_num += 4
+    columns = [
+        '',
+        'Наименование, модификация, тип',
+        'Наименование, модификация, тип',
+        'Внутренний номер',
+        'Заводской номер',
+        'Время выполнения ТОиР*',
+        'I КВАРТАЛ',
+        'I КВАРТАЛ',
+        'I КВАРТАЛ',
+        'II КВАРТАЛ',
+        'II КВАРТАЛ',
+        'II КВАРТАЛ',
+        'III КВАРТАЛ',
+        'III КВАРТАЛ',
+        'III КВАРТАЛ',
+        'IV КВАРТАЛ',
+        'IV КВАРТАЛ',
+        'IV КВАРТАЛ',
+        'Ответственный за ТО',
+        'Примечание',
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_headers)
+        ws.merge(row_num, row_num, 1, 2, style_headers)
+        ws.merge(row_num, row_num, 6, 8, style_headers)
+        ws.merge(row_num, row_num, 9, 11, style_headers)
+        ws.merge(row_num, row_num, 12, 14, style_headers)
+        ws.merge(row_num, row_num, 15, 17, style_headers)
+
+
+    equipment_type = 'СИ'
+    MODEL = MeasurEquipment.objects.exclude(equipment__status='С')
+    MODEL2 = ServiceEquipmentME
+    MODEL3 = Verificationequipment
+    to3 = 'Поверка'
+
+    get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search)
+
+    row_num = get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
+
+    equipment_type = 'ИО'
+    MODEL = TestingEquipment.objects.exclude(equipment__status='С')
+    MODEL2 = ServiceEquipmentTE
+    MODEL3 = Attestationequipment
+    to3 = 'Аттестация'
+
+
+    get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search)
+
+    row_num = get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
+
+    equipment_type = 'ВО'
+    MODEL = HelpingEquipment.objects.filter(charakters__kvasyattestation=True).exclude(equipment__status='С')
+    MODEL2 = ServiceEquipmentHE
+    MODEL3 = Checkequipment
+    to3 = 'Проверка технических характеристик'
+
+    get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search)
+
+    row_num = get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
+
+    row_num += 2
+    columns = [
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+        f'* Виды и периодичность технического обслуживания',
+    ]
+    for col_num in range(1, len(columns)-2):
+        ws.write(row_num, col_num, columns[col_num], style_headers)
+        ws.merge(row_num, row_num, 1, 17, style_headers)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 600
+
+    row_num += 1
+    columns = [
+        '',
+        'ТО 0',
+        'Ежедневное/еженедельное ',
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        servicedesc0,
+        '',
+        '',
+    ]
+    for col_num in range(1, len(columns)-2):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 3, 17, style_plain)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 3000
+
+    row_num += 1
+    columns = [
+        '',
+        'ТО 1',
+        'Ежемесячное',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        '',
+        '',
+    ]
+    for col_num in range(1, len(columns)-2):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 3, 17, style_plain)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 3000
+
+    row_num += 1
+    columns = [
+        '',
+        'ТО 2',
+        'Ежеквартальное',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        'В соответствии с Руководством по эксплуатации',
+        '',
+        '',
+    ]
+    for col_num in range(1, len(columns)-2):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 3, 17, style_plain)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 3000
+
+    row_num += 1
+    columns = [
+        '',
+        'ТО 3',
+        'Годовое',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        'Поверка/калибровка/аттестатция',
+        '',
+        '',
+    ]
+    for col_num in range(1, len(columns)-2):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.merge(row_num, row_num, 3, 17, style_plain)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 3000
+
+    # все сохраняем
+    wb.save(response)
+    return response
