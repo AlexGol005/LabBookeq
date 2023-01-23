@@ -177,8 +177,8 @@ class NoteCreationForm(forms.ModelForm):
                                '%d.%m.%Y',
                            ))
     type = forms.ChoiceField(label='Выберите тип события', required=True,
-                                  choices=NOTETYPE,
-                                  widget=forms.Select(attrs={'class': 'form-control'}))
+                             choices=NOTETYPE,
+                             widget=forms.Select(attrs={'class': 'form-control'}))
     note = forms.CharField(label='Внести запись о приборе', max_length=10000,
                            widget=forms.Textarea(attrs={'class': 'form-control',
                                                         'placeholder': 'введите текст записи о приборе'}))
@@ -197,7 +197,7 @@ class CommentsVerificationCreationForm(forms.ModelForm):
     """форма для комментария к истории поверки"""
     note = forms.CharField(label='Обновить комментарий отвественного', max_length=10000000, required=False,
                            widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                                                         'placeholder': ''}))
 
     class Meta:
         model = CommentsVerificationequipment
@@ -265,10 +265,10 @@ class EquipmentCreateForm(forms.ModelForm):
                                choices=CHOICES,
                                widget=forms.Select(attrs={'class': 'form-control'}))
     new = forms.ChoiceField(label='Новый или б/у', initial='новый',
-                               choices=(
-                                        ('новый', 'новый'),
-                                        ('б/у', 'б/у')),
-                               widget=forms.Select(attrs={'class': 'form-control'}))
+                            choices=(
+                                     ('новый', 'новый'),
+                                     ('б/у', 'б/у')),
+                            widget=forms.Select(attrs={'class': 'form-control'}))
     invnumber = forms.CharField(label='Инвентарный номер', max_length=10000, initial='б/н',  required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     kategory = forms.ChoiceField(label='Категория', initial='Средство измерения',
@@ -335,12 +335,12 @@ class EquipmentUpdateForm(forms.ModelForm):
                                choices=CHOICES,
                                widget=forms.Select(attrs={'class': 'form-control'}))
     individuality = forms.CharField(label='Индивидуальные особенности прибора', max_length=10000, required=False,
-                           widget=forms.Textarea(attrs={'class': 'form-control'}))
-    notemaster = forms.CharField(label='Примечание (или временное предостережение)', max_length=10000, required=False,
                                     widget=forms.Textarea(attrs={'class': 'form-control'}))
+    notemaster = forms.CharField(label='Примечание (или временное предостережение)', max_length=10000, required=False,
+                                 widget=forms.Textarea(attrs={'class': 'form-control'}))
     pasport = forms.CharField(label='Паспорт', max_length=10000, required=False,
                               widget=forms.TextInput(attrs={'class': 'form-control',
-                                                          'placeholder': 'добавьте ссылку на паспорт'}))
+                                                            'placeholder': 'добавьте ссылку на паспорт'}))
     instruction = forms.CharField(label='Основная инструкция по эксплуатации', max_length=10000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': 'добавьте ссылку на инструкцию'}))
@@ -351,7 +351,7 @@ class EquipmentUpdateForm(forms.ModelForm):
     invnumber = forms.CharField(label='Инвентарный номер', max_length=10000, initial='б/н', required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     repair = forms.CharField(label='Данные по ремонту', max_length=10000,  required=False,
-                                widget=forms.TextInput(attrs={'class': 'form-control'}))
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Equipment
@@ -359,9 +359,9 @@ class EquipmentUpdateForm(forms.ModelForm):
             'status', 'individuality', 'notemaster',
             'pasport', 'instruction',
             'imginstruction3',
-                  'video', 'invnumber',
-                  'repair'
-        ]
+            'video', 'invnumber',
+            'repair'
+                  ]
 
 
 class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
@@ -384,11 +384,11 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
                                                                 'placeholder': ''}))
     measurydiapason = forms.CharField(label='Диапазон измерений', max_length=10000000, required=False,
                                       widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': ''}))
+                                                                    'placeholder': ''}))
     accuracity = forms.CharField(label='Класс точности /(разряд/), погрешность и /(или/) '
                                  'неопределённость /(класс, разряд/)', max_length=10000000, required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': ''}))
+                                                               'placeholder': ''}))
     aim = forms.CharField(label='Назначение ЛО', max_length=10000000, required=False,
                           initial='Определение вязкости нефти и нефтепродуктов',
                           widget=forms.TextInput(attrs={'class': 'form-control',
@@ -397,13 +397,13 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
     voltage = forms.CharField(label='Напряжение требуемое', required=False,
                               widget=forms.TextInput(attrs={'class': 'form-control',
-                                                           'placeholder': ''}))
+                                                            'placeholder': ''}))
     frequency = forms.CharField(label='Частота требуемая', required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
+                                                              'placeholder': ''}))
     temperature = forms.CharField(label='Температура требуемая', required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
+                                                                'placeholder': ''}))
     humidicity = forms.CharField(label='Влажность требуемая', required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control',
                                                                'placeholder': ''}))
@@ -419,16 +419,16 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
     expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
     service0 = forms.CharField(label='ТО 0', required=False,
                                widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                                                            'placeholder': ''}))
     service1 = forms.CharField(label='ТО 1', required=False,
                                widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                                                            'placeholder': ''}))
     service2 = forms.CharField(label='ТО 2', required=False,
                                widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                                                            'placeholder': ''}))
     servicecomment = forms.CharField(label='Примечание ТО', required=False,
                                      widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                                                                  'placeholder': ''}))
 
     class Meta:
         model = MeasurEquipmentCharakters
@@ -437,7 +437,7 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             'name',
             'typename',
             'modificname',
-             'calinterval',
+            'calinterval',
             'measurydiapason', 'accuracity',
             'aim',
             'power',
@@ -461,7 +461,7 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
     """форма для внесения характеристик ИО"""
     name = forms.CharField(label='Название прибора', max_length=10000000, required=False,
                            widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                                                         'placeholder': ''}))
     typename = forms.CharField(label='Тип', max_length=10000000, required=False, initial='нет типа',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': ''}))
@@ -507,49 +507,49 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                                                              'placeholder': ''}))
     setplace = forms.CharField(label='Описание мероприятий по установке', required=False,
                                widget=forms.Textarea(attrs={'class': 'form-control',
-                                                             'placeholder': ''}))
-    complectlist = forms.CharField(label='Где в паспорте комплектация', required=False,
-                               widget=forms.Textarea(attrs={'class': 'form-control',
                                                             'placeholder': ''}))
+    complectlist = forms.CharField(label='Где в паспорте комплектация', required=False,
+                                   widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
     expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
     service0 = forms.CharField(label='ТО 0', required=False,
-                                  widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                               widget=forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
     service1 = forms.CharField(label='ТО 1', required=False,
-                                  widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                               widget=forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
     service2 = forms.CharField(label='ТО 2', required=False,
-                                  widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                               widget=forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
     servicecomment = forms.CharField(label='Примечание ТО', required=False,
-                                  widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                                     widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                  'placeholder': ''}))
 
     class Meta:
         model = TestingEquipmentCharakters
         fields = [
-            'name',
-            'typename',
-            'modificname',
-             'calinterval',
-            'measurydiapason',
-            'aim',
-            'aim2',
-            'ndoc',
-            'power',
-            'needsetplace',
-            'voltage',
-            'frequency',
-            'temperature',
-            'humidicity',
-            'pressure',
-            'setplace',
-            'complectlist',
-            'expresstest',
-            'service0',
-            'service1',
-            'service2',
-            'servicecomment',
+                  'name',
+                  'typename',
+                  'modificname',
+                  'calinterval',
+                  'measurydiapason',
+                  'aim',
+                  'aim2',
+                  'ndoc',
+                  'power',
+                  'needsetplace',
+                  'voltage',
+                  'frequency',
+                  'temperature',
+                  'humidicity',
+                  'pressure',
+                  'setplace',
+                  'complectlist',
+                  'expresstest',
+                  'service0',
+                  'service1',
+                  'service2',
+                  'servicecomment',
                   ]
 
 
@@ -557,25 +557,25 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
     """форма для внесения характеристик ВО"""
     name = forms.CharField(label='Название прибора', max_length=10000000, required=False,
                            widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                                                         'placeholder': ''}))
     typename = forms.CharField(label='Тип', max_length=10000000, required=False, initial='нет типа',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': ''}))
     modificname = forms.CharField(label='Модификация', max_length=10000000, required=False, initial='нет модификации',
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
-    measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
+    measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
+                                      widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                    'placeholder': ''}))
     aim = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
                           max_length=10000000, required=False,
                           initial='Определение содержания механических примесей в нефтепродуктах',
                           widget=forms.TextInput(attrs={'class': 'form-control',
                                                         'placeholder': ''}))
     ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=False,
-                          initial='ГОСТ 33, МИ-02-2018, ...',
-                          widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                           initial='ГОСТ 33, МИ-02-2018, ...',
+                           widget=forms.TextInput(attrs={'class': 'form-control',
+                                                         'placeholder': ''}))
     power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
     voltage = forms.CharField(label='Напряжение требуемое', required=False,
@@ -595,7 +595,7 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
                                                              'placeholder': ''}))
     setplace = forms.CharField(label='Описание мероприятий по установке', required=False,
                                widget=forms.Textarea(attrs={'class': 'form-control',
-                                                             'placeholder': ''}))
+                                                            'placeholder': ''}))
     complectlist = forms.CharField(label='Где в паспорте комплектация', required=False,
                                    widget=forms.Textarea(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
@@ -604,14 +604,14 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
                                widget=forms.Textarea(attrs={'class': 'form-control',
                                                             'placeholder': ''}))
     service1 = forms.CharField(label='ТО 1', required=False,
-                                  widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                               widget=forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
     service2 = forms.CharField(label='ТО 2', required=False,
                                widget=forms.Textarea(attrs={'class': 'form-control',
                                                             'placeholder': ''}))
     servicecomment = forms.CharField(label='Примечание ТО', required=False,
-                                  widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                                     widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                  'placeholder': ''}))
     kvasyattestation = forms.BooleanField(label='применяется внутренняя аттестация (проверка зарактеристик)',
                                           initial=False)
 
@@ -686,33 +686,33 @@ class HelpingEquipmentCreateForm(forms.ModelForm):
 class ContactsVerForm(ModelForm):
     """форма для добавления контактов поверителей"""
     verificators = forms.ModelChoiceField(label='Контактная информация',
-                                        queryset=VerificatorPerson.objects.all(),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
+                                          queryset=VerificatorPerson.objects.all(),
+                                          widget=forms.Select(attrs={'class': 'form-control'}))
     dop = forms.CharField(label='Примечание', required=False,
-                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
+                          widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = ContactsVer
         fields = [
-            'verificators',
-             'dop'
-                  ]
+                  'verificators',
+                  'dop'
+        ]
 
 
 class ManufacturerCreateForm(forms.ModelForm):
     """форма для внесения производителя"""
     companyName = forms.CharField(label='Название компании', max_length=10000,
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
-    country = forms.CharField(label='Страна', max_length=10000, initial = 'Россия',
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
+    country = forms.CharField(label='Страна', max_length=10000, initial='Россия',
+                              widget=forms.TextInput(attrs={'class': 'form-control'}))
     companyAdress = forms.CharField(label='Адрес', max_length=10000,
                                     required=False,
                                     widget=forms.TextInput(attrs={'class': 'form-control'}))
     telnumber = forms.CharField(label='Телефон общий', max_length=10000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
     telnumberhelp = forms.CharField(label='Телефон техподдержки для вопросов по приборам', required=False,
                                     max_length=10000,
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+                                    widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Manufacturer
@@ -725,20 +725,20 @@ class ManufacturerCreateForm(forms.ModelForm):
 class VerificatorsCreationForm(forms.ModelForm):
     """форма для внесения компании поверителя"""
     companyName = forms.CharField(label='Название организации', max_length=10000000,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
     companyAdress = forms.CharField(label='Адрес', max_length=10000000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                                    widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                  'placeholder': ''}))
     telnumber = forms.CharField(label='Телефон', max_length=10000000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                                widget=forms.TextInput(attrs={'class': 'form-control',
+                                                              'placeholder': ''}))
     email = forms.CharField(label='email', max_length=10000000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                            widget=forms.TextInput(attrs={'class': 'form-control',
+                                                          'placeholder': ''}))
     note = forms.CharField(label='Примечание', max_length=10000000, required=False,
                            widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                                                         'placeholder': ''}))
 
     class Meta:
         model = Verificators
@@ -752,31 +752,31 @@ class VerificatorsCreationForm(forms.ModelForm):
 class VerificatorPersonCreationForm(forms.ModelForm):
     """форма для внесения сотрудника поверителя"""
     company = forms.ModelChoiceField(label='Организация', required=False,
-                                                         queryset=Verificators.objects.all(),
-                                                         widget=forms.Select(attrs={'class': 'form-control'}))
+                                     queryset=Verificators.objects.all(),
+                                     widget=forms.Select(attrs={'class': 'form-control'}))
     name = forms.CharField(label='ФИО', max_length=10000000, required=False,
                            widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
-    position = forms.CharField(label='Должность', max_length=10000000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': ''}))
+    position = forms.CharField(label='Должность', max_length=10000000, required=False,
+                               widget=forms.TextInput(attrs={'class': 'form-control',
+                                                             'placeholder': ''}))
     departamentn = forms.CharField(label='Отдел №', max_length=10000000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                                   widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                 'placeholder': ''}))
     departament = forms.CharField(label='Отдел название', max_length=10000000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     departamentadress = forms.CharField(label='Расположение отдела', max_length=10000000, required=False,
-                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                'placeholder': ''}))
+                                        widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                      'placeholder': ''}))
     telnumber = forms.CharField(label='Телефон', max_length=10000000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                                widget=forms.TextInput(attrs={'class': 'form-control',
+                                                              'placeholder': ''}))
     email = forms.CharField(label='email', max_length=10000000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                            widget=forms.TextInput(attrs={'class': 'form-control',
+                                                          'placeholder': ''}))
     dop = forms.CharField(label='Примечание', max_length=10000000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
+                          widget=forms.TextInput(attrs={'class': 'form-control',
                                                         'placeholder': ''}))
 
     class Meta:
@@ -832,37 +832,37 @@ class DocsConsCreateForm(forms.ModelForm):
 class VerificationRegForm(forms.ModelForm):
     """форма для внесения сведений о поверке"""
     date = forms.DateField(label='Дата поверки',
-        widget=forms.DateInput(
-            attrs={'class': 'form-control', 'placeholder': ''}),
-        input_formats=(
-            '%Y-%m-%d',  # '2006-10-25'
-            '%m/%d/%Y',  # '10/25/2006'
-            '%m/%d/%y',
-            '%d.%m.%Y',
-        ))
+                           widget=forms.DateInput(
+                                                  attrs={'class': 'form-control', 'placeholder': ''}),
+                           input_formats=(
+                                          '%Y-%m-%d',  # '2006-10-25'
+                                          '%m/%d/%Y',  # '10/25/2006'
+                                          '%m/%d/%y',
+                                          '%d.%m.%Y',
+                                           ))
     datedead = forms.DateField(label='Дата окончания поверки',
-                           widget=forms.DateInput(
-                               attrs={'class': 'form-control', 'placeholder': ''}),
-                           input_formats=(
-                               '%Y-%m-%d',  # '2006-10-25'
-                               '%m/%d/%Y',  # '10/25/2006'
-                               '%m/%d/%y',
-                               '%d.%m.%Y',
-                           ))
+                               widget=forms.DateInput(
+                                                      attrs={'class': 'form-control', 'placeholder': ''}),
+                               input_formats=(
+                                              '%Y-%m-%d',  # '2006-10-25'
+                                              '%m/%d/%Y',  # '10/25/2006'
+                                              '%m/%d/%y',
+                                              '%d.%m.%Y',
+                                              ))
     dateorder = forms.DateField(label='Дата заказа поверки', required=False,
-                           widget=forms.DateInput(
-                               attrs={'class': 'form-control', 'placeholder': ''}),
-                           input_formats=(
-                               '%Y-%m-%d',  # '2006-10-25'
-                               '%m/%d/%Y',  # '10/25/2006'
-                               '%m/%d/%y',
-                               '%d.%m.%Y',
-                           ))
+                                widget=forms.DateInput(
+                                                       attrs={'class': 'form-control', 'placeholder': ''}),
+                                input_formats=(
+                                               '%Y-%m-%d',  # '2006-10-25'
+                                               '%m/%d/%Y',  # '10/25/2006'
+                                               '%m/%d/%y',
+                                               '%d.%m.%Y',
+                                                ))
     arshin = forms.CharField(label='Ссылка на сведения о поверке в Аршин', max_length=10000,
                              required=False,
                              widget=forms.TextInput(attrs={'class': 'form-control'}))
     certnumber = forms.CharField(label='№ свидетельства о поверке', max_length=10000,
-                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
+                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     price = forms.DecimalField(label='Стоимость данной поверки', max_digits=10, decimal_places=2,
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': '0000.00'}))
@@ -884,13 +884,13 @@ class VerificationRegForm(forms.ModelForm):
     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
                                    help_text='Укажите, если поверка не выгодна',
                                    widget=forms.DateInput(
-                                   attrs={'class': 'form-control', 'placeholder': ''}),
-                                          input_formats=(
-                                                         '%Y-%m-%d',
-                                                         '%m/%d/%Y',
-                                                         '%m/%d/%y',
-                                                         '%d.%m.%Y',
-                                                         ))
+                                                          attrs={'class': 'form-control', 'placeholder': ''}),
+                                   input_formats=(
+                                                  '%Y-%m-%d',
+                                                  '%m/%d/%Y',
+                                                  '%m/%d/%y',
+                                                  '%d.%m.%Y',
+                                                   ))
 
     class Meta:
         model = Verificationequipment
@@ -932,49 +932,48 @@ class VerificationRegForm(forms.ModelForm):
 class AttestationRegForm(forms.ModelForm):
     """форма для  внесения сведений об аттестации"""
     date = forms.DateField(label='Дата аттестации', required=False,
-        widget=forms.DateInput(
-            attrs={'class': 'form-control', 'placeholder': ''}),
-        input_formats=(
-            '%Y-%m-%d',  # '2006-10-25'
-            '%m/%d/%Y',  # '10/25/2006'
-            '%m/%d/%y',
-            '%d.%m.%Y',
-        ))
+                           widget=forms.DateInput(
+                                                  attrs={'class': 'form-control', 'placeholder': ''}),
+                           input_formats=(
+                                          '%Y-%m-%d',  # '2006-10-25'
+                                          '%m/%d/%Y',  # '10/25/2006'
+                                          '%m/%d/%y',
+                                          '%d.%m.%Y',
+                                           ))
     datedead = forms.DateField(label='Дата окончания аттестации', required=False,
-                           widget=forms.DateInput(
-                               attrs={'class': 'form-control', 'placeholder': ''}),
-                           input_formats=(
-                               '%Y-%m-%d',  # '2006-10-25'
-                               '%m/%d/%Y',  # '10/25/2006'
-                               '%m/%d/%y',
-                               '%d.%m.%Y',
-                           ))
+                               widget=forms.DateInput(
+                                                      attrs={'class': 'form-control', 'placeholder': ''}),
+                               input_formats=(
+                                              '%Y-%m-%d',  # '2006-10-25'
+                                              '%m/%d/%Y',  # '10/25/2006'
+                                              '%m/%d/%y',
+                                              '%d.%m.%Y',
+                                               ))
     dateorder = forms.DateField(label='Дата заказа аттестации', required=False,
-                           widget=forms.DateInput(
-                               attrs={'class': 'form-control', 'placeholder': ''}),
-                           input_formats=(
-                               '%Y-%m-%d',  # '2006-10-25'
-                               '%m/%d/%Y',  # '10/25/2006'
-                               '%m/%d/%y',
-                               '%d.%m.%Y',
-                           ))
+                                widget=forms.DateInput(
+                                                       attrs={'class': 'form-control', 'placeholder': ''}),
+                                input_formats=(
+                                               '%Y-%m-%d',  # '2006-10-25'
+                                               '%m/%d/%Y',  # '10/25/2006'
+                                               '%m/%d/%y',
+                                               '%d.%m.%Y',
+                                                ))
     ndocs = forms.CharField(label='Аттестован на методики', max_length=10000, required=False,
-                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
+                            widget=forms.TextInput(attrs={'class': 'form-control'}))
     certnumber = forms.CharField(label='№ аттестата', max_length=10000, required=False,
-                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
+                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     price = forms.DecimalField(label='Стоимость данной атт.', max_digits=10, decimal_places=2,
-                              widget=forms.TextInput(attrs={'class': 'form-control',
-                                                            'placeholder': '0000.00'}))
+                               widget=forms.TextInput(attrs={'class': 'form-control',
+                                                             'placeholder': '0000.00'}))
     statusver = forms.ChoiceField(label='Результат аттестации',
-                               choices=CHOICESATT,
-                               widget=forms.Select(attrs={'class': 'form-control'}))
-
+                                  choices=CHOICESATT,
+                                  widget=forms.Select(attrs={'class': 'form-control'}))
     verificator = forms.ModelChoiceField(label='Организация-поверитель',
                                          queryset=Verificators.objects.all(),
-                                             widget=forms.Select(attrs={'class': 'form-control'}))
-    verificatorperson = forms.ModelChoiceField(label='Имя поверителя', required=False,
-                                         queryset=VerificatorPerson.objects.all(),
                                          widget=forms.Select(attrs={'class': 'form-control'}))
+    verificatorperson = forms.ModelChoiceField(label='Имя поверителя', required=False,
+                                               queryset=VerificatorPerson.objects.all(),
+                                               widget=forms.Select(attrs={'class': 'form-control'}))
     place = forms.ChoiceField(label='Место аттестации',
                               choices=CHOICESPLACE, initial='В ПА',
                               widget=forms.Select(attrs={'class': 'form-control'}))
@@ -982,14 +981,14 @@ class AttestationRegForm(forms.ModelForm):
     img = forms.ImageField(label='Аттестат', widget=forms.FileInput, required=False)
     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
                                    help_text='Укажите, если аттестации не выгодна',
-                                widget=forms.DateInput(
-                                    attrs={'class': 'form-control', 'placeholder': ''}),
-                                input_formats=(
-                                    '%Y-%m-%d',
-                                    '%m/%d/%Y',
-                                    '%m/%d/%y',
-                                    '%d.%m.%Y',
-                                ))
+                                   widget=forms.DateInput(
+                                                          attrs={'class': 'form-control', 'placeholder': ''}),
+                                   input_formats=(
+                                                  '%Y-%m-%d',
+                                                  '%m/%d/%Y',
+                                                  '%m/%d/%y',
+                                                  '%d.%m.%Y',
+                                                  ))
     year = forms.CharField(label='год аттестации', max_length=10000, required=False,
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
 
@@ -1068,8 +1067,8 @@ class PersonchangeForm(forms.ModelForm):
 class RoomschangeForm(forms.ModelForm):
     """форма для смены Размещения ЛО"""
     roomnumber = forms.ModelChoiceField(label='Номер комнаты',
-                                                         queryset=Rooms.objects.all(),
-                                                         widget=forms.Select(attrs={'class': 'form-control'}))
+                                        queryset=Rooms.objects.all(),
+                                        widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Roomschange
