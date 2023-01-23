@@ -1,10 +1,29 @@
+"""
+Модуль проекта LabJournal, приложения equipment.
+Приложение equipment это обширное приложение, включает все про лабораторное оборудование и лабораторные помещения
+Данный модуль models.py выводит классы, создающие таблицы в базе данных - далее: модели.
+Список блоков:
+блок 1 - заглавные страницы с кнопками, структурирующие разделы. (Самая верхняя страница - записана в приложении main)
+блок 2 -  производители и поверители, комнаты лаборатории
+блок 3 - оборудование в целом, характеристики СИ ИО ВО, сами СИ ИО ВО
+блок 4 - смена комнаты, ответственного, добавление принадлежностей к оборудованию
+блок 5 - поверка СИ, аттестация ИО, проверка характеристик ВО
+блок 6 - комментарии
+блок 7 - микроклимат в помещении
+блок 8 - карточка предприятия
+блок 9 - контакты поверителей -  связывает контакты поверителя с оборудованием
+блок 10 - техобслуживание
+"""
+
+
 from django.db import models
 from PIL import Image
 from django.contrib.auth.models import User
 from decimal import *
-
 from django.urls import reverse
 
+
+# блок 1 -  неизменяемые непользовательские константы для полей с выбором значений в моделях
 
 CHOICES = (
         ('Э', 'Экс.'),
@@ -43,11 +62,14 @@ CHOICESATT = (
 
 CHOICESPLACE = (
         ('У поверителя', 'У поверителя'),
-        ('В ПА', 'В ПА'),
+        ('На месте эксплуатации', 'На месте эксплуатации'),
     )
 
 
+# блок 2 -  производители и поверители
+
 class Manufacturer(models.Model):
+    """Производители оборудования"""
     companyName = models.CharField('Производитель', max_length=100, unique=True)
     companyAdress = models.CharField('Адрес', max_length=200, default='', blank=True)
     country = models.CharField('Страна', max_length=200, default='Россия', blank=True)
@@ -64,6 +86,7 @@ class Manufacturer(models.Model):
 
 
 class Verificators(models.Model):
+    """Компании поверители оборудования"""
     companyName = models.CharField('Поверитель', max_length=100, unique=True)
     companyAdress = models.CharField('Адрес', max_length=200, default='-', blank=True)
     telnumber = models.CharField('Телефон', max_length=200, default='-', blank=True)
@@ -79,6 +102,7 @@ class Verificators(models.Model):
 
 
 class VerificatorPerson(models.Model):
+    """Сотрудники компаний поверителей поверители оборудования"""
     company = models.ForeignKey(Verificators, on_delete=models.PROTECT, verbose_name='Компания',
                                 related_name='Verificators_company', blank=True, null=True)
     name = models.CharField('ИМЯ', max_length=100, blank=True, null=True, default=' ')
@@ -99,6 +123,7 @@ class VerificatorPerson(models.Model):
 
 
 class Rooms(models.Model):
+    """Комнаты лаборатории/производства"""
     roomnumber = models.CharField('Номер комнаты', max_length=10, default='', unique=True)
     person = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
 
@@ -110,7 +135,11 @@ class Rooms(models.Model):
         verbose_name_plural = 'Комнаты'
 
 
+# блок 3 - оборудование в целом, характеристики СИ ИО ВО, сами СИ ИО ВО
+
+
 class Equipment(models.Model):
+    """Лабораторное оборудование - базовая индивидуальная сущность"""
     date = models.DateField(auto_now_add=True, blank=True, null=True)
     exnumber = models.CharField('Внутренний номер', max_length=100, default='', blank=True, null=True, unique=True)
     lot = models.CharField('Заводской номер', max_length=100, default='')
@@ -163,14 +192,175 @@ class Equipment(models.Model):
                 image3.save(self.imginstruction3.path)
         super(Equipment, self).save(*args, **kwargs)
 
-    # def get_absolute_url(self):
-    #     """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
-    #     return reverse('measureequipmentpk', kwargs={'str': self.exnumber})
+    class Meta:
+        verbose_name = 'Лабораторное оборудование'
+        verbose_name_plural = 'Лабораторное оборудование'
+
+
+class MeasurEquipmentCharakters(models.Model):
+    """Характеристики средств измерений (госреестры в связке с модификациями/типами/диапазонами)"""
+    name = models.CharField('Название прибора', max_length=100, default='')
+    reestr = models.CharField('Номер в Госреестре', max_length=1000, default='', blank=True, null=True)
+    calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
+    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
+    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
+    measurydiapason = models.CharField('Диапазон измерений', max_length=1000, default='', blank=True, null=True)
+    accuracity = models.CharField('Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)',
+                                  max_length=1000, default='', blank=True, null=True)
+    aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
+                           max_length=90, blank=True, null=True)
+    power = models.BooleanField('Работает от сети', default=False, blank=True)
+    voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
+    frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
+    temperature = models.CharField('температура', max_length=100, default='', blank=True, null=True)
+    humidicity = models.CharField('влажность', max_length=100, default='', blank=True, null=True)
+    pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
+    setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
+    needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
+    complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
+    expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
+    service0 = models.TextField('ТО 0', default='', blank=True, null=True)
+    service1 = models.TextField('ТО 1', default='', blank=True, null=True)
+    service2 = models.TextField('ТО 2', default='', blank=True, null=True)
+    servicecomment = models.TextField('ТО примечание', default='', blank=True, null=True)
+
+    def __str__(self):
+        return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
 
     class Meta:
-        verbose_name = 'Прибор'
-        verbose_name_plural = 'Приборы'
+        verbose_name = 'Средство измерения описание типа'
+        verbose_name_plural = 'Средства измерения описания типов'
+        unique_together = ('reestr', 'modificname', 'typename', 'name')
 
+
+class TestingEquipmentCharakters(models.Model):
+    """Характеристики ИО"""
+    name = models.CharField('Название прибора', max_length=100, default='')
+    calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
+    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
+    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
+    measurydiapason = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
+    aim = models.CharField('Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
+                           max_length=500, blank=True, null=True)
+    aim2 = models.CharField('Наименование испытуемых групп объектов',
+                            max_length=500, blank=True, null=True)
+    ndoc = models.CharField('Методики испытаний', max_length=500, blank=True, null=True)
+    power = models.BooleanField('Работает от сети', default=False, blank=True)
+    voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
+    frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
+    temperature = models.CharField('температура', max_length=100, default='', blank=True, null=True)
+    humidicity = models.CharField('влажность', max_length=100, default='', blank=True, null=True)
+    pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
+    setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
+    needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
+    complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
+    expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
+    service0 = models.TextField('ТО 0', default='', blank=True, null=True)
+    service1 = models.TextField('ТО 1', default='', blank=True, null=True)
+    service2 = models.TextField('ТО 2', default='', blank=True, null=True)
+    servicecomment = models.TextField('ТО примечание', default='', blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.name}  {self.modificname}'
+
+    class Meta:
+        verbose_name = 'Испытательное оборудование, характеристики'
+        verbose_name_plural = 'Испытательное оборудование, характеристики'
+        unique_together = ('name', 'modificname', 'typename')
+
+
+class HelpingEquipmentCharakters(models.Model):
+    """Характеристики ВО"""
+    name = models.CharField('Название прибора', max_length=100, default='')
+    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
+    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
+    measurydiapason = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
+    aim = models.CharField('Назначение',
+                           max_length=500, blank=True, null=True)
+    ndoc = models.CharField('Методики испытаний', max_length=500, blank=True, null=True)
+    power = models.BooleanField('Работает от сети', default=False, blank=True)
+    voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
+    frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
+    temperature = models.CharField('температура', max_length=100, default='', blank=True, null=True)
+    humidicity = models.CharField('влажность', max_length=100, default='', blank=True, null=True)
+    pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
+    setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
+    needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
+    complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
+    expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
+    service0 = models.TextField('ТО 0', default='', blank=True, null=True)
+    service1 = models.TextField('ТО 1', default='', blank=True, null=True)
+    service2 = models.TextField('ТО 2', default='', blank=True, null=True)
+    servicecomment = models.TextField('ТО примечание', default='', blank=True, null=True)
+    kvasyattestation = models.BooleanField('применяется внутренняя аттестация (проверка зарактеристик)',
+                                           default=False, blank=True)
+
+    def __str__(self):
+        return f'{self.name}  {self.modificname}'
+
+    class Meta:
+        verbose_name = 'Вспомогательное оборудование, характеристики'
+        verbose_name_plural = 'Вспомогательное оборудование, характеристики'
+        unique_together = ('name', 'modificname', 'typename')
+
+
+class MeasurEquipment(models.Model):
+    """СИ: составлено из ЛО и характеристик СИ"""
+    charakters = models.ForeignKey(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
+                                   verbose_name='Характеристики СИ', blank=True, null=True)
+    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+                                  verbose_name='Оборудование')
+    ecard = models.CharField('Назначение', max_length=90, blank=True, null=True)
+    aim = models.CharField('Назначение', max_length=90, blank=True, null=True)
+    newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
+    newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
+    newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
+
+    def __str__(self):
+        return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
+               f' № реестр {self.charakters.reestr} - pk {self.pk}'
+
+    class Meta:
+        verbose_name = 'Средство измерения'
+        verbose_name_plural = 'Средства измерения'
+        unique_together = ('charakters', 'equipment')
+        ordering = ['charakters__name']
+
+
+class TestingEquipment(models.Model):
+    """ИО: составлено из ЛО и характеристик ИО"""
+    charakters = models.ForeignKey(TestingEquipmentCharakters,  on_delete=models.PROTECT,
+                                   verbose_name='Характеристики ИО', blank=True, null=True)
+    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+                                  verbose_name='Оборудование')
+    newcertnumber = models.CharField('Номер последнего аттестата', max_length=90, blank=True, null=True)
+    newdate = models.CharField('Дата последней аттестации', blank=True, null=True, max_length=90)
+    newdatedead = models.CharField('Дата окончания последней аттестации', blank=True, null=True, max_length=90)
+
+    def __str__(self):
+        return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} - pk {self.pk}'
+
+    class Meta:
+        verbose_name = 'Испытательное оборудование'
+        verbose_name_plural = 'Испытательное оборудование'
+
+
+class HelpingEquipment(models.Model):
+    """ВО: составлено из ЛО и характеристик ВО"""
+    charakters = models.ForeignKey(HelpingEquipmentCharakters,  on_delete=models.PROTECT,
+                                   verbose_name='Характеристики ВО', blank=True, null=True)
+    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+                                  verbose_name='Оборудование')
+
+    def __str__(self):
+        return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} - pk {self.pk}'
+
+    class Meta:
+        verbose_name = 'Вспомогательное оборудование'
+        verbose_name_plural = 'Вспомогательное оборудование'
+
+
+# блок 4 - смена комнаты, ответственного, добавление принадлежностей к оборудованию
 
 class Personchange(models.Model):
     person = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
@@ -219,122 +409,11 @@ class DocsCons(models.Model):
         verbose_name_plural = 'Комплекты к приборам'
 
 
-class MeasurEquipmentCharakters(models.Model):
-    name = models.CharField('Название прибора', max_length=100, default='')
-    reestr = models.CharField('Номер в Госреестре', max_length=1000, default='', blank=True, null=True)
-    calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
-    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
-    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
-    measurydiapason = models.CharField('Диапазон измерений', max_length=1000, default='', blank=True, null=True)
-    accuracity = models.CharField('Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)',
-                                  max_length=1000, default='', blank=True, null=True)
-    aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
-                           max_length=90, blank=True, null=True)
-    power = models.BooleanField('Работает от сети', default=False, blank=True)
-    voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
-    frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
-    temperature = models.CharField('температура', max_length=100, default='', blank=True, null=True)
-    humidicity = models.CharField('влажность', max_length=100, default='', blank=True, null=True)
-    pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
-    setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
-    needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
-    complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
-    expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
-    service0 = models.TextField('ТО 0', default='', blank=True, null=True)
-    service1 = models.TextField('ТО 1', default='', blank=True, null=True)
-    service2 = models.TextField('ТО 2', default='', blank=True, null=True)
-    servicecomment = models.TextField('ТО примечание', default='', blank=True, null=True)
-
-    def __str__(self):
-        return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
-
-    class Meta:
-        verbose_name = 'Средство измерения описание типа'
-        verbose_name_plural = 'Средства измерения описания типов'
-        unique_together = ('reestr', 'modificname', 'typename', 'name')
-
-
-class TestingEquipmentCharakters(models.Model):
-    name = models.CharField('Название прибора', max_length=100, default='')
-    calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
-    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
-    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
-    measurydiapason = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
-    aim = models.CharField('Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
-                           max_length=500, blank=True, null=True)
-    aim2 = models.CharField('Наименование испытуемых групп объектов',
-                            max_length=500, blank=True, null=True)
-    ndoc = models.CharField('Методики испытаний', max_length=500, blank=True, null=True)
-    power = models.BooleanField('Работает от сети', default=False, blank=True)
-    voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
-    frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
-    temperature = models.CharField('температура', max_length=100, default='', blank=True, null=True)
-    humidicity = models.CharField('влажность', max_length=100, default='', blank=True, null=True)
-    pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
-    setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
-    needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
-    complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
-    expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
-    service0 = models.TextField('ТО 0', default='', blank=True, null=True)
-    service1 = models.TextField('ТО 1', default='', blank=True, null=True)
-    service2 = models.TextField('ТО 2', default='', blank=True, null=True)
-    servicecomment = models.TextField('ТО примечание', default='', blank=True, null=True)
-
-    def __str__(self):
-        return f'{self.name}  {self.modificname}'
-
-    class Meta:
-        verbose_name = 'Испытательное оборудование, характеристики'
-        verbose_name_plural = 'Испытательное оборудование, характеристики'
-        unique_together = ('name', 'modificname', 'typename')
-
-
-class MeasurEquipment(models.Model):
-    charakters = models.ForeignKey(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
-                                   verbose_name='Характеристики СИ', blank=True, null=True)
-    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
-                                  verbose_name='Оборудование')
-    ecard = models.CharField('Назначение', max_length=90, blank=True, null=True)
-    aim = models.CharField('Назначение', max_length=90, blank=True, null=True)
-    newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
-    newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
-    newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
-
-    def __str__(self):
-        return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
-               f' № реестр {self.charakters.reestr} - pk {self.pk}'
-
-    # def save(self, *args, **kwargs):
-    #     super().save()
-    #     now = datetime.now()
-    #     Verificationequipment.objects.create(equipmentSM=self, dateorder=now, statusver='не поверен')
-    #     super(MeasurEquipment, self).save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = 'Средство измерения'
-        verbose_name_plural = 'Средства измерения'
-        unique_together = ('charakters', 'equipment')
-        ordering = ['charakters__name']
-
-
-class TestingEquipment(models.Model):
-    charakters = models.ForeignKey(TestingEquipmentCharakters,  on_delete=models.PROTECT,
-                                   verbose_name='Характеристики ИО', blank=True, null=True)
-    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
-                                  verbose_name='Оборудование')
-    newcertnumber = models.CharField('Номер последнего аттестата', max_length=90, blank=True, null=True)
-    newdate = models.CharField('Дата последней аттестации', blank=True, null=True, max_length=90)
-    newdatedead = models.CharField('Дата окончания последней аттестации', blank=True, null=True, max_length=90)
-
-    def __str__(self):
-        return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} - pk {self.pk}'
-
-    class Meta:
-        verbose_name = 'Испытательное оборудование'
-        verbose_name_plural = 'Испытательное оборудование'
+# блок 5 - проверка СИ, аттестация ИО, проверка характеристик ВО
 
 
 class Verificationequipment(models.Model):
+    """Поверка СИ"""
     equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
                                     on_delete=models.PROTECT, related_name='equipmentSM_ver', blank=True, null=True)
     date = models.DateField('Дата поверки', blank=True, null=True)
@@ -360,14 +439,13 @@ class Verificationequipment(models.Model):
     haveorder = models.BooleanField(verbose_name='Заказана следующая поверка (или новое СИ)', default=False,
                                     blank=True)
     cust = models.BooleanField(verbose_name='Поверку организует Поставщик', default=False,
-                                    blank=True)
+                               blank=True)
 
     def __str__(self):
         try:
-            self.equipmentSM.equipment.exnumber
-            self.equipmentSM.charakters.name
             return f'Поверка  вн № ' \
-               f'  {self.equipmentSM.equipment.exnumber} {self.equipmentSM.charakters.name} от {self.date} до {self.datedead} {self.year}'
+               f'  {self.equipmentSM.equipment.exnumber} {self.equipmentSM.charakters.name} от {self.date} ' \
+                   f'до {self.datedead} {self.year}'
         except:
             return '&'
 
@@ -411,6 +489,7 @@ class Verificationequipment(models.Model):
 
 
 class Attestationequipment(models.Model):
+    """Аттестация ИО"""
     equipmentSM = models.ForeignKey(TestingEquipment, verbose_name='ИО',
                                     on_delete=models.PROTECT, related_name='equipmentSM_att', blank=True, null=True)
     date = models.DateField('Дата аттестации', blank=True, null=True)
@@ -438,10 +517,15 @@ class Attestationequipment(models.Model):
     haveorder = models.BooleanField(verbose_name='Заказана следующая аттестация (или новое СИ)', default=False,
                                     blank=True)
     cust = models.BooleanField(verbose_name='Аттестацию организует Поставщик', default=False,
-                                    blank=True)
+                               blank=True)
 
     def __str__(self):
-        return f'Поверка {self.equipmentSM.charakters.name} вн № {self.equipmentSM.equipment.exnumber}'
+        try:
+            return f'Аттестация  вн № ' \
+                   f'  {self.equipmentSM.equipment.exnumber} {self.equipmentSM.charakters.name} от {self.date} до' \
+                   f' {self.datedead} {self.year}'
+        except:
+            return '&'
 
     def get_absolute_url(self):
         """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
@@ -481,8 +565,45 @@ class Attestationequipment(models.Model):
         verbose_name_plural = 'Аттестации приборов'
 
 
+class Checkequipment(models.Model):
+    """Проверка характеристик ВО"""
+    equipmentSM = models.ForeignKey(HelpingEquipment, verbose_name='ИО',
+                                    on_delete=models.PROTECT, related_name='equipmentSM_att', blank=True, null=True)
+    date = models.DateField('Дата проверки', blank=True, null=True)
+    datedead = models.DateField('Дата окончания срока проверки', blank=True, null=True)
+    dateorder = models.DateField('Дата следующей проверки план', blank=True, null=True)
+    certnumber = models.CharField('Номер протокола проверки', max_length=90, blank=True, null=True)
+
+    def __str__(self):
+        try:
+            return f'Проверка характеристик  вн № ' \
+                   f'  {self.equipmentSM.equipment.exnumber} {self.equipmentSM.charakters.name} от {self.date} до' \
+                   f' {self.datedead}'
+        except:
+            return '&'
+
+    def get_absolute_url(self):
+        """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
+        return reverse('helpingequipmentcheck', kwargs={'str': self.equipmentSM.equipment.exnumber})
+
+    @staticmethod
+    def get_dateformat(dateneed):
+        dateformat = str(dateneed)
+        day = dateformat[8:]
+        month = dateformat[5:7]
+        year = dateformat[:4]
+        rdate = f'{day}.{month}.{year}'
+        return rdate
+
+    class Meta:
+        verbose_name = 'Проверка характеристик ВО'
+        verbose_name_plural = 'Проверка характеристик ВО'
+
+
+# блок 6 - комментарии
+
 class CommentsEquipment(models.Model):
-    """стандартнрый класс для комментариев, поменять только get_absolute_url"""
+    """стандартнрый класс для комментариев"""
     date = models.DateField('Дата',  db_index=True)
     note = models.TextField('Содержание', max_length=1000, default='')
     forNote = models.ForeignKey(Equipment, verbose_name='К прибору', on_delete=models.CASCADE)
@@ -540,8 +661,10 @@ class CommentsAttestationequipment(models.Model):
         verbose_name_plural = 'Комментарии к аттестациям'
 
 
+# блок 7 - микроклимат в помещении
+
 class MeteorologicalParameters(models.Model):
-    """метеорологические параметры в помещении """
+    """микроклимат в помещении"""
     date = models.DateField('Дата')
     roomnumber = models.ForeignKey(Rooms, on_delete=models.PROTECT)
     pressure = models.CharField('Давление, кПа', max_length=90, blank=True, null=True)
@@ -561,13 +684,17 @@ class MeteorologicalParameters(models.Model):
         unique_together = ['date', 'roomnumber']
 
 
+# блок 8 - карточка предприятия
+
+
 class CompanyCard(models.Model):
-    """Карточка Петроаналитики """
+    """Карточка предприятия"""
     name = models.CharField('Название', max_length=90, blank=True, null=True)
     nameboss = models.CharField('ФИО руководителя организации', max_length=90, blank=True, null=True)
     positionboss = models.CharField('Должность руководителя организации', max_length=90, blank=True, null=True)
     namemetrologequipment = models.CharField('ФИО инжененера по оборудованию', max_length=90, blank=True, null=True)
-    positionmetrologequipment = models.CharField('Должность инжененера по оборудованию', max_length=90, blank=True, null=True)
+    positionmetrologequipment = models.CharField('Должность инжененера по оборудованию', max_length=90,
+                                                 blank=True, null=True)
     sertificat = models.TextField('Документ сертификата', blank=True, null=True)
     sertificat9001 = models.CharField('Номер сертификата', max_length=500, blank=True, null=True)
     affirmationproduction = models.CharField('Утверждаю начальник производства', max_length=190, blank=True, null=True)
@@ -582,22 +709,15 @@ class CompanyCard(models.Model):
     def __str__(self):
         return self.name
 
-    # def save(self, *args, **kwargs):
-    #     super().save()
-    #     if self.imglogoadress:
-    #         image1 = Image.open(self.imglogoadress.path)
-    #         if image1.height > 100 or image1.width > 100:
-    #             resize = (200, 200)
-    #             image1.thumbnail(resize)
-    #             image1.save(self.imglogoadress.path)
-
     class Meta:
-        verbose_name = 'Карточка'
-        verbose_name_plural = 'Карточка'
+        verbose_name = 'Карточка предприятия'
+        verbose_name_plural = 'Карточка предприятия'
 
+
+# блок 9 - контакты поверителей -  связывает контакты поверителя с оборудованием
 
 class ContactsVer(models.Model):
-    """контакты поверителей"""
+    """контакты поверителей -  связывает контакты поверителя с оборудованием"""
     equipment = models.ForeignKey(Equipment, verbose_name='Прибор', on_delete=models.PROTECT)
     verificators = models.ForeignKey(VerificatorPerson, verbose_name='Организация', on_delete=models.PROTECT)
     dop = models.CharField('Примечание', max_length=200, blank=True, null=True)
@@ -607,53 +727,7 @@ class ContactsVer(models.Model):
         verbose_name_plural = 'Контакты поверителей для прибора'
 
 
-class HelpingEquipmentCharakters(models.Model):
-    name = models.CharField('Название прибора', max_length=100, default='')
-    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
-    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
-    measurydiapason = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
-    aim = models.CharField('Назначение',
-                            max_length=500, blank=True, null=True)
-    ndoc = models.CharField('Методики испытаний', max_length=500, blank=True, null=True)
-    power = models.BooleanField('Работает от сети', default=False, blank=True)
-    voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
-    frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
-    temperature = models.CharField('температура', max_length=100, default='', blank=True, null=True)
-    humidicity = models.CharField('влажность', max_length=100, default='', blank=True, null=True)
-    pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
-    setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
-    needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
-    complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
-    expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
-    service0 = models.TextField('ТО 0', default='', blank=True, null=True)
-    service1 = models.TextField('ТО 1', default='', blank=True, null=True)
-    service2 = models.TextField('ТО 2', default='', blank=True, null=True)
-    servicecomment = models.TextField('ТО примечание', default='', blank=True, null=True)
-    kvasyattestation = models.BooleanField('применяется внутренняя аттестация (проверка зарактеристик)',
-                                           default=False, blank=True)
-
-    def __str__(self):
-        return f'{self.name}  {self.modificname}'
-
-    class Meta:
-        verbose_name = 'Вспомогательное оборудование, характеристики'
-        verbose_name_plural = 'Вспомогательное оборудование, характеристики'
-        unique_together = ('name', 'modificname', 'typename')
-
-
-class HelpingEquipment(models.Model):
-    charakters = models.ForeignKey(HelpingEquipmentCharakters,  on_delete=models.PROTECT,
-                                   verbose_name='Характеристики ВО', blank=True, null=True)
-    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
-                                  verbose_name='Оборудование')
-
-    def __str__(self):
-        return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} - pk {self.pk}'
-
-    class Meta:
-        verbose_name = 'Вспомогательное оборудование'
-        verbose_name_plural = 'Вспомогательное оборудование'
-
+# блок 10 - техобслуживание
 
 class ServiceEquipmentME(models.Model):
     """Техобслуживание СИ"""
@@ -686,10 +760,8 @@ class ServiceEquipmentME(models.Model):
     t2month11 = models.BooleanField('ТО 2 в месяце 11', default=False)
     t2month12 = models.BooleanField('ТО 2 в месяце 12', default=False)
 
-
     def __str__(self):
         return f'{self.charakters.name}, pk = {self.pk}'
-
 
     class Meta:
         verbose_name = 'Техобслуживание СИ'
@@ -772,34 +844,3 @@ class ServiceEquipmentHE(models.Model):
     class Meta:
         verbose_name = 'Техобслуживание ВО'
         verbose_name_plural = 'Техобслуживание ВО'
-
-
-class Checkequipment(models.Model):
-    equipmentSM = models.ForeignKey(HelpingEquipment, verbose_name='ИО',
-                                    on_delete=models.PROTECT, related_name='equipmentSM_att', blank=True, null=True)
-    date = models.DateField('Дата проверки', blank=True, null=True)
-    datedead = models.DateField('Дата окончания срока проверки', blank=True, null=True)
-    dateorder = models.DateField('Дата следующей проверки план', blank=True, null=True)
-    certnumber = models.CharField('Номер протокола проверки', max_length=90, blank=True, null=True)
-
-
-    def __str__(self):
-        return f'Проверка характеристик {self.equipmentSM.charakters.name} вн № {self.equipmentSM.equipment.exnumber}'
-
-    def get_absolute_url(self):
-        """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
-        return reverse('helpingequipmentcheck', kwargs={'str': self.equipmentSM.equipment.exnumber})
-
-    @staticmethod
-    def get_dateformat(dateneed):
-        dateformat = str(dateneed)
-        day = dateformat[8:]
-        month = dateformat[5:7]
-        year = dateformat[:4]
-        rdate = f'{day}.{month}.{year}'
-        return rdate
-
-
-    class Meta:
-        verbose_name = 'Проверка характеристик ВО'
-        verbose_name_plural = 'Проверка характеристик ВО'
