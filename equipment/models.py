@@ -14,8 +14,7 @@
 блок 9 - контакты поверителей -  связывает контакты поверителя с оборудованием
 блок 10 - техобслуживание
 """
-
-
+from django.core.exceptions import ValidationError
 from django.db import models
 from PIL import Image
 from django.contrib.auth.models import User
@@ -708,6 +707,12 @@ class CompanyCard(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.pk and CompanyCard.objects.exists():
+            raise ValidationError('Можно создать только одну запись. '
+                                  'Для внесения изменений измените существующую запись')
+        return super(CompanyCard, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Карточка предприятия'
