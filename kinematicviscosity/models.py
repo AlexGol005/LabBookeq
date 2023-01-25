@@ -20,42 +20,42 @@ from jouViscosity.models import ViscosityKinematicResult
 from viscosimeters.models import Viscosimeters
 from functstandart import mrerrow, numberDigits, get_avg, get_acc_measurement, get_sec, get_round_signif_digit
 
-from .constants import CHOICES, REPEATABILITY, RELEERROR
+from .constants import CHOICES, REPEATABILITY, RELEERROR, ndocumentoptional
 
-class Constants(models.Model):
-    """Хранит константы журнала, которые могут быть изменены пользователем в административной части сайта"""
-    nd1 = models.CharField('Нормативный документ 1 - краткое название', max_length=100)
-    nd2 = models.CharField('Нормативный документ 2 - краткое название', max_length=100, blank=True, null=True)
-    nd3 = models.CharField('Нормативный документ 3 - краткое название', max_length=100, blank=True, null=True)
-    nd4 = models.CharField('Нормативный документ 4 - краткое название', max_length=100, blank=True, null=True)
-    nd5 = models.CharField('Нормативный документ 5 - краткое название', max_length=100, blank=True, null=True)
-    nd1name = models.TextField('Нормативный документ 1 - полное название', max_length=1000)
-    nd2name = models.TextField('Нормативный документ 2 - полное название', max_length=1000, blank=True, null=True)
-    nd3name = models.TextField('Нормативный документ 3 - полное название', max_length=1000, blank=True, null=True)
-    nd4name = models.TextField('Нормативный документ 4 - полное название', max_length=1000, blank=True, null=True)
-    nd5name = models.TextField('Нормативный документ 5 - полное название', max_length=1000, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        if not self.pk and Constants.objects.exists():
-            raise ValidationError('Можно создать только одну запись в таблице')
-        return super(Constants, self).save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = 'Константы журнала (Можно создать только одну запись в таблице)'
-        verbose_name_plural = 'Константы журнала (Можно создать только одну запись в таблице)'
-
-    def __str__(self):
-        return f'Константы журнала кинематической вязкости'
-
-
-
-ndocumentsource = Constants.objects.get(pk=1)
-
-ndocumentoptional = ((f'{ndocumentsource.nd1}', f'{ndocumentsource.nd1name}'))
-if ndocumentsource.nd2 and ndocumentsource.nd2name:
-    ndocumentoptional += ((f'{ndocumentsource.nd2}', f'{ndocumentsource.nd2name}'))
-if ndocumentsource.nd3 and ndocumentsource.nd3name:
-    ndocumentoptional += ((f'{ndocumentsource.nd3}', f'{ndocumentsource.nd3name}'))
+# class Constants(models.Model):
+#     """Хранит константы журнала, которые могут быть изменены пользователем в административной части сайта"""
+#     nd1 = models.CharField('Нормативный документ 1 - краткое название', max_length=100)
+#     nd2 = models.CharField('Нормативный документ 2 - краткое название', max_length=100, blank=True, null=True)
+#     nd3 = models.CharField('Нормативный документ 3 - краткое название', max_length=100, blank=True, null=True)
+#     nd4 = models.CharField('Нормативный документ 4 - краткое название', max_length=100, blank=True, null=True)
+#     nd5 = models.CharField('Нормативный документ 5 - краткое название', max_length=100, blank=True, null=True)
+#     nd1name = models.TextField('Нормативный документ 1 - полное название', max_length=1000)
+#     nd2name = models.TextField('Нормативный документ 2 - полное название', max_length=1000, blank=True, null=True)
+#     nd3name = models.TextField('Нормативный документ 3 - полное название', max_length=1000, blank=True, null=True)
+#     nd4name = models.TextField('Нормативный документ 4 - полное название', max_length=1000, blank=True, null=True)
+#     nd5name = models.TextField('Нормативный документ 5 - полное название', max_length=1000, blank=True, null=True)
+#
+#     def save(self, *args, **kwargs):
+#         if not self.pk and Constants.objects.exists():
+#             raise ValidationError('Можно создать только одну запись в таблице')
+#         return super(Constants, self).save(*args, **kwargs)
+#
+#     class Meta:
+#         verbose_name = 'Константы журнала (Можно создать только одну запись в таблице)'
+#         verbose_name_plural = 'Константы журнала (Можно создать только одну запись в таблице)'
+#
+#     def __str__(self):
+#         return f'Константы журнала кинематической вязкости'
+#
+#
+#
+# ndocumentsource = Constants.objects.get(pk=1)
+#
+# ndocumentoptional = ((f'{ndocumentsource.nd1}', f'{ndocumentsource.nd1name}'))
+# if ndocumentsource.nd2 and ndocumentsource.nd2name:
+#     ndocumentoptional += ((f'{ndocumentsource.nd2}', f'{ndocumentsource.nd2name}'))
+# if ndocumentsource.nd3 and ndocumentsource.nd3name:
+#     ndocumentoptional += ((f'{ndocumentsource.nd3}', f'{ndocumentsource.nd3name}'))
 
 
 

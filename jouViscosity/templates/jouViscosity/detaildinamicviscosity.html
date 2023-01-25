@@ -32,7 +32,7 @@
     <td>{{ obj.date|date:"d-m-Y" }}</td>
     <td>{{ obj.date_exp|date:"d-m-Y" }}</td>
     <td> {{ obj.density_avg|default_if_none:" " }}</td>
-    <td> {{ obj.certifiedValue|default_if_none:" " }}</td>
+    <td> {{ obj.result|default_if_none:" " }}</td>
     <td> {{ obj.deltaolddensity|default_if_none:" " }}</td>
     <td><a href="/attestationJ/dinamicviscosity/attestation/{{ obj.id }}/"  class="btn btn-outline-warning mt-3">смотреть</a></td>
 </tr>

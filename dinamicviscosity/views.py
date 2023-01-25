@@ -988,7 +988,7 @@ def export_protocol_xls(request, pk):
             note.temperature,
             kinematic.viscosity1,
             kinematic.viscosity2,
-            kinematic.certifiedValue_text,
+            kinematic.result,
             kinematic.accMeasurement,
             note.kriteriy,
         ]
@@ -1019,7 +1019,7 @@ def export_protocol_xls(request, pk):
         note.temperature,
         note.dinamicviscosity_not_rouned,
         note.dinamicviscosity_not_rouned,
-        note.certifiedValue,
+        note.result,
         '0,0',
         note.kriteriy,
     ]

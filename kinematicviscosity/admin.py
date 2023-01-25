@@ -34,4 +34,4 @@ class NoteAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
-admin.site.register(Constants)
+# admin.site.register(Constants)
