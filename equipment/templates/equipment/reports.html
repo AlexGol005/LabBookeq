@@ -14,10 +14,7 @@
 ----------------------------------------------------------------------------------------------------------
 <div style="text-align: center; margin-top: 20px">
 <h5>Выгрузить в EXEL Графики поверки и аттестации СИ и ИО</h5>
- <form action="{% url 'export_maintenance_schedule_xls' %}" target="blank" method="GET">
-        {% csrf_token %}
-        {% crispy form %}
-    </form>
+<a href="{% url 'export_me_xls' %}" class="btn btn-info mt-3" style="width: 310px; height: 45px" >сформировать</a>
 </div>
 ----------------------------------------------------------------------------------------------------------
 <div style="text-align: center; margin-top: 20px">
