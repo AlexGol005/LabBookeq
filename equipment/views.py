@@ -392,7 +392,7 @@ def EquipmentReg(request):
 
 class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     """ выводит форму внесения госреестра. """
-    template_name = URL + '/reg.html'
+    template_name = URL + '/reg2.html'
     form_class = MeasurEquipmentCharaktersCreateForm
     success_url = '/equipment/measurequipmentcharacterslist/'
     success_message = "Госреестр успешно добавлен"

@@ -17,7 +17,7 @@
 from datetime import datetime
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Row, Column
+from crispy_forms.layout import Layout, Submit, Row, Column, Div, Field
 
 from django import forms
 from django.forms import ModelForm
@@ -365,7 +365,7 @@ class EquipmentUpdateForm(forms.ModelForm):
 
 
 class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
-    """форма для внесения хармактеристик СИ (госреестра)"""
+    """форма для внесения характеристик СИ (госреестра)"""
     reestr = forms.CharField(label='Номер в Госреестре', required=False,
                              widget=forms.TextInput(attrs={'class': 'form-control',
                                                            'placeholder': ''}))
@@ -383,11 +383,11 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     measurydiapason = forms.CharField(label='Диапазон измерений', max_length=10000000, required=False,
-                                      widget=forms.TextInput(attrs={'class': 'form-control',
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
                                                                     'placeholder': ''}))
     accuracity = forms.CharField(label='Класс точности /(разряд/), погрешность и /(или/) '
                                  'неопределённость /(класс, разряд/)', max_length=10000000, required=False,
-                                 widget=forms.TextInput(attrs={'class': 'form-control',
+                                 widget=forms.Textarea(attrs={'class': 'form-control',
                                                                'placeholder': ''}))
     aim = forms.CharField(label='Назначение ЛО', max_length=10000000, required=False,
                           initial='Определение вязкости нефти и нефтепродуктов',
@@ -414,21 +414,10 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
                                widget=forms.Textarea(attrs={'class': 'form-control',
                                                             'placeholder': ''}))
     complectlist = forms.CharField(label='Где в паспорте комплектация', required=False,
-                                   widget=forms.Textarea(attrs={'class': 'form-control',
+                                   initial='Паспорт, страница 2',
+                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
-    service0 = forms.CharField(label='ТО 0', required=False,
-                               widget=forms.Textarea(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
-    service1 = forms.CharField(label='ТО 1', required=False,
-                               widget=forms.Textarea(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
-    service2 = forms.CharField(label='ТО 2', required=False,
-                               widget=forms.Textarea(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
-    servicecomment = forms.CharField(label='Примечание ТО', required=False,
-                                     widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                  'placeholder': ''}))
 
     class Meta:
         model = MeasurEquipmentCharakters
@@ -450,11 +439,47 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             'setplace',
             'complectlist',
             'expresstest',
-            'service0',
-            'service1',
-            'service2',
-            'servicecomment',
                   ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('reestr', css_class='form-group col-md-6 mb-0'),
+                Column('calinterval', css_class='form-group col-md-6 mb-0')),
+            Row(
+                Column('name', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('typename', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('modificname', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
+            Row(
+                Field('accuracity', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('aim', css_class='form-group col-md-6 mb-0'),
+                Column('complectlist', css_class='form-group col-md-6 mb-0')
+                ),
+            Row(
+                Column('power', css_class='form-group col-md-4 mb-0'),
+                Column('needsetplace', css_class='form-group col-md-4 mb-0'),
+                Column('expresstest', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('voltage', css_class='form-group col-md-6 mb-0'),
+                Column('frequency', css_class='form-group col-md-6 mb-0'),
+            ),
+            Row(
+                Column('temperature', css_class='form-group col-md-4 mb-0'),
+                Column('humidicity', css_class='form-group col-md-4 mb-0'),
+                Column('pressure', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('setplace', css_class='form-group col-md-6 mb-0'),
+            ),
+            Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
 
 class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
@@ -512,18 +537,6 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                                    widget=forms.Textarea(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
-    service0 = forms.CharField(label='ТО 0', required=False,
-                               widget=forms.Textarea(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
-    service1 = forms.CharField(label='ТО 1', required=False,
-                               widget=forms.Textarea(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
-    service2 = forms.CharField(label='ТО 2', required=False,
-                               widget=forms.Textarea(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
-    servicecomment = forms.CharField(label='Примечание ТО', required=False,
-                                     widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                  'placeholder': ''}))
 
     class Meta:
         model = TestingEquipmentCharakters
@@ -546,10 +559,6 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                   'setplace',
                   'complectlist',
                   'expresstest',
-                  'service0',
-                  'service1',
-                  'service2',
-                  'servicecomment',
                   ]
 
 
@@ -600,18 +609,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
                                    widget=forms.Textarea(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
-    service0 = forms.CharField(label='ТО 0', required=False,
-                               widget=forms.Textarea(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
-    service1 = forms.CharField(label='ТО 1', required=False,
-                               widget=forms.Textarea(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
-    service2 = forms.CharField(label='ТО 2', required=False,
-                               widget=forms.Textarea(attrs={'class': 'form-control',
-                                                            'placeholder': ''}))
-    servicecomment = forms.CharField(label='Примечание ТО', required=False,
-                                     widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                  'placeholder': ''}))
     kvasyattestation = forms.BooleanField(label='применяется внутренняя аттестация (проверка зарактеристик)',
                                           initial=False)
 
@@ -634,10 +631,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
             'setplace',
             'complectlist',
             'expresstest',
-            'service0',
-            'service1',
-            'service2',
-            'servicecomment',
             'kvasyattestation',
                   ]
 
