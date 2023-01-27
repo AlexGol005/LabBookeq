@@ -22,7 +22,7 @@
 
 import xlwt
 import pytils.translit
-from datetime import date
+from datetime import date, timedelta
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -5961,10 +5961,9 @@ def export_me_xls(request):
     ws.col(15).width = 3000
     ws.col(16).width = 3000
     ws.col(17).width = 3000
-    ws.col(20).width = 4500
-    ws.col(21).width = 4500
-    ws.col(22).width = 4500
-    ws.col(23).width = 4500
+    ws.col(20).width = 6500
+    ws.col(21).width = 6500
+    ws.col(22).width = 9000
 
     # ширина столбцов графика аттестации
     ws1.col(0).width = 3000
@@ -5979,12 +5978,11 @@ def export_me_xls(request):
     ws1.col(13).width = 3000
     ws1.col(14).width = 3000
     ws1.col(17).width = 8500
-    ws1.col(18).width = 4500
-    ws1.col(19).width = 4500
-    ws1.col(20).width = 4500
-    ws1.col(21).width = 4500
-    ws1.col(22).width = 4500
-    ws1.col(23).width = 4500
+    ws1.col(18).width = 6500
+    ws1.col(19).width = 6500
+    ws1.col(20).width = 9000
+
+
 
     # стили
     al10 = Alignment()
@@ -6057,6 +6055,7 @@ def export_me_xls(request):
                 'Инвентарный номер',
                 'Диапазон измерений',
                 'Метрологические характеристики',
+                'Дополнительная информация/\nвыписка из текущих сведений о поверке',
                ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
@@ -6091,6 +6090,7 @@ def export_me_xls(request):
             'equipment__invnumber',
             'charakters__measurydiapason',
             'charakters__accuracity',
+            'equipmentSM_ver__extra'
         )
 
     for row in rows:
@@ -6136,6 +6136,7 @@ def export_me_xls(request):
         'Аттестован на методики',
         'Основные технические характеристики',
         'Наименование видов испытаний',
+        'Дополнительная информация/\nвыписка из текущего аттестата',
     ]
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style10)
@@ -6169,6 +6170,7 @@ def export_me_xls(request):
         'equipmentSM_att__ndocs',
         'charakters__measurydiapason',
         'charakters__aim',
+        'equipmentSM_att__extra'
     )
     for row in rows:
         row_num += 1
