@@ -1,0 +1,84 @@
+{% extends 'main/superbase.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{#название страницы#}
+{#стандартная#}
+{% block title %}
+    Госреестры СИ
+{% endblock %}
+{#конец названия страницы#}
+
+{% block content %}
+
+{#заголовок#}
+    <a href="{% url 'measurequipmentcharacterslist' %}">
+    <div style="text-align: center;"><h4> {{ title }}</h4></div>
+    </a>
+    <br>
+{#конец заголовка #}
+
+    <br>
+    <div style="text-align: center;">
+        <a href="{% url 'measurequipmentcharactersreg' %}"  target="blank" class="btn btn-warning ml-2" style="width: 350px">
+            Добавить госреестр, тип, модификацию
+        </a>
+    </div>
+
+{#форма для поиска по полям #}
+    <br><br>
+    <div style="text-align: center; margin-top: 25px">
+        <form action="/equipment/reestrsearres/" method="GET">
+            {% csrf_token %}
+            {% crispy form %}
+        </form>
+    </div>
+{#конец формы для поиска#}
+
+{#основная таблица#}
+<div style="text-align: center; margin-top: 25px">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Номер в Госреестре</th>
+                <th>Название</th>
+                <th> Модификация </th>
+                <th> Тип </th>
+                <th> Межпов. <br> интервал, <br>мес. </th>
+                <th> Диапазон измерений </th>
+                <th> Ред </th>
+             </tr>
+        </thead>
+        <tbody>
+        {% for obj in objects %}
+        <tr>
+            <td>{{ obj.reestr }}</td>
+            <td>{{ obj.name }}</td>
+            <td>{{ obj.modificname }}</td>
+            <td>{{ obj.typename }}</td>
+            <td> {{ obj.calinterval }}</td>
+            <td> {{ obj.measurydiapason }}</td>
+        <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-warning mt-3">ред</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{#конец основной таблицы#}
+
+{#пагинация#}
+{# стандартная #}
+{% if is_paginated %}
+    {% if page_obj.has_previous %}
+       <a href="?page=1" class="btn btn-outline-primary">Начало</a>
+       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
+  {% endif %}
+    {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
+       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
+  {% endif %}
+  {% endif %}
+{#конец пагинации#}
+
+{% endblock %}
+{#конец блока {% block content %}"""#}

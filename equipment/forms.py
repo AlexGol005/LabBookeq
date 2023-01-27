@@ -59,7 +59,7 @@ class Searchreestrform(forms.Form):
     name = forms.CharField(label='Название', required=False,
                            help_text='введите название частично или полностью',
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
-    reestr = forms.CharField(label='Номер в реестре', required=False,
+    reestr = forms.CharField(label='Номер в госреестре', required=False,
                              help_text='введите номер частично или полностью',
                              widget=forms.TextInput(attrs={'class': 'form-control'}))
 
@@ -68,9 +68,9 @@ class Searchreestrform(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column('name', css_class='form-group col-md-3 mb-0'),
-                Column('reestr', css_class='form-group col-md-3 mb-0'),
-                Row(Submit('submit', 'Найти', css_class='btn  btn-info col-md-9 mb-3 mt-4 ml-4'))))
+                Column('name', css_class='form-group col-md-4 mb-0'),
+                Column('reestr', css_class='form-group col-md-4 mb-0'),
+                Submit('submit', 'Найти', css_class='btn  btn-info col-md-4 mb-4 mt-4 ml-0')))
 
 
 class Searchtestingform(forms.Form):
@@ -78,18 +78,14 @@ class Searchtestingform(forms.Form):
     name = forms.CharField(label='Название', required=False,
                            help_text='введите название частично или полностью',
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
-    ndoc = forms.CharField(label='Методики испытаний', required=False,
-                           help_text='введите методику испытаний',
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column('name', css_class='form-group col-md-3 mb-0'),
-                Column('ndoc', css_class='form-group col-md-3 mb-0'),
-                Row(Submit('submit', 'Найти', css_class='btn  btn-info col-md-9 mb-3 mt-4 ml-4'))))
+                Column('name', css_class='form-group col-md-8 mb-0'),
+                Submit('submit', 'Найти', css_class='btn  btn-info col-md-4 mb-4 mt-4 ml-0')))
 
 
 class LabelEquipmentform(forms.Form):
@@ -457,7 +453,7 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(
                 Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
             Row(
-                Field('accuracity', css_class='form-group col-md-12 mb-0')),
+                Column('accuracity', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('aim', css_class='form-group col-md-6 mb-0'),
                 Column('complectlist', css_class='form-group col-md-6 mb-0')
@@ -477,7 +473,7 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
                 Column('pressure', css_class='form-group col-md-4 mb-0'),
             ),
             Row(
-                Column('setplace', css_class='form-group col-md-6 mb-0'),
+                Column('setplace', css_class='form-group col-md-12 mb-0'),
             ),
             Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
@@ -493,17 +489,17 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
     modificname = forms.CharField(label='Модификация', max_length=10000000, required=False, initial='нет модификации',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    calinterval = forms.CharField(label='МежМетрологический интервал, месяцев', max_length=10000000, required=False,
+    calinterval = forms.CharField(label='Межаттестационный интервал, месяцев', max_length=10000000, required=False,
                                   initial='24',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
-                                      widget=forms.TextInput(attrs={'class': 'form-control',
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
                                                                     'placeholder': ''}))
     aim = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
                           max_length=10000000, required=False,
                           initial='Определение содержания механических примесей в нефтепродуктах',
-                          widget=forms.TextInput(attrs={'class': 'form-control',
+                          widget=forms.Textarea(attrs={'class': 'form-control',
                                                         'placeholder': ''}))
     aim2 = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=False,
                            initial='Нефть и нефтепродукты',
@@ -511,7 +507,7 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                                                          'placeholder': ''}))
     ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=False,
                            initial='ГОСТ 33, МИ-02-2018, ...',
-                           widget=forms.TextInput(attrs={'class': 'form-control',
+                           widget=forms.Textarea(attrs={'class': 'form-control',
                                                          'placeholder': ''}))
     power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
@@ -534,7 +530,7 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                                widget=forms.Textarea(attrs={'class': 'form-control',
                                                             'placeholder': ''}))
     complectlist = forms.CharField(label='Где в паспорте комплектация', required=False,
-                                   widget=forms.Textarea(attrs={'class': 'form-control',
+                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
 
@@ -560,6 +556,48 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                   'complectlist',
                   'expresstest',
                   ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('calinterval', css_class='form-group col-md-6 mb-0')),
+            Row(
+                Column('name', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('typename', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('modificname', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('accuracity', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('aim', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('aim2', css_class='form-group col-md-12 mb-0')),
+
+            Row(
+                Column('complectlist', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('power', css_class='form-group col-md-4 mb-0'),
+                Column('needsetplace', css_class='form-group col-md-4 mb-0'),
+                Column('expresstest', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('voltage', css_class='form-group col-md-6 mb-0'),
+                Column('frequency', css_class='form-group col-md-6 mb-0'),
+            ),
+            Row(
+                Column('temperature', css_class='form-group col-md-4 mb-0'),
+                Column('humidicity', css_class='form-group col-md-4 mb-0'),
+                Column('pressure', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('setplace', css_class='form-group col-md-12 mb-0'),
+            ),
+            Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
 
 class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):

@@ -5,45 +5,52 @@
 {#название страницы#}
 {#стандартная#}
 {% block title %}
-Характеристики ИО
+    Характеристики ИО
 {% endblock %}
 {#конец названия страницы#}
 
 {% block content %}
 
 {#заголовок#}
-<div class="row">
-<div class="col-md-24 mt-2" >
-<div style="text-align: center;"><h4> Характеристики ИО</h4></div>
-<br>
+    <a href="{% url 'testingequipmentcharacterslist' %}">
+    <div style="text-align: center;"><h4> {{ title }}</h4></div>
+    </a>
+    <br>
 {#конец заголовка #}
+
+    <br>
+    <div style="text-align: center;">
+        <a href="{% url 'testingequipmentcharactersreg' %}"  target="blank" class="btn btn-warning ml-2" style="width: 350px">
+            Добавить характеристики, тип
+        </a>
+    </div>
+
 {#форма для поиска по полям #}
-{#стандартная#}
-    <form action="/equipment/testingsearres/" method="GET">
-        {% csrf_token %}
-        {% crispy form %}
-    </form>
-{#конец формы для поиска по#}
-<a href="{% url 'testingequipmentcharactersreg' %}"  target="blank" class="btn btn-info ml-2 mb-2">
-Добавить характеристики ИО</a>
+    <br><br>
+    <div style="text-align: center; margin-top: 25px">
+        <form action="/equipment/testingsearres/" method="GET">
+            {% csrf_token %}
+            {% crispy form %}
+        </form>
+    </div>
+{#конец формы для поиска#}
+
 {#основная таблица#}
-{# уникальная #}
-<table class="table table-bordered">
-    <thead>
-        <tr>
+<div style="text-align: center; margin-top: 25px">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
             <th>Название</th>
             <th> Модификация </th>
             <th> Тип </th>
-            <th> Межпов. <br> интервал, <br>мес. </th>
+            <th> Межатт. <br> интервал, <br>мес. </th>
             <th> Основные технические характеристики </th>
             <th> Методики испытаний </th>
-            <th> Наименование видов испытаний и/или определяемых характеристик (параметров) продукции </th>
-            <th> Наименование испытуемых групп объектов </th>
             <th> Ред </th>
-         </tr>
-    </thead>
-    <tbody>
-    {% for obj in objects %}
+             </tr>
+        </thead>
+        <tbody>
+        {% for obj in objects %}
     <tr>
         <td>{{ obj.name }}</td>
         <td>{{ obj.modificname }}</td>
@@ -51,13 +58,12 @@
         <td> {{ obj.calinterval }}</td>
         <td> {{ obj.measurydiapason }}</td>
         <td> {{ obj.ndoc }}</td>
-        <td>{{ obj.aim }}</td>
-        <td>{{ obj.aim2 }}</td>
     <td> <a href="{% url 'testequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-warning mt-3">ред</a></td>
     </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {#конец основной таблицы#}
 
 {#пагинация#}
@@ -73,19 +79,6 @@
   {% endif %}
   {% endif %}
 {#конец пагинации#}
-</div>
-
-{#фильтры#}
-{# уникальные, менять url #}
-{# конец фильров #}
-
-
-{#форма для поиска по датам записей и вывод ошибки формата даты#}
-
-{#конец формы для поиска по датам записей#}
-
-</div>
-
 
 {% endblock %}
-{#конец блока {% block content %}"""#}
+{#конец блока {% block content %}#}

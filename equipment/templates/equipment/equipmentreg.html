@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Регистрация ЛО
+    Регистрация ЛО
 {% endblock %}
 
 
@@ -18,15 +18,7 @@
 Добавить характеристики ИО</a>
 </div>
 <form method="post" enctype="multipart/form-data" class="form-register">
-<form method="post" class="form-register">
-{% csrf_token %}
-{% crispy form %}
+    {% csrf_token %}
+    {% crispy form %}
 </form>
-</form>
-{#<div style="text-align: center; margin-top: 20px"><h4> Внести производителя </h4></div>#}
-{#<form method="post" class="form-register">#}
-{#{% csrf_token %}#}
-{#{{ form2.as_p }}#}
-{#<button class="btn btn-outline-warning" type="submit">Записать</button>#}
-{#</form>#}
 {% endblock %}

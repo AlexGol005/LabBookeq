@@ -121,7 +121,7 @@ class EquipmentView(ListView):
 class MeasurEquipmentCharaktersView(ListView):
     """ Выводит список госреестров """
     model = MeasurEquipmentCharakters
-    template_name = URL + '/measurequipmentcharacterslist.html'
+    template_name = URL + '/characterslistme.html'
     context_object_name = 'objects'
     ordering = ['reestr']
     paginate_by = 12
@@ -129,13 +129,14 @@ class MeasurEquipmentCharaktersView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(MeasurEquipmentCharaktersView, self).get_context_data(**kwargs)
         context['form'] = Searchreestrform()
+        context['title'] = 'Госреестры, типы, модификации средств измерений'
         return context
 
 
 class TestingEquipmentCharaktersView(ListView):
     """ Выводит список характеристик ИО """
     model = TestingEquipmentCharakters
-    template_name = URL + '/testingequipmentcharacterslist.html'
+    template_name = URL + '/characterslistte.html'
     context_object_name = 'objects'
     ordering = ['name']
     paginate_by = 12
@@ -143,6 +144,7 @@ class TestingEquipmentCharaktersView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TestingEquipmentCharaktersView, self).get_context_data(**kwargs)
         context['form'] = Searchtestingform()
+        context['title'] = 'Характеристики, типы, испытательного оборудования'
         return context
 
 
@@ -392,7 +394,7 @@ def EquipmentReg(request):
 
 class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     """ выводит форму внесения госреестра. """
-    template_name = URL + '/reg2.html'
+    template_name = URL + '/charactersreg.html'
     form_class = MeasurEquipmentCharaktersCreateForm
     success_url = '/equipment/measurequipmentcharacterslist/'
     success_message = "Госреестр успешно добавлен"
@@ -417,12 +419,12 @@ def MeasurEquipmentCharaktersUpdateView(request, str):
         form = MeasurEquipmentCharaktersCreateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
     data = {'form': form,
             }
-    return render(request, 'equipment/reg.html', data)
+    return render(request, 'equipment/charactersreg.html', data)
 
 
 class TestingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     """ выводит форму внесения характеристик ИО. """
-    template_name = URL + '/reg.html'
+    template_name = URL + '/charactersreg.html'
     form_class = TestingEquipmentCharaktersCreateForm
     success_url = '/equipment/testingequipmentcharacterslist/'
     success_message = "Характеристики ИО успешно добавлены"
@@ -447,7 +449,7 @@ def TestingEquipmentCharaktersUpdateView(request, str):
         form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
     data = {'form': form,
             }
-    return render(request, 'equipment/reg.html', data)
+    return render(request, 'equipment/charactersreg.html', data)
 
 
 class MeasureequipmentregView(LoginRequiredMixin, CreateView):
@@ -576,7 +578,7 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
 class ReestrsearresView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку госреестров """
 
-    template_name = URL + '/measurequipmentcharacterslist.html'
+    template_name = URL + '/characterslistme.html'
 
     def get_context_data(self, **kwargs):
         context = super(ReestrsearresView, self).get_context_data(**kwargs)
@@ -600,6 +602,28 @@ class ReestrsearresView(TemplateView):
             context['objects'] = objects
         context['form'] = Searchreestrform(initial={'name': name, 'reestr': reestr})
         context['URL'] = URL
+        context['title'] = 'Госреестры, типы, модификации средств измерений'
+        return context
+
+class TEcharacterssearresView(TemplateView):
+    """ Представление, которое выводит результаты поиска по списку характеристик ИО """
+
+    template_name = URL + '/characterslistte.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TEcharacterssearresView, self).get_context_data(**kwargs)
+        name = self.request.GET['name']
+        if self.request.GET['name']:
+            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
+        if self.request.GET['name']:
+            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
+        if name:
+            objects = TestingEquipmentCharakters.objects.\
+            filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
+            context['objects'] = objects
+        context['form'] = Searchreestrform(initial={'name': name})
+        context['URL'] = URL
+        context['title'] = 'Характеристики, типы, испытательного оборудования'
         return context
 
 
@@ -5981,7 +6005,6 @@ def export_me_xls(request):
     ws1.col(18).width = 6500
     ws1.col(19).width = 6500
     ws1.col(20).width = 9000
-
 
 
     # стили
