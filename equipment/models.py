@@ -427,6 +427,7 @@ class Verificationequipment(models.Model):
                                     blank=True)
     cust = models.BooleanField(verbose_name='Поверку организует Поставщик', default=False,
                                blank=True)
+    extra = models.TextField('Дополнительная информация', blank=True, null=True)
 
     def __str__(self):
         try:
@@ -505,6 +506,7 @@ class Attestationequipment(models.Model):
                                     blank=True)
     cust = models.BooleanField(verbose_name='Аттестацию организует Поставщик', default=False,
                                blank=True)
+    extra = models.TextField('Дополнительная информация', blank=True, null=True)
 
     def __str__(self):
         try:
@@ -560,6 +562,7 @@ class Checkequipment(models.Model):
     datedead = models.DateField('Дата окончания срока проверки', blank=True, null=True)
     dateorder = models.DateField('Дата следующей проверки план', blank=True, null=True)
     certnumber = models.CharField('Номер протокола проверки', max_length=90, blank=True, null=True)
+    extra = models.TextField('Дополнительная информация', blank=True, null=True)
 
     def __str__(self):
         try:
