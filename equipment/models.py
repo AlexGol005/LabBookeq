@@ -215,9 +215,11 @@ class MeasurEquipmentCharakters(models.Model):
     humidicity = models.CharField('влажность', max_length=100, default='', blank=True, null=True)
     pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
     setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
-    needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
-    complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
-    expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
+    needsetplace = models.BooleanField('установка не требуется', default=False, blank=True)
+    complectlist = models.CharField('где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
+    expresstest = models.BooleanField('тестирование возможно? да/нет', default=False, blank=True)
+    traceability = models.TextField('Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)',
+                                    default='', blank=True, null=True)
 
     def __str__(self):
         return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'

@@ -17,7 +17,7 @@
 from datetime import datetime
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Row, Column, Div, Field
+from crispy_forms.layout import Layout, Submit, Row, Column
 
 from django import forms
 from django.forms import ModelForm
@@ -380,11 +380,11 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
                                                                 'placeholder': ''}))
     measurydiapason = forms.CharField(label='Диапазон измерений', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                    'placeholder': ''}))
+                                                                   'placeholder': ''}))
     accuracity = forms.CharField(label='Класс точности /(разряд/), погрешность и /(или/) '
                                  'неопределённость /(класс, разряд/)', max_length=10000000, required=False,
                                  widget=forms.Textarea(attrs={'class': 'form-control',
-                                                               'placeholder': ''}))
+                                                              'placeholder': ''}))
     aim = forms.CharField(label='Назначение ЛО', max_length=10000000, required=False,
                           initial='Определение вязкости нефти и нефтепродуктов',
                           widget=forms.TextInput(attrs={'class': 'form-control',
@@ -409,11 +409,15 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
     setplace = forms.CharField(label='Описание мероприятий по установке', required=False,
                                widget=forms.Textarea(attrs={'class': 'form-control',
                                                             'placeholder': ''}))
-    complectlist = forms.CharField(label='Где в паспорте комплектация', required=False,
+    complectlist = forms.CharField(label='Где указана комплектация', required=False,
                                    initial='Паспорт, страница 2',
                                    widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                'placeholder': ''}))
+                                                                 'placeholder': ''}))
     expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
+    traceability = forms.CharField(label='Информация о прослеживаемости (к какому '
+                                   'эталону прослеживаются измерения)', required=False,
+                                   widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                 'placeholder': ''}))
 
     class Meta:
         model = MeasurEquipmentCharakters
@@ -435,6 +439,7 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             'setplace',
             'complectlist',
             'expresstest',
+            'traceability',
                   ]
 
     def __init__(self, *args, **kwargs):
@@ -455,9 +460,9 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(
                 Column('accuracity', css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('aim', css_class='form-group col-md-6 mb-0'),
-                Column('complectlist', css_class='form-group col-md-6 mb-0')
-                ),
+                Column('aim', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('complectlist', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('power', css_class='form-group col-md-4 mb-0'),
                 Column('needsetplace', css_class='form-group col-md-4 mb-0'),
@@ -474,6 +479,9 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             ),
             Row(
                 Column('setplace', css_class='form-group col-md-12 mb-0'),
+            ),
+            Row(
+                Column('traceability', css_class='form-group col-md-12 mb-0'),
             ),
             Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
@@ -495,12 +503,12 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                                                                 'placeholder': ''}))
     measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                    'placeholder': ''}))
+                                                                   'placeholder': ''}))
     aim = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
                           max_length=10000000, required=False,
                           initial='Определение содержания механических примесей в нефтепродуктах',
                           widget=forms.Textarea(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
+                                                       'placeholder': ''}))
     aim2 = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=False,
                            initial='Нефть и нефтепродукты',
                            widget=forms.TextInput(attrs={'class': 'form-control',
@@ -508,7 +516,7 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
     ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=False,
                            initial='ГОСТ 33, МИ-02-2018, ...',
                            widget=forms.Textarea(attrs={'class': 'form-control',
-                                                         'placeholder': ''}))
+                                                        'placeholder': ''}))
     power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
     voltage = forms.CharField(label='Напряжение требуемое', required=False,
@@ -529,9 +537,10 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
     setplace = forms.CharField(label='Описание мероприятий по установке', required=False,
                                widget=forms.Textarea(attrs={'class': 'form-control',
                                                             'placeholder': ''}))
-    complectlist = forms.CharField(label='Где в паспорте комплектация', required=False,
+    complectlist = forms.CharField(label='Где указана комплектация', required=False,
+                                   initial='Руководство по эксплуатации, страница 2',
                                    widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                'placeholder': ''}))
+                                                                 'placeholder': ''}))
     expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
 
     class Meta:
