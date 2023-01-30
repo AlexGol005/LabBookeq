@@ -142,6 +142,16 @@
      Распечатать этикетку</a></div>
 {#расположение и комплектность#}
 <div style="text-align: center; margin-top: 20px"><h4>
+{#    выписка #}
+<div style="text-align: center; margin-top: 20px"><h4>
+Выписка из текущей аттестации </h4></div>
+<div style="text-align: center;">
+<table class="table table-bordered">
+    <tr>
+        <td>{{ obj.equipmentSM_att.last.extra|default_if_none:'-' }}</td>
+    </tr>
+</table>
+</div>
 Расположение и комплекность </h4></div>
 <div style="text-align: center;">
 <table class="table table-bordered">
