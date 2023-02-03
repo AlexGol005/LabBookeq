@@ -106,8 +106,8 @@ class StrJournalCreationForm(forms.ModelForm):
                 css_class='form-row'
             ),
             Row(
-                Column('sowner', css_class='form-group col-md-8 mb-0'),
-                Column('ndocument', css_class='form-group col-md-8 mb-0'),
+                Column('sowner', css_class='form-group col-md-12 mb-0'),
+                Column('ndocument', css_class='form-group col-md-12 mb-0'),
                 css_class='form-row'
             ),
             Row(
