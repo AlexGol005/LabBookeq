@@ -2,9 +2,9 @@ body {
   background: rgba(123, 245, 244, 0.47);
 }
 
-/*aside {*/
-/*  background: #0c5460;*/
-/*}*/
+aside {
+
+}
 
 .alert-light {
   border-color: #bfbfbf;
@@ -25,10 +25,6 @@ body {
     font-weight: bold;
 }
 
-footer {
-  width: 70%;
-  margin-left: 15%;
-}
 
 .form-register.auth input {
     display: block;
@@ -105,3 +101,8 @@ td.ind {
     max-width: 100px !important;
     word-wrap: break-word;
 }
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;}
+

@@ -121,7 +121,7 @@ class EquipmentView(ListView):
 class MeasurEquipmentCharaktersView(ListView):
     """ Выводит список госреестров """
     model = MeasurEquipmentCharakters
-    template_name = URL + '/characterslistme.html'
+    template_name = URL + '/characterslistME.html'
     context_object_name = 'objects'
     ordering = ['reestr']
     paginate_by = 12
@@ -136,7 +136,7 @@ class MeasurEquipmentCharaktersView(ListView):
 class TestingEquipmentCharaktersView(ListView):
     """ Выводит список характеристик ИО """
     model = TestingEquipmentCharakters
-    template_name = URL + '/characterslistte.html'
+    template_name = URL + '/characterslistTE.html'
     context_object_name = 'objects'
     ordering = ['name']
     paginate_by = 12
@@ -150,7 +150,7 @@ class TestingEquipmentCharaktersView(ListView):
 
 class MeasurEquipmentView(ListView):
     """Выводит список средств измерений"""
-    template_name = URL + '/measureequipment.html'
+    template_name = URL + '/equipmentlLISTME.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
     paginate_by = 12
@@ -168,7 +168,7 @@ class MeasurEquipmentView(ListView):
 
 class TestingEquipmentView(ListView):
     """ Выводит список испытательного оборудования """
-    template_name = URL + '/testingequipment.html'
+    template_name = URL + '/equipmentLISTTE.html'
     context_object_name = 'objects'
     ordering = ['charakters__name']
     paginate_by = 12
@@ -394,7 +394,7 @@ def EquipmentReg(request):
 
 class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     """ выводит форму внесения госреестра. """
-    template_name = URL + '/charactersreg.html'
+    template_name = URL + '/charactersregME.html'
     form_class = MeasurEquipmentCharaktersCreateForm
     success_url = '/equipment/measurequipmentcharacterslist/'
     success_message = "Госреестр успешно добавлен"
@@ -419,12 +419,12 @@ def MeasurEquipmentCharaktersUpdateView(request, str):
         form = MeasurEquipmentCharaktersCreateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
     data = {'form': form,
             }
-    return render(request, 'equipment/charactersreg.html', data)
+    return render(request, 'equipment/charactersregME.html', data)
 
 
 class TestingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     """ выводит форму внесения характеристик ИО. """
-    template_name = URL + '/charactersreg.html'
+    template_name = URL + '/charactersregME.html'
     form_class = TestingEquipmentCharaktersCreateForm
     success_url = '/equipment/testingequipmentcharacterslist/'
     success_message = "Характеристики ИО успешно добавлены"
@@ -449,7 +449,7 @@ def TestingEquipmentCharaktersUpdateView(request, str):
         form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
     data = {'form': form,
             }
-    return render(request, 'equipment/charactersreg.html', data)
+    return render(request, 'equipment/charactersregME.html', data)
 
 
 class MeasureequipmentregView(LoginRequiredMixin, CreateView):
@@ -578,7 +578,7 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
 class ReestrsearresView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку госреестров """
 
-    template_name = URL + '/characterslistme.html'
+    template_name = URL + '/characterslistME.html'
 
     def get_context_data(self, **kwargs):
         context = super(ReestrsearresView, self).get_context_data(**kwargs)
@@ -608,7 +608,7 @@ class ReestrsearresView(TemplateView):
 class TEcharacterssearresView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку характеристик ИО """
 
-    template_name = URL + '/characterslistte.html'
+    template_name = URL + '/characterslistTE.html'
 
     def get_context_data(self, **kwargs):
         context = super(TEcharacterssearresView, self).get_context_data(**kwargs)
@@ -630,7 +630,7 @@ class TEcharacterssearresView(TemplateView):
 class SearchResultMeasurEquipmentView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку средств измерений """
 
-    template_name = URL + '/measureequipment.html'
+    template_name = URL + '/equipmentlLISTME.html'
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultMeasurEquipmentView, self).get_context_data(**kwargs)
@@ -734,7 +734,7 @@ class SearchResultMeasurEquipmentView(TemplateView):
 class SearchResultTestingEquipmentView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку испытательного оборудования """
 
-    template_name = URL + '/testingequipment.html'
+    template_name = URL + '/equipmentLISTTE.html'
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultTestingEquipmentView, self).get_context_data(**kwargs)
@@ -1126,7 +1126,7 @@ class StrMeasurEquipmentView(View):
             'obj': obj,
             'note': note,
         }
-        return render(request, URL + '/equipmentstr.html', context)
+        return render(request, URL + '/equipmentSTRME.html', context)
 
 
 class StrTestEquipmentView(View):
@@ -1138,7 +1138,7 @@ class StrTestEquipmentView(View):
             'obj': obj,
             'note': note,
         }
-        return render(request, URL + '/testingequipmentstr.html', context)
+        return render(request, URL + '/equipmentSTRTE.html', context)
 
 
 # блок 11 - все комментарии ко всему
@@ -1173,7 +1173,7 @@ class CommentsView(View):
 class SearchMustVerView(ListView):
     """ выводит список СИ у которых дата заказа поверки совпадает с указанной либо раньше неё"""
 
-    template_name = URL + '/measureequipment.html'
+    template_name = URL + '/equipmentlLISTME.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
 
@@ -1207,7 +1207,7 @@ class SearchMustVerView(ListView):
 class SearchNotVerView(ListView):
     """ выводит список СИ у которых дата окончания поверки совпадает с указанной либо раньше неё"""
 
-    template_name = URL + '/measureequipment.html'
+    template_name = URL + '/equipmentlLISTME.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
 
@@ -1259,7 +1259,7 @@ class LastNewEquipmentView(ListView):
 class SearchMustOrderView(ListView):
     """ выводит список СИ у которых месяц заказа поверки совпадает с указанным либо раньше него"""
 
-    template_name = URL + '/measureequipment.html'
+    template_name = URL + '/equipmentlLISTME.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
 
