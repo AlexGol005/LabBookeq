@@ -1,9 +1,16 @@
+@media screen and (min-width: 1200px) {
+    .table-list {
+        max-width: fit-content !important;
+    }
+}
+
 body {
   background: rgba(123, 245, 244, 0.47);
 }
 
 aside {
-
+position: absolute;
+right: 0;
 }
 
 .alert-light {
@@ -105,4 +112,3 @@ td.ind {
 .no-gutters {
   margin-right: 0;
   margin-left: 0;}
-
