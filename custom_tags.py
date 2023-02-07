@@ -1,6 +1,5 @@
 import jinja2
 from django import template
-from jinja2 import environment
 
 register = template.Library()
 

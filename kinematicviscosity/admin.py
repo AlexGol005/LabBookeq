@@ -8,6 +8,8 @@
 """
 
 from django.contrib import admin
+
+from main.models import Ad, News, Post
 from .models import *
 
 
@@ -34,4 +36,6 @@ class NoteAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
-# admin.site.register(Constants)
+admin.site.register(Ad)
+admin.site.register(News)
+admin.site.register(Post)
