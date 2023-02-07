@@ -28,7 +28,7 @@ from equipment.models import*
 # блок 1 - формы для поисков и распечатки этикеток
 
 class SearchMEForm(forms.Form):
-    """форма для поиска по полям списка СИ и ИО"""
+    """форма для поиска по полям списка СИ и ИО и ВО"""
     name = forms.CharField(label='Название', required=False,
                            help_text='введите название частично или полностью',
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -38,9 +38,6 @@ class SearchMEForm(forms.Form):
     lot = forms.CharField(label='Заводской №', required=False,
                           help_text='заводской № полностью',
                           widget=forms.TextInput(attrs={'class': 'form-control'}))
-    dateser = forms.CharField(label='Поверка/атт-я истекает после', required=False,
-                              help_text='дата в формате ГГГГ-ММ-ДД',
-                              widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -50,7 +47,6 @@ class SearchMEForm(forms.Form):
                 Column('name', css_class='form-group col-md-3 mb-0'),
                 Column('exnumber', css_class='form-group col-md-1 mb-0'),
                 Column('lot', css_class='form-group col-md-2 mb-0'),
-                Column('dateser', css_class='form-group col-md-3 mb-0'),
                 Row(Submit('submit', 'Найти', css_class='btn  btn-info col-md-9 mb-3 mt-4 ml-4'))))
 
 

@@ -7,6 +7,7 @@ urlpatterns = [
     path('measureequipmentall/notver/', views.SearchNotVerView.as_view(), name='notver'),
     path('measureequipmentall/mustorder/', views.SearchMustOrderView.as_view(), name='mustorder'),
     path('testingequipmentall/', views.TestingEquipmentView.as_view(), name='testingequipmentall'),
+    path('helpingequipmentall/', views.HelpingEquipmentView.as_view(), name='helpingequipmentall'),
     path('measureequipmentallsearres/', views.SearchResultMeasurEquipmentView.as_view(), name='measureequipmentallsearres'),
     path('testingequipmentallsearres/', views.SearchResultTestingEquipmentView.as_view(), name='testingequipmentallsearres'),
     path('measureequipment/<str:str>/', views.StrMeasurEquipmentView.as_view(), name='measureequipment'),

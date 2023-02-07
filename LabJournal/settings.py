@@ -81,6 +81,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_processors.base_context.last_news',
+                'main.context_processors.base_context.last_ad',
             ],
         },
     },
@@ -170,3 +172,9 @@ if DEBUG:
     mimetypes.add_type("application/javascript", ".js", True)
 
 
+DEFAULT_FROM_EMAIL = 'labjournal@yandex.ru'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'labjournal@yandex.ru'
+EMAIL_HOST_PASSWORD = 'ahkxqlqyoylyugsm'

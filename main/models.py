@@ -55,7 +55,7 @@ class ResultValueJ(models.Model):
 
 class Ad(models.Model):
     date = models.DateField('Дата',  auto_now_add=True)
-    name = models.CharField('Текст объявления', max_length=10000, default='')
+    text = models.TextField('Текст объявления', default='')
 
     def __str__(self):
         return f'Объявление от {self.date}'
@@ -67,7 +67,7 @@ class Ad(models.Model):
 
 class News(models.Model):
     date = models.DateField('Дата новости',  auto_now_add=True)
-    name = models.CharField('Новость', max_length=10000, default='')
+    text = models.TextField('Новость', default='')
 
     def __str__(self):
         return f'Новость от {self.date}'
@@ -79,7 +79,7 @@ class News(models.Model):
 
 class Post(models.Model):
     date = models.DateField('Дата выпуска',  auto_now_add=True)
-    name = models.CharField('Статья', max_length=10000, default='')
+    text = models.TextField('Статья', default='')
 
     def __str__(self):
         return f'Статья от {self.date}'

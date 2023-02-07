@@ -107,7 +107,7 @@ class ManufacturerView(ListView):
 class EquipmentView(ListView):
     """ Выводит список Всего ЛО """
     model = Equipment
-    template_name = URL + '/equipmentlist.html'
+    template_name = URL + '/EquipmentLIST.html'
     context_object_name = 'objects'
     ordering = ['exnumber']
     paginate_by = 12
@@ -121,7 +121,7 @@ class EquipmentView(ListView):
 class MeasurEquipmentCharaktersView(ListView):
     """ Выводит список госреестров """
     model = MeasurEquipmentCharakters
-    template_name = URL + '/characterslistME.html'
+    template_name = URL + '/MEcharacterslist.html'
     context_object_name = 'objects'
     ordering = ['reestr']
     paginate_by = 12
@@ -136,7 +136,7 @@ class MeasurEquipmentCharaktersView(ListView):
 class TestingEquipmentCharaktersView(ListView):
     """ Выводит список характеристик ИО """
     model = TestingEquipmentCharakters
-    template_name = URL + '/characterslistTE.html'
+    template_name = URL + '/TEcharacterslist.html'
     context_object_name = 'objects'
     ordering = ['name']
     paginate_by = 12
@@ -150,7 +150,7 @@ class TestingEquipmentCharaktersView(ListView):
 
 class MeasurEquipmentView(ListView):
     """Выводит список средств измерений"""
-    template_name = URL + '/equipmentlLISTME.html'
+    template_name = URL + '/MEequipmentlLIST.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
     paginate_by = 12
@@ -168,7 +168,7 @@ class MeasurEquipmentView(ListView):
 
 class TestingEquipmentView(ListView):
     """ Выводит список испытательного оборудования """
-    template_name = URL + '/equipmentLISTTE.html'
+    template_name = URL + '/TEequipmentLIST.html'
     context_object_name = 'objects'
     ordering = ['charakters__name']
     paginate_by = 12
@@ -179,6 +179,24 @@ class TestingEquipmentView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(TestingEquipmentView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['form'] = SearchMEForm()
+        return context
+
+
+class HelpingEquipmentView(ListView):
+    """ Выводит список вспомогательного оборудования """
+    template_name = URL + '/HEequipmentLIST.html'
+    context_object_name = 'objects'
+    ordering = ['charakters__name']
+    paginate_by = 12
+
+    def get_queryset(self):
+        queryset = HelpingEquipment.objects.exclude(equipment__status='С')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(HelpingEquipmentView, self).get_context_data(**kwargs)
         context['URL'] = URL
         context['form'] = SearchMEForm()
         return context
@@ -389,12 +407,12 @@ def EquipmentReg(request):
         content = {
             'form': form,
                 }
-        return render(request, 'equipment/equipmentreg.html', content)
+        return render(request, 'equipment/Equipmentreg.html', content)
 
 
 class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     """ выводит форму внесения госреестра. """
-    template_name = URL + '/charactersregME.html'
+    template_name = URL + '/MEcharactersreg.html'
     form_class = MeasurEquipmentCharaktersCreateForm
     success_url = '/equipment/measurequipmentcharacterslist/'
     success_message = "Госреестр успешно добавлен"
@@ -419,12 +437,12 @@ def MeasurEquipmentCharaktersUpdateView(request, str):
         form = MeasurEquipmentCharaktersCreateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
     data = {'form': form,
             }
-    return render(request, 'equipment/charactersregME.html', data)
+    return render(request, 'equipment/MEcharactersreg.html', data)
 
 
 class TestingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     """ выводит форму внесения характеристик ИО. """
-    template_name = URL + '/charactersregME.html'
+    template_name = URL + '/MEcharactersreg.html'
     form_class = TestingEquipmentCharaktersCreateForm
     success_url = '/equipment/testingequipmentcharacterslist/'
     success_message = "Характеристики ИО успешно добавлены"
@@ -449,7 +467,7 @@ def TestingEquipmentCharaktersUpdateView(request, str):
         form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
     data = {'form': form,
             }
-    return render(request, 'equipment/charactersregME.html', data)
+    return render(request, 'equipment/MEcharactersreg.html', data)
 
 
 class MeasureequipmentregView(LoginRequiredMixin, CreateView):
@@ -543,7 +561,7 @@ def EquipmentUpdate(request, str):
         form = EquipmentUpdateForm(instance=Equipment.objects.get(exnumber=str))
     data = {'form': form, 'title': title
             }
-    return render(request, 'equipment/individuality.html', data)
+    return render(request, 'equipment/Eindividuality.html', data)
 
 
 class HelpingequipmentregView(LoginRequiredMixin, CreateView):
@@ -578,7 +596,7 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
 class ReestrsearresView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку госреестров """
 
-    template_name = URL + '/characterslistME.html'
+    template_name = URL + '/MEcharacterslist.html'
 
     def get_context_data(self, **kwargs):
         context = super(ReestrsearresView, self).get_context_data(**kwargs)
@@ -608,7 +626,7 @@ class ReestrsearresView(TemplateView):
 class TEcharacterssearresView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку характеристик ИО """
 
-    template_name = URL + '/characterslistTE.html'
+    template_name = URL + '/TEcharacterslist.html'
 
     def get_context_data(self, **kwargs):
         context = super(TEcharacterssearresView, self).get_context_data(**kwargs)
@@ -630,7 +648,7 @@ class TEcharacterssearresView(TemplateView):
 class SearchResultMeasurEquipmentView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку средств измерений """
 
-    template_name = URL + '/equipmentlLISTME.html'
+    template_name = URL + '/MEequipmentlLIST.html'
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultMeasurEquipmentView, self).get_context_data(**kwargs)
@@ -639,9 +657,6 @@ class SearchResultMeasurEquipmentView(TemplateView):
             name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
         exnumber = self.request.GET['exnumber']
         lot = self.request.GET['lot']
-        dateser = self.request.GET['dateser']
-        if dateser:
-            delt = datetime.now() - timedelta(days=60 * 24 * 7)
 
         get_id_actual = Verificationequipment.objects.select_related('equipmentSM').values('equipmentSM'). \
             annotate(id_actual=Max('id')).values('id_actual')
@@ -651,82 +666,38 @@ class SearchResultMeasurEquipmentView(TemplateView):
             set.append(n.get('id_actual'))
         if self.request.GET['name']:
             name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
-        if name and not lot and not exnumber and not dateser:
+        if name and not lot and not exnumber:
             objects = MeasurEquipment.objects.\
             filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).order_by('charakters__name')
             context['objects'] = objects
-        if lot and not name  and not exnumber and not dateser:
+        if lot and not name  and not exnumber:
             objects = MeasurEquipment.objects.filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
-        if exnumber and not name and not lot and not dateser:
+        if exnumber and not name and not lot:
             objects = MeasurEquipment.objects.filter(equipment__exnumber=exnumber).order_by('charakters__name')
             context['objects'] = objects
-        if exnumber and name and lot and not dateser:
+        if exnumber and name and lot:
             objects = MeasurEquipment.objects.filter(equipment__exnumber=exnumber).\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
-        if exnumber and name and not lot and not dateser:
+        if exnumber and name and not lot:
             objects = MeasurEquipment.objects.filter(equipment__exnumber=exnumber).\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 order_by('charakters__name')
             context['objects'] = objects
-        if exnumber and not name and lot and not dateser:
+        if exnumber and not name and lot:
             objects = MeasurEquipment.objects.filter(equipment__exnumber=exnumber).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
-        if lot and name and not exnumber and not dateser:
+        if lot and name and not exnumber:
             objects = MeasurEquipment.objects.\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 filter(equipment__lot=lot).order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and not name and not lot and not exnumber:
-            objects = MeasurEquipment.objects.\
-                filter(Q(equipmentSM_ver__datedead__gte=dateser) & Q(equipmentSM_ver__id__in=set)). \
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and name and not lot and not exnumber:
-            objects = MeasurEquipment.objects.\
-                filter(Q(equipmentSM_ver__datedead__gte=dateser) & Q(equipmentSM_ver__id__in=set)). \
-                filter(Q(charakters__name__icontains=name) | Q(charakters__name__icontains=name1)). \
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and name and lot and not exnumber:
-            objects = MeasurEquipment.objects.\
-                filter(Q(equipmentSM_ver__datedead__gte=dateser) & Q(equipmentSM_ver__id__in=set)). \
-                filter(Q(charakters__name__icontains=name) | Q(charakters__name__icontains=name1)). \
-                filter(equipment__lot=lot).\
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and name and lot and exnumber:
-            objects = MeasurEquipment.objects. \
-                filter(Q(equipmentSM_ver__datedead__gte=dateser) & Q(equipmentSM_ver__id__in=set)). \
-                filter(Q(charakters__name__icontains=name) | Q(charakters__name__icontains=name1)). \
-                filter(equipment__lot=lot). \
-                filter(equipment__exnumber=exnumber). \
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and not name and lot and not exnumber:
-            objects = MeasurEquipment.objects.\
-                filter(Q(equipmentSM_ver__datedead__gte=dateser) & Q(equipmentSM_ver__id__in=set)). \
-                filter(equipment__lot=lot). \
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and not name and not lot and exnumber:
-            objects = MeasurEquipment.objects.\
-                filter(Q(equipmentSM_ver__datedead__gte=dateser) & Q(equipmentSM_ver__id__in=set)). \
-                filter(equipment__exnumber=exnumber). \
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and name and lot and not exnumber:
-            objects = MeasurEquipment.objects.\
-                filter(Q(equipmentSM_ver__datedead__gte=dateser) & Q(equipmentSM_ver__id__in=set)). \
-                filter(Q(charakters__name__icontains=name) | Q(charakters__name__icontains=name1)). \
-                filter(equipment__lot=lot). \
-                order_by('charakters__name')
             context['objects'] = objects
 
-        context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber, 'dateser': dateser})
+
+        context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber})
         context['URL'] = URL
         return context
 
@@ -734,7 +705,7 @@ class SearchResultMeasurEquipmentView(TemplateView):
 class SearchResultTestingEquipmentView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку испытательного оборудования """
 
-    template_name = URL + '/equipmentLISTTE.html'
+    template_name = URL + '/TEequipmentLIST.html'
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultTestingEquipmentView, self).get_context_data(**kwargs)
@@ -743,10 +714,6 @@ class SearchResultTestingEquipmentView(TemplateView):
             name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
         exnumber = self.request.GET['exnumber']
         lot = self.request.GET['lot']
-        dateser = self.request.GET['dateser']
-        if dateser:
-            delt = datetime.now() - timedelta(days=60 * 24 * 7)
-
         get_id_actual = TestingEquipment.objects.select_related('equipmentSM_att').values('equipmentSM_att'). \
             annotate(id_actual=Max('id')).values('id_actual')
         list_ = list(get_id_actual)
@@ -754,83 +721,37 @@ class SearchResultTestingEquipmentView(TemplateView):
         for n in list_:
             set.append(n.get('id_actual'))
 
-        if name and not lot and not exnumber and not dateser:
+        if name and not lot and not exnumber:
             objects = TestingEquipment.objects.\
             filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 order_by('charakters__name')
             context['objects'] = objects
-        if lot and not name  and not exnumber and not dateser:
+        if lot and not name  and not exnumber:
             objects = TestingEquipment.objects.filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
-        if exnumber and not name and not lot and not dateser:
+        if exnumber and not name and not lot:
             objects = TestingEquipment.objects.filter(equipment__exnumber=exnumber).order_by('charakters__name')
             context['objects'] = objects
-        if exnumber and name and lot and not dateser:
+        if exnumber and name and lot:
             objects = TestingEquipment.objects.filter(equipment__exnumber=exnumber).\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
-        if exnumber and name and not lot and not dateser:
+        if exnumber and name and not lot:
             objects = TestingEquipment.objects.filter(equipment__exnumber=exnumber).\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 order_by('charakters__name')
             context['objects'] = objects
-        if exnumber and not name and lot and not dateser:
+        if exnumber and not name and lot:
             objects = TestingEquipment.objects.filter(equipment__exnumber=exnumber).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
-        if lot and name and not exnumber and not dateser:
+        if lot and name and not exnumber:
             objects = TestingEquipment.objects.\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
-        if dateser and not name and not lot and not exnumber:
-            objects = TestingEquipment.objects.\
-                filter(Q(equipmentSM_att__datedead__gte=dateser) & Q(equipmentSM_att__id__in=set)). \
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and name and not lot and not exnumber:
-            objects = TestingEquipment.objects.\
-                filter(Q(equipmentSM_att__datedead__gte=dateser) & Q(equipmentSM_att__id__in=set)). \
-                filter(Q(charakters__name__icontains=name) | Q(charakters__name__icontains=name1)). \
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and name and lot and not exnumber:
-            objects = TestingEquipment.objects.\
-                filter(Q(equipmentSM_att__datedead__gte=dateser) & Q(equipmentSM_att__id__in=set)). \
-                filter(Q(charakters__name__icontains=name) | Q(charakters__name__icontains=name1)). \
-                filter(equipment__lot=lot).\
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and name and lot and exnumber:
-            objects = TestingEquipment.objects. \
-                filter(Q(equipmentSM_att__datedead__gte=dateser) & Q(equipmentSM_att__id__in=set)). \
-                filter(Q(charakters__name__icontains=name) | Q(charakters__name__icontains=name1)). \
-                filter(equipment__lot=lot). \
-                filter(equipment__exnumber=exnumber). \
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and not name and lot and not exnumber:
-            objects = TestingEquipment.objects.\
-                filter(Q(equipmentSM_att__datedead__gte=dateser) & Q(equipmentSM_att__id__in=set)). \
-                filter(equipment__lot=lot). \
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and not name and not lot and exnumber:
-            objects = TestingEquipment.objects.\
-                filter(Q(equipmentSM_att__datedead__gte=dateser) & Q(equipmentSM_att__id__in=set)). \
-                filter(equipment__exnumber=exnumber). \
-                order_by('charakters__name')
-            context['objects'] = objects
-        if dateser and name and lot and not exnumber:
-            objects = TestingEquipment.objects.\
-                filter(Q(equipmentSM_att__datedead__gte=dateser) & Q(equipmentSM_att__id__in=set)). \
-                filter(Q(charakters__name__icontains=name) | Q(charakters__name__icontains=name1)). \
-                filter(equipment__lot=lot). \
-                order_by('charakters__name')
-            context['objects'] = objects
-
-        context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber, 'dateser': dateser})
+        context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber})
         context['URL'] = URL
         return context
 
@@ -841,7 +762,7 @@ class SearchResultTestingEquipmentView(TemplateView):
 class DocsConsView(View):
     """ выводит список принадлежностей прибора и форму для добавления принадлежности """
     def get(self, request, str):
-        template_name = 'equipment/docsconslist.html'
+        template_name = 'equipment/Edocsconslist.html'
         form = DocsConsCreateForm()
         title = Equipment.objects.get(exnumber=str)
         objects = DocsCons.objects.filter(equipment__exnumber=str).order_by('pk')
@@ -914,7 +835,7 @@ def AttestationReg(request, str):
         'form': form,
         'title': title
     }
-    return render(request, 'equipment/attestationreg.html', data)
+    return render(request, 'equipment/TEattestationreg.html', data)
 
 
 def EquipmentMetrologyUpdate(request, str):
@@ -1032,7 +953,7 @@ class AttestationequipmentView(View):
                 'comment': comment,
                 'strreg': strreg,
                 }
-        return render(request, 'equipment/attestation.html', data)
+        return render(request, 'equipment/TEattestation.html', data)
 
     def post(self, request, str, *args, **kwargs):
         form = CommentsAttestationequipmentForm(request.POST)
@@ -1126,7 +1047,7 @@ class StrMeasurEquipmentView(View):
             'obj': obj,
             'note': note,
         }
-        return render(request, URL + '/equipmentSTRME.html', context)
+        return render(request, URL + '/MEequipmentSTR.html', context)
 
 
 class StrTestEquipmentView(View):
@@ -1138,7 +1059,7 @@ class StrTestEquipmentView(View):
             'obj': obj,
             'note': note,
         }
-        return render(request, URL + '/equipmentSTRTE.html', context)
+        return render(request, URL + '/TEequipmentSTR.html', context)
 
 
 # блок 11 - все комментарии ко всему
@@ -1173,7 +1094,7 @@ class CommentsView(View):
 class SearchMustVerView(ListView):
     """ выводит список СИ у которых дата заказа поверки совпадает с указанной либо раньше неё"""
 
-    template_name = URL + '/equipmentlLISTME.html'
+    template_name = URL + '/MEequipmentlLIST.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
 
@@ -1207,7 +1128,7 @@ class SearchMustVerView(ListView):
 class SearchNotVerView(ListView):
     """ выводит список СИ у которых дата окончания поверки совпадает с указанной либо раньше неё"""
 
-    template_name = URL + '/equipmentlLISTME.html'
+    template_name = URL + '/MEequipmentlLIST.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
 
@@ -1241,7 +1162,7 @@ class SearchNotVerView(ListView):
 class LastNewEquipmentView(ListView):
     """ выводит список 10 приборов, которые были добавлены последними"""
 
-    template_name = URL + '/equipmentlist.html'
+    template_name = URL + '/EquipmentLIST.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
 
@@ -1259,7 +1180,7 @@ class LastNewEquipmentView(ListView):
 class SearchMustOrderView(ListView):
     """ выводит список СИ у которых месяц заказа поверки совпадает с указанным либо раньше него"""
 
-    template_name = URL + '/equipmentlLISTME.html'
+    template_name = URL + '/MEequipmentlLIST.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
 
