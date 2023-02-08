@@ -148,6 +148,21 @@ class TestingEquipmentCharaktersView(ListView):
         return context
 
 
+class HelpingEquipmentCharaktersView(ListView):
+    """ Выводит список характеристик ВО """
+    model = HelpingEquipmentCharakters
+    template_name = URL + '/HEcharacterslist.html'
+    context_object_name = 'objects'
+    ordering = ['name']
+    paginate_by = 12
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(HelpingEquipmentCharaktersView, self).get_context_data(**kwargs)
+        context['form'] = Searchtestingform()
+        context['title'] = 'Характеристики, типы, вспомогательного оборудования'
+        return context
+
+
 class MeasurEquipmentView(ListView):
     """Выводит список средств измерений"""
     template_name = URL + '/MEequipmentlLIST.html'
@@ -1156,6 +1171,40 @@ class SearchNotVerView(ListView):
             a = i.get('equipmentSM__id')
             set1.append(a)
         queryset = MeasurEquipment.objects.filter(id__in=set1).exclude(equipment__status='C')
+        return queryset
+
+
+class SearchNotAttView(ListView):
+    """ выводит список ИО у которых дата окончания аттестации совпадает с указанной либо раньше неё"""
+
+    template_name = URL + '/TEequipmentLIST.html'
+    context_object_name = 'objects'
+    ordering = ['charakters_name']
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchNotAttView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['form'] = SearchMEForm()
+        return context
+
+    def get_queryset(self):
+        serdate = self.request.GET['date']
+        queryset_get = Attestationequipment.objects.\
+            select_related('equipmentSM').values('equipmentSM'). \
+            annotate(id_actual=Max('id')).values('id_actual')
+        b = list(queryset_get)
+        set = []
+        for i in b:
+            a = i.get('id_actual')
+            set.append(a)
+        queryset_get1 = Attestationequipment.objects.filter(id__in=set).\
+            filter(datedead__lte=serdate).values('equipmentSM__id')
+        b = list(queryset_get1)
+        set1 = []
+        for i in b:
+            a = i.get('equipmentSM__id')
+            set1.append(a)
+        queryset = TestingEquipment.objects.filter(id__in=set1).exclude(equipment__status='C')
         return queryset
 
 

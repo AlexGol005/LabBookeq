@@ -10,18 +10,25 @@
 {#mr-5 mt-3#}
 
 <div style="text-align: center; margin-top: 20px">
-<a href="{% url 'verificationlabels' %}" class="btn btn-warning" style="width: 210px">Распечать этикетки на СИ</a>
-{#<a href="{% url 'meteoreg' %}" class="btn btn-warning  mt-3" style="width: 210px">Распечать этикетки на ИО</a>#}
-</div>
-<div style="text-align: center; margin-top: 20px">
-<a href="{% url 'verificatorpersons' %}" class="btn btn-warning  mt-3" style="width: 210px" target="blank">
-Контакты поверителей</a>
+<a href="{% url 'verificationlabels' %}" class="btn btn-warning mt-3"  style="width: 210px">Распечать этикетки на СИ и ИО</a>
+<a href="{% url 'verificatorpersons' %}" class="btn btn-warning  mt-3 ml-3" style="width: 210px" target="blank">
+Контакты <br> поверителей</a>
+<a href="{% url 'lasttenequipment' %}" class="btn btn-warning ml-3 mt-3"  style="width: 210px">Список последних 10 добавленных приборов</a>
 </div>
 <br>
 ----------------------------------------------------------------------------------------------------------
 <div style="text-align: center; margin-top: 20px">
 <h5>Неповеренные к указанной дате СИ</h5>
  <form action="{% url 'notver' %}" target="blank" method="GET">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
+</div>
+<br>
+----------------------------------------------------------------------------------------------------------
+<div style="text-align: center; margin-top: 20px">
+<h5>Неаттестованные к указанной дате ИО</h5>
+ <form action="{% url 'notatt' %}" target="blank" method="GET">
         {% csrf_token %}
         {% crispy form %}
     </form>
@@ -43,16 +50,4 @@
         {% crispy form %}
     </form>
 </div>
-
-----------------------------------------------------------------------------------------------------------
-<div style="text-align: center; margin-top: 20px">
-<a href="{% url 'lasttenequipment' %}" class="btn btn-warning" style="width: 210px">Список последних 10 добавленных приборов</a>
-</div>
-
-
-<br><br>
-{#<div style="text-align: center;">#}
-{#<img src="{% static 'main/img/20.jpg' %}"#}
-{#alt="Изображение на странице метео"></div>#}
-
 {% endblock %}

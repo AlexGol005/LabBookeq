@@ -1,0 +1,84 @@
+{% extends 'main/superbase.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{#название страницы#}
+{#стандартная#}
+{% block title %}
+    Характеристики ВО
+{% endblock %}
+{#конец названия страницы#}
+
+{% block content %}
+
+{#заголовок#}
+    <a href="{% url 'helpingequipmentcharacterslist' %}">
+    <div style="text-align: center;"><h4> {{ title }}</h4></div>
+    </a>
+    <br>
+{#конец заголовка #}
+
+    <br>
+    <div style="text-align: center;">
+        <a href="{% url 'helpingequipmentcharactersreg' %}"  target="blank" class="btn btn-warning ml-2" style="width: 350px">
+            Добавить характеристики, тип
+        </a>
+    </div>
+
+{#форма для поиска по полям #}
+    <br><br>
+    <div style="text-align: center; margin-top: 25px">
+        <form action="/equipment/testingsearres/" method="GET">
+            {% csrf_token %}
+            {% crispy form %}
+        </form>
+    </div>
+{#конец формы для поиска#}
+
+{#основная таблица#}
+<div style="text-align: center; margin-top: 25px">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th>Название</th>
+            <th> Модификация </th>
+            <th> Тип </th>
+            <th> Межатт. <br> интервал, <br>мес. </th>
+            <th> Основные технические характеристики </th>
+            <th> Методики испытаний </th>
+            <th> Ред </th>
+             </tr>
+        </thead>
+        <tbody>
+        {% for obj in objects %}
+    <tr>
+        <td>{{ obj.name }}</td>
+        <td>{{ obj.modificname }}</td>
+        <td>{{ obj.typename }}</td>
+        <td> {{ obj.calinterval }}</td>
+        <td> {{ obj.measurydiapason }}</td>
+        <td> {{ obj.ndoc }}</td>
+    <td> <a href="{% url 'helpequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-warning mt-3">ред</a></td>
+    </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{#конец основной таблицы#}
+
+{#пагинация#}
+{# стандартная #}
+{% if is_paginated %}
+    {% if page_obj.has_previous %}
+       <a href="?page=1" class="btn btn-outline-primary">Начало</a>
+       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
+  {% endif %}
+    {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
+       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
+  {% endif %}
+  {% endif %}
+{#конец пагинации#}
+
+{% endblock %}
+{#конец блока {% block content %}#}
