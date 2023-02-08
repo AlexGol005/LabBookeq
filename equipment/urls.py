@@ -13,6 +13,7 @@ urlpatterns = [
     path('testingequipmentallsearres/', views.SearchResultTestingEquipmentView.as_view(), name='testingequipmentallsearres'),
     path('measureequipment/<str:str>/', views.StrMeasurEquipmentView.as_view(), name='measureequipment'),
     path('testequipment/<str:str>/', views.StrTestEquipmentView.as_view(), name='testequipment'),
+
     path(r'^export/xls/$', views.export_me_xls, name='export_me_xls'),
     path(r'^export3/xls/$', views.export_mustver_xls, name='export_mustver_xls'),
     path('measureequipment/<str:str>/comments/', views.CommentsView.as_view(), name='measureequipmentcomm'),

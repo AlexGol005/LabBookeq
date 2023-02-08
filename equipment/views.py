@@ -521,6 +521,7 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации СИ на основе ЛО и Госреестра """
     form_class = MeasurEquipmentCreateForm
     template_name = 'equipment/reg.html'
+    success_url = f'/equipment/measureequipment/{str}'
 
     def get_object(self, queryset=None):
         return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
@@ -530,6 +531,13 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
         context['title'] = 'Зарегистрировать СИ'
         context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
         return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
+            order.save()
+            return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
 
 
 class TestingequipmentregView(LoginRequiredMixin, CreateView):
@@ -546,6 +554,13 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
         context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
         return context
 
+    def form_valid(self, form):
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
+            order.save()
+            return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+
 
 class HelpingequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации ВО на основе ЛО и характеристик ВО """
@@ -560,6 +575,13 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
         context['title'] = 'Зарегистрировать ВО'
         context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
         return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
+            order.save()
+            return redirect(f'/equipment/helpingequipment/{self.kwargs["str"]}')
 
 
 def EquipmentUpdate(request, str):

@@ -243,7 +243,7 @@ class MetrologyUpdateForm(forms.ModelForm):
 class EquipmentCreateForm(forms.ModelForm):
     """форма для внесения ЛО"""
     exnumber = forms.CharField(label='Внутренний номер', max_length=10000, initial='А',
-                               help_text='уникальный, напишите буквенную часть номера (заглавная кириллица)',
+                               help_text='уникальный, придумайте первую букву номера (заглавная кириллица, 1 буква)',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': 'А'}))
     lot = forms.CharField(label='Заводской номер', max_length=10000,
@@ -266,10 +266,10 @@ class EquipmentCreateForm(forms.ModelForm):
     kategory = forms.ChoiceField(label='Категория', initial='Средство измерения',
                                  choices=KATEGORY,
                                  widget=forms.Select(attrs={'class': 'form-control'}))
-    pasport = forms.ImageField(label='Паспорт (ссылка)', widget=forms.FileInput, required=False)
-    instruction = forms.ImageField(label='Внутренняя инструкция (ссылка)', widget=forms.FileInput,
+    pasport = forms.CharField(label='Паспорт (ссылка)', max_length=10000, required=False)
+    instruction = forms.CharField(label='Внутренняя инструкция (ссылка)', max_length=10000,
                                        required=False)
-    imginstruction3 = forms.ImageField(label='Право владения (скрин jpg)', widget=forms.FileInput, required=False)
+    imginstruction3 = forms.CharField(label='Право владения (скрин jpg)', widget=forms.FileInput, required=False)
     individuality = forms.CharField(label='Индивидуальные особенности прибора', max_length=10000, required=False,
                                     widget=forms.TextInput(attrs={'class': 'form-control'}))
     notemaster = forms.CharField(label='Примечание (или временное предостережение)', max_length=10000, required=False,
@@ -1040,8 +1040,6 @@ class AttestationRegForm(forms.ModelForm):
                                                '%m/%d/%y',
                                                '%d.%m.%Y',
                                                 ))
-    ndocs = forms.CharField(label='Аттестован на методики', max_length=10000, required=False,
-                            widget=forms.TextInput(attrs={'class': 'form-control'}))
     certnumber = forms.CharField(label='№ аттестата', max_length=10000, required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
     price = forms.DecimalField(label='Стоимость данной атт.', max_digits=10, decimal_places=2,
@@ -1078,7 +1076,7 @@ class AttestationRegForm(forms.ModelForm):
 
     class Meta:
         model = Attestationequipment
-        fields = ['date', 'datedead', 'dateorder', 'ndocs', 'certnumber',
+        fields = ['date', 'datedead', 'dateorder', 'certnumber',
                   'price', 'statusver',  'verificator', 'verificatorperson',
                   'place',
                   'year',
@@ -1096,8 +1094,6 @@ class AttestationRegForm(forms.ModelForm):
                 Column('datedead', css_class='form-group col-md-4 mb-0'),
                 Column('dateorder', css_class='form-group col-md-4 mb-0'),
                 ),
-            Row(
-                Column('ndocs', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('certnumber', css_class='form-group col-md-4 mb-0'),
                 Column('statusver', css_class='form-group col-md-4 mb-0'),

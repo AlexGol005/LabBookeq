@@ -7,7 +7,11 @@
 
 
 {% block content %}
-<div style="text-align: center;"><h4> Регистрация ЛО </h4></div>
+<div style="text-align: center;"><h4> Регистрация ЛО* </h4></div>
+    <p><i><font color="red"><b>Перед регистрацией проверьте, что добавлен производитель и
+        характеристики ИО/ВО или госреестр с соответсвующей модификацией.
+        Они будут необходимы на втором этапе регистрации.
+   </b></font> </i></p>
 <div style="text-align: center; margin-top: 20px">
 <a href="{% url 'manufacturerreg' %}"  target="blank" class="btn btn-info ml-2">
 Добавить производителя</a>
@@ -16,6 +20,8 @@
 
 <a href="{% url 'testingequipmentcharactersreg' %}"  target="blank" class="btn btn-info ml-2">
 Добавить характеристики ИО</a>
+<a href="{% url 'helpingequipmentcharactersreg' %}"  target="blank" class="btn btn-info ml-2">
+Добавить характеристики ВО</a>
 </div>
 <form method="post" enctype="multipart/form-data" class="form-register">
     {% csrf_token %}

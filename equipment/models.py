@@ -316,6 +316,8 @@ class TestingEquipment(models.Model):
     class Meta:
         verbose_name = 'Испытательное оборудование'
         verbose_name_plural = 'Испытательное оборудование: список'
+        unique_together = ('charakters', 'equipment')
+        ordering = ['charakters__name']
 
 
 class HelpingEquipment(models.Model):
@@ -331,6 +333,8 @@ class HelpingEquipment(models.Model):
     class Meta:
         verbose_name = 'Вспомогательное оборудование'
         verbose_name_plural = 'Вспомогательное оборудование: список'
+        unique_together = ('charakters', 'equipment')
+        ordering = ['charakters__name']
 
 
 # блок 4 - смена комнаты, ответственного, добавление принадлежностей к оборудованию
@@ -484,7 +488,6 @@ class Attestationequipment(models.Model):
     place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
                              verbose_name='Место аттестации')
     note = models.CharField('Примечание', max_length=900, blank=True, null=True)
-    ndocs = models.CharField('Аттестован на методики', max_length=900, blank=True, null=True)
     year = models.CharField('Год аттестации (если нет точных дат)', max_length=900, blank=True, null=True)
     dateordernew = models.DateField('Дата заказа нового оборудования (если аттестовывать не выгодно)',
                                     blank=True, null=True)
