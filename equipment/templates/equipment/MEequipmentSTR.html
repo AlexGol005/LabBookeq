@@ -18,9 +18,9 @@
 
 {#карточка#}
 <div style="text-align: center; margin-top: 10px; margin-bottom: 50px">
-    <a href="{% url 'export_mecard_xls' obj.pk %}"  class="btn btn-warning mt-2 ">
+    <a href="{% url 'export_mecard_xls' obj.pk %}"  class="btn btn-warning mt-2 mr-3">
     Распечатать карточку на прибор</a>
-    <a href="{% url 'export_exvercard_xls' obj.pk %}"  class="btn btn-warning mt-2 ">
+    <a href="{% url 'export_exvercard_xls' obj.pk %}"  class="btn btn-warning mt-2 ml-3">
     Выгрузить шаблон протокола верификации</a>
 </div>
 
@@ -58,6 +58,7 @@
     </tbody>
 </table>
 </div>
+
 {#примечание#}
 <br>
 {% if obj.equipment.notemaster  %}
@@ -71,9 +72,10 @@
 </table>
 </div>
 {% endif %}
+<div style="text-align: center; margin-top: 40px">
+{#конец примечания#}
 
 {#особенности прибора, если имеются#}
-<br>
 {% if obj.equipment.individuality  %}
 <div style="text-align: center; margin-top: 2px"><h6>Особенности работы прибора</h6>
 <table class="table table-bordered">
@@ -81,9 +83,9 @@
 </table>
 </div>
 {% endif %}
+{#конецособенности прибора, если имеются#}
 
 {#контакты для ремонта#}
-<br>
 {% if obj.equipment.repair  %}
 <div style="text-align: center; margin-top: 2px"><h6>Куда обратиться при поломке</h6>
 <table class="table table-bordered">
@@ -91,21 +93,21 @@
 </table>
 </div>
 {% endif %}
+{# конец контакты для ремонта#}
+
+{#записи о приборе#}
+<div style="text-align: center; margin-top: 10px"><h4>Внести запись в карточку прибора* </h4></div>
+
+<div style="text-align: center; margin-top: 10px">
+ <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/comments/"  class="btn btn-warning mt-2">
+     Внести запись о приборе и смотреть записи (для всех пользователей)</a></div>
+
+
 
 <div style="text-align: center; margin-top: 20px">
  <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/individuality/"  class="btn btn-warning mt-2">
      Добавить особенности работы прибора, инструкцию и пр. (для ответственного за прибор)</a></div>
 </div>
-
-{#записи о приборе#}
-<div style="text-align: center; margin-top: 20px"><h4>
-Техническое обслуживание и данные о повреждениях, неисправностях, модификациях и ремонте </h4></div>
-<i>ГОСТ Р ИСО 17034-2021 (ссылка на ГОСТ ISO/IEC 17025-2019, п.6.4.13): "Должны вестись записи о состоянии оборудования...должны включать...
-подробную информацию о любых повреждениях, неисправностях, модификациях или ремонте..."</i></div>
-<div style="text-align: center; margin-top: 10px">
-<div style="text-align: center; margin-top: 10px">
- <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/comments/"  class="btn btn-warning mt-2">
-     Внести запись о приборе и смотреть записи (для всех пользователей)</a></div>
 
 {#    поверка#}
 <div style="text-align: center; margin-top: 20px"><h4>
@@ -154,18 +156,7 @@
  <a href="{% url 'verificationlabels' %}"  target="blank" class="btn btn-warning mt-2 ">
      Распечатать этикетку</a></div>
 {#расположение и комплектность#}
-<div style="text-align: center; margin-top: 20px"><h4>
-{#    выписка #}
-<div style="text-align: center; margin-top: 20px"><h4>
-Выписка из текущей поверки </h4></div>
-<div style="text-align: center;">
-<table class="table table-bordered">
-    <tr>
-        <td>{{ obj.equipmentSM_ver.last.extra|default_if_none:'-' }}</td>
-    </tr>
-</table>
-</div>
-Расположение и комплекность </h4></div>
+<div style="text-align: center; margin-top: 40px"><h4>Расположение и комплекность </h4></div>
 <div style="text-align: center;">
 <table class="table table-bordered">
     <thead>
@@ -200,7 +191,7 @@
  <a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/"  class="btn btn-warning mt-2 ">
      Смотреть список и Добавить документы и принадлежности</a></div>
 {#инструкция#}
-<div style="text-align: center; margin-top: 20px"><h4>
+<div style="text-align: center; margin-top: 40px"><h4>
 Характеристики и инструкции</h4></div>
 
 <div style="text-align: center;">
@@ -213,28 +204,52 @@
             <th> Класс точности, погрешность/неопределённость</th>
             <th> Наименование определяемых характеристик продукции </th>
             <th> Видеоинструкция </th>
-
          </tr>
     </thead>
     <tbody>
     <tr>
-
-{#        <td>{% if obj.equipment.imginstruction1 %}#}
-{#        <a href="{{ obj.equipment.imginstruction1.url }}" target="blank">#}
-{#        <img class="bd-placeholder-img mr-2 rounded" width=50px height=70px src="{{ obj.equipment.imginstruction1.url }}">#}
-{#        </a>{% endif %}</td>#}
-{#        <td>{% if obj.equipment.imginstruction2 %}#}
-{#        <a href="{{ obj.equipment.imginstruction2.url }}" target="blank">#}
-{#        <img class="bd-placeholder-img mr-2 rounded" width=50px height=70px src="{{ obj.equipment.imginstruction2.url }}">#}
-{#        </a>{% endif %}</td>#}
-        <td> {{ obj.charakters.pasport }}</td>
-        <td> {{ obj.charakters.instruction }}</td>
+             <td class="ind">
+             {% if obj.pasport %}
+              <a href="{{ obj.pasport}}"  target="blank" >
+             Ссылка на паспорт
+                  </a>
+             {% else  %}
+             Ссылка на паспорт отсутствует
+             {% endif %}
+         </td>
+         <td class="ind">
+         {% if obj.instruction %}
+          <a href="{{ obj.instruction}}"  target="blank" >
+         Ссылка на инструкцию
+              </a>
+         {% else  %}
+         Ссылка на инструкцию отсутствует
+         {% endif %}
+         </td>
         <td> {{ obj.charakters.measurydiapason }}</td>
         <td> {{ obj.charakters.accuracity }}</td>
         <td>{{ obj.charakters.aim }}</td>
-        <td> пока пусто</td>
+         <td class="ind">
+         {% if obj.instruction %}
+          <a href="{{ obj.instruction}}"  target="blank" >
+         Ссылка на видео
+              </a>
+         {% else  %}
+         видео отсутствует
+         {% endif %}
+         </td>
     </tr>
     </tbody>
+</table>
+</div>
+{#    выписка #}
+<div style="text-align: center; margin-top: 20px"><h4>
+Выписка из текущей поверки </h4></div>
+<div style="text-align: center;">
+<table class="table table-bordered">
+    <tr>
+        <td>{{ obj.equipmentSM_ver.last.extra|default_if_none:'-' }}</td>
+    </tr>
 </table>
 </div>
 {# бухгалтерия  #}
@@ -265,4 +280,7 @@
     <br>
     <br>
 </div>
+<p><i>    *ГОСТ Р ИСО 17034-2021 (ссылка на ГОСТ ISO/IEC 17025-2019, п.6.4.13): "Должны вестись записи о состоянии оборудования
+    ...должны включать...
+подробную информацию о любых повреждениях, неисправностях, модификациях или ремонте..."</i></p>
 {% endblock %}

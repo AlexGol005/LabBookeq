@@ -274,7 +274,7 @@ class EquipmentCreateForm(forms.ModelForm):
                                     widget=forms.TextInput(attrs={'class': 'form-control'}))
     notemaster = forms.CharField(label='Примечание (или временное предостережение)', max_length=10000, required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
-    video = forms.CharField(label='Видео к прибору', max_length=10000, required=False,
+    video = forms.CharField(label='Видео к прибору (ссылка)', max_length=10000, required=False,
                             widget=forms.TextInput(attrs={'class': 'form-control',
                                                           'placeholder': 'добавьте ссылку на видео'}))
     price = forms.DecimalField(label='Стоимость', max_digits=10, decimal_places=2, required=False,
@@ -317,6 +317,8 @@ class EquipmentCreateForm(forms.ModelForm):
                 Column('individuality', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('price', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('video', css_class='form-group col-md-12 mb-0')),
 
             Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
