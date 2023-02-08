@@ -266,10 +266,10 @@ class EquipmentCreateForm(forms.ModelForm):
     kategory = forms.ChoiceField(label='Категория', initial='Средство измерения',
                                  choices=KATEGORY,
                                  widget=forms.Select(attrs={'class': 'form-control'}))
-    imginstruction1 = forms.ImageField(label='Паспорт', widget=forms.FileInput, required=False)
-    imginstruction2 = forms.ImageField(label='Внутренняя инструкция', widget=forms.FileInput,
+    pasport = forms.ImageField(label='Паспорт (ссылка)', widget=forms.FileInput, required=False)
+    instruction = forms.ImageField(label='Внутренняя инструкция (ссылка)', widget=forms.FileInput,
                                        required=False)
-    imginstruction3 = forms.ImageField(label='Право владения', widget=forms.FileInput, required=False)
+    imginstruction3 = forms.ImageField(label='Право владения (скрин jpg)', widget=forms.FileInput, required=False)
     individuality = forms.CharField(label='Индивидуальные особенности прибора', max_length=10000, required=False,
                                     widget=forms.TextInput(attrs={'class': 'form-control'}))
     notemaster = forms.CharField(label='Примечание (или временное предостережение)', max_length=10000, required=False,
@@ -286,7 +286,7 @@ class EquipmentCreateForm(forms.ModelForm):
         fields = [
             'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status',
             'new', 'invnumber', 'kategory', 'individuality', 'notemaster',
-            'imginstruction2', 'imginstruction1',
+            'pasport', 'instruction',
             'imginstruction3', 'video', 'price'
         ]
 
@@ -308,9 +308,9 @@ class EquipmentCreateForm(forms.ModelForm):
                 Column('status', css_class='form-group col-md-6 mb-0'),
                 ),
             Row(
-                Column('imginstruction1', css_class='form-group col-md-12 mb-0')),
+                Column('pasport', css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('imginstruction2', css_class='form-group col-md-12 mb-0')),
+                Column('instruction', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('imginstruction3', css_class='form-group col-md-12 mb-0')),
             Row(
@@ -617,7 +617,7 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
-                                      widget=forms.TextInput(attrs={'class': 'form-control',
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
                                                                     'placeholder': ''}))
     aim = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
                           max_length=10000000, required=False,
@@ -648,15 +648,54 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
     setplace = forms.CharField(label='Описание мероприятий по установке', required=False,
                                widget=forms.Textarea(attrs={'class': 'form-control',
                                                             'placeholder': ''}))
-    complectlist = forms.CharField(label='Где в паспорте комплектация', required=False,
-                                   widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                'placeholder': ''}))
+    complectlist = forms.CharField(label='Где указана комплектация', required=False,
+                                   initial='Руководство по эксплуатации, страница 2',
+                                   widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                 'placeholder': ''}))
     expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
-    kvasyattestation = forms.BooleanField(label='применяется внутренняя аттестация (проверка зарактеристик)',
-                                          initial=False)
+    kvasyattestation = forms.BooleanField(label='применяется внутренняя аттестация (проверка характеристик)',
+                                          initial=False, required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('name', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('typename', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('modificname', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('aim', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('complectlist', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('power', css_class='form-group col-md-4 mb-0'),
+                Column('needsetplace', css_class='form-group col-md-4 mb-0'),
+                Column('expresstest', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('voltage', css_class='form-group col-md-6 mb-0'),
+                Column('frequency', css_class='form-group col-md-6 mb-0'),
+            ),
+            Row(
+                Column('temperature', css_class='form-group col-md-4 mb-0'),
+                Column('humidicity', css_class='form-group col-md-4 mb-0'),
+                Column('pressure', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('setplace', css_class='form-group col-md-12 mb-0'),
+            ),
+            Row(
+                Column('kvasyattestation', css_class='form-group col-md-12 mb-0'),
+            ),
+            Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
     class Meta:
-        model = TestingEquipmentCharakters
+        model = HelpingEquipmentCharakters
         fields = [
             'name',
             'typename',

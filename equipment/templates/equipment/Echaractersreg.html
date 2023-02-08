@@ -31,6 +31,13 @@
                 Смотреть добавленные характеристики ИО
             </a>
         </div>
+        {% elif title == 'Добавить характеристики ВО' %}
+        <br>
+        <div style="text-align: center;">
+            <a href="{% url 'helpingequipmentcharacterslist' %}"  target="blank" class="btn btn-warning ml-2" style="width: 350px">
+                Смотреть добавленные характеристики ВО
+            </a>
+        </div>
     {% endif %}
 
     <div style="text-align: center;"><h4>{{ dop }}</h4></div>

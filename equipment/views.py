@@ -22,7 +22,7 @@
 
 import xlwt
 import pytils.translit
-from datetime import date, timedelta
+from datetime import date
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -410,6 +410,8 @@ def EquipmentReg(request):
                     return redirect(f'/equipment/measureequipmentreg/{order.exnumber}/')
                 if order.kategory == 'ИО':
                     return redirect(f'/equipment/testequipmentreg/{order.exnumber}/')
+                if order.kategory == 'ВО':
+                    return redirect(f'/equipment/helpequipmentreg/{order.exnumber}/')
                 else:
                     return redirect('equipmentlist')
     if not request.user.is_superuser:
@@ -427,7 +429,7 @@ def EquipmentReg(request):
 
 class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     """ выводит форму внесения госреестра. """
-    template_name = URL + '/MEcharactersreg.html'
+    template_name = URL + '/Echaractersreg.html'
     form_class = MeasurEquipmentCharaktersCreateForm
     success_url = '/equipment/measurequipmentcharacterslist/'
     success_message = "Госреестр успешно добавлен"
@@ -452,12 +454,12 @@ def MeasurEquipmentCharaktersUpdateView(request, str):
         form = MeasurEquipmentCharaktersCreateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
     data = {'form': form,
             }
-    return render(request, 'equipment/MEcharactersreg.html', data)
+    return render(request, 'equipment/Echaractersreg.html', data)
 
 
 class TestingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     """ выводит форму внесения характеристик ИО. """
-    template_name = URL + '/MEcharactersreg.html'
+    template_name = URL + '/Echaractersreg.html'
     form_class = TestingEquipmentCharaktersCreateForm
     success_url = '/equipment/testingequipmentcharacterslist/'
     success_message = "Характеристики ИО успешно добавлены"
@@ -482,7 +484,37 @@ def TestingEquipmentCharaktersUpdateView(request, str):
         form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
     data = {'form': form,
             }
-    return render(request, 'equipment/MEcharactersreg.html', data)
+    return render(request, 'equipment/Echaractersreg.html', data)
+
+
+class HelpingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
+    """ выводит форму внесения характеристик ВО. """
+    template_name = URL + '/Echaractersreg.html'
+    form_class = HelpingEquipmentCharaktersCreateForm
+    success_url = '/equipment/helpingequipmentcharacterslist/'
+    success_message = "Характеристики ВО успешно добавлены"
+
+    def get_context_data(self, **kwargs):
+        context = super(HelpingEquipmentCharaktersRegView, self).get_context_data(**kwargs)
+        context['title'] = 'Добавить характеристики ВО'
+        context['dopin'] = 'equipment/helpingequipmentcharacterslist'
+        return context
+
+
+def HelpingEquipmentCharaktersUpdateView(request, str):
+    """выводит форму для обновления данных о характеристиках ВО"""
+    if request.method == "POST":
+        form = HelpingEquipmentCharaktersCreateForm(request.POST,
+                                                    instance=HelpingEquipmentCharakters.objects.get(pk=str))
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.save()
+            return redirect('helpingequipmentcharacterslist')
+    else:
+        form = HelpingEquipmentCharaktersCreateForm(instance=HelpingEquipmentCharakters.objects.get(pk=str))
+    data = {'form': form,
+            }
+    return render(request, 'equipment/Echaractersreg.html', data)
 
 
 class MeasureequipmentregView(LoginRequiredMixin, CreateView):
@@ -499,18 +531,6 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
         context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
         return context
 
-    def form_valid(self, form):
-        user = User.objects.get(username=self.request.user)
-        if user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                order.save()
-                return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
-        else:
-            messages.success(request, f'Регистрировать может только ответственный за поверку приборов')
-            return redirect(reverse('measureequipmentreg', kwargs={'str': self.kwargs['str']}))
-
 
 class TestingequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации ИО на основе ЛО и характеристик ИО """
@@ -526,18 +546,20 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
         context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
         return context
 
-    def form_valid(self, form):
-        user = User.objects.get(username=self.request.user)
-        if user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                order.save()
-                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
-        else:
-            messages.success(request, f'Регистрировать может только ответственный за метрологическое '
-                                      f'обеспечение приборов')
-            return redirect(reverse('testequipmentreg', kwargs={'str': self.kwargs['str']}))
+
+class HelpingequipmentregView(LoginRequiredMixin, CreateView):
+    """ выводит форму регистрации ВО на основе ЛО и характеристик ВО """
+    form_class = HelpingEquipmentCreateForm
+    template_name = 'equipment/reg.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
+
+    def get_context_data(self, **kwargs):
+        context = super(HelpingequipmentregView, self).get_context_data(**kwargs)
+        context['title'] = 'Зарегистрировать ВО'
+        context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
+        return context
 
 
 def EquipmentUpdate(request, str):
@@ -577,33 +599,6 @@ def EquipmentUpdate(request, str):
     data = {'form': form, 'title': title
             }
     return render(request, 'equipment/Eindividuality.html', data)
-
-
-class HelpingequipmentregView(LoginRequiredMixin, CreateView):
-    """ выводит форму регистрации ВО на основе ЛО и характеристик ВО """
-    form_class = HelpingEquipmentCreateForm
-    template_name = 'equipment/reg.html'
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
-
-    def get_context_data(self, **kwargs):
-        context = super(HelpingequipmentregView, self).get_context_data(**kwargs)
-        context['title'] = 'Зарегистрировать ВО'
-        context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
-        return context
-
-    def form_valid(self, form):
-        user = User.objects.get(username=self.request.user)
-        if user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                order.save()
-                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
-        else:
-            messages.success(request, f'Регистрировать может только ответственный за метрологическое обеспечение приборов')
-            return redirect(reverse('helpequipmentreg', kwargs={'str': self.kwargs['str']}))
 
 
 # блок 7 - все поисковики
