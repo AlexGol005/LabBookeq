@@ -327,15 +327,16 @@ class PersonchangeFormView(View):
 
     def post(self, request, str, *args, **kwargs):
         form = PersonchangeForm(request.POST)
-        if request.user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipment = Equipment.objects.get(exnumber=str)
-                order.save()
-                if order.equipment.kategory == 'СИ':
-                    return redirect(f'/equipment/measureequipment/{str}')
-                if order.equipment.kategory == 'ИО':
-                    return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.equipment = Equipment.objects.get(exnumber=str)
+            order.save()
+            if order.equipment.kategory == 'СИ':
+                return redirect(f'/equipment/measureequipment/{str}')
+            if order.equipment.kategory == 'ИО':
+                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+            if order.equipment.kategory == 'ВО':
+                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
         else:
             messages.success(request, f'Раздел для ответственного за поверку приборов')
@@ -358,18 +359,16 @@ class RoomschangeFormView(View):
 
     def post(self, request, str, *args, **kwargs):
         form = RoomschangeForm(request.POST)
-        if request.user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipment = Equipment.objects.get(exnumber=str)
-                order.save()
-                if order.equipment.kategory == 'СИ':
-                    return redirect(f'/equipment/measureequipment/{str}')
-                if order.equipment.kategory == 'ИО':
-                    return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
-        else:
-            messages.success(request, f'Раздел для ответственного за поверку приборов')
-            return redirect(f'/equipment/measureequipment/{str}')
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.equipment = Equipment.objects.get(exnumber=str)
+            order.save()
+            if order.equipment.kategory == 'СИ':
+                return redirect(f'/equipment/measureequipment/{str}')
+            if order.equipment.kategory == 'ИО':
+                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+            if order.equipment.kategory == 'ВО':
+                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
 
 # блок 5 - микроклимат: журналы, формы регистрации
@@ -1093,6 +1092,17 @@ class StrTestEquipmentView(View):
         }
         return render(request, URL + '/TEequipmentSTR.html', context)
 
+
+class StrHelpEquipmentView(View):
+    """ выводит отдельную страницу ВО """
+    def get(self, request, str):
+        note = Checkequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
+        obj = get_object_or_404(HelpingEquipment, equipment__exnumber=str)
+        context = {
+            'obj': obj,
+            'note': note,
+        }
+        return render(request, URL + '/HEequipmentSTR.html', context)
 
 # блок 11 - все комментарии ко всему
 
