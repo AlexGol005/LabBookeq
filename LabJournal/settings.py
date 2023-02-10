@@ -148,7 +148,7 @@ LOGIN_URL = 'user'
 MEDIA_URL = '/pictures/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures')
 
-SHORT_DATE_FORMAT = ' j . m. Y'
+SHORT_DATE_FORMAT = 'j . m. Y'
 
 TOOLBAR_DEBUG = False
 

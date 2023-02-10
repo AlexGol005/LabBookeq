@@ -933,7 +933,7 @@ class VerificationequipmentView(View):
                 'comment': comment,
                 'strreg': strreg,
                 }
-        return render(request, 'equipment/verification.html', data)
+        return render(request, 'equipment/MEverification.html', data)
 
     def post(self, request, str, *args, **kwargs):
         form = CommentsVerificationCreationForm(request.POST)
@@ -1420,7 +1420,8 @@ def base_planreport_xls(request, exel_file_name,
     ws1.col(2).width = 4500
     ws1.col(3).width = 4500
     ws1.col(4).width = 2500
-    ws1.col(6).width = 2500
+    ws1.col(5).width = 4500
+    ws1.col(6).width = 4500
     ws1.col(7).width = 4500
     ws1.col(7).width = 7500
     ws1.col(8).width = 7500
@@ -1434,12 +1435,12 @@ def base_planreport_xls(request, exel_file_name,
 
     # ширина столбцов ИО
     ws2.col(0).width = 2500
-    ws2.col(1).width = 2500
+    ws2.col(1).width = 4500
     ws2.col(2).width = 4500
     ws2.col(3).width = 4500
-    ws2.col(4).width = 2500
+    ws2.col(4).width = 4500
     ws2.col(5).width = 4500
-    ws2.col(6).width = 2500
+    ws2.col(6).width = 4500
     ws2.col(7).width = 4500
     ws2.col(8).width = 7500
     ws2.col(9).width = 7500
@@ -1597,7 +1598,7 @@ def base_planreport_xls(request, exel_file_name,
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
-            if col_num in datecolumnme:
+            if col_num in datecolumnte:
                 ws2.write(row_num, col_num, row[col_num], style_date)
             else:
                 ws2.write(row_num, col_num, row[col_num], style_plain)
@@ -2162,7 +2163,8 @@ def export_planmetro_xls(request):
     str6 = 6
 
 
-    u_headers_me = ['Номер текущего свидетельства',
+    u_headers_me = ['Текущее свидетельство',
+                    'Дата окончания свидетельства',
                     'Стоимость последней поверки, руб. (при наличии)',
                     'Месяц заказа поверки',
                     ]
@@ -2171,7 +2173,7 @@ def export_planmetro_xls(request):
         annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName')). \
-                                filter(equipment__roomschange__in=setroom). \
+            filter(equipment__roomschange__in=setroom). \
                                 filter(equipment__personchange__in=setperson). \
                                 filter(equipmentSM_ver__in=setver). \
                                 filter(equipmentSM_ver__dateorder__year=serdate). \
@@ -2182,11 +2184,13 @@ def export_planmetro_xls(request):
                                 'mod_type',
                                 'equipment__lot',
                                 'equipmentSM_ver__certnumber',
+                                'equipmentSM_ver__datedead',
                                 'equipmentSM_ver__price',
                                 'equipmentSM_ver__dateorder__month',
                             ).order_by('equipmentSM_ver__dateorder__month')
 
-    u_headers_te = ['Номер текущего аттестата',
+    u_headers_te = ['Текущий аттестат',
+                    'Дата окончания аттестата',
                     'Стоимость последней аттестации, руб. (при наличии)',
                     'Месяц заказа аттестации',
                     ]
@@ -2194,7 +2198,7 @@ def export_planmetro_xls(request):
     testing_e = TestingEquipment.objects. \
         annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
-                                      'equipment__manufacturer__companyName')). \
+                                      'equipment__manufacturer__companyName')).\
         filter(equipment__roomschange__in=setroom). \
         filter(equipment__personchange__in=setperson). \
         filter(equipmentSM_att__in=setatt). \
@@ -2205,6 +2209,7 @@ def export_planmetro_xls(request):
         'mod_type',
         'equipment__lot',
         'equipmentSM_att__certnumber',
+        'equipmentSM_att__datedead',
         'equipmentSM_att__price',
         'equipmentSM_att__dateorder__month',
     ).order_by('equipmentSM_att__dateorder__month')
@@ -2261,7 +2266,7 @@ def export_plan_purchaesing_xls(request):
     str6 = 6
 
 
-    u_headers_me = ['Номер текущего свидетельства',
+    u_headers_me = ['Текущее свидетельство',
                     'Стоимость оборудования',
                     'Месяц заказа замены',
                     ]
@@ -2285,7 +2290,7 @@ def export_plan_purchaesing_xls(request):
                                 'equipmentSM_ver__dateordernew__month',
                             ).order_by('equipmentSM_ver__dateordernew__month')
 
-    u_headers_te = ['Номер текущего аттестата',
+    u_headers_te = ['Текущий аттестат',
                     'Стоимость оборудования',
                     'Месяц заказа замены',
                     ]
