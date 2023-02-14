@@ -4,3 +4,4 @@ from .models import *
 
 
 admin.site.register(Blog)
+admin.site.register(Comments)

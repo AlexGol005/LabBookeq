@@ -1,4 +1,4 @@
-{% extends 'main/superbase.html' %}
+{% extends 'main/base.html' %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 
@@ -13,15 +13,21 @@
 
 {#основная таблица#}
 {# уникальная #}
+<div class="col-md-12 no-gutters">
+{% for obj in objects %}
 <table class="table table-bordered">
     <tbody>
-    {% for obj in objects %}
+
     <tr>
-        <td>{{ obj.text }}</td>
+        <td>{{ obj.date }}<br><h4>{{ obj.title }}</h4>
+            <br> {% autoescape off %}{{ obj.text|truncatewords:20 }}{% endautoescape %}
+        <a href="{% url 'blogstr' obj.pk %}" target="blank" class="btn btn-warning  mt-3" style="width: 180px">читать далее</a>
+        </td>
     </tr>
-    {% endfor %}
+
     </tbody>
 </table>
+ {% endfor %}
 {#конец основной таблицы#}
 
 {#пагинация#}
@@ -48,7 +54,6 @@
 
 {#конец формы для поиска по датам записей#}
 
-</div>
 
 
 {% endblock %}

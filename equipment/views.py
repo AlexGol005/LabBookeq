@@ -36,6 +36,7 @@ from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from xlwt import Alignment, Borders
 
+from blog.models import Comments
 from equipment.constants import servicedesc0
 from equipment.forms import*
 from equipment.models import*
@@ -71,7 +72,6 @@ class ReportsView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ReportsView, self).get_context_data(**kwargs)
         context['URL'] = URL
-        context['form'] = YearForm()
         return context
 
 
