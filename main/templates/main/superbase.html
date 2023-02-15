@@ -41,7 +41,7 @@
         <a class="nav-link" href="{% url 'eq' %}">Инфраструктура лаборатории</a>
       </li>
         <li class="nav-item">
-        <a class="nav-link" href="{% url 'eq' %}">О учёте приборов в лаборатории</a>
+        <a class="nav-link" href="{% url 'blog' %}">Об учёте приборов в лаборатории</a>
       </li>
       {% if not user.is_authenticated %}
         <a href="{% url 'reg' %}" >

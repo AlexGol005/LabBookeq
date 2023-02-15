@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'main/superbase.html' %}
 {% load crispy_forms_tags %}
 
 {% block title %}
@@ -11,9 +11,12 @@
  <a href="/equipment/measureequipment/{{ title.exnumber }}/">
  {{title.measurequipment_set.all.last.charakters}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber }}  </a> </h5></div>
 <div style="text-align: center; margin-top: 20px; margin-bottom: 15px"><h6> Межповерочный интервал {{ calinterval }} мес. </h6></div>
+{% if dateorder %}
 <div style="text-align: center; margin-top: 20px; margin-bottom: 15px"><h5> Планируемая дата отправки в поверку: {{ dateorder|date:"m.Y"|default_if_none:" " }} </h5></div>
+{% endif %}
+{% if dateordernew %}
 <div style="text-align: center; margin-top: 20px; margin-bottom: 15px"><h5> Планируемая дата заказа замены: {{ dateordernew|date:"m.Y"|default_if_none:" " }} </h5></div>
-
+{% endif %}
 {#таблица для вывода комментария#}
 {% if comment != '' %}
 <table class="table table-bordered">
@@ -25,15 +28,6 @@
 </table>
 {%  endif %}
 {#конец таблицы для вывода комментария#}
-{#таблица для вывода постоянных особенностей поверки#}
-{% if title.notemetrology %}
-<table class="table table-bordered">
-<td colspan="6">
-{{ title.notemetrology }}
-</td>
-</table>
-{%  endif %}
-{#конец таблицы ддля вывода постоянных особенностей поверки#}
 <div style="text-align: center; margin-top: 20px">
         <a href="/equipment/measureequipment/verificationreg/{{ strreg }}/"  class="btn btn-info mt-2 mr-2">
  Внести запись о поверке</a>
@@ -92,9 +86,7 @@
 </table>
     </div>
 {#конец таблицы для вывода поверки#}
- <div style="text-align: center; margin-top: 10px">
-<a href="/equipment/measureequipment/{{ title.exnumber }}/metrologyindividuality/"  class="btn btn-warning mt-2">
-     Обновить постоянные особенности поверки</a></div>
+
 {#форма для комментария#}
     <div style="text-align: center; margin-top: 20px">
 <form method="post" enctype="multipart/form-data" class="form-register">
@@ -107,9 +99,9 @@
 
 <br>
     <div style="text-align: center; margin-top: 5px; margin-bottom: 15px">
-     <a href="/equipment/measureequipment/verificationreg/{{ strreg }}/"  class="btn btn-warning mt-2 mr-2">
+     <a href="/equipment/measureequipment/verificationreg/{{ strreg }}/"  class="btn btn-info mt-2 mr-2">
  Внести запись о поверке</a>
-     <a href="/equipment/contactsverreg/{{ strreg }}/"  class="btn btn-warning mt-2 mr-2">
+     <a href="/equipment/contactsverreg/{{ strreg }}/"  class="btn btn-info mt-2 mr-2">
  Внести контакты поверителя</a>
    </div>
 <div style="text-align: center; margin-top: 20px; margin-bottom: 15px">
@@ -141,7 +133,7 @@
 <td> {{ obj2.verificators.departamentadress }}</td>
 <td> {{ obj2.verificators.email }}</td>
 <td> {{ obj2.verificators.dop }}</td>
-<td> <a href="{% url 'verificatorsupdate' obj2.verificators.pk %}"  class="btn btn-outline-warning mt-3">ред</a></td>
+<td> <a href="{% url 'verificatorsupdate' obj2.verificators.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>
 
 
 </tr>

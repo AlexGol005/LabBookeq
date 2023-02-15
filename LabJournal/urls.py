@@ -13,6 +13,7 @@ urlpatterns = [
     path('equipment/', include('equipment.urls')),
     path('CertifiedValueJ/', include('jouViscosity.urls')),
     path('^', include('django.contrib.auth.urls')),
+    path('blog/', include('blog.urls')),
 ]
 
 if settings.DEBUG:
