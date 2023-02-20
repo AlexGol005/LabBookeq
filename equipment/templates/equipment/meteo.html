@@ -9,11 +9,33 @@
 
 
 <div style="text-align: center; margin-top: 20px">
-<a href="{% url 'roomreg' %}" class="btn btn-warning mr-5 mt-3" style="width: 210px">Добавить помещение</a>
-<a href="{% url 'meteoreg' %}" class="btn btn-warning  mt-3" style="width: 210px">Добавить условия окружающей среды</a>
+<a href="{% url 'roomreg' %}" class="btn btn-info mr-5 mt-3" style="width: 210px">Добавить помещение</a>
+<a href="{% url 'meteoreg' %}" class="btn btn-info  mt-3" style="width: 210px">Добавить условия окружающей среды</a>
 </div>
-
-
+<div style="text-align: center; margin-top: 20px">
+   <h4>Помещения</h4>
+</div>
+{#основная таблица#}
+{# уникальная #}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Номер комнаты</th>
+            <th> Смотреть журнал микроклимата </th>
+            <th> Добавить запись о микроклимате </th>
+         </tr>
+    </thead>
+    <tbody>
+    {% for obj in objects %}
+    <tr>
+        <td>{{ obj.roomnumber }}</td>
+        <td> <a href="{% url 'meteoroom' obj.pk %}"  class="btn btn-outline-warning mt-3">см</a></td>
+        <td> </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{#конец основной таблицы#}
 
 <br><br>
 <div style="text-align: center;">

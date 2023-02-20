@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+
 from main.models import News, Ad
 
 
@@ -12,3 +14,22 @@ def last_ad(request):
     return {
         'last_ad': ad
     }
+
+def USER(request):
+    try:
+        user = User.objects.get(username=request.user)
+        if user.is_staff:
+            USER = True
+            return {
+                'last_ad': USER
+            }
+        if not user.is_staff:
+            USER = False
+            return {
+                'last_ad': USER
+            }
+    except:
+        USER = False
+        return {
+            'last_ad': USER
+        }

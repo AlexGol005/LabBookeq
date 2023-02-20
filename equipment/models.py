@@ -23,6 +23,7 @@ from django.urls import reverse
 
 
 # блок 1 -  неизменяемые непользовательские константы для полей с выбором значений в моделях
+from django.views.generic import DetailView
 
 CHOICES = (
         ('Э', 'Экс.'),
@@ -666,6 +667,7 @@ class MeteorologicalParameters(models.Model):
         verbose_name = 'Комнаты: Микроклимат в помещении'
         verbose_name_plural = 'Комнаты: Микроклимат в помещениях'
         unique_together = ['date', 'roomnumber']
+
 
 # блок 8 - карточка предприятия
 

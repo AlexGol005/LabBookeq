@@ -30,14 +30,17 @@ class Constants:
 class HeadView(Constants, TemplateView):
     """ Выводит заглавную страницу журнала """
     def get_context_data(self, **kwargs):
-        user = User.objects.get(username=self.request.user)
         context = super(HeadView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff:
+                context['USER'] = True
+            if not user.is_staff:
+                context['USER'] = False
+        except:
+            context['USER'] = False
         context['note'] = self.JOURNAL.objects.get(for_url=self.URL)
         context['URL'] = self.URL
-        if user.is_staff:
-            context['USER'] = True
-        if not user.is_staff:
-            context['USER'] = False
         return context
 
 
@@ -49,6 +52,14 @@ class StrJournalView(Constants, LoginRequiredMixin, SuccessMessageMixin, UpdateV
 
     def get_context_data(self, **kwargs):
         context = super(StrJournalView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff:
+                context['USER'] = True
+            if not user.is_staff:
+                context['USER'] = False
+        except:
+            context['USER'] = False
         context['note'] = get_object_or_404(self.MODEL, pk=self.kwargs['pk'])
         context['NAME'] = self.NAME
         context['URL'] = self.URL
@@ -76,6 +87,14 @@ class CommentsView(Constants, SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CommentsView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff:
+                context['USER'] = True
+            if not user.is_staff:
+                context['USER'] = False
+        except:
+            context['USER'] = False
         context['title'] = self.MODEL.objects.get(pk=self.kwargs['pk'])
         context['note'] = self.COMMENTMODEL.objects.filter(forNote=self.kwargs['pk'])
         context['URL'] = self.URL
@@ -96,11 +115,14 @@ class RegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = " "
 
     def get_context_data(self, **kwargs):
-        user = User.objects.get(username=self.request.user)
         context = super(RegView, self).get_context_data(**kwargs)
-        if user.is_staff:
-            context['USER'] = True
-        if not user.is_staff:
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff:
+                context['USER'] = True
+            if not user.is_staff:
+                context['USER'] = False
+        except:
             context['USER'] = False
         return context
 
@@ -152,6 +174,14 @@ class ProtocolbuttonView(Constants, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProtocolbuttonView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff:
+                context['USER'] = True
+            if not user.is_staff:
+                context['USER'] = False
+        except:
+            context['USER'] = False
         context['titlehead'] = "Протокол анализа"
         note = get_object_or_404(self.MODEL, pk=self.kwargs['pk'])
         context['note'] = note

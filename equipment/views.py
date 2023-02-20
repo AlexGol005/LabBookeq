@@ -31,16 +31,13 @@ from django.http import HttpResponse
 from django.db.models import Max, Q, Value, CharField, Count, Sum
 from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404, render, redirect
-from django.template.context_processors import request
 from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from xlwt import Alignment, Borders
 
-from blog.models import Comments
 from equipment.constants import servicedesc0
 from equipment.forms import*
 from equipment.models import*
-from formstandart import YearForm
 from functstandart import get_dateformat
 from users.models import Profile
 
@@ -50,9 +47,24 @@ now = date.today()
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
 
 
-class MeteorologicalParametersView(TemplateView):
+class MeteorologicalParametersView(ListView):
     """Выводит страницу с кнопками для добавления помещений, микроклимата и вывода журнала микроклимата"""
     template_name = URL + '/meteo.html'
+    model = Rooms
+    context_object_name = 'objects'
+
+    def get_context_data(self, **kwargs):
+        context = super(MeteorologicalParametersView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff:
+                context['USER'] = True
+            if not user.is_staff:
+                context['USER'] = False
+        except:
+            context['USER'] = False
+        context['form'] = DateForm()
+        return context
 
 
 class MetrologicalEnsuringView(TemplateView):
@@ -382,6 +394,22 @@ class MeteorologicalParametersCreateView(SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(MeteorologicalParametersCreateView, self).get_context_data(**kwargs)
         context['title'] = 'Добавить условия окружающей среды'
+        return context
+
+
+class MeteorologicalParametersRoomView(ListView):
+    model = MeteorologicalParameters
+    template_name = URL + '/meteoroom.html'
+    context_object_name = 'objects'
+    paginate_by = 22
+
+    def get_queryset(self):
+        queryset = MeteorologicalParameters.objects.filter(roomnumber_id=self.kwargs['pk']).order_by('-date')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(MeteorologicalParametersRoomView, self).get_context_data(**kwargs)
+        context['title'] = Rooms.objects.get(id=self.kwargs['pk']).roomnumber
         return context
 
 

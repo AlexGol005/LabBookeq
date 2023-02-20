@@ -84,6 +84,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'main.context_processors.base_context.last_news',
                 'main.context_processors.base_context.last_ad',
+                'main.context_processors.base_context.USER',
             ],
         },
     },

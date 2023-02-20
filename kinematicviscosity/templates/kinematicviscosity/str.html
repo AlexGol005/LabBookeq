@@ -10,9 +10,11 @@
         <div class="col-md-2">
         {#кнопка печать #}
         <div class="noprint">
-            <a href="/attestationJ/{{ URL }}/registration/" class="btn btn-warning mt-3 mr-5">&nbsp&nbspвнести&nbsp&nbsp&nbsp ещё </a>
-            <a href='/attestationJ/{{ URL }}/' class="btn btn-warning mt-3">В  журнал</a>
-            <a href='/attestationJ/{{ URL }}/attestation/' class="btn btn-warning mt-3">Все записи</a>
+            {% if USER %}
+            <a href="/attestationJ/{{ URL }}/registration/" class="btn btn-info mt-3 mr-5" style="width: 100px">&nbsp&nbspвнести&nbsp&nbsp&nbsp ещё </a>
+            {% endif %}
+            <a href='/attestationJ/{{ URL }}/' class="btn btn-warning mt-3" style="width: 100px">В  журнал</a>
+            <a href='/attestationJ/{{ URL }}/attestation/' class="btn btn-warning mt-3" style="width: 100px">Все записи</a>
         </div>
     </div>
 
@@ -194,8 +196,10 @@
                 </td>
                 <td colspan="3">
                     {% if not counter %}
-                        <a href="/attestationJ/{{ URL }}/attestation/{{ note.id }}/comments/"  class="btn btn-outline-warning mt-3">комментировать</a>
-                    {% elif counter %}
+                        {% if USER %}
+                        <a href="/attestationJ/{{ URL }}/attestation/{{ note.id }}/comments/"  class="btn btn-outline-info mt-3">комментировать</a>
+                        {% endif %}
+                        {% elif counter %}
                         <a href="/attestationJ/{{ URL }}/attestation/{{ note.id }}/comments/"  class="btn btn-outline-warning mt-3">смотреть </a>
                     {% endif %}
                 </td>
@@ -212,14 +216,15 @@
     <div class="noprint mt-20" style="text-align: center;">
 
         <a href="{% url 'export_kinematicviscosity_xls' note.pk %}"  class="btn btn-warning ml-5 mt-1">Распечатать</a>
-
+        {% if USER %}
             {% if note.room %}
-        <a href="{% url 'kinematicviscosityprotocolbutton' note.pk %}"  class="btn btn-warning ml-5 mt-1">
-            Сформировать протокол испытаний</a>
+                <a href="{% url 'kinematicviscosityprotocolbutton' note.pk %}"  class="btn btn-info ml-5 mt-1">
+                    Сформировать протокол испытаний</a>
             {% else %}
-        <a href="{% url 'kinematicviscosityprotocolroom' note.pk %}"  class="btn btn-warning ml-5 mt-1">
-            Сформировать протокол испытаний</a>
+                <a href="{% url 'kinematicviscosityprotocolroom' note.pk %}"  class="btn btn-info ml-5 mt-1">
+                    Сформировать протокол испытаний</a>
             {% endif %}
+        {% endif %}
         <br>
         <br>
     </div>

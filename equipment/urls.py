@@ -64,6 +64,7 @@ urlpatterns = [
     path('contactsverreg/<str:str>/', views.ContactsVerregView.as_view(), name='contactsverreg'),
     path('haveorder/<int:pk>/', views.HaveorderVerView.as_view(), name='haveorder'),
     path('haveorderatt/<int:pk>/', views.HaveorderAttView.as_view(), name='haveorderatt'),
+    path('meteoroom/<int:pk>/', views.MeteorologicalParametersRoomView.as_view(), name='meteoroom'),
     path('lasttenequipment/', views.LastNewEquipmentView.as_view(), name='lasttenequipment'),
     path(r'^export70/xls/$', views.export_metroyear_xls, name='export_metroyear_xls'),
     path(r'^export71/xls/$', views.export_metroyearprice_xls, name='export_metroyearprice_xls'),
