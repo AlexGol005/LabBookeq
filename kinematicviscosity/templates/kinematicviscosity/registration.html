@@ -10,16 +10,23 @@
 {% block content %}
     {#кнопки#}
     {#нестандартная#}
-    <a href="/attestationJ/kinematicviscosity/" class="btn btn-info mt-3 mr-3">перейти в журнал</a>
-    <a href="{% url 'konstv' %}" class="btn btn-info mt-3 mr-3" target="blank">константы вискозиметров</a>
+    <a href="/attestationJ/kinematicviscosity/" class="btn btn-warning mt-3 mr-3">перейти в журнал</a>
+    <a href="{% url 'konstv' %}" class="btn btn-warning mt-3 mr-3" target="blank">константы вискозиметров</a>
     <a href="/CertifiedValueJ/kinematicviscosityvalues/"
-    class="btn btn-info mt-3 mr-3" target="blank">журнал результатов</a>
+    class="btn btn-warning mt-3 mr-3" target="blank">журнал результатов</a>
     {#конец кнопок#}
 
     {#форма регистрации#}
     {#стандартная#}
+    {% if USER %}
     <form method="post" class="form-register">
         {% csrf_token %}
         {% crispy form %}
     </form>
+    {% elif not USER %}
+        <div style="text-align: center; margin-top: 50px">
+    <h5>У текущего пользователя нет прав на внесение записей. Для получения прав обратитесь
+        к вашему руководителю или администрации сайта. </h5>
+        </div>
+    {% endif %}
 {% endblock %}

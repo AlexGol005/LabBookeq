@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ValidationError
+from django.http import request
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -29,9 +30,14 @@ class Constants:
 class HeadView(Constants, TemplateView):
     """ Выводит заглавную страницу журнала """
     def get_context_data(self, **kwargs):
+        user = User.objects.get(username=self.request.user)
         context = super(HeadView, self).get_context_data(**kwargs)
         context['note'] = self.JOURNAL.objects.get(for_url=self.URL)
         context['URL'] = self.URL
+        if user.is_staff:
+            context['USER'] = True
+        if not user.is_staff:
+            context['USER'] = False
         return context
 
 
@@ -88,6 +94,15 @@ class RegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = None
     form_class = None
     success_message = " "
+
+    def get_context_data(self, **kwargs):
+        user = User.objects.get(username=self.request.user)
+        context = super(RegView, self).get_context_data(**kwargs)
+        if user.is_staff:
+            context['USER'] = True
+        if not user.is_staff:
+            context['USER'] = False
+        return context
 
     def form_valid(self, form):
         order = form.save(commit=False)
