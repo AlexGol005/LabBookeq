@@ -17,7 +17,20 @@
 <div style="text-align: center;"><h4> Микроклимат в помещении {{ title }}</h4></div>
 <br>
 {#конец заголовка #}
+{#поиск по дате #}
+<div style="text-align: center; margin-top: 20px">
+    <a href="{% url 'meteoreg' %}" class="btn btn-info  mt-3" style="width: 210px">Добавить запись о микроклимате</a>
+</div>
+    <div style="text-align: center; margin-top: 20px">
+   <h5>Найти условия микроклимата на дату:</h5>
+ <form action="{% url 'meteoroomser' titlepk %}" target="blank" method="GET">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
 
+</div>
+{# конец поиск по дате #}
+<br>
 {#основная таблица#}
 {# уникальная #}
 <table class="table table-bordered">
@@ -27,8 +40,8 @@
             <th> Температура (°C) </th>
             <th> Относительная <br>влажность (%) </th>
             <th> Давление (кПа) </th>
-            <th> Внутренний № <br>гигрометра </th>
-            <th> Внутренний № <br>барометра </th>
+            <th> Гигрометр </th>
+            <th> Барометр </th>
          </tr>
     </thead>
     <tbody>
@@ -38,8 +51,12 @@
         <td> {{ obj.temperature }}</td>
         <td> {{ obj.humidity }}</td>
         <td> {{ obj.pressure }}</td>
-        <td>{{ obj.equipment1.equipment.exnumber }}</td>
-        <td>{{ obj.equipment2.equipment.exnumber }}</td>
+        <td> <a href="{% url 'measureequipment' obj.equipment1.equipment.exnumber %}"
+                class="btn btn-outline-warning mt-3" target="blank">
+            {{ obj.equipment1.equipment.exnumber }}</a></td>
+        <td> <a href="{% url 'measureequipment' obj.equipment2.equipment.exnumber %}"
+                class="btn btn-outline-warning mt-3" target="blank">
+            {{ obj.equipment2.equipment.exnumber }}</a></td>
     </tr>
     {% endfor %}
     </tbody>

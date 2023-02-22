@@ -27,7 +27,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 from django.db.models import Max, Q, Value, CharField, Count, Sum
 from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404, render, redirect
@@ -410,8 +410,30 @@ class MeteorologicalParametersRoomView(ListView):
     def get_context_data(self, **kwargs):
         context = super(MeteorologicalParametersRoomView, self).get_context_data(**kwargs)
         context['title'] = Rooms.objects.get(id=self.kwargs['pk']).roomnumber
+        context['titlepk'] = Rooms.objects.get(id=self.kwargs['pk']).pk
+        context['form'] = DateForm(initial={'date': now})
         return context
 
+
+class MeteorologicalParametersRoomSearchResultView(ListView):
+    model = MeteorologicalParameters
+    template_name = URL + '/meteoroom.html'
+    context_object_name = 'objects'
+    paginate_by = 22
+
+    def get_queryset(self):
+        serdate = self.request.GET['date']
+        queryset1 = MeteorologicalParameters.objects.filter(roomnumber_id=self.kwargs['pk'])
+        queryset = queryset1.filter(date=serdate)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(MeteorologicalParametersRoomSearchResultView, self).get_context_data(**kwargs)
+        serdate = self.request.GET['date']
+        context['title'] = Rooms.objects.get(id=self.kwargs['pk']).roomnumber
+        context['titlepk'] = Rooms.objects.get(id=self.kwargs['pk']).pk
+        context['form'] = DateForm(initial={'date': serdate})
+        return context
 
 # блок 6 - регистрация госреестры, характеристики, ЛО - внесение, обновление
 
