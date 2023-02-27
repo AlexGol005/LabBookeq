@@ -9,8 +9,10 @@
 
 
 <div style="text-align: center; margin-top: 20px">
+{% if USER %}
 <a href="{% url 'roomreg' %}" class="btn btn-info mr-5 mt-3" style="width: 210px">Добавить помещение</a>
 <a href="{% url 'meteoreg' %}" class="btn btn-info  mt-3" style="width: 210px">Добавить запись о микроклимате</a>
+{% endif %}
 </div>
 <div style="text-align: center; margin-top: 20px">
    <h4>Помещения</h4>

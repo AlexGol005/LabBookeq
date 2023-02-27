@@ -178,7 +178,7 @@ class HelpingEquipmentCharaktersView(ListView):
 
 class MeasurEquipmentView(ListView):
     """Выводит список средств измерений"""
-    template_name = URL + '/MEequipmentlLIST.html'
+    template_name = URL + '/MEequipmentLIST.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
     paginate_by = 12
@@ -397,6 +397,12 @@ class MeteorologicalParametersCreateView(SuccessMessageMixin, CreateView):
         context['title'] = 'Добавить условия окружающей среды'
         return context
 
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        order.performer = User.objects.get(username=self.request.user)
+        order.save()
+        return super().form_valid(form)
+
 
 class MeteorologicalParametersRoomView(ListView):
     model = MeteorologicalParameters
@@ -410,6 +416,14 @@ class MeteorologicalParametersRoomView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MeteorologicalParametersRoomView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff:
+                context['USER'] = True
+            if not user.is_staff:
+                context['USER'] = False
+        except:
+            context['USER'] = False
         context['title'] = Rooms.objects.get(id=self.kwargs['pk']).roomnumber
         context['titlepk'] = Rooms.objects.get(id=self.kwargs['pk']).pk
         context['form'] = DateForm(initial={'date': now})
@@ -435,6 +449,7 @@ class MeteorologicalParametersRoomSearchResultView(ListView):
         context['title'] = Rooms.objects.get(id=self.kwargs['pk']).roomnumber
         context['titlepk'] = Rooms.objects.get(id=self.kwargs['pk']).pk
         context['form'] = DateForm(initial={'date': serdate})
+        context['form1'] = YearForm(initial={'date': now.year})
         return context
 
 # блок 6 - регистрация госреестры, характеристики, ЛО - внесение, обновление
@@ -731,7 +746,7 @@ class TEcharacterssearresView(TemplateView):
 class SearchResultMeasurEquipmentView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку средств измерений """
 
-    template_name = URL + '/MEequipmentlLIST.html'
+    template_name = URL + '/MEequipmentLIST.html'
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultMeasurEquipmentView, self).get_context_data(**kwargs)
@@ -1188,7 +1203,7 @@ class CommentsView(View):
 class SearchMustVerView(ListView):
     """ выводит список СИ у которых дата заказа поверки совпадает с указанной либо раньше неё"""
 
-    template_name = URL + '/MEequipmentlLIST.html'
+    template_name = URL + '/MEequipmentLIST.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
 
@@ -1219,10 +1234,44 @@ class SearchMustVerView(ListView):
         return queryset
 
 
+class SearchMustAttView(ListView):
+    """ выводит список ИО у которых дата заказа аттестации совпадает с указанной либо раньше неё"""
+
+    template_name = URL + '/TEequipmentLIST.html'
+    context_object_name = 'objects'
+    ordering = ['charakters_name']
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchMustAttView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['form'] = SearchMEForm()
+        return context
+
+    def get_queryset(self):
+        serdate = self.request.GET['date']
+        queryset_get = Attestationequipment.objects.filter(haveorder=False).\
+            select_related('equipmentSM').values('equipmentSM'). \
+            annotate(id_actual=Max('id')).values('id_actual')
+        b = list(queryset_get)
+        set = []
+        for i in b:
+            a = i.get('id_actual')
+            set.append(a)
+        queryset_get1 = Attestationequipment.objects.filter(id__in=set).\
+            filter(dateorder__lte=serdate).values('equipmentSM__id')
+        b = list(queryset_get1)
+        set1 = []
+        for i in b:
+            a = i.get('equipmentSM__id')
+            set1.append(a)
+        queryset = TestingEquipment.objects.filter(id__in=set1).filter(equipment__status='Э')
+        return queryset
+
+
 class SearchNotVerView(ListView):
     """ выводит список СИ у которых дата окончания поверки совпадает с указанной либо раньше неё"""
 
-    template_name = URL + '/MEequipmentlLIST.html'
+    template_name = URL + '/MEequipmentLIST.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
 
@@ -1308,7 +1357,7 @@ class LastNewEquipmentView(ListView):
 class SearchMustOrderView(ListView):
     """ выводит список СИ у которых месяц заказа поверки совпадает с указанным либо раньше него"""
 
-    template_name = URL + '/MEequipmentlLIST.html'
+    template_name = URL + '/MEequipmentLIST.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
 
@@ -2532,8 +2581,8 @@ def export_mustver_xls(request):
 # блок 14 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки)
 def export_meteo_xls(request, pk):
     '''представление для выгрузки журнала микроклимата'''
-    note = MeteorologicalParameters.objects.filter(roomnumber_id=pk)
-    company = CompanyCard.objects.get(pk=1)
+    serdate = request.GET['date']
+    note = MeteorologicalParameters.objects.filter(roomnumber_id=pk).filter(date__year=serdate)
     roomname = note.last().roomnumber
     roomname = str(roomname)
     rn = 'in '
@@ -2559,10 +2608,94 @@ def export_meteo_xls(request, pk):
     ws11 = wb.add_sheet('Ноябрь', cell_overwrite_ok=True)
     ws12 = wb.add_sheet('Декабрь', cell_overwrite_ok=True)
 
+    j = 0
 
     for i in [ws1, ws2, ws3, ws4, ws5, ws6, ws7, ws8, ws9, ws10, ws11, ws12]:
         i.col(0).width = 4000
+        i.col(1).width = 3000
+        i.col(2).width = 3000
+        i.col(3).width = 3000
+        i.col(4).width = 6000
+        i.col(5).width = 3000
+        i.header_str = b'&F c. &P  '
+        i.footer_str = b' '
 
+        note = note.filter(date__month=j)
+
+        row_num = 1
+        columns = [
+            f'Журнал регистрации условий микроклимата'
+        ]
+        for col_num in range(len(columns)):
+            ws1.write(row_num, col_num, columns[col_num], style_plain_nobor_bold)
+            ws1.merge(row_num, row_num, 0, 5)
+
+        row_num += 1
+        columns = [
+            f'Помещение {rn[2:]}, {serdate} год'
+        ]
+        for col_num in range(len(columns)):
+            i.write(row_num, col_num, columns[col_num], style_plain_nobor_bold)
+            i.merge(row_num, row_num, 0, 5)
+
+        row_num += 2
+        columns = [
+            f'При работе в лаборатории должны соблюдаться условия:'
+            f' температура воздуха: (20±5) °C;'
+            f' относительная влажность воздуха: не более 80%;'
+            f' атмосферное давление: (100±7) кПа.'
+        ]
+        for col_num in range(len(columns)):
+            i.write(row_num, col_num, columns[col_num], style_plain)
+            i.merge(row_num, row_num, 0, 5, style_plain)
+            i.row(row_num).height_mismatch = True
+            i.row(row_num).height = 600
+
+        row_num += 1
+        columns = [
+            f'Возможны иные условия,'
+            f' указанные в методике и/или инструкции на оборудование.'
+        ]
+        for col_num in range(len(columns)):
+            i.write(row_num, col_num, columns[col_num], style_plain)
+            i.merge(row_num, row_num, 0, 5, style_plain)
+            i.row(row_num).height_mismatch = True
+            i.row(row_num).height = 400
+
+        row_num += 2
+        columns = [
+            'Дата',
+            'Температура, °C',
+            'Относительная влажность, %',
+            'Давление, кПа',
+            'Измерил',
+            'Заключение (удовл./неудовл.)',
+        ]
+        for col_num in range(len(columns)):
+            i.write(row_num, col_num, columns[col_num], style_plain)
+
+        rows = note.\
+            values_list(
+            'date',
+            'temperature',
+            'humidity',
+            'pressure',
+            'performer__username',
+        ).order_by('date')
+
+        for row in rows:
+            row_num += 1
+            for col_num in range(1):
+                i.write(row_num, col_num, row[col_num], style_date)
+            for col_num in range(1, 5):
+                i.write(row_num, col_num, row[col_num], style_plain)
+            row = list(row)
+            if float(row[1]) <= 25 and float(row[1]) >= 15 and float(row[2]) <= 80 and float(row[3]) <= 107 and float(row[3]) >= 93:
+                for col_num in range(5, 6):
+                    i.write(row_num, col_num, 'удовл.', style_plain)
+            else:
+                for col_num in range(5, 6):
+                    i.write(row_num, col_num, 'неудовл.', style_plain)
 
     wb.save(response)
     return response
