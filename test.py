@@ -1,5 +1,9 @@
 
-a = ((f'nd1', f'nd1name'),)
-a += ((f'nd2', f'nd2name'),)
+roomname = '№ 1'
+roomname = list(roomname)
+rn = 'in '
+for i in roomname:
+    if i.isdigit():
+        rn = rn + i
 
-print(a)
+print(rn)

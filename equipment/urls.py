@@ -74,4 +74,5 @@ urlpatterns = [
     path(r'^export74/xls/$', views.export_planmetro_xls, name='export_planmetro_xls'),
     path(r'^export75/xls/$', views.export_plan_purchaesing_xls, name='export_plan_purchaesing_xls'),
     path(r'^export80/xls/$', views.export_maintenance_schedule_xls, name='export_maintenance_schedule_xls'),
+    path(r'^export90/xls/$/<int:pk>', views.export_meteo_xls, name='export_meteo_xls'),
 ]

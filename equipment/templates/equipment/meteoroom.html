@@ -27,9 +27,17 @@
         {% csrf_token %}
         {% crispy form %}
     </form>
-
 </div>
 {# конец поиск по дате #}
+{#выгрузить журнал микроклимата #}
+<div style="text-align: center; margin-top: 20px">
+              <h5>Сформировать журнал за год:</h5>
+ <form action="{% url 'export_meteo_xls' titlepk %}" target="blank" method="GET">
+        {% csrf_token %}
+        {% crispy form1 %}
+    </form>
+</div>
+{#конец выгрузить журнал микроклимата #}
 <br>
 {#основная таблица#}
 {# уникальная #}

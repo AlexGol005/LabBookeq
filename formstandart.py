@@ -27,7 +27,7 @@ class SearchDateForm(forms.Form):
         self.helper.layout = Layout(
                 Row(Column('datestart', css_class='form-group col-md-9 mb-1 ml-4')),
                 Row(Column('datefinish', css_class='form-group col-md-9 mb-1 ml-4')),
-                Row(Submit('submit', 'Найти', css_class='btn  btn-info col-md-9 mb-3 mt-4 ml-4')))
+                Row(Submit('submit', 'Найти', css_class='btn  btn-warning col-md-9 mb-3 mt-4 ml-4')))
 
 class YearForm(forms.Form):
     """форма для поиска записей по году"""
@@ -42,4 +42,4 @@ class YearForm(forms.Form):
         self.helper.layout = Layout(
             Row(
                 Column('date', css_class='form-group col-md-4 mb-0'),
-                Submit('submit', 'сформировать', css_class='btn  btn-info col-md-6 mb-3 mt-4 ml-4')))
+                Submit('submit', 'сформировать', css_class='btn  btn-warning col-md-6 mb-3 mt-4 ml-4')))

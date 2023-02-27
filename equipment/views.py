@@ -38,6 +38,7 @@ from xlwt import Alignment, Borders
 from equipment.constants import servicedesc0
 from equipment.forms import*
 from equipment.models import*
+from formstandart import YearForm
 from functstandart import get_dateformat
 from users.models import Profile
 
@@ -412,6 +413,7 @@ class MeteorologicalParametersRoomView(ListView):
         context['title'] = Rooms.objects.get(id=self.kwargs['pk']).roomnumber
         context['titlepk'] = Rooms.objects.get(id=self.kwargs['pk']).pk
         context['form'] = DateForm(initial={'date': now})
+        context['form1'] = YearForm(initial={'date': now.year})
         return context
 
 
@@ -2528,6 +2530,43 @@ def export_mustver_xls(request):
 
 
 # блок 14 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки)
+def export_meteo_xls(request, pk):
+    '''представление для выгрузки журнала микроклимата'''
+    note = MeteorologicalParameters.objects.filter(roomnumber_id=pk)
+    company = CompanyCard.objects.get(pk=1)
+    roomname = note.last().roomnumber
+    roomname = str(roomname)
+    rn = 'in '
+    for i in roomname:
+        if i.isdigit():
+            rn = rn + i
+
+
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="Microclimat {rn}.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws1 = wb.add_sheet('Январь', cell_overwrite_ok=True)
+    ws2 = wb.add_sheet('Февраль', cell_overwrite_ok=True)
+    ws3 = wb.add_sheet('Март', cell_overwrite_ok=True)
+    ws4 = wb.add_sheet('Апрель', cell_overwrite_ok=True)
+    ws5 = wb.add_sheet('Май', cell_overwrite_ok=True)
+    ws6 = wb.add_sheet('Июнь', cell_overwrite_ok=True)
+    ws7 = wb.add_sheet('Июль', cell_overwrite_ok=True)
+    ws8 = wb.add_sheet('Август', cell_overwrite_ok=True)
+    ws9 = wb.add_sheet('Сентябрь', cell_overwrite_ok=True)
+    ws10 = wb.add_sheet('Октябрь', cell_overwrite_ok=True)
+    ws11 = wb.add_sheet('Ноябрь', cell_overwrite_ok=True)
+    ws12 = wb.add_sheet('Декабрь', cell_overwrite_ok=True)
+
+
+    for i in [ws1, ws2, ws3, ws4, ws5, ws6, ws7, ws8, ws9, ws10, ws11, ws12]:
+        i.col(0).width = 4000
+
+
+    wb.save(response)
+    return response
+
 
 
 def export_mecard_xls(request, pk):
