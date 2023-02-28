@@ -66,7 +66,7 @@ class Searchreestrform(forms.Form):
             Row(
                 Column('name', css_class='form-group col-md-4 mb-0'),
                 Column('reestr', css_class='form-group col-md-4 mb-0'),
-                Submit('submit', 'Найти', css_class='btn  btn-info col-md-4 mb-4 mt-4 ml-0')))
+                Submit('submit', 'Найти', css_class='btn  btn-warning col-md-4 mb-4 mt-4 ml-0')))
 
 
 class Searchtestingform(forms.Form):
@@ -81,7 +81,7 @@ class Searchtestingform(forms.Form):
         self.helper.layout = Layout(
             Row(
                 Column('name', css_class='form-group col-md-8 mb-0'),
-                Submit('submit', 'Найти', css_class='btn  btn-info col-md-4 mb-4 mt-4 ml-0')))
+                Submit('submit', 'Найти', css_class='btn  btn-warning col-md-4 mb-4 mt-4 ml-0')))
 
 
 class LabelEquipmentform(forms.Form):

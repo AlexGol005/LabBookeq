@@ -458,7 +458,7 @@ class MeteorologicalParametersRoomSearchResultView(ListView):
 @login_required
 def EquipmentReg(request):
     """выводит форму для регистрации  ЛО"""
-    if request.user.is_superuser:
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = EquipmentCreateForm(request.POST, request.FILES)
             if form.is_valid():
@@ -480,17 +480,15 @@ def EquipmentReg(request):
                     return redirect(f'/equipment/helpequipmentreg/{order.exnumber}/')
                 else:
                     return redirect('equipmentlist')
-    if not request.user.is_superuser:
+        else:
+            form = EquipmentCreateForm()
+            content = {
+                'form': form,
+                    }
+            return render(request, 'equipment/Equipmentreg.html', content)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только инженеру по оборудованию')
-        return redirect('equipmentreg')
-    else:
-        form = EquipmentCreateForm()
-        form2 = ManufacturerCreateForm(request.POST)
-        # form3 = VerificatorPersonCreationForm(request.POST)
-        content = {
-            'form': form,
-                }
-        return render(request, 'equipment/Equipmentreg.html', content)
+        return redirect('/equipment/')
 
 
 class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
@@ -499,6 +497,17 @@ class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     form_class = MeasurEquipmentCharaktersCreateForm
     success_url = '/equipment/measurequipmentcharacterslist/'
     success_message = "Госреестр успешно добавлен"
+    error_message = "Раздел доступен только инженеру по оборудованию"
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        user = User.objects.get(username=self.request.user)
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.save()
+            return super().form_valid(form)
+        else:
+            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            return redirect('/equipment/measurequipmentcharacterslist/')
 
     def get_context_data(self, **kwargs):
         context = super(MeasurEquipmentCharaktersRegView, self).get_context_data(**kwargs)
@@ -509,18 +518,22 @@ class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
 
 def MeasurEquipmentCharaktersUpdateView(request, str):
     """выводит форму для обновления данных о госреестре"""
-    if request.method == "POST":
-        form = MeasurEquipmentCharaktersCreateForm(request.POST,
-                                                   instance=MeasurEquipmentCharakters.objects.get(pk=str))
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.save()
-            return redirect('measurequipmentcharacterslist')
-    else:
-        form = MeasurEquipmentCharaktersCreateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
-    data = {'form': form,
-            }
-    return render(request, 'equipment/Echaractersreg.html', data)
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = MeasurEquipmentCharaktersCreateForm(request.POST,
+                                                       instance=MeasurEquipmentCharakters.objects.get(pk=str))
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect('measurequipmentcharacterslist')
+        else:
+            form = MeasurEquipmentCharaktersCreateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/Echaractersreg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect('/equipment/measurequipmentcharacterslist/')
 
 
 class TestingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
@@ -529,6 +542,17 @@ class TestingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     form_class = TestingEquipmentCharaktersCreateForm
     success_url = '/equipment/testingequipmentcharacterslist/'
     success_message = "Характеристики ИО успешно добавлены"
+    error_message = "Раздел доступен только инженеру по оборудованию"
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        user = User.objects.get(username=self.request.user)
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.save()
+            return super().form_valid(form)
+        else:
+            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            return redirect('/equipment/testingequipmentcharacterslist/')
 
     def get_context_data(self, **kwargs):
         context = super(TestingEquipmentCharaktersRegView, self).get_context_data(**kwargs)
@@ -539,18 +563,22 @@ class TestingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
 
 def TestingEquipmentCharaktersUpdateView(request, str):
     """выводит форму для обновления данных о характеристиках ИО"""
-    if request.method == "POST":
-        form = TestingEquipmentCharaktersCreateForm(request.POST,
-                                                    instance=TestingEquipmentCharakters.objects.get(pk=str))
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.save()
-            return redirect('testingequipmentcharacterslist')
-    else:
-        form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
-    data = {'form': form,
-            }
-    return render(request, 'equipment/Echaractersreg.html', data)
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = TestingEquipmentCharaktersCreateForm(request.POST,
+                                                       instance=TestingEquipmentCharaktersCreateForm.objects.get(pk=str))
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect('testingequipmentcharacterslist')
+        else:
+            form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/Echaractersreg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect('/equipment/testingequipmentcharacterslist/')
 
 
 class HelpingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
@@ -559,6 +587,17 @@ class HelpingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     form_class = HelpingEquipmentCharaktersCreateForm
     success_url = '/equipment/helpingequipmentcharacterslist/'
     success_message = "Характеристики ВО успешно добавлены"
+    error_message = "Раздел доступен только инженеру по оборудованию"
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        user = User.objects.get(username=self.request.user)
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.save()
+            return super().form_valid(form)
+        else:
+            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            return redirect('/equipment/helpingequipmentcharacterslist/')
 
     def get_context_data(self, **kwargs):
         context = super(HelpingEquipmentCharaktersRegView, self).get_context_data(**kwargs)
@@ -569,18 +608,22 @@ class HelpingEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
 
 def HelpingEquipmentCharaktersUpdateView(request, str):
     """выводит форму для обновления данных о характеристиках ВО"""
-    if request.method == "POST":
-        form = HelpingEquipmentCharaktersCreateForm(request.POST,
-                                                    instance=HelpingEquipmentCharakters.objects.get(pk=str))
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.save()
-            return redirect('helpingequipmentcharacterslist')
-    else:
-        form = HelpingEquipmentCharaktersCreateForm(instance=HelpingEquipmentCharakters.objects.get(pk=str))
-    data = {'form': form,
-            }
-    return render(request, 'equipment/Echaractersreg.html', data)
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = HelpingEquipmentCharaktersCreateForm(request.POST,
+                                                       instance=HelpingEquipmentCharakters.objects.get(pk=str))
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect('helpingequipmentcharacterslist')
+        else:
+            form = HelpingEquipmentCharaktersCreateForm(instance=HelpingEquipmentCharakters.objects.get(pk=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/Echaractersreg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect('/equipment/helpingequipmentcharacterslist/')
 
 
 class MeasureequipmentregView(LoginRequiredMixin, CreateView):
@@ -1072,6 +1115,7 @@ class HaveorderVerView(UpdateView):
     template_name = 'equipment/reg.html'
     form_class = OrderMEUdateForm
 
+
     def get_object(self, queryset=None):
         queryset_get = Verificationequipment.objects. \
             select_related('equipmentSM').values('equipmentSM'). \
@@ -1085,20 +1129,21 @@ class HaveorderVerView(UpdateView):
             get(equipmentSM_id=self.kwargs['pk'])
         return q
 
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        user = User.objects.get(username=self.request.user)
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.save()
+            return redirect('/equipment/measureequipmentall/')
+        else:
+            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            return redirect('/equipment/measureequipmentall/')
 
     def get_context_data(self, **kwargs):
         context = super(HaveorderVerView, self).get_context_data(**kwargs)
         context['title'] = "Заказана поверка или новое СИ"
         return context
 
-    def form_valid(self, form):
-        user = User.objects.get(username=self.request.user)
-        if user.is_superuser:
-            order = form.save(commit=False)
-            order.save()
-            return redirect(f"/equipment/measureequipmentall/")
-        else:
-            return redirect(f"/equipment/measureequipmentall/")
 
 
 class HaveorderAttView(UpdateView):
@@ -1119,19 +1164,22 @@ class HaveorderAttView(UpdateView):
             get(equipmentSM_id=self.kwargs['pk'])
         return q
 
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        user = User.objects.get(username=self.request.user)
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.save()
+            return redirect('/equipment/testingequipmentall/')
+        else:
+            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            return redirect('/equipment/testingequipmentall/')
+
     def get_context_data(self, **kwargs):
         context = super(HaveorderAttView, self).get_context_data(**kwargs)
         context['title'] = "Заказана аттестация или новое ИО"
         return context
 
-    def form_valid(self, form):
-        user = User.objects.get(username=self.request.user)
-        if user.is_superuser:
-            order = form.save(commit=False)
-            order.save()
-            return redirect(f"/equipment/testingequipmentall/")
-        else:
-            return redirect(f"/equipment/testingequipmentall/")
+
 
 # блок 10 - индивидуальные страницы СИ ИО ВО их поверок и аттестаций
 
@@ -2583,7 +2631,11 @@ def export_meteo_xls(request, pk):
     '''представление для выгрузки журнала микроклимата'''
     serdate = request.GET['date']
     note = MeteorologicalParameters.objects.filter(roomnumber_id=pk).filter(date__year=serdate)
-    roomname = note.last().roomnumber
+    try:
+        roomname = note.last().roomnumber
+    except:
+        roomname = '0'
+
     roomname = str(roomname)
     rn = 'in '
     for i in roomname:
@@ -2595,107 +2647,91 @@ def export_meteo_xls(request, pk):
     response['Content-Disposition'] = f'attachment; filename="Microclimat {rn}.xls"'
 
     wb = xlwt.Workbook(encoding='utf-8')
-    ws1 = wb.add_sheet('Январь', cell_overwrite_ok=True)
-    ws2 = wb.add_sheet('Февраль', cell_overwrite_ok=True)
-    ws3 = wb.add_sheet('Март', cell_overwrite_ok=True)
-    ws4 = wb.add_sheet('Апрель', cell_overwrite_ok=True)
-    ws5 = wb.add_sheet('Май', cell_overwrite_ok=True)
-    ws6 = wb.add_sheet('Июнь', cell_overwrite_ok=True)
-    ws7 = wb.add_sheet('Июль', cell_overwrite_ok=True)
-    ws8 = wb.add_sheet('Август', cell_overwrite_ok=True)
-    ws9 = wb.add_sheet('Сентябрь', cell_overwrite_ok=True)
-    ws10 = wb.add_sheet('Октябрь', cell_overwrite_ok=True)
-    ws11 = wb.add_sheet('Ноябрь', cell_overwrite_ok=True)
-    ws12 = wb.add_sheet('Декабрь', cell_overwrite_ok=True)
+    i = wb.add_sheet('Журнал микроклимата', cell_overwrite_ok=True)
 
-    j = 0
+    i.col(0).width = 4000
+    i.col(1).width = 3000
+    i.col(2).width = 3000
+    i.col(3).width = 3000
+    i.col(4).width = 6000
+    i.col(5).width = 3000
+    i.header_str = b'c. &P  '
+    i.footer_str = b' '
 
-    for i in [ws1, ws2, ws3, ws4, ws5, ws6, ws7, ws8, ws9, ws10, ws11, ws12]:
-        i.col(0).width = 4000
-        i.col(1).width = 3000
-        i.col(2).width = 3000
-        i.col(3).width = 3000
-        i.col(4).width = 6000
-        i.col(5).width = 3000
-        i.header_str = b'&F c. &P  '
-        i.footer_str = b' '
+    row_num = 1
+    columns = [
+        f'Журнал регистрации условий микроклимата'
+    ]
+    for col_num in range(len(columns)):
+        i.write(row_num, col_num, columns[col_num], style_plain_nobor_bold)
+        i.merge(row_num, row_num, 0, 5)
 
-        note = note.filter(date__month=j)
+    row_num += 1
+    columns = [
+        f'Помещение {rn[2:]}, {serdate} год'
+    ]
+    for col_num in range(len(columns)):
+        i.write(row_num, col_num, columns[col_num], style_plain_nobor_bold)
+        i.merge(row_num, row_num, 0, 5)
 
-        row_num = 1
-        columns = [
-            f'Журнал регистрации условий микроклимата'
-        ]
-        for col_num in range(len(columns)):
-            ws1.write(row_num, col_num, columns[col_num], style_plain_nobor_bold)
-            ws1.merge(row_num, row_num, 0, 5)
+    row_num += 2
+    columns = [
+        f'При работе в лаборатории должны соблюдаться условия:'
+        f' температура воздуха: (20±5) °C;'
+        f' относительная влажность воздуха: не более 80%;'
+        f' атмосферное давление: (100±7) кПа.'
+    ]
+    for col_num in range(len(columns)):
+        i.write(row_num, col_num, columns[col_num], style_plain)
+        i.merge(row_num, row_num, 0, 5, style_plain)
+        i.row(row_num).height_mismatch = True
+        i.row(row_num).height = 600
 
+    row_num += 1
+    columns = [
+        f'Возможны иные условия,'
+        f' указанные в методике и/или инструкции на оборудование.'
+    ]
+    for col_num in range(len(columns)):
+        i.write(row_num, col_num, columns[col_num], style_plain)
+        i.merge(row_num, row_num, 0, 5, style_plain)
+        i.row(row_num).height_mismatch = True
+        i.row(row_num).height = 400
+
+    row_num += 2
+    columns = [
+        'Дата',
+        'Температура, °C',
+        'Относительная влажность, %',
+        'Давление, кПа',
+        'Измерил',
+        'Заключение (удовл./неудовл.)',
+    ]
+    for col_num in range(len(columns)):
+        i.write(row_num, col_num, columns[col_num], style_plain)
+
+    rows = note.\
+        values_list(
+        'date',
+        'temperature',
+        'humidity',
+        'pressure',
+        'performer__username',
+    ).order_by('date')
+
+    for row in rows:
         row_num += 1
-        columns = [
-            f'Помещение {rn[2:]}, {serdate} год'
-        ]
-        for col_num in range(len(columns)):
-            i.write(row_num, col_num, columns[col_num], style_plain_nobor_bold)
-            i.merge(row_num, row_num, 0, 5)
-
-        row_num += 2
-        columns = [
-            f'При работе в лаборатории должны соблюдаться условия:'
-            f' температура воздуха: (20±5) °C;'
-            f' относительная влажность воздуха: не более 80%;'
-            f' атмосферное давление: (100±7) кПа.'
-        ]
-        for col_num in range(len(columns)):
-            i.write(row_num, col_num, columns[col_num], style_plain)
-            i.merge(row_num, row_num, 0, 5, style_plain)
-            i.row(row_num).height_mismatch = True
-            i.row(row_num).height = 600
-
-        row_num += 1
-        columns = [
-            f'Возможны иные условия,'
-            f' указанные в методике и/или инструкции на оборудование.'
-        ]
-        for col_num in range(len(columns)):
-            i.write(row_num, col_num, columns[col_num], style_plain)
-            i.merge(row_num, row_num, 0, 5, style_plain)
-            i.row(row_num).height_mismatch = True
-            i.row(row_num).height = 400
-
-        row_num += 2
-        columns = [
-            'Дата',
-            'Температура, °C',
-            'Относительная влажность, %',
-            'Давление, кПа',
-            'Измерил',
-            'Заключение (удовл./неудовл.)',
-        ]
-        for col_num in range(len(columns)):
-            i.write(row_num, col_num, columns[col_num], style_plain)
-
-        rows = note.\
-            values_list(
-            'date',
-            'temperature',
-            'humidity',
-            'pressure',
-            'performer__username',
-        ).order_by('date')
-
-        for row in rows:
-            row_num += 1
-            for col_num in range(1):
-                i.write(row_num, col_num, row[col_num], style_date)
-            for col_num in range(1, 5):
-                i.write(row_num, col_num, row[col_num], style_plain)
-            row = list(row)
-            if float(row[1]) <= 25 and float(row[1]) >= 15 and float(row[2]) <= 80 and float(row[3]) <= 107 and float(row[3]) >= 93:
-                for col_num in range(5, 6):
-                    i.write(row_num, col_num, 'удовл.', style_plain)
-            else:
-                for col_num in range(5, 6):
-                    i.write(row_num, col_num, 'неудовл.', style_plain)
+        for col_num in range(1):
+            i.write(row_num, col_num, row[col_num], style_date)
+        for col_num in range(1, 5):
+            i.write(row_num, col_num, row[col_num], style_plain)
+        row = list(row)
+        if float(row[1]) <= 25 and float(row[1]) >= 15 and float(row[2]) <= 80 and float(row[3]) <= 107 and float(row[3]) >= 93:
+            for col_num in range(5, 6):
+                i.write(row_num, col_num, 'удовл.', style_plain)
+        else:
+            for col_num in range(5, 6):
+                i.write(row_num, col_num, 'неудовл.', style_plain)
 
     wb.save(response)
     return response

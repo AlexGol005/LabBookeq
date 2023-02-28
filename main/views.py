@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
+from django.views.generic import TemplateView
 
 from .forms import AttestationJForm
 from .models import AttestationJ, ResultValueJ
@@ -34,10 +36,21 @@ class CertifiedValueJView(View):
         return render(request, 'main/certifiedvalueJ.html', {'objects': objects})
 
 
-class EquipmentView(View):
+class EquipmentView(TemplateView):
     """выводит страницу Инфраструктура лаборатории"""
-    def get(self, request):
-        return render(request, 'main/equipment.html')
+    template_name = 'main/equipment.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EquipmentView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff:
+                context['USER'] = True
+            if not user.is_staff:
+                context['USER'] = False
+        except:
+            context['USER'] = False
+        return context
 
 
 @login_required
