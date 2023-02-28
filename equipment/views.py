@@ -701,7 +701,7 @@ def EquipmentUpdate(request, str):
         person = Personchange.objects.get(pk=get_pk).person
     except:
         person = 1
-    if person == request.user or request.user.is_superuser:
+    if person == request.user or request.user.is_superuser or request.user.has_perm('equipment.add_equipment'):
         if request.method == "POST":
             form = EquipmentUpdateForm(request.POST, request.FILES,  instance=Equipment.objects.get(exnumber=str))
             if form.is_valid():
@@ -713,11 +713,11 @@ def EquipmentUpdate(request, str):
                     return redirect(reverse('testequipment', kwargs={'str': str}))
                 if title.kategory == 'ВО':
                     return redirect(reverse('supequipment', kwargs={'str': str}))
-    if person != request.user and not request.user.is_superuser:
-        messages.success(request, f' Для внесения записей о приборе нажмите на кнопку ниже:'
-                                  f' "Внести запись о приборе и смотреть записи (для всех пользователей)"'
-                                  f'. Добавить особенности работы или поменять статус может только ответственный '
-                                  f'за прибор или поверку.')
+        else:
+            messages.success(request, f' Для внесения записей о приборе нажмите на кнопку'
+                                      f' "Внести запись о приборе и смотреть записи (для всех пользователей)"'
+                                      f'. Добавить особенности работы или поменять статус может только ответственный '
+                                      f'за прибор или поверку.')
 
         if title.kategory == 'СИ':
             return redirect(reverse('measureequipment', kwargs={'str': str}))
@@ -988,7 +988,7 @@ def EquipmentMetrologyUpdate(request, str):
     except:
         person = 1
 
-    if person == request.user or request.user.is_superuser:
+    if person == request.user or request.user.is_superuser or request.user.has_perm('equipment.add_equipment'):
         if request.method == "POST":
             form = MetrologyUpdateForm(request.POST, instance=Equipment.objects.get(exnumber=str))
             if form.is_valid():
@@ -998,7 +998,7 @@ def EquipmentMetrologyUpdate(request, str):
                     return redirect(reverse('measureequipmentver', kwargs={'str': str}))
                 if title.kategory == 'ИО':
                     return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
-    if person != request.user and not request.user.is_superuser:
+    if person != request.user or  not request.user.is_superuser or not request.user.has_perm('equipment.add_equipment'):
         messages.success(request, f'. поменять статус может только ответственный за поверку.')
         return redirect(reverse('measureequipmentver', kwargs={'str': str}))
     else:

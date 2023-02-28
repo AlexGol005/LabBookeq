@@ -47,7 +47,7 @@ class SearchMEForm(forms.Form):
                 Column('name', css_class='form-group col-md-3 mb-0'),
                 Column('exnumber', css_class='form-group col-md-1 mb-0'),
                 Column('lot', css_class='form-group col-md-2 mb-0'),
-                Row(Submit('submit', 'Найти', css_class='btn  btn-info col-md-9 mb-3 mt-4 ml-4'))))
+                Row(Submit('submit', 'Найти', css_class='btn  btn-warning col-md-9 mb-3 mt-4 ml-4'))))
 
 
 class Searchreestrform(forms.Form):
