@@ -85,6 +85,7 @@ class ReportsView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ReportsView, self).get_context_data(**kwargs)
         context['URL'] = URL
+        context['form'] = YearForm()
         return context
 
 
@@ -340,17 +341,17 @@ class PersonchangeFormView(View):
 
     def post(self, request, str, *args, **kwargs):
         form = PersonchangeForm(request.POST)
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.equipment = Equipment.objects.get(exnumber=str)
-            order.save()
-            if order.equipment.kategory == 'СИ':
-                return redirect(f'/equipment/measureequipment/{str}')
-            if order.equipment.kategory == 'ИО':
-                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
-            if order.equipment.kategory == 'ВО':
-                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
-
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipment = Equipment.objects.get(exnumber=str)
+                order.save()
+                if order.equipment.kategory == 'СИ':
+                    return redirect(f'/equipment/measureequipment/{str}')
+                if order.equipment.kategory == 'ИО':
+                    return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+                if order.equipment.kategory == 'ВО':
+                    return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
         else:
             messages.success(request, f'Раздел для ответственного за поверку приборов')
             return redirect(f'/equipment/measureequipment/{str}')
@@ -372,16 +373,17 @@ class RoomschangeFormView(View):
 
     def post(self, request, str, *args, **kwargs):
         form = RoomschangeForm(request.POST)
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.equipment = Equipment.objects.get(exnumber=str)
-            order.save()
-            if order.equipment.kategory == 'СИ':
-                return redirect(f'/equipment/measureequipment/{str}')
-            if order.equipment.kategory == 'ИО':
-                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
-            if order.equipment.kategory == 'ВО':
-                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipment = Equipment.objects.get(exnumber=str)
+                order.save()
+                if order.equipment.kategory == 'СИ':
+                    return redirect(f'/equipment/measureequipment/{str}')
+                if order.equipment.kategory == 'ИО':
+                    return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+                if order.equipment.kategory == 'ВО':
+                    return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
 
 # блок 5 - микроклимат: журналы, формы регистрации
@@ -566,7 +568,7 @@ def TestingEquipmentCharaktersUpdateView(request, str):
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = TestingEquipmentCharaktersCreateForm(request.POST,
-                                                       instance=TestingEquipmentCharaktersCreateForm.objects.get(pk=str))
+                                                       instance=TestingEquipmentCharakters.objects.get(pk=str))
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
@@ -701,7 +703,7 @@ def EquipmentUpdate(request, str):
         person = Personchange.objects.get(pk=get_pk).person
     except:
         person = 1
-    if person == request.user or request.user.is_superuser or request.user.has_perm('equipment.add_equipment'):
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser or request.user == person:
         if request.method == "POST":
             form = EquipmentUpdateForm(request.POST, request.FILES,  instance=Equipment.objects.get(exnumber=str))
             if form.is_valid():
@@ -714,22 +716,21 @@ def EquipmentUpdate(request, str):
                 if title.kategory == 'ВО':
                     return redirect(reverse('supequipment', kwargs={'str': str}))
         else:
-            messages.success(request, f' Для внесения записей о приборе нажмите на кнопку'
-                                      f' "Внести запись о приборе и смотреть записи (для всех пользователей)"'
-                                      f'. Добавить особенности работы или поменять статус может только ответственный '
-                                      f'за прибор или поверку.')
-
+            form = EquipmentUpdateForm(request.POST, request.FILES,  instance=Equipment.objects.get(exnumber=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/Eindividuality.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser or not request.user == person:
+        messages.success(request, f' Для внесения записей о приборе нажмите на кнопку'
+                                  f' "Внести запись о приборе и смотреть записи (для всех пользователей)"'
+                                  f'. Добавить особенности работы или поменять статус может только ответственный '
+                                  f'за прибор или поверку.')
         if title.kategory == 'СИ':
             return redirect(reverse('measureequipment', kwargs={'str': str}))
         if title.kategory == 'ИО':
             return redirect(reverse('testequipment', kwargs={'str': str}))
         if title.kategory == 'ВО':
             return redirect(reverse('supequipment', kwargs={'str': str}))
-    else:
-        form = EquipmentUpdateForm(instance=Equipment.objects.get(exnumber=str))
-    data = {'form': form, 'title': title
-            }
-    return render(request, 'equipment/Eindividuality.html', data)
 
 
 # блок 7 - все поисковики
@@ -900,7 +901,7 @@ class SearchResultTestingEquipmentView(TemplateView):
 # блок 8  принадлежности к оборудованию
 
 
-class DocsConsView(View):
+class DocsConsView(View, SuccessMessageMixin):
     """ выводит список принадлежностей прибора и форму для добавления принадлежности """
     def get(self, request, str):
         template_name = 'equipment/Edocsconslist.html'
@@ -916,10 +917,14 @@ class DocsConsView(View):
 
     def post(self, request, str, *args, **kwargs):
         form = DocsConsCreateForm(request.POST)
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.equipment = Equipment.objects.get(exnumber=str)
-            order.save()
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipment = Equipment.objects.get(exnumber=str)
+                order.save()
+                return redirect(f'/equipment/docsreg/{str}')
+        else:
+            messages.add_message(request, messages.SUCCESS, 'Раздел доступен только инженеру по оборудованию')
             return redirect(f'/equipment/docsreg/{str}')
 
 
@@ -3540,7 +3545,7 @@ style4.alignment = al1
 def export_verificlabel_xls(request):
     '''представление для выгрузки этикеток для указания поверки и аттестации'''
     note = []
-
+    company = CompanyCard.objects.get(pk=1)
     for n in (request.GET['n1'], request.GET['n2'],
               request.GET['n3'], request.GET['n4'],
               request.GET['n5'], request.GET['n6'],
@@ -3706,15 +3711,15 @@ def export_verificlabel_xls(request):
         row_num = 4 + j
         columns = [
             '',
-            f'Ответственный за {a} {"              "} А.Б.Головкина',
-            f'Ответственный за {a} {"              "} А.Б.Головкина',
-            f'Ответственный за {a} {"              "} А.Б.Головкина',
-            f'Ответственный за {a} {"              "} А.Б.Головкина',
+            f'Ответственный за {a} {"              "} {company.namemetrologequipment}',
+            f'Ответственный за {a} {"              "} {company.namemetrologequipment}',
+            f'Ответственный за {a} {"              "} {company.namemetrologequipment}',
+            f'Ответственный за {a} {"              "} {company.namemetrologequipment}',
             ' ',
-            f'Ответственный за {b} {"              "} А.Б.Головкина',
-            f'Ответственный за {b} {"              "} А.Б.Головкина',
-            f'Ответственный за {b} {"              "} А.Б.Головкина',
-            f'Ответственный за {b} {"              "} А.Б.Головкина',
+            f'Ответственный за {b} {"              "} {company.namemetrologequipment}',
+            f'Ответственный за {b} {"              "} {company.namemetrologequipment}',
+            f'Ответственный за {b} {"              "} {company.namemetrologequipment}',
+            f'Ответственный за {b} {"              "} {company.namemetrologequipment}',
             ' ',
         ]
         for col_num in range(1, 5):
@@ -6443,7 +6448,6 @@ def export_me_xls(request):
         'Дата заказа аттестации',
         'Периодичность аттестации',
         'Инвентарный номер',
-        'Аттестован на методики',
         'Основные технические характеристики',
         'Наименование видов испытаний',
         'Дополнительная информация/\nвыписка из текущего аттестата',
@@ -6477,7 +6481,6 @@ def export_me_xls(request):
         'equipmentSM_att__dateorder',
         'charakters__calinterval',
         'equipment__invnumber',
-        'equipmentSM_att__ndocs',
         'charakters__measurydiapason',
         'charakters__aim',
         'equipmentSM_att__extra'

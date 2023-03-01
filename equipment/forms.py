@@ -137,7 +137,7 @@ class LabelEquipmentform(forms.Form):
             Row(
                 Column('n13', css_class='form-group col-md-2 mb-0'),
                 Column('n14', css_class='form-group col-md-2 mb-0')),
-            Row(Submit('submit', 'сформировать', css_class='btn  btn-info col-md-6 mb-3 mt-4 ml-4')))
+            Row(Submit('submit', 'сформировать', css_class='btn  btn-warning col-md-6 mb-3 mt-4 ml-4')))
 
 
 class DateForm(forms.Form):
