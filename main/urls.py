@@ -10,4 +10,5 @@ urlpatterns = [
     path('equipment/', views.EquipmentView.as_view(), name='eq'),
     path('attjreg/', views.attestationJRegView, name='attjreg'),
     path('about/', views.About.as_view(), name='about'),
+    path('contacts/', views.Contacts.as_view(), name='contacts'),
       ]

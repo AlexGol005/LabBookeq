@@ -14,6 +14,11 @@ class About(View):
     def get(self, request):
         return render(request, 'main/about.html')
 
+class Contacts(View):
+    """выводит страницу контакты"""
+    def get(self, request):
+        return render(request, 'main/contacts.html')
+
 
 class IndexView(View):
     """выводит страницу главная страница по основному адресу"""
