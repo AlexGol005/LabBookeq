@@ -8,7 +8,7 @@ class Blog(models.Model):
     metatitle = models.CharField('Метазаголовок страницы', max_length=10000, blank=True, null=True)
     description = models.TextField('Метаописание страницы', blank=True, null=True)
     keywords = models.TextField('Ключевые слова', blank=True, null=True)
-    text = models.TextField('Текст записи')
+    text = models.TextField('Текст записи.')
 
 
 
