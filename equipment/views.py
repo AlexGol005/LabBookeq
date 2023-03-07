@@ -4457,11 +4457,6 @@ def export_exvercard_xls(request, pk):
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 500
 
-    if usere != 'А.Б.Головкина':
-        st = style10
-    else:
-        st = style10
-
     row_num += 2
     columns = [
         '',
@@ -4473,8 +4468,8 @@ def export_exvercard_xls(request, pk):
        usere,
     ]
     for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], st)
-        ws.merge(row_num, row_num, 4, 6, st)
+        ws.write(row_num, col_num, columns[col_num], style10)
+        ws.merge(row_num, row_num, 4, 6, style10)
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 500
 
@@ -5249,11 +5244,6 @@ def export_exvercardteste_xls(request, pk):
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 500
 
-    if usere != 'А.Б.Головкина':
-        st = style10
-    else:
-        st = style10
-
     row_num += 2
     columns = [
         '',
@@ -5265,8 +5255,8 @@ def export_exvercardteste_xls(request, pk):
        usere,
     ]
     for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], st)
-        ws.merge(row_num, row_num, 4, 6, st)
+        ws.write(row_num, col_num, columns[col_num], style10)
+        ws.merge(row_num, row_num, 4, 6, style10)
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 500
 
@@ -5289,12 +5279,12 @@ def export_exvercardteste_xls(request, pk):
     columns = [
         '',
         '',
-        'начальник производства'
+        f'{company.positionbosslab}'
         '',
         '',
-        'Н.Ю.Пилявская',
-        'Н.Ю.Пилявская',
-        'Н.Ю.Пилявская',
+        f'{company.namebosslab}',
+        f'{company.namebosslab}',
+        f'{company.namebosslab}'
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
@@ -5306,12 +5296,11 @@ def export_exvercardteste_xls(request, pk):
     columns = [
         '',
         '',
-        'заведующий АХЧ'
+        f'{company.positionsupmen}',
         '',
-        '',
-        'А.В.Теленков',
-        'А.В.Теленков',
-        'А.В.Теленков',
+        f'{company.namesupmen}',
+        f'{company.namesupmen}',
+        f'{company.namesupmen}',
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
@@ -5319,25 +5308,21 @@ def export_exvercardteste_xls(request, pk):
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 500
 
-    if usere != 'А.Б.Головкина':
-
-        row_num += 2
-        columns = [
-            '',
-            '',
-            'инженер-химик 2 категории'
-            '',
-            '',
-            'А.Б.Головкина',
-            'А.Б.Головкина',
-            'А.Б.Головкина',
-        ]
-        for col_num in range(len(columns)):
-            ws.write(row_num, col_num, columns[col_num], style10)
-            ws.merge(row_num, row_num, 4, 6, style10)
-        ws.row(row_num).height_mismatch = True
-        ws.row(row_num).height = 500
-
+    row_num += 2
+    columns = [
+        '',
+        '',
+        f'{company.positionmetrologequipment}',
+        '',
+        f'{company.namemetrologequipment}',
+        f'{company.namemetrologequipment}',
+        f'{company.namemetrologequipment}',
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style10)
+        ws.merge(row_num, row_num, 4, 6, style10)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 500
 
     wb.save(response)
     return response
