@@ -5,7 +5,13 @@
 {#название страницы#}
 {#стандартная#}
 {% block title %}
-оборудование в лаборатории
+{{ obj.metatitle }}
+{% endblock %}
+{% block keywords %}
+    <meta name="keywords" lang="ru" content="{{ obj.keywords }}">
+{% endblock %}
+{% block description %}
+<meta name="description" content="{{ obj.description }}">
 {% endblock %}
 {#конец названия страницы#}
 
