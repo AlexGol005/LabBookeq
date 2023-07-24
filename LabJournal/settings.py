@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'jouViscosity',
     'dinamicviscosity',
     'blog',
+    'bdanswers',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

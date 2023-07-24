@@ -675,6 +675,7 @@ class MeteorologicalParameters(models.Model):
 
 class CompanyCard(models.Model):
     """Карточка предприятия"""
+    objects = None
     name = models.CharField('Название', max_length=90, blank=True, null=True)
     nameboss = models.CharField('ФИО руководителя организации', max_length=90, blank=True, null=True)
     positionboss = models.CharField('Должность руководителя организации', max_length=90, blank=True, null=True)

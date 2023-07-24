@@ -14,6 +14,7 @@ urlpatterns = [
     path('CertifiedValueJ/', include('jouViscosity.urls')),
     path('^', include('django.contrib.auth.urls')),
     path('blog/', include('blog.urls')),
+    path('bdanswers/', include('bdanswers.urls')),
 ]
 
 if settings.DEBUG:

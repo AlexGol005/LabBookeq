@@ -1,5 +1,4 @@
-from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, CreateView
 
 from blog.forms import CommentCreationForm
 from blog.models import Blog, Comments

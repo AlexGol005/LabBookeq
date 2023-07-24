@@ -45,6 +45,8 @@ from users.models import Profile
 URL = 'equipment'
 now = date.today()
 
+
+
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
 
 
