@@ -4,8 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from exelbase import export_protocolbase_xls, export_base_kinematicviscosity_xls, style_plain
 
 """
-Модуль проекта LabJournal, приложения kinematicviscosity.
-Приложение kinematicviscosity это журнал фиксации 
+Модуль проекта LabJournal, приложения bdanswers.
+Приложение bdanswers это журнал фиксации 
 лабораторных записей по измерению кинематической вязкости нефтепродуктов
 (Лабортаорный журнал измерения кинематической вязкости).
 
@@ -105,7 +105,7 @@ class HeadView(Constants, HeadView):
 class StrJournalView(Constants, StrJournalView):
     """ выводит отдельную запись и форму добавления в ЖАЗ """
     form_class = StrJournalUdateForm
-    template_name = URL + '/str.html'
+    template_name = URL + '/bdquestion.html'
 
 
 class CommentsView(Constants, CommentsView):

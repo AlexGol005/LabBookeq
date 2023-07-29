@@ -1,6 +1,6 @@
 """
-Модуль проекта LabJournal, приложения kinematicviscosity.
-Приложение kinematicviscosity это журнал фиксации
+Модуль проекта LabJournal, приложения bdanswers.
+Приложение bdanswers это журнал фиксации
 лабораторных записей по измерению кинематической вязкости нефтепродуктов
 (Лабортаорный журнал измерения кинематической вязкости).
 
@@ -48,7 +48,7 @@ REPEATABILITY = (
 
 JOURNAL = AttestationJ
 journal = 'attestationJ'
-URL = 'kinematicviscosity'
+URL = 'bdanswers'
 NAME = 'кинематика'
 
 

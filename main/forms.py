@@ -15,7 +15,7 @@ class AttestationJForm(forms.ModelForm):
                                                              'placeholder': 'ГОСТ...'}))
     for_url = forms.CharField(label='URL адрес журнала (латиницей)', max_length=100,
                               widget=forms.TextInput(attrs={'class': 'form-control',
-                                                            'placeholder': 'kinematicviscosity'}))
+                                                            'placeholder': 'bdanswers'}))
     CM = forms.CharField(label='Испытуемые объекты', max_length=100,
                          widget=forms.Textarea(attrs={'class': 'form-control',
                                                       'placeholder': 'ХСН-ПА-1 (ГСО 9867-2011);'}))
