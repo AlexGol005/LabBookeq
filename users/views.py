@@ -1,4 +1,7 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.views.generic import TemplateView
+
 # from django.contrib.auth.forms import UserCreationForm
 from .forms import UserRegisterForm, UserUdateForm, ProfileUdateForm
 from django.contrib import messages
@@ -38,10 +41,23 @@ def profile(request):
     else:
         profailForm = ProfileUdateForm(instance=request.user.profile)
         userUpdadeForm = UserUdateForm(instance=request.user)
+        try:
+            user = User.objects.get(username=request.user)
+            if user.is_superuser:
+                USER = True
+            if not user.is_superuser:
+                USER = False
+        except:
+            USER = False
 
     data = {'profailForm': profailForm,
-            'userUpdadeForm': userUpdadeForm
+            'userUpdadeForm': userUpdadeForm,
+            'USER': USER
             }
 
     return render(request, 'users/profile.html', data)
+
+class PersonalView(TemplateView):
+    """выводит персональную страницу суперпользователя """
+    template_name = 'users/personal.html'
 

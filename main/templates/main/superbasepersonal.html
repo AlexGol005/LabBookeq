@@ -17,58 +17,24 @@
     <link rel="icon" href="{% static 'main/img/3.png' %}" type="image/x-icon">
 
 </head>
-<body class="main-page-body">
+<body class="inner-page-body">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar1 navbar-expand-lg navbar-light bg-light">
   <a href="/"><img src="{% static 'main/img/3.png' %}"  alt="Лого"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link active" aria-current="page" href="/">JournalLab</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'about' %}">О сайте</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'att' %}">Журналы испытаний</a>
-      </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'cv' %}">Журналы результатов</a>
-      </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'eq' %}">Инфраструктура лаборатории</a>
-      </li>
-        <li class="nav-item">
-        <a class="nav-link" href="{% url 'contacts' %}">Контакты</a>
-      </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'blog' %}">Об учёте приборов в лаборатории</a>
-      </li>
-      {% if not user.is_authenticated %}
-        <a href="{% url 'reg' %}" >
-            <button class="btn btn-outline-warning mt-2">регистрация</button>
-        </a>
-        <a href="{% url 'user' %}" class="ml-2">
-            <button class="btn btn-outline-info mt-2">войти</button>
-        </a>
-        {% else %}
         <a href="{% url 'profile' %}" >
-        <button class="btn btn-outline-warning mt-2">{{ request.user.username }}</button>
+        <button class="btn btn-outline-info mt-2 ml-5">{{ request.user.username }}</button>
         </a>
-        <a href="{% url 'exit' %}" class="ml-2">
-            <button class="btn btn-outline-info mt-2">выйти</button>
-        </a>
-        {% endif %}
+
     </ul>
   </div>
 </nav>
-<div style="text-align: center;">
-* Чтобы увидеть больше возможностей сайта - нажмите кнопку "регистрация" и зайдите под гостевой учетной записью через кнопку "вход"
-</div>
+
 <div class="container mt-5 table-list no-gutters">
     <div class="row no-gutters">
         <div class="col-md-9 no-gutters">
@@ -96,3 +62,5 @@
 
 {% endblock %}
     </div>
+    </div>
+
