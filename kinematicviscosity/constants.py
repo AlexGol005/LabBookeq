@@ -48,7 +48,7 @@ REPEATABILITY = (
 
 JOURNAL = AttestationJ
 journal = 'attestationJ'
-URL = 'bdanswers'
+URL = 'kinematicviscosity'
 NAME = 'кинематика'
 
 

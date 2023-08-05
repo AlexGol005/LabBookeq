@@ -145,7 +145,7 @@ class HeadView(Constants, HeadView):
 class StrJournalView(Constants, StrJournalView):
     """ выводит отдельную запись и форму добавления в ЖАЗ """
     form_class = StrJournalUdateForm
-    template_name = URL + '/bdquestion.html'
+    template_name = URL + '/str.html'
 
 
 class CommentsView(Constants, CommentsView):

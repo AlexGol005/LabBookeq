@@ -59,6 +59,19 @@ right: 0;
     text-align: center !important;
 }
 
+.td600 {
+    min-width: 600px !important;
+}
+
+.td200 {
+    min-width: 200px !important;
+}
+
+.td800 {
+    min-width: 800px !important;
+}
+
+
 td.red {
     background-color: rgb(252, 236, 236) !important;
 }

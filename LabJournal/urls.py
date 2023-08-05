@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('', include('viscosimeters.urls')),
-    path('attestationJ/kinematicviscosity/', include('bdanswers.urls')),
+    path('attestationJ/kinematicviscosity/', include('kinematicviscosity.urls')),
     path('attestationJ/dinamicviscosity/', include('dinamicviscosity.urls')),
     path('', include('users.urls')),
     path('equipment/', include('equipment.urls')),
