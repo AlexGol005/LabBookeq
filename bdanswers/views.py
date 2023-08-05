@@ -34,7 +34,7 @@ class SearchResultView(TemplateView):
     def get_context_data(self, **kwargs):
         name = self.request.GET['name']
         context = super(SearchResultView, self).get_context_data(**kwargs)
-        objects = Bdanswers.objects.filter(question=name)
+        objects = Bdanswers.objects.filter(question__icontains=name)
         context['objects'] = objects
         context['formSM'] = SearchForm
         return context
