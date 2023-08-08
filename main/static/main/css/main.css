@@ -60,15 +60,15 @@ right: 0;
 }
 
 .td600 {
-    min-width: 600px !important;
+    min-width: 250px !important;
 }
 
 .td200 {
-    min-width: 200px !important;
+    min-width: 60px !important;
 }
 
 .td800 {
-    min-width: 800px !important;
+    min-width: 330px !important;
 }
 
 

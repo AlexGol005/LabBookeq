@@ -1,4 +1,6 @@
 {% extends 'main/superbasepersonal.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 {% block title %}
 {% endblock %}
 
@@ -6,6 +8,12 @@
 {% block content %}
 <div class="row">
     <div class="col-md-2">
+        <div style="text-align: center;">
+            <form action="/bdanswers/searchresult/" method="GET">
+                {% csrf_token %}
+                {% crispy formSM %}
+            </form>
+        </div>
         <div style="text-align: center;">
             <table class="table table-bordered background-color">
                 {% for note in objects %}
