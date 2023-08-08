@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<div style="text-align: center;">
+<div style="text-align: center;" class="td800">
     <form action="/bdanswers/searchresult/" method="GET">
         {% csrf_token %}
         {% crispy formSM %}
