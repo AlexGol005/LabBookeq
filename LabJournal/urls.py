@@ -15,7 +15,7 @@ urlpatterns = [
     path('^', include('django.contrib.auth.urls')),
     path('blog/', include('blog.urls')),
     path('bdanswers/', include('bdanswers.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
+    # path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:

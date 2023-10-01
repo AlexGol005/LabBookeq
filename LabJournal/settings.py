@@ -53,8 +53,8 @@ INSTALLED_APPS = [
     'dinamicviscosity',
     'blog',
     'bdanswers',
-    'ckeditor',
-    'ckeditor_uploader',
+    # 'ckeditor',
+    # 'ckeditor_uploader',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
