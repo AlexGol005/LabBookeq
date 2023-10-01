@@ -3,7 +3,7 @@ from django import forms
 
 from bdanswers.models import Bdanswers
 
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
+# from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 # class PostAdminForm(forms.ModelForm):
