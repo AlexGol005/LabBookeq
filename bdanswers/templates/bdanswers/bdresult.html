@@ -22,7 +22,7 @@
                         {{note.question}}
                     </td>
                     <td class="td600">
-                        {{note.answer}}
+                        {{note.answer|safe}}
                     </td>
                 </tr>
                 	{% endfor %}
