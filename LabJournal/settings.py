@@ -29,11 +29,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ADMINS = [('Alex', 'sandra.005@mail.ru')]
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 587
-SERVER_EMAIL = 'sandra.005@mail.ru'
-EMAIL_HOST_USER = "sandra.005@mail.ru"
+EMAIL_HOST_USER = "sandra.005"
 EMAIL_HOST_PASSWORD = "7B7YUqnEHbTgT6iDtJey"
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
