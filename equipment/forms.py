@@ -32,7 +32,7 @@ class SearchMEForm(forms.Form):
     name = forms.CharField(label='Название', required=False,
                            help_text='введите название частично или полностью',
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
-    exnumber = forms.CharField(label='Внут. №', required=False,
+    email = forms.CharField(label='Внут. №', required=False,
                                help_text='вн. № полн.',
                                widget=forms.TextInput(attrs={'class': 'form-control'}))
     lot = forms.CharField(label='Заводской №', required=False,

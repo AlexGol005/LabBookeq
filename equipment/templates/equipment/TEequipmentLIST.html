@@ -21,7 +21,7 @@
 {# Выгрузка полного списка в ексель #}
 <a href="{% url 'measureequipmentall' %}" class="btn btn-warning mr-5 mt-3" >Перейти к средствам измерений</a>
 <a href="{% url 'helpingequipmentall' %}" class="btn btn-warning mr-5 mt-3" >Перейти к вспомогательному оборудованию</a>
-<a href="{% url 'export_me_xls' %}" class="btn btn-warning mr-5 mt-3">Выгрузить график аттестации испытательного оборудования</a>
+<a href="{% url 'export_me_xls' %}" class="btn btn-warning mr-5 mt-3">Скачать график аттестации ИО</a>
     <br>
     <br>
     <br>
@@ -45,13 +45,11 @@
             <th> Заводской № </th>
             <th> Год вып. </th>
             <th> Ком.№ </th>
-            <th> Ответств-й пользователь </th>
+            <th class="ind" > Отв-й  </th>
             <th> Статус прибора</th>
             <th> Аттестован до  </th>
             <th> Аттестация план  </th>
             <th> Заказана аттестация или замена </th>
-            <th> Карт. <br> exel  </th>
-            <th> Верифик. <br> exel  </th>
          </tr>
     </thead>
     <tbody>
@@ -77,10 +75,6 @@
             нет</a>
             {% endif %}
         </td>
-        <td> <a href="{% url 'export_tecard_xls' obj.pk %}"  class="btn btn-outline-warning mt-3">
-            exel {{ obj.equipment.exnumber }}</a></td>
-        <td> <a href="{% url 'export_exvercardteste_xls' obj.pk %}"  class="btn btn-outline-warning mt-3">
-            шаблон верификации {{ obj.equipment.exnumber }}</a></td>
     </tr>
     {% endfor %}
     </tbody>

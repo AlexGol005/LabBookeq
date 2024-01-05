@@ -48,25 +48,30 @@
         <a class="nav-link active" aria-current="page" href="/">JournalLab</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'about' %}">О сайте</a>
+        <a class="nav-link" href="{% url 'about' %}">О&nbspсайте</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'att' %}">Журналы испытаний</a>
+        <a class="nav-link" href="{% url 'att' %}">Журналы&nbspиспытаний</a>
       </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'cv' %}">Журналы результатов</a>
+        <a class="nav-link" href="{% url 'cv' %}">Журналы&nbspрезультатов</a>
       </li>
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'eq' %}">Лабораторное оборудование</a>
+        <a class="nav-link" href="{% url 'eq' %}">Лабораторное&nbspоборудование</a>
       </li>
         <li class="nav-item">
         <a class="nav-link" href="{% url 'contacts' %}">Контакты</a>
       </li>
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'blog' %}">Об учёте приборов в лаборатории</a>
+        <a class="nav-link" href="{% url 'blog' %}">Блог</a>
       </li>
+
+                <a href="{% url 'contact_page' %}" >
+        <button class="btn btn-outline-warning mr-2">Форма обратной связи</button>
+        </a>
       {% if not user.is_authenticated %}
+
         <a href="{% url 'reg' %}" >
             <button class="btn btn-outline-warning mt-2">регистрация</button>
         </a>
@@ -113,4 +118,5 @@
  {% block aside %}
 
 {% endblock %}
+    </div>
     </div>

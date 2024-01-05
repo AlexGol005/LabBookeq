@@ -1,10 +1,8 @@
+from django.shortcuts import render
 from django.views.generic import CreateView
 from .models import Contact
 from django.urls import reverse_lazy
-from django.http import HttpResponse
-from django.core.mail import send_mail
 from .forms import ContactForm
-from django.conf import settings
 from django.core.mail import send_mail
 
 # send_mail('Тема', 'Тело письма', settings.EMAIL_HOST_USER, ['sandra.005@mail.ru'])
@@ -18,7 +16,7 @@ class ContactCreate(CreateView):
     def form_valid(self, form):
         # Формируем сообщение для отправки
         data = form.data
-        subject = f'Сообщение с формы от {data["first_name"]} {data["last_name"]} Почта отправителя: {data["email"]}'
+        subject = f'Сообщение c JL от {data["name"]}  Почта отправителя: {data["email"]}'
         email(subject, data['message'])
         return super().form_valid(form)
 
@@ -33,4 +31,4 @@ def email(subject, content):
 
 # Функция, которая вернет сообщение в случае успешного заполнения формы
 def success(request):
-   return HttpResponse('Письмо отправлено!')
+   return render(request, 'contact_form/contact_answer.html')
