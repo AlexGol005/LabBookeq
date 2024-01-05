@@ -15,6 +15,7 @@ urlpatterns = [
     path('^', include('django.contrib.auth.urls')),
     path('blog/', include('blog.urls')),
     path('bdanswers/', include('bdanswers.urls')),
+    path('postbox/', include('contact_form.urls')),
     # path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from contact_form.views import ContactForm, success
+from contact_form.views import ContactForm, success, ContactCreate
 
 urlpatterns = [
     path('admin/', admin.site.urls),
