@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'dinamicviscosity',
     'blog',
     'bdanswers',
+    'contact_form',
     # 'ckeditor',
     # 'ckeditor_uploader',
 ]

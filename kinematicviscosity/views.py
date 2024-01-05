@@ -4,10 +4,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from exelbase import export_protocolbase_xls, export_base_kinematicviscosity_xls, style_plain
 
 """
-Модуль проекта LabJournal, приложения bdanswers.
-Приложение bdanswers это журнал фиксации 
+Модуль проекта LabJournal, приложения kinematicviscosity.
+Приложение kinematicviscosity это журнал фиксации 
 лабораторных записей по измерению кинематической вязкости нефтепродуктов
-(Лабортаорный журнал измерения кинематической вязкости).
+(Лабораторный журнал измерения кинематической вязкости).
 
 Данный модуль admin.py выводит таблицы приложения в административной части сайта. 
 """
