@@ -26,6 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = "vs3umg+heg!)ljfeg2o^eu@3fk1ma!=ett2^9o2x8cwjl@0ixy"
 # DEBUG = True
 # ALLOWED_HOSTS = []
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 2525
+SERVER_EMAIL = 'sandra.005@mail.ru'
+EMAIL_HOST_USER = "sandra.005@mail.ru"
+EMAIL_HOST_PASSWORD = "7B7YUqnEHbTgT6iDtJey"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -180,10 +188,4 @@ if DEBUG:
     mimetypes.add_type("application/javascript", ".js", True)
 
 
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 2525
-EMAIL_HOST_USER = "sandra.005@mail.ru"
-EMAIL_HOST_PASSWORD = "7B7YUqnEHbTgT6iDtJey"
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
 
