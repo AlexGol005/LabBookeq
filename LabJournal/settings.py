@@ -27,12 +27,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # DEBUG = True
 # ALLOWED_HOSTS = []
 
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "sandra.005@mail.ru"
-EMAIL_HOST_PASSWORD = "7B7YUqnEHbTgT6iDtJey"
-EMAIL_USE_TLS = True
 
+
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'sandra.005@mail.ru'
+SERVER_EMAIL = 'sandra.005@mail.ru'
+DEFAULT_FROM_EMAIL = 'sandra.005@mail.ru'
+EMAIL_HOST_PASSWORD = '7B7YUqnEHbTgT6iDtJey'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
