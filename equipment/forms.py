@@ -151,8 +151,9 @@ class DateForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column('date', css_class='form-group col-md-4 mb-0'),
-                Submit('submit', 'сформировать', css_class='btn  btn-warning col-md-6 mb-3 mt-4 ml-4')))
+                Column('date', css_class='form-group col-md-4 mb-0 ml-2 mr-2'),
+                Submit('submit', 'сформировать', css_class='btn  btn-warning col-md-6 mb-3 mt-4 ml-2 mr-2')))
+
 
 
 # блок 2 - формы для комментариев и примечаний, особенностей - внесение и обновление

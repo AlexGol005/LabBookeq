@@ -7,9 +7,9 @@
 
 {% block content %}
 <div style="text-align: center; margin-top: 20px">
-<a href="{% url 'verificatorsreg' %}" class="btn btn-warning mr-5 mt-3" style="width: 210px" target="blank">
+<a href="{% url 'verificatorsreg' %}" class="btn btn-warning ml-1 mr-1 mt-3" style="width: 210px" target="blank">
 Добавить организацию поверителя</a>
-<a href="{% url 'verificatorspersonsreg' %}" class="btn btn-warning  mt-3" style="width: 210px" target="blank">
+<a href="{% url 'verificatorspersonsreg' %}" class="btn btn-warning  mt-3 ml-1 mr-1" style="width: 210px" target="blank">
 Добавить сотрудника поверителя</a>
 </div>
 <div style="text-align: center; margin-top: 35px" ><h4>
@@ -28,5 +28,6 @@
         <button class="btn btn-outline-warning" type="submit">Записать</button>
     </form>
     <br>
+
 
 {% endblock %}
