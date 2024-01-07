@@ -44,10 +44,10 @@ class SearchMEForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column('name', css_class='form-group col-md-2 mb-0 ml-1'),
-                Column('exnumber', css_class='form-group col-md-1 mb-0 ml-1'),
-                Column('lot', css_class='form-group col-md-2 mb-0 ml-1'),
-                Row(Submit('submit', 'Найти', css_class='btn  btn-warning   ml-1 mb-3'))))
+                Column('name', css_class='form-group col-md-4 mb-0'),
+                Column('exnumber', css_class='form-group col-md-2 mb-0'),
+                Column('lot', css_class='form-group col-md-2 mb-0'),
+                Row(Submit('submit', 'Найти', css_class='btn  btn-warning col-md-9 mb-3 mt-4 ml-4'))))
 
 
 class Searchreestrform(forms.Form):

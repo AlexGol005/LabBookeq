@@ -10,33 +10,31 @@
 {#конец названия страницы#}
 
 {% block content %}
+
+    {#заголовок с ссылкой#}
+    {#стандартная#}
+
+        <div class=".col-24 mt-2 no-gutters" >
+            <div style="text-align: center;"><h4><a href="/{{ URL }}/"> Средства измерения</a></h4></div>
+            <br>
+            {#конец заголовка со ссылкой#}
+            {# Выгрузка полного списка в ексель #}
+            <div style="text-align: center;">
+            <a href="{% url 'testingequipmentall' %}" class="btn btn-warning mr-1 mt-1" >Перейти к испытательному оборудованию</a>
+            <a href="{% url 'helpingequipmentall' %}" class="btn btn-warning mr-1 mt-1" >Перейти к вспомогательному оборудованию</a>
+            <a href="{% url 'export_me_xls' %}" class="btn btn-warning  mt-3">Скачать график поверки </a>
+            </div>
+                <br>
+            {#форма для поиска по полям #}
             {#стандартная#}
+            <div style="text-align: center;">
                 <form action="/equipment/measureequipmentallsearres/" method="GET">
                     {% csrf_token %}
                     {% crispy form %}
                 </form>
+                </div>
             {#конец формы для поиска по#}
-    {#заголовок с ссылкой#}
-    {#стандартная#}
-    <div class="row no-gutters">
-        <div class=".col-24 mt-2 no-gutters" >
-            <div style="text-align: left;"><h4><a href="/{{ URL }}/"> Средства измерения</a></h4></div>
-            <br>
-            {#конец заголовка со ссылкой#}
-            {# Выгрузка полного списка в ексель #}
-            <div style="text-align: left;">
-            <a href="{% url 'testingequipmentall' %}" class="btn btn-warning mr-1 ml-1" >Перейти к ИО</a>
-            <a href="{% url 'helpingequipmentall' %}" class="btn btn-warning mr-1 ml-1" >Перейти к ВО</a>
-                </div>
-<div style="text-align: left;" class="mt-2">
-            <a href="{% url 'export_me_xls' %}" class="btn btn-warning mr-1 ml-1">Скачать график поверки СИ</a>
-                </div>
-
-
-                <br>
-            {#форма для поиска по полям #}
-
-
+<div class="row no-gutters">
             {#основная таблица#}
             {# уникальная #}
             <table class="table table-bordered">
