@@ -10,7 +10,12 @@
 {#конец названия страницы#}
 
 {% block content %}
-
+            {#стандартная#}
+                <form action="/equipment/measureequipmentallsearres/" method="GET">
+                    {% csrf_token %}
+                    {% crispy form %}
+                </form>
+            {#конец формы для поиска по#}
     {#заголовок с ссылкой#}
     {#стандартная#}
     <div class="row no-gutters">
@@ -30,12 +35,7 @@
 
                 <br>
             {#форма для поиска по полям #}
-            {#стандартная#}
-                <form action="/equipment/measureequipmentallsearres/" method="GET">
-                    {% csrf_token %}
-                    {% crispy form %}
-                </form>
-            {#конец формы для поиска по#}
+
 
             {#основная таблица#}
             {# уникальная #}
