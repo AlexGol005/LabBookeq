@@ -12,7 +12,6 @@
 <thead>
     <tr>
       <th style="text-align: center; width: 120px">  Наименование </th>
-      <th style="text-align: center; width: 88px">  Для проб  </th>
       <th style="text-align: center; width: 90px"> <div style="text-align: center; ">Открыть</div></th>
     </tr>
   </thead>
@@ -20,7 +19,6 @@
 {% for obj in objects %}
     <tr>
       <td>{{ obj.name }}</td>
-      <td> {{ obj.CM }}</td>
       <td><a href="CertifiedValueJ/{{obj.for_url}}"  class="btn btn-outline-warning mt-3" style="width: 88px">открыть журнал</a></td>
     </tr>
 {% endfor %}
