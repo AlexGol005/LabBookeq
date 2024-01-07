@@ -44,9 +44,9 @@ class SearchMEForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column('name', css_class='form-group col-md-3'),
-                Column('exnumber', css_class='form-group col-md-3'),
-                Column('lot', css_class='form-group col-md-3'),
+                Column('name', css_class='form-group col-md-2'),
+                Column('exnumber', css_class='form-group col-md-1'),
+                Column('lot', css_class='form-group col-md-2'),
                 Row(Submit('submit', 'Найти', css_class='btn  btn-warning  mb-3 mt-4 ml-4'))))
 
 
