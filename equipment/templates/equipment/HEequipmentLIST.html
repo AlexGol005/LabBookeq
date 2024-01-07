@@ -13,25 +13,29 @@
 
 {#заголовок с ссылкой#}
 {#стандартная#}
-<div class="row">
-<div class="col-md-24 mt-2" >
+<div class=".col-24 mt-2 no-gutters" >
 <div style="text-align: center;"><h4><a href="/{{ URL }}/"> Вспомогательное оборудование </a></h4></div>
 <br>
 {#конец заголовка со ссылкой#}
 {# Выгрузка полного списка в ексель #}
-<a href="{% url 'measureequipmentall' %}" class="btn btn-warning mr-5 mt-3" >Перейти к средствам измерений</a>
-<a href="{% url 'testingequipmentall' %}" class="btn btn-warning mr-5 mt-3" >Перейти к испытательному оборудованию</a>
-    <br>
-    <br>
-    <br>
+    <div style="text-align: center;">
+<a href="{% url 'measureequipmentall' %}" class="btn btn-warning mr-1 ml-1 mt-3" >Перейти к СИ</a>
+<a href="{% url 'testingequipmentall' %}" class="btn btn-warning mr-1 ml-1 mt-3" >Перейти к ВО</a>
+
+</div>
+     <br>
+     <br>
 {#форма для поиска по полям #}
 {#стандартная#}
+    <div style="text-align: center;">
     <form action="/equipment/helpingequipmentallsearres/" method="GET">
         {% csrf_token %}
         {% crispy form %}
     </form>
 {#конец формы для поиска по#}
+</div>
 
+<div class=".col-24 mt-2 no-gutters" >
 {#основная таблица#}
 {# уникальная #}
 <table class="table table-bordered">
