@@ -12,8 +12,8 @@
 <thead>
     <tr>
       <th>  Наименование </th>
-      <th>  Для проб  </th>
-      <th> <div style="text-align: center;"> Открыть журнал  </div></th>
+      <th style="text-align: center; width: 88px">  Для проб  </th>
+      <th> <div style="text-align: center; width: 88px">Открыть</div></th>
     </tr>
   </thead>
   <tbody>
@@ -21,7 +21,7 @@
     <tr>
       <td>{{ obj.name }}</td>
       <td> {{ obj.CM }}</td>
-      <td><a href="CertifiedValueJ/{{obj.for_url}}"  class="btn btn-outline-warning mt-3">открыть журнал</a></td>
+      <td><a href="CertifiedValueJ/{{obj.for_url}}"  class="btn btn-outline-warning mt-3" style="width: 88px">открыть журнал</a></td>
     </tr>
 {% endfor %}
 </tbody>
