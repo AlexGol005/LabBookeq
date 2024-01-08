@@ -270,6 +270,7 @@ class RoomsCreateView(SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(RoomsCreateView, self).get_context_data(**kwargs)
         context['title'] = 'Добавить помещение'
+        context['dopin'] = 'equipment/meteo/'
         return context
 
 
@@ -399,6 +400,7 @@ class MeteorologicalParametersCreateView(SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(MeteorologicalParametersCreateView, self).get_context_data(**kwargs)
         context['title'] = 'Добавить условия окружающей среды'
+        context['dopin'] = 'equipment/meteo/'
         return context
 
     def form_valid(self, form):
