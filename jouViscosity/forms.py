@@ -19,9 +19,9 @@ class SearchKinematicaForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column('name', css_class='form-group col-md-3 mb-0 ml-5'),
-                Column('lot', css_class='form-group col-md-1 mb-0 ml-3'),
-                Submit('submit', 'Найти', css_class='btn  btn-info col-md-2 mb-3 mt-4 ml-4'),
+                Column('name', css_class='form-group col-md-3 mb-0 ml-2 mr-2'),
+                Column('lot', css_class='form-group col-md-1 mb-0 ml-2 mr-2'),
+                Submit('submit', 'Найти', css_class='btn  btn-info col-md-2 mb-3 mt-4 ml-2 mr-2'),
                 css_class='form-row'
             ))
 
