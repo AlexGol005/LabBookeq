@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'blog',
     'bdanswers',
     'contact_form',
+    'hike',
     # 'ckeditor',
     # 'ckeditor_uploader',
 ]
