@@ -5,5 +5,5 @@ from . import constants
 
 
 urlpatterns = [
-    path('', views.Head.as_view(), name=URL + 'head'),
+    path('', views.HikeAllListView.as_view(), name=URL + 'head'),
     ]
