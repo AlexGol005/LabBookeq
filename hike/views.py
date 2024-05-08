@@ -4,10 +4,11 @@ from django.views.generic import ListView, CreateView
 
 
 from .models import *
+from .forms import *
 from .constants import *
 
 
-class HikeAllListView1(ListView):
+class HikeAllListView(ListView):
     """ Выводит список всех постов """
     model = Hike
     template_name = 'main/list.html'
@@ -18,14 +19,6 @@ class HikeAllListView1(ListView):
         context = super(HikeView,self).get_context_data(**kwargs)
         context['title'] = TITLE
         return context
-
-class HikeAllListView(ListView):
-    """ Выводит список всех постов """
-    model = Hike
-    template_name = 'main/list.html'
-    context_object_name = 'objects'
-    ordering = ['-pk']
-    paginate_by = 6
 
 
 class HikeStrView(CreateView):
