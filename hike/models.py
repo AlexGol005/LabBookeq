@@ -21,7 +21,8 @@ class Hike(models.Model):
     travel_details = models.TextField('Подробности добирания',  blank=True, null=True)
     attractions = models.TextField('Достопримечательности',  blank=True, null=True)
     w_r = models.TextField('Погода и дорога', blank=True, null=True)
-    kilomet = models.CharField('Примерный километраж', max_length=10000, blank=True, null=True)
+    kilometers = models.CharField('Примерный километраж', max_length=10000, blank=True, null=True)
+    pictures = models.CharField('Ссылка на альбом с фото', max_length=10000, blank=True, null=True)
     
     
     def __str__(self):
