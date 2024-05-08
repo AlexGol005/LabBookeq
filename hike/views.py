@@ -2,13 +2,13 @@ from django.shortcuts import render
 
 from django.views.generic import ListView, CreateView
 
-from .forms import *
+
 from .models import *
 
 
 class HikeView(ListView):
     """ Выводит список всех постов """
-    model = Blog
+    model = Hike
     template_name = 'blog/blog.html'
     context_object_name = 'objects'
     ordering = ['-pk']
