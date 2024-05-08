@@ -10,7 +10,7 @@ from .constants import *
 class HikeAllListView(ListView):
     """ Выводит список всех постов """
     model = Hike
-    template_name = 'list.html'
+    template_name = 'main/list.html'
     context_object_name = 'objects'
     ordering = ['-pk']
     paginate_by = 6
