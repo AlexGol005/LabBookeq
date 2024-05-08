@@ -4,15 +4,20 @@ from django.views.generic import ListView, CreateView
 
 
 from .models import *
+from .constants import *
 
 
 class HikeView(ListView):
     """ Выводит список всех постов """
     model = Hike
-    template_name = 'blog/blog.html'
+    template_name = 'list.html'
     context_object_name = 'objects'
     ordering = ['-pk']
     paginate_by = 6
+    def get_context_data(self,**kwargs):
+        context = super(HikeView,self).get_context_data(**kwargs)
+        context['title'] = TITLE
+        return context
 
 
 class HikeStrView(CreateView):
