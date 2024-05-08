@@ -30,17 +30,17 @@ class HikeAllListView(ListView):
 
 class HikeStrView(CreateView):
     """ выводит отдельный пост """
-    model = Blog
+    model = Hike
     template_name = 'blog/blogstr.html'
     form_class = CommentCreationForm
 
     def get_object(self, queryset=None):
-        return Blog.objects.get(pk=self.kwargs.get("pk"))
+        return Hike.objects.get(pk=self.kwargs.get("pk"))
 
     def get_context_data(self, **kwargs):
-        context = super(BlogStrView, self).get_context_data(**kwargs)
+        context = super(HikeStrView, self).get_context_data(**kwargs)
         comments = Comments.objects.filter(forNote=self.kwargs['pk']).order_by("pk")
-        obj = Blog.objects.get(pk=self.kwargs.get("pk"))
+        obj = Hike.objects.get(pk=self.kwargs.get("pk"))
         context['form'] = CommentCreationForm()
         context['comments'] = comments
         context['obj'] = obj
@@ -49,6 +49,6 @@ class HikeStrView(CreateView):
 
     def form_valid(self, form):
         order = form.save(commit=False)
-        order.forNote = Blog.objects.get(pk=self.kwargs['pk'])
+        order.forNote = Hike.objects.get(pk=self.kwargs['pk'])
         order.save()
         return super().form_valid(form)
