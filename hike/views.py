@@ -16,7 +16,7 @@ class HikeAllListView(ListView):
     ordering = ['-pk']
     paginate_by = 6
     def get_context_data(self,**kwargs):
-        context = super(HikeView,self).get_context_data(**kwargs)
+        context = super(HikeAllListView,self).get_context_data(**kwargs)
         context['title'] = TITLE
         return context
 
