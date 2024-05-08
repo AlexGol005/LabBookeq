@@ -7,7 +7,7 @@ from .models import *
 from .constants import *
 
 
-class HikeView(ListView):
+class HikeAllListView(ListView):
     """ Выводит список всех постов """
     model = Hike
     template_name = 'list.html'
