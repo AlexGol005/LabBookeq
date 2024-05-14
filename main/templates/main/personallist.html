@@ -1,52 +1,60 @@
 {% extends 'main/superbasepersonal.html' %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
-{% block title %}
-{% endblock %}
 
+{#название страницы#}
+{#стандартная#}
+{% block title %}
+{{title}} 
+{% endblock %}
+{#конец названия страницы#}
 
 {% block content %}
 
-<div class="row">
-    <div class="col-md-2">
-        <div style="text-align: center;">
-            <table class="table table-bordered background-color">
-                {% for note in objects %}
-                <tr>
-                    <td class="td600">
-                        {{note.question}}
-                    </td>
-                    <td class="td200">
-                        <a href="/bdanswers/bdanswer/{{ note.number }}/"  class="btn btn-outline-success mt-3">Смотреть ответ</a>
-                    </td>
-                </tr>
-                	{% endfor %}
-            </table>
+{#основная таблица#}
+{# уникальная #}
+<div class="col-md-12 no-gutters">
+{% for obj in objects %}
+<table class="table table-bordered">
+    <tbody>
 
-        </div>
-    </div>
+    <tr>
+        <td>{{ obj.date }}<br><h4>{{ obj.title }}</h4>
+            <br> {% autoescape off %}{{ obj.text|truncatewords:20 }}{% endautoescape %}
+        <a href="{% url 'blogstr' obj.pk %}" target="blank" class="btn btn-warning  mt-3" style="width: 180px">читать далее</a>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+ {% endfor %}
+{#конец основной таблицы#}
+
+{#пагинация#}
+{# стандартная #}
+{% if is_paginated %}
+    {% if page_obj.has_previous %}
+       <a href="?page=1" class="btn btn-outline-primary">Начало</a>
+       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
+  {% endif %}
+    {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
+       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
+  {% endif %}
+  {% endif %}
+{#конец пагинации#}
 </div>
-            {#пагинация#}
-            {# стандартная #}
-                {% if is_paginated %}
-                {% if page_obj.has_previous %}
-                <a href="?page=1" class="btn btn-outline-primary mt-3">Начало</a>
-                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary ml-2 mt-3">Предыдущая</a>
-                {% endif %}
-                {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary mt-3">Следующая</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary ml-2 mt-3">Последняя</a>
-                {% endif %}
-                {% endif %}
-            {#конец пагинации#}
+
+{#фильтры#}
+{# уникальные, менять url #}
+{# конец фильров #}
 
 
+{#форма для поиска по датам записей и вывод ошибки формата даты#}
 
-
-
-
-
+{#конец формы для поиска по датам записей#}
 
 
 
 {% endblock %}
+{#конец блока {% block content %}"""#}
