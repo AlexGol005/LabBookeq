@@ -1,0 +1,52 @@
+{% extends 'main/superbasepersonal.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% block title %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-2">
+        <div style="text-align: center;">
+            <table class="table table-bordered background-color">
+                {% for note in objects %}
+                <tr>
+                    <td class="td600">
+                        {{note.question}}
+                    </td>
+                    <td class="td200">
+                        <a href="/bdanswers/bdanswer/{{ note.number }}/"  class="btn btn-outline-success mt-3">Смотреть ответ</a>
+                    </td>
+                </tr>
+                	{% endfor %}
+            </table>
+
+        </div>
+    </div>
+</div>
+            {#пагинация#}
+            {# стандартная #}
+                {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                <a href="?page=1" class="btn btn-outline-primary mt-3">Начало</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary ml-2 mt-3">Предыдущая</a>
+                {% endif %}
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary mt-3">Следующая</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary ml-2 mt-3">Последняя</a>
+                {% endif %}
+                {% endif %}
+            {#конец пагинации#}
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
