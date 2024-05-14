@@ -23,6 +23,9 @@ class Hike(models.Model):
     w_r = models.TextField('Погода и дорога', blank=True, null=True)
     kilometers = models.CharField('Примерный километраж', max_length=10000, blank=True, null=True)
     pictures = models.CharField('Ссылка на альбом с фото', max_length=10000, blank=True, null=True)
+    country = models.CharField('Страна', max_length=10000, blank=True, null=True, default='Россия')
+    region = models.CharField('Регион', max_length=10000, blank=True, null=True, default='СПб и ЛО')
+    type = models.CharField('Тип записи', max_length=10000, blank=True, null=True, default='Идея для прогулки/поездки')
     
     
     def __str__(self):
