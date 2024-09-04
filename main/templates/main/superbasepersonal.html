@@ -44,14 +44,22 @@
             {% endfor %}
         {% endif %}
 
-{% block content %}
+
+ {% block leftaside %}
 
 {% endblock %}
+        <div class="container no-gutters">
+         {% block content %}
 
+           {% endblock %}
+        </div>
+        {% block uniccontent %}
+
+{% endblock %}
+       </div>
 
  {% block aside %}
 
 {% endblock %}
     </div>
     </div>
-
