@@ -5,27 +5,28 @@ from django.urls import reverse
 
 
 class Hike(models.Model):
+    how_long = models.IntegerField('Скролько дней',  blank=True, null=True, default='1')
+    country = models.CharField('Страна', max_length=10000, blank=True, null=True, default='Россия')
+    region = models.CharField('Регион', max_length=10000, blank=True, null=True, default='Северо-Запад')
+    title = models.CharField('Заголовок', max_length=10000, blank=True, null=True)
     reality = models.BooleanField(verbose_name='Пройдено',
                                            blank=True, null=True, default=False)
     date = models.DateField('Дата добавления записи', auto_now_add=True, db_index=True)
     date_fact = models.DateField('Дата похода', blank=True, null=True)
-    title = models.CharField('Заголовок', max_length=10000, blank=True, null=True)
     metatitle = models.CharField('Метазаголовок страницы', max_length=10000, blank=True, null=True)
     description = models.TextField('Метаописание страницы', blank=True, null=True)
     keywords = models.TextField('Ключевые слова', blank=True, null=True)
-    text = models.TextField('Текст записи.')
     start_station = models.CharField('Вокзал отправления туда', max_length=10000, blank=True, null=True)
     aim_station = models.CharField('Вокзал прибытия туда', max_length=10000, blank=True, null=True)
-    aim_station = models.CharField('Вокзал прибытия туда', max_length=10000, blank=True, null=True)
+    home_station = models.CharField('Вокзал прибытия оттуда', max_length=10000, blank=True, null=True)
     back_station = models.CharField('Вокзал отправления оттуда', max_length=10000, blank=True, null=True)
-    travel_details = models.TextField('Подробности добирания',  blank=True, null=True)
+    travel_details = models.TextField('Подробности добирания и комментарии',  blank=True, null=True)
     attractions = models.TextField('Достопримечательности',  blank=True, null=True)
-    w_r = models.TextField('Погода и дорога', blank=True, null=True)
     kilometers = models.CharField('Примерный километраж', max_length=10000, blank=True, null=True)
-    pictures = models.CharField('Ссылка на альбом с фото', max_length=10000, blank=True, null=True)
-    country = models.CharField('Страна', max_length=10000, blank=True, null=True, default='Россия')
-    region = models.CharField('Регион', max_length=10000, blank=True, null=True, default='СПб и ЛО')
-    type = models.CharField('Тип записи', max_length=10000, blank=True, null=True, default='Идея для прогулки/поездки')
+    vk = models.CharField('Ссылка на встречу вк', max_length=10000, blank=True, null=True)
+    track = models.CharField('Ссылка на трек', max_length=10000, blank=True, null=True)
+
+
     
     
     def __str__(self):
