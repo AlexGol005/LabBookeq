@@ -8,13 +8,12 @@
 {{title}} 
 {% endblock %}
 {#конец названия страницы#}
-{% block leftaside %}
-<div class="row">
-<div class="col-md-2 mt-2" >
-{% endblock %}
+
+
+    
 {% block content %}
-<div class="row">
-<div class="col-md-4 mt-2 ml-2" >
+  <div class="row">
+    <div class="col-md-8">
 {#основная таблица#}
 
 {% for obj in objects %}
@@ -70,6 +69,4 @@
 
 {% endblock %}
 
- {% block aside %}
 
-{% endblock %}
