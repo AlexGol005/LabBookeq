@@ -1,5 +1,5 @@
 from django.db import models
-
+from PIL import Image
 from django.db import models
 from django.urls import reverse
 
@@ -26,6 +26,8 @@ class Hike(models.Model):
     kilometers = models.CharField('Примерный километраж', max_length=10000, blank=True, null=True)
     vk = models.CharField('Ссылка на встречу вк', max_length=10000, blank=True, null=True)
     track = models.CharField('Ссылка на трек', max_length=10000, blank=True, null=True)
+    img_track = models.ImageField('Фото трека', upload_to='user_images', blank=True, null=True,
+                                        default='user_images/default1.png')
 
 
     
