@@ -9,18 +9,11 @@
 {% endblock %}
 {#конец названия страницы#}
 
-{% block leftaside %}
- <div class="row">
-    <div class="col-md-2">
 
-        </div>
-</div>
-
-{% endblock %}
     
 {% block content %}
   <div class="row">
-    <div class="col-md-6 mt-2">
+    <div class="col-md-6 mt-2 ml-2">
 {#основная таблица#}
 
 {% for obj in objects %}
@@ -31,12 +24,10 @@
         <td > 
             <h4>{{ obj.title }}</h4>
             <h6>{{ obj.aim_station }}  -  {{ obj.back_station }}</h6>
-            <br>
             <b>дней:</b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км: </b> {{ obj.kilometers }}
             <br>         
 
             <b>Отправление&nbspс:</b>&nbsp{{ obj.start_station }}
-            <br>
             <br>
             <b>Группа VK:</b> 
                 {% if obj.equipmentSM_ver.last.arshin %}
