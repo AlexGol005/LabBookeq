@@ -3,7 +3,7 @@ from django.db import models
 from django.db import models
 from django.urls import reverse
 
-SEASONS = ['теплое время года', 'лето', 'зима', 'весна', 'осень',] 
+SEASONS = [('теплое время года', 'теплое время года'),('лето','лето'), ('зима','зима'), ('весна','весна'), ('осень','осень')] 
 class Hike(models.Model):
     how_long = models.IntegerField('Сколько дней',  blank=True, null=True, default='1')
     season = models.CharField('Сезон', max_length=10000, blank=True, choices=SEASONS, null=True, default='теплое время года')
