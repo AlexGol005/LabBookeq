@@ -11,7 +11,7 @@ from .constants import *
 class HikeAllListView(ListView):
     """ Выводит список всех постов """
     model = Hike
-    template_name = 'main/personallist.html'
+    template_name = 'mainlist.html'
     context_object_name = 'objects'
     ordering = ['-pk']
     paginate_by = 6
