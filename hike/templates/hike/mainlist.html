@@ -10,8 +10,8 @@
 {#конец названия страницы#}
 
 {% block content %}
-<div style="text-align: center;">
-    акуцк
+<div class="row">
+<div class="col-md-12 mt-2" >
 {#основная таблица#}
 
 {% for obj in objects %}
@@ -20,13 +20,12 @@
     <tr>
         <td> 
             <h4>{{ obj.title }}</h4>
-            <br>
-            <b>дней:</b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км: </b> {{ obj.kilometers }}
-            <br>
-                
             <h6>{{ obj.aim_station }}  -  {{ obj.back_station }}</h6>
             <br>
             <br>
+            <b>дней:</b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км: </b> {{ obj.kilometers }}
+            <br>         
+
             <b>Отправление с:</b> {{ obj.start_station }}
             <br>
             <br>
