@@ -3,9 +3,10 @@ from django.db import models
 from django.db import models
 from django.urls import reverse
 
-
+SEASONS = ['теплое время года', 'лето', 'зима', 'весна', 'осень',] 
 class Hike(models.Model):
-    how_long = models.IntegerField('Скролько дней',  blank=True, null=True, default='1')
+    how_long = models.IntegerField('Сколько дней',  blank=True, null=True, default='1')
+    season = models.CharField('Сезон', max_length=10000, blank=True, choices=SEASONS, null=True, default='теплое время года')
     country = models.CharField('Страна', max_length=10000, blank=True, null=True, default='Россия')
     region = models.CharField('Регион', max_length=10000, blank=True, null=True, default='Северо-Запад')
     title = models.CharField('Заголовок', max_length=10000, blank=True, null=True)
