@@ -35,32 +35,15 @@
   </div>
 </nav>
 
-<div class="container mt-5 table-list no-gutters">
-    <div class="row no-gutters">
-        <div class="col-md-9 no-gutters">
-        {% if messages %}
-            {% for mess in messages %}
-                <div class="alert alert=success">{{ mess }}</div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    </div>
-  </div>
- {% block leftaside %}
-
+{% block leftaside %}
 {% endblock %}
-        <div class="container no-gutters">
-         {% block content %}
-
-           {% endblock %}
-        </div>
-        {% block uniccontent %}
-
+    
+{% block content %}
 {% endblock %}
-       </div>
 
- {% block aside %}
-
+{% block uniccontent %}
 {% endblock %}
-    </div>
-    </div>
+
+{% block aside %}
+{% endblock %}
+
