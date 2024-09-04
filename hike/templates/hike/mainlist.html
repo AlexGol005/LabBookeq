@@ -12,20 +12,22 @@
 {% block content %}
 
 {#основная таблица#}
-<div class="col-md-24 no-gutters">
+
 {% for obj in objects %}
 <table class="table table-bordered", style="width:100%">
     <tbody>
     <tr>
         <td> 
-            <h2>{{ obj.title }}</h2>
+            <h4>{{ obj.title }}</h4>
             <br>
             <b>дней:</b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км: </b> {{ obj.kilometers }}
             <br>
                 
-            {{ obj.aim_station }}  -  {{ obj.back_station }}
+            <h6>{{ obj.aim_station }}  -  {{ obj.back_station }}</h6>
+            <br>
             <br>
             <b>Отправление с:</b> {{ obj.start_station }}
+            <br>
             <br>
             <b>Группа VK:</b> 
                 {% if obj.equipmentSM_ver.last.arshin %}
@@ -35,6 +37,7 @@
                 {% else  %}
                 отсутствует
                 {% endif %}
+            <br>
 
         <a href="{% url 'blogstr' obj.pk %}" target="blank" class="btn btn btn-outline-primary  mt-3" style="width: 180px">читать далее</a>
         </td>
