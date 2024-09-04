@@ -17,22 +17,26 @@
 <table class="table table-bordered">
     <tbody>
     <tr>
-        <td><h4>Дней: {{ obj.how_long }}  &nbsp&nbspвнести&nbsp&nbsp&nbsp км: {{ obj.kilometers }}</h4>
-                <br>
-                <h2>{{ obj.title }}</h2>
-                <br>
-                {{ obj.aim_station }} - {{ obj.back_station }}
-                Отправление с: {{ obj.start_station }}
-                Группа VK: 
+        <td> 
+            <h2>{{ obj.title }}</h2>
+            <br>
+            Дней: {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp км: {{ obj.kilometers }}
+            <br>
+                
+            {{ obj.aim_station }} - {{ obj.back_station }}
+            <br>
+            Отправление с: {{ obj.start_station }}
+            <br>
+            Группа VK: 
                 {% if obj.equipmentSM_ver.last.arshin %}
                 <a href="{{ obj.vk}}"  target="blank" >
-                 внешняя ссылка
+                внешняя ссылка
                 </a>
-                       {% else  %}
-               отсутствует
-               {% endif %}
+                {% else  %}
+                отсутствует
+                {% endif %}
 
-        <a href="{% url 'blogstr' obj.pk %}" target="blank" class="btn btn-warning  mt-3" style="width: 180px">читать далее</a>
+        <a href="{% url 'blogstr' obj.pk %}" target="blank" class="btn btn btn-outline-primary  mt-3" style="width: 180px">читать далее</a>
         </td>
     </tr>
     </tbody>
