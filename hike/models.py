@@ -29,6 +29,8 @@ class Hike(models.Model):
     img_track = models.ImageField('Фото трека', upload_to='user_images', blank=True, null=True,
                                         default='user_images/default1.png')
     dates_try = models.CharField('Даты прохождения', max_length=10000, blank=True, null=True, default='в планах')
+    maturity = models.BooleanField(verbose_name='Готов ли маршрут?',
+                                           blank=True, null=True, default=False)
 
 
     
