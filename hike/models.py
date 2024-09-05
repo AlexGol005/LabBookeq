@@ -28,6 +28,7 @@ class Hike(models.Model):
     track = models.CharField('Ссылка на трек', max_length=10000, blank=True, null=True)
     img_track = models.ImageField('Фото трека', upload_to='user_images', blank=True, null=True,
                                         default='user_images/default1.png')
+    dates_try = models.CharField('Даты прохождения', max_length=10000, blank=True, null=True, default='в планах')
 
 
     
