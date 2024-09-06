@@ -1,1 +1,64 @@
+{% extends 'main/superbasepersonal.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
+{#название страницы#}
+{#стандартная#}
+{% block title %}
+{{title}} 
+{% endblock %}
+{#конец названия страницы#}
+
+
+    
+{% block content %}
+  <div class="row">
+    <div class="col-md-6 mt-2 ml-2">
+        <h3>Маршруты походов</h3>
+{#основная таблица#}
+
+
+<div style="text-align: center;">
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+        <td > 
+            <h4>{{ obj.title }}</h4>
+            <h6>{{ obj.aim_station }}  -&nbsp   {{ obj.back_station }}</h6>
+            <b>дней:</b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км: </b> {{ obj.kilometers }}
+            <br>         
+
+            <b>Отправление&nbspс:</b>&nbsp{{ obj.start_station }}
+            <br>
+            <b>Группа VK:</b> 
+                {% if obj.vk %}
+                <a href="{{ obj.vk}}"  target="blank" >
+                ссылка
+                </a>
+                {% else  %}
+                отсутствует
+                {% endif %}
+            <br>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+{#конец основной таблицы#}
+
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block uniccontent %}
+{% endblock %}
+
+{% block aside %}
+  <div class="row">
+
+{% endblock %}
