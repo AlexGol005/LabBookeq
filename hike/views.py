@@ -24,7 +24,7 @@ class HikeAllListView(ListView):
 class HikeStrView(CreateView):
     """ выводит отдельный пост """
     model = Hike
-    template_name = 'blog/blogstr.html'
+    template_name = 'hike/indilist.html'
     form_class = CommentCreationForm
 
     def get_object(self, queryset=None):
