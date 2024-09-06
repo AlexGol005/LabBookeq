@@ -12,3 +12,4 @@ urlpatterns = [
     path('about/', views.About.as_view(), name='about'),
     path('contacts/', views.Contacts.as_view(), name='contacts'),
       ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
