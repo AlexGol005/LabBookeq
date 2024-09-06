@@ -26,7 +26,9 @@ class Hike(models.Model):
     kilometers = models.CharField('Примерный километраж', max_length=10000, blank=True, null=True)
     vk = models.CharField('Ссылка на встречу вк', max_length=10000, blank=True, null=True)
     track = models.CharField('Ссылка на трек', max_length=10000, blank=True, null=True)
-    img_track = models.ImageField('Фото трека', upload_to='user_images', blank=True, null=True,
+    img_track_project = models.ImageField('Трек план', upload_to='user_images', blank=True, null=True,
+                                        default='user_images/default1.png')
+    img_track_fact = models.ImageField('Трек факт', upload_to='user_images', blank=True, null=True,
                                         default='user_images/default1.png')
     dates_try = models.CharField('Даты прохождения', max_length=10000, blank=True, null=True, default='в планах')
     maturity = models.BooleanField(verbose_name='Готов ли маршрут?',
