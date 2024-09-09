@@ -70,7 +70,14 @@ class Comments(models.Model):
 class Bookmarks(models.Model):
     type = models.CharField('Раздел', max_length=10000, blank=True, choices=TYPE, null=True, default='путешествия')
     undertype = models.CharField('Подраздел', max_length=10000, blank=True, null=True)
-    text = models.IntegerField('Сколько дней',  blank=True, null=True, default='1')
+    text = models.IntegerField('Текст',  blank=True, null=True, default='1')
     country = models.CharField('Страна', max_length=10000, blank=True, null=True, default='Россия')
     region = models.CharField('Регион (город)', max_length=10000, blank=True, null=True, default='Любой')
     vk = models.CharField('Ссылка на источник', max_length=10000, blank=True, null=True)
+
+    def __str__(self):
+        return f' {self.type} , {self.region}'
+
+    class Meta:
+        verbose_name = 'Хайкинг'
+        verbose_name_plural = 'Хайкинг'
