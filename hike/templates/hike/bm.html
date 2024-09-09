@@ -1,1 +1,78 @@
+{% extends 'main/superbasepersonal.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
+{#название страницы#}
+{#стандартная#}
+{% block title %}
+{{title}} 
+{% endblock %}
+{#конец названия страницы#}
+
+
+    
+{% block content %}
+  <div class="row">
+    <div class="col-md-5 mt-2 ml-2">
+  <div style="text-align: center;">      <h3>Закладки</h3> </div>
+{#основная таблица#}
+
+{% for obj in objects %}
+<div style="text-align: center;">
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+        <td > 
+           <p><b>Тип:</b>{{ obj.type }}</p>
+          <p><b>подтип:</b>{{ obj.undertype }}</p>
+           <p><b>Регион:</b>{{ obj.country }}, {{ obj.region }}</p>
+          <p><b>Текст:</b>{{ obj.text }}</p>
+          <p>
+
+            
+            <b>Ссылка:</b> 
+                {% if obj.vk %}
+                <a href="{{ obj.vk}}"  target="blank" >
+                ссылка
+                </a>
+                {% else  %}
+                отсутствует
+                {% endif %}
+            <br> </p>
+
+       
+        </td>
+    </tr>
+    </tbody>
+</table>
+ {% endfor %}
+{#конец основной таблицы#}
+
+{#пагинация#}
+{# стандартная #}
+{% if is_paginated %}
+    {% if page_obj.has_previous %}
+       <a href="?page=1" class="btn btn-outline-primary">Начало</a>
+       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
+  {% endif %}
+    {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
+       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
+  {% endif %}
+  {% endif %}
+{#конец пагинации#}
+</div>
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block uniccontent %}
+{% endblock %}
+
+{% block aside %}
+  <div class="row">
+    <div class="col-md-5 mt-2 ml-2">
+       <div style="text-align: center;">   <h3>Фильтры</h3> </div>
+{% endblock %}
