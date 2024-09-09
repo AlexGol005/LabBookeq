@@ -79,5 +79,5 @@ class Bookmarks(models.Model):
         return f' {self.type} , {self.region}'
 
     class Meta:
-        verbose_name = 'Хайкинг'
-        verbose_name_plural = 'Хайкинг'
+        verbose_name = 'Закладки по темам'
+        verbose_name_plural = 'Закладки по темам'
