@@ -21,6 +21,18 @@ class HikeAllListView(ListView):
         return context
 
 
+class BMAllListView(ListView):
+    """ Выводит список всех постов """
+    model = Bookmarks
+    template_name = 'hike/bm.html'
+    context_object_name = 'objects'
+    ordering = ['-pk']
+    paginate_by = 6
+    def get_context_data(self,**kwargs):
+        context = super(BMAllListView,self).get_context_data(**kwargs)
+        context['title'] = TITLE
+        return context
+
 class HikeStrView(CreateView):
     """ выводит отдельный пост """
     model = Hike
