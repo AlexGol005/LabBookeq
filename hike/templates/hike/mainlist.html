@@ -13,7 +13,7 @@
     
 {% block content %}
   <div class="row">
-    <div class="col-md-6 mt-2 ml-2">
+    <div class="col-md-5 mt-2 ml-2">
         <h3>Маршруты походов</h3>
 {#основная таблица#}
 
@@ -23,7 +23,7 @@
     <tbody>
     <tr>
         <td > 
-            <h4>{{ obj.title }}</h4>
+           <center> <h4>{{ obj.title }}</h4></center>
             <h6>{{ obj.aim_station }}  -&nbsp   {{ obj.back_station }}</h6>
             <b>дней:</b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км: </b> {{ obj.kilometers }}
             <br>         
@@ -73,6 +73,6 @@
 
 {% block aside %}
   <div class="row">
-    <div class="col-md-2 mt-2 ml-2">
-        <h3>Фильтры</h3>
+    <div class="col-md-5 mt-2 ml-2">
+       <center>  <h3>Фильтры</h3> </center>
 {% endblock %}
