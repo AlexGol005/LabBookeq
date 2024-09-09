@@ -1,12 +1,17 @@
-{% extends 'main/basepersonal.html' %}
+{% extends 'main/superbasepersonal.html' %}
 {% block title %}
 {% endblock %}
 
 
 {% block content %}
     <div style="text-align: center;">
-        <a href="{% url 'bdanswersall' %}" class="btn btn-success mt-3" style="width: 250px">Билеты по базам данных</a>
-        <a href="{% url 'hikehead' %}" class="btn btn-success mt-3" style="width: 250px">Прогулки</a>
+        <a href="{% url 'bdanswersall' %}" class="btn btn-success mt-3 mr-1" style="width: 250px">Билеты по базам данных</a>
+        <a href="{% url 'hikehead' %}" class="btn btn-success mt-3 ml-1" style="width: 250px">Прогулки</a>
+        
+    </div>
+    <div style="text-align: center;">
+        <a href="{% url 'bdanswersall' %}" class="btn btn-success mt-3 mr-1" style="width: 250px">Закладки на разные темы</a>
+      
         
     </div>
 {% endblock %}
