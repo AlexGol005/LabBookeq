@@ -26,7 +26,7 @@
             <p><b>дней:</b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км: </b> {{ obj.kilometers }}<br></p>
             <p><b>Отправление c:</b> {{ obj.start_station }} -  <b>прибытие обратно на:</b> {{ obj.home_station }}<br></p>
             <p><b>Начало похода с:</b> {{ obj.aim_station }} -  <b>окончание похода на:</b> {{ obj.back_station }}<br></p>
-           <p><b>Нитка маршрута:</b> {{ obj.attractions }} <br>
+          
                <p><b>Подробности добирания и комментарии:</b> {{ obj.travel_details }} <br>
 
              <p><b>Группа VK:</b> 
@@ -38,6 +38,7 @@
                 отсутствует
                 {% endif %}</p>
             <p> <b>Даты прохождения:</b> {{ obj.dates_try}}<br></b> 
+         <p><b>Нитка маршрута:</b> {{ obj.attractions }} <br>
        <p><b>Трек план и  факт:</b></p>
     <div class="media text-muted pt-3">
       <img class="bd-placeholder-img mr-2 rounded" width=30% height=30% src="{{ obj.img_track_project.url }}">
