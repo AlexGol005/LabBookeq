@@ -70,7 +70,7 @@ class Comments(models.Model):
 class Bookmarks(models.Model):
     type = models.CharField('Раздел', max_length=10000, blank=True, choices=TYPE, null=True, default='путешествия')
     undertype = models.CharField('Подраздел', max_length=10000, blank=True, null=True)
-    text = models.IntegerField('Текст',  blank=True, null=True, default='1')
+    text = models.TextField('Текст', blank=True, null=True)
     country = models.CharField('Страна', max_length=10000, blank=True, null=True, default='Россия')
     region = models.CharField('Регион (город)', max_length=10000, blank=True, null=True, default='Любой')
     vk = models.CharField('Ссылка на источник', max_length=10000, blank=True, null=True)
