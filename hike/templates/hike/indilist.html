@@ -38,9 +38,13 @@
                 отсутствует
                 {% endif %}</p>
             <p> <b>Даты прохождения:</b> {{ obj.dates_try}}<br></b> 
-            
+       Трек план:     
     <div class="media text-muted pt-3">
-      <img class="bd-placeholder-img mr-2 rounded" width=50% height=50% src="{{ obj.img_track_fact }}">
+      <img class="bd-placeholder-img mr-2 rounded" width=50% height=50% src="{{ obj.img_track_project.url }}">
+</div>
+        Трек факт:
+            <div class="media text-muted pt-3">
+      <img class="bd-placeholder-img mr-2 rounded" width=50% height=50% src="{{ obj.img_track_fact.url }}">
 </div>
 
 {#конец основной таблицы#}
