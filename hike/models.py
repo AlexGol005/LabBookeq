@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 
 SEASONS = [('теплое время года', 'теплое время года'),('лето','лето'), ('зима','зима'), ('весна','весна'), ('осень','осень')] 
+TYPE = [('путешествия', 'путешествия'),('книги','книги'), ('фильмы','фильмы'), ('учебные курсы','учебные курсы'), ('рецепты','рецепты'), ('покупки','покупки')] 
 class Hike(models.Model):
     how_long = models.IntegerField('Сколько дней',  blank=True, null=True, default='1')
     season = models.CharField('Сезон', max_length=10000, blank=True, choices=SEASONS, null=True, default='теплое время года')
@@ -63,3 +64,12 @@ class Comments(models.Model):
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ['-pk']
+
+
+
+class Bookmarks(models.Model):
+    type = models.CharField('Раздел', max_length=10000, blank=True, choices=TYPE, null=True, default='путешествия')
+    text = models.IntegerField('Сколько дней',  blank=True, null=True, default='1')
+    country = models.CharField('Страна', max_length=10000, blank=True, null=True, default='Россия')
+    region = models.CharField('Регион (город)', max_length=10000, blank=True, null=True, default='Любой')
+    vk = models.CharField('Ссылка на источник', max_length=10000, blank=True, null=True)
