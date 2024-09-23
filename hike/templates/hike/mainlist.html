@@ -15,6 +15,18 @@
   <div class="row">
     <div class="col-md-5 mt-2 ml-2">
   <div style="text-align: center;">      <h3>Маршруты походов</h3> </div>
+        
+{#форма для поиска по полям #}
+{#стандартная#}
+<div style="text-align: center;">
+    <form action="/hike/hike/searchresult/" method="GET">
+                    {% csrf_token %}
+                    {% crispy form %}
+                </form>
+                </div>
+{#конец формы для поиска по#}
+
+        
 {#основная таблица#}
 
 {% for obj in objects %}
