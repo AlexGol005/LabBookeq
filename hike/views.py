@@ -79,3 +79,12 @@ class SearchResultView(TemplateView):
             context['objects'] = objects
             context['form'] = SearchForm(initial={'searchword': searchword})
         return context
+
+
+def filterview(request, pk):
+    """ Фильтр заметок по темам """
+    objects = Bookmarks.objects.all()
+    if pk == 1:
+        objects = objects.filter(type='книги').order_by('-pk')
+
+    return render(request,  "hike/bm.html", {'objects': objects})
