@@ -15,19 +15,7 @@
   <div class="row">
     <div class="col-md-5 mt-2 ml-2">
    <div style="text-align: center;"><h3><a href="/hike/"> Маршруты походов </a></h3></div>     
-{#форма для поиска по полям #}
-{#стандартная#}
-        <br> 
-       <div style="text-align: center;">
-    <form action="/hike/hike/searchresult/" method="GET">
-                    {% csrf_token %}
-                    {% crispy form %}
-                </form>
-                </div>
 
-        <br> 
-        
-{#конец формы для поиска по#}
 
         
 {#основная таблица#}
@@ -90,4 +78,19 @@
   <div class="row">
     <div class="col-md-5 mt-2 ml-3">
        <div style="text-align: center;">   <h3>Фильтры</h3> </div>
+        {#форма для поиска по полям #}
+{#стандартная#}
+        <br> 
+       <div style="text-align: center;">
+    <form action="/hike/hike/searchresult/" method="GET">
+                    {% csrf_token %}
+                    {% crispy form %}
+                </form>
+                </div>
+</div>
+</div>
+</div>
+        <br> 
+        
+{#конец формы для поиска по#}
 {% endblock %}
