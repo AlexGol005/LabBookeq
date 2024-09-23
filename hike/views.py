@@ -21,6 +21,7 @@ class HikeAllListView(ListView):
     def get_context_data(self,**kwargs):
         context = super(HikeAllListView,self).get_context_data(**kwargs)
         context['title'] = TITLE
+        context['form'] = SearchForm()
         return context
 
 
