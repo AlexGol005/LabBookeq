@@ -15,16 +15,16 @@
 <div class="container">
 <div class="row">
         <div class="col">
-      <div style="text-align: center;"><h3><a href="/hike/"> Маршруты походов </a></h3></div>            
+     <h3><a href="/hike/"> Маршруты походов </a></h3>     
 {#основная таблица#}
 
 {% for obj in objects %}
-    <div style="text-align: center;">
+   
     <table class="table table-bordered">
     <tbody>
     <tr>
         <td > 
-           <center> <h4>{{ obj.title }}</h4></center>
+           <h4>{{ obj.title }}</h4>
             <h6>{{ obj.aim_station }}  -&nbsp   {{ obj.back_station }}</h6>
             <b>дней:&nbsp </b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км:&nbsp  </b> {{ obj.kilometers }}
             <br>         
@@ -49,19 +49,7 @@
  {% endfor %}
 {#конец основной таблицы#}
 
-{#пагинация#}
-{# стандартная #}
-{% if is_paginated %}
-    {% if page_obj.has_previous %}
-       <a href="?page=1" class="btn btn-outline-primary">Начало</a>
-       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
-  {% endif %}
-    {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
-       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
-  {% endif %}
-  {% endif %}
-{#конец пагинации#}
+
     </div>
         <div class="col">
       2 из 2
