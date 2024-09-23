@@ -52,25 +52,20 @@
 
     </div>
         <div class="col">
-      2 из 2
-    </div>
-
-
-</div>
-</div>
-    </div>
-<div class="col">
- <div style="text-align: center;">   <h3>Фильтры</h3> </div>
+        <h3>Фильтры</h3> 
         {#форма для поиска по полям #}
 {#стандартная#}
-        <br> 
-       <div style="text-align: center;">
     <form action="/hike/hike/searchresult/" method="GET">
                     {% csrf_token %}
                     {% crispy form %}
                 </form>
-                </div>
     </div>
+
+
+</div>
+
+
+
   </div>
       </div>
 
