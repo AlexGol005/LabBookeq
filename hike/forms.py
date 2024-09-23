@@ -14,3 +14,19 @@ class CommentCreationForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ['text', 'author']
+
+
+class SearchForm(forms.Form):
+    """форма для поиска по названию маршрута"""
+    title = forms.CharField(label='Поиск по названию', required=False,
+                           help_text='слово для поиска',
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('title', css_class='form-group col-md-4 mb-0'),
+                Row(Submit('submit', 'Найти', css_class='btn  btn-warning col-md-9 mb-3 mt-4 ml-4'))))
