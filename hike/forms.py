@@ -31,5 +31,5 @@ class SearchForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Row(
-                Column('searchword', css_class='form-group col-md-8 mb-0'),
+                Column('searchword', css_class='form-group col-md-10 mb-0'),
                 Row(Submit('submit', 'Найти', css_class='btn  btn-warning col-md-9 mb-3 mt-4 ml-4'))))
