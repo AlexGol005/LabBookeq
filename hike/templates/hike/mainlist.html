@@ -12,31 +12,29 @@
 
     
 {% block content %}
-  <div class="row">
-    <div class="col-md-5 mt-2 ml-2">
-   <div style="text-align: center;"><h3><a href="/hike/"> Маршруты походов </a></h3></div>     
-
-
-        
+<div class="container">
+<div class="row">
+<div class="col">
+<div style="text-align: center;"><h3><a href="/hike/"> Маршруты походов </a></h3></div>            
 {#основная таблица#}
 
 {% for obj in objects %}
-<div style="text-align: center;">
-<table class="table table-bordered">
+    <div style="text-align: center;">
+    <table class="table table-bordered">
     <tbody>
     <tr>
         <td > 
            <center> <h4>{{ obj.title }}</h4></center>
             <h6>{{ obj.aim_station }}  -&nbsp   {{ obj.back_station }}</h6>
-            <b>дней:</b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км: </b> {{ obj.kilometers }}
+            <b>дней:&nbsp </b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км:&nbsp  </b> {{ obj.kilometers }}
             <br>         
 
             <b>Отправление&nbspс:</b>&nbsp{{ obj.start_station }}
             <br>
-            <b>Группа VK:</b> 
+            <b>Группа VK: </b> 
                 {% if obj.vk %}
                 <a href="{{ obj.vk}}"  target="blank" >
-                ссылка
+                 ссылка
                 </a>
                 {% else  %}
                 отсутствует
@@ -66,18 +64,8 @@
 {#конец пагинации#}
 </div>
 </div>
-</div>
-
-
-{% endblock %}
-
-{% block uniccontent %}
-{% endblock %}
-
-{% block aside %}
-  <div class="row">
-    <div class="col-md-5 mt-2 ml-3">
-       <div style="text-align: center;">   <h3>Фильтры</h3> </div>
+<div class="col">
+ <div style="text-align: center;">   <h3>Фильтры</h3> </div>
         {#форма для поиска по полям #}
 {#стандартная#}
         <br> 
@@ -87,10 +75,7 @@
                     {% crispy form %}
                 </form>
                 </div>
-</div>
-</div>
-</div>
-        <br> 
-        
-{#конец формы для поиска по#}
-{% endblock %}
+    </div>
+  </div>
+      </div>
+
