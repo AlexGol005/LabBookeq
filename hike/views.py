@@ -2,14 +2,17 @@ from django.shortcuts import render
 
 from django.views.generic import ListView, CreateView
 
+from django.db.models import Q
+
 
 from .models import *
 from .forms import *
 from .constants import *
 
 
+
 class HikeAllListView(ListView):
-    """ Выводит список всех постов """
+    """ Выводит список всех маршрутов """
     model = Hike
     template_name = 'hike/mainlist.html'
     context_object_name = 'objects'
@@ -22,7 +25,7 @@ class HikeAllListView(ListView):
 
 
 class BMAllListView(ListView):
-    """ Выводит список всех постов """
+    """ Выводит список всех закладок на разные темы """
     model = Bookmarks
     template_name = 'hike/bm.html'
     context_object_name = 'objects'
@@ -34,7 +37,7 @@ class BMAllListView(ListView):
         return context
 
 class HikeStrView(CreateView):
-    """ выводит отдельный пост """
+    """ выводит отдельный маршрут """
     model = Hike
     template_name = 'hike/indilist.html'
     form_class = CommentCreationForm
@@ -57,3 +60,21 @@ class HikeStrView(CreateView):
         order.forNote = Hike.objects.get(pk=self.kwargs['pk'])
         order.save()
         return super().form_valid(form)
+
+
+class SearchResultView(TemplateView):
+    """ Представление, которое выводит результаты поиска по слову/фразе в списке маршрутов """
+
+    template_name = 'hike/mainlist.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchResultView, self).get_context_data(**kwargs)
+        searchword = self.request.GET['searchword']
+        if self.request.GET['searchword']:
+            searchword1 = self.request.GET['searchword'][0].upper() + self.request.GET['searchword'][1:]
+        if searchword:
+            objects = Hike.objects.\
+            filter(Q(title__icontains=searchword)|Q(title__icontains=searchword1)).order_by('pk')
+            context['objects'] = objects
+        context['form'] = SearchResultView(initial={'searchword': searchword})
+        return context
