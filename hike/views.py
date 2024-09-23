@@ -21,7 +21,6 @@ class HikeAllListView(ListView):
     paginate_by = 6
     def get_context_data(self,**kwargs):
         context = super(HikeAllListView,self).get_context_data(**kwargs)
-        context['title'] = TITLE
         context['form'] = SearchForm()
         return context
 
@@ -78,5 +77,5 @@ class SearchResultView(TemplateView):
             objects = Hike.objects.\
             filter(Q(title__icontains=searchword)|Q(title__icontains=searchword1)).order_by('pk')
             context['objects'] = objects
-        context['form'] = SearchResultView(initial={'searchword': searchword})
+            context['form'] = SearchForm(initial={'searchword': searchword})
         return context
