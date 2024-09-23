@@ -8,6 +8,7 @@ from django.db.models import Q
 from .models import *
 from .forms import *
 from .constants import *
+from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 
 
 
