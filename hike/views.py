@@ -115,7 +115,9 @@ class ITSearchResultView(TemplateView):
 def filterview(request, pk):
     """ Фильтр заметок по темам """
     objects = Bookmarks.objects.all()
-    if pk == 1:
-        objects = objects.filter(type='книги').order_by('-pk')
+    for i in range(len(TYPE)+1):
+        s = TYPE[i][0]
+        if pk == i:
+            objects = objects.filter(type=s).order_by('-pk')
 
     return render(request,  "hike/bm.html", {'objects': objects})
