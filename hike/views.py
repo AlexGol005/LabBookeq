@@ -31,7 +31,6 @@ class BMAllListView(ListView, UpdateView):
     model = Bookmarks
     template_name = 'hike/bm.html'
     context_object_name = 'objects'
-    form_class = UdateForm
     ordering = ['-pk']
     paginate_by = 6
     def get_queryset(self):
@@ -40,11 +39,6 @@ class BMAllListView(ListView, UpdateView):
         context = super(BMAllListView,self).get_context_data(**kwargs)
         context['form'] = UdateForm()
         return context
-    def form_valid(self, form):
-        order = form.save(commit=False)
-        order.save()
-        return redirect(order)
-
 
 
 
