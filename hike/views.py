@@ -25,7 +25,7 @@ class HikeAllListView(ListView):
         return context
 
 
-
+.filter(done=false)
 class BMAllListView(ListView):
     """ Выводит список всех закладок на разные темы """
     model = Bookmarks
@@ -33,6 +33,8 @@ class BMAllListView(ListView):
     context_object_name = 'objects'
     ordering = ['-pk']
     paginate_by = 6
+    def get_queryset(self):
+        return Bookmarks.objects.filter(done=false)
     def get_context_data(self,**kwargs):
         context = super(BMAllListView,self).get_context_data(**kwargs)
         context['form'] = UdateForm()
@@ -117,7 +119,7 @@ class ITSearchResultView(TemplateView):
 
 def filterview(request, pk):
     """ Фильтр заметок по темам """
-    objects = Bookmarks.objects.all()
+    objects = Bookmarks.objects.filter(done=false)
     for i in range(len(TYPE)):
         s = TYPE[i][0]
         if pk == i:
