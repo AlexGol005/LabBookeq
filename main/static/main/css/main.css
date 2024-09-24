@@ -57,6 +57,12 @@ right: 0;
     border-color: #4d74bd !important;
     background-color: rgb(245, 245, 246) !important;
     text-align: center !important;
+}
+
+.table-bordered_flex td, .table-bordered_flex th{
+    border-color: #4d74bd !important;
+    background-color: rgb(245, 245, 246) !important;
+    text-align: center !important;
     width:100% !important;
     word-break: break-all !important;
     table-layout: fixed !important;
