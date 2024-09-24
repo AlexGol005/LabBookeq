@@ -12,13 +12,14 @@
 
     
 {% block content %}
-  <div class="row">
-    <div class="col-md-5 mt-2 ml-2">
-  <div style="text-align: center;">      <h3>Закладки</h3> </div>
+<div class="container">
+<div class="row">
+        <div class="col-7">
+  <center>  <h3>Закладки</h3> </center>
 {#основная таблица#}
 
 {% for obj in objects %}
-<div style="text-align: center;">
+
 <table class="table table-bordered">
     <tbody>
     <tr>
@@ -52,31 +53,23 @@
 {# стандартная #}
 {% if is_paginated %}
     {% if page_obj.has_previous %}
-       <a href="?page=1" class="btn btn-outline-primary">Начало</a>
-       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
+       <a href="?page=1" class="btn btn-outline-primary mt-1">Начало</a>
+       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary mt-1">Предыдущая</a>
   {% endif %}
     {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
-       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
+       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary mt-1">Следующая</a>
+       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary mt-1">Последняя</a>
   {% endif %}
   {% endif %}
 {#конец пагинации#}
 </div>
-</div>
-</div>
 
+  <div class="col">
 
-
-{% endblock %}
-
-{% block uniccontent %}
-{% endblock %}
-
-{% block aside %}
-  <div class="row">
-    <div class="col-md-5 mt-2 ml-3">
-       <div style="text-align: center;">   <h3>Фильтры</h3> </div>
+       <center>   <h3>Фильтры</h3> </center>
         <div style="text-align: center;"> <a href="{% url 'bmfilter' pk=1 %}" class="btn  btn-primary  mt-3" style="width: 100px">Книги</a></div>
         </div>
-      </div>
+  
+</div>
+</div>
 {% endblock %}
