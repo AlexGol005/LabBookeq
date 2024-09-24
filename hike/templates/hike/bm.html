@@ -71,18 +71,20 @@
 
 <br>
 <!-- Пример отдельной кнопки danger -->
-<div class="btn-group">
-  <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+ <center><div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     Действие
   </button>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Действие</a></li>
-    <li><a class="dropdown-item" href="#">Другое действие</a></li>
-    <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><a class="dropdown-item" href="#">Отделенная ссылка</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=1 %}">путешествия</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=2 %}">книги</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=3 %}">книги</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=4 %}">музеи</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=5 %}">учебные курсы</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=6 %}">рецепты</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=7 %}">покупки</a></li>
   </ul>
-</div>
+</div> </center>
         </div>
   
 </div>
