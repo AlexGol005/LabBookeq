@@ -25,7 +25,7 @@ class HikeAllListView(ListView):
         return context
 
 
-.filter(done=false)
+
 class BMAllListView(ListView):
     """ Выводит список всех закладок на разные темы """
     model = Bookmarks
