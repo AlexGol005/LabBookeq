@@ -6,4 +6,10 @@ from .models import *
 admin.site.register(Hike)
 admin.site.register(Comments)
 admin.site.register(Bookmarks)
-admin.site.register(Itbookmarks)
+
+@admin.register(Itbookmarks)
+class NoteAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'type',)
+    search_fields = ['pk']
+    
+
