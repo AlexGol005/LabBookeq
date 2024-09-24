@@ -68,6 +68,18 @@
 
        <center>   <h3>Фильтры</h3> </center>
         <div style="text-align: center;"> <a href="{% url 'bmfilter' pk=1 %}" class="btn  btn-primary  mt-3" style="width: 100px">Книги</a></div>
+
+
+      <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    Кнопка выпадающего списка
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=1 %}">Книги</a></li>
+    <li><a class="dropdown-item" href="#">Фильмы</a></li>
+    <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+  </ul>
+</div>
         </div>
   
 </div>
