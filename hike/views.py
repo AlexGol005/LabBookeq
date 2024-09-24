@@ -26,7 +26,7 @@ class HikeAllListView(ListView):
 
 
 
-class BMAllListView(ListView, UpdateView):
+class BMAllListView(ListView):
     """ Выводит список всех закладок на разные темы """
     model = Bookmarks
     template_name = 'hike/bm.html'
