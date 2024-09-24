@@ -39,10 +39,7 @@ class BMAllListView(ListView):
         context = super(BMAllListView,self).get_context_data(**kwargs)
         context['form'] = UdateForm()
         return context
-    def form_valid(self, form):
-        order = form.save(commit=False)
-        order.save()
-        return super().form_valid(form)
+
 
 
 
