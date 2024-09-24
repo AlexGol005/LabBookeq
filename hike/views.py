@@ -31,6 +31,7 @@ class BMAllListView(ListView, UpdateView):
     model = Bookmarks
     template_name = 'hike/bm.html'
     context_object_name = 'objects'
+    form_class = BusinessForm
     ordering = ['-pk']
     paginate_by = 6
     def get_queryset(self):
