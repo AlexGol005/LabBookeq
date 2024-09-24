@@ -35,7 +35,7 @@ class SearchForm(forms.Form):
                 Row(Submit('submit', 'Найти', css_class='btn  btn-warning col-md-9 mb-3 mt-4 ml-4'))))
 
 
-class UdateForm(forms.ModelForm):
+class UdateForm(forms.UpdateForm):
     """форма для  обновления записи"""
 
     done = forms.BooleanField(label='', required=False)
