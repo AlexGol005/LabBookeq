@@ -1,1 +1,78 @@
+{% extends 'main/superbasepersonal.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
+{#название страницы#}
+{#стандартная#}
+{% block title %}
+{{title}} 
+{% endblock %}
+{#конец названия страницы#}
+
+
+    
+{% block content %}
+<div class="container">
+<div class="row">
+        <div class="col-7">
+  <center>  <h3>Записная книжка по айти</h3> </center>
+{#основная таблица#}
+
+{% for obj in objects %}
+
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+        <td > 
+           <p><b>Тема:</b>{{ obj.type }}</p>
+          <p><b>Текст:</b>{{ obj.text }}</p>
+          <p>
+
+            
+            <b>Ссылка:</b> 
+                {% if obj.vk %}
+                <a href="{{ obj.vk}}"  target="blank" >
+                ссылка
+                </a>
+                {% else  %}
+                отсутствует
+                {% endif %}
+            <br> </p>
+
+       
+        </td>
+    </tr>
+    </tbody>
+</table>
+ {% endfor %}
+{#конец основной таблицы#}
+
+{#пагинация#}
+{# стандартная #}
+{% if is_paginated %}
+    {% if page_obj.has_previous %}
+       <a href="?page=1" class="btn btn-outline-primary mt-1">Начало</a>
+       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary mt-1">Предыдущая</a>
+  {% endif %}
+    {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary mt-1">Следующая</a>
+       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary mt-1">Последняя</a>
+  {% endif %}
+  {% endif %}
+{#конец пагинации#}
+</div>
+
+  <div class="col">
+
+       <center>   <h3>Фильтры</h3> </center>
+                {#форма для поиска по полям #}
+{#стандартная#}
+    <form action="/it/searchresult/" method="GET">
+                    {% csrf_token %}
+                    {% crispy form %}
+                </form>
+        </div>
+  
+</div>
+</div>
+{% endblock %}
