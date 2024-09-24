@@ -6,4 +6,4 @@ from .models import *
 admin.site.register(Hike)
 admin.site.register(Comments)
 admin.site.register(Bookmarks)
-admin.site.register(IT)
+admin.site.register(Itbookmarks)
