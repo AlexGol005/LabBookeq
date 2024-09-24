@@ -37,14 +37,7 @@ class BMAllListView(ListView):
         context = super(BMAllListView,self).get_context_data(**kwargs)
         context['form'] = UdateForm()
         return context
-    def add_link(request):
-        if request.method == "POST":
-            form = UdateForm(request.POST)
 
-        if form.is_valid():
-            Bookmarks.objects.create(address=form.cleaned_data['address'])
-
-        return HttpResponseRedirect('/')
 
 
 class ITAllListView(ListView):
