@@ -42,7 +42,7 @@ class BMAllListView(ListView, UpdateView):
     def form_valid(self, form):
         order = form.save(commit=False)
         order.save()
-            return redirect(order)
+        return redirect(order)
 
 
 
