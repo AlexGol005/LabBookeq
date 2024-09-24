@@ -13,8 +13,11 @@
     
 {% block content %}
 <div class="container">
+        <center>  <h3><a href="/personal/"> Персональный раздел </a></h3>     </center>
+     <br>
 <div class="row">
         <div class="col-7">
+            
    <center>  <h3><a href="/hike/"> Маршруты походов </a></h3>     </center>
 {#основная таблица#}
 
@@ -25,7 +28,7 @@
     <tr>
         <td > 
            <h4>{{ obj.title }}</h4>
-            <h6>{{ obj.aim_station }}  -&nbsp   {{ obj.back_station }}</h6>
+            <h6>{{ obj.aim_station }}  -&nbsp;   {{ obj.back_station }}</h6>
             <b>дней:&nbsp </b> {{ obj.how_long }}  &nbsp&nbsp&nbsp&nbsp&nbsp <b>км:&nbsp  </b> {{ obj.kilometers }}
             <br>         
 
