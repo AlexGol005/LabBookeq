@@ -39,11 +39,15 @@ class BMAllListView(ListView):
 
 class ITAllListView(ListView):
     """ Выводит список всех закладок по айти """
-    model = IT
+    model = Itbookmarks
     template_name = 'hike/it.html'
     context_object_name = 'objects'
     ordering = ['-pk']
     paginate_by = 6
+    def get_context_data(self,**kwargs):
+        context = super(ITAllListView,self).get_context_data(**kwargs)
+        context['form'] = SearchForm()
+        return context
 
 
 class HikeStrView(CreateView):
@@ -100,7 +104,7 @@ class ITSearchResultView(TemplateView):
         if self.request.GET['searchword']:
             searchword1 = self.request.GET['searchword'][0].upper() + self.request.GET['searchword'][1:]
         if searchword:
-            objects = IT.objects.\
+            objects = Itbookmarks.objects.\
             filter(Q(text__icontains=searchword)|Q(text__icontains=searchword1)).order_by('pk')
             context['objects'] = objects
             context['form'] = SearchForm(initial={'searchword': searchword})
