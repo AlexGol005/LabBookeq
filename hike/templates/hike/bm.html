@@ -14,6 +14,7 @@
 {% block content %}
 <div class="container">
     <center>  <h3><a href="/personal/"> Персональный раздел </a></h3>     </center>
+     <br>
 <div class="row">
         <div class="col-7">
 <center>  <h3><a href="/hike/bm/"> Тематические закладки </a></h3>     </center>
@@ -26,14 +27,14 @@
     <tbody>
     <tr>
         <td > 
-           <p><b>Тип:<pre></b>{{ obj.type }}</p>
-          <p><b>подтип:<pre></b>{{ obj.undertype }}</p>
-           <p><b>Регион:<pre></b>{{ obj.country }}, {{ obj.region }}</p>
-          <p><b>Текст:<pre></b>{{ obj.text }}</p>
+           <p><b>Тип:&nbsp;</b>{{ obj.type }}</p>
+          <p><b>подтип:&nbsp;</b>{{ obj.undertype }}</p>
+           <p><b>Регион:&nbsp;</b>{{ obj.country }}, {{ obj.region }}</p>
+          <p><b>Текст:&nbsp;</b>{{ obj.text }}</p>
           <p>
 
             
-            <b>Ссылка:<pre></b> 
+            <b>Ссылка:&nbsp;</b> 
                 {% if obj.vk %}
                 <a href="{{ obj.vk}}"  target="blank" >
                 ссылка
