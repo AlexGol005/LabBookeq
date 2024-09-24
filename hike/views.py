@@ -38,9 +38,8 @@ class BMAllListView(ListView):
         context['form'] = UdateForm()
         return context
     def add_link(request):
-    # Sole job of this function is to process the form when POSTed. 
         if request.method == "POST":
-        form = UdateForm(request.POST)
+            form = UdateForm(request.POST)
 
         if form.is_valid():
             Bookmarks.objects.create(address=form.cleaned_data['address'])
