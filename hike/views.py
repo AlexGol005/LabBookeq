@@ -34,7 +34,7 @@ class BMAllListView(ListView):
     ordering = ['-pk']
     paginate_by = 6
     def get_queryset(self):
-        return Bookmarks.objects.filter(done=false)
+        return Bookmarks.objects.filter(done=False)
     def get_context_data(self,**kwargs):
         context = super(BMAllListView,self).get_context_data(**kwargs)
         context['form'] = UdateForm()
@@ -119,7 +119,7 @@ class ITSearchResultView(TemplateView):
 
 def filterview(request, pk):
     """ Фильтр заметок по темам """
-    objects = Bookmarks.objects.filter(done=false)
+    objects = Bookmarks.objects.filter(done=False)
     for i in range(len(TYPE)):
         s = TYPE[i][0]
         if pk == i:
