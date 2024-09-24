@@ -23,9 +23,7 @@ class HikeAllListView(ListView):
         context = super(HikeAllListView,self).get_context_data(**kwargs)
         context['form'] = SearchForm() 
         return context
-    def form_valid(self, form):
-        order = form.save(commit=False)
-        return redirect(order)
+
 
 
 class BMAllListView(ListView):
@@ -39,6 +37,9 @@ class BMAllListView(ListView):
         context = super(BMAllListView,self).get_context_data(**kwargs)
         context['form'] = UdateForm()
         return context
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        return redirect(order)
 
 
 class ITAllListView(ListView):
