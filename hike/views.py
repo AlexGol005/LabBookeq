@@ -34,8 +34,17 @@ class BMAllListView(ListView):
     paginate_by = 6
     def get_context_data(self,**kwargs):
         context = super(BMAllListView,self).get_context_data(**kwargs)
-        context['title'] = TITLE
         return context
+
+
+class ITAllListView(ListView):
+    """ Выводит список всех закладок по айти """
+    model = IT
+    template_name = 'hike/it.html'
+    context_object_name = 'objects'
+    ordering = ['-pk']
+    paginate_by = 6
+
 
 class HikeStrView(CreateView):
     """ выводит отдельный маршрут """
@@ -79,6 +88,24 @@ class SearchResultView(TemplateView):
             context['objects'] = objects
             context['form'] = SearchForm(initial={'searchword': searchword})
         return context
+
+class ITSearchResultView(TemplateView):
+    """ Представление, которое выводит результаты поиска по закладкам айти """
+
+    template_name = 'hike/it.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ITSearchResultView, self).get_context_data(**kwargs)
+        searchword = self.request.GET['searchword']
+        if self.request.GET['searchword']:
+            searchword1 = self.request.GET['searchword'][0].upper() + self.request.GET['searchword'][1:]
+        if searchword:
+            objects = IT.objects.\
+            filter(Q(text__icontains=searchword)|Q(text__icontains=searchword1)).order_by('pk')
+            context['objects'] = objects
+            context['form'] = SearchForm(initial={'searchword': searchword})
+        return context
+
 
 
 def filterview(request, pk):
