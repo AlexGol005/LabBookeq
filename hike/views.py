@@ -26,7 +26,7 @@ class HikeAllListView(ListView):
 
 
 
-class BMAllListView(ListView):
+class BMAllListView(ListView, UpdateView):
     """ Выводит список всех закладок на разные темы """
     model = Bookmarks
     template_name = 'hike/bm.html'
@@ -39,6 +39,10 @@ class BMAllListView(ListView):
         context = super(BMAllListView,self).get_context_data(**kwargs)
         context['form'] = UdateForm()
         return context
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        order.save()
+            return redirect(order)
 
 
 
