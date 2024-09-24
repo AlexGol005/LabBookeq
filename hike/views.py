@@ -21,7 +21,7 @@ class HikeAllListView(ListView):
     paginate_by = 6
     def get_context_data(self,**kwargs):
         context = super(HikeAllListView,self).get_context_data(**kwargs)
-        context['form'] = SearchForm()
+        context['form'] = SearchForm() 
         return context
 
 
@@ -34,6 +34,7 @@ class BMAllListView(ListView):
     paginate_by = 6
     def get_context_data(self,**kwargs):
         context = super(BMAllListView,self).get_context_data(**kwargs)
+        context['form'] = UdateForm()
         return context
 
 
@@ -119,5 +120,6 @@ def filterview(request, pk):
         s = TYPE[i][0]
         if pk == i:
             objects = objects.filter(type=s).order_by('-pk')
+            form = UdateForm()
 
-    return render(request,  "hike/bm.html", {'objects': objects})
+    return render(request,  "hike/bm.html", {'objects': objects, 'form':form})
