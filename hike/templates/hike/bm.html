@@ -24,14 +24,14 @@
     <tbody>
     <tr>
         <td > 
-           <p><b>Тип:</b>{{ obj.type }}</p>
-          <p><b>подтип:</b>{{ obj.undertype }}</p>
-           <p><b>Регион:</b>{{ obj.country }}, {{ obj.region }}</p>
-          <p><b>Текст:</b>{{ obj.text }}</p>
+           <p><b>Тип:<pre></b>{{ obj.type }}</p>
+          <p><b>подтип:<pre></b>{{ obj.undertype }}</p>
+           <p><b>Регион:<pre></b>{{ obj.country }}, {{ obj.region }}</p>
+          <p><b>Текст:<pre></b>{{ obj.text }}</p>
           <p>
 
             
-            <b>Ссылка:</b> 
+            <b>Ссылка:<pre></b> 
                 {% if obj.vk %}
                 <a href="{{ obj.vk}}"  target="blank" >
                 ссылка
@@ -73,16 +73,16 @@
 <!-- Пример отдельной кнопки danger -->
  <center><div class="btn-group">
   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    Действие
+    Раздел
   </button>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=1 %}">путешествия</a></li>
-    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=2 %}">книги</a></li>
-    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=3 %}">фильмы</a></li>
-    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=4 %}">музеи</a></li>
-    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=5 %}">учебные курсы</a></li>
-    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=6 %}">рецепты</a></li>
-    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=7 %}">покупки</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=0 %}">путешествия</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=1 %}">книги</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=2 %}">фильмы</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=3 %}">музеи</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=4 %}">учебные курсы</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=5 %}">рецепты</a></li>
+    <li><a class="dropdown-item" href="{% url 'bmfilter' pk=6 %}">покупки</a></li>
   </ul>
 </div> </center>
         </div>
