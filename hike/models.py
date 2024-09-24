@@ -89,7 +89,7 @@ class Itbookmarks(models.Model):
     vk = models.CharField('Ссылка', max_length=10000, blank=True, null=True)
 
     def __str__(self):
-        return f' {self.type} , {self.region}'
+        return f' {self.type}'
 
     class Meta:
         verbose_name = 'Записная книжка по айти'
