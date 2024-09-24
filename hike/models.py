@@ -74,10 +74,23 @@ class Bookmarks(models.Model):
     country = models.CharField('Страна', max_length=10000, blank=True, null=True, default='Россия')
     region = models.CharField('Регион (город)', max_length=10000, blank=True, null=True, default='Любой')
     vk = models.CharField('Ссылка на источник', max_length=10000, blank=True, null=True)
-
+    done = models.BooleanField(verbose_name='Использовано ли?', default=False, null=True)
+                                   
     def __str__(self):
         return f' {self.type} , {self.region}'
 
     class Meta:
         verbose_name = 'Закладки по темам'
         verbose_name_plural = 'Закладки по темам'
+
+class Itbookmarks(models.Model):
+    type = models.CharField('Раздел', max_length=10000, blank=True,  null=True, default='любой')
+    text = models.TextField('Текст', blank=True, null=True)
+    vk = models.CharField('Ссылка', max_length=10000, blank=True, null=True)
+
+    def __str__(self):
+        return f' {self.type} , {self.region}'
+
+    class Meta:
+        verbose_name = 'Записная книжка по айти'
+        verbose_name_plural = 'Записная книжка по айти'
