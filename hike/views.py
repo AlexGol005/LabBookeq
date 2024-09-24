@@ -34,7 +34,7 @@ class BMAllListView(ListView):
     ordering = ['-pk']
     paginate_by = 6
     def get_queryset(self):
-        return Bookmarks.objects.filter(done=False)
+        return Bookmarks.objects.filter(done=False).order_by('-pk')
     def get_context_data(self,**kwargs):
         context = super(BMAllListView,self).get_context_data(**kwargs)
         context['form'] = UdateForm()
