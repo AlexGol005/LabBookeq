@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.shortcuts import render
 
 from django.views.generic import ListView, CreateView
@@ -10,6 +12,7 @@ from .forms import *
 from .constants import *
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 
+now = date.today()
 
 
 class HikeAllListView(ListView):
@@ -126,4 +129,18 @@ def filterview(request, pk):
             objects = objects.filter(type=s).order_by('-pk')
             form = UdateForm()
 
+    return render(request,  "hike/bm.html", {'objects': objects, 'form':form})
+
+
+def hikefilterview(request, pk):
+    """ Фильтр пройденных и непройденных маршрутов в этом году """
+    model = Hike
+    ar = str(now.year)[2:]
+    # a = str(model.dates_try)[-2:]
+    # b = str(model.dates_try)[-3:-1]
+    if pk = 0:
+        objects = model.objects.filter(str(dates_try)[-2:]=ar).order_by('-pk')
+    if pk = 1:   
+        objects = model.objects.all()
+    form = SearchForm() 
     return render(request,  "hike/bm.html", {'objects': objects, 'form':form})
