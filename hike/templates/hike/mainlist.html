@@ -64,24 +64,29 @@
   {% endif %}
   {% endif %}
 {#конец пагинации#}
-
-    </div>
-        <div class="col">
-       <center> <h3>Фильтры</h3> </center>
-        {#форма для поиска по полям #}
-{#стандартная#}
-    <form action="/hike/hike/searchresult/" method="GET">
-                    {% csrf_token %}
-                    {% crispy form %}
-                </form>
-    </div>
-
-
 </div>
-
-
-
-  </div>
-      </div>
+<div class="col">
+ <center> <h3>Фильтры</h3> </center>
+    {#фильтр 1 форма для поиска по заголовку #}
+        <form action="/hike/hike/searchresult/" method="GET">
+         {% csrf_token %}
+         {% crispy form %}
+         </form>
+    <br>
+    {#фильтр 2 поиск пройденных и непройденных маршрутов в этом году #}
+     <center><div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Пройдено в текущем году или нет?
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=0 %}">пройдено в этом году</a></li>
+    <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=1 %}">не пройдено в этом году</a></li>
+  </ul>
+</div> </center>
+    
+</div>
+</div>
+</div>
+</div>
 
 {% endblock %}
