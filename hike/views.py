@@ -134,13 +134,12 @@ def filterview(request, pk):
 
 def hikefilterview(request, pk):
     """ Фильтр пройденных и непройденных маршрутов в этом году """
-    model = Hike
     ar = str(now.year)[2:]
     # a = str(model.dates_try)[-2:]
     # b = str(model.dates_try)[-3:-1]
     if pk == 0:
-        objects = model.objects.filter(dates_try[-2:]==ar).order_by('-pk')
+        objects = Hike.objects.filter(dates_try[-2:]==ar).order_by('-pk')
     if pk == 1:   
-        objects = model.objects.all()
+        objects = Hike.objects.all()
     form = SearchForm() 
     return render(request,  "hike/bm.html", {'objects': objects, 'form':form})
