@@ -182,5 +182,5 @@ def readyhikefilterview(request, qk):
         objects = Hike.objects.filter(maturity=False).order_by('-pk')  
     form = SearchForm() 
     pk = 0
-    rk = 0
+    qk = 0
     return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form, 'pk': pk , 'qk': qk, 'rk': rk})
