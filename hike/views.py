@@ -135,11 +135,12 @@ def filterview(request, pk):
 def hikefilterview(request, pk):
     """ Фильтр пройденных и непройденных маршрутов в этом году """
     ar = str(now.year)[2:]
+    arr = ar + ';'
     # a = str(model.dates_try)[-2:]
     # b = str(model.dates_try)[-3:-1]
     if pk == 0:
         objects = Hike.objects.filter(dates_try__iendswith=ar).order_by('-pk')
     if pk == 1:   
-        objects = Hike.objects.all()
+        objects = Hike.objects.filter(dates_try__regex=r"(ar|arr)$").order_by('-pk')
     form = SearchForm() 
     return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form})
