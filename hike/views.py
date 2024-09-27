@@ -141,6 +141,6 @@ def hikefilterview(request, pk):
     if pk == 0:
         objects = Hike.objects.filter(dates_try__iendswith=ar).order_by('-pk') | Hike.objects.filter(dates_try__iendswith=arr).order_by('-pk')
     if pk == 1:   
-        objects = Hike.objects.filter(dates_try__regex=r"(ar|arr)$").order_by('-pk')
+        objects = Hike.objects.exclude(dates_try__iendswith=ar).order_by('-pk') & Hike.objects.exclude(dates_try__iendswith=arr).order_by('-pk')
     form = SearchForm() 
     return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form})
