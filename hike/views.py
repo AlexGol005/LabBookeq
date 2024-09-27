@@ -139,7 +139,7 @@ def hikefilterview(request, pk):
     # a = str(model.dates_try)[-2:]
     # b = str(model.dates_try)[-3:-1]
     if pk == 0:
-        objects = Hike.objects.filter(dates_try__iendswith=ar).order_by('-pk')
+        objects = Hike.objects.filter(dates_try__iendswith=ar).order_by('-pk') & Hike.objects.filter(dates_try__iendswith=arr).order_by('-pk')
     if pk == 1:   
         objects = Hike.objects.filter(dates_try__regex=r"(ar|arr)$").order_by('-pk')
     form = SearchForm() 
