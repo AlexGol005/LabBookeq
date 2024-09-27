@@ -172,7 +172,7 @@ def donehikefilterview(request, qk):
     rk = 0
     return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form, 'pk': pk , 'qk': qk, 'rk': rk})
 
-def readyhikefilterview(request, qk):
+def readyhikefilterview(request, rk):
     """ Фильтр готовых и не готовых маршрутов"""
     if rk == 0:   
         objects = Hike.objects.all()
