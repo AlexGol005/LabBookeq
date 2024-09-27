@@ -135,7 +135,7 @@ def filterview(request, pk):
 def hikefilterview(request, pk):
     """ Фильтр пройденных и непройденных маршрутов в этом году """
     ar = str(now.year)[2:]
-    arr = ar + ';'
+    arr = f'{ar};'
     # a = str(model.dates_try)[-2:]
     # b = str(model.dates_try)[-3:-1]
     if pk == 0:
