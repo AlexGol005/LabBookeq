@@ -81,20 +81,20 @@
      <center><div class="btn-group">
           
 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    Все маршруты
+    Найти
   </button>
   <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=0 %}">все</a></li>
+      <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=0 %}">Все маршруты</a></li>
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=1 %}">пройдено</a></li>
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=2 %}">не пройдено</a></li>
   </ul>
 </div> </center>
    {% elif pk == 1 %} 
-    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+   <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     пройдено
   </button>
   <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=0 %}">все</a></li>
+      <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=0 %}">Все маршруты</a></li>
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=1 %}">пройдено</a></li>
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=2 %}">не пройдено</a></li>
   </ul>
@@ -102,11 +102,11 @@
 </div> </center>
     {% elif pk == 2 %} 
      
-        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     не пройдено
   </button>
   <ul class="dropdown-menu">
-     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=0 %}">все</a></li>
+     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=0 %}">Все маршруты</a></li>
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=1 %}">пройдено</a></li>
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=2 %}">не пройдено</a></li>
   </ul>
