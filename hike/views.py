@@ -111,6 +111,8 @@ class SearchResultView(TemplateView):
             context['objects'] = objects
             context['form'] = SearchForm(initial={'searchword': searchword})
             context['pk'] = 0
+            context['qk'] = 0
+            context['rk'] = 0
         return context
 
 class ITSearchResultView(TemplateView):
