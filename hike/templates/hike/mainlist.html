@@ -74,69 +74,12 @@
          {% csrf_token %}
          {% crispy form %}
          </form>
-    <br>
-        {#фильтр 1 форма для поиска по нужным полям #}
- <center> <h6>  Поиск </h6></center>
-        <form action="/hike/hike/searchresult/" method="GET">
-         {% csrf_token %}
-         {% crispy form %}
-         </form>
-    <br>
-        {#фильтр 1 форма для поиска по нужным полям #}
- <center> <h6>  Поиск </h6></center>
-        <form action="/hike/hike/searchresult/" method="GET">
-         {% csrf_token %}
-         {% crispy form %}
-         </form>
-    <br>
-        {#фильтр 1 форма для поиска по нужным полям #}
- <center> <h6>  Поиск </h6></center>
-        <form action="/hike/hike/searchresult/" method="GET">
-         {% csrf_token %}
-         {% crispy form %}
-         </form>
-    <br>
-        {#фильтр 1 форма для поиска по нужным полям #}
- <center> <h6>  Поиск </h6></center>
-        <form action="/hike/hike/searchresult/" method="GET">
-         {% csrf_token %}
-         {% crispy form %}
-         </form>
-    <br>
-        {#фильтр 1 форма для поиска по нужным полям #}
- <center> <h6>  Поиск </h6></center>
-        <form action="/hike/hike/searchresult/" method="GET">
-         {% csrf_token %}
-         {% crispy form %}
-         </form>
-    <br>
-        {#фильтр 1 форма для поиска по нужным полям #}
- <center> <h6>  Поиск </h6></center>
-        <form action="/hike/hike/searchresult/" method="GET">
-         {% csrf_token %}
-         {% crispy form %}
-         </form>
-    <br>
-        {#фильтр 1 форма для поиска по нужным полям #}
- <center> <h6>  Поиск </h6></center>
-        <form action="/hike/hike/searchresult/" method="GET">
-         {% csrf_token %}
-         {% crispy form %}
-         </form>
-    <br>
-        {#фильтр 1 форма для поиска по нужным полям #}
- <center> <h6>  Поиск </h6></center>
-        <form action="/hike/hike/searchresult/" method="GET">
-         {% csrf_token %}
-         {% crispy form %}
-         </form>
-    <br>
+
+ 
 {#фильтр 2 поиск пройденных и непройденных маршрутов в этом году #}
     <center> <h6>  Пройдено в этом году?  </h6></center>
-     {% if pk == 0 %}
-    
-     <center><div class="btn-group">
-          
+     {% if pk == 0 %}    
+     <center><div class="btn-group">          
 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     Найти
   </button>
@@ -146,22 +89,21 @@
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=2 %}">не пройдено</a></li>
   </ul>
 </div> </center>
-     <br>
+
    {% elif pk == 1 %} 
-   <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+     <center><div class="btn-group">   
+    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     пройдено
   </button>
   <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=0 %}">Все маршруты</a></li>
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=1 %}">пройдено</a></li>
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=2 %}">не пройдено</a></li>
-  </ul>
-   
+  </ul>   
 </div> </center>
-     <br>
-    {% elif pk == 2 %} 
-     
-      <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    {% elif pk == 2 %}      
+      <center>  <div class="btn-group">   
+          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     не пройдено
   </button>
   <ul class="dropdown-menu">
@@ -191,7 +133,8 @@
 </div> </center>
      <br>
    {% elif qk == 1 %} 
-   <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+   <center>  <div class="btn-group"> 
+       <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     пройдено
   </button>
   <ul class="dropdown-menu">
@@ -204,7 +147,8 @@
  <br>
     {% elif qk == 2 %} 
      
-      <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <center>   <div class="btn-group">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     не пройдено
   </button>
   <ul class="dropdown-menu">
@@ -233,7 +177,8 @@
 </div> </center>
      <br>
    {% elif qk == 1 %} 
-   <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+   <center>  <div class="btn-group">
+       <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     пройдено
   </button>
   <ul class="dropdown-menu">
@@ -246,7 +191,8 @@
  <br>
     {% elif qk == 2 %} 
      
-      <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <center>   <div class="btn-group">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     не пройдено
   </button>
   <ul class="dropdown-menu">
