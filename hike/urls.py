@@ -13,4 +13,6 @@ urlpatterns = [
     path('hike/searchresult/', views.SearchResultView.as_view(), name='hikesearchresult'),
     path('filter/<int:pk>', views.filterview, name='bmfilter'),
     path('hikefilter/<int:pk>', views.hikefilterview, name='hikefilteryear'),
+    path('donehikefilter/<int:qk>', views.donehikefilterview, name='donehikefilteryear'),
+    path('readyhikefilter/<int:rk>', views.readyhikefilterview, name='readyhikefilteryear'),
     ]
