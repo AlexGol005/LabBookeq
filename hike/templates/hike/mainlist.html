@@ -116,45 +116,6 @@
     {% endif %} 
     {#фильтр 3 поиск пройденных и непройденных маршрутов вообще #}
     <center> <h6>  Пройдено когда-то  </h6></center>
-     {% if rk == 0 %}
-    
-     <center><div class="btn-group">
-          
-<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    Найти
-  </button>
-  <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="{% url 'donehikefilteryear' rk=0 %}">Все маршруты</a></li>
-    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' rk=1 %}">пройдено</a></li>
-    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' rk=2 %}">не пройдено</a></li>
-  </ul>
-</div> </center>
-   {% elif rk == 1 %} 
-   <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    пройдено
-  </button>
-  <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="{% url 'donehikefilteryear' rk=0 %}">Все маршруты</a></li>
-    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' rk=1 %}">пройдено</a></li>
-    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' rk=2 %}">не пройдено</a></li>
-  </ul>
-   
-</div> </center>
-    {% elif rk == 2 %} 
-     
-      <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    не пройдено
-  </button>
-  <ul class="dropdown-menu">
-     <li><a class="dropdown-item" href="{% url 'donehikefilteryear' rk=0 %}">Все маршруты</a></li>
-    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' rk=1 %}">пройдено</a></li>
-    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' rk=2 %}">не пройдено</a></li>
-  </ul>
-   
-</div> </center>
-    {% endif %} 
-    {#фильтр 4 поиск готовых и не готовых маршрутов  #}
-    <center> <h6>  Пройдено когда-то  </h6></center>
      {% if qk == 0 %}
     
      <center><div class="btn-group">
@@ -163,31 +124,70 @@
     Найти
   </button>
   <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' qk=0 %}">Все маршруты</a></li>
-    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' qk=1 %}">готов</a></li>
-    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' qk=2 %}">не готов</a></li>
+      <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=0 %}">Все маршруты</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=1 %}">пройдено</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=2 %}">не пройдено</a></li>
   </ul>
 </div> </center>
    {% elif qk == 1 %} 
    <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    готов
+    пройдено
   </button>
   <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' qk=0 %}">Все маршруты</a></li>
-    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' qk=1 %}">готов</a></li>
-    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' qk=2 %}">не готов</a></li>
+      <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=0 %}">Все маршруты</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=1 %}">пройдено</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=2 %}">не пройдено</a></li>
   </ul>
    
 </div> </center>
     {% elif qk == 2 %} 
      
       <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    не пройдено
+  </button>
+  <ul class="dropdown-menu">
+     <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=0 %}">Все маршруты</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=1 %}">пройдено</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=2 %}">не пройдено</a></li>
+  </ul>
+   
+</div> </center>
+    {% endif %} 
+    {#фильтр 4 поиск готовых и не готовых маршрутов  #}
+    <center> <h6>  Пройдено когда-то  </h6></center>
+     {% if rk == 0 %}
+    
+     <center><div class="btn-group">
+          
+<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Найти
+  </button>
+  <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=0 %}">Все маршруты</a></li>
+    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=1 %}">готов</a></li>
+    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=2 %}">не готов</a></li>
+  </ul>
+</div> </center>
+   {% elif rk == 1 %} 
+   <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    готов
+  </button>
+  <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=0 %}">Все маршруты</a></li>
+    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=1 %}">готов</a></li>
+    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=2 %}">не готов</a></li>
+  </ul>
+   
+</div> </center>
+    {% elif rk == 2 %} 
+     
+      <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     не готов
   </button>
   <ul class="dropdown-menu">
-     <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' qk=0 %}">Все маршруты</a></li>
-    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' qk=1 %}">готов</a></li>
-    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' qk=2 %}">не готов</a></li>
+     <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=0 %}">Все маршруты</a></li>
+    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=1 %}">готов</a></li>
+    <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=2 %}">не готов</a></li>
   </ul>
    
 </div> </center>
