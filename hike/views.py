@@ -108,6 +108,7 @@ class SearchResultView(TemplateView):
             filter(Q(attractions__icontains=searchword)|Q(attractions=searchword1)).order_by('pk')
             context['objects'] = objects
             context['form'] = SearchForm(initial={'searchword': searchword})
+            context['pk'] = 0
         return context
 
 class ITSearchResultView(TemplateView):
