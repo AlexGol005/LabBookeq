@@ -90,6 +90,7 @@
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=2 %}">не пройдено</a></li>
   </ul>
 </div> </center>
+     <br>
    {% elif pk == 1 %} 
    <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     пройдено
@@ -101,6 +102,7 @@
   </ul>
    
 </div> </center>
+     <br>
     {% elif pk == 2 %} 
      
       <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -113,6 +115,7 @@
   </ul>
         <br>
 </div> </center>
+     <br>
     {% endif %} 
 
     {#фильтр 3 поиск пройденных и непройденных маршрутов вообще #}
@@ -130,6 +133,7 @@
     <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=2 %}">не пройдено</a></li>
   </ul>
 </div> </center>
+     <br>
    {% elif qk == 1 %} 
    <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     пройдено
@@ -141,6 +145,7 @@
   </ul>
    
 </div> </center>
+ <br>
     {% elif qk == 2 %} 
      
       <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -154,6 +159,7 @@
     {% endif %} 
           <br>
 </div> </center>
+ <br>
    
     {#фильтр 4 поиск готовых и не готовых маршрутов  #}
     <center> <h6>  Маршрут готов?  </h6></center>
@@ -170,6 +176,7 @@
     <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=2 %}">не готов</a></li>
   </ul>
 </div> </center>
+ <br>
    {% elif rk == 1 %} 
 
    <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -182,6 +189,7 @@
   </ul>
    
 </div> </center>
+ <br>
     {% elif rk == 2 %} 
      
       <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -192,10 +200,10 @@
     <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=1 %}">готов</a></li>
     <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=2 %}">не готов</a></li>
   </ul>
-           {% endif %} 
-        <br>
+        
 </div> </center>
-   
+      {% endif %} 
+        <br>
 </div>
  {# конец колонки с фильтрами #} 
 </div>
