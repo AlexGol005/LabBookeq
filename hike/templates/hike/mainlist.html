@@ -75,7 +75,7 @@
     <br>
     {#фильтр 2 поиск пройденных и непройденных маршрутов в этом году #}
      <center><div class="btn-group">
-          {% if pk %}
+         
   {% if pk == 0 %}
 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     пройдено в этом году
@@ -95,8 +95,8 @@
   </ul>
    
 </div> </center>
-    {% endif %} 
-      {% if not pk %}
+    {% else %} 
+     
         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     пройдено?
   </button>
