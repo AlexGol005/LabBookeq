@@ -76,7 +76,8 @@
     <br>
     {#фильтр 2 поиск пройденных и непройденных маршрутов в этом году #}
     <center> <h6>  Пройдено в этом году?  </h6></center>
-     {% if pk == '0' %}
+     {% if pk == 0 %}
+    
      <center><div class="btn-group">
           
 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -88,7 +89,7 @@
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=2 %}">не пройдено</a></li>
   </ul>
 </div> </center>
-   {% elif pk == '1' %} 
+   {% elif pk == 1 %} 
     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     пройдено
   </button>
@@ -99,7 +100,7 @@
   </ul>
    
 </div> </center>
-    {% elif pk == '2' %} 
+    {% elif pk == 2 %} 
      
         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     не пройдено
