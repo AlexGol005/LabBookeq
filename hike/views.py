@@ -137,6 +137,8 @@ def hikefilterview(request, pk):
     """ Фильтр пройденных и непройденных маршрутов в этом году """
     ar = str(now.year)[2:]
     arr = f'{ar};'
+    if pk == 0:   
+        objects = Hike.objects.all()
     if pk == 1:
         objects = Hike.objects.filter(dates_try__iendswith=ar).order_by('-pk') | Hike.objects.filter(dates_try__iendswith=arr).order_by('-pk')
     if pk == 2:   
