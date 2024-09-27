@@ -14,9 +14,6 @@ class Hike(models.Model):
     reality = models.BooleanField(verbose_name='Пройдено',
                                            blank=True, null=True, default=False)
     date = models.DateField('Дата добавления записи', auto_now_add=True, db_index=True)
-    metatitle = models.CharField('Метазаголовок страницы', max_length=10000, blank=True, null=True)
-    description = models.TextField('Метаописание страницы', blank=True, null=True)
-    keywords = models.TextField('Ключевые слова', blank=True, null=True)
     start_station = models.CharField('Вокзал отправления туда', max_length=10000, blank=True, null=True)
     aim_station = models.CharField('Вокзал прибытия туда', max_length=10000, blank=True, null=True)
     home_station = models.CharField('Вокзал прибытия оттуда', max_length=10000, blank=True, null=True)
