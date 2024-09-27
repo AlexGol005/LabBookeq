@@ -140,7 +140,9 @@ def hikefilterview(request, pk):
     # b = str(model.dates_try)[-3:-1]
     if pk == 0:
         objects = Hike.objects.filter(dates_try__iendswith=ar).order_by('-pk') | Hike.objects.filter(dates_try__iendswith=arr).order_by('-pk')
+        fl = 'да'
     if pk == 1:   
         objects = Hike.objects.exclude(dates_try__iendswith=ar).order_by('-pk') & Hike.objects.exclude(dates_try__iendswith=arr).order_by('-pk')
+         fl = 'нет'
     form = SearchForm() 
-    return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form})
+    return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form, 'fl': fl})
