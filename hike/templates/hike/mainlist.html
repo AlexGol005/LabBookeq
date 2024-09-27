@@ -111,9 +111,10 @@
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=1 %}">пройдено</a></li>
     <li><a class="dropdown-item" href="{% url 'hikefilteryear' pk=2 %}">не пройдено</a></li>
   </ul>
-   
+        <br>
 </div> </center>
     {% endif %} 
+
     {#фильтр 3 поиск пройденных и непройденных маршрутов вообще #}
     <center> <h6>  Пройдено когда-то  </h6></center>
      {% if qk == 0 %}
@@ -150,11 +151,12 @@
     <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=1 %}">пройдено</a></li>
     <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=2 %}">не пройдено</a></li>
   </ul>
-   
-</div> </center>
     {% endif %} 
+          <br>
+</div> </center>
+   
     {#фильтр 4 поиск готовых и не готовых маршрутов  #}
-    <center> <h6>  Пройдено когда-то  </h6></center>
+    <center> <h6>  Маршрут готов?  </h6></center>
      {% if rk == 0 %}
     
      <center><div class="btn-group">
@@ -169,6 +171,7 @@
   </ul>
 </div> </center>
    {% elif rk == 1 %} 
+
    <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     готов
   </button>
@@ -189,9 +192,10 @@
     <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=1 %}">готов</a></li>
     <li><a class="dropdown-item" href="{% url 'readyhikefilteryear' rk=2 %}">не готов</a></li>
   </ul>
-   
+           {% endif %} 
+        <br>
 </div> </center>
-    {% endif %} 
+   
 </div>
  {# конец колонки с фильтрами #} 
 </div>
