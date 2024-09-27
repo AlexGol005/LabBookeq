@@ -160,7 +160,48 @@
           <br>
 </div> </center>
  <br>
+    {#фильтр 3 поиск пройденных и непройденных маршрутов вообще #}
+    <center> <h6>  Пройдено когда-то  </h6></center>
+     {% if qk == 0 %}
+    
+     <center><div class="btn-group">
+          
+<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Найти
+  </button>
+  <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=0 %}">Все маршруты</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=1 %}">пройдено</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=2 %}">не пройдено</a></li>
+  </ul>
+</div> </center>
+     <br>
+   {% elif qk == 1 %} 
+   <center>  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    пройдено
+  </button>
+  <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=0 %}">Все маршруты</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=1 %}">пройдено</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=2 %}">не пройдено</a></li>
+  </ul>
    
+</div> </center>
+ <br>
+    {% elif qk == 2 %} 
+     
+      <center>   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    не пройдено
+  </button>
+  <ul class="dropdown-menu">
+     <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=0 %}">Все маршруты</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=1 %}">пройдено</a></li>
+    <li><a class="dropdown-item" href="{% url 'donehikefilteryear' qk=2 %}">не пройдено</a></li>
+  </ul>
+    {% endif %} 
+          <br>
+</div> </center>
+ <br>   
  
 </div>
  {# конец колонки с фильтрами #} 
