@@ -26,6 +26,8 @@ class HikeAllListView(ListView):
         context = super(HikeAllListView,self).get_context_data(**kwargs)
         context['form'] = SearchForm() 
         context['pk'] = 0
+        context['qk'] = 0
+        context['rk'] = 0
         return context
 
 
@@ -153,4 +155,32 @@ def hikefilterview(request, pk):
     if pk == 2:   
         objects = Hike.objects.exclude(dates_try__iendswith=ar).order_by('-pk') & Hike.objects.exclude(dates_try__iendswith=arr).order_by('-pk')
     form = SearchForm() 
-    return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form, 'pk': pk})
+    qk = 0
+    rk = 0
+    return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form, 'pk': pk , 'qk': qk, 'rk': rk})
+
+def donehikefilterview(request, qk):
+    """ Фильтр пройденных и непройденных маршрутов вообще"""
+    if qk == 0:   
+        objects = Hike.objects.all()
+    if qk == 1:
+        objects = Hike.objects.filter(reality=True).order_by('-pk') 
+    if qk == 2:   
+        objects = Hike.objects.filter(reality=False).order_by('-pk')  
+    form = SearchForm() 
+    pk = 0
+    rk = 0
+    return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form, 'pk': pk , 'qk': qk, 'rk': rk})
+
+def readyhikefilterview(request, qk):
+    """ Фильтр готовых и не готовых маршрутов"""
+    if rk == 0:   
+        objects = Hike.objects.all()
+    if rk == 1:
+        objects = Hike.objects.filter(maturity=True).order_by('-pk') 
+    if rk == 2:   
+        objects = Hike.objects.filter(maturity=False).order_by('-pk')  
+    form = SearchForm() 
+    pk = 0
+    rk = 0
+    return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form, 'pk': pk , 'qk': qk, 'rk': rk})
