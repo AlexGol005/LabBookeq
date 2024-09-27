@@ -67,8 +67,8 @@
 </div>
 <div class="col">
  <center> <h3>Фильтры</h3> </center>
-    {#фильтр 1 форма для поиска по заголовку #}
- <center> <h6>  Поиск по заголовку</h6></center>
+    {#фильтр 1 форма для поиска по нужным полям #}
+ <center> <h6>  Поиск </h6></center>
         <form action="/hike/hike/searchresult/" method="GET">
          {% csrf_token %}
          {% crispy form %}
