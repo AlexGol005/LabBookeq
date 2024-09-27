@@ -25,6 +25,7 @@ class HikeAllListView(ListView):
     def get_context_data(self,**kwargs):
         context = super(HikeAllListView,self).get_context_data(**kwargs)
         context['form'] = SearchForm() 
+        context['pk'] = 0
         return context
 
 
@@ -136,13 +137,9 @@ def hikefilterview(request, pk):
     """ Фильтр пройденных и непройденных маршрутов в этом году """
     ar = str(now.year)[2:]
     arr = f'{ar};'
-    # a = str(model.dates_try)[-2:]
-    # b = str(model.dates_try)[-3:-1]
-    if pk == 0:
+    if pk == 1:
         objects = Hike.objects.filter(dates_try__iendswith=ar).order_by('-pk') | Hike.objects.filter(dates_try__iendswith=arr).order_by('-pk')
-        fl = 'да'
-    if pk == 1:   
+    if pk == 2:   
         objects = Hike.objects.exclude(dates_try__iendswith=ar).order_by('-pk') & Hike.objects.exclude(dates_try__iendswith=arr).order_by('-pk')
-        fl = 'нет'
     form = SearchForm() 
-    return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form, 'fl': fl})
+    return render(request,  "hike/mainlist.html", {'objects': objects, 'form':form, 'pk': pk})
