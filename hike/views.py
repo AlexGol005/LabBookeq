@@ -78,7 +78,7 @@ class KareliahistorySearchResultView(TemplateView):
     template_name = 'hike/kareliahistory.html'
 
     def get_context_data(self, **kwargs):
-        context = super(SearchResultView, self).get_context_data(**kwargs)
+        context = super(KareliahistorySearchResultView, self).get_context_data(**kwargs)
         searchword = self.request.GET['searchword']
         if searchword:
             objects = Kareliahistory.objects.\
