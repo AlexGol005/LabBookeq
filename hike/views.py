@@ -81,8 +81,12 @@ class KareliahistorySearchResultView(TemplateView):
         context = super(KareliahistorySearchResultView, self).get_context_data(**kwargs)
         searchword = self.request.GET['searchword']
         context['form'] = SearchForm()
+        if self.request.GET['searchword']:
+            searchword1 = self.request.GET['searchword'][0].upper() + self.request.GET['searchword'][1:]
         if searchword:
-            objects = Kareliahistory.objects.filter(title__icontains=searchword).order_by('pk')
+            objects = Kareliahistory.objects.\
+            filter(Q(title__icontains=searchword)|Q(title__icontains=searchword1)).order_by('pk') | Kareliahistory.objects.\
+            filter(Q(text__icontains=searchword)|Q(text__icontains=searchword1)).order_by('pk')
             
         return context
 
@@ -139,6 +143,7 @@ class SearchResultView(TemplateView):
             context['pk'] = 0
             context['qk'] = 0
             context['rk'] = 0
+        return context
         
 
 class ITSearchResultView(TemplateView):
