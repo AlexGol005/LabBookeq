@@ -87,6 +87,7 @@ class KareliahistorySearchResultView(TemplateView):
             objects = Kareliahistory.objects.\
             filter(Q(title__icontains=searchword)|Q(title__icontains=searchword1)).order_by('pk') | Kareliahistory.objects.\
             filter(Q(text__icontains=searchword)|Q(text__icontains=searchword1)).order_by('pk')
+            context['objects'] = objects
             
         return context
 
