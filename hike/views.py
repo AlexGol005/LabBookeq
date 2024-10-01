@@ -72,7 +72,7 @@ class KareliahistoryAllListView(ListView):
         context['form'] = SearchForm()
         return context
 
-class SearchResultView(TemplateView):
+class KareliahistorySearchResultView(TemplateView):
     """ Представление, которое выводит результаты поиска по истории Карелии """
 
     template_name = 'hike/kareliahistory.html'
