@@ -90,3 +90,15 @@ class Itbookmarks(models.Model):
     class Meta:
         verbose_name = 'Записная книжка по айти'
         verbose_name_plural = 'Записная книжка по айти'
+
+class Kareliahistory(models.Model):
+    title = models.CharField('Раздел', max_length=10000, blank=True,  null=True)
+    text = models.TextField('Текст', blank=True, null=True)
+    vk = models.CharField('Ссылка', max_length=10000, blank=True, null=True)
+
+    def __str__(self):
+        return f'№ {self.pk} .  {self.title}'
+
+    class Meta:
+        verbose_name = 'История Карелии'
+        verbose_name_plural = 'История Карелии'
