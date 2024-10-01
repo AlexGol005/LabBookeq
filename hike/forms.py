@@ -20,7 +20,7 @@ class CommentCreationForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    """форма для поиска по названию 1 полю модели"""
+    """форма для поиска по полям модели"""
     searchword = forms.CharField(label='Поиск', required=False,
                            help_text='слово для поиска с маленькой и большой буквы',
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
