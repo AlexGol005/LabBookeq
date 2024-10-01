@@ -13,11 +13,11 @@ class NoteAdmin(admin.ModelAdmin):
 
 @admin.register(Bookmarks)
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'type',)
-    search_fields = ['pk']
+    list_display = ('pk', 'text')
+    search_fields = ['pk', 'text']
     
 @admin.register(Hike)
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title',)
+    list_display = ('pk', 'title', )
 
-    search_fields = ['pk', 'title']
+    search_fields = ['pk', 'title', 'attractions']
