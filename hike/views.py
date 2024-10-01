@@ -60,6 +60,32 @@ class ITAllListView(ListView):
         context['form'] = SearchForm()
         return context
 
+class KareliahistoryAllListView(ListView):
+    """ Выводит список всех закладок по истории Карелии """
+    model = Kareliahistory
+    template_name = 'hike/kareliahistory.html'
+    context_object_name = 'objects'
+    ordering = ['-pk']
+    paginate_by = 6
+    def get_context_data(self,**kwargs):
+        context = super(KareliahistoryAllListView,self).get_context_data(**kwargs)
+        context['form'] = SearchForm()
+        return context
+
+class SearchResultView(TemplateView):
+    """ Представление, которое выводит результаты поиска по истории Карелии """
+
+    template_name = 'hike/kareliahistory.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchResultView, self).get_context_data(**kwargs)
+        searchword = self.request.GET['searchword']
+        if searchword:
+            objects = Kareliahistory.objects.\
+            filter(title__icontains=searchword).order_by('pk')| Kareliahistory.objects.\
+            filter(text__icontains=searchword).order_by('pk')
+        return context
+
 
 class HikeStrView(CreateView):
     """ выводит отдельный маршрут """
@@ -113,7 +139,7 @@ class SearchResultView(TemplateView):
             context['pk'] = 0
             context['qk'] = 0
             context['rk'] = 0
-        return context
+        
 
 class ITSearchResultView(TemplateView):
     """ Представление, которое выводит результаты поиска по закладкам айти """
