@@ -15,4 +15,6 @@ urlpatterns = [
     path('hikefilter/<int:pk>', views.hikefilterview, name='hikefilteryear'),
     path('donehikefilter/<int:qk>', views.donehikefilterview, name='donehikefilteryear'),
     path('readyhikefilter/<int:rk>', views.readyhikefilterview, name='readyhikefilteryear'),
+    path('kareliahistory', views.KareliahistoryAllListView.as_view(), name='kareliahistory'),
+    path('kareliahistory/searchresult/', views.KareliahistorySearchResultView.as_view(), name='kareliahistorysearchresult'),
     ]
