@@ -80,6 +80,7 @@ class KareliahistorySearchResultView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(KareliahistorySearchResultView, self).get_context_data(**kwargs)
         searchword = self.request.GET['searchword']
+        context['form'] = SearchForm()
         if searchword:
             objects = Kareliahistory.objects.\
             filter(title__icontains=searchword).order_by('pk')| Kareliahistory.objects.\
