@@ -70,7 +70,7 @@ INSTALLED_APPS = [
     'bdanswers',
     'contact_form',
     'hike',
-    'import_export'
+    #'import_export'
     # 'ckeditor',
     # 'ckeditor_uploader',
 ]
