@@ -4,7 +4,7 @@ from .models import *
 from import_export.admin import ImportExportActionModelAdmin
 from import_export import resources
 from import_export import fields
-from import_export.wigets import ForeignKeyWidget
+from import_export.widgets import ForeignKeyWidget
 
 class ProductResource(resources.ModelResource):
     # category = fields.Field(column_name='title', attribute='title')
