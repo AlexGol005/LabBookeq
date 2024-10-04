@@ -44,6 +44,26 @@ class BMAllListView(ListView):
     def get_context_data(self,**kwargs):
         context = super(BMAllListView,self).get_context_data(**kwargs)
         context['form'] = UdateForm()
+        context['sform'] = SearchForm() 
+        return context
+
+class BMSearchResultView(TemplateView):
+    """ Представление, которое выводит результаты поиска по истории Карелии """
+
+    template_name = 'hike/bm.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(BMSearchResultView, self).get_context_data(**kwargs)
+        searchword = self.request.GET['searchword']
+        context['form'] = UdateForm()
+        context['sform'] = SearchForm() 
+        if self.request.GET['searchword']:
+            searchword1 = self.request.GET['searchword'][0].upper() + self.request.GET['searchword'][1:]
+        if searchword:
+            objects = Bookmarks.objects.\
+            filter(Q(text__icontains=searchword)|Q(text__icontains=searchword1)).order_by('pk')
+            context['objects'] = objects
+            
         return context
 
 
