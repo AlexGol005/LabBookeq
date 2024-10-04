@@ -102,6 +102,13 @@
     <li><a class="dropdown-item" href="{% url 'bmfilter' pk=7 %}">фотографии</a></li>
   </ul>
 </div> </center>
+      <br>
+                      {#форма для поиска по полям #}
+{#стандартная#}
+    <form action="/hike/kareliahistory/searchresult/" method="GET">
+                    {% csrf_token %}
+                    {% crispy form %}
+                </form>
         </div>
   
 </div>
