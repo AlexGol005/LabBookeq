@@ -105,9 +105,9 @@
       <br>
                       {#форма для поиска по полям #}
 {#стандартная#}
-    <form action="/hike/kareliahistory/searchresult/" method="GET">
+    <form action="/hike/bm/searchresult/" method="GET">
                     {% csrf_token %}
-                    {% crispy form %}
+                    {% crispy sform %}
                 </form>
         </div>
   
