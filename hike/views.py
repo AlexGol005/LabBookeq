@@ -194,8 +194,9 @@ def filterview(request, pk):
         if pk == i:
             objects = objects.filter(type=s).order_by('-pk')
             form = UdateForm()
+            sform = SearchForm() 
 
-    return render(request,  "hike/bm.html", {'objects': objects, 'form':form})
+    return render(request,  "hike/bm.html", {'objects': objects, 'form':form, 'sform':sform})
 
 
 def hikefilterview(request, pk):
