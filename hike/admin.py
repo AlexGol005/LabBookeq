@@ -8,15 +8,13 @@ from import_export.widgets import ForeignKeyWidget
 import tablib
 
 
-
-        
-class KareliahistoryAdmin(ImportExportActionModelAdmin):
-    resource_class = KareliahistoryResource
-    list_display = ('pk', 'text',)
-
 class KareliahistoryResource(resources.ModelResource):
     class Meta:
         model = Kareliahistory
+
+class KareliahistoryAdmin(ImportExportActionModelAdmin):
+    resource_class = KareliahistoryResource
+    list_display = ('pk', 'text',)
 
 admin.site.register(Kareliahistory, KareliahistoryAdmin)
 
