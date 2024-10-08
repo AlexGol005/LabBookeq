@@ -12,7 +12,7 @@
 
     
 {% block content %}
-{% autoescape false %}
+
 <div class="container">
         <center>  <h3><a href="/personal/"> Персональный раздел </a></h3>     </center>
      <br>
@@ -30,7 +30,7 @@
         <td > 
              <p><b>№</b>{{ obj.pk }}</p>
            <p><b></b>{{ obj.title }}</p>
-          <p><b>Текст:&nbsp;</b>{{ obj.text }}</p>
+         {% autoescape false %} <p><b>Текст:&nbsp;</b>{{ obj.text }}</p>{% endautoescape %}
           <p>
 
             
@@ -80,5 +80,5 @@
   
 </div>
 </div>
-{% endautoescape %}
+
 {% endblock %}
