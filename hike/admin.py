@@ -7,14 +7,14 @@ from import_export import fields
 from import_export.widgets import ForeignKeyWidget
 import tablib
 
+
 class KareliahistoryResource(resources.ModelResource):
     class Meta:
         model = Kareliahistory
-
         
-class KareliahistoryAdmin(ImportExportActionModelAdmin):
-    resource_class = KareliahistoryResource
-    list_display = ('pk', 'text',)
+#class KareliahistoryAdmin(ImportExportActionModelAdmin):
+    #resource_class = KareliahistoryResource
+    #list_display = ('pk', 'text',)
 
 
 
