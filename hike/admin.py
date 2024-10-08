@@ -12,9 +12,9 @@ class ProductResource(resources.ModelResource):
     class Meta:
         model = Kareliahistory
         
-class ProductAdmin(ImportExportActionModelAdmin):
+class NoteAdmin(ImportExportActionModelAdmin):
     resource_class = ProductResource
-    list_display = [field.name for field in Kareliahistory._meta.fields if field.name != "id"]
+    list_display = ('pk', 'text',)
 
 
 
