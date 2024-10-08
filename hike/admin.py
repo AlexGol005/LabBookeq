@@ -15,7 +15,7 @@ class ProductResource(resources.ModelResource):
 class ProductAdmin(ImportExportActionModelAdmin):
     resource_class = ProductResource
     list_display = [field.name for field in Kareliahistory._meta.fields if field.name != "id"]
-    inlines = [ProductImageInlane]
+
 
 
 @admin.register(Itbookmarks)
