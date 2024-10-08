@@ -17,7 +17,7 @@ urlpatterns = [
     path('bdanswers/', include('bdanswers.urls')),
     path('postbox/', include('contact_form.urls')),
     path('hike/', include('hike.urls')),
-    # path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:
