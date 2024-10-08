@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'hike',
     'import_export'
     'ckeditor',
+    'ckeditor-uploader',
 ]
 
 
