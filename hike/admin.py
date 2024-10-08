@@ -1,19 +1,19 @@
 from django.contrib import admin
 from .models import *
 
-from import_export import ImportExportActionModelAdmin
-from import_export import resources
-from import_export import fields
+#from import_export import ImportExportActionModelAdmin
+#from import_export import resources
+#from import_export import fields
 
 
-class ProductResource(resources.ModelResource):
-    category = fields.Field(column_name='title', attribute='title')
-    class Meta:
-        model = Kareliahistory
+#class ProductResource(resources.ModelResource):
+    #category = fields.Field(column_name='title', attribute='title')
+    #class Meta:
+        #model = Kareliahistory
         
-class ProductAdmin(ImportExportActionModelAdmin):
-    resource_class = ProductResource
-    list_display = ('pk', 'type',)
+#class ProductAdmin(ImportExportActionModelAdmin):
+    #resource_class = ProductResource
+    #list_display = ('pk', 'type',)
 
 
 @admin.register(Itbookmarks)
