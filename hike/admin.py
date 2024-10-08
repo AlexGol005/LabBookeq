@@ -8,13 +8,14 @@ from import_export.widgets import ForeignKeyWidget
 
 
 class ProductResource(resources.ModelResource):
-    category = fields.Field(column_name='title', attribute='title')
+    #category = fields.Field(column_name='title', attribute='title')
     class Meta:
         model = Kareliahistory
         
 class ProductAdmin(ImportExportActionModelAdmin):
     resource_class = ProductResource
-    list_display = ('pk', 'type',)
+    list_display = [field.name for field in Kareliahistory._meta.fields if field.name != "id"]
+    inlines = [ProductImageInlane]
 
 
 @admin.register(Itbookmarks)
