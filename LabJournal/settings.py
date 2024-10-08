@@ -71,8 +71,7 @@ INSTALLED_APPS = [
     'contact_form',
     'hike',
     'import_export'
-    # 'ckeditor',
-    # 'ckeditor_uploader',
+    'ckeditor',
 ]
 
 
