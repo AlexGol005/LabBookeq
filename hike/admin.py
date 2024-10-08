@@ -8,9 +8,7 @@ from import_export.widgets import ForeignKeyWidget
 import tablib
 
 
-class KareliahistoryResource(resources.ModelResource):
-    class Meta:
-        model = Kareliahistory
+
         
 #class KareliahistoryAdmin(ImportExportActionModelAdmin):
     #resource_class = KareliahistoryResource
@@ -34,8 +32,12 @@ class NoteAdmin(admin.ModelAdmin):
 
     search_fields = ['pk', 'title', 'attractions']
 
-#@admin.register(Kareliahistory)
-#class NoteAdmin(admin.ModelAdmin):
-    #list_display = ('pk', 'title', )
+@admin.register(Kareliahistory)
+class NoteAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'title', )
 
-    #search_fields = ['pk', 'title', 'text']
+    search_fields = ['pk', 'title', 'text']
+
+class KareliahistoryResource(resources.ModelResource):
+    class Meta:
+        model = Kareliahistory
