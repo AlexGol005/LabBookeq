@@ -7,7 +7,7 @@ from import_export import fields
 from import_export.widgets import ForeignKeyWidget
 import tablib
 
-
+@admin.register(Kareliahistory)
 class KareliahistoryResource(resources.ModelResource):
     class Meta:
         model = Kareliahistory
