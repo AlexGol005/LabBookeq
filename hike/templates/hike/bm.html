@@ -12,6 +12,7 @@
 
     
 {% block content %}
+{% autoescape false %}
 <div class="container">
     <center>  <h3><a href="/personal/"> Персональный раздел </a></h3>     </center>
      <br>
@@ -116,4 +117,5 @@
   
 </div>
 </div>
+{% endautoescape %}
 {% endblock %}
