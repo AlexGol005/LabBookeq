@@ -16,6 +16,14 @@ class KareliahistoryAdminForm(forms.ModelForm):
     class Meta:
         model = Kareliahistory
         fields = '__all__'
+
+
+class ItbookmarksAdminForm(forms.ModelForm):
+    text = forms.CharField(label="Текст", widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Itbookmarks
+        fields = '__all__'
         
 class KareliahistoryResource(resources.ModelResource):
     class Meta:
@@ -34,6 +42,7 @@ admin.site.register(Kareliahistory, KareliahistoryAdmin)
 class NoteAdmin(admin.ModelAdmin):
     list_display = ('pk', 'type',)
     search_fields = ['pk']
+    form = ItbookmarksAdminForm
 
 @admin.register(Bookmarks)
 class NoteAdmin(admin.ModelAdmin):
