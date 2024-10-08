@@ -12,7 +12,7 @@ class KareliahistoryResource(resources.ModelResource):
         model = Kareliahistory
 
         
-class NoteAdmin(ImportExportActionModelAdmin):
+class KareliahistoryAdmin(ImportExportActionModelAdmin):
     resource_class = KareliahistoryResource
     list_display = ('pk', 'text',)
 
