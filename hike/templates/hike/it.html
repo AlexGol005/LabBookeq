@@ -29,7 +29,7 @@
         <td > 
              <p><b>№</b>{{ obj.pk }}</p>
            <p><b>Тема:&nbsp;</b>{{ obj.type }}</p>
-          <p><b>Текст:&nbsp;</b>{{ obj.text }}</p>
+         {% autoescape off %} <p><b>Текст:&nbsp;</b>{{ obj.text }}</p>{% endautoescape %}
           <p>
 
             
