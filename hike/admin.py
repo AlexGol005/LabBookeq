@@ -3,7 +3,7 @@ from .models import *
 
 from import_export.admin import ImportExportActionModelAdmin
 from import_export import resources
-from import_export import field
+from import_export import fields
 from import_export.widgets import ForeighKeyWidget
 
 
