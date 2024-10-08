@@ -8,9 +8,7 @@ from import_export.widgets import ForeignKeyWidget
 import tablib
 
 
-class KareliahistoryResource(resources.ModelResource):
-    class Meta:
-        model = Kareliahistory
+
         
 #class NoteAdmin(ImportExportActionModelAdmin):
     #resource_class = ProductResource
