@@ -33,8 +33,8 @@ class NoteAdmin(admin.ModelAdmin):
 
     search_fields = ['pk', 'title', 'attractions']
 
-@admin.register(Kareliahistory)
-class NoteAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', )
+#@admin.register(Kareliahistory)
+#class NoteAdmin(admin.ModelAdmin):
+    #list_display = ('pk', 'title', )
 
-    search_fields = ['pk', 'title', 'text']
+    #search_fields = ['pk', 'title', 'text']
