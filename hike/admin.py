@@ -10,10 +10,15 @@ import tablib
 
 
         
-#class KareliahistoryAdmin(ImportExportActionModelAdmin):
-    #resource_class = KareliahistoryResource
-    #list_display = ('pk', 'text',)
+class KareliahistoryAdmin(ImportExportActionModelAdmin):
+    resource_class = KareliahistoryResource
+    list_display = ('pk', 'text',)
 
+class KareliahistoryResource(resources.ModelResource):
+    class Meta:
+        model = Kareliahistory
+
+admin.site.register(Kareliahistory, KareliahistoryAdmin)
 
 
 @admin.register(Itbookmarks)
@@ -32,12 +37,11 @@ class NoteAdmin(admin.ModelAdmin):
 
     search_fields = ['pk', 'title', 'attractions']
 
-@admin.register(Kareliahistory)
-class NoteAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', )
+#@admin.register(Kareliahistory)
+#class NoteAdmin(admin.ModelAdmin):
+    #list_display = ('pk', 'title', )
 
-    search_fields = ['pk', 'title', 'text']
+    #search_fields = ['pk', 'title', 'text']
 
-class KareliahistoryResource(resources.ModelResource):
-    class Meta:
-        model = Kareliahistory
+
+
