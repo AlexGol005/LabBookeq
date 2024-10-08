@@ -176,7 +176,7 @@ LOGIN_URL = 'user'
 
 MEDIA_URL = '/pictures/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures')
-
+CKEDITOR_UPLOAD_PATH = "uploads/"
 SHORT_DATE_FORMAT = 'j . m. Y'
 
 TOOLBAR_DEBUG = False
