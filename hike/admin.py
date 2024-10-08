@@ -6,12 +6,7 @@ from import_export import resources
 from import_export import fields
 from import_export.widgets import ForeignKeyWidget
 import tablib
-book_resource = resources.modelresource_factory(model=Kareliahistory)()
-dataset = tablib.Dataset(['', 'New book'], headers=['id', 'title'])
-result = book_resource.import_data(dataset, dry_run=True)
-print(result.has_errors())
-False
-result = book_resource.import_data(dataset, dry_run=False)
+
 
 class KareliahistoryResource(resources.ModelResource):
     class Meta:
@@ -20,7 +15,12 @@ class KareliahistoryResource(resources.ModelResource):
 #class NoteAdmin(ImportExportActionModelAdmin):
     #resource_class = ProductResource
     #list_display = ('pk', 'text',)
-
+book_resource = resources.modelresource_factory(model=Kareliahistory)()
+dataset = tablib.Dataset(['', 'New book'], headers=['id', 'title'])
+result = book_resource.import_data(dataset, dry_run=True)
+print(result.has_errors())
+False
+result = book_resource.import_data(dataset, dry_run=False)
 
 
 @admin.register(Itbookmarks)
