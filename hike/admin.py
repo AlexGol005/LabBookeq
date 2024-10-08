@@ -11,7 +11,7 @@ import tablib
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 class KareliahistoryAdminForm(forms.ModelForm):
-    description = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
+    text = forms.CharField(label="Текст", widget=CKEditorUploadingWidget())
 
     class Meta:
         model = Kareliahistory
