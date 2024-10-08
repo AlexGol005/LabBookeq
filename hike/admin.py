@@ -5,16 +5,16 @@ from import_export.admin import ImportExportActionModelAdmin
 from import_export import resources
 from import_export import fields
 from import_export.widgets import ForeignKeyWidget
+import tablib
 
 
-class ProductResource(resources.ModelResource):
-    #category = fields.Field(column_name='title', attribute='title')
+class KareliahistoryResource(resources.ModelResource):
     class Meta:
         model = Kareliahistory
         
-class NoteAdmin(ImportExportActionModelAdmin):
-    resource_class = ProductResource
-    list_display = ('pk', 'text',)
+#class NoteAdmin(ImportExportActionModelAdmin):
+    #resource_class = ProductResource
+    #list_display = ('pk', 'text',)
 
 
 
