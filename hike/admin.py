@@ -24,7 +24,7 @@ class KareliahistoryAdmin(ImportExportActionModelAdmin):
     resource_class = KareliahistoryResource
     list_display = ('pk', 'text',)
     search_fields = ['pk', 'title', 'text']
-    form = MovieAdminForm
+    form = KareliahistoryAdminForm
 
 admin.site.register(Kareliahistory, KareliahistoryAdmin)
 
