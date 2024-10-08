@@ -7,7 +7,15 @@ from import_export import fields
 from import_export.widgets import ForeignKeyWidget
 import tablib
 
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
+class KareliahistoryAdminForm(forms.ModelForm):
+    description = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Kareliahistory
+        fields = '__all__'
+        
 class KareliahistoryResource(resources.ModelResource):
     class Meta:
         model = Kareliahistory
@@ -15,6 +23,8 @@ class KareliahistoryResource(resources.ModelResource):
 class KareliahistoryAdmin(ImportExportActionModelAdmin):
     resource_class = KareliahistoryResource
     list_display = ('pk', 'text',)
+    search_fields = ['pk', 'title', 'text']
+    form = MovieAdminForm
 
 admin.site.register(Kareliahistory, KareliahistoryAdmin)
 
