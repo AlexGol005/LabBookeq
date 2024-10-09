@@ -18,5 +18,5 @@ urlpatterns = [
     path('kareliahistory', views.KareliahistoryAllListView.as_view(), name='kareliahistory'),
     path('kareliahistory/searchresult/', views.KareliahistorySearchResultView.as_view(), name='kareliahistorysearchresult'),
     path('bm/searchresult/', views.BMSearchResultView.as_view(), name='bmsearchresult'),
-    path('example', views.ExampleView.as_view(), name='example'),
+    path('example', views.ExampleTemplateView.as_view(), name='example'),
     ]
