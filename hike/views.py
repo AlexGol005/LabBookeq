@@ -14,7 +14,7 @@ from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 
 now = date.today()
 
-class ExampleTemplateVie(TemplateView):
+class ExampleTemplateView(TemplateView):
     template_name = 'hike/example.html'
 
 class HikeAllListView(ListView):
