@@ -20,4 +20,4 @@ urlpatterns = [
     path('bm/searchresult/', views.BMSearchResultView.as_view(), name='bmsearchresult'),
     path('example', views.index, name='example'),
     #path('example', views.ExampleTemplateView.as_view(), name='example'),
-    ]
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
