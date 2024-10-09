@@ -12,6 +12,7 @@
 
     
 {% block content %}
+{% autoescape off %}
   <div class="row">
     <div class="col-md-10 mt-2 ml-2">
        
@@ -54,14 +55,7 @@
 </div>
 </div>
 </div>
-
-
+{% endautoescape %}
 {% endblock %}
 
-{% block uniccontent %}
-{% endblock %}
 
-{% block aside %}
-  <div class="row">
-
-{% endblock %}
