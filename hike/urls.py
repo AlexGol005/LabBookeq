@@ -2,8 +2,7 @@ from django.urls import path
 
 from . import views
 from . constants import *
-from django.conf import settings
-from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.HikeAllListView.as_view(), name=URL + 'head'),
@@ -21,4 +20,4 @@ urlpatterns = [
     path('bm/searchresult/', views.BMSearchResultView.as_view(), name='bmsearchresult'),
     path('example', views.index, name='example'),
     #path('example', views.ExampleTemplateView.as_view(), name='example'),
-    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    ] 
