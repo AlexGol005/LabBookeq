@@ -14,6 +14,8 @@ from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 
 now = date.today()
 
+class ExampleListView(TemplateView):
+    template_name = 'hike/example.html'
 
 class HikeAllListView(ListView):
     """ Выводит список всех маршрутов """
