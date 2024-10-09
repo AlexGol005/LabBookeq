@@ -18,6 +18,12 @@ now = date.today()
 
 class ExampleTemplateView(TemplateView):
     template_name = 'hike/example.html'
+    def get_context_data(self, **kwargs):
+        context = super(ExampleTemplateView,self).get_context_data(**kwargs)
+        context["categories"] = {'первая', 'вторая', 'третья', 'четвертая',}
+        context["values"] = {'1', '2', '3', '4',}
+        context["table_data"] = {'11', '22', '33', '44',}
+        return context
 
 class HikeAllListView(ListView):
     """ Выводит список всех маршрутов """
