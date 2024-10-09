@@ -19,7 +19,7 @@ def index(request):
 
     # read data                                                                                                  
 	
-    df = pd.read_csv("hike/data/car_sales.csv")
+    df = pd.read_csv("car_sales.csv")
     rs = df.groupby("Engine size")["Sales in thousands"].agg("sum")
     categories = list(rs.index)
     values = list(rs.values)
