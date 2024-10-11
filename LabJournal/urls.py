@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('', include('users.urls')),
-    path('equipment/', include('equipment.urls')),
+    # path('equipment/', include('equipment.urls')),
     path('^', include('django.contrib.auth.urls')),
     path('postbox/', include('contact_form.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
