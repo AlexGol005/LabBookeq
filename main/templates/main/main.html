@@ -9,11 +9,11 @@
             <div class="col-8">
                 <center><h3>Автоматизация учета лабораторного оборудования и микроклимата для Вашей лаборатории</h3></center>
                 {% if not user.is_authenticated %}
-                    <center><a href="{% url 'reg' %}" class="btn btn-warning mr-2 ml-2 mt-2">регистрация</a>
-                    <a href="{% url 'reg' %}" class="btn btn-info mr-2 ml-2 mt-2">войти</a> </center>
+                    <center><a href="{% url 'reg' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width: 140px">регистрация</a>
+                    <a href="{% url 'reg' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width: 140px">войти</a> </center>
                 {% else %}
-                    <center><a href="{% url 'profile' %}" class="btn btn-warning mr-2 ml-2 mt-2"> ID {{ request.user.username }}</a>
-                    <a href="{% url 'exit' %}" class="btn btn-warning mr-2 ml-2 mt-2"> выйти</a> </center>
+                    <center><a href="{% url 'profile' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width: 140px"> ID {{ request.user.username }}</a>
+                    <a href="{% url 'exit' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width: 140px"> выйти</a> </center>
                 {% endif %}
                 <center> <a href="{% url 'contact_page' %}" class="btn btn-warning  mr-2 ml-2 mt-3 " style="width: 300px">Задать вопрос администрации сайта</a></center>
                 <center><a href="{% url 'about' %}" class="btn btn-info  mr-2 ml-2 mt-3 " style="width: 300px">Что это за сайт?</a> </center>
