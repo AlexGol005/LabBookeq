@@ -137,6 +137,54 @@ class Rooms(models.Model):
 
 # блок 3 - оборудование в целом, характеристики СИ ИО ВО, сами СИ ИО ВО
 
+class MeasurEquipmentReestr(models.Model):
+    """Характеристики средств измерений (госреестры БЕЗ СВЯЗКИ модификациями/типами/диапазонами) абстрактный тип"""
+    name = models.CharField('Название прибора', max_length=100, default='')
+    reestr = models.CharField('Номер в Госреестре', max_length=1000, default='', blank=True, null=True)
+    calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
+    power = models.BooleanField('Работает от сети', default=False, blank=True)
+    setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
+    needsetplace = models.BooleanField('установка не требуется', default=False, blank=True)
+    complectlist = models.CharField('где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
+    expresstest = models.BooleanField('тестирование возможно? да/нет', default=False, blank=True)
+    traceability = models.TextField('Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)',
+                                    default='', blank=True, null=True)
+
+    def __str__(self):
+        return f'госреестр: {self.reestr},  {self.name}'
+
+    class Meta:
+        abstract = True
+        verbose_name = 'Средство измерения: госреестр'
+        verbose_name_plural = 'Средства измерения: госреестр'
+        unique = ('reestr', )
+
+
+class MeasurEquipmentCharakters(MeasurEquipmentReestr):
+    """Характеристики средств измерений (госреестры в связке с модификациями/типами/диапазонами) дочерняя таблица"""
+    reestr = models.CharField('Номер в Госреестре', max_length=1000, default='', blank=True, null=True)
+    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
+    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
+    measurydiapason = models.CharField('Диапазон измерений', max_length=1000, default='', blank=True, null=True)
+    accuracity = models.CharField('Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)',
+                                  max_length=1000, default='', blank=True, null=True)
+    aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
+                           max_length=90, blank=True, null=True)
+    voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
+    frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
+    temperature = models.CharField('температура', max_length=100, default='', blank=True, null=True)
+    humidicity = models.CharField('влажность', max_length=100, default='', blank=True, null=True)
+    pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
+
+
+    def __str__(self):
+        return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
+
+    class Meta:
+        verbose_name = 'Средство измерения: описание типа'
+        verbose_name_plural = 'Средства измерения: описания типов'
+        unique_together = ('reestr', 'modificname', 'typename', 'name')
+
 
 class Equipment(models.Model):
     """Лабораторное оборудование - базовая индивидуальная сущность"""
@@ -181,38 +229,7 @@ class Equipment(models.Model):
         verbose_name_plural = 'Оборудование: список всего оборудования'
 
 
-class MeasurEquipmentCharakters(models.Model):
-    """Характеристики средств измерений (госреестры в связке с модификациями/типами/диапазонами)"""
-    name = models.CharField('Название прибора', max_length=100, default='')
-    reestr = models.CharField('Номер в Госреестре', max_length=1000, default='', blank=True, null=True)
-    calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
-    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
-    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
-    measurydiapason = models.CharField('Диапазон измерений', max_length=1000, default='', blank=True, null=True)
-    accuracity = models.CharField('Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)',
-                                  max_length=1000, default='', blank=True, null=True)
-    aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
-                           max_length=90, blank=True, null=True)
-    power = models.BooleanField('Работает от сети', default=False, blank=True)
-    voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
-    frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
-    temperature = models.CharField('температура', max_length=100, default='', blank=True, null=True)
-    humidicity = models.CharField('влажность', max_length=100, default='', blank=True, null=True)
-    pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
-    setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
-    needsetplace = models.BooleanField('установка не требуется', default=False, blank=True)
-    complectlist = models.CharField('где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
-    expresstest = models.BooleanField('тестирование возможно? да/нет', default=False, blank=True)
-    traceability = models.TextField('Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)',
-                                    default='', blank=True, null=True)
 
-    def __str__(self):
-        return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
-
-    class Meta:
-        verbose_name = 'Средство измерения: описание типа'
-        verbose_name_plural = 'Средства измерения: описания типов'
-        unique_together = ('reestr', 'modificname', 'typename', 'name')
 
 
 class TestingEquipmentCharakters(models.Model):
