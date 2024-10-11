@@ -235,29 +235,29 @@ class HelpingEquipmentView(ListView):
 
 # блок 4 - формы регистрации и обновления: комнаты, поверители, персоны поверители, производители, контакты поверителей
 
-class ContactsVerregView(LoginRequiredMixin, CreateView):
-    """ выводит форму добавления контактов поверителей"""
-    form_class = ContactsVerForm
-    template_name = 'equipment/personverreg.html'
+# class ContactsVerregView(LoginRequiredMixin, CreateView):
+#     """ выводит форму добавления контактов поверителей"""
+#     form_class = ContactsVerForm
+#     template_name = 'equipment/personverreg.html'
 
-    def get_object(self, queryset=None):
-        return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
+#     def get_object(self, queryset=None):
+#         return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
 
-    def get_context_data(self, **kwargs):
-        context = super(ContactsVerregView, self).get_context_data(**kwargs)
-        context['title'] = 'Добавить контакт поверителя'
-        context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super(ContactsVerregView, self).get_context_data(**kwargs)
+#         context['title'] = 'Добавить контакт поверителя'
+#         context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
+#         return context
 
-    def form_valid(self, form):
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-            order.save()
-            if order.equipment.kategory == 'СИ':
-                return redirect(f'/equipment/measureequipment/verification/{self.kwargs["str"]}')
-            if order.equipment.kategory == 'ИО':
-                return redirect(f'/equipment/testingequipment/attestation/{self.kwargs["str"]}')
+#     def form_valid(self, form):
+#         if form.is_valid():
+#             order = form.save(commit=False)
+#             order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
+#             order.save()
+#             if order.equipment.kategory == 'СИ':
+#                 return redirect(f'/equipment/measureequipment/verification/{self.kwargs["str"]}')
+#             if order.equipment.kategory == 'ИО':
+#                 return redirect(f'/equipment/testingequipment/attestation/{self.kwargs["str"]}')
 
 
 class RoomsCreateView(SuccessMessageMixin, CreateView):
