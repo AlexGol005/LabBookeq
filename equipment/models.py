@@ -157,7 +157,7 @@ class MeasurEquipmentReestr(models.Model):
         abstract = True
         verbose_name = 'Средство измерения: госреестр'
         verbose_name_plural = 'Средства измерения: госреестр'
-        unique = ('reestr', )
+
 
 
 class MeasurEquipmentCharakters(MeasurEquipmentReestr):
