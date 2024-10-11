@@ -49,6 +49,21 @@ now = date.today()
 
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
 
+class ManagerEquipmentView(TemplateView):
+    """выводит страницу для управляющего оборудованием"""
+    template_name = 'main/manager.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ManagerEquipmentView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff:
+                context['USER'] = True
+            if not user.is_staff:
+                context['USER'] = False
+        except:
+            context['USER'] = False
+        return context
 
 class MeteorologicalParametersView(ListView):
     """Выводит страницу с кнопками для добавления помещений, микроклимата и вывода журнала микроклимата"""
