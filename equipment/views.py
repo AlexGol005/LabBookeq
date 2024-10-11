@@ -360,33 +360,33 @@ class PersonchangeFormView(View):
             return redirect(f'/equipment/measureequipment/{str}')
 
 
-class RoomschangeFormView(View):
-    """вывод формы смены помещения, URL=roomschangereg/<str:str>/"""
-    def get(self, request, str):
-        title = 'Смена размещения прибора'
-        dop = Equipment.objects.get(exnumber=str)
-        form = RoomschangeForm()
-        context = {
-            'title': title,
-            'dop': dop,
-            'form': form,
-        }
-        template_name = 'equipment/reg.html'
-        return render(request, template_name, context)
+# class RoomschangeFormView(View):
+#     """вывод формы смены помещения, URL=roomschangereg/<str:str>/"""
+#     def get(self, request, str):
+#         title = 'Смена размещения прибора'
+#         dop = Equipment.objects.get(exnumber=str)
+#         form = RoomschangeForm()
+#         context = {
+#             'title': title,
+#             'dop': dop,
+#             'form': form,
+#         }
+#         template_name = 'equipment/reg.html'
+#         return render(request, template_name, context)
 
-    def post(self, request, str, *args, **kwargs):
-        form = RoomschangeForm(request.POST)
-        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipment = Equipment.objects.get(exnumber=str)
-                order.save()
-                if order.equipment.kategory == 'СИ':
-                    return redirect(f'/equipment/measureequipment/{str}')
-                if order.equipment.kategory == 'ИО':
-                    return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
-                if order.equipment.kategory == 'ВО':
-                    return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+#     def post(self, request, str, *args, **kwargs):
+#         form = RoomschangeForm(request.POST)
+#         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+#             if form.is_valid():
+#                 order = form.save(commit=False)
+#                 order.equipment = Equipment.objects.get(exnumber=str)
+#                 order.save()
+#                 if order.equipment.kategory == 'СИ':
+#                     return redirect(f'/equipment/measureequipment/{str}')
+#                 if order.equipment.kategory == 'ИО':
+#                     return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+#                 if order.equipment.kategory == 'ВО':
+#                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
 
 # блок 5 - микроклимат: журналы, формы регистрации
@@ -1464,19 +1464,19 @@ class VerificationLabelsView(TemplateView):
 # для фильтрации кверисетов для выгрузок ексель. Так как нужно выбирать актуальные (последниие)
 # поверки/аттестации из их таблиц и подставлять их в таблицы СИ и ИО, при этом не теряя остальные поля,
 # поэтому просто группировка не подходит
-get_id_room = Roomschange.objects.select_related('equipment').values('equipment'). \
-        annotate(id_actual=Max('id')).values('id_actual')
-list_ = list(get_id_room)
-setroom = []
-for n in list_:
-    setroom.append(n.get('id_actual'))
+# get_id_room = Roomschange.objects.select_related('equipment').values('equipment'). \
+#         annotate(id_actual=Max('id')).values('id_actual')
+# list_ = list(get_id_room)
+# setroom = []
+# for n in list_:
+#     setroom.append(n.get('id_actual'))
 
-get_id_person = Personchange.objects.select_related('equipment').values('equipment'). \
-        annotate(id_actual=Max('id')).values('id_actual')
-list_ = list(get_id_person)
-setperson = []
-for n in list_:
-    setperson.append(n.get('id_actual'))
+# get_id_person = Personchange.objects.select_related('equipment').values('equipment'). \
+#         annotate(id_actual=Max('id')).values('id_actual')
+# list_ = list(get_id_person)
+# setperson = []
+# for n in list_:
+#     setperson.append(n.get('id_actual'))
 
 get_id_verification = Verificationequipment.objects.select_related('equipmentSM').values('equipmentSM'). \
     annotate(id_actual=Max('id')).values('id_actual')
