@@ -49,12 +49,14 @@ _tmr.push({id: "3475315", type: "pageView", start: (new Date()).getTime()});
 <!-- /Yandex.Metrika counter -->
 {#конец кода счётчика#}
 </head>
+
+    
 <body class="main-page-body">
     
 # здесь рисуем шапку сайта
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col-12">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a href="/"><img src="{% static 'main/img/3.png' %}"  alt="Лого"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,4 +129,4 @@ _tmr.push({id: "3475315", type: "pageView", start: (new Date()).getTime()});
 {% block aside %}
 {% endblock %}
 
-    
+</body>    
