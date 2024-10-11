@@ -1135,30 +1135,30 @@ class OrderTEUdateForm(forms.ModelForm):
 
 # блок 6 - смена ответственного и помещения
 
-class PersonchangeForm(forms.ModelForm):
-    """форма для смены ответственного за ЛО"""
-    person = forms.ModelChoiceField(label='Ответственный за ЛО',
-                                    queryset=User.objects.all(),
-                                    widget=forms.Select(attrs={'class': 'form-control'}))
+# class PersonchangeForm(forms.ModelForm):
+#     """форма для смены ответственного за ЛО"""
+#     person = forms.ModelChoiceField(label='Ответственный за ЛО',
+#                                     queryset=User.objects.all(),
+#                                     widget=forms.Select(attrs={'class': 'form-control'}))
 
-    class Meta:
-        model = Personchange
-        fields = [
-            'person'
-                  ]
+#     class Meta:
+#         model = Personchange
+#         fields = [
+#             'person'
+#                   ]
 
 
-class RoomschangeForm(forms.ModelForm):
-    """форма для смены Размещения ЛО"""
-    roomnumber = forms.ModelChoiceField(label='Номер комнаты',
-                                        queryset=Rooms.objects.all(),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
+# class RoomschangeForm(forms.ModelForm):
+#     """форма для смены Размещения ЛО"""
+#     roomnumber = forms.ModelChoiceField(label='Номер комнаты',
+#                                         queryset=Rooms.objects.all(),
+#                                         widget=forms.Select(attrs={'class': 'form-control'}))
 
-    class Meta:
-        model = Roomschange
-        fields = [
-            'roomnumber'
-                  ]
+#     class Meta:
+#         model = Roomschange
+#         fields = [
+#             'roomnumber'
+#                   ]
 
 
 # блок 7 - формы для микроклимата
