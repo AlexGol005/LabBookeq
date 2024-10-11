@@ -21,7 +21,9 @@ admin.site.register(TestingEquipmentCharakters)
 admin.site.register(TestingEquipment)
 admin.site.register(Attestationequipment)
 admin.site.register(HelpingEquipmentCharakters)
-admin.site.register(HelpingEquipment)
+admin.site.register(HelpingEquipment) 
+admin.site.register(MeasurEquipmentReestr)
+
 
 
 
