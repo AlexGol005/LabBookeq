@@ -7,16 +7,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('', include('viscosimeters.urls')),
-    path('attestationJ/kinematicviscosity/', include('kinematicviscosity.urls')),
-    path('attestationJ/dinamicviscosity/', include('dinamicviscosity.urls')),
     path('', include('users.urls')),
     path('equipment/', include('equipment.urls')),
-    path('CertifiedValueJ/', include('jouViscosity.urls')),
     path('^', include('django.contrib.auth.urls')),
-    path('blog/', include('blog.urls')),
-    path('bdanswers/', include('bdanswers.urls')),
     path('postbox/', include('contact_form.urls')),
-    path('hike/', include('hike.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
