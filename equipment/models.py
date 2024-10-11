@@ -390,81 +390,81 @@ class DocsCons(models.Model):
 # блок 5 - проверка СИ, аттестация ИО, проверка характеристик ВО
 
 
-class Verificationequipment(models.Model):
-    """Поверка СИ"""
-    equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
-                                    on_delete=models.PROTECT, related_name='equipmentSM_ver', blank=True, null=True)
-    date = models.DateField('Дата поверки', blank=True, null=True)
-    datedead = models.DateField('Дата окончания поверки', blank=True, null=True)
-    dateorder = models.DateField('Дата заказа следующей поверки', blank=True, null=True)
-    arshin = models.TextField('Ссылка на сведения о поверке в Аршин', blank=True, null=True)
-    certnumber = models.CharField('Номер свидетельства о поверке', max_length=90, blank=True, null=True)
-    certnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
-    price = models.DecimalField('Стоимость данной поверки', max_digits=100, decimal_places=2, null=True, blank=True)
-    img = models.ImageField('Сертификат', upload_to='user_images', blank=True, null=True)
-    statusver = models.CharField(max_length=300, choices=CHOICESVERIFIC, default='Поверен', null=True,
-                                 verbose_name='Статус')
-    verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
-                                    verbose_name='Поверитель', blank=True, null=True)
-    verificatorperson = models.ForeignKey(VerificatorPerson, on_delete=models.PROTECT,
-                                          verbose_name='Поверитель имя', blank=True, null=True)
-    place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
-                             verbose_name='Место поверки')
-    note = models.CharField('Примечание', max_length=900, blank=True, null=True)
-    year = models.CharField('Год поверки (если нет точных дат)', max_length=900, blank=True, null=True)
-    dateordernew = models.DateField('Дата заказа нового оборудования (если поверять не выгодно)',
-                                    blank=True, null=True)
-    haveorder = models.BooleanField(verbose_name='Заказана следующая поверка (или новое СИ)', default=False,
-                                    blank=True)
-    cust = models.BooleanField(verbose_name='Поверку организует Поставщик', default=False,
-                               blank=True)
-    extra = models.TextField('Дополнительная информация', blank=True, null=True)
+# class Verificationequipment(models.Model):
+#     """Поверка СИ"""
+#     equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
+#                                     on_delete=models.PROTECT, related_name='equipmentSM_ver', blank=True, null=True)
+#     date = models.DateField('Дата поверки', blank=True, null=True)
+#     datedead = models.DateField('Дата окончания поверки', blank=True, null=True)
+#     dateorder = models.DateField('Дата заказа следующей поверки', blank=True, null=True)
+#     arshin = models.TextField('Ссылка на сведения о поверке в Аршин', blank=True, null=True)
+#     certnumber = models.CharField('Номер свидетельства о поверке', max_length=90, blank=True, null=True)
+#     certnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
+#     price = models.DecimalField('Стоимость данной поверки', max_digits=100, decimal_places=2, null=True, blank=True)
+#     img = models.ImageField('Сертификат', upload_to='user_images', blank=True, null=True)
+#     statusver = models.CharField(max_length=300, choices=CHOICESVERIFIC, default='Поверен', null=True,
+#                                  verbose_name='Статус')
+#     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
+#                                     verbose_name='Поверитель', blank=True, null=True)
+#     verificatorperson = models.ForeignKey(VerificatorPerson, on_delete=models.PROTECT,
+#                                           verbose_name='Поверитель имя', blank=True, null=True)
+#     place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
+#                              verbose_name='Место поверки')
+#     note = models.CharField('Примечание', max_length=900, blank=True, null=True)
+#     year = models.CharField('Год поверки (если нет точных дат)', max_length=900, blank=True, null=True)
+#     dateordernew = models.DateField('Дата заказа нового оборудования (если поверять не выгодно)',
+#                                     blank=True, null=True)
+#     haveorder = models.BooleanField(verbose_name='Заказана следующая поверка (или новое СИ)', default=False,
+#                                     blank=True)
+#     cust = models.BooleanField(verbose_name='Поверку организует Поставщик', default=False,
+#                                blank=True)
+#     extra = models.TextField('Дополнительная информация', blank=True, null=True)
 
-    def __str__(self):
-        try:
-            return f'Поверка  вн № ' \
-               f'  {self.equipmentSM.equipment.exnumber} {self.equipmentSM.charakters.name} от {self.date} ' \
-                   f'до {self.datedead} {self.year}'
-        except:
-            return '&'
+#     def __str__(self):
+#         try:
+#             return f'Поверка  вн № ' \
+#                f'  {self.equipmentSM.equipment.exnumber} {self.equipmentSM.charakters.name} от {self.date} ' \
+#                    f'до {self.datedead} {self.year}'
+#         except:
+#             return '&'
 
-    def get_absolute_url(self):
-        """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
-        return reverse('measureequipmentver', kwargs={'str': self.equipmentSM.equipment.exnumber})
+#     def get_absolute_url(self):
+#         """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
+#         return reverse('measureequipmentver', kwargs={'str': self.equipmentSM.equipment.exnumber})
 
-    @staticmethod
-    def get_dateformat(dateneed):
-        dateformat = str(dateneed)
-        day = dateformat[8:]
-        month = dateformat[5:7]
-        year = dateformat[:4]
-        rdate = f'{day}.{month}.{year}'
-        return rdate
+#     @staticmethod
+#     def get_dateformat(dateneed):
+#         dateformat = str(dateneed)
+#         day = dateformat[8:]
+#         month = dateformat[5:7]
+#         year = dateformat[:4]
+#         rdate = f'{day}.{month}.{year}'
+#         return rdate
 
-    def save(self, *args, **kwargs):
-        super().save()
-        # для картинок
-        if self.img:
-            image = Image.open(self.img.path)
-            if image.height > 500 or image.width > 500:
-                resize = (500, 500)
-                image.thumbnail(resize)
-                image.save(self.img.path)
-        # добавляем последнюю поверку к оборудованию
-        try:
-            note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
-            note.newcertnumber = self.certnumber
-            newdate = self.get_dateformat(self.date)
-            note.newdate = newdate
-            newdatedead = self.get_dateformat(self.datedead)
-            note.newdatedead = newdatedead
-            note.save()
-        except:
-            pass
+#     def save(self, *args, **kwargs):
+#         super().save()
+#         # для картинок
+#         if self.img:
+#             image = Image.open(self.img.path)
+#             if image.height > 500 or image.width > 500:
+#                 resize = (500, 500)
+#                 image.thumbnail(resize)
+#                 image.save(self.img.path)
+#         # добавляем последнюю поверку к оборудованию
+#         try:
+#             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
+#             note.newcertnumber = self.certnumber
+#             newdate = self.get_dateformat(self.date)
+#             note.newdate = newdate
+#             newdatedead = self.get_dateformat(self.datedead)
+#             note.newdatedead = newdatedead
+#             note.save()
+#         except:
+#             pass
 
-    class Meta:
-        verbose_name = 'Средство измерения: поверка'
-        verbose_name_plural = 'Средства измерения: поверки'
+#     class Meta:
+#         verbose_name = 'Средство измерения: поверка'
+#         verbose_name_plural = 'Средства измерения: поверки'
 
 
 class Attestationequipment(models.Model):
