@@ -907,109 +907,109 @@ class DocsConsCreateForm(forms.ModelForm):
 # блок 5 - формы для внесения внесения сведений о поверке, аттестации, проверке характеристик плюс формы изменения
 
 
-class VerificationRegForm(forms.ModelForm):
-    """форма для внесения сведений о поверке"""
-    date = forms.DateField(label='Дата поверки',
-                           widget=forms.DateInput(
-                                                  attrs={'class': 'form-control', 'placeholder': ''}),
-                           input_formats=(
-                                          '%Y-%m-%d',  # '2006-10-25'
-                                          '%m/%d/%Y',  # '10/25/2006'
-                                          '%m/%d/%y',
-                                          '%d.%m.%Y',
-                                           ))
-    datedead = forms.DateField(label='Дата окончания поверки',
-                               widget=forms.DateInput(
-                                                      attrs={'class': 'form-control', 'placeholder': ''}),
-                               input_formats=(
-                                              '%Y-%m-%d',  # '2006-10-25'
-                                              '%m/%d/%Y',  # '10/25/2006'
-                                              '%m/%d/%y',
-                                              '%d.%m.%Y',
-                                              ))
-    dateorder = forms.DateField(label='Дата заказа поверки', required=False,
-                                widget=forms.DateInput(
-                                                       attrs={'class': 'form-control', 'placeholder': ''}),
-                                input_formats=(
-                                               '%Y-%m-%d',  # '2006-10-25'
-                                               '%m/%d/%Y',  # '10/25/2006'
-                                               '%m/%d/%y',
-                                               '%d.%m.%Y',
-                                                ))
-    arshin = forms.CharField(label='Ссылка на сведения о поверке в Аршин', max_length=10000,
-                             required=False,
-                             widget=forms.TextInput(attrs={'class': 'form-control'}))
-    certnumber = forms.CharField(label='№ свидетельства о поверке', max_length=10000,
-                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
-    price = forms.DecimalField(label='Стоимость данной поверки', max_digits=10, decimal_places=2,
-                               widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'placeholder': '0000.00'}))
-    statusver = forms.ChoiceField(label='Результат поверки',
-                                  choices=CHOICESVERIFIC,
-                                  widget=forms.Select(attrs={'class': 'form-control'}))
+# class VerificationRegForm(forms.ModelForm):
+#     """форма для внесения сведений о поверке"""
+#     date = forms.DateField(label='Дата поверки',
+#                            widget=forms.DateInput(
+#                                                   attrs={'class': 'form-control', 'placeholder': ''}),
+#                            input_formats=(
+#                                           '%Y-%m-%d',  # '2006-10-25'
+#                                           '%m/%d/%Y',  # '10/25/2006'
+#                                           '%m/%d/%y',
+#                                           '%d.%m.%Y',
+#                                            ))
+#     datedead = forms.DateField(label='Дата окончания поверки',
+#                                widget=forms.DateInput(
+#                                                       attrs={'class': 'form-control', 'placeholder': ''}),
+#                                input_formats=(
+#                                               '%Y-%m-%d',  # '2006-10-25'
+#                                               '%m/%d/%Y',  # '10/25/2006'
+#                                               '%m/%d/%y',
+#                                               '%d.%m.%Y',
+#                                               ))
+#     dateorder = forms.DateField(label='Дата заказа поверки', required=False,
+#                                 widget=forms.DateInput(
+#                                                        attrs={'class': 'form-control', 'placeholder': ''}),
+#                                 input_formats=(
+#                                                '%Y-%m-%d',  # '2006-10-25'
+#                                                '%m/%d/%Y',  # '10/25/2006'
+#                                                '%m/%d/%y',
+#                                                '%d.%m.%Y',
+#                                                 ))
+#     arshin = forms.CharField(label='Ссылка на сведения о поверке в Аршин', max_length=10000,
+#                              required=False,
+#                              widget=forms.TextInput(attrs={'class': 'form-control'}))
+#     certnumber = forms.CharField(label='№ свидетельства о поверке', max_length=10000,
+#                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
+#     price = forms.DecimalField(label='Стоимость данной поверки', max_digits=10, decimal_places=2,
+#                                widget=forms.TextInput(attrs={'class': 'form-control',
+#                                                              'placeholder': '0000.00'}))
+#     statusver = forms.ChoiceField(label='Результат поверки',
+#                                   choices=CHOICESVERIFIC,
+#                                   widget=forms.Select(attrs={'class': 'form-control'}))
 
-    verificator = forms.ModelChoiceField(label='Организация-поверитель',
-                                         queryset=Verificators.objects.all(),
-                                         widget=forms.Select(attrs={'class': 'form-control'}))
-    verificatorperson = forms.ModelChoiceField(label='Имя поверителя', required=False,
-                                               queryset=VerificatorPerson.objects.all(),
-                                               widget=forms.Select(attrs={'class': 'form-control'}))
-    place = forms.ChoiceField(label='Место поверки',
-                              choices=CHOICESPLACE,
-                              widget=forms.Select(attrs={'class': 'form-control'}))
-    cust = forms.BooleanField(label='Поверка заказана поставщиком', required=False)
-    img = forms.ImageField(label='Сертификат', widget=forms.FileInput, required=False)
-    dateordernew = forms.DateField(label='Дата заказа замены', required=False,
-                                   help_text='Укажите, если поверка не выгодна',
-                                   widget=forms.DateInput(
-                                                          attrs={'class': 'form-control', 'placeholder': ''}),
-                                   input_formats=(
-                                                  '%Y-%m-%d',
-                                                  '%m/%d/%Y',
-                                                  '%m/%d/%y',
-                                                  '%d.%m.%Y',
-                                                   ))
-    extra = forms.CharField(label='Дополнительная информация/выписка из текущих сведений о поверке',
-                                  widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
+#     verificator = forms.ModelChoiceField(label='Организация-поверитель',
+#                                          queryset=Verificators.objects.all(),
+#                                          widget=forms.Select(attrs={'class': 'form-control'}))
+#     verificatorperson = forms.ModelChoiceField(label='Имя поверителя', required=False,
+#                                                queryset=VerificatorPerson.objects.all(),
+#                                                widget=forms.Select(attrs={'class': 'form-control'}))
+#     place = forms.ChoiceField(label='Место поверки',
+#                               choices=CHOICESPLACE,
+#                               widget=forms.Select(attrs={'class': 'form-control'}))
+#     cust = forms.BooleanField(label='Поверка заказана поставщиком', required=False)
+#     img = forms.ImageField(label='Сертификат', widget=forms.FileInput, required=False)
+#     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
+#                                    help_text='Укажите, если поверка не выгодна',
+#                                    widget=forms.DateInput(
+#                                                           attrs={'class': 'form-control', 'placeholder': ''}),
+#                                    input_formats=(
+#                                                   '%Y-%m-%d',
+#                                                   '%m/%d/%Y',
+#                                                   '%m/%d/%y',
+#                                                   '%d.%m.%Y',
+#                                                    ))
+#     extra = forms.CharField(label='Дополнительная информация/выписка из текущих сведений о поверке',
+#                                   widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
 
-    class Meta:
-        model = Verificationequipment
-        fields = ['date', 'datedead', 'dateorder', 'arshin', 'certnumber',
-                  'price', 'statusver',  'verificator', 'verificatorperson',
-                  'place', 'year',
-                  'dateordernew',
-                  'cust',
-                  'extra',
-                  ]
+#     class Meta:
+#         model = Verificationequipment
+#         fields = ['date', 'datedead', 'dateorder', 'arshin', 'certnumber',
+#                   'price', 'statusver',  'verificator', 'verificatorperson',
+#                   'place', 'year',
+#                   'dateordernew',
+#                   'cust',
+#                   'extra',
+#                   ]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            Row(
-                Column('date', css_class='form-group col-md-4 mb-0'),
-                Column('datedead', css_class='form-group col-md-4 mb-0'),
-                Column('dateorder', css_class='form-group col-md-4 mb-0'),
-                ),
-            Row(
-                Column('arshin', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('certnumber', css_class='form-group col-md-4 mb-0'),
-                Column('statusver', css_class='form-group col-md-4 mb-0'),
-                Column('price', css_class='form-group col-md-4 mb-0'),
-            ),
-            Row(
-                Column('verificator', css_class='form-group col-md-4 mb-0'),
-                Column('verificatorperson', css_class='form-group col-md-4 mb-0'),
-                Column('place', css_class='form-group col-md-4 mb-0'),
-                Column('cust', css_class='form-group col-md-4 mb-0'),
-            ),
-            Row(
-                Column('img', css_class='form-group col-md-6 mb-1'),
-                Column('dateordernew', css_class='form-group col-md-6 mb-1')),
-            Row(
-                Column('extra', css_class='form-group col-md-12 mb-1')),
-            Submit('submit', 'Внести'))
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.helper = FormHelper()
+#         self.helper.layout = Layout(
+#             Row(
+#                 Column('date', css_class='form-group col-md-4 mb-0'),
+#                 Column('datedead', css_class='form-group col-md-4 mb-0'),
+#                 Column('dateorder', css_class='form-group col-md-4 mb-0'),
+#                 ),
+#             Row(
+#                 Column('arshin', css_class='form-group col-md-12 mb-0')),
+#             Row(
+#                 Column('certnumber', css_class='form-group col-md-4 mb-0'),
+#                 Column('statusver', css_class='form-group col-md-4 mb-0'),
+#                 Column('price', css_class='form-group col-md-4 mb-0'),
+#             ),
+#             Row(
+#                 Column('verificator', css_class='form-group col-md-4 mb-0'),
+#                 Column('verificatorperson', css_class='form-group col-md-4 mb-0'),
+#                 Column('place', css_class='form-group col-md-4 mb-0'),
+#                 Column('cust', css_class='form-group col-md-4 mb-0'),
+#             ),
+#             Row(
+#                 Column('img', css_class='form-group col-md-6 mb-1'),
+#                 Column('dateordernew', css_class='form-group col-md-6 mb-1')),
+#             Row(
+#                 Column('extra', css_class='form-group col-md-12 mb-1')),
+#             Submit('submit', 'Внести'))
 
 
 class AttestationRegForm(forms.ModelForm):
@@ -1115,13 +1115,13 @@ class AttestationRegForm(forms.ModelForm):
             Submit('submit', 'Внести'))
 
 
-class OrderMEUdateForm(forms.ModelForm):
-    """форма для обозначения того, что заказана поверка, или ЛО на замену"""
-    haveorder = forms.BooleanField(label='', required=False)
+# class OrderMEUdateForm(forms.ModelForm):
+#     """форма для обозначения того, что заказана поверка, или ЛО на замену"""
+#     haveorder = forms.BooleanField(label='', required=False)
 
-    class Meta:
-        model = Verificationequipment
-        fields = ['haveorder']
+#     class Meta:
+#         model = Verificationequipment
+#         fields = ['haveorder']
 
 
 class OrderTEUdateForm(forms.ModelForm):
