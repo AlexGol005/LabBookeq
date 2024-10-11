@@ -6,39 +6,22 @@
 
 
 {% block content %}
-<div style="text-align: center;">
-     <table class="table table-bordered">
-    <td colspan="6">
-
-    <h6>Мы создадим ПО для вашей лаборатории: электронные лабораторные журналы, электронный учет лабораторного оборудования. Попробуйте бесплатно!
-    <a href="{% url 'contact_page' %}">Пишите  </a> или звоните 89500484071</h6>
-               </td>
-</table>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <center><h3>Автоматизация учета лабораторного оборудования и микроклимата для Вашей лаборатории</h3></center>
+                {% if not user.is_authenticated %}
+                    <center><a href="{% url 'reg' %}" class="btn btn-warning mr-2 ml-2 mt-2">регистрация</a>
+                    <a href="{% url 'reg' %}" class="btn btn-info mr-2 ml-2 mt-2">войти</a> </center>
+                {% else %}
+                    <center><a href="{% url 'profile' %}" class="btn btn-warning mr-2 ml-2 mt-2"> ID {{ request.user.username }}</a>
+                    <a href="{% url 'exit' %}" class="btn btn-warning mr-2 ml-2 mt-2"> выйти</a> </center>
+                {% endif %}
+                <center> a href="{% url 'contact_page' %}" class="btn btn-warning  mr-2 ml-2 mt-3 " style="width: 300px">Задать вопрос администрации сайта</a></center>
+                <center><a href="{% url 'about' %}" class="btn btn-info  mr-2 ml-2 mt-3 " style="width: 300px">Что это за сайт?</a> </center>
+                <center><img src="{% static 'main/img/2.jpg' %}" alt="Изображение на главной странице" mr-2 ml-2 mt-2> </center>
+            </div>
         </div>
-<div style="text-align: center;"><h4>Документы лаборатории: пример</h4></div>
-
-
-<div style="text-align: center;">
-<a href="{% url 'eq' %}" class="btn btn-warning  mr-2 ml-2 mt-3" style="width: 210px">Инфраструктура</a>
-</div>
-<div style="text-align: center;">
-
-    <a href="{% url 'contact_page' %}" class="btn btn-warning  mr-2 ml-2 mt-3 " style="width: 300px">Задать вопрос администрации сайта</a>
-</div>
-<div style="text-align: center;">
-
-    <a href="{% url 'about' %}" class="btn btn-info  mr-2 ml-2 mt-3 " style="width: 300px">Что это за сайт?</a>
-</div>
-    <br>
-
-<div style="text-align: center;">
-
-        </td>
-</table>
-</div>
-<br><br>
-<div style="text-align: center;">
-<img src="{% static 'main/img/2.jpg' %}"
-alt="Изображение на главной странице"></div>
-
+    </div>
 {% endblock %}
+                        
