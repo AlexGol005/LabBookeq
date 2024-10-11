@@ -340,34 +340,34 @@ class HelpingEquipment(models.Model):
 
 # блок 4 - смена комнаты, ответственного, добавление принадлежностей к оборудованию
 
-#class Personchange(models.Model):
-#     person = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
-#     date = models.DateField('Дата изменения ответственного', auto_now_add=True, db_index=True)
-#     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True)
+class Personchange(models.Model):
+    person = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
+    date = models.DateField('Дата изменения ответственного', auto_now_add=True, db_index=True)
+    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True)
 
-#     def __str__(self):
-#         try:
-#             return f'{self.equipment.exnumber} Изменён ответственный {self.date}'
-#         except:
-#             return '&'
+    def __str__(self):
+        try:
+            return f'{self.equipment.exnumber} Изменён ответственный {self.date}'
+        except:
+            return '&'
 
-#     class Meta:
-#         verbose_name = 'Оборудование: дата изменения ответственного'
-#         verbose_name_plural = 'Оборудование: даты изменения ответственных'
+    class Meta:
+        verbose_name = 'Оборудование: дата изменения ответственного'
+        verbose_name_plural = 'Оборудование: даты изменения ответственных'
 
 
-# class Roomschange(models.Model):
-#     roomnumber = models.ForeignKey(Rooms, on_delete=models.PROTECT)
-#     date = models.DateField('Дата перемещения', auto_now_add=True, db_index=True)
-#     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
-#                                   verbose_name='Оборудование')
+class Roomschange(models.Model):
+    roomnumber = models.ForeignKey(Rooms, on_delete=models.PROTECT)
+    date = models.DateField('Дата перемещения', auto_now_add=True, db_index=True)
+    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+                                  verbose_name='Оборудование')
 
-#     def __str__(self):
-#         return f'{self.equipment} Перемещено {self.date} '
+    def __str__(self):
+        return f'{self.equipment} Перемещено {self.date} '
 
-#     class Meta:
-#         verbose_name = 'Оборудование: Дата перемещения прибора'
-#         verbose_name_plural = 'Оборудование: Даты перемещения приборов'
+    class Meta:
+        verbose_name = 'Оборудование: Дата перемещения прибора'
+        verbose_name_plural = 'Оборудование: Даты перемещения приборов'
 
 
 class DocsCons(models.Model):
