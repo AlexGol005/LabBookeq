@@ -53,83 +53,85 @@ _tmr.push({id: "3475315", type: "pageView", start: (new Date()).getTime()});
     
 <body class="main-page-body">
     
-{# здесь рисуем шапку сайта #}
-<!-- <div class="container">
-    <div class="row">
-        <div class="col-12"> -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a href="/"><img src="{% static 'main/img/3.png' %}"  alt="Лого"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                            <li class="nav-item active">
-                                <a class="nav-link active" aria-current="page" href="/">JournalLab</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'about' %}">О&nbspсайте</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'eq' %}">Инфраструктура</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'contacts' %}">Контакты</a>
-                            </li>
-                            <li class="nav-item">               
-                                <a href="{% url 'contact_page' %}" class="btn btn-warning  mr-2 ml-2 mt-2" style="width: 210px">Форма обратной связи</a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                        {% if not user.is_authenticated %}
-                            <li class="nav-item">
-                                <a href="{% url 'reg' %}" class="btn btn-outline-warning mr-2 ml-2 mt-2">регистрация</a>
-                            </li>
-                            <li class="nav-item">
-                                    <a href="{% url 'reg' %}" class="btn btn-outline-info mr-2 ml-2 mt-2">войти</a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                     <a href="{% url 'profile' %}" class="btn btn-outline-warning mr-2 ml-2 mt-2"> ID {{ request.user.username }}</a>
-                            </li>
-                            <li class="nav-item">
-                                     <a href="{% url 'exit' %}" class="btn btn-outline-warning mr-2 ml-2 mt-2"> выйти</a>
-                            </li>
-                        {% endif %} 
-                    </ul>
-                </div>
-            </nav>
-<!--         </div>
-    </div>
-</div> -->
-
-{# конец шапки #}
-        
-{# здесь рисуем всплывающие при разных действиях сообщения  #}       
-<div class="container mt-5 table-list no-gutters">
-    <div class="row no-gutters">
-        <div class="col-md-9 no-gutters">
-        {% if messages %}
-            {% for mess in messages %}
-                <div class="alert alert=success">{{ mess }}</div>
-            {% endfor %}
-        {% endif %}
+    {# здесь рисуем шапку сайта #}
+    <!-- <div class="container">
+        <div class="row">
+            <div class="col-12"> -->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a href="/"><img src="{% static 'main/img/3.png' %}"  alt="Лого"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                                <li class="nav-item active">
+                                    <a class="nav-link active" aria-current="page" href="/">JournalLab</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'about' %}">О&nbspсайте</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'eq' %}">Инфраструктура</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'contacts' %}">Контакты</a>
+                                </li>
+                                <li class="nav-item">               
+                                    <a href="{% url 'contact_page' %}" class="btn btn-warning  mr-2 ml-2 mt-2" style="width: 210px">Форма обратной связи</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            {% if not user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a href="{% url 'reg' %}" class="btn btn-outline-warning mr-2 ml-2 mt-2">регистрация</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a href="{% url 'reg' %}" class="btn btn-outline-info mr-2 ml-2 mt-2">войти</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                         <a href="{% url 'profile' %}" class="btn btn-outline-warning mr-2 ml-2 mt-2"> ID {{ request.user.username }}</a>
+                                </li>
+                                <li class="nav-item">
+                                         <a href="{% url 'exit' %}" class="btn btn-outline-warning mr-2 ml-2 mt-2"> выйти</a>
+                                </li>
+                            {% endif %} 
+                        </ul>
+                    </div>
+                </nav>
+    <!--         </div>
         </div>
-     </div>
-</div>
-{# конец сообщений #}           
-
-<div class="container">
-{% block content %}
-{% endblock %}
-
-{% block uniccontent %}
-{% endblock %}
-      
-
-{% block aside %}
-{% endblock %}
-</div>
+    </div> -->
+    
+    {# конец шапки #}
+            
+    {# здесь рисуем всплывающие при разных действиях сообщения  #}       
+    <div class="container mt-5 table-list no-gutters">
+        <div class="row no-gutters">
+            <div class="col-md-9 no-gutters">
+            {% if messages %}
+                {% for mess in messages %}
+                    <div class="alert alert=success">{{ mess }}</div>
+                {% endfor %}
+            {% endif %}
+            </div>
+         </div>
+    </div>
+    {# конец сообщений #}           
+    
+    <div class="container">
+        <div class="row">
+            {% block content %}
+            {% endblock %}
+            
+            {% block uniccontent %}
+            {% endblock %}
+                  
+            
+            {% block aside %}
+            {% endblock %}
+        </div>
+    </div>
 </body>    
