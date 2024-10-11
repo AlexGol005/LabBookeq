@@ -51,7 +51,7 @@ now = date.today()
 
 class ManagerEquipmentView(TemplateView):
     """выводит страницу для управляющего оборудованием"""
-    template_name = 'main/manager.html'
+    template_name = URL + 'main/manager.html'
 
     def get_context_data(self, **kwargs):
         context = super(ManagerEquipmentView, self).get_context_data(**kwargs)
