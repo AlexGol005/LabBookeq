@@ -4,7 +4,7 @@
    Управление оборудованием
 {% endblock %}
 
- 
+{% block content %} 
     <center><h3>Управление оборудованием лаборатории</h4></div></center>
     <center><a href="{% url 'meteo' %}" class="btn btn-primary mr-2 ml-2 mt-2">Добавить новое ЛО</a></center>
     <center><a href="{% url 'metro' %}" class="btn btn-primary mr-2 ml-2 mt-2" >Метрологическое обеспечение лабораторного оборудования</a></center>
@@ -23,3 +23,4 @@
     </center>
     <br>
 {% endif %}
+{% endblock %}
