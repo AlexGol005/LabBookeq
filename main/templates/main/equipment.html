@@ -10,15 +10,14 @@
     <br>
     <center><h5>Лабораторное оборудование</h5></center>
     <center>
-        <a href="{% url 'measureequipmentall' %}" class="btn btn-primary mr-2 ml-2 mt-3" style="width: 150px"> Средства <br>измерения </a>
-        <a href="{% url 'testingequipmentall' %}" class="btn btn-primary mr-2 ml-2 mt-3" style="width: 150px"> Испытательное <br>оборудование </a>
-        <a href="{% url 'helpingequipmentall' %}" class="btn btn-primary  mr-2 ml-2 mt-3" style="width: 150px">Вспомогательное <br>оборудование </a>
+        <a href="{% url 'measureequipmentall' %}" class="btn btn-primary mr-2 ml-2 mt-2" style="width: 150px"> Средства <br>измерения </a>
+        <a href="{% url 'testingequipmentall' %}" class="btn btn-primary mr-2 ml-2 mt-2" style="width: 150px"> Испытательное <br>оборудование </a>
+        <a href="{% url 'helpingequipmentall' %}" class="btn btn-primary  mr-2 ml-2 mt-2" style="width: 150px">Вспомогательное <br>оборудование </a>
     </center>
     <br>
     <center><h5>Микроклимат в помещениях</h5></center>
-    <center><a href="{% url 'meteo' %}" class="btn btn-primary mt-3" >Смотреть и добавить условия окружающей среды</a></center>
-    <br>
+    <center><a href="{% url 'meteo' %}" class="btn btn-primary mr-2 ml-2 mt-2" >Смотреть и добавить условия окружающей среды</a></center>
 
-    <center><a href="{% url 'contact_page' %}" class="btn btn-primary mr-2 ml-2 mt-3">Задать вопрос администрации сайта</a></center>
-    <center><img src="{% static 'main/img/10.jpg' %}"</center>
+
+    <center><img src="{% static 'main/img/10.jpg' %} mr-2 ml-2 mt-2"</center>
 {% endblock %}
