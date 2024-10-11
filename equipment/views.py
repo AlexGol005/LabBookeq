@@ -1119,39 +1119,39 @@ class AttestationequipmentView(View):
             return redirect(reverse('testingequipmentattestation', kwargs={'str': str}))
 
 
-class HaveorderVerView(UpdateView):
-    """ выводит форму добавления инфо о заказе поверки """
-    template_name = 'equipment/reg.html'
-    form_class = OrderMEUdateForm
+# class HaveorderVerView(UpdateView):
+#     """ выводит форму добавления инфо о заказе поверки """
+#     template_name = 'equipment/reg.html'
+#     form_class = OrderMEUdateForm
 
 
-    def get_object(self, queryset=None):
-        queryset_get = Verificationequipment.objects. \
-            select_related('equipmentSM').values('equipmentSM'). \
-            annotate(id_actual=Max('id')).values('id_actual')
-        b = list(queryset_get)
-        set = []
-        for i in b:
-            a = i.get('id_actual')
-            set.append(a)
-        q = Verificationequipment.objects.filter(id__in=set). \
-            get(equipmentSM_id=self.kwargs['pk'])
-        return q
+#     def get_object(self, queryset=None):
+#         queryset_get = Verificationequipment.objects. \
+#             select_related('equipmentSM').values('equipmentSM'). \
+#             annotate(id_actual=Max('id')).values('id_actual')
+#         b = list(queryset_get)
+#         set = []
+#         for i in b:
+#             a = i.get('id_actual')
+#             set.append(a)
+#         q = Verificationequipment.objects.filter(id__in=set). \
+#             get(equipmentSM_id=self.kwargs['pk'])
+#         return q
 
-    def form_valid(self, form):
-        order = form.save(commit=False)
-        user = User.objects.get(username=self.request.user)
-        if user.has_perm('equipment.add_equipment') or user.is_superuser:
-            order.save()
-            return redirect('/equipment/measureequipmentall/')
-        else:
-            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
-            return redirect('/equipment/measureequipmentall/')
+#     def form_valid(self, form):
+#         order = form.save(commit=False)
+#         user = User.objects.get(username=self.request.user)
+#         if user.has_perm('equipment.add_equipment') or user.is_superuser:
+#             order.save()
+#             return redirect('/equipment/measureequipmentall/')
+#         else:
+#             messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+#             return redirect('/equipment/measureequipmentall/')
 
-    def get_context_data(self, **kwargs):
-        context = super(HaveorderVerView, self).get_context_data(**kwargs)
-        context['title'] = "Заказана поверка или новое СИ"
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super(HaveorderVerView, self).get_context_data(**kwargs)
+#         context['title'] = "Заказана поверка или новое СИ"
+#         return context
 
 
 
