@@ -183,7 +183,7 @@ class MeasurEquipmentCharakters(models.Model):
     class Meta:
         verbose_name = 'Средство измерения: описание типа'
         verbose_name_plural = 'Средства измерения: описания типов'
-        unique_together = ('reestr__reestr', 'modificname', 'typename', 'reestr__name')
+        unique_together = ('reestr_reestr', 'modificname', 'typename', 'reestr_name')
 
 
 class Equipment(models.Model):
