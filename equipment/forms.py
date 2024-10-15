@@ -361,10 +361,10 @@ class EquipmentUpdateForm(forms.ModelForm):
 
 class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
     """форма для внесения характеристик СИ (госреестра)"""
-    reestr = forms.CharField(label='Номер в Госреестре', required=False,
+    reestr = forms.CharField(label='Номер в Госреестре', required=True,
                              widget=forms.TextInput(attrs={'class': 'form-control',
                                                            'placeholder': ''}))
-    name = forms.CharField(label='Название прибора', max_length=10000000, required=False,
+    name = forms.CharField(label='Название прибора', max_length=10000000, required=True,
                            widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': ''}))
     typename = forms.CharField(label='Тип', max_length=10000000, required=False, initial='нет типа',
@@ -373,21 +373,17 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
     modificname = forms.CharField(label='Модификация', max_length=10000000, required=False, initial='нет модификации',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': ''}))
-    calinterval = forms.CharField(label='Межповерочный интервал, месяцев', max_length=10000000, required=False,
+    calinterval = forms.CharField(label='Межповерочный интервал, месяцев', max_length=10000000, required=True,
                                   initial='12',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    measurydiapason = forms.CharField(label='Диапазон измерений', max_length=10000000, required=False,
+    measurydiapason = forms.CharField(label='Диапазон измерений', max_length=10000000, required=True,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
     accuracity = forms.CharField(label='Класс точности /(разряд/), погрешность и /(или/) '
-                                 'неопределённость /(класс, разряд/)', max_length=10000000, required=False,
+                                 'неопределённость /(класс, разряд/)', max_length=10000000, required=True,
                                  widget=forms.Textarea(attrs={'class': 'form-control',
                                                               'placeholder': ''}))
-    aim = forms.CharField(label='Назначение ЛО', max_length=10000000, required=False,
-                          initial='Определение вязкости нефти и нефтепродуктов',
-                          widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
     power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
     voltage = forms.CharField(label='Напряжение требуемое', required=False,
@@ -459,8 +455,6 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(
                 Column('accuracity', css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('aim', css_class='form-group col-md-12 mb-0')),
-            Row(
                 Column('complectlist', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('power', css_class='form-group col-md-4 mb-0'),
@@ -487,7 +481,7 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
 
 class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
     """форма для внесения характеристик ИО"""
-    name = forms.CharField(label='Название прибора', max_length=10000000, required=False,
+    name = forms.CharField(label='Название прибора', max_length=10000000, required=True,
                            widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': ''}))
     typename = forms.CharField(label='Тип', max_length=10000000, required=False, initial='нет типа',
@@ -496,26 +490,13 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
     modificname = forms.CharField(label='Модификация', max_length=10000000, required=False, initial='нет модификации',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    calinterval = forms.CharField(label='Межаттестационный интервал, месяцев', max_length=10000000, required=False,
+    calinterval = forms.CharField(label='Межаттестационный интервал, месяцев', max_length=10000000, required=True,
                                   initial='24',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
+    measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=True,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
-    aim = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
-                          max_length=10000000, required=False,
-                          initial='Определение содержания механических примесей в нефтепродуктах',
-                          widget=forms.Textarea(attrs={'class': 'form-control',
-                                                       'placeholder': ''}))
-    aim2 = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=False,
-                           initial='Нефть и нефтепродукты',
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': ''}))
-    ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=False,
-                           initial='ГОСТ 33, МИ-02-2018, ...',
-                           widget=forms.Textarea(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
     power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
     voltage = forms.CharField(label='Напряжение требуемое', required=False,
@@ -582,11 +563,6 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(
                 Column('accuracity', css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('aim', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('aim2', css_class='form-group col-md-12 mb-0')),
-
-            Row(
                 Column('complectlist', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('power', css_class='form-group col-md-4 mb-0'),
@@ -610,7 +586,7 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
 
 class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
     """форма для внесения характеристик ВО"""
-    name = forms.CharField(label='Название прибора', max_length=10000000, required=False,
+    name = forms.CharField(label='Название прибора', max_length=10000000, required=True,
                            widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': ''}))
     typename = forms.CharField(label='Тип', max_length=10000000, required=False, initial='нет типа',
@@ -622,15 +598,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
     measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                     'placeholder': ''}))
-    aim = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
-                          max_length=10000000, required=False,
-                          initial='Определение содержания механических примесей в нефтепродуктах',
-                          widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
-    ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=False,
-                           initial='ГОСТ 33, МИ-02-2018, ...',
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': ''}))
     power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
     voltage = forms.CharField(label='Напряжение требуемое', required=False,
@@ -656,8 +623,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
                                    widget=forms.TextInput(attrs={'class': 'form-control',
                                                                  'placeholder': ''}))
     expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
-    kvasyattestation = forms.BooleanField(label='применяется внутренняя аттестация (проверка характеристик)',
-                                          initial=False, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -671,8 +636,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
                 Column('modificname', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('aim', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('complectlist', css_class='form-group col-md-12 mb-0')),
             Row(
@@ -692,8 +655,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(
                 Column('setplace', css_class='form-group col-md-12 mb-0'),
             ),
-            Row(
-                Column('kvasyattestation', css_class='form-group col-md-12 mb-0'),
             ),
             Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
