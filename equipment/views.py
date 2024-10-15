@@ -517,7 +517,7 @@ class MeasurEquipmentCharaktersRegView(SuccessMessageMixin, CreateView):
     template_name = URL + '/Echaractersreg.html'
     form_class = MeasurEquipmentCharaktersCreateForm
     success_url = '/equipment/measurequipmentcharacterslist/'
-    success_message = "Госреестр успешно добавлен"
+    success_message = "Госреестр успешно добавлен. Для внесения изменений обратитесь к администрации сайта"
     error_message = "Раздел доступен только инженеру по оборудованию"
 
     def form_valid(self, form):
