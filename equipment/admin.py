@@ -38,7 +38,7 @@ class MeasurEquipmentCharaktersResource(resources.ModelResource):
 # класс подробностей реестр без типа/модификации   
 class MeasurEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
     resource_class = MeasurEquipmentCharaktersResource
-    list_display = ('pk', 'text',)
+    list_display = ('reestr', 'modificname', 'typename')
     search_fields = ['reestr',]
         
 # фиксация формы в админке реестр без типа/модификации
