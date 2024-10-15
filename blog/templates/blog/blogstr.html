@@ -5,7 +5,7 @@
 {#название страницы#}
 {#стандартная#}
 {% block title %}
-{{ obj.metatitle }}
+{{ obj.metatitle |default_if_none:"статья про лабораторное оборудование"  }}
 {% endblock %}
 {% block keywords %}
     <meta name="keywords" lang="ru" content="{{ obj.keywords }}">
@@ -19,7 +19,8 @@
 
 {#основная таблица#}
 {# уникальная #}
-<div class="col-md-12 no-gutters">
+
+    
 <table class="table table-bordered">
     <tbody>
 
