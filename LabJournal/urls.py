@@ -11,6 +11,7 @@ urlpatterns = [
     path('^', include('django.contrib.auth.urls')),
     path('postbox/', include('contact_form.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('articles/', include('blog.urls')),
 ]
 
 if settings.DEBUG:
