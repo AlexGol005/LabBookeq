@@ -27,9 +27,5 @@ class BlogStrView(CreateView):
         context['obj'] = obj
         return context
 
-    def form_valid(self, form):
-        order = form.save(commit=False)
-        order.forNote = Blog.objects.get(pk=self.kwargs['pk'])
-        order.save()
-        return super().form_valid(form)
+   
 
