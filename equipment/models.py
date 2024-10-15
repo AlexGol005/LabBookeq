@@ -178,12 +178,12 @@ class MeasurEquipmentCharakters(models.Model):
 
 
     def __str__(self):
-        return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
+        return f'госреестр: {self.reestr_reestr},  {self.reestr_reestr} {self.typename} {self.modificname}'
 
     class Meta:
         verbose_name = 'Средство измерения: описание типа'
         verbose_name_plural = 'Средства измерения: описания типов'
-        unique_together = ('reestr_reestr', 'modificname', 'typename', 'reestr_name')
+        unique_together = ('reestr_reestr', 'modificname', 'typename', 'reestr_reestr')
 
 
 class Equipment(models.Model):
