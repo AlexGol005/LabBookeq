@@ -32,17 +32,17 @@ admin.site.register(HelpingEquipment)
 # реестр без типа/модификации классы для отображения в админке
 
 # класс для загрузки/выгрузки реестр без типа/модификации
-class MeasurEquipmentReestrResource(resources.ModelResource):
+class MeasurEquipmentCharaktersResource(resources.ModelResource):
     class Meta:
         model = MeasurEquipmentReestr
         
 # класс подробностей реестр без типа/модификации   
-class MeasurEquipmentReestrAdmin(ImportExportActionModelAdmin):
-    resource_class = MeasurEquipmentReestrResource
+class MeasurEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
+    resource_class = MeasurEquipmentCharaktersResource
     list_display = ('pk', 'text',)
     search_fields = ['reestr',]
         
 # фиксация формы в админке реестр без типа/модификации
-admin.site.register(MeasurEquipmentReestr, MeasurEquipmentReestrAdmin)
+admin.site.register(MeasurEquipmentCharakters, MeasurEquipmentCharaktersAdmin)
 
 
