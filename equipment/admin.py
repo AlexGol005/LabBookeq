@@ -24,6 +24,20 @@ admin.site.register(HelpingEquipmentCharakters)
 admin.site.register(HelpingEquipment) 
 admin.site.register(MeasurEquipmentReestr) 
 
+# реестр без типа/модификации классы для отображения в админке
 
+# класс для загрузки/выгрузки реестр без типа/модификации
+class MeasurEquipmentReestrResource(resources.ModelResource):
+    class Meta:
+        model = MeasurEquipmentReestr
+        
+# класс подробностей реестр без типа/модификации   
+class MeasurEquipmentReestrAdmin(ImportExportActionModelAdmin):
+    resource_class = MeasurEquipmentReestrResource
+    list_display = ('pk', 'text',)
+    search_fields = ['reestr',]
+        
+# фиксация формы в админке реестр без типа/модификации
+admin.site.register(MeasurEquipmentReestr, MeasurEquipmentReestrAdmin)
 
 
