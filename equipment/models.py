@@ -193,8 +193,6 @@ class MeasurEquipmentCharakters(models.Model):
     measurydiapason = models.CharField('Диапазон измерений', max_length=1000, default='', blank=True, null=True)
     accuracity = models.CharField('Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)',
                                   max_length=1000, default='', blank=True, null=True)
-    aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
-                           max_length=90, blank=True, null=True)
     power = models.BooleanField('Работает от сети', default=False, blank=True)
     voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
     frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
@@ -215,7 +213,7 @@ class MeasurEquipmentCharakters(models.Model):
         verbose_name = 'Средство измерения: описание типа'
         verbose_name_plural = 'Средства измерения: описания типов'
         unique_together = ('reestr', 'modificname', 'typename', 'name')
-
+        
 
 
 class TestingEquipmentCharakters(models.Model):
@@ -287,8 +285,8 @@ class MeasurEquipment(models.Model):
                                    verbose_name='Характеристики СИ', blank=True, null=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
-    ecard = models.CharField('Назначение', max_length=90, blank=True, null=True)
-    aim = models.CharField('Назначение', max_length=90, blank=True, null=True)
+    aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
+                           max_length=90, blank=True, null=True)
     newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
     newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
