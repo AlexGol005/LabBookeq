@@ -205,6 +205,8 @@ class MeasurEquipmentCharakters(models.Model):
     expresstest = models.BooleanField('тестирование возможно? да/нет', default=False, blank=True)
     traceability = models.TextField('Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)',
                                     default='', blank=True, null=True)
+    aim = models.CharField('примечание',
+                           max_length=90, blank=True, null=True)
 
     def __str__(self):
         return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
