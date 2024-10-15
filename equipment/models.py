@@ -138,7 +138,7 @@ class Rooms(models.Model):
 # блок 3 - оборудование в целом, характеристики СИ ИО ВО, сами СИ ИО ВО
 
 class MeasurEquipmentReestr(models.Model):
-    """Характеристики средств измерений (госреестры БЕЗ СВЯЗКИ модификациями/типами/диапазонами) абстрактный тип"""
+    """Характеристики средств измерений (госреестры БЕЗ СВЯЗКИ модификациями/типами/диапазонами)"""
     name = models.CharField('Название прибора', max_length=100, default='')
     reestr = models.CharField('Номер в Госреестре', max_length=1000, default='', blank=True, null=True)
     calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
@@ -154,15 +154,15 @@ class MeasurEquipmentReestr(models.Model):
         return f'госреестр: {self.reestr},  {self.name}'
 
     class Meta:
-        abstract = True
         verbose_name = 'Средство измерения: госреестр'
         verbose_name_plural = 'Средства измерения: госреестр'
 
 
 
-class MeasurEquipmentCharakters(MeasurEquipmentReestr):
-    """Характеристики средств измерений (госреестры в связке с модификациями/типами/диапазонами) дочерняя таблица"""
-    reestr = models.CharField('Номер в Госреестре', max_length=1000, default='', blank=True, null=True)
+class MeasurEquipmentCharakters(models.Model):
+    """Характеристики средств измерений (госреестры в связке с модификациями/типами/диапазонами)"""
+    reestr = models.ForeignKey(MeasurEquipmentReestr,  on_delete=models.PROTECT,
+                                   verbose_name='Характеристики СИ (реестр)', blank=True, null=True)
     modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
     typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
     measurydiapason = models.CharField('Диапазон измерений', max_length=1000, default='', blank=True, null=True)
