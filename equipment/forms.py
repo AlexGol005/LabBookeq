@@ -655,7 +655,7 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(
                 Column('setplace', css_class='form-group col-md-12 mb-0'),
             ),
-            ),
+
             Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
     class Meta:
