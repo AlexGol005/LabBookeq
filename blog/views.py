@@ -12,7 +12,7 @@ class BlogView(ListView):
     paginate_by = 6
 
 
-class BlogStrView(CreateView):
+class BlogStrView(TemplateView):
     """ выводит отдельный пост """
     model = Blog
     template_name = 'blog/blogstr.html'
