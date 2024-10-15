@@ -18,7 +18,7 @@ class MeasurEquipmentCharaktersResource(resources.ModelResource):
 # класс подробностей реестр 
 class MeasurEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
     resource_class = MeasurEquipmentCharaktersResource
-    list_display = ('reestr', 'modificname', 'typename')
+    list_display = ('reestr' , 'name', 'modificname', 'typename')
     search_fields = ['reestr',]
         
 # фиксация формы в админке реестр 
