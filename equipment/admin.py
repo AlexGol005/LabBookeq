@@ -11,7 +11,6 @@ import tablib
 
 admin.site.register(Manufacturer)
 admin.site.register(Rooms)
-admin.site.register(MeasurEquipmentCharakters)
 admin.site.register(Personchange)
 admin.site.register(MeasurEquipment)
 admin.site.register(Equipment)
@@ -34,7 +33,7 @@ admin.site.register(HelpingEquipment)
 # класс для загрузки/выгрузки реестр без типа/модификации
 class MeasurEquipmentCharaktersResource(resources.ModelResource):
     class Meta:
-        model = MeasurEquipmentReestr
+        model = MeasurEquipmentCharakters
         
 # класс подробностей реестр без типа/модификации   
 class MeasurEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
