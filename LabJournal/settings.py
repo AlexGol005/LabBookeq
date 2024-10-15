@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'import_export',
     'ckeditor',
     'ckeditor_uploader',
+    'blog',
 ]
 
 
