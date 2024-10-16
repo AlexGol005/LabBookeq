@@ -6,7 +6,7 @@ from PIL import  Image
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)    
     name = models.CharField('ФИО/роль', max_length=40, default=None, null=True)
-    userposition = models.CharField('Должность', max_length=50, default=None, null=True)
+    userposition = models.CharField('Должность', max_length=50, null=True, blank=True)
     userid = models.CharField('Идентификатор организации=ИНН_ГГММДД регистрации)', max_length=50, default=None, null=True)
     img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
     pay = models.BooleanField ('Оплачено', default=True)
