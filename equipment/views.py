@@ -484,6 +484,7 @@ def EquipmentReg(request):
             form = EquipmentCreateForm(request.POST, request.FILES)
             if form.is_valid():
                 order = form.save(commit=False)
+                order.pointer = request.user.userid
                 try:
                     a = Equipment.objects.filter(exnumber__startswith=order.exnumber).last().exnumber
                     b = int(str(a)[-3::]) + 1
