@@ -244,17 +244,17 @@ class MetrologyUpdateForm(forms.ModelForm):
 class EquipmentCreateForm(forms.ModelForm):
     """форма для внесения ЛО"""
     exnumber = forms.CharField(label='Внутренний номер', max_length=10000, initial='А',
-                               help_text='уникальный, придумайте первую букву номера (заглавная кириллица, 1 буква)',
+                               help_text='уникальный, придумайте первую букву номера по названию оборудования (заглавная кириллица, 1 буква)',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': 'А'}))
     lot = forms.CharField(label='Заводской номер (указан производителем на приборе)', max_length=10000,
                           widget=forms.TextInput(attrs={'class': 'form-control'}))
-    yearmanuf = forms.CharField(label='Год выпуска', max_length=10000, initial=datetime.now().year,
+    yearmanuf = forms.CharField(label='Год выпуска прибора', max_length=10000, initial=datetime.now().year,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
-    manufacturer = forms.ModelChoiceField(label='Производитель',
+    manufacturer = forms.ModelChoiceField(label='Производитель прибора',
                                           queryset=Manufacturer.objects.all(),
                                           widget=forms.Select(attrs={'class': 'form-control'}))
-    status = forms.ChoiceField(label='Статус', initial='Эксплуатация',
+    status = forms.ChoiceField(label='Статус (эксплуатация, ремонт и тд)', initial='Эксплуатация',
                                choices=CHOICES,
                                widget=forms.Select(attrs={'class': 'form-control'}))
     new = forms.ChoiceField(label='Новый или б/у', initial='новый',
@@ -268,24 +268,28 @@ class EquipmentCreateForm(forms.ModelForm):
                                  choices=KATEGORY,
                                  widget=forms.Select(attrs={'class': 'form-control'}))
     pasport = forms.CharField(label='Паспорт (ссылка)', max_length=10000, required=False)
-    instruction = forms.CharField(label='Внутренняя инструкция (ссылка)', max_length=10000,
-                                       required=False)
-    imginstruction3 = forms.CharField(label='Право владения (скрин jpg)', widget=forms.FileInput, required=False)
+    instruction = forms.CharField(label='Внутренняя инструкция (ссылка)', max_length=10000, required=False)                                       
     individuality = forms.CharField(label='Индивидуальные особенности прибора', max_length=10000, required=False,
                                     widget=forms.TextInput(attrs={'class': 'form-control'}))
-    notemaster = forms.CharField(label='Примечание (или временное предостережение)', max_length=10000, required=False,
+    notemaster = forms.CharField(label='Примечание ответственного за прибор', max_length=10000, required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
     price = forms.DecimalField(label='Стоимость', max_digits=10, decimal_places=2, required=False,
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': '0000.00'}))
 
+    pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)', max_length=1000,  required=False)
+    aim = forms.CharField(label='Предназначение', max_length=500, required=False)                           
+    aim2 = forms.CharField(label='Наименование испытуемых групп объектов', max_length=500, required=False)
+    notemetrology = forms.CharField(label='Примечание о метрологическом обеспечении прибора',  required=False)
+    repair = forms.CharField('Контакты для ремонта', max_length=1000,  required=False)
+
     class Meta:
         model = Equipment
         fields = [
-            'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status',
-            'new', 'invnumber', 'kategory', 'individuality', 'notemaster',
+            'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status', '
+            'new', 'invnumber', 'kategory', 'individuality', 'notemaster', 'price',
             'pasport', 'instruction',
-            'imginstruction3',  'price'
+            'aim',  'aim2', 'notemetrology', 'repair',
         ]
 
     def __init__(self, *args, **kwargs):
@@ -316,7 +320,13 @@ class EquipmentCreateForm(forms.ModelForm):
             Row(
                 Column('price', css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('video', css_class='form-group col-md-12 mb-0')),
+                Column('aim', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('aim2', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('notemetrology', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('repair', css_class='form-group col-md-12 mb-0')),
 
             Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
@@ -337,9 +347,6 @@ class EquipmentUpdateForm(forms.ModelForm):
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': 'добавьте ссылку на инструкцию'}))
     imginstruction3 = forms.ImageField(label='Право владения', widget=forms.FileInput, required=False)
-    video = forms.CharField(label='Видео к прибору', max_length=10000, required=False,
-                            widget=forms.TextInput(attrs={'class': 'form-control',
-                                                          'placeholder': 'добавьте ссылку на видео'}))
     invnumber = forms.CharField(label='Инвентарный номер', max_length=10000, initial='б/н', required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     repair = forms.CharField(label='Данные по ремонту', max_length=10000,  required=False,
@@ -351,7 +358,7 @@ class EquipmentUpdateForm(forms.ModelForm):
             'status', 'individuality', 'notemaster',
             'pasport', 'instruction',
             'imginstruction3',
-            'video', 'invnumber',
+             'invnumber',
             'repair'
                   ]
 
