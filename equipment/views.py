@@ -487,12 +487,12 @@ def EquipmentReg(request):
                 order.pointer = request.user.profile.userid
                 try:
                     a = Equipment.objects.filter(exnumber__startswith=order.exnumber).filter(pointer=request.user.profile.userid).last().exnumber
-                    b = int(str(a)[-3::]) + 1
-                    c = str(b).rjust(3, '0')
+                    b = int(str(a)[-4::]) + 1
+                    c = str(b).rjust(4, '0')
                     d = str(order.exnumber) + c
                     order.exnumber = d
                 except:
-                    order.exnumber = str(order.exnumber) + '001'
+                    order.exnumber = str(order.pointer) + '_' + str(order.exnumber) + '0001'
                 order.save()
                 if order.kategory == 'СИ':
                     return redirect(f'/equipment/measureequipmentreg/{order.exnumber}/')
