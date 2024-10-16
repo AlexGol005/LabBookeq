@@ -51,7 +51,7 @@ class AuthenticatedMixin(object):
             return HttpResponseForbidden()
     def get_uuser(self, request, *args, **kwargs):
         uuser = request.user.profile.userid
-            return uuser
+        return uuser
         return super(AuthenticatedMixin, self).dispatch(request, *args, **kwargs)
 
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
