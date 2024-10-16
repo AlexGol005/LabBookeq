@@ -247,7 +247,8 @@ class EquipmentCreateForm(forms.ModelForm):
                                help_text='уникальный, придумайте первую букву номера по названию оборудования (заглавная кириллица, 1 буква)',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': 'А'}))
-    lot = forms.CharField(label='Заводской номер (указан производителем на приборе)', max_length=10000,
+    lot = forms.CharField(label='Заводской номер', max_length=10000,
+                          help_text='указан производителем на приборе и в документах',
                           widget=forms.TextInput(attrs={'class': 'form-control'}))
     yearmanuf = forms.CharField(label='Год выпуска прибора', max_length=10000, initial=datetime.now().year,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -262,7 +263,8 @@ class EquipmentCreateForm(forms.ModelForm):
                                      ('новый', 'новый'),
                                      ('б/у', 'б/у')),
                             widget=forms.Select(attrs={'class': 'form-control'}))
-    invnumber = forms.CharField(label='Инвентарный номер (присваивает бухгалтерия)', max_length=10000, initial='б/н',  required=False,
+    invnumber = forms.CharField(label='Инвентарный номер', max_length=10000, initial='б/н',  required=False,
+                                help_text='Присваивает бухгалтерия',
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     kategory = forms.ChoiceField(label='Категория', initial='Средство измерения',
                                  choices=KATEGORY,
