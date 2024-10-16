@@ -202,7 +202,7 @@ class MeasurEquipmentView(ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = MeasurEquipment.objects.exclude(equipment__status='С')
+        queryset = MeasurEquipment.objects.filter(pointer=request.user.profile.userid).exclude(equipment__status='С')
         return queryset
 
     def get_context_data(self, **kwargs):
