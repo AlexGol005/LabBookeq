@@ -49,7 +49,7 @@ class AuthenticatedMixin(object):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             uuser = request.user.profile.userid
-            return HttpResponseForbidden()
+            return HttpResponseForbidden(), uuser
         return super(AuthenticatedMixin, self).dispatch(request, *args, **kwargs)
 
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
