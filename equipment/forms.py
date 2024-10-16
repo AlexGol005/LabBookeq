@@ -247,7 +247,7 @@ class EquipmentCreateForm(forms.ModelForm):
                                help_text='уникальный, придумайте первую букву номера (заглавная кириллица, 1 буква)',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': 'А'}))
-    lot = forms.CharField(label='Заводской номер', max_length=10000,
+    lot = forms.CharField(label='Заводской номер (указан производителем на приборе)', max_length=10000,
                           widget=forms.TextInput(attrs={'class': 'form-control'}))
     yearmanuf = forms.CharField(label='Год выпуска', max_length=10000, initial=datetime.now().year,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -262,7 +262,7 @@ class EquipmentCreateForm(forms.ModelForm):
                                      ('новый', 'новый'),
                                      ('б/у', 'б/у')),
                             widget=forms.Select(attrs={'class': 'form-control'}))
-    invnumber = forms.CharField(label='Инвентарный номер', max_length=10000, initial='б/н',  required=False,
+    invnumber = forms.CharField(label='Инвентарный номер (присваивает бухгалтерия)', max_length=10000, initial='б/н',  required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     kategory = forms.ChoiceField(label='Категория', initial='Средство измерения',
                                  choices=KATEGORY,
@@ -275,9 +275,6 @@ class EquipmentCreateForm(forms.ModelForm):
                                     widget=forms.TextInput(attrs={'class': 'form-control'}))
     notemaster = forms.CharField(label='Примечание (или временное предостережение)', max_length=10000, required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
-    video = forms.CharField(label='Видео к прибору (ссылка)', max_length=10000, required=False,
-                            widget=forms.TextInput(attrs={'class': 'form-control',
-                                                          'placeholder': 'добавьте ссылку на видео'}))
     price = forms.DecimalField(label='Стоимость', max_digits=10, decimal_places=2, required=False,
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': '0000.00'}))
@@ -288,7 +285,7 @@ class EquipmentCreateForm(forms.ModelForm):
             'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status',
             'new', 'invnumber', 'kategory', 'individuality', 'notemaster',
             'pasport', 'instruction',
-            'imginstruction3', 'video', 'price'
+            'imginstruction3',  'price'
         ]
 
     def __init__(self, *args, **kwargs):
