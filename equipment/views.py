@@ -126,7 +126,7 @@ class VerificatorsPersonsView(ListView):
 class ManufacturerView(ListView):
     """ Выводит список всех производителей """
     model = Manufacturer
-    template_name = URL + '/blog.html'
+    template_name = 'blog/blog.html'
     context_object_name = 'objects'
     ordering = ['companyName']
     paginate_by = 12
