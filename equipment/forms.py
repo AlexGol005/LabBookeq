@@ -281,7 +281,7 @@ class EquipmentCreateForm(forms.ModelForm):
     aim = forms.CharField(label='Предназначение', max_length=500, required=False)                           
     aim2 = forms.CharField(label='Наименование испытуемых групп объектов', max_length=500, required=False)
     notemetrology = forms.CharField(label='Примечание о метрологическом обеспечении прибора',  required=False)
-    repair = forms.CharField('Контакты для ремонта', max_length=1000,  required=False)
+    repair = forms.CharField(label='Контакты для ремонта', max_length=1000,  required=False)
 
     class Meta:
         model = Equipment
