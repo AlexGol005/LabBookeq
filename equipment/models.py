@@ -144,7 +144,7 @@ class Rooms(models.Model):
 class Equipment(models.Model):
     """Лабораторное оборудование - базовая индивидуальная сущность"""
     date = models.DateField('Дата внесения записи', auto_now_add=True, blank=True, null=True)
-    exnumber = models.CharField('Внутренний номер', max_length=100, default='', blank=True, null=True, unique=True)
+    exnumber = models.CharField('Внутренний номер', max_length=100, default='', blank=True, null=True)
     lot = models.CharField('Заводской номер', max_length=100, default='')
     yearmanuf = models.IntegerField('Год выпуска', default='', blank=True, null=True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, verbose_name='Производитель')
@@ -175,6 +175,7 @@ class Equipment(models.Model):
         super(Equipment, self).save(*args, **kwargs)
 
     class Meta:
+        unique_together = ('exnumber', 'pointer',)
         verbose_name = 'Оборудование'
         verbose_name_plural = 'Оборудование: список всего оборудования'
 
