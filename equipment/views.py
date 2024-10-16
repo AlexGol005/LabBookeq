@@ -45,7 +45,12 @@ from users.models import Profile
 URL = 'equipment'
 now = date.today()
 
-
+class AuthenticatedMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            uuser = request.user.profile.userid
+            return HttpResponseForbidden()
+        return super(AuthenticatedMixin, self).dispatch(request, *args, **kwargs)
 
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
 
@@ -194,7 +199,7 @@ class HelpingEquipmentCharaktersView(ListView):
         return context
 
 
-class MeasurEquipmentView(ListView):
+class MeasurEquipmentView(ListView, AuthenticatedMixin):
     """Выводит список средств измерений"""
     template_name = URL + '/MEequipmentLIST.html'
     context_object_name = 'objects'
@@ -202,7 +207,7 @@ class MeasurEquipmentView(ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = MeasurEquipment.objects.filter(pointer=user.profile.userid).exclude(equipment__status='С')
+        queryset = MeasurEquipment.objects.filter(pointer=uuser).exclude(equipment__status='С')
         return queryset
 
     def get_context_data(self, **kwargs):
