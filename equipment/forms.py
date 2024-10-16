@@ -316,8 +316,6 @@ class EquipmentCreateForm(forms.ModelForm):
             Row(
                 Column('instruction', css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('imginstruction3', css_class='form-group col-md-12 mb-0')),
-            Row(
                 Column('individuality', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('price', css_class='form-group col-md-12 mb-0')),
@@ -348,7 +346,7 @@ class EquipmentUpdateForm(forms.ModelForm):
     instruction = forms.CharField(label='Основная инструкция по эксплуатации', max_length=10000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': 'добавьте ссылку на инструкцию'}))
-    imginstruction3 = forms.ImageField(label='Право владения', widget=forms.FileInput, required=False)
+    pravo = forms.ImageField(label='Право владения', max_length=10000,  required=False)
     invnumber = forms.CharField(label='Инвентарный номер', max_length=10000, initial='б/н', required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     repair = forms.CharField(label='Данные по ремонту', max_length=10000,  required=False,
@@ -359,7 +357,7 @@ class EquipmentUpdateForm(forms.ModelForm):
         fields = [
             'status', 'individuality', 'notemaster',
             'pasport', 'instruction',
-            'imginstruction3',
+            'pravo',
              'invnumber',
             'repair'
                   ]
