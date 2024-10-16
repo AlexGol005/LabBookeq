@@ -9,6 +9,7 @@ class Profile(models.Model):
     userposition = models.CharField('Должность', max_length=50, default=None, null=True)
     userid = models.CharField('Идентификатор организации=ИНН_ГГММДД регистрации)', max_length=50, default=None, null=True)
     img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
+    pay = models.BooleanField ('Оплачено')
 
 
     def __str__(self):
