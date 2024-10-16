@@ -487,7 +487,7 @@ def EquipmentReg(request):
                 order.pointer = request.user.profile.userid
                 try:
                     a = Equipment.objects.filter(exnumber__startswith=order.exnumber).filter(pointer=request.user.profile.userid).last().exnumber
-                    b = int(str(a)[1:6]) + 1
+                    b = int(str(a)[1:5]) + 1
                     c = str(b).rjust(4, '0')
                     d = str(order.exnumber) + c + '_' + str(order.pointer)
                     order.exnumber = d
