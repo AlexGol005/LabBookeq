@@ -143,7 +143,7 @@ class Rooms(models.Model):
 
 class Equipment(models.Model):
     """Лабораторное оборудование - базовая индивидуальная сущность"""
-    date = models.DateField(auto_now_add=True, blank=True, null=True)
+    date = models.DateField('Дата внесения записи', auto_now_add=True, blank=True, null=True)
     exnumber = models.CharField('Внутренний номер', max_length=100, default='', blank=True, null=True, unique=True)
     lot = models.CharField('Заводской номер', max_length=100, default='')
     yearmanuf = models.IntegerField('Год выпуска', default='', blank=True, null=True)
@@ -162,18 +162,16 @@ class Equipment(models.Model):
     pasport = models.CharField('Ссылка на паспорт', max_length=1000,  blank=True, null=True)
     instruction = models.CharField('Инструкция по эксплуатации (ссылка)', max_length=1000,  blank=True, null=True)
     repair = models.CharField('Контакты для ремонта', max_length=1000,  blank=True, null=True)
+    pravo = models.CharField('Право владения прибором (например, номер и дата накладной)', max_length=1000,  blank=True, null=True)
+    aim = models.CharField('Предназначение', max_length=500, blank=True, null=True)                           
+    aim2 = models.CharField('Наименование испытуемых групп объектов', max_length=500, blank=True, null=True)
+    pointer =  models.CharField('Указатель организации (ИНН_дата добавления ГГММДД)', max_length=500, blank=True, null=True)                       
 
     def __str__(self):
-        return f'Вн. № {self.exnumber}    Зав. № {self.lot} - pk {self.pk}'
+        return f'{self.pointer}: {self.exnumber} - {self.lot}'
 
     def save(self, *args, **kwargs):
         super().save()
-        if self.imginstruction3:
-            image3 = Image.open(self.imginstruction3.path)
-            if image3.height > 1000 or image3.width > 1000:
-                resize = (1000, 1000)
-                image3.thumbnail(resize)
-                image3.save(self.imginstruction3.path)
         super(Equipment, self).save(*args, **kwargs)
 
     class Meta:
@@ -202,8 +200,8 @@ class MeasurEquipmentCharakters(models.Model):
     expresstest = models.BooleanField('тестирование возможно? да/нет', default=False, blank=True)
     traceability = models.TextField('Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)',
                                     default='', blank=True, null=True)
-    aim = models.CharField('примечание',
-                           max_length=90, blank=True, null=True)
+    aim = models.CharField('примечание', max_length=90, blank=True, null=True)
+                           
 
     def __str__(self):
         return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
