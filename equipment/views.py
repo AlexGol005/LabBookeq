@@ -486,7 +486,7 @@ def EquipmentReg(request):
                 order = form.save(commit=False)
                 order.pointer = request.user.userid
                 try:
-                    a = Equipment.objects.filter(exnumber__startswith=order.exnumber).last().exnumber
+                    a = Equipment.objects.filter(exnumber__startswith=order.exnumber).filter(pointer=request.user.userid).last().exnumber
                     b = int(str(a)[-3::]) + 1
                     c = str(b).rjust(3, '0')
                     d = str(order.exnumber) + c
