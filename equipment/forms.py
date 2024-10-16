@@ -286,7 +286,7 @@ class EquipmentCreateForm(forms.ModelForm):
     class Meta:
         model = Equipment
         fields = [
-            'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status', '
+            'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status', 
             'new', 'invnumber', 'kategory', 'individuality', 'notemaster', 'price',
             'pasport', 'instruction',
             'aim',  'aim2', 'notemetrology', 'repair',
