@@ -4,31 +4,15 @@ from PIL import  Image
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
-    userlastname = models.CharField('Фамилия', max_length=50, default=None, null=True)
-                                   # required=True,
-                                   # widget=models.TextInput(attrs={'class': 'form-control',
-                                   #                               'placeholder': 'Фамилия'}))
-    userfirstname = models.CharField('Имя', max_length=50, default=None, null=True)
-                                    #  required=True,
-                                    # widget=models.TextInput(attrs={'class': 'form-control',
-                                    #                               'placeholder': 'Имя'}))
-    userpatronymic = models.CharField('Отчество', max_length=50, default=None, null=True)
-                                     # required=False,
-                                     # widget=models.TextInput(attrs={'class': 'form-control',
-                                     #                               'placeholder': 'Отчество'}))
+    user = models.OneToOneField(User, on_delete=models.CASCADE)    
+    name = models.CharField('ФИО/роль', max_length=40, default=None, null=True)
     userposition = models.CharField('Должность', max_length=50, default=None, null=True)
-                                   # required=True,
-                                   # widget=models.TextInput(attrs={'class': 'form-control',
-                                   #                               'placeholder': 'Должность'}))
-    usertelnumber = models.CharField('Телефон', max_length=50, default=None, null=True)
-                                   # required=True,
-                                   # widget=models.TextInput(attrs={'class': 'form-control',
-                                   #                               'placeholder': 'Телефон'}))
+    userid = models.CharField('Идентификатор организации=ИНН_ГГММДД регистрации)', max_length=50, default=None, null=True)
+    img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
+
 
     def __str__(self):
-        return f'Профиль сотрудника {self.user.username}'
+        return f'Организация: {self.userid}; пользователь: {self.name}; логин: {self.user.username}'
 
     def save(self, *args, **kwargs):
         super().save()
@@ -39,5 +23,5 @@ class Profile(models.Model):
             image.save(self.img.path)
 
     class Meta:
-        verbose_name = 'Профиль сотрудника'
-        verbose_name_plural = 'Профили сотрудников'
+        verbose_name = 'Профиль пользователя'
+        verbose_name_plural = 'Профили пользователей'
