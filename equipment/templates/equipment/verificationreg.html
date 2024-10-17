@@ -14,17 +14,20 @@
             {{ title.exnumber|slice:":5" }}, {{title.measurequipment_set.all.last.charakters}}, зав. № {{title.lot}}
          </a> </h5></center>
          <br>
+        
+        <center>
+            <p><i><font color="red"><b>
+                Перед регистрацией проверьте, что добавлена организация-поверитель
+            </b></font> </i></p>
+        </center>
+        <br>
 
-        <p><i><font color="red"><b>
-            Перед регистрацией проверьте, что добавлена организация-поверитель
-        </b></font> </i></p>
-
-        <div style="text-align: center; margin-top: 20px">
+        <center>
             <a href="{% url 'verificatorsreg' %}" class="btn btn-primary mr-2 mt-3" style="width: 500px" target="blank">
             смотреть и добавить поверителей</a>
-        </div>
-
-        
+        </center>
+        <br>
+ 
         <center><h5> Внести сведения о поверке </h5></center>
         <center>
             <form method="post" enctype="multipart/form-data" class="form-register">
