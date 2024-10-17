@@ -961,7 +961,7 @@ class VerificationRegForm(forms.ModelForm):
             Row(
                 Column('verificator', css_class='form-group col-md-6 mb-0'),
                 Column('place', css_class='form-group col-md-3 mb-0'),   
-                Column('dateordernew', css_class='form-group col-md-3 mb-1')), 
+                Column('dateordernew', css_class='form-group col-md-3 mb-1'), 
             ),
             Row(
                 Column('price', css_class='form-group col-md-3 mb-0'),                       
