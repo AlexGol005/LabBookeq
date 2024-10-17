@@ -771,24 +771,30 @@ def EquipmentUpdate(request, str):
 
 # блок 7 - все поисковики
 
-class SearchPersonverregView(SuccessMessageMixin,TemplateView):
+class SearchPersonverregView(SuccessMessageMixin, ListView):
     """ Представление, которое выводит результаты поиска по списку поверителей организаций """
 
     template_name = URL + '/personverreg.html'
+    context_object_name = 'objects'
+    success_url = '/equipment/verificatorsreg/'
+    success_message = "Организация поверитель успешно добавлена"
+
 
     def get_context_data(self, **kwargs):
-        context = super(SearchPersonverregView, self).get_context_data(**kwargs)
-        form_class = VerificatorsCreationForm
-        success_url = '/equipment/verificators/'
-        success_message = "Организация поверитель успешно добавлена"
-        context_object_name = 'objects'
-        name = self.request.GET['name']
-        Verificators.objects.filter(companyName__icontains=name)
+        context = super(VerificatorsCreationView, self).get_context_data(**kwargs)
+        context['serform'] = Searchtestingform
+        context['form'] = VerificatorsCreationForm  
+        return context
 
-        def get_context_data(self, **kwargs):
-            context = super(SearchPersonverregView, self).get_context_data(**kwargs)
-            context['serform'] = Searchtestingform
-            return context
+    def get_queryset(self):
+        name = self.request.GET['name']
+        queryset = Verificators.objects.filter(companyName__icontains=name)
+        return queryset
+
+        
+        
+        
+        
 
 class ReestrsearresView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку госреестров """
