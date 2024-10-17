@@ -6,6 +6,7 @@
 
 
 {% block content %}
+<div class="col-12">
                 <center><h3>Автоматизация учета лабораторного оборудования и микроклимата для Вашей лаборатории</h3></center>
                 {% if not user.is_authenticated %}
                     <center><a href="{% url 'reg' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width: 140px">регистрация</a>
@@ -18,5 +19,6 @@
                 <center><a href="{% url 'about' %}" class="btn btn-primary  mr-2 ml-2 mt-3 " style="width: 300px">Что это за сайт?</a> </center>
                 <br>
                 <center><img src="{% static 'main/img/2.jpg' %}" alt="Изображение на главной странице" mr-2 ml-2 mt-2> </center>
+</div>
 {% endblock %}
                           
