@@ -674,7 +674,7 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         if form.is_valid():
             order = form.save(commit=False)
-            order.pointer = request.user.profile.userid
+            order.pointer = self.request.user.profile.userid
             order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
             order.save()
             return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
