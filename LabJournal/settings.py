@@ -194,5 +194,5 @@ if DEBUG:
 
     mimetypes.add_type("application/javascript", ".js", True)
 
-
+DEBUG = True
 
