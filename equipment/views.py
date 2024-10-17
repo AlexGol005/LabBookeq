@@ -770,6 +770,25 @@ def EquipmentUpdate(request, str):
 
 # блок 7 - все поисковики
 
+class SearchPersonverregView(SuccessMessageMixin,TemplateView):
+    """ Представление, которое выводит результаты поиска по списку поверителей организаций """
+
+    template_name = URL + '/personverreg.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchPersonverregView, self).get_context_data(**kwargs)
+        form_class = VerificatorsCreationForm
+        success_url = '/equipment/verificators/'
+        success_message = "Организация поверитель успешно добавлена"
+        context_object_name = 'objects'
+        name = self.request.GET['name']
+        Verificators.objects.filter(companyName__icontains=name)
+
+        def get_context_data(self, **kwargs):
+            context = super(SearchPersonverregView, self).get_context_data(**kwargs)
+            context['serform'] = Searchtestingform
+            return context
+
 class ReestrsearresView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку госреестров """
 
