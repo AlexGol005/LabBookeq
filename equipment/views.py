@@ -45,11 +45,11 @@ from users.models import Profile
 URL = 'equipment'
 now = date.today()
 
-class AuthenticatedMixin(object):
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated():
-            return HttpResponseForbidden()
-        return super(AuthenticatedMixin, self).dispatch(request, *args, **kwargs)
+# class AuthenticatedMixin(object):
+#     def dispatch(self, request, *args, **kwargs):
+#         if not request.user.is_authenticated():
+#             return HttpResponseForbidden()
+#         return super(AuthenticatedMixin, self).dispatch(request, *args, **kwargs)
 
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
 
@@ -198,7 +198,7 @@ class HelpingEquipmentCharaktersView(ListView):
         return context
 
 
-class MeasurEquipmentView(AuthenticatedMixin, ListView):
+class MeasurEquipmentView(ListView):
     """Выводит список средств измерений"""
     template_name = URL + '/MEequipmentLIST.html'
     context_object_name = 'objects'
