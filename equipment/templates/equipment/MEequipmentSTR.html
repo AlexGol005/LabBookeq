@@ -1,283 +1,284 @@
-{% extends 'main/base.html' %}
+{% extends 'main/superbase.html' %}
 {% load static %}
 {% block title %}
 {{ obj.charakters.name}}
 {% endblock %}
 
 
-{% block content %}
-<div class="row">
-<div class="col-md-12 mt-2" >
-<div style="text-align: center;"><a href="/equipment/measureequipmentall/"><h4>{{ obj.charakters.name}}</h4></a></div>
-    <div style="text-align: center;">
-<h6>тип: {{ obj.charakters.typename|default:" " }}
-модификация: {{ obj.charakters.modificname|default:" " }}.
-Заводской номер: <b>{{ obj.equipment.lot }}</b></h6>
-</div>
-<br>
+{% block content %}>
+<div class="col-12">  
 
-{#карточка#}
-<div style="text-align: center; margin-top: 10px; margin-bottom: 50px">
-    <a href="{% url 'export_mecard_xls' obj.pk %}"  class="btn btn-warning mt-2 mr-2 ml-2">
-    Распечатать карточку на прибор</a>
-    <a href="{% url 'export_exvercard_xls' obj.pk %}"  class="btn btn-warning mt-2 mr-2 ml-2">
-    Выгрузить протокол верификации лабораторного оборудования</a>
-</div>
-
-
-{#таблица неизменные сведения о приборе#}
-<div style="text-align: center;">
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Внут.№</th>
-            <th> Номер в реестре </th>
-            <th> Название </th>
-            <th> Тип/модификация</th>
-            <th> Заводской № </th>
-            <th> Год вып. </th>
-            <th> Произв-ль </th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>{{ obj.equipment.exnumber }}</td>
-         <td> <a href="{% url 'measurequipmentcharactersupdate' obj.charakters.pk %}"  target="blank" >
-             {{ obj.charakters.reestr }}
-                  </a>
-
-             </td>
-         <td> {{ obj.charakters.name }}</td>
-        <td>{{ obj.charakters.typename|default:" " }}/
-             {{ obj.charakters.modificname|default:" " }} </td>
-        <td> {{ obj.equipment.lot }}</td>
-        <td> {{ obj.equipment.yearmanuf }}</td>
-        <td> {{ obj.equipment.manufacturer.country }},
-         {{ obj.equipment.manufacturer.companyName }}</td>
-    </tr>
-    </tbody>
-</table>
-</div>
-
-{#примечание#}
-<br>
-{% if obj.equipment.notemaster  %}
-<div style="text-align: center; margin-top: 2px; color: red" ><h6>Внимание!</h6>
-<table class="table table-bordered">
-<td colspan="6">
-<div class="TransactionAmount Badresult">
-{{ obj.equipment.notemaster }}
-</div>
-</td>
-</table>
-</div>
-{% endif %}
-<div style="text-align: center; margin-top: 40px">
-{#конец примечания#}
-
-{#особенности прибора, если имеются#}
-{% if obj.equipment.individuality  %}
-<div style="text-align: center; margin-top: 2px"><h6>Особенности работы прибора</h6>
-<table class="table table-bordered">
-<td colspan="6">{{ obj.equipment.individuality }}</td>
-</table>
-</div>
-{% endif %}
-{#конецособенности прибора, если имеются#}
-
-{#контакты для ремонта#}
-{% if obj.equipment.repair  %}
-<div style="text-align: center; margin-top: 2px"><h6>Куда обратиться при поломке</h6>
-<table class="table table-bordered">
-<td colspan="6">{{ obj.equipment.repair }}</td>
-</table>
-</div>
-{% endif %}
-{# конец контакты для ремонта#}
-
-{#записи о приборе#}
-<div style="text-align: center; margin-top: 10px"><h4>Внести запись в карточку прибора* </h4></div>
-
-<div style="text-align: center; margin-top: 10px">
- <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/comments/"  class="btn btn-warning mt-2">
-     Внести запись о приборе и смотреть записи (для всех пользователей)</a></div>
-{#конец записи о приборе#}
-
-{#изменение сведений о приборе#}
-<div style="text-align: center; margin-top: 40px"><h4>Обновить сведения о приборе (только для ответственного за прибор или метрологию) </h4></div>
-<div style="text-align: center; margin-top: 20px">
- <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/individuality/"  class="btn btn-info mt-2">
-     Добавить особенности работы прибора, инструкцию и пр. (для ответственного за прибор или метрологию)</a></div>
-</div>
-{#конец изменение сведений о приборе#}
-{#    поверка#}
-<div style="text-align: center; margin-top: 40px"><h4>
-Поверка </h4></div>
-<div style="text-align: center;">
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th> Дата поверки </th>
-            <th> Поверен до </th>
-            <th> Месяц заказа поверки </th>
-            <th> Месяц заказа замены </th>
-            <th class="ind"> Ссылка ФГИС</th>
-            <th class="ind">  № свидет. о поверке</th>
-         </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>{{ obj.equipmentSM_ver.last.date|date:'d.m.y'|default:" " }}</td>
-         <td> {{ obj.equipmentSM_ver.last.datedead|date:'d.m.y'|default:" " }}</td>
-         <td> {{ obj.equipmentSM_ver.last.dateorder|date:'m.Y'|default:" " }}</td>
-         <td> {{ obj.equipmentSM_ver.last.dateordernew|date:'m.Y'|default:" " }}</td>
-         <td class="ind">
-             {% if obj.equipmentSM_ver.last.arshin %}
-              <a href="{{ obj.equipmentSM_ver.last.arshin}}"  target="blank" >
-             Аршин
-                  </a>
-             {% else  %}
-             отсутствует
-             {% endif %}
-         </td>
-         <td> {{ obj.equipmentSM_ver.last.certnumber}}</td>
-    </tr>
-    </tbody>
-</table>
-</div>
-{# поверка кнопка1#}
-<div style="text-align: center; margin-top: 10px">
-    {% if note %}
- <a href="/equipment/measureequipment/verification/{{ obj.equipment.exnumber }}/"  class="btn btn-warning mt-2 mr-2">
-     Смотреть историю поверок</a>
-    {% endif %}
-     <a href="/equipment/measureequipment/verificationreg/{{ obj.equipment.exnumber }}/"  class="btn btn-info mt-2 mr-2">
-     Внести запись о поверке</a>
-{# поверка кнопка3#}
- <a href="{% url 'verificationlabels' %}"  target="blank" class="btn btn-warning mt-2 ">
-     Распечатать этикетку</a></div>
-{#расположение и комплектность#}
-<div style="text-align: center; margin-top: 40px"><h4>Расположение и комплекность </h4></div>
-<div style="text-align: center;">
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th> № <br> комн. </th>
-            <th> Ответственный </th>
-            <th> Документы и принадлежности</th>
-            <th> Год <br> ввода в&nbspэксп.</th>
-            <th> Новый <br>или&nbsp&nbsp б/у</th>
-            <th> Статус</th>
-         </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>{{ obj.equipment.roomschange_set.last.roomnumber.roomnumber }}</td>
-        <td>{{ obj.equipment.personchange_set.last.person.username }}</td>
-        <td><a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-outline-warning mt-3">
-            см</a></td>
-        <td> {{ obj.equipment.yearintoservice }}</td>
-        <td> {{ obj.equipment.new }}</td>
-        <td> {{ obj.equipment.get_status_display }}</td>
-    </tr>
-    </tbody>
-</table>
-</div>
-{# расположение кнопки#}
-<div style="text-align: center; margin-top: 10px">
- <a href="/equipment/personchangereg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-info mt-2 mr-2">
-     Поменять ответственного</a>
-     <a href="/equipment/roomschangereg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-info mt-2 mr-2">
-     Поменять помещение</a>
- <a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/"  class="btn btn-warning mt-2 ">
-     Смотреть список и Добавить документы и принадлежности</a></div>
-{#инструкция#}
-<div style="text-align: center; margin-top: 40px"><h4>
-Характеристики и инструкции</h4></div>
-
-<div style="text-align: center;">
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th> Паспорт</th>
-            <th> Инструкция по эксплуатации</th>
-            <th> Диапазон измерений</th>
-            <th> Класс точности, погрешность/неопределённость</th>
-            <th> Наименование определяемых характеристик продукции </th>
-            <th> Видеоинструкция </th>
-         </tr>
-    </thead>
-    <tbody>
-    <tr>
-             <td class="ind">
-             {% if obj.pasport %}
-              <a href="{{ obj.pasport}}"  target="blank" >
-             Ссылка на паспорт
-                  </a>
-             {% else  %}
-             Ссылка на паспорт отсутствует
-             {% endif %}
-         </td>
-         <td class="ind">
-         {% if obj.instruction %}
-          <a href="{{ obj.instruction}}"  target="blank" >
-         Ссылка на инструкцию
-              </a>
-         {% else  %}
-         Ссылка на инструкцию отсутствует
-         {% endif %}
-         </td>
-        <td> {{ obj.charakters.measurydiapason }}</td>
-        <td> {{ obj.charakters.accuracity }}</td>
-        <td>{{ obj.charakters.aim }}</td>
-         <td class="ind">
-         {% if obj.instruction %}
-          <a href="{{ obj.instruction}}"  target="blank" >
-         Ссылка на видео
-              </a>
-         {% else  %}
-         видео отсутствует
-         {% endif %}
-         </td>
-    </tr>
-    </tbody>
-</table>
-</div>
-{#    выписка #}
-<div style="text-align: center; margin-top: 20px"><h4>
-Выписка из текущей поверки </h4></div>
-<div style="text-align: center;">
-<table class="table table-bordered">
-    <tr>
-        <td>{{ obj.equipmentSM_ver.last.extra|default_if_none:'-' }}</td>
-    </tr>
-</table>
-</div>
-{# бухгалтерия  #}
-<div style="text-align: center; margin-top: 40px"><h4>
-Бухгалтерские сведения</h4></div>
-
-<div style="text-align: center;">
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th> Стоимость, руб</th>
-            <th> Инвентарный № <br> (НЕ = внут.№) </th>
-         </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>{{ obj.equipment.price|default:" " }}</td>
-        <td> {{ obj.equipment.invnumber|default:"б/н" }}</td>
-    </tr>
-    </tbody>
-</table>
-</div>
+    {#название#}
+    <center><a href="/equipment/measureequipmentall/"><h4>{{ obj.charakters.name}}</h4></a></center>
+    <center>
+        <h6>тип: {{ obj.charakters.typename|default:" " }}
+        модификация: {{ obj.charakters.modificname|default:" " }}.
+        Заводской номер: <b>{{ obj.equipment.lot }}</b></h6>
+    </center>
     <br>
-    <br>
-</div>
-<p><i>    *ГОСТ ISO/IEC 17025-2019, п.6.4.13: "Должны вестись записи о состоянии оборудования
-    ...должны включать...
-подробную информацию о любых повреждениях, неисправностях, модификациях или ремонте..."</i></p>
+    
+    {# распечатка карточки и протокола верификации #}
+    <div style="text-align: center; margin-top: 10px; margin-bottom: 50px">
+        <a href="{% url 'export_mecard_xls' obj.pk %}"  class="btn btn-primary  mt-2 mr-2 ml-2">
+        Распечатать карточку на прибор</a>
+        <a href="{% url 'export_exvercard_xls' obj.pk %}"  class="btn btn-primary  mt-2 mr-2 ml-2">
+        Выгрузить протокол верификации лабораторного оборудования</a>
     </div>
+    
+    
+    {#таблица неизменные сведения о приборе#}
+    <center>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Внут.№</th>
+                    <th> Номер в реестре </th>
+                    <th> Название </th>
+                    <th> Тип/модификация</th>
+                    <th> Заводской № </th>
+                    <th> Год вып. </th>
+                    <th> Произв-ль </th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ obj.equipment.exnumber }}</td>
+                 <td> <a href="{% url 'measurequipmentcharactersupdate' obj.charakters.pk %}"  target="blank" >
+                     {{ obj.charakters.reestr }}
+                          </a>
+        
+                     </td>
+                 <td> {{ obj.charakters.name }}</td>
+                <td>{{ obj.charakters.typename|default:" " }}/
+                     {{ obj.charakters.modificname|slice:":5"|default:" " }} </td>
+                <td> {{ obj.equipment.lot }}</td>
+                <td> {{ obj.equipment.yearmanuf }}</td>
+                <td> {{ obj.equipment.manufacturer.country }},
+                 {{ obj.equipment.manufacturer.companyName }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </center>
+    
+    {#примечание#}
+    <br>
+    {% if obj.equipment.notemaster  %}
+    <div style="text-align: center; margin-top: 2px; color: red" ><h6>Внимание!</h6>
+    <table class="table table-bordered">
+    <td colspan="6">
+    <div class="TransactionAmount Badresult">
+    {{ obj.equipment.notemaster }}
+    </div>
+    </td>
+    </table>
+    </div>
+    {% endif %}
+    <div style="text-align: center; margin-top: 40px">
+    {#конец примечания#}
+    
+    {#особенности прибора, если имеются#}
+    {% if obj.equipment.individuality  %}
+    <div style="text-align: center; margin-top: 2px"><h6>Особенности работы прибора</h6>
+    <table class="table table-bordered">
+    <td colspan="6">{{ obj.equipment.individuality }}</td>
+    </table>
+    </div>
+    {% endif %}
+    {#конецособенности прибора, если имеются#}
+    
+    {#контакты для ремонта#}
+    {% if obj.equipment.repair  %}
+    <div style="text-align: center; margin-top: 2px"><h6>Куда обратиться при поломке</h6>
+    <table class="table table-bordered">
+    <td colspan="6">{{ obj.equipment.repair }}</td>
+    </table>
+    </div>
+    {% endif %}
+    {# конец контакты для ремонта#}
+    
+    {#записи о приборе#}
+    <div style="text-align: center; margin-top: 10px"><h4>Внести запись в карточку прибора* </h4></div>
+    
+    <div style="text-align: center; margin-top: 10px">
+     <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/comments/"  class="btn btn-warning mt-2">
+         Внести запись о приборе и смотреть записи (для всех пользователей)</a></div>
+    {#конец записи о приборе#}
+    
+    {#изменение сведений о приборе#}
+    <div style="text-align: center; margin-top: 40px"><h4>Обновить сведения о приборе (только для ответственного за прибор или метрологию) </h4></div>
+    <div style="text-align: center; margin-top: 20px">
+     <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/individuality/"  class="btn btn-info mt-2">
+         Добавить особенности работы прибора, инструкцию и пр. (для ответственного за прибор или метрологию)</a></div>
+    </div>
+    {#конец изменение сведений о приборе#}
+    {#    поверка#}
+    <div style="text-align: center; margin-top: 40px"><h4>
+    Поверка </h4></div>
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Дата поверки </th>
+                <th> Поверен до </th>
+                <th> Месяц заказа поверки </th>
+                <th> Месяц заказа замены </th>
+                <th class="ind"> Ссылка ФГИС</th>
+                <th class="ind">  № свидет. о поверке</th>
+             </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ obj.equipmentSM_ver.last.date|date:'d.m.y'|default:" " }}</td>
+             <td> {{ obj.equipmentSM_ver.last.datedead|date:'d.m.y'|default:" " }}</td>
+             <td> {{ obj.equipmentSM_ver.last.dateorder|date:'m.Y'|default:" " }}</td>
+             <td> {{ obj.equipmentSM_ver.last.dateordernew|date:'m.Y'|default:" " }}</td>
+             <td class="ind">
+                 {% if obj.equipmentSM_ver.last.arshin %}
+                  <a href="{{ obj.equipmentSM_ver.last.arshin}}"  target="blank" >
+                 Аршин
+                      </a>
+                 {% else  %}
+                 отсутствует
+                 {% endif %}
+             </td>
+             <td> {{ obj.equipmentSM_ver.last.certnumber}}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    {# поверка кнопка1#}
+    <div style="text-align: center; margin-top: 10px">
+        {% if note %}
+     <a href="/equipment/measureequipment/verification/{{ obj.equipment.exnumber }}/"  class="btn btn-warning mt-2 mr-2">
+         Смотреть историю поверок</a>
+        {% endif %}
+         <a href="/equipment/measureequipment/verificationreg/{{ obj.equipment.exnumber }}/"  class="btn btn-info mt-2 mr-2">
+         Внести запись о поверке</a>
+    {# поверка кнопка3#}
+     <a href="{% url 'verificationlabels' %}"  target="blank" class="btn btn-warning mt-2 ">
+         Распечатать этикетку</a></div>
+    {#расположение и комплектность#}
+    <div style="text-align: center; margin-top: 40px"><h4>Расположение и комплекность </h4></div>
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> № <br> комн. </th>
+                <th> Ответственный </th>
+                <th> Документы и принадлежности</th>
+                <th> Год <br> ввода в&nbspэксп.</th>
+                <th> Новый <br>или&nbsp&nbsp б/у</th>
+                <th> Статус</th>
+             </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ obj.equipment.roomschange_set.last.roomnumber.roomnumber }}</td>
+            <td>{{ obj.equipment.personchange_set.last.person.username }}</td>
+            <td><a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-outline-warning mt-3">
+                см</a></td>
+            <td> {{ obj.equipment.yearintoservice }}</td>
+            <td> {{ obj.equipment.new }}</td>
+            <td> {{ obj.equipment.get_status_display }}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    {# расположение кнопки#}
+    <div style="text-align: center; margin-top: 10px">
+     <a href="/equipment/personchangereg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-info mt-2 mr-2">
+         Поменять ответственного</a>
+         <a href="/equipment/roomschangereg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-info mt-2 mr-2">
+         Поменять помещение</a>
+     <a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/"  class="btn btn-warning mt-2 ">
+         Смотреть список и Добавить документы и принадлежности</a></div>
+    {#инструкция#}
+    <div style="text-align: center; margin-top: 40px"><h4>
+    Характеристики и инструкции</h4></div>
+    
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Паспорт</th>
+                <th> Инструкция по эксплуатации</th>
+                <th> Диапазон измерений</th>
+                <th> Класс точности, погрешность/неопределённость</th>
+                <th> Наименование определяемых характеристик продукции </th>
+                <th> Видеоинструкция </th>
+             </tr>
+        </thead>
+        <tbody>
+        <tr>
+                 <td class="ind">
+                 {% if obj.pasport %}
+                  <a href="{{ obj.pasport}}"  target="blank" >
+                 Ссылка на паспорт
+                      </a>
+                 {% else  %}
+                 Ссылка на паспорт отсутствует
+                 {% endif %}
+             </td>
+             <td class="ind">
+             {% if obj.instruction %}
+              <a href="{{ obj.instruction}}"  target="blank" >
+             Ссылка на инструкцию
+                  </a>
+             {% else  %}
+             Ссылка на инструкцию отсутствует
+             {% endif %}
+             </td>
+            <td> {{ obj.charakters.measurydiapason }}</td>
+            <td> {{ obj.charakters.accuracity }}</td>
+            <td>{{ obj.charakters.aim }}</td>
+             <td class="ind">
+             {% if obj.instruction %}
+              <a href="{{ obj.instruction}}"  target="blank" >
+             Ссылка на видео
+                  </a>
+             {% else  %}
+             видео отсутствует
+             {% endif %}
+             </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    {#    выписка #}
+    <div style="text-align: center; margin-top: 20px"><h4>
+    Выписка из текущей поверки </h4></div>
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <tr>
+            <td>{{ obj.equipmentSM_ver.last.extra|default_if_none:'-' }}</td>
+        </tr>
+    </table>
+    </div>
+    {# бухгалтерия  #}
+    <div style="text-align: center; margin-top: 40px"><h4>
+    Бухгалтерские сведения</h4></div>
+    
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Стоимость, руб</th>
+                <th> Инвентарный № <br> (НЕ = внут.№) </th>
+             </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ obj.equipment.price|default:" " }}</td>
+            <td> {{ obj.equipment.invnumber|default:"б/н" }}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+        <br>
+        <br>
+    </div>
+    <p><i>    *ГОСТ ISO/IEC 17025-2019, п.6.4.13: "Должны вестись записи о состоянии оборудования
+        ...должны включать...
+    подробную информацию о любых повреждениях, неисправностях, модификациях или ремонте..."</i></p>
+</div>
 {% endblock %}
