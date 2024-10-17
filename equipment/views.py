@@ -781,7 +781,7 @@ class SearchPersonverregView(SuccessMessageMixin, ListView):
 
 
     def get_context_data(self, **kwargs):
-        context = super(VerificatorsCreationView, self).get_context_data(**kwargs)
+        context = super(SearchPersonverregView, self).get_context_data(**kwargs)
         context['serform'] = Searchtestingform
         context['form'] = VerificatorsCreationForm  
         return context
