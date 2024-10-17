@@ -770,25 +770,11 @@ class VerificatorsCreationForm(forms.ModelForm):
     companyName = forms.CharField(label='Название организации', max_length=10000000,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    companyAdress = forms.CharField(label='Адрес', max_length=10000000, required=False,
-                                    widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                  'placeholder': ''}))
-    telnumber = forms.CharField(label='Телефон', max_length=10000000, required=False,
-                                widget=forms.TextInput(attrs={'class': 'form-control',
-                                                              'placeholder': ''}))
-    email = forms.CharField(label='email', max_length=10000000, required=False,
-                            widget=forms.TextInput(attrs={'class': 'form-control',
-                                                          'placeholder': ''}))
-    note = forms.CharField(label='Примечание', max_length=10000000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': ''}))
 
     class Meta:
         model = Verificators
         fields = [
             'companyName',
-            'companyAdress', 'telnumber',
-            'email', 'note'
                   ]
 
 
