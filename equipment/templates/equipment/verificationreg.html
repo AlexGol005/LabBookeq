@@ -1,4 +1,4 @@
-{% extends 'main/superbase.html' %}
+{% extends 'main/base.html' %}
 {% load crispy_forms_tags %}
 
 {% block title %}
@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-12">
+    <div class="col-8">
     <br> 
     <center><h5><a href="/equipment/measureequipment/{{ title.exnumber }}/">
         {{ title.exnumber|slice:":5" }}, {{title.measurequipment_set.all.last.charakters}}, зав. № {{title.lot}}
