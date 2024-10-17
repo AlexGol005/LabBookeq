@@ -36,8 +36,8 @@
                     <th> Название </th>
                     <th> Тип/модификация</th>
                     <th> Заводской № </th>
-                    <th> Год вып. </th>
-                    <th> Произв-ль </th>
+                    <th> Год выпуска </th>
+                    <th> Производитель </th>
                 </tr>
             </thead>
             <tbody>
@@ -93,20 +93,20 @@
     {# конец контакты для ремонта#}
     
     {#записи о приборе#}
-    <div style="text-align: center; margin-top: 10px"><h4>Внести запись в карточку прибора* </h4></div>
-    
+    <div style="text-align: center; margin-top: 10px"><h4>Внести запись в карточку прибора* </h4></div>    
     <div style="text-align: center; margin-top: 10px">
-     <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/comments/"  class="btn btn-warning mt-2">
+     <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/comments/"  class="btn btn-primary mt-2">
          Внести запись о приборе и смотреть записи (для всех пользователей)</a></div>
     {#конец записи о приборе#}
     
     {#изменение сведений о приборе#}
     <div style="text-align: center; margin-top: 40px"><h4>Обновить сведения о приборе (только для ответственного за прибор или метрологию) </h4></div>
     <div style="text-align: center; margin-top: 20px">
-     <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/individuality/"  class="btn btn-info mt-2">
+     <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/individuality/"  class="btn btn-primary mt-2">
          Добавить особенности работы прибора, инструкцию и пр. (для ответственного за прибор или метрологию)</a></div>
     </div>
     {#конец изменение сведений о приборе#}
+    
     {#    поверка#}
     <div style="text-align: center; margin-top: 40px"><h4>
     Поверка </h4></div>
