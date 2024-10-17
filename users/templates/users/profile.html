@@ -5,6 +5,7 @@
 
 
 {% block content %}
+ <div class="col-8">
     <h1>Кабинет пользователя</h1>
     <div class="media text-muted pt-3">
       <img class="bd-placeholder-img mr-2 rounded" width=30% height=30% src="{{ user.profile.img.url }}">
@@ -27,5 +28,5 @@
         <a href="{% url 'personal' %}" class="btn btn-info mt-3" style="width: 250px">Личный раздел сайта</a>
     </div>
 {% endif %}
-
+ </div>
 {% endblock %}
