@@ -7,6 +7,7 @@
 
 
 {% block content %}
+ <div class="col-8">
 <div style="text-align: center;"><h4> Регистрация ЛО* </h4></div>
     <p><i><font color="red"><b>Перед регистрацией проверьте, что добавлен производитель и
         характеристики ИО/ВО или госреестр с соответсвующей модификацией.
@@ -28,4 +29,5 @@
     {% csrf_token %}
     {% crispy form %}
 </form>
+ </div>
 {% endblock %}
