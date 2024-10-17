@@ -210,7 +210,7 @@ class MeasurEquipmentView(ListView):
     #     user = self.request.user)
 
     def get_queryset(self):
-        queryset = MeasurEquipment.objects.filter(pointer=self.request.user.userid).exclude(equipment__status='С')
+        queryset = MeasurEquipment.objects.filter(pointer=self.request.user.profile.userid).exclude(equipment__status='С')
         return queryset
 
     def get_context_data(self, **kwargs):
