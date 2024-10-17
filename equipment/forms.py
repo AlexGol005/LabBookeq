@@ -47,7 +47,7 @@ class SearchMEForm(forms.Form):
                 Column('name', css_class='form-group col-md-4 mb-0'),
                 Column('exnumber', css_class='form-group col-md-2 mb-0'),
                 Column('lot', css_class='form-group col-md-2 mb-0'),
-                Row(Submit('submit', 'Найти', css_class='btn  btn-warning col-md-9 mb-3 mt-4 ml-4'))))
+                Row(Submit('submit', 'Найти', css_class='btn  btn-prima col-md-9 mb-3 mt-4 ml-4'))))
 
 
 class Searchreestrform(forms.Form):
@@ -66,7 +66,7 @@ class Searchreestrform(forms.Form):
             Row(
                 Column('name', css_class='form-group col-md-4 mb-0'),
                 Column('reestr', css_class='form-group col-md-4 mb-0'),
-                Submit('submit', 'Найти', css_class='btn  btn-warning col-md-4 mb-4 mt-4 ml-0')))
+                Submit('submit', 'Найти', css_class='btn  btn-prima col-md-4 mb-4 mt-4 ml-0')))
 
 
 class Searchtestingform(forms.Form):
@@ -81,7 +81,7 @@ class Searchtestingform(forms.Form):
         self.helper.layout = Layout(
             Row(
                 Column('name', css_class='form-group col-md-8 mb-0'),
-                Submit('submit', 'Найти', css_class='btn  btn-warning col-md-4 mb-4 mt-4 ml-0')))
+                Submit('submit', 'Найти', css_class='btn  btn-prima col-md-4 mb-4 mt-4 ml-0')))
 
 
 class LabelEquipmentform(forms.Form):
@@ -137,7 +137,7 @@ class LabelEquipmentform(forms.Form):
             Row(
                 Column('n13', css_class='form-group col-md-2 mb-0'),
                 Column('n14', css_class='form-group col-md-2 mb-0')),
-            Row(Submit('submit', 'сформировать', css_class='btn  btn-warning col-md-6 mb-3 mt-4 ml-4')))
+            Row(Submit('submit', 'сформировать', css_class='btn  btn-prima col-md-6 mb-3 mt-4 ml-4')))
 
 
 class DateForm(forms.Form):
@@ -152,7 +152,7 @@ class DateForm(forms.Form):
         self.helper.layout = Layout(
             Row(
                 Column('date', css_class='form-group col-md-4 mb-0 ml-2 mr-2'),
-                Submit('submit', 'сформировать', css_class='btn  btn-warning col-md-6 mb-3 mt-4 ml-2 mr-2')))
+                Submit('submit', 'сформировать', css_class='btn  btn-prima col-md-6 mb-3 mt-4 ml-2 mr-2')))
 
 
 
