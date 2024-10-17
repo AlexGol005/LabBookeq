@@ -303,11 +303,17 @@ class VerificatorsCreationView(SuccessMessageMixin, CreateView):
     form_class = VerificatorsCreationForm
     success_url = '/equipment/verificators/'
     success_message = "Организация поверитель успешно добавлена"
+    context_object_name = 'objects'
 
     def get_context_data(self, **kwargs):
         context = super(VerificatorsCreationView, self).get_context_data(**kwargs)
         context['title'] = 'Внести организацию поверителя'
+        context['serform'] = Searchtestingform
         return context
+
+    def get_queryset(self):
+        queryset = Verificators.objects.all()
+        return queryset
 
 
 class VerificatorPersonCreationView(SuccessMessageMixin, CreateView):
