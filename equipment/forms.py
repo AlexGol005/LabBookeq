@@ -906,7 +906,7 @@ class VerificationRegForm(forms.ModelForm):
                              widget=forms.TextInput(attrs={'class': 'form-control'}))
     certnumber = forms.CharField(label='№ свидетельства о поверке', max_length=10000,
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
-    price = forms.DecimalField(label='Стоимость данной поверки', max_digits=10, decimal_places=2,
+    price = forms.DecimalField(label='Стоимость поверки', max_digits=10, decimal_places=2,
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': '0000.00'}))
     statusver = forms.ChoiceField(label='Результат поверки',
@@ -965,8 +965,8 @@ class VerificationRegForm(forms.ModelForm):
                 
             ),
             Row(
-                Column('dateordernew', css_class='form-group col-md-6 mb-1')),             
-                Column('cust', css_class='form-group col-md-6 mb-0'),           
+                Column('dateordernew', css_class='form-group col-md-4 mb-1')),             
+                Column('cust', css_class='form-group col-md-4 mb-0'),           
             Row(
                 Column('extra', css_class='form-group col-md-12 mb-1')),
             Submit('submit', 'Внести'))
