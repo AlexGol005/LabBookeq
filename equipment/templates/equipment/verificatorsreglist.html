@@ -11,21 +11,21 @@
 {% block content %}
 <div class="col-8">
     <center><h4>Поверители</h4></center><br>
-    <center><h6>Найти поверителя по названию организации</h6></center><br>
-    <form method="post" class="form-register">
+    <center><h6>Найти поверителя по названию организации</h6></center>
+    <form action="/equipment/verificatorssearres/" method="GET">
         {% csrf_token %}
         {% crispy serform %}
     </form>
     <br>
-    <center><h6>Добавить поверителя</h6></center><br>
+    <center><h6>Добавить поверителя</h6></center>
       <form method="post" enctype="multipart/form-data" class="form-register">
           {% csrf_token %}
           {{ form.as_p }}
-          <button class="btn btn-outline-warning" type="submit">Записать</button>
+          <button class="btn btn-outline-prima" type="submit">Записать</button>
       </form>
     </center>
     <br>
-    <center><h6>Поверители</h6></center><br>
+    <center><h6>Поверители</h6></center>
     <table class="table table-bordered">
     <thead>
         <tr>
