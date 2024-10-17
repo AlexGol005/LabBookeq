@@ -297,10 +297,10 @@ class RoomsCreateView(SuccessMessageMixin, CreateView):
         return context
 
 
-class VerificatorsCreationView(SuccessMessageMixin, CreateView):
+class VerificatorsCreationView(SuccessMessageMixin, ListView):
     """ выводит форму добавления компании поверителя и список поверителей """
     template_name = URL + '/verificatorsreglist.html'
-    form_class = VerificatorsCreationForm
+    # form_class = VerificatorsCreationForm
     success_url = '/equipment/verificatorsreg/'
     success_message = "Организация поверитель успешно добавлена"
     context_object_name = 'objects'
@@ -309,6 +309,7 @@ class VerificatorsCreationView(SuccessMessageMixin, CreateView):
         context = super(VerificatorsCreationView, self).get_context_data(**kwargs)
         context['title'] = 'Внести организацию поверителя'
         context['serform'] = Searchtestingform
+        context['form'] = VerificatorsCreationForm       
         return context
 
     def get_queryset(self):
