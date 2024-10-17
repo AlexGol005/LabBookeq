@@ -953,22 +953,22 @@ class VerificationRegForm(forms.ModelForm):
                 Column('dateorder', css_class='form-group col-md-4 mb-0'),
                 ),
             Row(
-                Column('arshin', css_class='form-group col-md-12 mb-0')),
+                Column('arshin', css_class='form-group col-md-8 mb-0')),
             Row(
-                Column('certnumber', css_class='form-group col-md-4 mb-0'),
-                Column('statusver', css_class='form-group col-md-4 mb-0'),
+                Column('certnumber', css_class='form-group col-md-6 mb-0'),
+                Column('statusver', css_class='form-group col-md-6 mb-0'),
             ),
             Row(
-                Column('verificator', css_class='form-group col-md-4 mb-0'),
-                Column('place', css_class='form-group col-md-4 mb-0'),
+                Column('verificator', css_class='form-group col-md-6 mb-0'),
+                Column('place', css_class='form-group col-md-6 mb-0'),
                 
             ),
             Row(
-                Column('dateordernew', css_class='form-group col-md-6 mb-1')),
+                Column('dateordernew', css_class='form-group col-md-4 mb-1')),
                 Column('price', css_class='form-group col-md-4 mb-0'),
                 Column('cust', css_class='form-group col-md-4 mb-0'),           
             Row(
-                Column('extra', css_class='form-group col-md-12 mb-1')),
+                Column('extra', css_class='form-group col-md-8 mb-1')),
             Submit('submit', 'Внести'))
 
 
