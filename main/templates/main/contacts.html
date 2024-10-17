@@ -19,21 +19,19 @@
 {% endblock %}
 
 {% block content %}
-<div style="text-align: center;">
-<h1>Контакты сайта для лабораторий</h1>
-<table class="table table-bordered">
-    <td colspan="6">
-
-<h3><span style="font-size: 16px;"><strong>По всем вопросам пишите в мессенджеры или звоните администрации сайта:</strong></span></h3>
-<span style="font-size:20px;"><strong>89500484071<br />
-sandra.005@mail.ru</strong></span><br />
-
-&nbsp;<div style="text-align: center;">
-<a href="{% url 'contact_page' %}" class="btn btn-warning  mt-3" style="width: 250px">Задать вопрос администрации сайта</a>
-</div>
-
-        </td>
-</table>
-</div>
-
+    <div class="col-8">
+        <center>
+            <h1>Контакты сайта для лабораторий</h1>
+            <table class="table table-bordered">
+                <td colspan="6"> 
+                    <h3><span style="font-size: 16px;"><strong>По всем вопросам пишите в мессенджеры или звоните администрации сайта:</strong></span></h3>
+                    <span style="font-size:20px;"><strong>89500484071<br />
+                    sandra.005@mail.ru</strong></span><br />          
+                    <center>
+                        <a href="{% url 'contact_page' %}" class="btn btn-warning  mt-3" style="width: 250px">Задать вопрос администрации сайта</a>
+                    </center>
+                </td>
+            </table>       
+        </center>
+    </div>
 {% endblock %}
