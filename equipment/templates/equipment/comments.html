@@ -36,13 +36,14 @@
         <a href="{{ obj.img.url }}" target="blank">
         <img  src="{{ obj.img.url }}"></a>
         {% endif %}
-        </div>
-        <br>
         
+        <br>
+        <hr>
     
         <p><b>Тип записи: {{ obj.type }}</b></p>
         <p><b>Автор записи: {{ obj.author }}</b></p>
         <span class="text-muted"> {{ obj.date|date:"j F Y" }}</span>
+        </div>
     
         <br>
         <br>
