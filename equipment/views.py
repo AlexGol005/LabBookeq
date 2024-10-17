@@ -298,8 +298,8 @@ class RoomsCreateView(SuccessMessageMixin, CreateView):
 
 
 class VerificatorsCreationView(SuccessMessageMixin, CreateView):
-    """ выводит форму добавления компании поверителя """
-    template_name = URL + '/reg.html'
+    """ выводит форму добавления компании поверителя и список поверителей """
+    template_name = URL + '/verificatorsreglist.html'
     form_class = VerificatorsCreationForm
     success_url = '/equipment/verificators/'
     success_message = "Организация поверитель успешно добавлена"
