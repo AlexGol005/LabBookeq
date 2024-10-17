@@ -919,7 +919,7 @@ class VerificationRegForm(forms.ModelForm):
     place = forms.ChoiceField(label='Место поверки',
                               choices=CHOICESPLACE,
                               widget=forms.Select(attrs={'class': 'form-control'}))
-    cust = forms.BooleanField(label='Поверка заказана поставщиком', required=False, help_text='Например, если поверку оплачивал производитель')
+    cust = forms.BooleanField(label='Не оплачивалась', required=False, help_text='Например, если поверку оплачивал производитель')
     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
                                    help_text='Укажите, если поверка не выгодна и вы покупаете замену',
                                    widget=forms.DateInput(
@@ -960,12 +960,11 @@ class VerificationRegForm(forms.ModelForm):
             ),
             Row(
                 Column('verificator', css_class='form-group col-md-6 mb-0'),
-                Column('place', css_class='form-group col-md-3 mb-0'),
-                Column('price', css_class='form-group col-md-3 mb-0'),
-                
+                Column('place', css_class='form-group col-md-3 mb-0'),   
+                Column('dateordernew', css_class='form-group col-md-3 mb-1')), 
             ),
             Row(
-                Column('dateordernew', css_class='form-group col-md-3 mb-1')),             
+                Column('price', css_class='form-group col-md-3 mb-0'),                       
                 Column('cust', css_class='form-group col-md-8 mb-0'),           
             Row(
                 Column('extra', css_class='form-group col-md-12 mb-1')),
