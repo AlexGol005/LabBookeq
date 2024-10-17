@@ -288,6 +288,7 @@ class MeasurEquipment(models.Model):
     newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
     newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
+    pointer =  models.CharField('Указатель организации (ИНН_дата добавления ГГММДД)', max_length=500, blank=True, null=True) 
 
     def __str__(self):
         return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
