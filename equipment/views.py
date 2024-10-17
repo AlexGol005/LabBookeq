@@ -838,31 +838,31 @@ class SearchResultMeasurEquipmentView(TemplateView):
         if self.request.GET['name']:
             name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
         if name and not lot and not exnumber:
-            objects = MeasurEquipment.objects.\
+            objects = MeasurEquipment.objects.filter(pointer=self.request.user.profile.userid).\
             filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).order_by('charakters__name')
             context['objects'] = objects
         if lot and not name  and not exnumber:
-            objects = MeasurEquipment.objects.filter(equipment__lot=lot).order_by('charakters__name')
+            objects = MeasurEquipment.objects.filter(equipment__lot=lot).filter(pointer=self.request.user.profile.userid).order_by('charakters__name')
             context['objects'] = objects
         if exnumber and not name and not lot:
-            objects = MeasurEquipment.objects.filter(equipment__exnumber=exnumber).order_by('charakters__name')
+            objects = MeasurEquipment.objects.filter(equipment__exnumber_startswith=exnumber).filter(pointer=self.request.user.profile.userid).order_by('charakters__name')
             context['objects'] = objects
         if exnumber and name and lot:
-            objects = MeasurEquipment.objects.filter(equipment__exnumber=exnumber).\
+            objects = MeasurEquipment.objects.filter(equipment__exnumber_startswith=exnumber).filter(pointer=self.request.user.profile.userid).\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
         if exnumber and name and not lot:
-            objects = MeasurEquipment.objects.filter(equipment__exnumber=exnumber).\
+            objects = MeasurEquipment.objects.filter(equipment__exnumber_startswith=exnumber).filter(pointer=self.request.user.profile.userid).\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 order_by('charakters__name')
             context['objects'] = objects
         if exnumber and not name and lot:
-            objects = MeasurEquipment.objects.filter(equipment__exnumber=exnumber).\
+            objects = MeasurEquipment.objects.filter(equipment__exnumber_startswith=exnumber).filter(pointer=self.request.user.profile.userid).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
         if lot and name and not exnumber:
-            objects = MeasurEquipment.objects.\
+            objects = MeasurEquipment.objects.filter(pointer=self.request.user.profile.userid).\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
