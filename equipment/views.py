@@ -774,7 +774,7 @@ def EquipmentUpdate(request, str):
 class SearchPersonverregView(SuccessMessageMixin, ListView):
     """ Представление, которое выводит результаты поиска по списку поверителей организаций """
 
-    template_name = URL + '/personverreg.html'
+    template_name = URL + '/verificatorsreglist.html'
     context_object_name = 'objects'
     success_url = '/equipment/verificatorsreg/'
     success_message = "Организация поверитель успешно добавлена"
