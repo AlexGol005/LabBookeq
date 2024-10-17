@@ -916,16 +916,12 @@ class VerificationRegForm(forms.ModelForm):
     verificator = forms.ModelChoiceField(label='Организация-поверитель',
                                          queryset=Verificators.objects.all(),
                                          widget=forms.Select(attrs={'class': 'form-control'}))
-    verificatorperson = forms.ModelChoiceField(label='Имя поверителя', required=False,
-                                               queryset=VerificatorPerson.objects.all(),
-                                               widget=forms.Select(attrs={'class': 'form-control'}))
     place = forms.ChoiceField(label='Место поверки',
                               choices=CHOICESPLACE,
                               widget=forms.Select(attrs={'class': 'form-control'}))
-    cust = forms.BooleanField(label='Поверка заказана поставщиком', required=False)
-    img = forms.ImageField(label='Сертификат', widget=forms.FileInput, required=False)
+    cust = forms.BooleanField(label='Поверка заказана поставщиком', required=False, help_text='Например, если поверку оплачивал производитель')
     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
-                                   help_text='Укажите, если поверка не выгодна',
+                                   help_text='Укажите, если поверка не выгодна и вы покупаете замену',
                                    widget=forms.DateInput(
                                                           attrs={'class': 'form-control', 'placeholder': ''}),
                                    input_formats=(
@@ -940,7 +936,7 @@ class VerificationRegForm(forms.ModelForm):
     class Meta:
         model = Verificationequipment
         fields = ['date', 'datedead', 'dateorder', 'arshin', 'certnumber',
-                  'price', 'statusver',  'verificator', 'verificatorperson',
+                  'price', 'statusver',  'verificator', 
                   'place', 'year',
                   'dateordernew',
                   'cust',
@@ -961,17 +957,16 @@ class VerificationRegForm(forms.ModelForm):
             Row(
                 Column('certnumber', css_class='form-group col-md-4 mb-0'),
                 Column('statusver', css_class='form-group col-md-4 mb-0'),
-                Column('price', css_class='form-group col-md-4 mb-0'),
             ),
             Row(
                 Column('verificator', css_class='form-group col-md-4 mb-0'),
-                Column('verificatorperson', css_class='form-group col-md-4 mb-0'),
                 Column('place', css_class='form-group col-md-4 mb-0'),
-                Column('cust', css_class='form-group col-md-4 mb-0'),
+                
             ),
             Row(
-                Column('img', css_class='form-group col-md-6 mb-1'),
                 Column('dateordernew', css_class='form-group col-md-6 mb-1')),
+                Column('price', css_class='form-group col-md-4 mb-0'),
+                Column('cust', css_class='form-group col-md-4 mb-0'),           
             Row(
                 Column('extra', css_class='form-group col-md-12 mb-1')),
             Submit('submit', 'Внести'))
