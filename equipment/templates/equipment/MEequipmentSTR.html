@@ -42,13 +42,9 @@
             </thead>
             <tbody>
             <tr>
-                <td>{{ obj.equipment.exnumber }}</td>
-                 <td> <a href="{% url 'measurequipmentcharactersupdate' obj.charakters.pk %}"  target="blank" >
-                     {{ obj.charakters.reestr }}
-                          </a>
-        
-                     </td>
-                 <td> {{ obj.charakters.name }}</td>
+                <td>{{ obj.equipment.exnumber|slice:":5" }}</td>
+                <td> {{ obj.charakters.reestr }}</td>    
+                <td> {{ obj.charakters.name }}</td>
                 <td>{{ obj.charakters.typename|default:" " }}/
                      {{ obj.charakters.modificname|slice:":5"|default:" " }} </td>
                 <td> {{ obj.equipment.lot }}</td>
@@ -56,7 +52,7 @@
                 <td> {{ obj.equipment.manufacturer.country }},
                  {{ obj.equipment.manufacturer.companyName }}</td>
             </tr>
-            </tbody>
+          </tbody>
         </table>
     </center>
     
