@@ -965,7 +965,8 @@ class VerificationRegForm(forms.ModelForm):
             ),
             Row(
                 Column('price', css_class='form-group col-md-3 mb-0'),                       
-                Column('cust', css_class='form-group col-md-8 mb-0'),           
+                Column('cust', css_class='form-group col-md-8 mb-0'), 
+            ),
             Row(
                 Column('extra', css_class='form-group col-md-12 mb-1')),
             Submit('submit', 'Внести'))
