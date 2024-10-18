@@ -9,7 +9,7 @@ class VerificatorsLookup(LookupChannel):
         return self.model.objects.filter(companyName__icontains=q).order_by('companyName')[:50]
 
     def format_item_display(self, item):
-        return u"<span class='verificator'>%s</span>" % item.pk
+        return u"<span class='verificator_tag'>%s</span>" % item.companyName
 
 
 
