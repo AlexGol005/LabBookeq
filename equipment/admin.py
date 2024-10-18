@@ -52,9 +52,8 @@ class BlogAdminForm(forms.ModelForm):
         model = Blog
         fields = '__all__'
 
-class ChoiceAdmin(admin.ModelAdmin):
+# class ChoiceAdmin(admin.ModelAdmin):
     
-
 @admin.register(Verificationequipment)
 class NoteAdmin(admin.ModelAdmin):
     autocomplete_fields = ['verificator']
