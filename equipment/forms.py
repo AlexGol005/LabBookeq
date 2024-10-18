@@ -904,7 +904,7 @@ class VerificationRegForm(forms.ModelForm):
                                   choices=CHOICESVERIFIC,
                                   widget=forms.Select(attrs={'class': 'form-control'}))
 
-    verificator = forms.AutoCompleteSelectField(label='Организация-поверитель',
+    verificator = forms.CharField(label='Организация-поверитель',
                                          queryset=Verificators.objects.all(),
                                          widget=forms.Select(attrs={'class': 'form-control'}))
     place = forms.ChoiceField(label='Место поверки',
