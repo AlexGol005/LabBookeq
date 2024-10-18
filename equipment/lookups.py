@@ -11,8 +11,6 @@ class VerificatorsLookup(LookupChannel):
     def format_item_display(self, item):
         return u"<span class='verificator_tag'>%s</span>" % item.companyName
 
-        def get_query(self, q, request):
-        return moboListing.objects.filter(Q(moboList__icontains=q)).order_by('name')
     def get_result(self, obj):
         """ result is the simple text that is the completion of what the person typed """
         return obj.companyName
