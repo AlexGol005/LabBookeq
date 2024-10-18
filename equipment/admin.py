@@ -56,7 +56,7 @@ class VerificationequipmentAdmin(AjaxSelectAdmin):
 
     form = make_ajax_form(Verificationequipment, {
         # fieldname: channel_name
-        'companyName': 'verificator_tag'
+        'verificator': 'verificator_tag'
     })
 
 # class ChoiceAdmin(admin.ModelAdmin):
