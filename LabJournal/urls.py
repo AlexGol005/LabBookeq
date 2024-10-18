@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from ajax_select import urls as ajax_select_urls
+admin.autodiscover()
 
 urlpatterns = [
     path("admin/lookups/", include(ajax_select_urls)),
