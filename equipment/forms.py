@@ -907,7 +907,7 @@ class VerificationRegForm(forms.ModelForm):
     # verificator = forms.ModelChoiceField(label='Организация-поверитель',
     #                                      queryset=Verificators.objects.all(),
     #                                      widget=forms.Select(attrs={'class': 'form-control'}))
-    verificator = AutoCompleteSelectField(label='Организация-поверитель', lookup_class = VerificatorsLookup, required=True,  help_text='Начните вводить название и появится список')
+    verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название и появится список')
     place = forms.ChoiceField(label='Место поверки',
                               choices=CHOICESPLACE,
                               widget=forms.Select(attrs={'class': 'form-control'}))
