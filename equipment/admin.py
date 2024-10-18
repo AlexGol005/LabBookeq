@@ -45,15 +45,15 @@ admin.site.register(HelpingEquipmentCharakters)
 admin.site.register(HelpingEquipment) 
 
 
-admin.site.register(Verificationequipment)
+# admin.site.register(Verificationequipment)
 
-# @admin.register(Verificationequipment)
-# class VerificationequipmentAdmin(AjaxSelectAdmin):
+@admin.register(Verificationequipment)
+class VerificationequipmentAdmin(AjaxSelectAdmin):
 
-#     form = make_ajax_form(Verificationequipment, {
-#         # fieldname: channel_name
-#         'verificator': 'verificator_tag'
-#     })
+    form = make_ajax_form(Verificationequipment, {
+        # fieldname: channel_name
+        'verificator': 'verificator_tag'
+    })
 #-------------------------------------------------------
 # class ChoiceAdmin(admin.ModelAdmin):
     
