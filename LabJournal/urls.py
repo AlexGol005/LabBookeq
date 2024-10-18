@@ -6,7 +6,7 @@ from ajax_select import urls as ajax_select_urls
 admin.autodiscover()
 
 urlpatterns = [
-    path("admin/lookups/", include(ajax_select_urls)),
+    (r'^autocomplete/', include(ajax_select_urls)),
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('', include('users.urls')),
