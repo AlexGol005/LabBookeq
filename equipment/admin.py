@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from .lookups import *
 
 from import_export.admin import ImportExportActionModelAdmin
 from import_export import resources
