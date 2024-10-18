@@ -46,11 +46,7 @@ autocomplete_fields = ['question']
 class ChoiceAdmin(admin.ModelAdmin):
     autocomplete_fields = ['question']
 
-class BlogAdminForm(forms.ModelForm):
-    text = forms.CharField(label="Текст", widget=CKEditorUploadingWidget())
-    class Meta:
-        model = Blog
-        fields = '__all__'
+
 
 # class ChoiceAdmin(admin.ModelAdmin):
     
