@@ -23,7 +23,7 @@ from django import forms
 from django.forms import ModelForm
 
 from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
-
+from .lookups import*
 
 from equipment.models import*
 
