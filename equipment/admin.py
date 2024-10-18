@@ -43,12 +43,9 @@ admin.site.register(TestingEquipment)
 admin.site.register(Attestationequipment)
 admin.site.register(HelpingEquipmentCharakters)
 admin.site.register(HelpingEquipment) 
-autocomplete_fields = ['question']
-class ChoiceAdmin(admin.ModelAdmin):
-    autocomplete_fields = ['question']
 
 
- admin.site.register(Verificationequipment)
+admin.site.register(Verificationequipment)
 
 # @admin.register(Verificationequipment)
 # class VerificationequipmentAdmin(AjaxSelectAdmin):
