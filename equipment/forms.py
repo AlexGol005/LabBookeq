@@ -22,6 +22,9 @@ from crispy_forms.layout import Layout, Submit, Row, Column
 from django import forms
 from django.forms import ModelForm
 
+from ajax_select.fields import AutoCompleteSelectMultipleField
+
+
 from equipment.models import*
 
 
@@ -858,6 +861,8 @@ class DocsConsCreateForm(forms.ModelForm):
 # блок 5 - формы для внесения внесения сведений о поверке, аттестации, проверке характеристик плюс формы изменения
 
 
+   
+
 class VerificationRegForm(forms.ModelForm):
     """форма для внесения сведений о поверке"""
     date = forms.DateField(label='Дата поверки',
@@ -921,6 +926,7 @@ class VerificationRegForm(forms.ModelForm):
 
     class Meta:
         model = Verificationequipment
+        tags = AutoCompleteSelectMultipleField('tags')
         fields = ['date', 'datedead', 'dateorder', 'arshin', 'certnumber',
                   'price', 'statusver',  'verificator', 
                   'place', 'year',
