@@ -50,13 +50,13 @@ class ChoiceAdmin(admin.ModelAdmin):
 
 # class ChoiceAdmin(admin.ModelAdmin):
     
-# @admin.register(Verificationequipment)
-# class NoteAdmin(admin.ModelAdmin):
-#     autocomplete_fields = ['verificator']
-
-# это для поиска по выпадающему списку
-class VerificationequipmentCycleAdmin(admin.ModelAdmin):
+@admin.register(Verificationequipment)
+class NoteAdmin(admin.ModelAdmin):
     autocomplete_fields = ['companyName']
 
-admin.site.register(Verificationequipment, VerificationequipmentCycleAdmin)
+# это для поиска по выпадающему списку
+# class VerificationequipmentCycleAdmin(admin.ModelAdmin):
+#     autocomplete_fields = ['companyName']
+
+# admin.site.register(Verificationequipment, VerificationequipmentCycleAdmin)
 
