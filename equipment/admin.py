@@ -32,7 +32,6 @@ admin.site.register(Personchange)
 admin.site.register(MeasurEquipment)
 admin.site.register(Equipment)
 admin.site.register(CommentsEquipment)
-# admin.site.register(Verificationequipment)
 admin.site.register(Roomschange)
 admin.site.register(VerificatorPerson)
 admin.site.register(Verificators)
@@ -49,16 +48,16 @@ class ChoiceAdmin(admin.ModelAdmin):
     autocomplete_fields = ['question']
 
 
+ admin.site.register(Verificationequipment)
 
+# @admin.register(Verificationequipment)
+# class VerificationequipmentAdmin(AjaxSelectAdmin):
 
-@admin.register(Verificationequipment)
-class VerificationequipmentAdmin(AjaxSelectAdmin):
-
-    form = make_ajax_form(Verificationequipment, {
-        # fieldname: channel_name
-        'verificator': 'verificator_tag'
-    })
-
+#     form = make_ajax_form(Verificationequipment, {
+#         # fieldname: channel_name
+#         'verificator': 'verificator_tag'
+#     })
+#-------------------------------------------------------
 # class ChoiceAdmin(admin.ModelAdmin):
     
 # @admin.register(Verificationequipment)
