@@ -10,7 +10,6 @@ import tablib
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
-
 # реестр  классы для отображения в админке
 
 # класс для загрузки/выгрузки  типа/модификации
@@ -35,7 +34,7 @@ admin.site.register(Equipment)
 admin.site.register(CommentsEquipment)
 admin.site.register(Roomschange)
 admin.site.register(VerificatorPerson)
-admin.site.register(Verificators)
+# admin.site.register(Verificators)
 admin.site.register(DocsCons)
 admin.site.register(CompanyCard)
 admin.site.register(MeteorologicalParameters)
@@ -45,16 +44,27 @@ admin.site.register(Attestationequipment)
 admin.site.register(HelpingEquipmentCharakters)
 admin.site.register(HelpingEquipment) 
 
+@admin.register(Verificators)
+class VerificatorsAdmin(admin.ModelAdmin):
+    fields = ['companyName', ]
+
+
+@admin.register(Verificationequipment)
+class VerificationequipmentAdmin(admin.ModelAdmin):
+
+    form = make_ajax_form(Verificationequipment, {
+        'verificator': 'verificator_tag'
+    })
 
 # admin.site.register(Verificationequipment)
 
-@admin.register(Verificationequipment)
-class VerificationequipmentAdmin(AjaxSelectAdmin):
+# @admin.register(Verificationequipment)
+# class VerificationequipmentAdmin(AjaxSelectAdmin):
 
-    form = make_ajax_form(Verificationequipment, {
-        # fieldname: channel_name
-        'verificator': 'verificator_tag'
-    })
+#     form = make_ajax_form(Verificationequipment, {
+#         # fieldname: channel_name
+#         'verificator': 'verificator_tag'
+#     })
 #-------------------------------------------------------
 # class ChoiceAdmin(admin.ModelAdmin):
     
