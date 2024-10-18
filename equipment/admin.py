@@ -30,7 +30,7 @@ admin.site.register(Personchange)
 admin.site.register(MeasurEquipment)
 admin.site.register(Equipment)
 admin.site.register(CommentsEquipment)
-admin.site.register(Verificationequipment)
+# admin.site.register(Verificationequipment)
 admin.site.register(Roomschange)
 admin.site.register(VerificatorPerson)
 admin.site.register(Verificators)
@@ -42,7 +42,19 @@ admin.site.register(TestingEquipment)
 admin.site.register(Attestationequipment)
 admin.site.register(HelpingEquipmentCharakters)
 admin.site.register(HelpingEquipment) 
+autocomplete_fields = ['question']
+class ChoiceAdmin(admin.ModelAdmin):
+    autocomplete_fields = ['question']
 
+class BlogAdminForm(forms.ModelForm):
+    text = forms.CharField(label="Текст", widget=CKEditorUploadingWidget())
+    class Meta:
+        model = Blog
+        fields = '__all__'
 
+class ChoiceAdmin(admin.ModelAdmin):
+    
 
-
+@admin.register(Verificationequipment)
+class NoteAdmin(admin.ModelAdmin):
+    autocomplete_fields = ['verificator']
