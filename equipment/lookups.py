@@ -8,14 +8,8 @@ class VerificatorsLookup(LookupChannel):
     def get_query(self, q, request):
         return self.model.objects.filter(companyName__icontains=q).order_by('companyName')[:50]
 
-    def get_result(self,obj):
-        return obj.companyName
-        
-    def format_match(self,obj):
-        return self.format_item_display(obj)
-        
-    def format_item_display(self,obj):
-        return u"%s" % escape(obj.pk)
+    def format_item_display(self, item):
+        return u"<span class='tag'>%s</span>" % item
 
 
 
