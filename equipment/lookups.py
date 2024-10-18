@@ -1,5 +1,5 @@
 from ajax_select import register, LookupChannel
-from .models import Verificationequipment
+from .models import *
 
 @register('verificator_tag')
 class VerificatorsLookup(LookupChannel):
