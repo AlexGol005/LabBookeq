@@ -94,7 +94,7 @@ class Verificators(models.Model):
     note = models.CharField('Примечание', max_length=10000, default='-', blank=True)
 
     def __str__(self):
-        return f'{self.companyName}, {self.companyAdress}, {self.email}, {self.telnumber}'
+        return f'{self.companyName}'
 
     class Meta:
         verbose_name = 'Поверитель организация'
