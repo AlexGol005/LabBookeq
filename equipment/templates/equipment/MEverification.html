@@ -8,9 +8,9 @@
 
 {% block content %}
 <div class="col-12">
-    <center><h5>История поверки:
+    <center><h5>История поверок:
     <a href="/equipment/measureequipment/{{ title.exnumber }}/">
-        {{title.measurequipment_set.all.last.charakters}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber }} </a> 
+        {{title.measurequipment_set.all.last.charakters}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
      </h5></center>
      <br>
  
@@ -39,7 +39,7 @@
      Внести запись о поверке</a>
     </div>
     
-    
+     <center><h5>История поверок</h5></center>
     
     {#таблица для вывода поверки#}
     <div style="text-align: center; margin-top: 20px">
@@ -54,6 +54,7 @@
                 <th> Результат </th>
                 <th> Стоимость, <br> руб </th>
                 <th> Документ </th>
+                <th> Дополнительная информация </th>
              </tr>
         </thead>
         <tbody>
@@ -80,6 +81,7 @@
                 {% endif %}
             {{ obj.certnumber|default:" "}}
             </td>
+             <td> {{ obj.extra|default:" " }}</td>
         </tr>
         {% endfor %}
         </tbody>
@@ -98,10 +100,7 @@
     {#конец формы для комментария#}
     
     <br>
-        <div style="text-align: center; margin-top: 5px; margin-bottom: 15px">
-         <a href="/equipment/measureequipment/verificationreg/{{ strreg }}/"  class="btn btn-prima mt-2 ml-2 mr-2">
-        Внести запись о поверке</a>
-       </div>
+
   
 </div>
 {% endblock %}
