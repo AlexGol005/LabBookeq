@@ -6,6 +6,8 @@ from import_export import resources
 from import_export import fields
 from import_export.widgets import ForeignKeyWidget
 import tablib
+from ajax_select.admin import AjaxSelectAdmin
+from ajax_select import make_ajax_form
 
 
 # реестр  классы для отображения в админке
@@ -30,7 +32,7 @@ admin.site.register(Personchange)
 admin.site.register(MeasurEquipment)
 admin.site.register(Equipment)
 admin.site.register(CommentsEquipment)
-admin.site.register(Verificationequipment)
+# admin.site.register(Verificationequipment)
 admin.site.register(Roomschange)
 admin.site.register(VerificatorPerson)
 admin.site.register(Verificators)
@@ -47,6 +49,15 @@ class ChoiceAdmin(admin.ModelAdmin):
     autocomplete_fields = ['question']
 
 
+
+
+@admin.register(Verificationequipment)
+class VerificationequipmentAdmin(AjaxSelectAdmin):
+
+    form = make_ajax_form(Verificationequipment, {
+        # fieldname: channel_name
+        'verificator': 'verificator_tag'
+    })
 
 # class ChoiceAdmin(admin.ModelAdmin):
     
