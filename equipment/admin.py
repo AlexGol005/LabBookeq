@@ -55,10 +55,7 @@ class VerificationequipmentAdmin(admin.ModelAdmin):
     form = make_ajax_form(Verificationequipment, {
         'verificator': 'verificator_tag'
     })
-    class Media:
-        js = ["/static/js/jquery.min.js",
-              "/static/js/jquery-ui.js"]
-        css = {'all': ["/static/css/jquery-ui.css"]}
+
 
 # admin.site.register(Verificationequipment)
 
