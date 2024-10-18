@@ -11,18 +11,7 @@ class VerificatorsLookup(LookupChannel):
     def format_item_display(self, item):
         return item.companyName
 
-    def get_result(self, item):
-        return item.companyName
-
-    # def format_item_display(self, item):
-    #     return u"<span class='verificator_tag'>%s</span>" % item.companyName
-    
-    # def format_match(self, obj):
-    #     """ (HTML) formatted item for display in the dropdown """
-    #     return self.format_item_display(obj)
-
-
-
+ 
 
 
 
