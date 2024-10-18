@@ -8,8 +8,10 @@ class VerificatorsLookup(LookupChannel):
     def get_query(self, q, request):
         return self.model.objects.filter(companyName__icontains=q).order_by('companyName')[:50]
 
-    def format_item_display(self, item):
-        return u"<span class='verificator_tag'>%s</span>" % item.companyName
+    # def format_item_display(self, item):
+    #     return u"<span class='verificator_tag'>%s</span>" % item.companyName
+
+
 
     def get_result(self, obj):
         """ result is the simple text that is the completion of what the person typed """
@@ -25,9 +27,6 @@ class VerificatorsLookup(LookupChannel):
 
     def get_objects(self, ids):
         return model.objects.filter(pk__in=ids)
-
-    # def format_match(self, item):
-    #     return u"<span class='verificator_tag'>%s</span>" % item.companyName
 
 
 
