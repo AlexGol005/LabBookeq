@@ -22,7 +22,7 @@ from crispy_forms.layout import Layout, Submit, Row, Column
 from django import forms
 from django.forms import ModelForm
 
-
+from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 
 
 from equipment.models import*
@@ -904,7 +904,7 @@ class VerificationRegForm(forms.ModelForm):
                                   choices=CHOICESVERIFIC,
                                   widget=forms.Select(attrs={'class': 'form-control'}))
 
-    verificator = forms.ModelChoiceField(label='Организация-поверитель',
+    verificator = forms.AutoCompleteSelectField(label='Организация-поверитель',
                                          queryset=Verificators.objects.all(),
                                          widget=forms.Select(attrs={'class': 'form-control'}))
     place = forms.ChoiceField(label='Место поверки',
