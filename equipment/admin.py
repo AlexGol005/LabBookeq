@@ -56,7 +56,7 @@ class ChoiceAdmin(admin.ModelAdmin):
 
 # это для поиска по выпадающему списку
 class VerificationequipmentCycleAdmin(admin.ModelAdmin):
-    autocomplete_fields = ['verificator']
+    autocomplete_fields = ['companyName']
 
 admin.site.register(Verificationequipment, VerificationequipmentCycleAdmin)
 
