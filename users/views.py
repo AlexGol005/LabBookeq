@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # from django.contrib.auth.forms import UserCreationForm
 from .forms import UserRegisterForm, UserUdateForm, ProfileUdateForm
@@ -11,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 
 @login_required
-def profile(request):
+def profileupdate(request):
     if request.method == "POST":
         profailForm = ProfileUdateForm(request.POST, request.FILES,  instance=request.user.profile)
         userUpdadeForm = UserUdateForm(request.POST, instance=request.user)
@@ -38,11 +39,11 @@ def profile(request):
             'USER': USER
             }
 
-    return render(request, 'users/profile.html', data)
+    return render(request, 'users/profileupdate.html', data)
 
-class PersonalView(TemplateView):
-    """выводит персональную страницу суперпользователя """
-    template_name = 'users/personal.html'
+class ProfileView(LoginRequiredMixin, TemplateView):
+    """выводит персональную страницу """
+    template_name = 'users/profile.html'
 
 
 
