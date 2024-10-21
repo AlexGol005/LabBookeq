@@ -25,7 +25,7 @@ class EmployeesResource(resources.ModelResource):
 # класс подробностей сотрудники 
 class EmployeesAdmin(ImportExportActionModelAdmin):
     resource_class = EmployeesResource
-    list_display = ('сompany.userid' , 'name', 'position', )
+    list_display = ('сompany__userid' , 'name', 'position', )
     search_fields = ['name',]
 
 # фиксация формы в админке сотрудники 
