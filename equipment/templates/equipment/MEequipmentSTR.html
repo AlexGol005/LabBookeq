@@ -145,13 +145,13 @@
     {# поверка кнопка1#}
     <div style="text-align: center; margin-top: 10px">
         {% if note %}
-     <a href="/equipment/measureequipment/verification/{{ obj.equipment.exnumber }}/"  class="btn btn-warning mt-2 mr-2">
+     <a href="/equipment/measureequipment/verification/{{ obj.equipment.exnumber }}/"  class="btn btn-primary mt-2 mr-2">
          Смотреть историю поверок</a>
         {% endif %}
-         <a href="/equipment/measureequipment/verificationreg/{{ obj.equipment.exnumber }}/"  class="btn btn-info mt-2 mr-2">
+         <a href="/equipment/measureequipment/verificationreg/{{ obj.equipment.exnumber }}/"  class="btn btn-primary mt-2 mr-2">
          Внести запись о поверке</a>
     {# поверка кнопка3#}
-     <a href="{% url 'verificationlabels' %}"  target="blank" class="btn btn-warning mt-2 ">
+     <a href="{% url 'verificationlabels' %}"  target="blank" class="btn btn-primary mt-2 ">
          Распечатать этикетку</a></div>
     {#расположение и комплектность#}
     <div style="text-align: center; margin-top: 40px"><h4>Расположение и комплекность </h4></div>
@@ -171,7 +171,7 @@
         <tr>
             <td>{{ obj.equipment.roomschange_set.last.roomnumber.roomnumber }}</td>
             <td>{{ obj.equipment.personchange_set.last.person.username }}</td>
-            <td><a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-outline-warning mt-3">
+            <td><a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-outline-ptimary mt-3">
                 см</a></td>
             <td> {{ obj.equipment.yearintoservice }}</td>
             <td> {{ obj.equipment.new }}</td>
@@ -182,11 +182,11 @@
     </div>
     {# расположение кнопки#}
     <div style="text-align: center; margin-top: 10px">
-     <a href="/equipment/personchangereg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-info mt-2 mr-2">
+     <a href="/equipment/personchangereg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-ptimary mt-2 mr-2">
          Поменять ответственного</a>
-         <a href="/equipment/roomschangereg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-info mt-2 mr-2">
+         <a href="/equipment/roomschangereg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-ptimary mt-2 mr-2">
          Поменять помещение</a>
-     <a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/"  class="btn btn-warning mt-2 ">
+     <a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/"  class="btn btn-ptimary mt-2 ">
          Смотреть список и Добавить документы и принадлежности</a></div>
     {#инструкция#}
     <div style="text-align: center; margin-top: 40px"><h4>
