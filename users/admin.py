@@ -28,6 +28,7 @@ class EmployeesAdmin(ImportExportActionModelAdmin):
     list_display = ('get_userid' , 'name', 'position', )
     def get_userid(self, obj):
         return obj.userid.userid
+    # get_name.admin_order_field  = 'author'  #Allows column order sorting
     get_userid.short_description = 'ID компании'  #Renames column head
     search_fields = ['name',]
 
