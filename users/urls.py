@@ -6,10 +6,10 @@ from django.contrib.auth import views as authViews
 
 urlpatterns = [
     # path('register/', UserView.register, name='reg'),
-    path('personal/', UserView.PersonalView.as_view(), name='personal'),
+    path('Profile/', UserView.PersonalView.as_view(), name='profile'),
     path('login/', authViews.LoginView.as_view(template_name='users/user.html'), name='user'),
     path('exit/', authViews.LogoutView.as_view(template_name='users/exit.html'), name='exit'),
-    path('profile/', UserView.profile, name='profile'),
+    path('profileupdate/', UserView.profileupdate, name='profileupdate'),
     path('password_reset/',
     PasswordResetView.as_view(template_name='users/password_reset_form.html',
                                subject_template_name='users/password_reset_subject.html',
