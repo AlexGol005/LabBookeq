@@ -31,16 +31,16 @@ class Profile(models.Model):
 
 class Company(models.Model):
     userid = models.CharField('Идентификатор организации (10 случайных цифр)', max_length=50, default=None, null=True, blank=True)
-    name = models.CharField('Название организации', max_length=40, default=None, null=True, blank=True)
-    requisits =  models.TextField('Реквизиты организации', max_length=40, default=None, null=True, blank=True)
-    adress =  models.TextField('Адрес организации юридический', max_length=40, default=None, null=True, blank=True)
-    adress_lab =  models.TextField('Адрес лаборатории физический', max_length=40, default=None, null=True, blank=True)
+    name = models.CharField('Название организации', max_length=100, default=None, null=True, blank=True)
+    requisits =  models.TextField('Реквизиты организации', default=None, null=True, blank=True)
+    adress =  models.TextField('Адрес организации юридический', max_length=100, default=None, null=True, blank=True)
+    adress_lab =  models.TextField('Адрес лаборатории физический', max_length=100, default=None, null=True, blank=True)
     phone =  models.TextField('Телефон организации юридический', max_length=15, default=None, null=True, blank=True)
     phone_lab =  models.TextField('Телефон лаборатории', max_length=15, default=None, null=True, blank=True)
     direktor_position = models.CharField('Должность главного лица компании', max_length=40, default=None, null=True, blank=True)
-    direktor_name = models.CharField('ФИО главного лица компании', max_length=40, default=None, null=True, blank=True)
-    headlab_position = models.CharField('Должность главного лица лаборатории', max_length=40, default=None, null=True, blank=True)
-    headlab_name = models.CharField('ФИО главного лица лаборатории', max_length=40, default=None, null=True, blank=True)
+    direktor_name = models.CharField('ФИО главного лица компании', max_length=100, default=None, null=True, blank=True)
+    headlab_position = models.CharField('Должность главного лица лаборатории', max_length=100, default=None, null=True, blank=True)
+    headlab_name = models.CharField('ФИО главного лица лаборатории', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
     pay = models.BooleanField ('Оплачено', default=True)
 
