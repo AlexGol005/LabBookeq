@@ -53,7 +53,7 @@ class Company(models.Model):
 
 
 class Employees(models.Model):
-    userid = models.ForeignKey(Company, verbose_name'Идентификатор организации', on_delete=models.PROTECT, null=True, blank=True)
+    userid = models.ForeignKey(Company, verbose_name = 'Идентификатор организации', on_delete=models.PROTECT, null=True, blank=True)
     name = models.CharField('ФИО', max_length=40, default=None, null=True, blank=True)
     position = models.CharField('Должность', max_length=40, default=None, null=True, blank=True)
 
