@@ -1091,7 +1091,7 @@ class PersonchangeForm(forms.ModelForm):
     ruser = None
     """форма для смены ответственного за ЛО"""
     person = forms.ModelChoiceField(label='Ответственный за ЛО',
-                                    queryset=Employees.objects.filter(userid__userid=self.ruser),
+                                    queryset=Employees.objects.filter(userid__userid=ruser),
                                     widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
