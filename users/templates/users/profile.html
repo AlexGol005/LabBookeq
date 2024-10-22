@@ -9,10 +9,26 @@
     <div class="media text-muted pt-3">
         <img class="bd-placeholder-img mr-2 rounded" width=30% height=30% src="{{ user.profile.img.url }}">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <b>ID организации:  </b> {{ user.userid }}
+            <b>Название организации:  </b> {{ user.userid }}
+            <hr>
+            <h6>Данные учетной записи</h6>
+            <b>Логин:  </b> {{ user.username }}
+            <b>Имя:  </b> {{ user.name }}
+            {% if user.position %}
+            <b>Должность:  </b> {{ user.position }}
+            {% endif %}
+            
+            
+
+            
+
+<!--             
         <strong class="d-block text-gray-dark">{{ user.username }}</strong>
         {% if user.email %}
-        <b>Email: </b> {{ user.email }}
-        {% endif %}
+        <b>Email: </b> {{ user.email }}   
+            {% endif %} -->
+            
     </div>
      
 
