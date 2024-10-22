@@ -1088,10 +1088,10 @@ class OrderTEUdateForm(forms.ModelForm):
 # блок 6 - смена ответственного и помещения
 
 class PersonchangeForm(forms.ModelForm):
-    ruser = None
+    # ruser = None
     """форма для смены ответственного за ЛО"""
     person = forms.ModelChoiceField(label='Ответственный за ЛО',
-                                    queryset=Employees.objects.filter(userid__userid=ruser),
+                                    queryset=Employees.objects.all(),
                                     widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
