@@ -25,8 +25,10 @@
 
 <!--       Кнопки                                                                                              -->
 
-            {% if USER  %}
+            {% if USER  %}    
              <br>
+     {{ company }}
+     {{ employees }}
                 <center>
                     <a href="{% url 'profileupdate' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:30%"> Смотреть и менять профиль организации </a>
                     <a href="{% url 'profileupdate' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:30%"> Смотреть и менять список сотрудников </a>
