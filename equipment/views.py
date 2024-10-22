@@ -361,6 +361,7 @@ class ManufacturerRegView(SuccessMessageMixin, CreateView):
 class PersonchangeFormView(View):
     """вывод формы смены ответсвенного за прибор, URL=personchangereg/<str:str>/"""
     def get(self, request, str):
+        ruser=request.user.profile.userid
         title = 'Смена ответственного за прибор'
         dop = Equipment.objects.get(exnumber=str)
         form = PersonchangeForm()
@@ -373,7 +374,8 @@ class PersonchangeFormView(View):
         return render(request, template_name, context)
 
     def post(self, request, str, *args, **kwargs):
-        form = PersonchangeForm(request.POST, ruser=request.user.profile.userid)
+        ruser=request.user.profile.userid
+        form = PersonchangeForm(request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
