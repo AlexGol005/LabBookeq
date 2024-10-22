@@ -60,8 +60,10 @@ class ProfileView(LoginRequiredMixin, TemplateView):
                 context['USERTITLE'] = "Базовый пользователь"
         except:
             context['USER'] = False
-        employees = Employees.objects.filter(userid=user.profile.userid)
-        company = Company.objects.get(userid=user.profile.userid)
+        # employees = Employees.objects.filter(userid=user.profile.userid)
+        # company = Company.objects.get(userid=user.profile.userid)
+        employees = Employees.objects.all()
+        company = Company.objects.all()
         context['employees'] = employees
         context['company'] = company 
             
