@@ -92,7 +92,7 @@ class CompanyCreateForm(forms.ModelForm):
     headlab_position = forms.CharField(label='Должность главного лица лаборатории', widget=forms.TextInput(attrs={'class': 'form-control',}))
     headlab_name = forms.CharField(label='ФИО главного лица лаборатории', widget=forms.TextInput(attrs={'class': 'form-control',}))
     email = forms.CharField(label='email', widget=forms.TextInput(attrs={'class': 'form-control',}))
-    attestat = forms.CharField(label='Данные аттестата аккредитации', widget=forms.Textarea(attrs={'class': 'form-control',}))
+    attestat = forms.CharField(label='Данные аттестата аккредитации', required=False, widget=forms.Textarea(attrs={'class': 'form-control',}))
                              
 
     class Meta:
