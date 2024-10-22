@@ -3,6 +3,7 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, 
 from django.urls import path
 from users import views as UserView
 from django.contrib.auth import views as authViews
+from . import views
 
 urlpatterns = [
     path('employeeupdate/<str:str>/', views.EmployeeUpdateView, name='employeeupdate'),
