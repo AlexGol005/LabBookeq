@@ -111,3 +111,16 @@ class CompanyCreateForm(forms.ModelForm):
                 'email', 
                 'attestat', 
                   ]
+
+
+class EmployeesUpdateForm(forms.ModelForm):
+    """форма для обновления сотрудника компании"""
+    name = forms.CharField(label='ФИО', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    position = forms.CharField(label='Должность', widget=forms.TextInput(attrs={'class': 'form-control',}))
+                             
+    class Meta:
+        model = Employees
+        fields = [
+                 'name', 
+                'position', 
+                  ]
