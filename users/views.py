@@ -131,7 +131,23 @@ class EmployeesView(LoginRequiredMixin, TemplateView):
             
         return context
 
-
+def EmployeeUpdateView(request, str):
+    """выводит форму для обновления данных о сотруднике"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = EmployeesUpdateForm(request.POST, instance=Employees.objects.get(pk=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect('employees')
+        else:
+            form = EmployeesUpdateForm(instance=Employees.objects.get(pk=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('employeesupdate')
 
 # def register(request):
 #     if request.method == "POST":
