@@ -23,7 +23,9 @@
             <strong class="d-block text-gray-dark"><b>Права пользователя:  </b> {{ USERTITLE }}</strong>
 
                  {{ company }}
-     {{ employees }}
+     {% for e in employees %}
+            {{ e.name }}
+           {% end for %}
     </div>
 
 <!--       Кнопки                                                                                              -->
