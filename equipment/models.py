@@ -21,6 +21,7 @@ from django.contrib.auth.models import User
 from decimal import *
 from django.urls import reverse
 
+from users.models import Employees
 
 # блок 1 -  неизменяемые непользовательские константы для полей с выбором значений в моделях
 from django.views.generic import DetailView
