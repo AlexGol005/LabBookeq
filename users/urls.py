@@ -5,6 +5,7 @@ from users import views as UserView
 from django.contrib.auth import views as authViews
 
 urlpatterns = [
+    path('employees/', UserView.EmployeesView.as_view(), name='employees'),
     path('companyupdate/', UserView.CompanyUpdateView, name='companyupdate'),
     # path('register/', UserView.register, name='reg'), CompanyProfileView
     path('companyprofile/', UserView.CompanyProfileView.as_view(), name='companyprofile'),
