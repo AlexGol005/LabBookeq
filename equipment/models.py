@@ -341,7 +341,7 @@ class HelpingEquipment(models.Model):
 # блок 4 - смена комнаты, ответственного, добавление принадлежностей к оборудованию
 
 class Personchange(models.Model):
-    person = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
+    person = models.ForeignKey(Employee, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
     date = models.DateField('Дата изменения ответственного', auto_now_add=True, db_index=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True)
 
