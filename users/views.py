@@ -64,7 +64,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             employees = Employees.objects.all()
             company = Company.objects.all()
             context['employees'] = employees
-            context['company'] = company      
+            context['company'] = company 
+            company = 'hhh'
         return context
 
 
