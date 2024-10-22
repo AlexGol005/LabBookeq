@@ -6,7 +6,8 @@
 {% block content %}
  <div class="col-8">
      <h5>Данные компании {{ company.name }}</h5> 
-     <table class="table table-bordered">
+     <br>
+     <table class="table table-bordered" style="width:50%>
        <tr><th>Идентификатор</th><td>{{ company.userid }}</td></tr>
        <tr><th>Название</th><td>{{ company.name }}</d></tr>
        <tr><th>Реквизиты</th><td>{{ company.requisits }}</td></tr>
@@ -35,6 +36,7 @@
                     <a href="{% url 'profileupdate' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:30%"> Смотреть и менять профиль организации </a>
                     <a href="{% url 'profileupdate' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:30%"> Смотреть и менять список сотрудников </a>
                 </center>
+                <br>
             {% endif %}
 </div>
 {% endblock %}
