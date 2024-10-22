@@ -101,14 +101,14 @@ def CompanyUpdateView(request):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                return redirect('equipment/reg.html')
+                return redirect('companyupdate')
         else:
             form = CompanyCreateForm(instance=Company.objects.get(userid=ruser.profile.userid))
         data = {'form': form,}               
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
-        return redirect('equipment/reg.html')
+        return redirect('companyupdate')
 
 
 
