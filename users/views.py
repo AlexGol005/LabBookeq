@@ -44,6 +44,22 @@ def profileupdate(request):
 class ProfileView(LoginRequiredMixin, TemplateView):
     """выводит персональную страницу """
     template_name = 'users/profile.html'
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff:
+                context['USER'] = True
+                context['USERTITLE'] = "Продвинутый пользователь"
+            if user.is_superuser:
+                context['USER'] = True
+                context['USERTITLE'] = "Суперпользователь"
+            else:
+                context['USER'] = False
+                context['USERTITLE'] = "Базовый пользователь"
+        except:
+            context['USER'] = False
+        return context
 
 
 
