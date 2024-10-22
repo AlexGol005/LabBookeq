@@ -114,7 +114,7 @@ class CompanyCreateForm(forms.ModelForm):
 
 
 class EmployeesUpdateForm(forms.ModelForm):
-    """форма для обновления сотрудника компании"""
+    """форма для создания обновления сотрудника компании"""
     name = forms.CharField(label='ФИО', widget=forms.TextInput(attrs={'class': 'form-control',}))
     position = forms.CharField(label='Должность', widget=forms.TextInput(attrs={'class': 'form-control',}))
                              
