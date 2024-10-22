@@ -9,14 +9,14 @@
     <div class="media text-muted pt-3">
         <img class="bd-placeholder-img mr-2 rounded" width=30% height=30% src="{{ user.profile.img.url }}">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <b>ID организации:  </b> {{ user.profile.userid }}
-            <b>Название организации:  </b> {{ user.userid }}
-            <b>------------------- </b> 
+            <strong class="d-block text-gray-dark"><b>ID организации:  </b></strong> {{ user.profile.userid }}
+            <strong class="d-block text-gray-dark"><b>Название организации:  </b> </strong>{{ user.userid }}
+            <strong class="d-block text-gray-dark"><b>------------------- </b> </strong>
             <strong class="d-block text-gray-dark">Данные учетной записи</strong>
-            <b>Логин:  </b> {{ user.username }}
-            <b>Имя:  </b> {{ user.profile.name }}
+            <strong class="d-block text-gray-dark"><b>Логин:  </b></strong> {{ user.username }}
+            <strong class="d-block text-gray-dark"><b>Имя:  </b> </strong>{{ user.profile.name }}
             {% if user.profile.position  %}
-            <b>Должность:  </b> {{ user.profile.position }}
+            <strong class="d-block text-gray-dark"><b>Должность:  </b></strong> {{ user.profile.position }}
             {% endif %}
             
             
