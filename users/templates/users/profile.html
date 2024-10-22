@@ -21,14 +21,16 @@
             <strong class="d-block text-gray-dark"><b>Должность:  </b> {{ user.profile.position }}</strong>
             {% endif %} 
             <strong class="d-block text-gray-dark"><b>Права пользователя:  </b> {{ USERTITLE }}</strong>
+
+                 {{ company }}
+     {{ employees }}
     </div>
 
 <!--       Кнопки                                                                                              -->
 
             {% if USER  %}    
              <br>
-     {{ company }}
-     {{ employees }}
+
                 <center>
                     <a href="{% url 'profileupdate' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:30%"> Смотреть и менять профиль организации </a>
                     <a href="{% url 'profileupdate' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:30%"> Смотреть и менять список сотрудников </a>
