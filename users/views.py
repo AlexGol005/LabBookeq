@@ -158,7 +158,7 @@ def Employeereg(request):
             form = EmployeesUpdateForm(request.POST, request.FILES)
             if form.is_valid():
                 order = form.save(commit=False)
-                order.userid = request.user.profile.userid
+                order.userid = Company.objects.get(userid=request.user.profile.userid)
                 order.save()
                 return redirect('employees')
         else:
