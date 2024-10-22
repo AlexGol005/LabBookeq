@@ -79,7 +79,7 @@ class ProfileUdateForm(forms.ModelForm):
 
 
 
-class CpmpanyCreateForm(forms.ModelForm):
+class CompanyCreateForm(forms.ModelForm):
     """форма для обновления профиля компании"""
     name = forms.CharField(label='Название', widget=forms.TextInput(attrs={'class': 'form-control',}))
     requisits = forms.CharField(label='Реквизиты', widget=forms.Textarea(attrs={'class': 'form-control',}))
