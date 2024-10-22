@@ -142,8 +142,28 @@ def EmployeeUpdateView(request, str):
                 return redirect('employees')
         else:
             form = EmployeesUpdateForm(instance=Employees.objects.get(pk=str))
-        data = {'form': form,
-                }
+        data = {'form': form,}                
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('employees')
+
+
+
+@login_required
+def EquipmentReg(request):
+    """выводит форму для регистрации  сотрудника"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = EmployeesUpdateForm(request.POST, request.FILES)
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.userid = request.user.profile.userid
+                order.save()
+                return redirect('employees')
+        else:
+            form = EmployeesUpdateForm()
+        data = {'form': form, }                   
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
