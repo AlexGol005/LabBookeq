@@ -90,8 +90,8 @@ class CompanyProfileView(LoginRequiredMixin, TemplateView):
         return context
 
 
-
-def CompanyUpdateView(request, str):
+@login_required
+def CompanyUpdateView(request):
     """выводит форму для обновления данных о компании"""
     ruser = request.user
     if ruser.has_perm('equipment.add_equipment') or ruser.is_superuser:
