@@ -101,7 +101,7 @@ def CompanyUpdateView(request):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                return redirect('companyupdate')
+                return redirect('companyprofile')
         else:
             form = CompanyCreateForm(instance=Company.objects.get(userid=ruser.profile.userid))
         data = {'form': form,}               
