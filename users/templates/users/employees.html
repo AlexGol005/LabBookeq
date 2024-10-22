@@ -4,9 +4,18 @@
 {% endblock %}
 
 {% block content %}
- <div class="col-8">
+  <div class="col-8">
+      
      <center><h5>Сотрудники компании {{ company.name }}</h5></center> 
      <br>
+      
+     {% if USER  %}    
+        <center>
+            <a href="{% url 'employeereg' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:60%"> Добавить сотрудника </a>
+        </center>
+        <br>
+     {% endif %}
+      
      <table class="table table-bordered flexy">
        <tr><th>ФИО</th><th>Должность</th><th> Ред </th></tr>
        {% for e in employees %}
@@ -17,10 +26,6 @@
         </tr>
        {% endfor %}
      </table>
-
-         
-
-
 <br>
 </div>
 {% endblock %}
