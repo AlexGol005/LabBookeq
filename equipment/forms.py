@@ -1090,7 +1090,7 @@ class OrderTEUdateForm(forms.ModelForm):
 class PersonchangeForm(forms.ModelForm):
     """форма для смены ответственного за ЛО"""
     person = forms.ModelChoiceField(label='Ответственный за ЛО',
-                                    queryset=User.objects.all(),
+                                    queryset=Employees.objects.filter(userid__userid=ruser),
                                     widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
