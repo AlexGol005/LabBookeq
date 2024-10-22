@@ -61,9 +61,9 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         except:
             context['USER'] = False
         # employees = Employees.objects.filter(userid=user.profile.userid)
-        # company = Company.objects.get(userid=user.profile.userid)
+        company = Company.objects.get(userid=user.profile.userid)
         employees = Employees.objects.all()
-        company = Company.objects.all()
+        # company = Company.objects.all()
         context['employees'] = employees
         context['company'] = company 
             
