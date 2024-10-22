@@ -5,7 +5,7 @@
 
 {% block content %}
  <div class="col-8">
-     <h2>Данные компании {{ company.name }}</h2> 
+     <h5>Данные компании {{ company.name }}</h5> 
      <table class="table table-bordered">
        <tr><th>Идентификатор</th><td>{{ company.userid }}</td></tr>
        <tr><th>Название</th><td>{{ company.name }}</d></tr>
@@ -21,6 +21,8 @@
        <tr><th>ФИО главного лица лаборатории</th><td>{{ company.headlab_name  }}</td></tr>
        <tr><th>email</th><td>{{ company.email  }}</td></tr>
        <tr><th>Данные аттестата аккредитации</th><td>{{ company.attestat|default:" "}}</td></tr>
+     </table>
+
          
 
 
