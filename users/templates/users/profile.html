@@ -9,14 +9,15 @@
     <div class="media text-muted pt-3">
         <img class="bd-placeholder-img mr-2 rounded" width=30% height=30% src="{{ user.profile.img.url }}">
         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <b>ID организации:  </b> {{ user.userid }}
+            <b>ID организации:  </b> {{ user.profile.userid }}
             <b>Название организации:  </b> {{ user.userid }}
             <hr>
-            <h6>Данные учетной записи</h6>
+        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <b>Данные учетной записи</b>
             <b>Логин:  </b> {{ user.username }}
-            <b>Имя:  </b> {{ user.name }}
+            <b>Имя:  </b> {{ user.profile.name }}
             {% if user.position %}
-            <b>Должность:  </b> {{ user.position }}
+            <b>Должность:  </b> {{ user.profile.position }}
             {% endif %}
             
             
