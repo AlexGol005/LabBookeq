@@ -147,7 +147,7 @@ def EmployeeUpdateView(request, str):
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
-        return redirect('employeesupdate')
+        return redirect('employees')
 
 # def register(request):
 #     if request.method == "POST":
