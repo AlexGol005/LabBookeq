@@ -16,7 +16,7 @@
             <b>Данные учетной записи</b>
             <b>Логин:  </b> {{ user.username }}
             <b>Имя:  </b> {{ user.profile.name }}
-            {% if user.position %}
+            {% if user.profile.position  %}
             <b>Должность:  </b> {{ user.profile.position }}
             {% endif %}
             
