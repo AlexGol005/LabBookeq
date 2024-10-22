@@ -151,7 +151,7 @@ def EmployeeUpdateView(request, str):
 
 
 @login_required
-def EquipmentReg(request):
+def Employeereg(request):
     """выводит форму для регистрации  сотрудника"""
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
