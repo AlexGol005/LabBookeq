@@ -91,6 +91,30 @@ class CompanyProfileView(LoginRequiredMixin, TemplateView):
 
 
 
+def CompanyUpdateView(request, str):
+    """выводит форму для обновления данных о компании"""
+    ruser = request.user
+    if ruser.has_perm('equipment.add_equipment') or ruser.is_superuser:
+        if request.method == "POST":
+            form = CompanyCreateForm(request.POST, instance=Company.objects.get(userid=ruser.profile.userid)
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect('measurequipmentcharacterslist')
+        else:
+            form = CompanyCreateForm(instance=Company.objects.get(userid=ruser.profile.userid))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('equipment/reg.html')
+
+
+
+
+
+
 # def register(request):
 #     if request.method == "POST":
 #         form = UserRegisterForm(request.POST)
