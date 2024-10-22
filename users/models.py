@@ -30,7 +30,7 @@ class Profile(models.Model):
 
 
 class Company(models.Model):
-    userid = models.CharField('Идентификатор организации (10 случайных цифр)', max_length=50, default=None, null=True, blank=True)
+    userid = models.CharField('Идентификатор организации (10 случайных цифр)', max_length=50, default=None, null=True, blank=True, unique=True)
     name = models.CharField('Название организации', max_length=100, default=None, null=True, blank=True)
     requisits =  models.TextField('Реквизиты организации', default=None, null=True, blank=True)
     adress =  models.TextField('Адрес организации юридический', max_length=100, default=None, null=True, blank=True)
