@@ -76,3 +76,38 @@ class ProfileUdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['img']
+
+
+
+class CpmpanyCreateForm(forms.ModelForm):
+    """форма для обновления профиля компании"""
+        name = forms.CharField(label='Название', widget=forms.TextInput(attrs={'class': 'form-control',}))
+        requisits = forms.CharField(label='Реквизиты', widget=forms.Textarea(attrs={'class': 'form-control',}))
+        adress = forms.CharField(label='Адрес юридический', widget=forms.Textarea(attrs={'class': 'form-control',}))
+        adress_lab = forms.CharField(label='Адрес физический', widget=forms.Textarea(attrs={'class': 'form-control',}))
+        phone = forms.CharField(label='Телефон', widget=forms.TextInput(attrs={'class': 'form-control',}))
+        phone_lab = forms.CharField(label='Телефон лаборатории', widget=forms.TextInput(attrs={'class': 'form-control',}))
+        direktor_position = forms.CharField(label='Должность главного лица компании', widget=forms.TextInput(attrs={'class': 'form-control',}))
+        direktor_name = forms.CharField(label='ФИО главного лица компании', widget=forms.TextInput(attrs={'class': 'form-control',}))
+        headlab_position = forms.CharField(label='Должность главного лица лаборатории', widget=forms.TextInput(attrs={'class': 'form-control',}))
+        headlab_name = forms.CharField(label='ФИО главного лица лаборатории', widget=forms.TextInput(attrs={'class': 'form-control',}))
+        email = forms.CharField(label='email', widget=forms.TextInput(attrs={'class': 'form-control',}))
+        attestat = forms.CharField(label='Данные аттестата аккредитации', widget=forms.Textarea(attrs={'class': 'form-control',}))
+                             
+
+    class Meta:
+        model = Company
+        fields = [
+                 'name', 
+                'requisits', 
+                'adress', 
+                'adress_lab',  
+                'phone',
+               ' phone_lab',
+                'direktor_position', 
+                'direktor_name', 
+                'headlab_position', 
+                'headlab_name', 
+                'email', 
+                'attestat', 
+                  ]
