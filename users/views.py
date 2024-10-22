@@ -62,7 +62,28 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             context['USER'] = False
         employees = Employees.objects.filter(userid__userid=user.profile.userid)
         company = Company.objects.get(userid=user.profile.userid)
-        # company = Company.objects.all()
+        context['employees'] = employees
+        context['company'] = company 
+            
+        return context
+
+
+
+class CompanyProfileView(LoginRequiredMixin, TemplateView):
+    """выводит страницу данных компании """
+    template_name = 'users/companyprofile.html'
+    def get_context_data(self, **kwargs):
+        context = super(CompanyProfileView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff or user.is_superuser:
+                context['USER'] = True
+            else:
+                context['USER'] = False
+        except:
+            context['USER'] = False
+        employees = Employees.objects.filter(userid__userid=user.profile.userid)
+        company = Company.objects.get(userid=user.profile.userid)
         context['employees'] = employees
         context['company'] = company 
             
