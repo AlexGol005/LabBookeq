@@ -35,14 +35,16 @@ class Company(models.Model):
     requisits =  models.TextField('Реквизиты организации', default=None, null=True, blank=True)
     adress =  models.TextField('Адрес организации юридический', max_length=100, default=None, null=True, blank=True)
     adress_lab =  models.TextField('Адрес лаборатории физический', max_length=100, default=None, null=True, blank=True)
-    phone =  models.TextField('Телефон организации юридический', max_length=15, default=None, null=True, blank=True)
-    phone_lab =  models.TextField('Телефон лаборатории', max_length=15, default=None, null=True, blank=True)
+    phone =  models.CharField('Телефон организации юридический', max_length=15, default=None, null=True, blank=True)
+    phone_lab =  models.CharField('Телефон лаборатории', max_length=15, default=None, null=True, blank=True)
     direktor_position = models.CharField('Должность главного лица компании', max_length=40, default=None, null=True, blank=True)
     direktor_name = models.CharField('ФИО главного лица компании', max_length=100, default=None, null=True, blank=True)
     headlab_position = models.CharField('Должность главного лица лаборатории', max_length=100, default=None, null=True, blank=True)
     headlab_name = models.CharField('ФИО главного лица лаборатории', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
+    attestat = models.CharField('Аттестат аккредитации', max_length=200, default=None, null=True, blank=True)
     pay = models.BooleanField ('Оплачено', default=True)
+    
 
     def __str__(self):
         return f'Организация: {self.userid}; {self.name}'
