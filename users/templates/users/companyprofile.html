@@ -1,1 +1,47 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Данные компании
+{% endblock %}
 
+{% block content %}
+ <div class="col-8">
+     <h2>Данные компании {{ company.name }}</h2> 
+     <table class="table table-bordered">
+       <tr>
+         <th>Идентификатор</th><td>{{ company.userid }}</d>
+         <th>Название</th><td>{{ company.name }}</d>
+         <th>Реквизиты</th><td>{{ company.requisits }}</d>
+         <th>Адрес юридический</th><td>{{ company.adress }}</d>
+         <th>Адрес физический</th><td>{{ company.adress_lab }}</d>
+         <th>Телефон лаборатории</th><td>{{ company.phone }}</d>
+         <th>Телефон</th><td>{{ company.phone_lab }}</d>
+         <th>Должность главного лица компании</th><td>{{ company.direktor_position  }}</d>
+         <th>ФИО главного лица компании</th><td>{{ company.direktor_position  }}</d>
+         <th>Должность главного лица компании</th><td>{{ company.direktor_name  }}</d>
+         <th>Должность главного лица лаборатории</th><td>{{ company.headlab_position  }}</d>
+         <th>ФИО главного лица лаборатории</th><td>{{ company.headlab_name  }}</d>
+         <th>email</th><td>{{ company.email  }}</d>
+         <th>Данные аттестата аккредитации</th><td>{{ company.attestat| default: "-"  }}</d>
+       
+    
+   
+    
+  
+    
+ 
+
+
+
+
+<!--       Кнопки                                                                                              -->
+
+            {% if USER  %}    
+             <br>
+
+                <center>
+                    <a href="{% url 'profileupdate' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:30%"> Смотреть и менять профиль организации </a>
+                    <a href="{% url 'profileupdate' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:30%"> Смотреть и менять список сотрудников </a>
+                </center>
+            {% endif %}
+</div>
+{% endblock %}
