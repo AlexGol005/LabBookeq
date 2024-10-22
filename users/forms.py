@@ -103,7 +103,7 @@ class CpmpanyCreateForm(forms.ModelForm):
                 'adress', 
                 'adress_lab',  
                 'phone',
-               ' phone_lab',
+                'phone_lab',
                 'direktor_position', 
                 'direktor_name', 
                 'headlab_position', 
