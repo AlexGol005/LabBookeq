@@ -97,7 +97,7 @@ def CompanyUpdateView(request):
     if ruser.has_perm('equipment.add_equipment') or ruser.is_superuser:
         if request.method == "POST":
             form = CompanyCreateForm(request.POST, instance=Company.objects.get(userid=ruser.profile.userid)
-            if form.is_valid():
+            if ruser:
                 order = form.save(commit=False)
                 order.save()
                 return redirect('measurequipmentcharacterslist')
