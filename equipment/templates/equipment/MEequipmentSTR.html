@@ -203,7 +203,6 @@
                 <th> Диапазон измерений</th>
                 <th> Класс точности, погрешность/неопределённость</th>
                 <th> Наименование определяемых характеристик продукции </th>
-                <th> Видеоинструкция </th>
              </tr>
         </thead>
         <tbody>
@@ -228,16 +227,7 @@
              </td>
             <td> {{ obj.charakters.measurydiapason }}</td>
             <td> {{ obj.charakters.accuracity }}</td>
-            <td>{{ obj.charakters.aim }}</td>
-             <td class="ind">
-             {% if obj.instruction %}
-              <a href="{{ obj.instruction}}"  target="blank" >
-             Ссылка на видео
-                  </a>
-             {% else  %}
-             видео отсутствует
-             {% endif %}
-             </td>
+            <td>{{ obj.charakters.aim| |default_if_none:' ' }}</td>
         </tr>
         </tbody>
     </table>
