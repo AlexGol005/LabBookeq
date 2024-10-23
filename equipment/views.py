@@ -810,7 +810,7 @@ def EquipmentUpdate(request, str):
         person = 1
     if request.user.has_perm('equipment.add_equipment') or request.user.is_supe or request.user == person:
         if request.method == "POST":
-            form = EquipmentUpdateForm(request.POST, request.FILES,  instance=Equipment.objects.get(exnumber=str))
+            form = EquipmentUpdateForm(request.POST,  instance=Equipment.objects.get(exnumber=str))
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
