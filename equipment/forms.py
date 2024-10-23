@@ -1092,14 +1092,13 @@ class PersonchangeForm(forms.ModelForm):
     def __init__(self, ruser, *args, **kwargs):
         super(PersonchangeForm, self).__init__(*args, **kwargs)
         self.fields['person'].queryset = Employees.objects.filter(userid__userid = ruser)
-
     
     class Meta:
         model = Personchange
         fields = [
             'person'
                   ]
-        widgets = ('person':forms.Select(attrs={'class': 'form-control'}),)
+        widgets = {'person':forms.Select(attrs={'class': 'form-control'}),}
 
 
     
