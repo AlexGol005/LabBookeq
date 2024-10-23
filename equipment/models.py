@@ -125,7 +125,7 @@ class VerificatorPerson(models.Model):
 
 class Rooms(models.Model):
     """Комнаты лаборатории/производства"""
-    roomnumber = models.CharField('Номер комнаты', max_length=100, default='', unique=True)
+    roomnumber = models.CharField('Номер комнаты', max_length=100, default='')
     person = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
 
@@ -133,6 +133,7 @@ class Rooms(models.Model):
         return self.roomnumber
 
     class Meta:
+        unique_together = ('roomnumber', 'pointer',)
         verbose_name = 'Комната'
         verbose_name_plural = 'Комнаты: список'
 
