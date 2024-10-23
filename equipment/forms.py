@@ -1115,7 +1115,7 @@ class RoomschangeForm(forms.ModelForm):
             'roomnumber'
                   ]
         widgets = {'roomnumber':forms.Select(attrs={'class': 'form-control'}),}
-        labels = {'title': 'название или номер помещения'}
+        labels = {'roomnumber': 'название или номер помещения'}
 
 
 
