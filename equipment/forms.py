@@ -831,14 +831,12 @@ class VerificatorPersonCreationForm(forms.ModelForm):
 class RoomsCreateForm(forms.ModelForm):
     """форма для внесения комнаты"""
     roomnumber = forms.CharField(label='Номер комнаты', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    person = forms.ModelChoiceField(label='Ответственный за комнату', required=False,
-                                    queryset=User.objects.all(),
-                                    widget=forms.Select(attrs={'class': 'form-control'}))
+
 
     class Meta:
         model = Rooms
         fields = [
-            'roomnumber', 'person'
+            'roomnumber'
                   ]
 
 
