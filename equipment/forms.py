@@ -1095,7 +1095,7 @@ class PersonchangeForm(forms.ModelForm):
     
     # person = forms.ModelChoiceField(label='Ответственный за ЛО', queryset = Employees.objects.all()
     #                                 widget=forms.Select(attrs={'class': 'form-control'}))
-
+    wigets = ('person': forms.Select(attrs={'class': 'form-control'}))
     class Meta:
         model = Personchange
         fields = [
