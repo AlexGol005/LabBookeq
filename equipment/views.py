@@ -374,7 +374,6 @@ class PersonchangeFormView(View):
         return render(request, template_name, context)
 
     def post(self, request, str, *args, **kwargs):
-        ruser=request.user.profile.userid
         form = PersonchangeForm(request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
@@ -387,10 +386,6 @@ class PersonchangeFormView(View):
                     return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
                 if order.equipment.kategory == 'ВО':
                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
-            else:
-                messages.success(request, f'Ошибка!')
-                return redirect(f'/equipment/measureequipment/{str}')
-
         else:
             messages.success(request, f'Раздел для ответственного за поверку приборов')
             return redirect(f'/equipment/measureequipment/{str}')
