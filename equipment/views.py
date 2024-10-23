@@ -364,10 +364,11 @@ class PersonchangeFormView(View):
         ruser=request.user.profile.userid
         title = 'Смена ответственного за прибор'
         dop = Equipment.objects.get(exnumber=str)
+        form =  PersonchangeForm(ruser, initial={'ruser': ruser,})
         context = {
             'title': title,
             'dop': dop,
-            'form': PersonchangeForm(ruser, initial={'ruser': ruser,}),
+            'form': form,
         }
         template_name = 'equipment/reg.html'
         return render(request, template_name, context)
@@ -386,6 +387,8 @@ class PersonchangeFormView(View):
                     return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
                 if order.equipment.kategory == 'ВО':
                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+            else:
+                return self.form_invalid(form)
         else:
             messages.success(request, f'Раздел для ответственного за поверку приборов')
             return redirect(f'/equipment/measureequipment/{str}')
