@@ -399,6 +399,7 @@ class ManufacturerRegView(SuccessMessageMixin, CreateView):
 def PersonchangeFormView(request, str):
     dop = Equipment.objects.get(exnumber=str)
     title = 'Смена ответственного за прибор'
+    ruser=request.user.profile.userid
     form = PersonchangeForm(ruser)
 
     
