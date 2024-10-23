@@ -358,41 +358,74 @@ class ManufacturerRegView(SuccessMessageMixin, CreateView):
         return context
 
 
-class PersonchangeFormView(View):
-    """вывод формы смены ответсвенного за прибор, URL=personchangereg/<str:str>/"""
+# class PersonchangeFormView(View):
+#     """вывод формы смены ответсвенного за прибор, URL=personchangereg/<str:str>/"""
     
-    def get(self, request, str):
-        ruser=request.user.profile.userid
-        title = 'Смена ответственного за прибор'
-        dop = Equipment.objects.get(exnumber=str)
-        form = PersonchangeForm(ruser)
-        context = {
+#     def get(self, request, str):
+#         ruser=request.user.profile.userid
+#         title = 'Смена ответственного за прибор'
+#         dop = Equipment.objects.get(exnumber=str)
+#         form = PersonchangeForm(ruser)
+#         context = {
+#             'title': title,
+#             'dop': dop,
+#             'form': PersonchangeForm({'ruser': ruser}),
+#             'ruser': ruser
+#         }
+#         template_name = 'equipment/reg.html'
+#         return render(request, template_name, context)
+
+#     def post(self, request, str, *args, **kwargs):
+#         ruser=request.user.profile.userid
+#         form = PersonchangeForm(request.POST)
+#         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+#             if form.is_valid():
+#                 order = form.save(commit=False)
+#                 order.equipment = Equipment.objects.get(exnumber=str)
+#                 order.save()
+#                 if order.equipment.kategory == 'СИ':
+#                     return redirect(f'/equipment/measureequipment/{str}')
+#                 if order.equipment.kategory == 'ИО':
+#                     return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+#                 if order.equipment.kategory == 'ВО':
+#                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+        
+#         else:
+#             messages.success(request, f'Раздел для ответственного за поверку приборов')
+#             return redirect(f'/equipment/measureequipment/{str}')
+
+
+
+def PersonchangeFormView(request, str):
+    dop = Equipment.objects.get(exnumber=str)
+
+    
+    project = Project.objects.get(id=id)
+    if request.POST:
+        form = PersonchangeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            if order.equipment.kategory == 'СИ':
+                return redirect(f'/equipment/measureequipment/{str}')
+            if order.equipment.kategory == 'ИО':
+                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+            if order.equipment.kategory == 'ВО':
+                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+            
+    org = ProjectCompany.objects.filter(project=project)
+    ruser=request.user.profile.userid
+    context = {
+        'form': DocumentForm(initial={'ruser': ruser,}),
             'title': title,
             'dop': dop,
-            'form': PersonchangeForm({'ruser': ruser}),
             'ruser': ruser
-        }
-        template_name = 'equipment/reg.html'
-        return render(request, template_name, context)
 
-    def post(self, request, str, *args, **kwargs):
-        ruser=request.user.profile.userid
-        form = PersonchangeForm(request.POST)
-        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.equipment = Equipment.objects.get(exnumber=str)
-                order.save()
-                if order.equipment.kategory == 'СИ':
-                    return redirect(f'/equipment/measureequipment/{str}')
-                if order.equipment.kategory == 'ИО':
-                    return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
-                if order.equipment.kategory == 'ВО':
-                    return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
-        
-        else:
-            messages.success(request, f'Раздел для ответственного за поверку приборов')
-            return redirect(f'/equipment/measureequipment/{str}')
+    }
+    
+    return render(request, template_name, context)
+
+
+
 
 
 class RoomschangeFormView(View):
