@@ -1108,15 +1108,16 @@ class PersonchangeForm(forms.ModelForm):
 
 class RoomschangeForm(forms.ModelForm):
     """форма для смены Размещения ЛО"""
-    roomnumber = forms.ModelChoiceField(label='Номер комнаты',
-                                        queryset=Rooms.objects.all(),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
+    def __init__(self, ruser, *args, **kwargs):
+        super(RoomschangeForm, self).__init__(*args, **kwargs)
+        self.fields['person'].queryset = Rooms.objects.filter(pointer = ruser)
 
     class Meta:
         model = Roomschange
         fields = [
             'roomnumber'
                   ]
+        widgets = {'roomnumber':forms.Select(attrs={'class': 'form-control'}),}
 
 
 
