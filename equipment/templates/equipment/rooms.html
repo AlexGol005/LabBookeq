@@ -17,13 +17,17 @@
      {% endif %}
       
      <table class="table table-bordered flexy">
-       {% for r in rooms %}
+       
         <tr>
               <th>Комната</th> <th>Ред.</th>
-              <td>{{ r.roomnumber }}</td> 
-              <td> <a href="{% url 'roomupdate' r.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>
         </tr>
-       {% endfor %}
+        {% for r in rooms %}
+        <tr>              
+            <td>{{ r.roomnumber }}</td> 
+            <td> <a href="{% url 'roomupdate' r.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>                
+        </tr>
+        {% endfor %}
+       
      </table>
 <br>
 </div>
