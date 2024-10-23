@@ -327,19 +327,6 @@ class ContactsVerregView(LoginRequiredMixin, CreateView):
                 return redirect(f'/equipment/testingequipment/attestation/{self.kwargs["str"]}')
 
 
-# class RoomsCreateView(SuccessMessageMixin, CreateView):
-#     """ выводит форму добавления помещения """
-#     template_name = URL + '/reg.html'
-#     form_class = RoomsCreateForm
-#     success_url = '/equipment/meteo/'
-#     success_message = "Помещение успешно добавлено"
-
-#     def get_context_data(self, **kwargs):
-#         context = super(RoomsCreateView, self).get_context_data(**kwargs)
-#         context['title'] = 'Добавить помещение'
-#         context['dopin'] = 'equipment/meteo/'
-#         return context
-
 @login_required
 def RoomsCreateView(request):
     """ выводит форму добавления помещения """
@@ -360,11 +347,6 @@ def RoomsCreateView(request):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
         return redirect('employees')
-
-
-
-
-
 
 
 class VerificatorsCreationView(SuccessMessageMixin, ListView):
@@ -458,61 +440,22 @@ class PersonchangeFormView(View):
                 if order.equipment.kategory == 'ВО':
                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
         else:
-            messages.success(request, f'Раздел для ответственного за поверку приборов')
-            return redirect(f'/equipment/measureequipment/{str}')
-
-
-
-# def PersonchangeFormView(request, str):
-#     dop = Equipment.objects.get(exnumber=str)
-#     title = 'Смена ответственного за прибор'
-#     ruser=request.user.profile.userid
-#     form = PersonchangeForm(ruser)   
-#     if request.POST:
-
-#         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-#             form = PersonchangeForm(request.POST)
-#             if form.is_valid():
-#                 order = form.save(commit=False)
-#                 order.equipment = Equipment.objects.get(exnumber=str)
-#                 order.save()
-#                 if order.equipment.kategory == 'СИ':
-#                     return redirect(f'/equipment/measureequipment/{str}')
-#                 if order.equipment.kategory == 'ИО':
-#                     return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
-#                 if order.equipment.kategory == 'ВО':
-#                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
-#         else:
-#             messages.success(request, f'Раздел для ответственного за поверку приборов')
-#             if order.equipment.kategory == 'СИ':
-#                 return redirect(f'/equipment/measureequipment/{str}')
-#             if order.equipment.kategory == 'ИО':
-#                 return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
-#             if order.equipment.kategory == 'ВО':
-#                 return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
-            
-    
-    # ruser=request.user.profile.userid
-    # context = {
-    #     'form': PersonchangeForm(ruser, initial={'ruser': ruser,}),
-    #         'title': title,
-    #         'dop': dop,
-    #         'ruser': ruser
-
-    # }
-    
-    # return render(request, 'equipment/reg.html', context)
-
-
-
+            messages.success(request, f'Раздел недоступен')
+            if order.equipment.kategory == 'СИ':
+                return redirect(f'/equipment/measureequipment/{str}')
+            if order.equipment.kategory == 'ИО':
+                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+            if order.equipment.kategory == 'ВО':
+                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
 
 class RoomschangeFormView(View):
     """вывод формы смены помещения, URL=roomschangereg/<str:str>/"""
     def get(self, request, str):
+        ruser=request.user.profile.userid
         title = 'Смена размещения прибора'
         dop = Equipment.objects.get(exnumber=str)
-        form = RoomschangeForm()
+        form =  RoomschangeForm(ruser, initial={'ruser': ruser,})
         context = {
             'title': title,
             'dop': dop,
@@ -522,7 +465,8 @@ class RoomschangeFormView(View):
         return render(request, template_name, context)
 
     def post(self, request, str, *args, **kwargs):
-        form = RoomschangeForm(request.POST)
+        ruser=request.user.profile.userid
+        form = RoomschangeForm(ruser, request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
@@ -534,6 +478,14 @@ class RoomschangeFormView(View):
                     return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
                 if order.equipment.kategory == 'ВО':
                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+        else:
+            messages.success(request, f'Раздел недоступен')
+            if order.equipment.kategory == 'СИ':
+                return redirect(f'/equipment/measureequipment/{str}')
+            if order.equipment.kategory == 'ИО':
+                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+            if order.equipment.kategory == 'ВО':
+                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
 
 # блок 5 - микроклимат: журналы, формы регистрации
