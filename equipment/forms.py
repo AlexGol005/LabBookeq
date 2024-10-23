@@ -344,7 +344,9 @@ class EquipmentUpdateForm(forms.ModelForm):
                                widget=forms.Select(attrs={'class': 'form-control'}))
     individuality = forms.CharField(label='Индивидуальные особенности прибора', max_length=10000, required=False,
                                     widget=forms.Textarea(attrs={'class': 'form-control'}))
-    notemaster = forms.CharField(label='Примечание (или временное предостережение)', max_length=10000, required=False,
+    notemaster = forms.CharField(label='Примечание (или временное предостережение для сотрудников)', max_length=10000, required=False,
+                                 widget=forms.Textarea(attrs={'class': 'form-control'}))
+    notemetrology = forms.CharField(label='Примечание о метрологическом обеспечении прибора (для вывода на странице поверок: телефоны поверителей и т.п.)', max_length=10000, required=False,
                                  widget=forms.Textarea(attrs={'class': 'form-control'}))
     pasport = forms.CharField(label='Паспорт', max_length=10000, required=False,
                               widget=forms.TextInput(attrs={'class': 'form-control',
@@ -352,7 +354,7 @@ class EquipmentUpdateForm(forms.ModelForm):
     instruction = forms.CharField(label='Основная инструкция по эксплуатации', max_length=10000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': 'добавьте ссылку на инструкцию'}))
-    pravo = forms.ImageField(label='Право владения', max_length=10000,  required=False)
+    pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)', max_length=10000,  required=False)
     invnumber = forms.CharField(label='Инвентарный номер', max_length=10000, initial='б/н', required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     repair = forms.CharField(label='Данные по ремонту', max_length=10000,  required=False,
@@ -365,7 +367,7 @@ class EquipmentUpdateForm(forms.ModelForm):
             'pasport', 'instruction',
             'pravo',
              'invnumber',
-            'repair'
+            'repair', 'notemetrology'
                   ]
 
 
