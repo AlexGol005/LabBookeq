@@ -1093,8 +1093,8 @@ class PersonchangeForm(forms.ModelForm):
         super(PersonchangeForm, self).__init__(*args, **kwargs)
         self.fields['person'].queryset = Employees.objects.all()
     
-    person = forms.ModelChoiceField(label='Ответственный за ЛО',
-                                    widget=forms.Select(attrs={'class': 'form-control'}))
+    # person = forms.ModelChoiceField(label='Ответственный за ЛО', queryset = Employees.objects.all()
+    #                                 widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Personchange
