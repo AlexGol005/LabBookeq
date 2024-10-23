@@ -821,8 +821,8 @@ def EquipmentUpdate(request, str):
                 if title.kategory == 'ВО':
                     return redirect(reverse('supequipment', kwargs={'str': str}))
         else:
-            form = EquipmentUpdateForm(request.POST, request.FILES,  instance=Equipment.objects.get(exnumber=str))
-        data = {'form': form, 'title': title
+            form = EquipmentUpdateForm(request.POST, instance=Equipment.objects.get(exnumber=str))
+        data = {'form': EquipmentUpdateForm(instance=Equipment.objects.get(exnumber=str)), 'title': title
                 }
         return render(request, 'equipment/Eindividuality.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_supe or not request.user == person:
