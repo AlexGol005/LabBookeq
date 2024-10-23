@@ -296,7 +296,7 @@ class EquipmentCreateForm(forms.ModelForm):
             'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status', 
             'new', 'invnumber', 'kategory', 'individuality', 'notemaster', 'price',
             'pasport', 'instruction',
-            'aim',  'aim2', 'notemetrology', 'repair', yearintoservice
+            'aim',  'aim2', 'notemetrology', 'repair', 'yearintoservice'
         ]
 
     def __init__(self, *args, **kwargs):
