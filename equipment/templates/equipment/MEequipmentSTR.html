@@ -252,12 +252,14 @@
             <tr>
                 <th> Стоимость, руб</th>
                 <th> Инвентарный № <br> (НЕ = внут.№) </th>
+                <th> Право владения прибором </th>
              </tr>
         </thead>
         <tbody>
         <tr>
             <td>{{ obj.equipment.price|default:" " }}</td>
             <td> {{ obj.equipment.invnumber|default:"б/н" }}</td>
+            <td> {{ obj.equipment.pravo|default:" " }}</td>
         </tr>
         </tbody>
     </table>
