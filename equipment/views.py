@@ -91,24 +91,7 @@ def EmployeeUpdateView(request, str):
 
 
 
-@login_required
-def Employeereg(request):
-    """выводит форму для регистрации  сотрудника"""
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        if request.method == "POST":
-            form = EmployeesUpdateForm(request.POST, request.FILES)
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.userid = Company.objects.get(userid=request.user.profile.userid)
-                order.save()
-                return redirect('employees')
-        else:
-            form = EmployeesUpdateForm()
-        data = {'form': form, }                   
-        return render(request, 'equipment/reg.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел недоступен')
-        return redirect('employees')
+
 
 
 
@@ -348,18 +331,43 @@ class ContactsVerregView(LoginRequiredMixin, CreateView):
                 return redirect(f'/equipment/testingequipment/attestation/{self.kwargs["str"]}')
 
 
-class RoomsCreateView(SuccessMessageMixin, CreateView):
-    """ выводит форму добавления помещения """
-    template_name = URL + '/reg.html'
-    form_class = RoomsCreateForm
-    success_url = '/equipment/meteo/'
-    success_message = "Помещение успешно добавлено"
+# class RoomsCreateView(SuccessMessageMixin, CreateView):
+#     """ выводит форму добавления помещения """
+#     template_name = URL + '/reg.html'
+#     form_class = RoomsCreateForm
+#     success_url = '/equipment/meteo/'
+#     success_message = "Помещение успешно добавлено"
 
-    def get_context_data(self, **kwargs):
-        context = super(RoomsCreateView, self).get_context_data(**kwargs)
-        context['title'] = 'Добавить помещение'
-        context['dopin'] = 'equipment/meteo/'
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super(RoomsCreateView, self).get_context_data(**kwargs)
+#         context['title'] = 'Добавить помещение'
+#         context['dopin'] = 'equipment/meteo/'
+#         return context
+
+@login_required
+def RoomsCreateView(request):
+    """ выводит форму добавления помещения """
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = RoomsCreateForm(request.POST, request.FILES)
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.pointer = request.user.profile.userid
+                order.save()
+                messages.success(request, "Помещение успешно добавлено")
+                return redirect('rooms')
+        else:
+            form = RoomsCreateForm()
+        data = {'form': form, }                   
+        return render(request, 'equipment/roomreg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('employees')
+
+
+
+
+
 
 
 class VerificatorsCreationView(SuccessMessageMixin, ListView):
