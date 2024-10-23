@@ -369,7 +369,7 @@ class PersonchangeFormView(View):
         context = {
             'title': title,
             'dop': dop,
-            'form': PersonchangeForm{'ruser': ruser}),
+            'form': PersonchangeForm({'ruser': ruser}),
             'ruser': ruser
         }
         template_name = 'equipment/reg.html'
