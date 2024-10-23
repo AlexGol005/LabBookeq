@@ -360,15 +360,17 @@ class ManufacturerRegView(SuccessMessageMixin, CreateView):
 
 class PersonchangeFormView(View):
     """вывод формы смены ответсвенного за прибор, URL=personchangereg/<str:str>/"""
+    
     def get(self, request, str):
         ruser=request.user.profile.userid
         title = 'Смена ответственного за прибор'
         dop = Equipment.objects.get(exnumber=str)
-        form = PersonchangeForm({'ruser': ruser})
+        form = PersonchangeForm()
         context = {
             'title': title,
             'dop': dop,
-            'form': form,
+            'form': PersonchangeForm{'ruser': ruser}),
+            'ruser': ruser
         }
         template_name = 'equipment/reg.html'
         return render(request, template_name, context)
@@ -387,6 +389,7 @@ class PersonchangeFormView(View):
                     return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
                 if order.equipment.kategory == 'ВО':
                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+        
         else:
             messages.success(request, f'Раздел для ответственного за поверку приборов')
             return redirect(f'/equipment/measureequipment/{str}')
