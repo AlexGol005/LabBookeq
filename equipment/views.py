@@ -822,7 +822,7 @@ def EquipmentUpdate(request, str):
                     return redirect(reverse('supequipment', kwargs={'str': str}))
         else:
             form = EquipmentUpdateForm(request.POST, request.FILES,  instance=Equipment.objects.get(exnumber=str))
-        data = {'form': form,
+        data = {'form': form, 'title': title
                 }
         return render(request, 'equipment/Eindividuality.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_supe or not request.user == person:
