@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Помещения
+{% endblock %}
+
+{% block content %}
+  <div class="col-8">
+      
+     <center><h5>Помещения компании {{ company.name }}</h5></center> 
+     <br>
+      
+     {% if USER  %}    
+        <center>
+            <a href="{% url 'roomreg' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:60%"> Добавить помещение </a>
+        </center>
+        <br>
+     {% endif %}
+      
+     <table class="table table-bordered flexy">
+       {% for r in rooms %}
+        <tr>
+              <td>{{ r.roomnumber }}</td>
+              <td> <a href="{% url 'roomupdate' e.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>
+        </tr>
+       {% endfor %}
+     </table>
+<br>
+</div>
+{% endblock %}
