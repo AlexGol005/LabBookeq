@@ -400,14 +400,23 @@ def PersonchangeFormView(request, str):
     dop = Equipment.objects.get(exnumber=str)
     title = 'Смена ответственного за прибор'
     ruser=request.user.profile.userid
-    form = PersonchangeForm(ruser)
-
-    
-   
+    form = PersonchangeForm(ruser)   
     if request.POST:
-        form = PersonchangeForm(request.POST)
-        if form.is_valid():
-            form.save()
+
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            form = PersonchangeForm(request.POST)
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipment = Equipment.objects.get(exnumber=str)
+                order.save()
+                if order.equipment.kategory == 'СИ':
+                    return redirect(f'/equipment/measureequipment/{str}')
+                if order.equipment.kategory == 'ИО':
+                    return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+                if order.equipment.kategory == 'ВО':
+                    return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+        else:
+            messages.success(request, f'Раздел для ответственного за поверку приборов')
             if order.equipment.kategory == 'СИ':
                 return redirect(f'/equipment/measureequipment/{str}')
             if order.equipment.kategory == 'ИО':
