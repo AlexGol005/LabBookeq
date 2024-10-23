@@ -1110,7 +1110,7 @@ class RoomschangeForm(forms.ModelForm):
     """форма для смены Размещения ЛО"""
     def __init__(self, ruser, *args, **kwargs):
         super(RoomschangeForm, self).__init__(*args, **kwargs)
-        self.fields['person'].queryset = Rooms.objects.filter(pointer = ruser)
+        self.fields['roomnumber'].queryset = Rooms.objects.filter(pointer = ruser)
 
     class Meta:
         model = Roomschange
