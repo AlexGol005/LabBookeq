@@ -1102,9 +1102,6 @@ class PersonchangeForm(forms.ModelForm):
         widgets = {'person':forms.Select(attrs={'class': 'form-control'}),}
 
 
-    
-    # person = forms.ModelChoiceField(label='Ответственный за ЛО', queryset = Employees.objects.all()
-    #                                 widget=forms.Select(attrs={'class': 'form-control'}))
 
 class RoomschangeForm(forms.ModelForm):
     """форма для смены Размещения ЛО"""
