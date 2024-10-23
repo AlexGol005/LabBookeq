@@ -1182,7 +1182,7 @@ class VerificationequipmentView(View):
 
     def post(self, request, str, *args, **kwargs):
         form = CommentsVerificationCreationForm(request.POST)
-        if request.user.is_supe:
+        if request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.author = request.user
