@@ -374,6 +374,7 @@ class PersonchangeFormView(View):
         return render(request, template_name, context)
 
     def post(self, request, str, *args, **kwargs):
+        ruser=request.user.profile.userid
         form = PersonchangeForm(ruser, request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
