@@ -61,7 +61,7 @@ class Employees(models.Model):
 
 
     def __str__(self):
-        return f'Сотрудник: {self.userid}; {self.name}'
+        return f'{self.name};{self.position};({self.userid.userid}) '
 
     class Meta:
         verbose_name = 'Сотрудники'
