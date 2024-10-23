@@ -415,7 +415,7 @@ def PersonchangeFormView(request, str):
             if order.equipment.kategory == 'ВО':
                 return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
             
-    org = ProjectCompany.objects.filter(project=project)
+    
     ruser=request.user.profile.userid
     context = {
         'form': DocumentForm(initial={'ruser': ruser,}),
