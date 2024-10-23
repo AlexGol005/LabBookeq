@@ -125,8 +125,9 @@ class VerificatorPerson(models.Model):
 
 class Rooms(models.Model):
     """Комнаты лаборатории/производства"""
-    roomnumber = models.CharField('Номер комнаты', max_length=10, default='', unique=True)
+    roomnumber = models.CharField('Номер комнаты', max_length=100, default='', unique=True)
     person = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
 
     def __str__(self):
         return self.roomnumber
@@ -166,7 +167,7 @@ class Equipment(models.Model):
     pravo = models.CharField('Право владения прибором (например, номер и дата накладной)', max_length=1000,  blank=True, null=True)
     aim = models.CharField('Предназначение', max_length=500, blank=True, null=True)                           
     aim2 = models.CharField('Наименование испытуемых групп объектов', max_length=500, blank=True, null=True)
-    pointer =  models.CharField('Указатель организации (ИНН_дата добавления ГГММДД)', max_length=500, blank=True, null=True)                       
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)                       
 
     def __str__(self):
         return f'{self.pointer}: {self.exnumber} - {self.lot}'
