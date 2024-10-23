@@ -286,7 +286,9 @@ class EquipmentCreateForm(forms.ModelForm):
     aim = forms.CharField(label='Предназначение', max_length=500, required=False)                           
     aim2 = forms.CharField(label='Наименование испытуемых групп объектов', max_length=500, required=False)
     notemetrology = forms.CharField(label='Примечание о метрологическом обеспечении прибора',  required=False)
-    repair = forms.CharField(label='Контакты для ремонта', max_length=1000,  required=False)
+    repair = forms.CharField(label='Контакты для ремонта', max_length=1000,  required=False)    
+    yearintoservice = forms.CharField(label='Год ввода в эксплуатацию', max_length=10000, initial=datetime.now().year,
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Equipment
@@ -294,7 +296,7 @@ class EquipmentCreateForm(forms.ModelForm):
             'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status', 
             'new', 'invnumber', 'kategory', 'individuality', 'notemaster', 'price',
             'pasport', 'instruction',
-            'aim',  'aim2', 'notemetrology', 'repair',
+            'aim',  'aim2', 'notemetrology', 'repair', yearintoservice
         ]
 
     def __init__(self, *args, **kwargs):
@@ -313,6 +315,7 @@ class EquipmentCreateForm(forms.ModelForm):
                 Column('new', css_class='form-group col-md-4 mb-0')),
             Row(
                 Column('status', css_class='form-group col-md-6 mb-0'),
+                Column('yearintoservice', css_class='form-group col-md-6 mb-0'),
                 ),
             Row(
                 Column('pasport', css_class='form-group col-md-12 mb-0')),
