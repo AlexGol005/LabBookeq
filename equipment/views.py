@@ -418,7 +418,7 @@ def PersonchangeFormView(request, str):
     
     ruser=request.user.profile.userid
     context = {
-        'form': DocumentForm(initial={'ruser': ruser,}),
+        'form': PersonchangeForm(initial={'ruser': ruser,}),
             'title': title,
             'dop': dop,
             'ruser': ruser
