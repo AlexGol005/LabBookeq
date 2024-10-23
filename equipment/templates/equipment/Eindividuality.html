@@ -6,15 +6,14 @@
 
 
 {% block content %}
-    <div style="text-align: center;"><h4>Особенности работы на ЛО:
-        <br> <a href="/equipment/measureequipment/{{ title.exnumber }}/">
-    {{ title.exnumber }}, {{title.measurequipment_set.all.last.charakters}}, зав. № {{title.lot}}  </a> </h4></div>
-    <br><br>
+    <div class="col-8"> 
+    <center>
     <form method="post" enctype="multipart/form-data" class="form-register">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-outline-warning" type="submit">Отправить</button>
+        <button class="btn btn-outline-prima" type="submit">Отправить</button>
     </form>
+    </center>
     <br>
 
 {% endblock %}
