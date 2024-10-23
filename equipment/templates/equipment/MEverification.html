@@ -98,9 +98,14 @@
     </form>
     </form>
     {#конец формы для комментария#}
-    
-    <br>
-
-  
+    <div style="text-align: center; margin-top: 20px">
+  <h6> Примечание о метрологическом обеспечении прибора (телефоны поверителей и так далее)</h6>
+        </div>
+    <div style="text-align: center; margin-top: 10px">
+    <table class="table table-bordered mt-2">
+        {{ title.notemetrology|default_if_none:' '}}
+            </table>
+        </div>
+ <br>  
 </div>
 {% endblock %}
