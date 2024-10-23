@@ -6,7 +6,12 @@
 
 
 {% block content %}
-    <div class="col-8"> 
+<center><h5>Обновление для ответственного за оборудование: 
+    <a href="/equipment/measureequipment/{{ title.exnumber }}/">
+        {{title.measurequipment_set.all.last.charakters}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+     </h5></center>
+     <br>
+    <div class="col-7"> 
     <center>
     <form method="post" enctype="multipart/form-data" class="form-register">
         {% csrf_token %}
