@@ -425,7 +425,7 @@ def PersonchangeFormView(request, str):
 
     }
     
-    return render(request, template_name, context)
+    return render(request, 'equipment/reg.html', context)
 
 
 
