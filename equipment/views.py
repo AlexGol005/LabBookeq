@@ -40,7 +40,7 @@ from equipment.forms import*
 from equipment.models import*
 from formstandart import YearForm
 from functstandart import get_dateformat
-from users.models import Profile
+from users.models import Profile, Company
 
 URL = 'equipment'
 now = date.today()
