@@ -51,6 +51,71 @@ now = date.today()
 #             return HttpResponseForbidden()
 #         return super(AuthenticatedMixin, self).dispatch(request, *args, **kwargs)
 
+
+class RoomsView(LoginRequiredMixin, TemplateView):
+    """выводит страницу комнат компании """
+    template_name = 'equipment/rooms.html'
+    def get_context_data(self, **kwargs):
+        context = super(RoomsView, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff or user.is_superuser:
+                context['USER'] = True
+            else:
+                context['USER'] = False
+        except:
+            context['USER'] = False
+        rooms = Rooms.objects.filter(pointer=user.profile.userid)
+        company = Company.objects.get(userid=user.profile.userid)
+        context['rooms'] = rooms
+        context['company'] = company 
+            
+        return context
+
+def EmployeeUpdateView(request, str):
+    """выводит форму для обновления данных о сотруднике"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = EmployeesUpdateForm(request.POST, instance=Employees.objects.get(pk=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect('employees')
+        else:
+            form = EmployeesUpdateForm(instance=Employees.objects.get(pk=str))
+        data = {'form': form,}                
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('employees')
+
+
+
+@login_required
+def Employeereg(request):
+    """выводит форму для регистрации  сотрудника"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = EmployeesUpdateForm(request.POST, request.FILES)
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.userid = Company.objects.get(userid=request.user.profile.userid)
+                order.save()
+                return redirect('employees')
+        else:
+            form = EmployeesUpdateForm()
+        data = {'form': form, }                   
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('employees')
+
+
+
+
+
+
+
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
 
 class ManagerEquipmentView(TemplateView):
