@@ -1092,16 +1092,19 @@ class PersonchangeForm(forms.ModelForm):
     def __init__(self, ruser, *args, **kwargs):
         super(PersonchangeForm, self).__init__(*args, **kwargs)
         self.fields['person'].queryset = Employees.objects.filter(userid__userid = ruser)
+
     
-    # person = forms.ModelChoiceField(label='Ответственный за ЛО', queryset = Employees.objects.all()
-    #                                 widget=forms.Select(attrs={'class': 'form-control'}))
-    widgets = ('person':forms.Select(attrs={'class': 'form-control'}),)
     class Meta:
         model = Personchange
         fields = [
             'person'
                   ]
+        widgets = ('person':forms.Select(attrs={'class': 'form-control'}),)
 
+
+    
+    # person = forms.ModelChoiceField(label='Ответственный за ЛО', queryset = Employees.objects.all()
+    #                                 widget=forms.Select(attrs={'class': 'form-control'}))
 
 class RoomschangeForm(forms.ModelForm):
     """форма для смены Размещения ЛО"""
