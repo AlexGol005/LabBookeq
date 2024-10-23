@@ -364,7 +364,7 @@ class PersonchangeFormView(View):
         ruser=request.user.profile.userid
         title = 'Смена ответственного за прибор'
         dop = Equipment.objects.get(exnumber=str)
-        form = PersonchangeForm()
+        form = PersonchangeForm({'ruser': ruser})
         context = {
             'title': title,
             'dop': dop,
