@@ -1091,7 +1091,7 @@ class PersonchangeForm(forms.ModelForm):
     """форма для смены ответственного за ЛО"""
     def __init__(self, ruser, *args, **kwargs):
         super(PersonchangeForm, self).__init__(*args, **kwargs)
-        self.fields['person'].queryset = Employees.objects.all()
+        self.fields['person'].queryset = Employees.objects.filter(userid__userid = '1111111111_240101')
     
     # person = forms.ModelChoiceField(label='Ответственный за ЛО', queryset = Employees.objects.all()
     #                                 widget=forms.Select(attrs={'class': 'form-control'}))
