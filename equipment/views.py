@@ -388,7 +388,9 @@ class PersonchangeFormView(View):
                 if order.equipment.kategory == 'ВО':
                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
             else:
-                return self.form_invalid(form)
+                messages.success(request, f'Ошибка!')
+                return redirect(f'/equipment/measureequipment/{str}')
+
         else:
             messages.success(request, f'Раздел для ответственного за поверку приборов')
             return redirect(f'/equipment/measureequipment/{str}')
