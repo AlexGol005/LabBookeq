@@ -283,8 +283,6 @@ class EquipmentCreateForm(forms.ModelForm):
                                                              'placeholder': '0000.00'}))
 
     pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)', max_length=1000,  required=False)
-    aim = forms.CharField(label='Предназначение', max_length=500, required=False)                           
-    aim2 = forms.CharField(label='Наименование испытуемых групп объектов', max_length=500, required=False)
     notemetrology = forms.CharField(label='Примечание о метрологическом обеспечении прибора',  required=False)
     repair = forms.CharField(label='Контакты для ремонта', max_length=1000,  required=False)    
     yearintoservice = forms.CharField(label='Год ввода в эксплуатацию', max_length=10000, initial=datetime.now().year,
@@ -296,7 +294,7 @@ class EquipmentCreateForm(forms.ModelForm):
             'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status', 
             'new', 'invnumber', 'kategory', 'individuality', 'notemaster', 'price',
             'pasport', 'instruction',
-            'aim',  'aim2', 'notemetrology', 'repair', 'yearintoservice'
+             'notemetrology', 'repair', 'yearintoservice'
         ]
 
     def __init__(self, *args, **kwargs):
@@ -325,10 +323,6 @@ class EquipmentCreateForm(forms.ModelForm):
                 Column('individuality', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('price', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('aim', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('aim2', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('notemetrology', css_class='form-group col-md-12 mb-0')),
             Row(
