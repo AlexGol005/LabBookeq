@@ -159,7 +159,7 @@ class Equipment(models.Model):
     kategory = models.CharField(max_length=300, choices=KATEGORY, default='Средство измерения', null=True,
                                 verbose_name='Категория')
     individuality = models.TextField('Индивидуальные особенности прибора',  blank=True, null=True)
-    notemaster = models.TextField('Примечание ответственного за прибор',  blank=True, null=True)
+    notemaster = models.TextField('Примечание (или временное предостережение для сотрудников)',  blank=True, null=True)
     notemetrology = models.TextField('Примечание о метрологическом обеспечении прибора',  blank=True, null=True)
     price = models.DecimalField('Стоимость', max_digits=100, decimal_places=2, null=True, blank=True)
     pasport = models.CharField('Ссылка на паспорт', max_length=1000,  blank=True, null=True)
@@ -205,6 +205,7 @@ class MeasurEquipmentCharakters(models.Model):
     traceability = models.TextField('Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)',
                                     default='', blank=True, null=True)
     aim = models.CharField('примечание', max_length=90, blank=True, null=True)
+    cod = models.CharField('виды измерений, тип (группа) средств измерений по МИ 2314' , max_length=200, blank=True, null=True)
                            
 
     def __str__(self):
