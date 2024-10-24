@@ -46,6 +46,7 @@
                 <th> Тип </th>
                 <th> Межпов. <br> интервал, <br>мес. </th>
                 <th> Диапазон измерений </th>
+                <th> По Ми 2314 </th>
 <!--                 <th> Ред </th> -->
              </tr>
         </thead>
@@ -58,6 +59,7 @@
             <td>{{ obj.typename }}</td>
             <td> {{ obj.calinterval }}</td>
             <td> {{ obj.measurydiapason }}</td>
+            <td> {{ obj.cod }}</td>
 <!--         <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> -->
         </tr>
         {% endfor %}
