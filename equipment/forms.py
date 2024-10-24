@@ -357,7 +357,7 @@ class EquipmentUpdateForm(forms.ModelForm):
     pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)', max_length=10000,  required=False)
     invnumber = forms.CharField(label='Инвентарный номер', max_length=10000, initial='б/н', required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
-    repair = forms.CharField(label='Данные по ремонту', max_length=10000,  required=False,
+    repair = forms.CharField(label='Контакты для ремонта', max_length=10000,  required=False,
                              widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
@@ -425,6 +425,9 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
                                    'эталону прослеживаются измерения)', required=False,
                                    widget=forms.Textarea(attrs={'class': 'form-control',
                                                                  'placeholder': ''}))
+    cod = forms.CharField(label='виды измерений, тип (группа) средств измерений по МИ 2314', required=False,
+                                   widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                 'placeholder': ''}))
 
     class Meta:
         model = MeasurEquipmentCharakters
@@ -487,6 +490,9 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             ),
             Row(
                 Column('traceability', css_class='form-group col-md-12 mb-0'),
+            ),
+            Row(
+                Column('cod', css_class='form-group col-md-12 mb-0'),
             ),
             Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
