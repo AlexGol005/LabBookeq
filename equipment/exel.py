@@ -1,3 +1,16 @@
+"""
+Модуль проекта LabJournal, приложения equipment.
+Приложение equipment это обширное приложение, включает все про лабораторное оборудование и лабораторные помещения
+Данный модуль exel.py выводит представления для выгрузки данных в формате exel.
+Список блоков:
+блок 1 блок получения констант
+блок 2 блок стили  для стилей полей документа exel
+блок 1 - выгрузка данных в формате ексель (вначале блока идет общий класс base_planreport_xls, который наследуется частными классами)
+блок 2 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки) 
+"""
+
+
+from django.http import HttpResponse, request
 from django.db.models import Max, Q, Value, CharField, Count, Sum
 from django.db.models.functions import Concat
 
@@ -15,14 +28,18 @@ from users.models import Profile, Company
 
 URL = 'equipment'
 now = date.today()
+ruser = 
 
-# блок 13 - выгрузка данных в формате ексель (списки приборов)
 
 
-# блок получения констант для блока 13 и блока 14
+
+# блок 1
+# блок получения констант для блока 1 и блока 2
+
 # для фильтрации кверисетов для выгрузок ексель. Так как нужно выбирать актуальные (последниие)
 # поверки/аттестации из их таблиц и подставлять их в таблицы СИ и ИО, при этом не теряя остальные поля,
 # поэтому просто группировка не подходит
+
 get_id_room = Roomschange.objects.select_related('equipment').values('equipment'). \
         annotate(id_actual=Max('id')).values('id_actual')
 list_ = list(get_id_room)
@@ -52,12 +69,190 @@ for n in list_:
     setatt.append(n.get('id_actual'))
 
 
-# флаг ексели отчёты и планы по приборам
-# Набор вьюшек для выгрузки планов и отчетов по оборудованию в exel
+# для для фильтрации из базы данных по ID компании (userid  или pointer)
+ruser=request.user.profile.userid
+
+# для выгрузки реквизитов организации
+company = Company.objects.get(userid=ruser)
+
+# шапка на документы "утверждаю"  генеральный директор
+affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+
+
+# блок 2
+# блок стили
+
+# al10 выравнивание по центру по горизонтали и по вертикали, обтекание wrap тип 1
+alg_hc_vc_w1 = Alignment()
+alg_hc_vc_w1.horz = Alignment.HORZ_CENTER
+alg_hc_vc_w1.vert = Alignment.VERT_CENTER
+alg_hc_vc_w1.wrap = 1
+
+# обкновенные границы ячеек
+b1 = Borders()
+b1.left = 1
+b1.right = 1
+b1.top = 1
+b1.bottom = 1
+
+
+# кажется двойные границы ячеек
+b2 = Borders()
+b2.left = 6
+b2.right = 6
+b2.bottom = 6
+b2.top = 6
+
+# style_headers  жирным шрифтом, с границами ячеек
+style_bold_borders = xlwt.XFStyle()
+style_bold_borders.font.bold = True
+style_bold_borders.font.name = 'Times New Roman'
+style_bold_borders.borders = b1
+style_bold_borders.alignment = alg_hc_vc_w1
+
+
+# style_plain обычные ячейки, с границами ячеек
+style_plain = xlwt.XFStyle()
+style_plain.font.name = 'Times New Roman'
+style_plain.borders = b1
+style_plain.alignment = alg_hc_vc_w1
+style_plain.font.height = 20 * size
+
+
+# style_date обычные ячейки с датами, с границами ячеек
+style_date = xlwt.XFStyle()
+style_date.font.name = 'Times New Roman'
+style_date.borders = b1
+style_date.alignment = alg_hc_vc_w1
+style_date.num_format_str = 'DD.MM.YYYY г'
+style_date.font.height = 20 * size
+
+
+
+
+
+
+al1 = Alignment()
+al1.horz = Alignment.HORZ_CENTER
+al1.vert = Alignment.VERT_CENTER
+
+al2 = Alignment()
+al2.horz = Alignment.HORZ_RIGHT
+al2.vert = Alignment.VERT_CENTER
+
+al20 = Alignment()
+al20.horz = Alignment.HORZ_RIGHT
+al20.vert = Alignment.VERT_CENTER
+al20.wrap = 1
+
+al3 = Alignment()
+al3.horz = Alignment.HORZ_LEFT
+al3.vert = Alignment.VERT_CENTER
+al3.wrap = 1
+
+al100 = Alignment()
+al100.horz = Alignment.HORZ_CENTER
+al100.vert = Alignment.VERT_CENTER
+al100.rota = Alignment.ROTATION_STACKED
+
+
+# обычные ячейки, с границами ячеек повернут на 90 градусов
+style_plain_90 = xlwt.XFStyle()
+style_plain_90.font.name = 'Times New Roman'
+style_plain_90.font.height = 20 * size
+style_plain_90.borders = b1
+style_plain_90.alignment = al100
+
+
+xlwt.easyxf('align: rotation 90')
+
+# обычные ячейки, с толстыми границами ячеек
+style_plain_bb = xlwt.XFStyle()
+style_plain_bb.font.name = 'Times New Roman'
+style_plain_bb.font.height = 20 * size
+style_plain_bb.borders = b2
+style_plain_bb.alignment = alg_hc_vc_w1
+
+
+
+# обычные ячейки, с границами ячеек, c форматом чисел '0.00'  == style4
+style_2dp = xlwt.XFStyle()
+style_2dp.font.name = 'Times New Roman'
+style_2dp.font.height = 20 * size
+style_2dp.borders = b1
+style_2dp.alignment = al1
+style_2dp.num_format_str = '0.00'
+
+# обычные ячейки, с границами ячеек, c форматом чисел '0.00000'  == style5
+style_5dp = xlwt.XFStyle()
+style_5dp.font.name = 'Times New Roman'
+style_5dp.font.height = 20 * size
+style_5dp.borders = b1
+style_5dp.alignment = al1
+style_5dp.num_format_str = '0.00000'
+
+# обычные ячейки, с границами ячеек, c форматом чисел '0.0000'
+style_4dp = xlwt.XFStyle()
+style_4dp.font.name = 'Times New Roman'
+style_4dp.font.height = 20 * size
+style_4dp.borders = b1
+style_4dp.alignment = al1
+style_4dp.num_format_str = '0.0000'
+
+# обычные ячейки, без границ  == style6
+style_plain_nobor = xlwt.XFStyle()
+style_plain_nobor.font.name = 'Times New Roman'
+style_plain_nobor.font.height = 20 * size
+style_plain_nobor.alignment = alg_hc_vc_w1
+
+# обычные ячейки, без границ  жирный шрифт размер больше на 1
+style_plain_nobor_bold = xlwt.XFStyle()
+style_plain_nobor_bold.font.bold = True
+style_plain_nobor_bold.font.name = 'Times New Roman'
+style_plain_nobor_bold.font.height = 20 * (size + 1)
+style_plain_nobor_bold.alignment = alg_hc_vc_w1
+
+# обычные ячейки, без границ, сдвинуто вправо  == style7
+style_plain_nobor_r = xlwt.XFStyle()
+style_plain_nobor_r.font.name = 'Times New Roman'
+style_plain_nobor_r.font.height = 20 * size
+style_plain_nobor_r.alignment = al20
+
+# обычные ячейки, без границ, сдвинуто влево
+style_plain_nobor_l = xlwt.XFStyle()
+style_plain_nobor_l.font.name = 'Times New Roman'
+style_plain_nobor_l.font.height = 20 * size
+style_plain_nobor_l.alignment = al3
+
+# обычные ячейки, без границ, сдвинуто влево, c датовым форматом
+style_plain_nobor_l_date = xlwt.XFStyle()
+style_plain_nobor_l_date.font.name = 'Times New Roman'
+style_plain_nobor_l_date.font.height = 20 * size
+style_plain_nobor_l_date.alignment = al3
+style_plain_nobor_l_date.num_format_str = 'DD.MM.YYYY г.'
+
+# обычные ячейки, с границами, сдвинуто вправо  == style7
+style_plain_r = xlwt.XFStyle()
+style_plain_r.font.name = 'Times New Roman'
+style_plain_r.font.height = 20 * size
+style_plain_r.alignment.wrap = 1
+
+pattern_black = xlwt.Pattern()
+pattern_black.pattern = xlwt.Pattern.SOLID_PATTERN
+pattern_black.pattern_fore_colour = 0
+
+# чёрные ячейки
+style_black = xlwt.XFStyle()
+style_black.pattern = pattern_black
+
+
+
+# блок 3 - выгрузка данных в формате ексель (списки приборов)
+# (Набор вьюшек для выгрузки планов и отчетов по оборудованию в exel
 # Так как планы и отчеты имеют сходную структуру. Они разделены на страницы для СИ, ИО, ВО,
 # а также на помесячные суммы, то
 # вначале идет общая базовая  функция.
-# В ней объединено все общее для всех планов и отчетов. Базовая функция  выполняется в индивидуальных функциях
+# В ней объединено все общее для всех планов и отчетов. Базовая функция  выполняется в индивидуальных функциях)
 
 
 def base_planreport_xls(request, exel_file_name,
@@ -67,47 +262,11 @@ def base_planreport_xls(request, exel_file_name,
                                str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE):
     """базовое шаблон представление для выгрузки планов и отчетов по СИ, ИО, ВО к которому обращаются частные представления"""
 
-    # для выгрузки реквизитов организации
-    company = CompanyCard.objects.get(pk=1)
-    affirmation = f'УТВЕРЖДАЮ \n{company.positionboss}\n{company.name}\n____________/{company.nameboss}/\n«__» ________20__ г.'
 
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="{exel_file_name}.xls"'
 
-    serdate = request.GET['date']
-    # стили
-    al10 = Alignment()
-    al10.horz = Alignment.HORZ_CENTER
-    al10.vert = Alignment.VERT_CENTER
-    al10.wrap = 1
-
-    b1 = Borders()
-    b1.left = 1
-    b1.right = 1
-    b1.top = 1
-    b1.bottom = 1
-
-    # заголовки жирным шрифтом, с границами ячеек
-    style_headers = xlwt.XFStyle()
-    style_headers.font.bold = True
-    style_headers.font.name = 'Times New Roman'
-    style_headers.borders = b1
-    style_headers.alignment = al10
-
-    # обычные ячейки, с границами ячеек
-    style_plain = xlwt.XFStyle()
-    style_plain.font.name = 'Times New Roman'
-    style_plain.borders = b1
-    style_plain.alignment = al10
-
-    # обычные ячейки с датами, с границами ячеек
-    style_date = xlwt.XFStyle()
-    style_date.font.name = 'Times New Roman'
-    style_date.borders = b1
-    style_date.alignment = al10
-    style_date.num_format_str = 'DD.MM.YYYY'
-
-
+   
     # добавляем книгу и страницы
     wb = xlwt.Workbook(encoding='utf-8')
     ws1 = wb.add_sheet(f'{str1}', cell_overwrite_ok=True)
@@ -251,7 +410,7 @@ def base_planreport_xls(request, exel_file_name,
 
     # запись заголовков СИ
     for col_num in range(len(columnsME)):
-        ws1.write(row_num, col_num, columnsME[col_num], style_headers)
+        ws1.write(row_num, col_num, columnsME[col_num], style_bold_borders)
         if 'Дата' in str(columnsME[col_num]) or 'дата' in str(columnsME[col_num]):
             datecolumnme.append(col_num)
 
@@ -306,7 +465,7 @@ def base_planreport_xls(request, exel_file_name,
 
     # запись заголовков ИО
     for col_num in range(len(columnsTE)):
-        ws2.write(row_num, col_num, columnsTE[col_num], style_headers)
+        ws2.write(row_num, col_num, columnsTE[col_num], style_bold_borders)
         if 'Дата' in str(columnsTE[col_num]) or 'дата' in str(columnsTE[col_num]):
             datecolumnte.append(col_num)
 
@@ -359,7 +518,7 @@ def base_planreport_xls(request, exel_file_name,
 
     # запись заголовков ВО
     for col_num in range(len(columnsHE)):
-        ws3.write(row_num, col_num, columnsHE[col_num], style_headers)
+        ws3.write(row_num, col_num, columnsHE[col_num], style_bold_borders)
         if 'Дата' in str(columnsHE[col_num]) or 'дата' in str(columnsHE[col_num]):
             datecolumnhe.append(col_num)
 
@@ -390,7 +549,7 @@ def base_planreport_xls(request, exel_file_name,
 
     # запись заголовков ПСИ
     for col_num in range(len(columns_month)):
-        ws4.write(row_num, col_num, columns_month[col_num], style_headers)
+        ws4.write(row_num, col_num, columns_month[col_num], style_bold_borders)
 
     # данные ПСИ и их запись
     rows = measure_e_months
@@ -405,7 +564,7 @@ def base_planreport_xls(request, exel_file_name,
 
     # запись заголовков ПИО
     for col_num in range(len(columns_month)):
-        ws5.write(row_num, col_num, columns_month[col_num], style_headers)
+        ws5.write(row_num, col_num, columns_month[col_num], style_bold_borders)
 
     # данные ПИО и их запись
     rows = testing_e_months
@@ -420,7 +579,7 @@ def base_planreport_xls(request, exel_file_name,
 
     # запись заголовков ПВО
     for col_num in range(len(columns_month)):
-        ws6.write(row_num, col_num, columns_month[col_num], style_headers)
+        ws6.write(row_num, col_num, columns_month[col_num], style_bold_borders)
 
     # данные ПВО и их запись
     rows = helping_e_months
@@ -1345,9 +1504,7 @@ def export_mecard_xls(request, pk):
 
 
 
-    al1 = Alignment()
-    al1.horz = Alignment.HORZ_CENTER
-    al1.vert = Alignment.VERT_CENTER
+
 
     b1 = Borders()
     b1.left = 1
@@ -1727,10 +1884,6 @@ def export_tecard_xls(request, pk):
 
 
 
-    al1 = Alignment()
-    al1.horz = Alignment.HORZ_CENTER
-    al1.vert = Alignment.VERT_CENTER
-
     b1 = Borders()
     b1.left = 1
     b1.right = 1
@@ -2079,30 +2232,30 @@ brd1.right = 1
 brd1.top = 1
 brd1.bottom = 1
 
-al1 = Alignment()
-al1.horz = Alignment.HORZ_CENTER
-al1.vert = Alignment.VERT_BOTTOM
+al_cb = Alignment()
+al_cb.horz = Alignment.HORZ_CENTER
+al_cb.vert = Alignment.VERT_BOTTOM
 
 style1 = xlwt.XFStyle()
 style1.font.bold = True
 style1.font.name = 'Calibri'
 style1.borders = brd1
-style1.alignment = al1
+style1.alignment = al_cb
 style1.alignment.wrap = 1
 
 style2 = xlwt.XFStyle()
 style2.font.name = 'Calibri'
 style2.borders = brd1
-style2.alignment = al1
+style2.alignment = al_cb
 
 style3 = xlwt.XFStyle()
 style3.font.name = 'Calibri'
-style3.alignment = al1
+style3.alignment = al_cb
 
 style4 = xlwt.XFStyle()
 style4.font.bold = True
 style4.font.name = 'Calibri'
-style4.alignment = al1
+style4.alignment = al_cb
 
 # флаг этикетки СИ
 def export_verificlabel_xls(request):
@@ -3902,158 +4055,8 @@ def export_exvercardteste_xls(request, pk):
 # Поэтому: для удобства стили все далаем заново. В лаббуке стили с такими же названиями вынесены в файл exelbase
 # но! кроме размера шрифта - он 11!
 
-# блок стилей
-al100 = Alignment()
-al100.horz = Alignment.HORZ_CENTER
-al100.vert = Alignment.VERT_CENTER
-al100.rota = Alignment.ROTATION_STACKED
-
-al10 = Alignment()
-al10.horz = Alignment.HORZ_CENTER
-al10.vert = Alignment.VERT_CENTER
-al10.wrap = 1
-
-al1 = Alignment()
-al1.horz = Alignment.HORZ_CENTER
-al1.vert = Alignment.VERT_CENTER
-
-al2 = Alignment()
-al2.horz = Alignment.HORZ_RIGHT
-al2.vert = Alignment.VERT_CENTER
-
-al20 = Alignment()
-al20.horz = Alignment.HORZ_RIGHT
-al20.vert = Alignment.VERT_CENTER
-al20.wrap = 1
-
-al3 = Alignment()
-al3.horz = Alignment.HORZ_LEFT
-al3.vert = Alignment.VERT_CENTER
-al3.wrap = 1
-
-b1 = Borders()
-b1.left = 1
-b1.right = 1
-b1.top = 1
-b1.bottom = 1
-
-b2 = Borders()
-b2.left = 6
-b2.right = 6
-b2.bottom = 6
-b2.top = 6
-
 # размер шрифта
 size = 11
-# заголовки жирным шрифтом, с границами ячеек
-style_headers = xlwt.XFStyle()
-style_headers.font.bold = True
-style_headers.font.name = 'Times New Roman'
-style_headers.font.height = 20 * size
-style_headers.borders = b1
-style_headers.alignment = al10
-
-# обычные ячейки, с границами ячеек
-style_plain = xlwt.XFStyle()
-style_plain.font.name = 'Times New Roman'
-style_plain.font.height = 20 * size
-style_plain.borders = b1
-style_plain.alignment = al10
-
-# обычные ячейки, с границами ячеек повернут на 90 градусов
-style_plain_90 = xlwt.XFStyle()
-style_plain_90.font.name = 'Times New Roman'
-style_plain_90.font.height = 20 * size
-style_plain_90.borders = b1
-style_plain_90.alignment = al100
-
-
-xlwt.easyxf('align: rotation 90')
-
-# обычные ячейки, с толстыми границами ячеек
-style_plain_bb = xlwt.XFStyle()
-style_plain_bb.font.name = 'Times New Roman'
-style_plain_bb.font.height = 20 * size
-style_plain_bb.borders = b2
-style_plain_bb.alignment = al10
-
-# обычные ячейки с датами, с границами ячеек == style3
-style_date = xlwt.XFStyle()
-style_date.font.name = 'Times New Roman'
-style_date.font.height = 20 * size
-style_date.borders = b1
-style_date.alignment = al10
-style_date.num_format_str = 'DD.MM.YYYY г'
-
-# обычные ячейки, с границами ячеек, c форматом чисел '0.00'  == style4
-style_2dp = xlwt.XFStyle()
-style_2dp.font.name = 'Times New Roman'
-style_2dp.font.height = 20 * size
-style_2dp.borders = b1
-style_2dp.alignment = al1
-style_2dp.num_format_str = '0.00'
-
-# обычные ячейки, с границами ячеек, c форматом чисел '0.00000'  == style5
-style_5dp = xlwt.XFStyle()
-style_5dp.font.name = 'Times New Roman'
-style_5dp.font.height = 20 * size
-style_5dp.borders = b1
-style_5dp.alignment = al1
-style_5dp.num_format_str = '0.00000'
-
-# обычные ячейки, с границами ячеек, c форматом чисел '0.0000'
-style_4dp = xlwt.XFStyle()
-style_4dp.font.name = 'Times New Roman'
-style_4dp.font.height = 20 * size
-style_4dp.borders = b1
-style_4dp.alignment = al1
-style_4dp.num_format_str = '0.0000'
-
-# обычные ячейки, без границ  == style6
-style_plain_nobor = xlwt.XFStyle()
-style_plain_nobor.font.name = 'Times New Roman'
-style_plain_nobor.font.height = 20 * size
-style_plain_nobor.alignment = al10
-
-# обычные ячейки, без границ  жирный шрифт размер больше на 1
-style_plain_nobor_bold = xlwt.XFStyle()
-style_plain_nobor_bold.font.bold = True
-style_plain_nobor_bold.font.name = 'Times New Roman'
-style_plain_nobor_bold.font.height = 20 * (size + 1)
-style_plain_nobor_bold.alignment = al10
-
-# обычные ячейки, без границ, сдвинуто вправо  == style7
-style_plain_nobor_r = xlwt.XFStyle()
-style_plain_nobor_r.font.name = 'Times New Roman'
-style_plain_nobor_r.font.height = 20 * size
-style_plain_nobor_r.alignment = al20
-
-# обычные ячейки, без границ, сдвинуто влево
-style_plain_nobor_l = xlwt.XFStyle()
-style_plain_nobor_l.font.name = 'Times New Roman'
-style_plain_nobor_l.font.height = 20 * size
-style_plain_nobor_l.alignment = al3
-
-# обычные ячейки, без границ, сдвинуто влево, c датовым форматом
-style_plain_nobor_l_date = xlwt.XFStyle()
-style_plain_nobor_l_date.font.name = 'Times New Roman'
-style_plain_nobor_l_date.font.height = 20 * size
-style_plain_nobor_l_date.alignment = al3
-style_plain_nobor_l_date.num_format_str = 'DD.MM.YYYY г.'
-
-# обычные ячейки, с границами, сдвинуто вправо  == style7
-style_plain_r = xlwt.XFStyle()
-style_plain_r.font.name = 'Times New Roman'
-style_plain_r.font.height = 20 * size
-style_plain_r.alignment.wrap = 1
-
-pattern_black = xlwt.Pattern()
-pattern_black.pattern = xlwt.Pattern.SOLID_PATTERN
-pattern_black.pattern_fore_colour = 0
-
-# чёрные ячейки
-style_black = xlwt.XFStyle()
-style_black.pattern = pattern_black
 
 def get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search):
 
@@ -4062,8 +4065,8 @@ def get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MO
         f'{equipment_type}'
     ]
     for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style_headers)
-        ws.merge(row_num, row_num, 0, 19, style_headers)
+        ws.write(row_num, col_num, columns[col_num], style_bold_borders)
+        ws.merge(row_num, row_num, 0, 19, style_bold_borders)
         ws.row(row_num).height_mismatch = True
         ws.row(row_num).height = 600
 
@@ -4619,12 +4622,12 @@ def export_maintenance_schedule_xls(request):
         'Примечание',
     ]
     for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style_headers)
-        ws.merge(row_num, row_num, 1, 2, style_headers)
-        ws.merge(row_num, row_num, 6, 8, style_headers)
-        ws.merge(row_num, row_num, 9, 11, style_headers)
-        ws.merge(row_num, row_num, 12, 14, style_headers)
-        ws.merge(row_num, row_num, 15, 17, style_headers)
+        ws.write(row_num, col_num, columns[col_num], style_bold_borders)
+        ws.merge(row_num, row_num, 1, 2, style_bold_borders)
+        ws.merge(row_num, row_num, 6, 8, style_bold_borders)
+        ws.merge(row_num, row_num, 9, 11, style_bold_borders)
+        ws.merge(row_num, row_num, 12, 14, style_bold_borders)
+        ws.merge(row_num, row_num, 15, 17, style_bold_borders)
 
 
     equipment_type = 'СИ'
@@ -4677,8 +4680,8 @@ def export_maintenance_schedule_xls(request):
         f'* Виды и периодичность технического обслуживания',
     ]
     for col_num in range(1, len(columns)-2):
-        ws.write(row_num, col_num, columns[col_num], style_headers)
-        ws.merge(row_num, row_num, 1, 17, style_headers)
+        ws.write(row_num, col_num, columns[col_num], style_bold_borders)
+        ws.merge(row_num, row_num, 1, 17, style_bold_borders)
         ws.row(row_num).height_mismatch = True
         ws.row(row_num).height = 600
 
@@ -4850,10 +4853,6 @@ def export_me_xls(request):
 
 
     # стили
-    al10 = Alignment()
-    al10.horz = Alignment.HORZ_CENTER
-    al10.vert = Alignment.VERT_CENTER
-    al10.wrap = 1
 
     b1 = Borders()
     b1.left = 1
@@ -4865,22 +4864,22 @@ def export_me_xls(request):
     style10.font.bold = True
     style10.font.name = 'Times New Roman'
     style10.borders = b1
-    style10.alignment = al10
+    style10.alignment = alg_hc_vc_w1
 
     style100 = xlwt.XFStyle()
     style100.font.bold = True
     style100.font.name = 'Times New Roman'
-    style100.alignment = al10
+    style100.alignment = alg_hc_vc_w1
 
     style20 = xlwt.XFStyle()
     style20.font.name = 'Times New Roman'
     style20.borders = b1
-    style20.alignment = al10
+    style20.alignment = alg_hc_vc_w1
 
     style30 = xlwt.XFStyle()
     style30.font.name = 'Times New Roman'
     style30.borders = b1
-    style30.alignment = al10
+    style30.alignment = alg_hc_vc_w1
     style30.num_format_str = 'DD.MM.YYYY'
 
     # название графика поверки, первый ряд
