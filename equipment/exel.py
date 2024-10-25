@@ -28,9 +28,6 @@ from users.models import Profile, Company
 
 URL = 'equipment'
 now = date.today()
-ruser = 
-
-
 
 
 # блок 1
@@ -77,6 +74,10 @@ company = Company.objects.get(userid=ruser)
 
 # шапка на документы "утверждаю"  генеральный директор
 affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+
+# подпись под документами
+author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
+
 
 
 # блок 2
@@ -126,10 +127,6 @@ style_date.borders = b1
 style_date.alignment = alg_hc_vc_w1
 style_date.num_format_str = 'DD.MM.YYYY г'
 style_date.font.height = 20 * size
-
-
-
-
 
 
 al1 = Alignment()
@@ -427,7 +424,7 @@ def base_planreport_xls(request, exel_file_name,
     # подпись СИ
     row_num += 2
     columns = [
-        f'Разработал: \n{company.positionmetrologequipment} _____________ /{company.namemetrologequipment}/'
+        author
     ]
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain_nobor_l)
@@ -482,7 +479,7 @@ def base_planreport_xls(request, exel_file_name,
     # подпись ИО
     row_num += 2
     columns = [
-        f'Разработал: \n{company.positionmetrologequipment} _____________ /{company.namemetrologequipment}/'
+        author
     ]
     for col_num in range(len(columns)):
         ws2.write(row_num, col_num, columns[col_num], style_plain_nobor_l)
@@ -535,7 +532,7 @@ def base_planreport_xls(request, exel_file_name,
     # подпись ВО
     row_num += 2
     columns = [
-        f'Разработал: \n{company.positionmetrologequipment} _____________ /{company.namemetrologequipment}/'
+        author
     ]
     for col_num in range(len(columns)):
         ws3.write(row_num, col_num, columns[col_num], style_plain_nobor_l)
