@@ -1,3 +1,6 @@
+from django.db.models import Max, Q, Value, CharField, Count, Sum
+from django.db.models.functions import Concat
+
 import pytils.translit
 from datetime import date
 import xlwt
