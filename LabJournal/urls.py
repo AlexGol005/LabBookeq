@@ -11,7 +11,7 @@ urlpatterns = [
     path('', include('main.urls')),
     path('', include('users.urls')),
     path('equipment/', include('equipment.urls')),
-    re_path('^', include('django.contrib.auth.urls')),
+    path('^', include('django.contrib.auth.urls')),
     path('postbox/', include('contact_form.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('articles/', include('blog.urls')),
