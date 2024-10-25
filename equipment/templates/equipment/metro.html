@@ -10,30 +10,29 @@
 <div class="col-8">  
         <br>
         <center>
-            <a href="{% url 'verificationlabels' %}" class="btn btn-warning mt-2 ml-2 mr-2"  style="width: 40%">Распечать этикетки на СИ и ИО</a>
-            <a href="{% url 'lasttenequipment' %}" class="btn btn-warning mt-2 ml-2 mr-2"  style="width: 40%">Список последних 10 добавленных приборов</a>
+            <a href="{% url 'verificationlabels' %}" class="btn btn-prima mt-2 ml-2 mr-2"  style="width: 30%">Распечать этикетки на СИ и ИО</a>
+            <a href="{% url 'lasttenequipment' %}" class="btn btn-prima mt-2 ml-2 mr-2"  style="width: 50%">Список последних 10 добавленных приборов</a>
         </center>
         <br>
         <hr>
         
         <div style="text-align: center; margin-top: 20px"><h5>Выгрузить в EXEL список СИ/ИО/ВО для поверки, аттестации, проверки</h5></div>        
-        <center>
+        <div style="text-align: center; margin-top: 10px "width: 100%"> 
             <form action="{% url 'export_mustver_xls' %}" target="blank" method="GET">
                 {% csrf_token %}
                 {% crispy form %}
             </form>
-        </center>
-        </div>
+        </div>  
         <hr>
 
         
-        <div style="text-align: center; margin-top: 20px"> <h6>Список СИ требующих поверки к указанной дате (чтобы отметить галочкой уже заказанную поверку в работе)</h6></div> 
-        <center>       
+        <div style="text-align: center; margin-top: 20px"><h5>Выгрузить в EXEL список СИ/ИО/ВО для поверки, аттестации, проверки</h5></div>        
+        <div style="text-align: center; margin-top: 10px "width: 100%">      
              <form action="{% url 'mustver' %}" target="blank" method="GET">
                 {% csrf_token %}
                 {% crispy form %}
             </form>
-        </center>
+        </div> 
         <hr>
 
 
