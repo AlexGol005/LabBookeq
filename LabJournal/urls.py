@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include, re-path
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from ajax_select import urls as ajax_select_urls
@@ -11,7 +11,7 @@ urlpatterns = [
     path('', include('main.urls')),
     path('', include('users.urls')),
     path('equipment/', include('equipment.urls')),
-    re-path('^', include('django.contrib.auth.urls')),
+    re_path('^', include('django.contrib.auth.urls')),
     path('postbox/', include('contact_form.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('articles/', include('blog.urls')),
