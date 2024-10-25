@@ -2,73 +2,79 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block title %}
-Метрологическое обеспечение
+    Метрологическое обеспечение ЛО
 {% endblock %}
 
 
 {% block content %}
-{#mr-5 mt-3#}
+<div class="col-8">  
+        <br>
+        <center>
+            <a href="{% url 'verificationlabels' %}" class="btn btn-warning mt-2 ml-2 mr-2"  style="width: 40%">Распечать этикетки на СИ и ИО</a>
+            <a href="{% url 'lasttenequipment' %}" class="btn btn-warning mt-2 ml-2 mr-2"  style="width: 40%">Список последних 10 добавленных приборов</a>
+        </center>
+        <br>
+        <hr>
+        
+        <div style="text-align: center; margin-top: 20px"><h5>Выгрузить в EXEL список СИ/ИО/ВО для поверки, аттестации, проверки</h5></div>        
+        <center>
+            <form action="{% url 'export_mustver_xls' %}" target="blank" method="GET">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </center>
+        </div>
+        <hr>
 
-<div style="text-align: center; margin-top: 20px">
-<a href="{% url 'verificationlabels' %}" class="btn btn-warning mt-2 ml-1 mr-1"  style="width: 210px">Распечать этикетки на СИ и ИО</a>
-<a href="{% url 'verificatorpersons' %}" class="btn btn-warning  mt-3 ml-1 mr-1" style="width: 210px" target="blank">
-Контакты <br> поверителей</a>
-<a href="{% url 'lasttenequipment' %}" class="btn btn-warning mt-3 ml-1 mr-1"  style="width: 210px">Список последних 10 добавленных приборов</a>
-</div>
-<br>
-<hr>
+        
+        <div style="text-align: center; margin-top: 20px"> <h6>Список СИ требующих поверки к указанной дате (чтобы отметить галочкой уже заказанную поверку в работе)</h6></div> 
+        <center>       
+             <form action="{% url 'mustver' %}" target="blank" method="GET">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </center>
+        <hr>
 
-<div style="text-align: center; margin-top: 20px">
-<h5>Выгрузить в EXEL список СИ/ИО/ВО для поверки, аттестации, проверки</h5>
-    <div style="text-align: center>
- <form action="{% url 'export_mustver_xls' %}" target="blank" method="GET">
-        {% csrf_token %}
-        {% crispy form %}
-    </form>
-</div>
-</div>
-<hr>
-<div style="text-align: center; margin-top: 20px">
-<h5>Список СИ требующих поверки к указанной дате (чтобы отметить галочкой уже заказанную поверку в работе)</h5>
- <form action="{% url 'mustver' %}" target="blank" method="GET">
-        {% csrf_token %}
-        {% crispy form %}
-    </form>
-</div>
-<br>
-<hr>
-<div style="text-align: center; margin-top: 20px">
-<h5>Список ИО требующих аттестации к указанной дате (чтобы отметить галочкой уже заказанную аттестацию в работе)</h5>
- <form action="{% url 'mustatt' %}" target="blank" method="GET">
-        {% csrf_token %}
-        {% crispy form %}
-    </form>
-</div>
-<br>
-<hr>
-<div style="text-align: center; margin-top: 20px">
-<h5>Неповеренные к указанной дате СИ</h5>
- <form action="{% url 'notver' %}" target="blank" method="GET">
-        {% csrf_token %}
-        {% crispy form %}
-    </form>
-</div>
-<br>
-<hr>
-<div style="text-align: center; margin-top: 20px">
-<h5>Неаттестованные к указанной дате ИО</h5>
- <form action="{% url 'notatt' %}" target="blank" method="GET">
-        {% csrf_token %}
-        {% crispy form %}
-    </form>
-</div>
-<br>
-<hr>
-<div style="text-align: center; margin-top: 20px">
-<h5>Список СИ для заказа взамен СИ с истёкшей поверкой</h5>
- <form action="{% url 'mustorder' %}" target="blank" method="GET">
-        {% csrf_token %}
-        {% crispy form %}
-    </form>
+
+        <div style="text-align: center; margin-top: 20px"><h6>Список ИО требующих аттестации к указанной дате (чтобы отметить галочкой уже заказанную аттестацию в работе)</h6></div> 
+        <center>
+            <form action="{% url 'mustatt' %}" target="blank" method="GET">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </center>
+        <hr>
+
+
+        <div style="text-align: center; margin-top: 20px"><h6>Неповеренные к указанной дате СИ</h6></div> 
+        <center>
+            <form action="{% url 'notver' %}" target="blank" method="GET">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </center>
+        <hr>
+
+
+        <div style="text-align: center; margin-top: 20px"><h6>Неаттестованные к указанной дате ИО</h6></div> 
+        <center>
+            <form action="{% url 'notatt' %}" target="blank" method="GET">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </center>
+        <hr>
+
+
+        <div style="text-align: center; margin-top: 20px"><h6>Список СИ для заказа взамен СИ с истёкшей поверкой</h6></div>
+        <center>
+            <form action="{% url 'mustorder' %}" target="blank" method="GET">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </center>
+
+
 </div>
 {% endblock %}
