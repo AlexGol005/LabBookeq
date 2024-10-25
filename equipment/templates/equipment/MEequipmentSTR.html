@@ -202,7 +202,7 @@
                 <th> Инструкция по эксплуатации</th>
                 <th> Диапазон измерений</th>
                 <th> Класс точности, погрешность/неопределённость</th>
-                <th> Наименование определяемых характеристик продукции </th>
+                <th> Виды измерений, тип (группа) средств измерений (по МИ 2314) </th>
              </tr>
         </thead>
         <tbody>
@@ -227,7 +227,7 @@
              </td>
             <td> {{ obj.charakters.measurydiapason }}</td>
             <td> {{ obj.charakters.accuracity }}</td>
-            <td>{{ obj.charakters.aim|default_if_none:' ' }}</td>
+            <td>{{ obj.charakters.cod|default_if_none:' ' }}</td>
         </tr>
         </tbody>
     </table>
