@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .exel import *
 
 urlpatterns = [
     path('rooms/', views.RoomsView.as_view(), name='rooms'),
