@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.db.models import Max
-from blog.models import *
+from .models import *
 
 class RegstrView(TemplateView):
     """ выводит отдельный пост """
