@@ -1832,7 +1832,7 @@ def export_mecard_xls(request, pk):
         'author',
     )
 
-     row_num = row_num_fix  
+    row_num = row_num_fix  
     for row in rows_1:
         row_num += 1
         for col_num in range(0, 1):
