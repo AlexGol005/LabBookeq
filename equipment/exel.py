@@ -70,7 +70,7 @@ for n in list_:
 # ruser=rquest.user.profile.userid
 
 # для выгрузки реквизитов организации
-company = Company.objects.get(userid=ruser)
+company = Company.objects.get(userid=request.user.profile.userid)
 
 # шапка на документы "утверждаю"  генеральный директор
 affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
