@@ -283,7 +283,7 @@ class EquipmentCreateForm(forms.ModelForm):
                                                              'placeholder': '0000.00'}))
 
     pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)', max_length=1000,  required=False,
-                            widget=forms.TextInput(attrs={'class': 'form-control',))
+                            widget=forms.TextInput(attrs={'class': 'form-control',})
     notemetrology = forms.CharField(label='Примечание о метрологическом обеспечении прибора',  required=False)
     repair = forms.CharField(label='Контакты для ремонта', max_length=1000,  required=False)    
     yearintoservice = forms.CharField(label='Год ввода в эксплуатацию', max_length=10000, initial=datetime.now().year,
