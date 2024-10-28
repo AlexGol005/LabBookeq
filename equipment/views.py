@@ -242,7 +242,7 @@ class HelpingEquipmentCharaktersView(ListView):
         return context
 
 
-class MeasurEquipmentView(ListView):
+class MeasurEquipmentView(LoginRequiredMixin, ListView):
     """Выводит список средств измерений"""
     template_name = URL + '/MEequipmentLIST.html'
     context_object_name = 'objects'
