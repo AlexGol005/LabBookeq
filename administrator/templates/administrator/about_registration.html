@@ -13,7 +13,7 @@
 
   <table class="table table-bordered">
         <tr>
-            <td>{{ obj.text }}</td>        
+            <td>{% autoescape off %}{{ obj.text }}{% endautoescape %}</td>        
         </tr>
     </table>
 
