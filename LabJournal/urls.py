@@ -15,6 +15,7 @@ urlpatterns = [
     path('postbox/', include('contact_form.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('articles/', include('blog.urls')),
+    path('org/', include('administrator.urls')),
 ]
 
 if settings.DEBUG:
