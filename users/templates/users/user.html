@@ -5,6 +5,7 @@
 
 
 {% block content %}
+<div class="col-8">
     <div style="text-align: center;"><h3>Страница авторизации</h3></div>
     <form method="post" class="form-register auth">
         {% csrf_token %}
@@ -13,5 +14,5 @@
         <button class="btn btn-outline-warning mt-2"><a href="{% url 'reg' %}" > Зарегистрироваться</a></button>
         <button class="btn btn-outline-warning mt-2"><a href="{% url 'password_reset' %}">Восстановление пароля</a></button>
     </form>
-
+</div>
 {% endblock %}
