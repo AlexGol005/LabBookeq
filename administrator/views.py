@@ -4,10 +4,10 @@ from .models import *
 
 class RegstrView(TemplateView):
     """ выводит отдельный пост """
-    model = Regstr
     template_name = 'administrator/about_registration.html'
-    context_object_name = 'obj'
 
-    def get_object(self, queryset=None):
-        return Regstr.objects.get(pk=1)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['obj'] = Regstr.objects.latest('date')
+        return context
 
