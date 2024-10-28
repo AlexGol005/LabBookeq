@@ -3194,11 +3194,11 @@ def export_exvercard_xls(request, pk):
     columns = [
         '',
         '',
-        f'{company.positionsupmen}',
+        f'{company.caretaker_position}',
         '',
-        f'{company.namesupmen}',
-        f'{company.namesupmen}',
-        f'{company.namesupmen}',
+        f'{company.caretaker_name}',
+        f'{company.caretaker_name}',
+        f'{company.caretaker_name}',
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
