@@ -9,5 +9,5 @@ class RegstrView(TemplateView):
     context_object_name = 'obj'
 
     def get_object(self, queryset=None):
-        return Regstr.objects.get(date=Max('date'))
+        return Regstr.objects.latest('date')
 
