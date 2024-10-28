@@ -1474,7 +1474,7 @@ def export_mecard_xls(request, pk):
     #             pytils.translit.translify(note.charakters.name) +\
     #             ' ' + pytils.translit.translify(note.equipment.lot)
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="{cardname}.xls"'
+    # response['Content-Disposition'] = f'attachment; filename="{cardname}.xls"'
 
     wb = xlwt.Workbook(encoding='utf-8')
 #     ws = wb.add_sheet('Основная информация', cell_overwrite_ok=True)
