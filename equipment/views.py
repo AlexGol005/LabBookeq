@@ -93,7 +93,7 @@ class MeteorologicalParametersView(ListView):
         return context
 
 
-class MetrologicalEnsuringView(TemplateView):
+class MetrologicalEnsuringView(LoginRequiredMixin, TemplateView):
     """Выводит заглавную страницу для Этикетки о поверке/аттестации и списки на поверку/аттестацию """
     template_name = URL + '/metro.html'
 
@@ -103,7 +103,7 @@ class MetrologicalEnsuringView(TemplateView):
         return context
 
 
-class ReportsView(TemplateView):
+class ReportsView(LoginRequiredMixin, TemplateView):
     """Выводит страницу с кнопками для вывода планов и отчётов по оборудованию"""
     template_name = URL + '/reports.html'
 
