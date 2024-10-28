@@ -3177,12 +3177,12 @@ def export_exvercard_xls(request, pk):
     columns = [
         '',
         '',
-        f'{company.positionbosslab}'
+        f'{company.headlab_position}'
         '',
         '',
-        f'{company.namebosslab}',
-        f'{company.namebosslab}',
-        f'{company.namebosslab}'
+        f'{company.headlab_name}',
+        f'{company.headlab_name}',
+        f'{company.headlab_name}'
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
