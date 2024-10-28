@@ -1467,19 +1467,19 @@ def export_meteo_xls(request, pk):
 
 # редакция
 
-def export_mecard_xls(request, pk):
-    '''представление для выгрузки карточки на прибор (СИ) в ексель'''
+# def export_mecard_xls(request, pk):
+#     '''представление для выгрузки карточки на прибор (СИ) в ексель'''
 
     # note = MeasurEquipment.objects.get(pk=pk)
     # cardname = pytils.translit.translify(note.equipment.exnumber) + ' ' +\
     #             pytils.translit.translify(note.charakters.name) +\
     #             ' ' + pytils.translit.translify(note.equipment.lot)
-    response = HttpResponse(content_type='application/ms-excel')
+    # response = HttpResponse(content_type='application/ms-excel')
     # response['Content-Disposition'] = f'attachment; filename="{cardname}.xls"'
-    response['Content-Disposition'] = f'attachment; filename="1.xls"'
-    wb = xlwt.Workbook(encoding='utf-8')
-    wb.save(response)
-    return response
+    # response['Content-Disposition'] = f'attachment; filename="1.xls"'
+    # wb = xlwt.Workbook(encoding='utf-8')
+    # wb.save(response)
+    # return response
 #     ws = wb.add_sheet('Основная информация', cell_overwrite_ok=True)
 
 #     ws.col(0).width = 2700
