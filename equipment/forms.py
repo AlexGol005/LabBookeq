@@ -327,7 +327,6 @@ class EquipmentCreateForm(forms.ModelForm):
                 Column('notemetrology', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('repair', css_class='form-group col-md-12 mb-0')),
-
             Row(Submit('submit', 'Записать', css_class='btn btn-primary col-md-11 mb-3 mt-4 ml-4')))
 
 
@@ -348,7 +347,8 @@ class EquipmentUpdateForm(forms.ModelForm):
     instruction = forms.CharField(label='Основная инструкция по эксплуатации', max_length=10000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': 'добавьте ссылку на инструкцию'}))
-    pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)', max_length=10000,  required=False)
+    pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)', max_length=10000,  required=False,
+                            widget=forms.TextInput(attrs={'class': 'form-control'}))
     invnumber = forms.CharField(label='Инвентарный номер', max_length=10000, initial='б/н', required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     repair = forms.CharField(label='Контакты для ремонта', max_length=10000,  required=False,
