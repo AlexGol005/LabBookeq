@@ -1478,12 +1478,11 @@ def export_mecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (СИ) в ексель'''
 
     note = MeasurEquipment.objects.get(pk=pk)
-    cardname = pytils.translit.translify(note.equipment.exnumber) + ' ' +\
+    cardname = pytils.translit.translify(note.equipment.exnumber[5]) + ' ' +\
                 pytils.translit.translify(note.charakters.name) +\
                 ' ' + pytils.translit.translify(note.equipment.lot)
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="{cardname}.xls"'
-    response['Content-Disposition'] = f'attachment; filename="1.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
 
     ws = wb.add_sheet('Основная информация', cell_overwrite_ok=True)
@@ -1561,7 +1560,7 @@ def export_mecard_xls(request, pk):
     #         ws.row(row_num).height_mismatch = True
     #         ws.row(row_num).height = 500
 
-    row_num = 4
+    row_num = 1
     columns = [
         'Регистрационная карточка на СИ и ИО'
     ]
@@ -1571,7 +1570,7 @@ def export_mecard_xls(request, pk):
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 500
 
-    row_num = 5
+    row_num += 1
     columns = [
         'Идентификационная и уникальная информация'
     ]
@@ -1581,7 +1580,7 @@ def export_mecard_xls(request, pk):
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 500
 
-    row_num = 7
+    row_num += 2
     columns = [
         'Внутренний номер',
         'Номер в госреестре',
@@ -1599,7 +1598,7 @@ def export_mecard_xls(request, pk):
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 1100
 
-    row_num = 8
+    row_num += 1
     columns = [
         note.equipment.exnumber,
         note.charakters.reestr,
@@ -1617,7 +1616,7 @@ def export_mecard_xls(request, pk):
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 1100
 
-    row_num = 9
+    row_num += 1
     columns = [
         'Расположение и комплектность'
     ]
@@ -1627,7 +1626,7 @@ def export_mecard_xls(request, pk):
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 500
 
-    row_num = 10
+    row_num += 1
     columns = [
         'Документы, комплектные принадлежности, программное обеспечение',
         'Документы, комплектные принадлежности, программное обеспечение',
@@ -1645,7 +1644,9 @@ def export_mecard_xls(request, pk):
         ws.merge(row_num, row_num, 5, 6, style2)
         ws.merge(row_num, row_num, 7, 9, style2)
 
-    row_num = 11
+    row_num += 1
+    row_num_fix = row_num
+
     columns = [
         'год появления',
         'наименование документа/комплектной принадлежности/ПО',
@@ -1697,7 +1698,7 @@ def export_mecard_xls(request, pk):
         ws.row(row_num).height = 500
     a = row_num
 
-    row_num = 11
+    row_num_fix
     for row in rows_2:
         row_num += 1
         for col_num in range(5, 7):
@@ -1707,7 +1708,7 @@ def export_mecard_xls(request, pk):
     b = row_num
 
 
-    row_num = 11
+    row_num_fix
     for row in rows_3:
         row_num += 1
         for col_num in range(7, 9):
@@ -1720,7 +1721,7 @@ def export_mecard_xls(request, pk):
     d = max(a, b, c)
 
 
-    row_num = 24
+    row_num += 15
     columns = [
         'Соответствие оборудования  установленным требованиям подтверждается протоколом верификации'
     ]
@@ -1747,7 +1748,7 @@ def export_mecard_xls(request, pk):
     ws1.footer_str = b' '
     ws1.start_page_number = 2
 
-    row_num = 4
+    row_num = 1
     columns = [
         'Особенности работы прибора',
         'Особенности работы прибора',
@@ -1767,7 +1768,7 @@ def export_mecard_xls(request, pk):
     ws1.row(row_num).height = 2000
 
 
-    row_num = 6
+    row_num += 2
     columns = [
         'Поверка',
         'Поверка',
@@ -1785,7 +1786,7 @@ def export_mecard_xls(request, pk):
         ws1.write(row_num, col_num, columns[col_num], style2)
         ws1.merge(row_num, row_num, 3, 7, style2)
 
-    row_num = 7
+    row_num += 1
     columns = [
         'Год',
         'Сведения о результатах поверки',
@@ -1839,7 +1840,7 @@ def export_mecard_xls(request, pk):
         ws1.row(row_num).height_mismatch = True
         ws1.row(row_num).height = 1500
 
-    row_num = 7
+    row_num += 1
     for row in rows_2:
         row_num += 1
         for col_num in range(3, 8):
