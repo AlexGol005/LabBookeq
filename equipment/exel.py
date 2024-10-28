@@ -1480,7 +1480,7 @@ b1 = Borders()
 b1.left = 1
 b1.right = 1
 b1.bottom = 1
- b1.top = 1
+b1.top = 1
 
 style1 = xlwt.XFStyle()
 style1.font.height = 9 * 20
