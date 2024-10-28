@@ -76,7 +76,7 @@ for n in list_:
 
 # блок 2
 # блок стили
-
+size = 11
 # al10 выравнивание по центру по горизонтали и по вертикали, обтекание wrap тип 1
 alg_hc_vc_w1 = Alignment()
 alg_hc_vc_w1.horz = Alignment.HORZ_CENTER
