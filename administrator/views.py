@@ -10,3 +10,4 @@ class RegstrView(TemplateView):
 
     def get_object(self, queryset=None):
         return Regstr.objects.get(date=Max('date'))
+
