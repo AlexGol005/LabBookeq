@@ -69,14 +69,8 @@ for n in list_:
 # для для фильтрации из базы данных по ID компании (userid  или pointer)
 # ruser=rquest.user.profile.userid
 
-# для выгрузки реквизитов организации
-company = Company.objects.get(userid=request.user.profile.userid)
 
-# шапка на документы "утверждаю"  генеральный директор
-affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
 
-# подпись под документами
-author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
 
 
 
@@ -694,7 +688,9 @@ def export_metroyearcust_xls(request):
 
     helping_e_months = []
     serdate = request.GET['date']
-    company = CompanyCard.objects.get(pk=1)
+    company = Company.objects.get(userid=request.user.profile.userid)
+    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     nameME = f'Средства измерений - отчет по поверке в {company.name} за {serdate} год'
     nameTE = f'Испытательное оборудование - отчет по аттестации в {company.name} за {serdate} год'
     nameHE = ''
@@ -807,7 +803,9 @@ def export_metroyearprice_xls(request):
 
     helping_e_months = []
     serdate = request.GET['date']
-    company = CompanyCard.objects.get(pk=1)
+    company = Company.objects.get(userid=request.user.profile.userid)
+    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     nameME = f'Средства измерений - отчет по поверке в {company.name} за {serdate} год (только те, где известна стоимость)'
     nameTE = f'Испытательное оборудование - отчет по аттестации в {company.name} за {serdate} год (только те, где известна стоимость)'
     nameHE = ''
@@ -891,7 +889,9 @@ def export_metroyear_xls(request):
 
     helping_e_months = []
     serdate = request.GET['date']
-    company = CompanyCard.objects.get(pk=1)
+    company = Company.objects.get(userid=request.user.profile.userid)
+    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     nameME = f'Средства измерений - отчет по поверке в {company.name} за {serdate} год (включая купленное с поверкой)'
     nameTE = f'Испытательное оборудование - отчет по аттестации в {company.name} за {serdate} год (включая купленное с аттестацией)'
     nameHE = ''
@@ -1013,7 +1013,9 @@ def export_metronewyear_xls(request):
         's2',
     )
     serdate = request.GET['date']
-    company = CompanyCard.objects.get(pk=1)
+    company = Company.objects.get(userid=request.user.profile.userid)
+    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     nameME = f'Средства измерений введенные в эксплуатацию в {company.name} за {serdate} год'
     nameTE = f'Испытательное оборудование введенное в эксплуатацию  в {company.name} за {serdate} год'
     nameHE = f'Вспомогательное оборудование введенное в эксплуатацию  в {company.name} за {serdate} год'
@@ -1115,7 +1117,9 @@ def export_planmetro_xls(request):
     )
     helping_e_months = []
     serdate = request.GET['date']
-    company = CompanyCard.objects.get(pk=1)
+    company = Company.objects.get(userid=request.user.profile.userid)
+    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     nameME = f'План поверки средств измерений в {company.name} на {serdate} год'
     nameTE = f'План аттестации испытательного оборудования в {company.name} за {serdate} год'
     nameHE = f'План проверки характеристик вспомогательного оборудования в {company.name} за {serdate} год'
@@ -1842,7 +1846,9 @@ def export_mecard_xls(request, pk):
 def export_tecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (ИО) в ексель'''
     note = TestingEquipment.objects.get(pk=pk)
-    company = CompanyCard.objects.get(pk=1)
+    company = Company.objects.get(userid=request.user.profile.userid)
+    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     cardname = pytils.translit.translify(note.equipment.exnumber) + ' ' +\
                 pytils.translit.translify(note.charakters.name) +\
                 ' ' + pytils.translit.translify(note.equipment.lot)
@@ -2255,6 +2261,9 @@ style4.alignment = al_cb
 def export_verificlabel_xls(request):
     '''представление для выгрузки этикеток для указания поверки и аттестации'''
     note = []
+    company = Company.objects.get(userid=request.user.profile.userid)
+    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     for n in (request.GET['n1'], request.GET['n2'],
               request.GET['n3'], request.GET['n4'],
               request.GET['n5'], request.GET['n6'],
@@ -2417,7 +2426,7 @@ def export_verificlabel_xls(request):
         if currentnote2.equipment.kategory == 'ИО':
             b = 'аттест-ю'
 
-        responser = f'Ответственный за {a} {"              "} {company. manager_name}'
+        responser = f'Ответственный за {a} {"              "} {company.manager_name}'
             
         row_num = 4 + j
         columns = [
@@ -2456,6 +2465,9 @@ def export_verificlabel_xls(request):
 def export_exvercard_xls(request, pk):
     '''представление для выгрузки протокола верификации СИ в ексель'''
     note = MeasurEquipment.objects.get(pk=pk)
+    company = Company.objects.get(userid=request.user.profile.userid)
+    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     try:
         room = Roomschange.objects.filter(equipment__exnumber=note.equipment.exnumber)
         room = room.last().roomnumber
@@ -3258,7 +3270,9 @@ def export_exvercard_xls(request, pk):
 def export_exvercardteste_xls(request, pk):
     '''представление для выгрузки протокола верификации ИО в ексель'''
     note = TestingEquipment.objects.get(pk=pk)
-    company = CompanyCard.objects.get(pk=1)
+    company = Company.objects.get(userid=request.user.profile.userid)
+    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     try:
         room = Roomschange.objects.filter(equipment__exnumber=note.equipment.exnumber)
         room = room.last().roomnumber
