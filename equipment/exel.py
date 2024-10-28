@@ -1469,7 +1469,7 @@ def export_meteo_xls(request, pk):
 
 def export_mecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (СИ) в ексель'''
-    note = MeasurEquipment.objects.get(pk=pk)
+    note = MeasurEquipment.objects.get(pk=7)
     cardname = pytils.translit.translify(note.equipment.exnumber) + ' ' +\
                 pytils.translit.translify(note.charakters.name) +\
                 ' ' + pytils.translit.translify(note.equipment.lot)
