@@ -43,6 +43,8 @@ class Company(models.Model):
     headlab_name = models.CharField('ФИО главного лица лаборатории', max_length=100, default=None, null=True, blank=True)
     manager_position = models.CharField('Должность лица ответственного за оборудование', max_length=100, default=None, null=True, blank=True)
     manager_name = models.CharField('ФИО лица ответственного за оборудование', max_length=100, default=None, null=True, blank=True)
+    caretaker_position = models.CharField('Должность завхоза', max_length=100, default=None, null=True, blank=True)
+    caretaker_name = models.CharField('ФИО завхоза', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
     attestat = models.CharField('Аттестат аккредитации', max_length=200, default=None, null=True, blank=True)
     pay = models.BooleanField ('Оплачено', default=True)
