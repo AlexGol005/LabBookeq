@@ -1,1 +1,26 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+     Регистрация
+{% endblock %}
+
+
+{% block content %}
+<div class="col-8">    
+
+  <table class="table table-bordered">
+        <tr>
+            <td>{{ obj.text }}</td>        
+        </tr>
+    </table>
+
+    <center>
+        <a href="{% url 'contact_page' %}" class="btn btn-primary  mr-2 ml-2 mt-2 " style="width: 80%">Задать вопрос администрации сайта</a>
+    </center>
+  
+</div>
+{% endblock %}
 
