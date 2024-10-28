@@ -280,8 +280,8 @@ class EquipmentCreateForm(forms.ModelForm):
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
     price = forms.DecimalField(label='Стоимость', max_digits=10, decimal_places=2, required=False,
                                widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'placeholder': '0000.00'}))
-    pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)', max_length=1000,  required=False, widget=forms.TextInput(attrs={'class': 'form-control'})                            
+                                                             'placeholder': '0000.00'}))  
+    pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)',  required=False)
     notemetrology = forms.CharField(label='Примечание о метрологическом обеспечении прибора',  required=False)
     repair = forms.CharField(label='Контакты для ремонта', max_length=1000,  required=False)    
     yearintoservice = forms.CharField(label='Год ввода в эксплуатацию', max_length=10000, initial=datetime.now().year,
