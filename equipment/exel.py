@@ -1466,6 +1466,10 @@ def export_meteo_xls(request, pk):
     return response
 
 # редакция
+def export_mecard_xls(request, pk):
+        w = Workbook()
+        ws = w.add_sheet('xlwt was here')
+        w.save('mini.xls')
 
 # def export_mecard_xls(request, pk):
 #     '''представление для выгрузки карточки на прибор (СИ) в ексель'''
