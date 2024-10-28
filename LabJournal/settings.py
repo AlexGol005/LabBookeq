@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'blog',
     'ajax_select'
+    'administrator'
 ]
 
 
