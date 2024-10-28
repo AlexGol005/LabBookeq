@@ -67,7 +67,7 @@ for n in list_:
 
 
 # для для фильтрации из базы данных по ID компании (userid  или pointer)
-ruser=rquest.user.profile.userid
+# ruser=rquest.user.profile.userid
 
 # для выгрузки реквизитов организации
 company = Company.objects.get(userid=ruser)
