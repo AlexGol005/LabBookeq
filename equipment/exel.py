@@ -1350,7 +1350,7 @@ def export_mustver_xls(request):
                                )
 
 
-# блок 14 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки)
+# блок 4 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки)
 def export_meteo_xls(request, pk):
     '''представление для выгрузки журнала микроклимата'''
     serdate = request.GET['date']
@@ -1460,12 +1460,11 @@ def export_meteo_xls(request, pk):
     wb.save(response)
     return response
 
-
+# редакция
 
 def export_mecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (СИ) в ексель'''
     note = MeasurEquipment.objects.get(pk=pk)
-    company = CompanyCard.objects.get(pk=1)
     cardname = pytils.translit.translify(note.equipment.exnumber) + ' ' +\
                 pytils.translit.translify(note.charakters.name) +\
                 ' ' + pytils.translit.translify(note.equipment.lot)
@@ -1486,20 +1485,17 @@ def export_mecard_xls(request, pk):
     ws.col(8).width = 2000
     ws.col(9).width = 2000
 
-    Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
-    ws.insert_bitmap('logo.bmp', 0, 0)
+    # Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
+    # ws.insert_bitmap('logo.bmp', 0, 0)
     ws.left_margin = 0
     ws.header_str = b'&F c. &P  '
     ws.footer_str = b' '
     ws.start_page_number = 1
 
 
-
     pattern = xlwt.Pattern()
     pattern.pattern = xlwt.Pattern.SOLID_PATTERN
     pattern.pattern_fore_colour = 26
-
-
 
 
 
@@ -1667,7 +1663,7 @@ def export_mecard_xls(request, pk):
     rows_2 = Personchange.objects.filter(equipment=note.equipment). \
         values_list(
         'date',
-        'person__username',
+        'person__name',
     )
 
     rows_3 = Roomschange.objects.filter(equipment=note.equipment). \
@@ -1729,9 +1725,9 @@ def export_mecard_xls(request, pk):
     ws1.col(6).width = 14000
     ws1.col(7).width = 4000
 
-    Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
-    ws1.insert_bitmap('logo.bmp', 0, 0)
-    ws1.left_margin = 0
+    # Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
+    # ws1.insert_bitmap('logo.bmp', 0, 0)
+    # ws1.left_margin = 0
 
     ws1.header_str = b'&F c. &P  '
     ws1.footer_str = b' '
@@ -1866,8 +1862,8 @@ def export_tecard_xls(request, pk):
     ws.col(8).width = 2000
     ws.col(9).width = 2000
 
-    Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
-    ws.insert_bitmap('logo.bmp', 0, 0)
+    # Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
+    # ws.insert_bitmap('logo.bmp', 0, 0)
     ws.left_margin = 0
     ws.header_str = b'&F c. &P  '
     ws.footer_str = b' '
@@ -2047,7 +2043,7 @@ def export_tecard_xls(request, pk):
     rows_2 = Personchange.objects.filter(equipment=note.equipment). \
         values_list(
         'date',
-        'person__username',
+        'person__name',
     )
 
     rows_3 = Roomschange.objects.filter(equipment=note.equipment). \
@@ -2109,9 +2105,9 @@ def export_tecard_xls(request, pk):
     ws1.col(6).width = 14000
     ws1.col(7).width = 4000
 
-    Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
-    ws1.insert_bitmap('logo.bmp', 0, 0)
-    ws1.left_margin = 0
+    # Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
+    # ws1.insert_bitmap('logo.bmp', 0, 0)
+    # ws1.left_margin = 0
 
     ws1.header_str = b'&F c. &P  '
     ws1.footer_str = b' '
@@ -2258,7 +2254,6 @@ style4.alignment = al_cb
 def export_verificlabel_xls(request):
     '''представление для выгрузки этикеток для указания поверки и аттестации'''
     note = []
-    company = CompanyCard.objects.get(pk=1)
     for n in (request.GET['n1'], request.GET['n2'],
               request.GET['n3'], request.GET['n4'],
               request.GET['n5'], request.GET['n6'],
@@ -2421,18 +2416,20 @@ def export_verificlabel_xls(request):
         if currentnote2.equipment.kategory == 'ИО':
             b = 'аттест-ю'
 
+        responser = f'Ответственный за {a} {"              "} {company. manager_name}'
+            
         row_num = 4 + j
         columns = [
             '',
-            f'Ответственный за {a} {"              "} {company.namemetrologequipment}',
-            f'Ответственный за {a} {"              "} {company.namemetrologequipment}',
-            f'Ответственный за {a} {"              "} {company.namemetrologequipment}',
-            f'Ответственный за {a} {"              "} {company.namemetrologequipment}',
+            responser,
+            responser,
+            responser,
+            responser,
             ' ',
-            f'Ответственный за {b} {"              "} {company.namemetrologequipment}',
-            f'Ответственный за {b} {"              "} {company.namemetrologequipment}',
-            f'Ответственный за {b} {"              "} {company.namemetrologequipment}',
-            f'Ответственный за {b} {"              "} {company.namemetrologequipment}',
+            responser,
+            responser,
+            responser,
+            responser,
             ' ',
         ]
         for col_num in range(1, 5):
@@ -2458,7 +2455,6 @@ def export_verificlabel_xls(request):
 def export_exvercard_xls(request, pk):
     '''представление для выгрузки протокола верификации СИ в ексель'''
     note = MeasurEquipment.objects.get(pk=pk)
-    company = CompanyCard.objects.get(pk=1)
     try:
         room = Roomschange.objects.filter(equipment__exnumber=note.equipment.exnumber)
         room = room.last().roomnumber
@@ -2499,9 +2495,9 @@ def export_exvercard_xls(request, pk):
     ws.col(6).width = 3600
 
 
-    Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
-    ws.insert_bitmap('logo.bmp', 0, 0)
-    ws.left_margin = 0
+    # Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
+    # ws.insert_bitmap('logo.bmp', 0, 0)
+    # ws.left_margin = 0
     ws.header_str = b'  '
     ws.footer_str = b'c. &P '
     ws.start_page_number = 1
@@ -3242,11 +3238,11 @@ def export_exvercard_xls(request, pk):
     columns = [
         '',
         '',
-        f'{company.positionmetrologequipment}',
+        f'{company.manager_position}',
         '',
-        f'{company.namemetrologequipment}',
-        f'{company.namemetrologequipment}',
-        f'{company.namemetrologequipment}',
+        f'{company.manager_name}',
+        f'{company.manager_name}',
+        f'{company.manager_name}',
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
@@ -3301,8 +3297,8 @@ def export_exvercardteste_xls(request, pk):
     ws.col(6).width = 3600
 
 
-    Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
-    ws.insert_bitmap('logo.bmp', 0, 0)
+    # Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
+    # ws.insert_bitmap('logo.bmp', 0, 0)
     ws.left_margin = 0
     ws.header_str = b'  '
     ws.footer_str = b'c. &P '
@@ -3999,12 +3995,12 @@ def export_exvercardteste_xls(request, pk):
     columns = [
         '',
         '',
-        f'{company.positionbosslab}'
+        f'{company.headlab_position}'
         '',
         '',
-        f'{company.namebosslab}',
-        f'{company.namebosslab}',
-        f'{company.namebosslab}'
+        f'{company.headlab_name}',
+        f'{company.headlab_name}',
+        f'{company.headlab_name}'
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
@@ -4016,11 +4012,11 @@ def export_exvercardteste_xls(request, pk):
     columns = [
         '',
         '',
-        f'{company.positionsupmen}',
+        f'{company.caretaker_position}',
         '',
-        f'{company.namesupmen}',
-        f'{company.namesupmen}',
-        f'{company.namesupmen}',
+        f'{company.caretaker_name}',
+        f'{company.caretaker_name}',
+        f'{company.caretaker_name}',
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
@@ -4032,11 +4028,11 @@ def export_exvercardteste_xls(request, pk):
     columns = [
         '',
         '',
-        f'{company.positionmetrologequipment}',
+        f'{company.manager_position}',
         '',
-        f'{company.namemetrologequipment}',
-        f'{company.namemetrologequipment}',
-        f'{company.namemetrologequipment}',
+        f'{company.manager_name}',
+        f'{company.manager_name}',
+        f'{company.manager_name}',
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
@@ -4047,7 +4043,7 @@ def export_exvercardteste_xls(request, pk):
     wb.save(response)
     return response
 
-
+# блок 5 - ТОиР
 # Ниже будут быгрузки ексель для переноса в LabBook
 # Поэтому: для удобства стили все далаем заново. В лаббуке стили с такими же названиями вынесены в файл exelbase
 # но! кроме размера шрифта - он 11!
@@ -4069,7 +4065,7 @@ def get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MO
 
     for note in MODEL:
         try:
-            person = Personchange.objects.filter(equipment__pk=note.equipment.pk).order_by('pk').last().person.username
+            person = Personchange.objects.filter(equipment__pk=note.equipment.pk).order_by('pk').last().person.name
         except:
             person = 'Ответственный за метрологическое обеспечение'
 
@@ -4552,8 +4548,6 @@ def export_maintenance_schedule_xls(request):
     ws.col(19).width = 4000
 
     # шапка
-    company = CompanyCard.objects.get(pk=1)
-    affirmation = f'УТВЕРЖДАЮ \n{company.positionboss}\n{company.name}\n____________/{company.nameboss}/\n«__» ________20__ г.'
     row_num = 2
     columns = [
         '',
