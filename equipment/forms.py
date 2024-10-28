@@ -329,7 +329,7 @@ class EquipmentCreateForm(forms.ModelForm):
             Row(
                 Column('repair', css_class='form-group col-md-12 mb-0')),
 
-            Row(Submit('submit', 'Записать', css_class='btn  btn-primary col-md-11 mb-3 mt-4 ml-4')))
+            Row(Submit('submit', 'Записать', css_class='btn btn-primary col-md-11 mb-3 mt-4 ml-4')))
 
 
 class EquipmentUpdateForm(forms.ModelForm):
