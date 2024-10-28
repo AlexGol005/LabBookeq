@@ -67,7 +67,7 @@ for n in list_:
 
 
 # для для фильтрации из базы данных по ID компании (userid  или pointer)
-ruser=request.user.profile.userid
+ruser=rquest.user.profile.userid
 
 # для выгрузки реквизитов организации
 company = Company.objects.get(userid=ruser)
@@ -613,6 +613,7 @@ def export_metroyearcust_xls(request):
         annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName')). \
+        filter(equipment__pointer=request.profile.userid). \
         filter(equipment__personchange__in=setperson). \
         filter(equipment__roomschange__in=setroom). \
         filter(equipmentSM_ver__in=setver). \
