@@ -1478,7 +1478,7 @@ def export_mecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (СИ) в ексель'''
 
     note = MeasurEquipment.objects.get(pk=pk)
-    cardname = pytils.translit.translify(note.equipment.exnumber[5]) + ' ' +\
+    cardname = pytils.translit.translify(note.equipment.exnumber[:5]) + ' ' +\
                 pytils.translit.translify(note.charakters.name) +\
                 ' ' + pytils.translit.translify(note.equipment.lot)
     response = HttpResponse(content_type='application/ms-excel')
@@ -1501,7 +1501,7 @@ def export_mecard_xls(request, pk):
     # Image.open(company.imglogoadress_mini.path).convert("RGB").save('logo.bmp')
     # ws.insert_bitmap('logo.bmp', 0, 0)
     ws.left_margin = 0
-    ws.header_str = b'&F c. &P  '
+    ws.header_str = b'1'
     ws.footer_str = b' '
     ws.start_page_number = 1
 
@@ -1698,7 +1698,7 @@ def export_mecard_xls(request, pk):
         ws.row(row_num).height = 500
     a = row_num
 
-    row_num_fix
+    row_num = row_num_fix
     for row in rows_2:
         row_num += 1
         for col_num in range(5, 7):
@@ -1708,7 +1708,7 @@ def export_mecard_xls(request, pk):
     b = row_num
 
 
-    row_num_fix
+    row_num = row_num_fix
     for row in rows_3:
         row_num += 1
         for col_num in range(7, 9):
