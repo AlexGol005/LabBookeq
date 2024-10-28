@@ -1787,6 +1787,7 @@ def export_mecard_xls(request, pk):
         ws1.merge(row_num, row_num, 3, 7, style2)
 
     row_num += 1
+    row_num_fix=row_num
     columns = [
         'Год',
         'Сведения о результатах поверки',
@@ -1831,6 +1832,7 @@ def export_mecard_xls(request, pk):
         'author',
     )
 
+     row_num = row_num_fix  
     for row in rows_1:
         row_num += 1
         for col_num in range(0, 1):
