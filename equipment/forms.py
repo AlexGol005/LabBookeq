@@ -1013,7 +1013,7 @@ class CalibrationRegForm(forms.ModelForm):
     place = forms.ChoiceField(label='Место калибровки',
                               choices=CHOICESPLACE,
                               widget=forms.Select(attrs={'class': 'form-control'}))
-    cust = forms.BooleanField(label='Не оплачивалась', required=False, help_text='Например, если поверку оплачивал производитель')
+    cust = forms.BooleanField(label='Не оплачивалась', required=False, help_text='Например, если калибровку оплачивал производитель')
     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
                                    help_text='Укажите, если калибровкa не выгодна и вы покупаете замену',
                                    widget=forms.DateInput(
