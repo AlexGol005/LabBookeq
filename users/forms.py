@@ -93,6 +93,10 @@ class CompanyCreateForm(forms.ModelForm):
     headlab_name = forms.CharField(label='ФИО главного лица лаборатории', widget=forms.TextInput(attrs={'class': 'form-control',}))
     email = forms.CharField(label='email', widget=forms.TextInput(attrs={'class': 'form-control',}))
     attestat = forms.CharField(label='Данные аттестата аккредитации', required=False, widget=forms.Textarea(attrs={'class': 'form-control',}))
+    manager_position = forms.CharField(label='Должность лица ответственного за оборудование', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    manager_name = forms.CharField(label='ФИО лица ответственного за оборудованиеи', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    caretaker_position = forms.CharField(label='Должность завхоза', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    caretaker_name = forms.CharField(label='ФИО завхоза', widget=forms.TextInput(attrs={'class': 'form-control',}))
                              
 
     class Meta:
@@ -110,6 +114,10 @@ class CompanyCreateForm(forms.ModelForm):
                 'headlab_name', 
                 'email', 
                 'attestat', 
+                'manager_position',
+                'manager_name',
+                'caretaker_position',
+                'caretaker_name'            
                   ]
 
 
