@@ -2437,6 +2437,7 @@ def export_exvercard_xls(request, pk):
         usere = usere.last().person
         # position = usere.last().person.position
         usere = str(usere)
+        position = 1
         
         
     except:
