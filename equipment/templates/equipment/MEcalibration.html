@@ -14,10 +14,9 @@
      </h5></center>
      <br>
  
-    <center><h6> Межповерочный интервал {{ calinterval }} мес. </h6></center>
  
     {% if dateorder %}
-    <div style="text-align: center; margin-top: 20px; margin-bottom: 15px"><h5> Планируемая дата отправки на калибровку: {{ dateordercal|date:"m.Y"|default_if_none:" " }} </h5></div>
+    <div style="text-align: center; margin-top: 20px; margin-bottom: 15px"><h5> Планируемая дата отправки на калибровку: {{ dateorder|date:"m.Y"|default_if_none:" " }} </h5></div>
     {% endif %}
     {% if dateordernew %}
     <div style="text-align: center; margin-top: 20px; margin-bottom: 15px"><h5> Планируемая дата заказа замены: {{ dateordernew|date:"m.Y"|default_if_none:" " }} </h5></div>
@@ -35,8 +34,8 @@
     {%  endif %}
     {#конец таблицы для вывода комментария#}
     <div style="text-align: center; margin-top: 20px">
-            <a href="/equipment/measureequipment/verificationreg/{{ strreg }}/"  class="btn btn-info mt-2 mr-2 ml-2 mb-2">
-     Внести запись о поверке</a>
+            <a href="/equipment/measureequipment/calibrationreg/{{ strreg }}/"  class="btn btn-info mt-2 mr-2 ml-2 mb-2">
+     Внести запись о калибровке</a>
     </div>
     
      <center><h5>История поверок</h5></center>
