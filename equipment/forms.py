@@ -1015,7 +1015,7 @@ class CalibrationRegForm(forms.ModelForm):
                               widget=forms.Select(attrs={'class': 'form-control'}))
     cust = forms.BooleanField(label='Не оплачивалась', required=False, help_text='Например, если поверку оплачивал производитель')
     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
-                                   help_text='Укажите, если калибровкf не выгодна и вы покупаете замену',
+                                   help_text='Укажите, если калибровкa не выгодна и вы покупаете замену',
                                    widget=forms.DateInput(
                                                           attrs={'class': 'form-control', 'placeholder': ''}),
                                    input_formats=(
@@ -1024,7 +1024,7 @@ class CalibrationRegForm(forms.ModelForm):
                                                   '%m/%d/%y',
                                                   '%d.%m.%Y',
                                                    ))
-    extra = forms.CharField(label='Дополнительная информация/выписка из текущих сведений о калибровкt',
+    extra = forms.CharField(label='Дополнительная информация/выписка из текущих сведений о калибровкe',
                                   widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
 
     class Meta:
