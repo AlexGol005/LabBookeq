@@ -2566,7 +2566,7 @@ def export_exvercard_xls(request, pk):
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 500
 
-    row_num = 5
+    row_num = 1
     columns = [
         '1. Идентификационная и уникальная информация'
     ]
