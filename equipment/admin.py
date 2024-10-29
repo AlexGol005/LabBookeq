@@ -56,6 +56,13 @@ class VerificationequipmentAdmin(admin.ModelAdmin):
         'verificator': 'verificator_tag'
     })
 
+@admin.register(Calibrationequipment)
+class CalibrationequipmentAdmin(admin.ModelAdmin):
+
+    form = make_ajax_form(Calibrationequipment, {
+        'verificator': 'verificator_tag'
+    })
+
 
 # admin.site.register(Verificationequipment)
 
