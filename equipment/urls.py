@@ -25,6 +25,7 @@ urlpatterns = [
     path('measureequipment/<str:str>/metrologyindividuality/', views.EquipmentMetrologyUpdate, name='metrologyindividuality'),
     path('measureequipment/<str:str>/individuality/', views.EquipmentUpdate, name='measureequipmentind'),
     path('measureequipment/verification/<str:str>/', views.VerificationequipmentView.as_view(), name='measureequipmentver'),
+    path('measureequipment/calibration/<str:str>/', views.CalibrationequipmentView.as_view(), name='measureequipmentcal'),
     path('testingequipment/attestation/<str:str>/', views.AttestationequipmentView.as_view(), name='testingequipmentatt'),
     path('measureequipment/verificationreg/<str:str>/', views.VerificationReg, name='measureequipmentverificationreg'),
     path('measureequipment/calibrationreg/<str:str>/', views.CalibrationReg, name='measureequipmentcalibrationreg'),
