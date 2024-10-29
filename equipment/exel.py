@@ -2439,11 +2439,10 @@ def export_exvercard_xls(request, pk):
         
         
     except:
-        usere = Personchange.objects.filter(equipment__exnumber=note.equipment.exnumber)
-        usere = usere.last().person.name
-        position = usere.last().person.position
+        usere = ''
+        position = ''
     userelat = pytils.translit.translify(usere)
-    cardname = pytils.translit.translify(note.equipment.exnumber) + ' ' + pytils.translit.translify(note.equipment.lot)
+    cardname = pytils.translit.translify(str(note.equipment.exnumber)[:5]) + ' ' + pytils.translit.translify(note.equipment.lot)
     response = HttpResponse(content_type='application/ms-excel')
     filename = f"{userelat}_{cardname}"
     filename = str(filename)
