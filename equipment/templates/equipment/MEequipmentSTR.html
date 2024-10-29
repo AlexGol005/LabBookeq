@@ -153,6 +153,56 @@
     {# поверка кнопка3#}
      <a href="{% url 'verificationlabels' %}"  target="blank" class="btn btn-primary mt-2 ">
          Распечатать этикетку</a></div>
+
+    {#    калибровка #}
+    <div style="text-align: center; margin-top: 40px"><h4>
+    Калибровка </h4></div>
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Дата калибровки </th>
+                <th> Рекомендуемая дата калибровки до </th>
+                <th> Месяц заказа калибровки </th>
+                <th> Месяц заказа замены </th>
+                <th class="ind"> Ссылка на скан сертификата калибровки</th>
+                <th class="ind">  № сертификата калибровки</th>
+             </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ obj.equipmentSM_cal.last.date|date:'d.m.y'|default:" " }}</td>
+             <td> {{ obj.equipmentSM_cal.last.datedead|date:'d.m.y'|default:" " }}</td>
+             <td> {{ obj.equipmentSM_cal.last.dateorder|date:'m.Y'|default:" " }}</td>
+             <td> {{ obj.equipmentSM_cal.last.dateordernew|date:'m.Y'|default:" " }}</td>
+             <td class="ind">
+                 {% if obj.equipmentSM_cal.last.arshin %}
+                  <a href="{{ obj.equipmentSM_cal.last.arshin}}"  target="blank" >
+                 ссылка
+                      </a>
+                 {% else  %}
+                 отсутствует
+                 {% endif %}
+             </td>
+             <td> {{ obj.equipmentSM_cal.last.certnumber}}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    {# поверка кнопка1#}
+    <div style="text-align: center; margin-top: 10px">
+        {% if note %}
+     <a href="/equipment/measureequipment/verification/{{ obj.equipment.exnumber }}/"  class="btn btn-primary mt-2 mr-2">
+         Смотреть историю калибровок</a>
+        {% endif %}
+         <a href="/equipment/measureequipment/verificationreg/{{ obj.equipment.exnumber }}/"  class="btn btn-primary mt-2 mr-2">
+         Внести запись о калибровке</a>
+    {# поверка кнопка3#}
+     <a href="{% url 'verificationlabels' %}"  target="blank" class="btn btn-primary mt-2 ">
+         Распечатать этикетку</a></div>
+
+
+    
     {#расположение и комплектность#}
     <div style="text-align: center; margin-top: 40px"><h4>Расположение и комплекность </h4></div>
     <div style="text-align: center;">
