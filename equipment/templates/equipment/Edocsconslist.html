@@ -2,23 +2,24 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Документы и принадлежности
+    Документы и принадлежности
 {% endblock %}
 
 
 {% block content %}
-<div style="text-align: center;">
-
+<div class="col-8">
+<center>
+ 
  {% if title.kategory == 'СИ' %}
-    <div style="text-align: center;"><h4>Документы и принадлежности: <a href="/equipment/measureequipment/{{ title.exnumber }}/">
+    <div style="text-align: center;"><h4>Документы и принадлежности: <a href="/equipment/measureequipment/{{str(title.exnumber)[:5]}}/">
     {{ title.exnumber }}, {{title.measurequipment_set.all.last.charakters}}, зав. № {{title.lot}}  </a> </h4></div>
     <br><br>
     {% elif title.kategory == 'ИО' %}
-    <div style="text-align: center;"><h4>Документы и принадлежности: <a href="/equipment/testequipment/{{ title.exnumber }}/">
+    <div style="text-align: center;"><h4>Документы и принадлежности: <a href="/equipment/testequipment/{{ str(title.exnumber)[:5] }}/">
     {{ title.exnumber }}, {{title.testingequipment_set.all.last.charakters}}, зав. № {{title.lot}}  </a> </h4></div>
     <br><br>
     {% elif title.kategory == 'ВО' %}
-    <div style="text-align: center;"><h4>Документы и принадлежности: <a href="/equipment/helpequipment/{{ title.exnumber }}/">
+    <div style="text-align: center;"><h4>Документы и принадлежности: <a href="/equipment/helpequipment/{{ str(title.exnumber)[:5] }}/">
     {{ title.exnumber }}, {{title.measurequipment_set.all.last.charakters}}, зав. № {{title.lot}}  </a> </h4></div>
     <br><br>
     {% endif %}
@@ -43,12 +44,11 @@
 </tbody>
 </table>
 {# конец таблицы #}
-{% if  title.exnumber == 'Х001' %}
-<a href="{% url 'chromato' %}"  class="btn btn-warning mt-2">смотреть больше</a>
 {% endif %}
+ </center> 
 {#форма для внесения документа#}
   <br><br>
-<div style="text-align: center;">
+<center>
 <h5>Добавить</h5></div>
 <form method="post" enctype="multipart/form-data" class="form-register">
 {% csrf_token %}
@@ -56,5 +56,8 @@
 <button class="btn btn-outline-warning" type="submit">Записать</button>
 </form>
 {#конец формы#}
+ </center>
 <br>
+
+</div>
 {% endblock %}
