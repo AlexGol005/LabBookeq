@@ -55,6 +55,12 @@ CHOICESVERIFIC = (
         ('Спорный', 'Спорный'),
     )
 
+CHOICESCAL = (
+        ('Калиброван', 'Калиброван'),
+        ('Признан непригодным', 'Признан непригодным'),
+        ('Спорный', 'Спорный'),
+    )
+
 CHOICESATT = (
         ('Аттестован', 'Аттестован'),
         ('Признан непригодным', 'Признан непригодным'),
@@ -292,6 +298,9 @@ class MeasurEquipment(models.Model):
     newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
     newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
+    newcertnumbercal = models.CharField('Номер последнего сертификата калибровки', max_length=90, blank=True, null=True)
+    newdatecal = models.CharField('Дата последнего сертификата калибровки', blank=True, null=True, max_length=90)
+    newdatedeadcal = models.CharField('Дата окончания сертификата калибровки', blank=True, null=True, max_length=90)
     pointer =  models.CharField('Указатель организации (ИНН_дата добавления ГГММДД)', max_length=500, blank=True, null=True) 
 
     def __str__(self):
@@ -469,6 +478,75 @@ class Verificationequipment(models.Model):
     class Meta:
         verbose_name = 'Средство измерения: поверка'
         verbose_name_plural = 'Средства измерения: поверки'
+
+
+class Calibrationequipment(models.Model):
+    """Калибровка СИ"""
+    equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
+                                    on_delete=models.PROTECT, related_name='equipmentSM_ver', blank=True, null=True)
+    date = models.DateField('Дата калибровки', blank=True, null=True)
+    datedead = models.DateField('Дата окончания калибровки', blank=True, null=True)
+    dateorder = models.DateField('Дата заказа следующей калибровки', blank=True, null=True)
+    arshin = models.TextField('Ссылка на скан сертификата', blank=True, null=True)
+    certnumber = models.CharField('Номер сертификата калибровки', max_length=90, blank=True, null=True)
+    certnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
+    price = models.DecimalField('Стоимость данной калибровки', max_digits=100, decimal_places=2, null=True, blank=True)
+    statusver = models.CharField(max_length=300, choices=CHOICESCAL, default='Калиброван', null=True,
+                                 verbose_name='Статус')
+    verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
+                                    verbose_name='Поверитель', blank=True, null=True)
+    verificatorperson = models.ForeignKey(VerificatorPerson, on_delete=models.PROTECT,
+                                          verbose_name='Поверитель имя', blank=True, null=True)
+    place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
+                             verbose_name='Место калибровки')
+    note = models.CharField('Примечание', max_length=900, blank=True, null=True)
+    year = models.CharField('Год калибровки (если нет точных дат)', max_length=900, blank=True, null=True)
+    dateordernew = models.DateField('Дата заказа нового оборудования (если калибровать не выгодно)',
+                                    blank=True, null=True)
+    haveorder = models.BooleanField(verbose_name='Заказана следующая калибровка (или новое СИ)', default=False,
+                                    blank=True)
+    cust = models.BooleanField(verbose_name='Калибровку организует Поставщик', default=False,
+                               blank=True)
+    extra = models.TextField('Дополнительная информация', blank=True, null=True)
+
+    def __str__(self):
+        try:
+            return f'Калибровка  вн № ' \
+               f'  {self.equipmentSM.equipment.exnumber} {self.equipmentSM.charakters.name} от {self.date} ' \
+                   f'до {self.datedead} {self.year}'
+        except:
+            return '&'
+
+    def get_absolute_url(self):
+        """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
+        return reverse('measureequipmentcal', kwargs={'str': self.equipmentSM.equipment.exnumber})
+
+    @staticmethod
+    def get_dateformat(dateneed):
+        dateformat = str(dateneed)
+        day = dateformat[8:]
+        month = dateformat[5:7]
+        year = dateformat[:4]
+        rdate = f'{day}.{month}.{year}'
+        return rdate
+
+    def save(self, *args, **kwargs):
+        super().save()
+        # добавляем последнюю калибровку к оборудованию
+        try:
+            note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
+            note.newcertnumbercal = self.certnumber
+            newdate = self.get_dateformat(self.date)
+            note.newdatecal = newdate
+            newdatedeadcal = self.get_dateformat(self.datedead)
+            note.newdatedeadcal = newdatedeadcal
+            note.save()
+        except:
+            pass
+
+    class Meta:
+        verbose_name = 'Средство измерения: калибровка'
+        verbose_name_plural = 'Средства измерения: калибровка'
 
 
 class Attestationequipment(models.Model):
