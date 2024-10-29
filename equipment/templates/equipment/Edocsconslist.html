@@ -14,11 +14,11 @@
             <br><br>
          {% elif title.kategory == 'ИО' %}
             <center><h4>Документы и принадлежности: <a href="/equipment/testequipment/{title.exnumber}/">
-            {{ str(title.exnumber)[:5] }}, {{title.testingequipment_set.all.last.charakters}}, зав. № {{title.lot}}  </a> </h4></center>
+            {{ title.exnumber }}, {{title.testingequipment_set.all.last.charakters}}, зав. № {{title.lot}}  </a> </h4></center>
             <br><br>
          {% elif title.kategory == 'ВО' %}
             <center><h4>Документы и принадлежности: <a href="/equipment/helpequipment/{title.exnumber}/">
-            {{ str(title.exnumber)[:5] }}, {{title.measurequipment_set.all.last.charakters}}, зав. № {{title.lot}}  </a> </h4></center>
+            {{ title.exnumber }}, {{title.measurequipment_set.all.last.charakters}}, зав. № {{title.lot}}  </a> </h4></center>
             <br><br>
          {% endif %}
          {#таблица #}
