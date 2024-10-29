@@ -967,6 +967,105 @@ class VerificationRegForm(forms.ModelForm):
             Submit('submit', 'Внести'))
 
 
+
+
+class CalibrationRegForm(forms.ModelForm):
+    """форма для внесения сведений о калибровке"""
+    date = forms.DateField(label='Дата калибровки',
+                           widget=forms.DateInput(
+                                                  attrs={'class': 'form-control', 'placeholder': ''}),
+                           input_formats=(
+                                          '%Y-%m-%d',  # '2006-10-25'
+                                          '%m/%d/%Y',  # '10/25/2006'
+                                          '%m/%d/%y',
+                                          '%d.%m.%Y',
+                                           ))
+    datedead = forms.DateField(label='Дата окончания калибровки рекомендуемая',
+                               widget=forms.DateInput(
+                                                      attrs={'class': 'form-control', 'placeholder': ''}),
+                               input_formats=(
+                                              '%Y-%m-%d',  # '2006-10-25'
+                                              '%m/%d/%Y',  # '10/25/2006'
+                                              '%m/%d/%y',
+                                              '%d.%m.%Y',
+                                              ))
+    dateorder = forms.DateField(label='Дата заказа калибровки', required=False,
+                                widget=forms.DateInput(
+                                                       attrs={'class': 'form-control', 'placeholder': ''}),
+                                input_formats=(
+                                               '%Y-%m-%d',  # '2006-10-25'
+                                               '%m/%d/%Y',  # '10/25/2006'
+                                               '%m/%d/%y',
+                                               '%d.%m.%Y',
+                                                ))
+    arshin = forms.CharField(label='Ссылка на скан сертификата', max_length=10000,
+                             required=False,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+    certnumber = forms.CharField(label='№ сертификата калибровки', max_length=10000,
+                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
+    price = forms.DecimalField(label='Стоимость калибровки', max_digits=10, decimal_places=2,
+                               widget=forms.TextInput(attrs={'class': 'form-control',
+                                                             'placeholder': '0000.00'}))
+    statusver = forms.ChoiceField(label='Результат калибровки',
+                                  choices=CHOICESCAL,
+                                  widget=forms.Select(attrs={'class': 'form-control'}))
+    verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False)
+    place = forms.ChoiceField(label='Место калибровки',
+                              choices=CHOICESPLACE,
+                              widget=forms.Select(attrs={'class': 'form-control'}))
+    cust = forms.BooleanField(label='Не оплачивалась', required=False, help_text='Например, если поверку оплачивал производитель')
+    dateordernew = forms.DateField(label='Дата заказа замены', required=False,
+                                   help_text='Укажите, если калибровкf не выгодна и вы покупаете замену',
+                                   widget=forms.DateInput(
+                                                          attrs={'class': 'form-control', 'placeholder': ''}),
+                                   input_formats=(
+                                                  '%Y-%m-%d',
+                                                  '%m/%d/%Y',
+                                                  '%m/%d/%y',
+                                                  '%d.%m.%Y',
+                                                   ))
+    extra = forms.CharField(label='Дополнительная информация/выписка из текущих сведений о калибровкt',
+                                  widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
+
+    class Meta:
+        model = Calibrationequipment
+        fields = ['date', 'datedead', 'dateorder', 'arshin', 'certnumber',
+                  'price', 'statusver',  'verificator', 
+                  'place', 'year',
+                  'dateordernew',
+                  'cust',
+                  'extra',
+                  ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('date', css_class='form-group col-md-4 mb-0'),
+                Column('datedead', css_class='form-group col-md-4 mb-0'),
+                Column('dateorder', css_class='form-group col-md-4 mb-0'),
+                ),
+            Row(
+                Column('arshin', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('certnumber', css_class='form-group col-md-6 mb-0'),
+                Column('statusver', css_class='form-group col-md-6 mb-0'),
+            ),
+            Row(
+                Column('verificator', css_class='form-group col-md-6 mb-0'),
+                Column('place', css_class='form-group col-md-3 mb-0'),   
+                Column('dateordernew', css_class='form-group col-md-3 mb-1'), 
+            ),
+            Row(
+                Column('price', css_class='form-group col-md-3 mb-0'),                       
+                Column('cust', css_class='form-group col-md-8 mb-0'), 
+            ),
+            Row(
+                Column('extra', css_class='form-group col-md-12 mb-1')),
+            Submit('submit', 'Внести'))
+
+
 class AttestationRegForm(forms.ModelForm):
     """форма для  внесения сведений об аттестации"""
     date = forms.DateField(label='Дата аттестации', required=False,
