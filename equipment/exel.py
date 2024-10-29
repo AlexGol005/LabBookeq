@@ -2556,7 +2556,7 @@ def export_exvercard_xls(request, pk):
 
     dateverificformat = now
     dateverific = get_dateformat(now)
-    row_num = 4
+    row_num = 1
     columns = [
         f'Протокол верификации № {note.pk}/{str(now.year)[2:4]} от {dateverific} г. СИ вн.№ {str(note.equipment.exnumber)[:5]}'
     ]
@@ -2566,7 +2566,7 @@ def export_exvercard_xls(request, pk):
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 500
 
-    row_num = 1
+    row_num +=1
     columns = [
         '1. Идентификационная и уникальная информация'
     ]
