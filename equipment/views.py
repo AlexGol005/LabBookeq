@@ -1219,6 +1219,58 @@ class VerificationequipmentView(View):
             return redirect(reverse('measureequipmentver', kwargs={'str': str}))
 
 
+
+class CalibrationequipmentView(View):
+    """ выводит историю калибровок и форму для добавления комментария к истории калибровок """
+
+    def get(self, request, str):
+        note = Calibrationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
+        note2 = ContactsVer.objects.filter(equipment__exnumber=str).order_by('-pk')
+        try:
+            strreg = note.latest('pk').equipmentSM.equipment.exnumber
+        except:
+            strreg = Equipment.objects.get(exnumber=str).exnumber
+        try:
+            calinterval = note.latest('pk').equipmentSM.charakters.calinterval
+        except:
+            calinterval = '-'
+        title = Equipment.objects.get(exnumber=str)
+        try:
+            dateorder = Calibrationequipment.objects.filter(equipmentSM__equipment__exnumber=str).last().dateorder
+        except:
+            dateorder = 'не поверен'
+        now = date.today()
+        try:
+            comment = CommentsVerificationequipment.objects.filter(forNote__exnumber=str).last().note
+        except:
+            comment = ''
+        form = CommentsVerificationCreationForm(initial={'comment': comment})
+        data = {'note': note,
+                'note2': note2,
+                'title': title,
+                'calinterval': calinterval,
+                'now': now,
+                'dateorder': dateorder,
+                'form': form,
+                'comment': comment,
+                'strreg': strreg,
+                }
+        return render(request, 'equipment/MEcalibration.html', data)
+
+    def post(self, request, str, *args, **kwargs):
+        form = CommentsVerificationCreationForm(request.POST)
+        if request.user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.author = request.user
+                order.forNote = Equipment.objects.get(exnumber=str)
+                order.save()
+                return redirect(order)
+        else:
+            messages.success(request, f'Комментировать может только ответственный за поверку приборов')
+            return redirect(reverse('measureequipmentcal', kwargs={'str': str}))
+
+
 class AttestationequipmentView(View):
     """ выводит историю аттестаций и форму для добавления комментария к истории аттестаций """
 
