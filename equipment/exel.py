@@ -2297,12 +2297,12 @@ def export_verificlabel_xls(request):
             f'Заводской №:',
             f'{currentnote1.equipment.lot}',
             f'Внут. №',
-            f'{currentnote1.equipment.exnumber}',
+            f'{str(currentnote1.equipment.exnumber)[:5]}',
             '',
             f'Заводской №:',
             f'{currentnote2.equipment.lot}',
             f'Внут. №',
-            f'{currentnote2.equipment.exnumber}',
+            f'{str(currentnote2.equipment.exnumber)[:5]}',
             '',
         ]
 
