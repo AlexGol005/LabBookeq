@@ -2434,10 +2434,8 @@ def export_exvercard_xls(request, pk):
         room = 'не указано'
     try:
         usere = Personchange.objects.filter(equipment__exnumber=note.equipment.exnumber)
-        usere = usere.last().person
-        # position = usere.last().person.position
-        usere = str(usere)
-        position = 1
+        usere = usere.last().person.name
+        position = usere.last().person.position
         
         
     except:
