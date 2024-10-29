@@ -7,13 +7,15 @@
 
 
 {% block content %}
-
+<div class="col-8"> 
 <div style="text-align: left;"><h5>Распечатка этикеток на приборы (введите внутренний номер (номера)) </h5></div>
 <br>
-<div style="text-align: center;">
+<center>
  <form action="{% url 'export_verificlabel_xls' %}" method="GET">
         {% csrf_token %}
         {% crispy form %}
     </form>
+
+</center>
 </div>
 {% endblock %}
