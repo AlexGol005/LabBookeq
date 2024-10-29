@@ -2558,7 +2558,7 @@ def export_exvercard_xls(request, pk):
     dateverific = get_dateformat(now)
     row_num = 4
     columns = [
-        f'Протокол верификации № {note.pk}/{str(dateverific.year)[2:4]} от {dateverific} г. СИ вн.№ {str(note.equipment.exnumber)[:5]}'
+        f'Протокол верификации № {note.pk}/{str(now.year)[2:4]} от {dateverific} г. СИ вн.№ {str(note.equipment.exnumber)[:5]}'
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style5)
