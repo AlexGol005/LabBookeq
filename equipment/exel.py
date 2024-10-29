@@ -2433,9 +2433,9 @@ def export_exvercard_xls(request, pk):
     except:
         room = 'не указано'
     try:
-        usere = Personchange.objects.filter(equipment__exnumber=note.equipment.exnumber)
-        usere = usere.last().person.name
-        position = usere.last().person.position
+        q = Personchange.objects.filter(equipment__exnumber=note.equipment.exnumber)
+        usere = q.last().person.name
+        position = q.last().person.position
         
         
     except:
