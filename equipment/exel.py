@@ -5,8 +5,8 @@
 Список блоков:
 блок 1 блок получения констант
 блок 2 блок стили  для стилей полей документа exel
-блок 1 - выгрузка данных в формате ексель (вначале блока идет общий класс base_planreport_xls, который наследуется частными классами)
-блок 2 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки) 
+блок 3 - выгрузка данных в формате ексель (вначале блока идет общий класс base_planreport_xls, который наследуется частными классами)
+блок 4 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки) 
 """
 
 
@@ -2221,8 +2221,6 @@ def export_verificlabel_xls(request):
     '''представление для выгрузки этикеток для указания поверки и аттестации'''
     note = []
     company = Company.objects.get(userid=request.user.profile.userid)
-    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
-    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     for n in (request.GET['n1'], request.GET['n2'],
               request.GET['n3'], request.GET['n4'],
               request.GET['n5'], request.GET['n6'],
@@ -2231,11 +2229,13 @@ def export_verificlabel_xls(request):
               request.GET['n11'], request.GET['n12'],
               request.GET['n13'], request.GET['n14']):
         try:
+            n = n + '_' + str(request.user.profile.userid)
             MeasurEquipment.objects.get(equipment__exnumber=n)
             note.append(MeasurEquipment.objects.get(equipment__exnumber=n))
         except:
             pass
         try:
+            n = n + '_' + str(request.user.profile.userid)
             TestingEquipment.objects.get(equipment__exnumber=n)
             note.append(TestingEquipment.objects.get(equipment__exnumber=n))
         except:
