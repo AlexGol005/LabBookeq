@@ -727,7 +727,7 @@ def HelpingEquipmentCharaktersUpdateView(request, str):
         data = {'form': form,
                 }
         return render(request, 'equipment/Echaractersreg.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_supe:
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только инженеру по оборудованию')
         return redirect('/equipment/helpingequipmentcharacterslist/')
 
@@ -808,7 +808,7 @@ def EquipmentUpdate(request, str):
         person = Personchange.objects.get(pk=get_pk).person
     except:
         person = 1
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_supe or request.user == person:
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser or request.user == person:
         if request.method == "POST":
             form = EquipmentUpdateForm(request.POST,  instance=Equipment.objects.get(exnumber=str))
             if form.is_valid():
@@ -825,7 +825,7 @@ def EquipmentUpdate(request, str):
         data = {'form': EquipmentUpdateForm(instance=Equipment.objects.get(exnumber=str)), 'title': title
                 }
         return render(request, 'equipment/Eindividuality.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_supe or not request.user == person:
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser or not request.user == person:
         messages.success(request, f' Для внесения записей о приборе нажмите на кнопку'
                                   f' "Внести запись о приборе и смотреть записи (для всех пользователей)"'
                                   f'. Добавить особенности работы или поменять статус может только ответственный '
@@ -1047,7 +1047,7 @@ class DocsConsView(View, SuccessMessageMixin):
 
     def post(self, request, str, *args, **kwargs):
         form = DocsConsCreateForm(request.POST)
-        if request.user.has_perm('equipment.add_equipment') or request.user.is_supe:
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipment = Equipment.objects.get(exnumber=str)
@@ -1070,7 +1070,7 @@ class ChromatoView(TemplateView):
 def VerificationReg(request, str):
     """выводит форму для внесения сведений о поверке"""
     title = Equipment.objects.get(exnumber=str)
-    if request.user.is_supe:
+    if request.user.is_superuser:
         if request.method == "POST":
             form = VerificationRegForm(request.POST, request.FILES)
             if form.is_valid():
@@ -1078,7 +1078,7 @@ def VerificationReg(request, str):
                 order.equipmentSM = MeasurEquipment.objects.get(equipment__exnumber=str)
                 order.save()
                 return redirect(order)
-    if not request.user.is_supe:
+    if not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только инженеру по оборудованию')
         return redirect(reverse('measureequipmentver', kwargs={'str': str}))
     else:
@@ -1089,12 +1089,37 @@ def VerificationReg(request, str):
     }
     return render(request, 'equipment/verificationreg.html', data)
 
+@login_required
+def CalibrationReg(request, str):
+    """выводит форму для внесения сведений о калибровке"""
+    title = Equipment.objects.get(exnumber=str)
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = CalibrationRegForm(request.POST, request.FILES)
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipmentSM = MeasurEquipment.objects.get(equipment__exnumber=str)
+                order.save()
+                return redirect(order)
+    if not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect(reverse('measureequipmentcal', kwargs={'str': str}))
+    else:
+        form = CalibrationRegForm()
+    data = {
+        'form': form,
+        'title': title
+    }
+    return render(request, 'equipment/calibrationreg.html', data)
+
+
+
 
 @login_required
 def AttestationReg(request, str):
     """выводит форму для внесения сведений об аттестации"""
     title = Equipment.objects.get(exnumber=str)
-    if request.user.is_supe:
+    if request.user.is_superuser:
         if request.method == "POST":
             form = AttestationRegForm(request.POST, request.FILES)
             if form.is_valid():
@@ -1102,7 +1127,7 @@ def AttestationReg(request, str):
                 order.equipmentSM = TestingEquipment.objects.get(equipment__exnumber=str)
                 order.save()
                 return redirect(order)
-    if not request.user.is_supe:
+    if not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только инженеру по оборудованию')
         return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
     else:
@@ -1123,7 +1148,7 @@ def EquipmentMetrologyUpdate(request, str):
     except:
         person = 1
 
-    if person == request.user or request.user.is_supe or request.user.has_perm('equipment.add_equipment'):
+    if person == request.user or request.user.is_superuser or request.user.has_perm('equipment.add_equipment'):
         if request.method == "POST":
             form = MetrologyUpdateForm(request.POST, instance=Equipment.objects.get(exnumber=str))
             if form.is_valid():
@@ -1133,7 +1158,7 @@ def EquipmentMetrologyUpdate(request, str):
                     return redirect(reverse('measureequipmentver', kwargs={'str': str}))
                 if title.kategory == 'ИО':
                     return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
-    if person != request.user or  not request.user.is_supe or not request.user.has_perm('equipment.add_equipment'):
+    if person != request.user or  not request.user.is_superuser or not request.user.has_perm('equipment.add_equipment'):
         messages.success(request, f'. поменять статус может только ответственный за поверку.')
         return redirect(reverse('measureequipmentver', kwargs={'str': str}))
     else:
@@ -1233,7 +1258,7 @@ class AttestationequipmentView(View):
 
     def post(self, request, str, *args, **kwargs):
         form = CommentsAttestationequipmentForm(request.POST)
-        if request.user.is_supe:
+        if request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.author = request.user
@@ -1267,7 +1292,7 @@ class HaveorderVerView(UpdateView):
     def form_valid(self, form):
         order = form.save(commit=False)
         user = User.objects.get(username=self.request.user)
-        if user.has_perm('equipment.add_equipment') or user.is_supe:
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
             order.save()
             return redirect('/equipment/measureequipmentall/')
         else:
@@ -1302,7 +1327,7 @@ class HaveorderAttView(UpdateView):
     def form_valid(self, form):
         order = form.save(commit=False)
         user = User.objects.get(username=self.request.user)
-        if user.has_perm('equipment.add_equipment') or user.is_supe:
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
             order.save()
             return redirect('/equipment/testingequipmentall/')
         else:
