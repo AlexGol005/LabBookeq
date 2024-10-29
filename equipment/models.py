@@ -483,7 +483,7 @@ class Verificationequipment(models.Model):
 class Calibrationequipment(models.Model):
     """Калибровка СИ"""
     equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
-                                    on_delete=models.PROTECT, related_name='equipmentSM_ver', blank=True, null=True)
+                                    on_delete=models.PROTECT, related_name='equipmentSM_cal', blank=True, null=True)
     date = models.DateField('Дата калибровки', blank=True, null=True)
     datedead = models.DateField('Дата окончания калибровки', blank=True, null=True)
     dateorder = models.DateField('Дата заказа следующей калибровки', blank=True, null=True)
