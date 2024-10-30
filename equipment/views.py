@@ -186,7 +186,7 @@ def RoomsUpdateView(request, str):
 # блок 3 - списки: Все оборудование, СИ, ИО, ВО, госреестры, характеристики ИО, характеристики ВО
 
 
-class EquipmentView(ListView):
+class EquipmentView(LoginRequiredMixin, ListView):
     """ Выводит список Всего ЛО """
     model = Equipment
     template_name = URL + '/EquipmentLIST.html'
@@ -200,7 +200,7 @@ class EquipmentView(ListView):
         return context
 
 
-class MeasurEquipmentCharaktersView(ListView):
+class MeasurEquipmentCharaktersView(LoginRequiredMixin, ListView):
     """ Выводит список госреестров """
     model = MeasurEquipmentCharakters
     template_name = URL + '/MEcharacterslist.html'
@@ -215,7 +215,7 @@ class MeasurEquipmentCharaktersView(ListView):
         return context
 
 
-class TestingEquipmentCharaktersView(ListView):
+class TestingEquipmentCharaktersView(LoginRequiredMixin, ListView):
     """ Выводит список характеристик ИО """
     model = TestingEquipmentCharakters
     template_name = URL + '/TEcharacterslist.html'
@@ -230,7 +230,7 @@ class TestingEquipmentCharaktersView(ListView):
         return context
 
 
-class HelpingEquipmentCharaktersView(ListView):
+class HelpingEquipmentCharaktersView(LoginRequiredMixin, ListView):
     """ Выводит список характеристик ВО """
     model = HelpingEquipmentCharakters
     template_name = URL + '/HEcharacterslist.html'
@@ -263,7 +263,7 @@ class MeasurEquipmentView(LoginRequiredMixin, ListView):
         return context
 
 
-class TestingEquipmentView(ListView):
+class TestingEquipmentView(LoginRequiredMixin, ListView):
     """ Выводит список испытательного оборудования """
     template_name = URL + '/TEequipmentLIST.html'
     context_object_name = 'objects'
@@ -281,7 +281,7 @@ class TestingEquipmentView(ListView):
         return context
 
 
-class HelpingEquipmentView(ListView):
+class HelpingEquipmentView(LoginRequiredMixin, ListView):
     """ Выводит список вспомогательного оборудования """
     template_name = URL + '/HEequipmentLIST.html'
     context_object_name = 'objects'
@@ -299,31 +299,7 @@ class HelpingEquipmentView(ListView):
         return context
 
 
-# блок 4 - формы регистрации и обновления: комнаты, поверители, персоны поверители, производители, контакты поверителей
-
-class ContactsVerregView(LoginRequiredMixin, CreateView):
-    """ выводит форму добавления контактов поверителей"""
-    form_class = ContactsVerForm
-    template_name = 'equipment/personverreg.html'
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
-
-    def get_context_data(self, **kwargs):
-        context = super(ContactsVerregView, self).get_context_data(**kwargs)
-        context['title'] = 'Добавить контакт поверителя'
-        context['dop'] = Equipment.objects.get(exnumber=self.kwargs['str'])
-        return context
-
-    def form_valid(self, form):
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-            order.save()
-            if order.equipment.kategory == 'СИ':
-                return redirect(f'/equipment/measureequipment/verification/{self.kwargs["str"]}')
-            if order.equipment.kategory == 'ИО':
-                return redirect(f'/equipment/testingequipment/attestation/{self.kwargs["str"]}')
+# блок 4 - формы регистрации и обновления: комнаты, поверители, производители
 
 
 @login_required
@@ -348,7 +324,7 @@ def RoomsCreateView(request):
         return redirect('employees')
 
 
-class VerificatorsCreationView(SuccessMessageMixin, ListView):
+class VerificatorsCreationView(LoginRequiredMixin, SuccessMessageMixin, ListView):
     """ выводит форму добавления компании поверителя и список поверителей """
     template_name = URL + '/verificatorsreglist.html'
     # form_class = VerificatorsCreationForm
@@ -368,35 +344,7 @@ class VerificatorsCreationView(SuccessMessageMixin, ListView):
         return queryset
 
 
-class VerificatorPersonCreationView(SuccessMessageMixin, CreateView):
-    """ выводит форму добавления сотрудника поверителя """
-    template_name = URL + '/reg.html'
-    form_class = VerificatorPersonCreationForm
-    success_url = '/equipment/verificatorpersons/'
-    success_message = "Сотрудник поверитель успешно добавлен"
-
-    def get_context_data(self, **kwargs):
-        context = super(VerificatorPersonCreationView, self).get_context_data(**kwargs)
-        context['title'] = 'Внести сотрудника поверителя'
-        return context
-
-
-def VerificatorUpdate(request, str):
-    """выводит форму для обновления данных о сотруднике поверителе"""
-    if request.method == "POST":
-        form = VerificatorPersonCreationForm(request.POST,  instance=VerificatorPerson.objects.get(pk=str))
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.save()
-            return redirect('verificatorpersons')
-    else:
-        form = VerificatorPersonCreationForm(instance=VerificatorPerson.objects.get(pk=str))
-    data = {'form': form,
-            }
-    return render(request, 'equipment/personverreg.html', data)
-
-
-class ManufacturerRegView(SuccessMessageMixin, CreateView):
+class ManufacturerRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """ выводит форму добавления производителя """
     template_name = URL + '/reg.html'
     form_class = ManufacturerCreateForm
@@ -409,7 +357,7 @@ class ManufacturerRegView(SuccessMessageMixin, CreateView):
         return context
 
 
-class PersonchangeFormView(View):
+class PersonchangeFormView(LoginRequiredMixin, View):
     """вывод формы смены ответсвенного за прибор, URL=personchangereg/<str:str>/"""
     def get(self, request, str):
         ruser=request.user.profile.userid
@@ -448,7 +396,7 @@ class PersonchangeFormView(View):
                 return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
 
-class RoomschangeFormView(View):
+class RoomschangeFormView(LoginRequiredMixin, View):
     """вывод формы смены помещения, URL=roomschangereg/<str:str>/"""
     def get(self, request, str):
         ruser=request.user.profile.userid
@@ -488,7 +436,7 @@ class RoomschangeFormView(View):
 
 
 # блок 5 - микроклимат: журналы, формы регистрации
-class MeteorologicalParametersCreateView(SuccessMessageMixin, CreateView):
+class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """ выводит форму добавления метеопараметров """
     template_name = URL + '/reg.html'
     form_class = MeteorologicalParametersRegForm
@@ -506,6 +454,34 @@ class MeteorologicalParametersCreateView(SuccessMessageMixin, CreateView):
         order.performer = User.objects.get(username=self.request.user)
         order.save()
         return super().form_valid(form)
+
+class PersonchangeFormView(LoginRequiredMixin, SuccessMessageMixin, View):
+    """ выводит форму добавления метеопараметров """
+    def get(self, request, str):
+        ruser=request.user.profile.userid
+        title = 'Добавить условия окружающей среды'
+        dopin = 'equipment/meteo/'
+        form =  MeteorologicalParametersRegForm(ruser, initial={'ruser': ruser,})
+        context = {
+            'title': title,
+            'dopin': dopin,
+            'form': form,
+        }
+        template_name = URL + '/reg.html'
+        return render(request, template_name, context)
+
+    def post(self, request, str, *args, **kwargs):
+        ruser=request.user.profile.userid
+        form = MeteorologicalParametersRegForm(ruser, initial={'ruser': ruser,})
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.performer = User.objects.get(username=self.request.user)
+                order.save()
+                return redirect(f'/equipment/meteo/')
+        else:
+            messages.success(request, f'Раздел недоступен')
+            return redirect(f'/equipment/meteoreg/')
 
 
 class MeteorologicalParametersRoomView(ListView):
