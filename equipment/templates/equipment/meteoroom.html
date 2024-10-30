@@ -5,81 +5,91 @@
 {#название страницы#}
 {#стандартная#}
 {% block title %}
-Микроклимат
+    Микроклимат
 {% endblock %}
 {#конец названия страницы#}
 
 {% block content %}
+<div class="col-8"> 
+   
+         <center><h4> Микроклимат в помещении {{ title }}</h4></center>
+        <br>
+        
+        <center>
+            {% if USER %}
+                <a href="{% url 'meteoreg' %}" class="btn btn-primary  mt-3" style="width: 80%">Добавить запись о микроклимате</a>
+            {% endif %}
+        </center>
+        <br>
 
-{#заголовок#}
-{#стандартная#}
-    <div style="text-align: center;">
-<div style="text-align: center;"><h4> Микроклимат в помещении {{ title }}</h4></div>
-<br>
-{#конец заголовка #}
-{#поиск по дате #}
-<div style="text-align: center; margin-top: 20px">
-    {% if USER %}
-    <a href="{% url 'meteoreg' %}" class="btn btn-info  mt-3" style="width: 210px">Добавить запись о микроклимате</a>
-    {% endif %}
-</div>
-    <div style="text-align: center; margin-top: 20px">
-   <h5>Найти условия микроклимата на дату:</h5>
- <form action="{% url 'meteoroomser' titlepk %}" target="blank" method="GET">
-        {% csrf_token %}
-        {% crispy form %}
-    </form>
-</div>
-{# конец поиск по дате #}
-{#выгрузить журнал микроклимата #}
-<div style="text-align: center; margin-top: 20px">
-              <h5>Сформировать журнал за год:</h5>
- <form action="{% url 'export_meteo_xls' titlepk %}" target="blank" method="GET">
-        {% csrf_token %}
-        {% crispy form1 %}
-    </form>
-</div>
-{#конец выгрузить журнал микроклимата #}
-<br>
-{#основная таблица#}
-{# уникальная #}
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Дата</th>
-            <th> Температура (°C) </th>
-            <th> Относительная <br>влажность (%) </th>
-            <th> Давление (кПа) </th>
-            <th> Гигрометр </th>
-            <th> Барометр </th>
-         </tr>
-    </thead>
-    <tbody>
-    {% for obj in objects %}
-    <tr>
-        <td>{{ obj.date|date:'d.m.Y' }}</td>
-        <td> {{ obj.temperature }}</td>
-        <td> {{ obj.humidity }}</td>
-        <td> {{ obj.pressure }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{#конец основной таблицы#}
+        <center><h5>Найти условия микроклимата на дату:</h5></center>
+               
+        <center>
+            <form action="{% url 'meteoroomser' titlepk %}" target="blank" method="GET">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </center>
+        <br>
 
-{#пагинация#}
-{# стандартная #}
-{% if is_paginated %}
-    {% if page_obj.has_previous %}
-       <a href="?page=1" class="btn btn-outline-primary">Начало</a>
-       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
-  {% endif %}
-    {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
-       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
-  {% endif %}
-  {% endif %}
-{#конец пагинации#}
+        <center><h5>Сформировать журнал за год:</h5></center>
+        <center>
+              <form action="{% url 'export_meteo_xls' titlepk %}" target="blank" method="GET">
+                  {% csrf_token %}
+                  {% crispy form1 %}
+              </form>
+        </center>
+        <br>
+
+    
+        {#основная таблица#}
+        <center>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th> Температура (°C) </th>
+                    <th> Относительная <br>влажность (%) </th>
+                    <th> Давление (кПа) </th>
+                    <th> Гигрометр </th>
+                    <th> Барометр </th>
+                 </tr>
+            </thead>
+            <tbody>
+            {% for obj in objects %}
+                <tr>
+                    <td>{{ obj.date|date:'d.m.Y' }}</td>
+                    <td> {{ obj.temperature }}</td>
+                    <td> {{ obj.humidity }}</td>
+                    <td> {{ obj.pressure }}</td>
+                    <td> <a href="{% url 'measureequipment' obj.equipment1.equipment.exnumber %}"
+                            class="btn btn-outline-warning mt-3" target="blank">
+                        {{ obj.equipment1.equipment.exnumber }}</a></td>
+                    <td> <a href="{% url 'measureequipment' obj.equipment2.equipment.exnumber %}"
+                            class="btn btn-outline-warning mt-3" target="blank">
+                        {{ obj.equipment2.equipment.exnumber }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </center>
+        {#конец основной таблицы#}
+
+            
+        {#пагинация#}
+        {# стандартная #}
+        {% if is_paginated %}
+            {% if page_obj.has_previous %}
+               <a href="?page=1" class="btn btn-outline-primary">Начало</a>
+               <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
+          {% endif %}
+            {% if page_obj.has_next %}
+               <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
+               <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
+          {% endif %}
+          {% endif %}
+        {#конец пагинации#}
+    
 </div>
 {% endblock %}
-{#конец блока {% block content %}"""#}
+
