@@ -11,8 +11,8 @@
 
         <div style="text-align: center; margin-top: 20px">
             {% if USER %}
-                <a href="{% url 'roomreg' %}" class="btn btn-info mr-2 ml-2 mt-2" style="width: 210px">Добавить помещение</a>
-                <a href="{% url 'meteoreg' %}" class="btn btn-info  mr-2 ml-2 mt-2" style="width: 210px">Добавить запись о микроклимате</a>
+                <a href="{% url 'roomreg' %}" class="btn btn-ptimary mr-2 ml-2 mt-2" style="width: 210px">Добавить помещение</a>
+                <a href="{% url 'meteoreg' %}" class="btn btn-ptimary  mr-2 ml-2 mt-2" style="width: 210px">Добавить запись о микроклимате</a>
             {% endif %}
         </div>
     
@@ -37,7 +37,7 @@
         </table>
         {#конец основной таблицы#}
                 
-        <center><img width= 50% src="{% static 'main/img/20.jpg' %}" mr-2 ml-2 mt-2></center>
+        <center><img width= 80% src="{% static 'main/img/20.jpg' %}" mr-2 ml-2 mt-2></center>
 
 </div>
 {% endblock %}
