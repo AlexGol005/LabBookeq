@@ -1227,7 +1227,7 @@ class RoomsUpdateForm(forms.ModelForm):
         self.fields['equipment1'].queryset = MeasurEquipment.objects.filter(pointer = ruser).filter(charakters__name__contains='Барометр')
         self.fields['equipment2'].queryset = MeasurEquipment.objects.filter(pointer = ruser).filter(charakters__name__contains='Гигрометр')
         
-        roomnumber = forms.CharField(label='Название комнаты', widget=forms.TextInput(attrs={'class': 'form-control',})).filter(charakters__name__contains='Гигрометр')
+        roomnumber = forms.CharField(label='Название комнаты', widget=forms.TextInput(attrs={'class': 'form-control',}))
                              
     class Meta:
         model = Rooms
