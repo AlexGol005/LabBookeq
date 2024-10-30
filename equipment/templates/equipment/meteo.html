@@ -6,40 +6,38 @@
 
 
 {% block content %}
+<div class="col-8">  
 
 
-<div style="text-align: center; margin-top: 20px">
-{% if USER %}
-<a href="{% url 'roomreg' %}" class="btn btn-info mr-2 ml-2 mt-2" style="width: 210px">Добавить помещение</a>
-<a href="{% url 'meteoreg' %}" class="btn btn-info  mr-2 ml-2 mt-2" style="width: 210px">Добавить запись о микроклимате</a>
-{% endif %}
+        <div style="text-align: center; margin-top: 20px">
+            {% if USER %}
+                <a href="{% url 'roomreg' %}" class="btn btn-info mr-2 ml-2 mt-2" style="width: 210px">Добавить помещение</a>
+                <a href="{% url 'meteoreg' %}" class="btn btn-info  mr-2 ml-2 mt-2" style="width: 210px">Добавить запись о микроклимате</a>
+            {% endif %}
+        </div>
+    
+        <div style="text-align: center; margin-top: 20px"> <h4>Помещения</h4></div>
+        
+        {#основная таблица#}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Комната</th>
+                    <th> Смотреть журнал микроклимата </th>
+                 </tr>
+            </thead>
+            <tbody>
+            {% for obj in objects %}
+                <tr>
+                    <td>{{ obj.roomnumber }}</td>
+                    <td> <a href="{% url 'meteoroom' obj.pk %}"  class="btn btn-outline-warning mt-3">см</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {#конец основной таблицы#}
+                
+        <center><img width= 50% src="{% static 'main/img/20.jpg' %}" mr-2 ml-2 mt-2></center>
+
 </div>
-<div style="text-align: center; margin-top: 20px">
-   <h4>Помещения</h4>
-</div>
-{#основная таблица#}
-{# уникальная #}
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Номер комнаты</th>
-            <th> Смотреть журнал микроклимата </th>
-         </tr>
-    </thead>
-    <tbody>
-    {% for obj in objects %}
-    <tr>
-        <td>{{ obj.roomnumber }}</td>
-        <td> <a href="{% url 'meteoroom' obj.pk %}"  class="btn btn-outline-warning mt-3">см</a></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{#конец основной таблицы#}
-
-<br><br>
-<div style="text-align: center;">
-<img src="{% static 'main/img/20.jpg' %}"
-alt="Изображение на странице метео"></div>
-
 {% endblock %}
