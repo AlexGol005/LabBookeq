@@ -448,7 +448,6 @@ class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
-                order.performer = User.objects.get(username=self.request.user)
                 order.save()
                 return redirect(f'/equipment/meteo/')
         else:
