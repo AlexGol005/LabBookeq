@@ -446,12 +446,11 @@ class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin
         ruser=request.user.profile.userid
         form = MeteorologicalParametersRegForm(ruser, request.POST, initial={'ruser': ruser,})
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-            try:
-                if form.is_valid():
-                    order = form.save(commit=False)
-                    order.save()
-                    return redirect(f'/equipment/meteo/')
-            except:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect(f'/equipment/meteo/')
+            else:
                     messages.success(request, f'Условия уже добавлены ранее')
                     return redirect(f'/equipment/meteoreg/')
         else:
