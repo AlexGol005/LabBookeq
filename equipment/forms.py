@@ -145,9 +145,15 @@ class LabelEquipmentform(forms.Form):
 
 class DateForm(forms.Form):
     """форма для указания даты"""
-    date = forms.DateField(label='Дата в формате ГГГГ-ММ-ДД',
+    date = forms.DateField(label='Дата', initial = f'{date.today().day}.{date.today().month}.{date.today().year}',
                            widget=forms.DateInput(
-                               attrs={'class': 'form-control', 'placeholder': '2022-12-18'}))
+                               attrs={'class': 'form-control', 'placeholder': ''}),
+                           input_formats=(
+                               '%Y-%m-%d',
+                               '%m/%d/%Y',
+                               '%m/%d/%y',
+                               '%d.%m.%Y',
+                           ))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
