@@ -347,7 +347,7 @@ class Rooms(models.Model):
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
     equipment1 = models.ForeignKey(MeasurEquipment, verbose_name='Барометр', null=True,
                                    on_delete=models.PROTECT, blank=True, related_name='equipment1rooms')
-    equipment2 = models.ForeignKey(MeasurEquipment, verbose_name='Гигрометр', null=True, related_name='equipment1rooms',
+    equipment2 = models.ForeignKey(MeasurEquipment, verbose_name='Гигрометр', null=True, related_name='equipment2rooms',
                                    on_delete=models.PROTECT, blank=True)
 
     def __str__(self):
