@@ -134,6 +134,10 @@ class Rooms(models.Model):
     roomnumber = models.CharField('Номер комнаты', max_length=100, default='')
     person = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
+    equipment1 = models.ForeignKey(MeasurEquipment, verbose_name='Барометр', null=True,
+                                   on_delete=models.PROTECT, blank=True)
+    equipment2 = models.ForeignKey(MeasurEquipment, verbose_name='Гигрометр', null=True,
+                                   on_delete=models.PROTECT, blank=True)
 
     def __str__(self):
         return self.roomnumber
