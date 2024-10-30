@@ -1243,9 +1243,6 @@ class RoomsUpdateForm(forms.ModelForm):
 
 # блок 7 - формы для микроклимата
 
-    
-
-
 
 class MeteorologicalParametersRegForm(ModelForm):
     """форма для внесения условий окружающей среды в помещении"""
