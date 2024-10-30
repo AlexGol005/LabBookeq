@@ -436,26 +436,8 @@ class RoomschangeFormView(LoginRequiredMixin, View):
 
 
 # блок 5 - микроклимат: журналы, формы регистрации
-class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    """ выводит форму добавления метеопараметров """
-    template_name = URL + '/reg.html'
-    form_class = MeteorologicalParametersRegForm
-    success_url = '/equipment/meteo/'
-    success_message = "Условия окружающей среды успешно добавлены"
 
-    def get_context_data(self, **kwargs):
-        context = super(MeteorologicalParametersCreateView, self).get_context_data(**kwargs)
-        context['title'] = 'Добавить условия окружающей среды'
-        context['dopin'] = 'equipment/meteo/'
-        return context
-
-    def form_valid(self, form):
-        order = form.save(commit=False)
-        order.performer = User.objects.get(username=self.request.user)
-        order.save()
-        return super().form_valid(form)
-
-class PersonchangeFormView(LoginRequiredMixin, SuccessMessageMixin, View):
+class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin, View):
     """ выводит форму добавления метеопараметров """
     def get(self, request, str):
         ruser=request.user.profile.userid
