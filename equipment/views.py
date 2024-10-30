@@ -76,8 +76,11 @@ class ManagerEquipmentView(TemplateView):
 class MeteorologicalParametersView(ListView):
     """Выводит страницу с кнопками для добавления помещений, микроклимата и вывода журнала микроклимата"""
     template_name = URL + '/meteo.html'
-    model = Rooms
     context_object_name = 'objects'
+
+    def get_queryset(self):
+        queryset = Rooms.objects.filter(pointer=self.request.user.profile.userid)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(MeteorologicalParametersView, self).get_context_data(**kwargs)
@@ -248,10 +251,6 @@ class MeasurEquipmentView(LoginRequiredMixin, ListView):
     context_object_name = 'objects'
     ordering = ['charakters_name']
     paginate_by = 12
-    
-    # def get_context_data(self, **kwargs):
-    #     context = super(MeasurEquipmentView, self).get_context_data(**kwargs)
-    #     user = self.request.user)
 
     def get_queryset(self):
         queryset = MeasurEquipment.objects.filter(pointer=self.request.user.profile.userid).exclude(equipment__status='С')
