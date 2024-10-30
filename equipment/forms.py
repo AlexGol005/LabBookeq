@@ -1280,3 +1280,4 @@ class MeteorologicalParametersRegForm(ModelForm):
             'equipment1', 'equipment2',
                   ]
         widgets = {'roomnumber':forms.Select(attrs={'class': 'form-control'}),}
+        labels = {'roomnumber': 'название или номер помещения'}
