@@ -1234,9 +1234,27 @@ class RoomsUpdateForm(forms.ModelForm):
 
 # блок 7 - формы для микроклимата
 
+пример!!
+class PersonchangeForm(forms.ModelForm):
+    """форма для смены ответственного за ЛО"""
+    def __init__(self, ruser, *args, **kwargs):
+        super(PersonchangeForm, self).__init__(*args, **kwargs)
+        self.fields['person'].queryset = Employees.objects.filter(userid__userid = ruser)
+    
+    class Meta:
+        model = Personchange
+        fields = [
+            'person'
+                  ]
+        widgets = {'person':forms.Select(attrs={'class': 'form-control'}),}
+
 
 class MeteorologicalParametersRegForm(ModelForm):
     """форма для внесения условий окружающей среды в помещении"""
+    def __init__(self, ruser, *args, **kwargs):
+        super(MeteorologicalParametersRegForm, self).__init__(*args, **kwargs)
+        self.fields['roomnumber'].queryset = Rooms.objects.filter(pointer = ruser)
+        
     date = forms.DateField(label='Дата',
                            widget=forms.DateInput(
                                attrs={'class': 'form-control', 'placeholder': ''}),
@@ -1246,9 +1264,6 @@ class MeteorologicalParametersRegForm(ModelForm):
                                '%m/%d/%y',
                                '%d.%m.%Y',
                            ))
-    roomnumber = forms.ModelChoiceField(label='Помещение',
-                                        queryset=Rooms.objects.all(),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
     pressure = forms.CharField(label='Давление, кПа', required=False, initial='102.0',
                                widget=forms.TextInput(attrs={'class': 'form-control'}))
     temperature = forms.CharField(label='Температура, °С',  required=False, initial='20.0',
@@ -1270,3 +1285,4 @@ class MeteorologicalParametersRegForm(ModelForm):
             'temperature', 'humidity',
             'equipment1', 'equipment2',
                   ]
+        widgets = {'roomnumber':forms.Select(attrs={'class': 'form-control'}),}
