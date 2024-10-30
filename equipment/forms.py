@@ -1224,10 +1224,9 @@ class RoomsUpdateForm(forms.ModelForm):
     """форма для создания обновления названия комнаты и оборудования"""
     def __init__(self, ruser, *args, **kwargs):
         super(RoomsUpdateForm, self).__init__(*args, **kwargs)
-        # self.fields['equipment1'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser).filter(charakters__name__contains='Барометр')
-        # self.fields['equipment2'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser).filter(charakters__name__contains='Гигрометр')
-        self.fields['equipment1'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser)
-        self.fields['equipment2'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser)
+        self.fields['equipment1'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser).filter(reestr__name_contains='Барометр')
+        self.fields['equipment2'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser).filter(reestr__name_contains='Гигрометр')
+
         
         roomnumber = forms.CharField(label='Название комнаты', widget=forms.TextInput(attrs={'class': 'form-control',}))
                              
