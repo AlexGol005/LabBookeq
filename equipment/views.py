@@ -162,7 +162,7 @@ def RoomsUpdateView(request, str):
                 order.save()
                 return redirect('rooms')
         else:
-            form = RoomsUpdateForm(ruser, instance=Rooms.objects.get(pk=str), ruser, initial={'ruser': ruser,})
+            form = RoomsUpdateForm(ruser, instance=Rooms.objects.get(pk=str), initial={'ruser': ruser,})
         data = {'form': form,}                
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
