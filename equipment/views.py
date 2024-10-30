@@ -478,6 +478,7 @@ class MeteorologicalParametersRoomView(ListView):
                 context['USER'] = False
         except:
             context['USER'] = False
+        context['me'] = Rooms.objects.get(id=self.kwargs['pk']).equipments
         context['title'] = Rooms.objects.get(id=self.kwargs['pk']).roomnumber
         context['titlepk'] = Rooms.objects.get(id=self.kwargs['pk']).pk
         context['form'] = DateForm()
