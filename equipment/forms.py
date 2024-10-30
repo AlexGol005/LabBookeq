@@ -1221,7 +1221,7 @@ class RoomschangeForm(forms.ModelForm):
 
 
 class RoomsUpdateForm(forms.ModelForm):
-    """форма для создания обновления названия комнаты"""
+    """форма для создания обновления названия комнаты и оборудования"""
     roomnumber = forms.CharField(label='Название комнаты', widget=forms.TextInput(attrs={'class': 'form-control',}))
 
                              
@@ -1229,6 +1229,9 @@ class RoomsUpdateForm(forms.ModelForm):
         model = Rooms
         fields = [
                  'roomnumber', 
+                'equipment1', 
+                'equipment2', 
+            
                   ]
 
 
