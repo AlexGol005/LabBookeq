@@ -62,12 +62,6 @@
                     <td> {{ obj.temperature }}</td>
                     <td> {{ obj.humidity }}</td>
                     <td> {{ obj.pressure }}</td>
-                    <td> <a href="{% url 'measureequipment' obj.equipment1.equipment.exnumber %}"
-                            class="btn btn-outline-warning mt-3" target="blank">
-                        {{ obj.equipment1.equipment.exnumber }}</a></td>
-                    <td> <a href="{% url 'measureequipment' obj.equipment2.equipment.exnumber %}"
-                            class="btn btn-outline-warning mt-3" target="blank">
-                        {{ obj.equipment2.equipment.exnumber }}</a></td>
                 </tr>
             {% endfor %}
             </tbody>
