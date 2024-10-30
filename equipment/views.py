@@ -329,7 +329,7 @@ class ContactsVerregView(LoginRequiredMixin, CreateView):
 @login_required
 def RoomsCreateView(request):
     """ выводит форму добавления помещения """
-    template_name = URL + '/roomreg.html'
+    template_name = URL + '/newroomreg.html'
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = RoomsCreateForm(request.POST, request.FILES)
