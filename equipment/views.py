@@ -451,8 +451,8 @@ class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin
                 order.save()
                 return redirect(f'/equipment/meteo/')
             else:
-                    messages.success(request, f'Условия уже добавлены ранее')
-                    return redirect(f'/equipment/meteoreg/')
+                messages.success(request, f'Условия уже добавлены ранее')
+                return redirect(f'/equipment/meteoreg/')
         else:
             messages.success(request, f'Раздел недоступен')
             return redirect(f'/equipment/meteoreg/')
