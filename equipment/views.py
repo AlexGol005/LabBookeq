@@ -444,7 +444,7 @@ class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin
 
     def post(self, request, *args, **kwargs):
         ruser=request.user.profile.userid
-        form = MeteorologicalParametersRegForm(ruser, initial={'ruser': ruser,})
+        form = MeteorologicalParametersRegForm(ruser, request.POST, initial={'ruser': ruser,})
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
