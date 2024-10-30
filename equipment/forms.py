@@ -1226,8 +1226,8 @@ class RoomsUpdateForm(forms.ModelForm):
         super(RoomsUpdateForm, self).__init__(*args, **kwargs)
         # self.fields['equipment1'].queryset = MeasurEquipment.objects.filter(pointer = ruser).filter(charakters__name__contains='Барометр') related_name='equipment1rooms'
         # self.fields['equipment2'].queryset = MeasurEquipment.objects.filter(pointer = ruser).filter(charakters__name__contains='Гигрометр')
-        self.fields['equipment1'].queryset = MeasurEquipment.objects.filter(pointer = ruser)
-        self.fields['equipment2'].queryset = MeasurEquipment.objects.filter(pointer = ruser)
+        self.fields['equipment1'].queryset = MeasurEquipment.objects.filter(equipment_pointer = ruser)
+        self.fields['equipment2'].queryset = MeasurEquipment.objects.filter(equipment_pointer = ruser)
         
         roomnumber = forms.CharField(label='Название комнаты', widget=forms.TextInput(attrs={'class': 'form-control',}))
                              
@@ -1274,12 +1274,7 @@ class MeteorologicalParametersRegForm(ModelForm):
                                   widget=forms.TextInput(attrs={'class': 'form-control'}))
     humidity = forms.CharField(label='Влажность, %', required=False, initial='50',
                                widget=forms.TextInput(attrs={'class': 'form-control'}))
-    equipment1 = forms.ModelChoiceField(label='Гигрометр',
-                                        queryset=MeasurEquipment.objects.filter(charakters__name__contains='Гигрометр'),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
-    equipment2 = forms.ModelChoiceField(label='Барометр',
-                                        queryset=MeasurEquipment.objects.filter(charakters__name__contains='Барометр'),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
+
 
     class Meta:
         model = MeteorologicalParameters
@@ -1287,7 +1282,7 @@ class MeteorologicalParametersRegForm(ModelForm):
             'date',
             'roomnumber', 'pressure',
             'temperature', 'humidity',
-            'equipment1', 'equipment2',
+
                   ]
         widgets = {'roomnumber':forms.Select(attrs={'class': 'form-control'}),}
         labels = {'roomnumber': 'название или номер помещения'}
