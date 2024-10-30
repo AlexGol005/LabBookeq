@@ -292,7 +292,7 @@ class MeasurEquipment(models.Model):
     pointer =  models.CharField('Указатель организации (ИНН_дата добавления ГГММДД)', max_length=500, blank=True, null=True) 
 
     def __str__(self):
-        return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
+        return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
                f' № реестр {self.charakters.reestr} - pk {self.pk}'
 
     class Meta:
