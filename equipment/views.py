@@ -439,7 +439,7 @@ class RoomschangeFormView(LoginRequiredMixin, View):
 
 class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin, View):
     """ выводит форму добавления метеопараметров """
-    def get(self, request, str):
+    def get(self, request):
         ruser=request.user.profile.userid
         title = 'Добавить условия окружающей среды'
         dopin = 'equipment/meteo/'
@@ -452,7 +452,7 @@ class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin
         template_name = URL + '/reg.html'
         return render(request, template_name, context)
 
-    def post(self, request, str, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         ruser=request.user.profile.userid
         form = MeteorologicalParametersRegForm(ruser, initial={'ruser': ruser,})
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
