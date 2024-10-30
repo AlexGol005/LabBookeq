@@ -15,8 +15,6 @@
 блок 10 - индивидуальные страницы СИ ИО ВО их поверок и аттестаций
 блок 11 - все комментарии ко всему
 блок 12 - вывод списков и форм  для метрологического обеспечения
-блок 13 - выгрузка данных в формате ексель (перенесен в файл exel.py)
-блок 14 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки) (перенесен в файл exel.py)
 """
 
 
@@ -155,15 +153,16 @@ class RoomsView(LoginRequiredMixin, TemplateView):
 
 def RoomsUpdateView(request, str):
     """выводит форму для обновления данных о помещении"""
+    ruser=request.user.profile.userid
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            form = RoomsUpdateForm(request.POST, instance=Rooms.objects.get(pk=str))                                                       
+            form = RoomsUpdateForm(ruser, request.POST, instance=Rooms.objects.get(pk=str), initial={'ruser': ruser,})                                                       
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
                 return redirect('rooms')
         else:
-            form = RoomsUpdateForm(instance=Rooms.objects.get(pk=str))
+            form = RoomsUpdateForm(ruser, instance=Rooms.objects.get(pk=str), ruser, initial={'ruser': ruser,})
         data = {'form': form,}                
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
@@ -808,10 +807,6 @@ class SearchPersonverregView(SuccessMessageMixin, ListView):
         queryset = Verificators.objects.filter(companyName__icontains=name)
         return queryset
 
-        
-        
-        
-        
 
 class ReestrsearresView(TemplateView):
     """ Представление, которое выводит результаты поиска по списку госреестров """
