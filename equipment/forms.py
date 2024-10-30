@@ -1253,7 +1253,7 @@ class MeteorologicalParametersRegForm(ModelForm):
         super(MeteorologicalParametersRegForm, self).__init__(*args, **kwargs)
         self.fields['roomnumber'].queryset = Rooms.objects.filter(pointer = ruser)
         
-    date = forms.DateField(label='Дата', initial = date.today(),
+    date = forms.DateField(label='Дата', initial = f'{date.today().day}.{date.today().month}.{date.today().year}',
                            widget=forms.DateInput(
                                attrs={'class': 'form-control', 'placeholder': ''}),
                            input_formats=(
