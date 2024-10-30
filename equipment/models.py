@@ -744,15 +744,9 @@ class MeteorologicalParameters(models.Model):
         return f' {self.date} , {self.roomnumber.roomnumber}'
 
     class Meta:
-        verbose_name = 'Условия в помещении'
-        verbose_name_plural = 'Условия в помещениях'
-        unique_together = ('date', 'roomnumber',)
-
-
-    class Meta:
         verbose_name = 'Комнаты: Микроклимат в помещении'
         verbose_name_plural = 'Комнаты: Микроклимат в помещениях'
-        unique_together = ['date', 'roomnumber']
+        unique_together = ('date', 'roomnumber',)
 
 
 # блок 8 - карточка предприятия
