@@ -1228,7 +1228,7 @@ class RoomsUpdateForm(forms.ModelForm):
         self.fields['equipment2'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser).filter(reestr__name_contains='Гигрометр')
 
         
-        roomnumber = forms.CharField(label='Название комнаты', widget=forms.TextInput(attrs={'class': 'form-control',}))
+
                              
     class Meta:
         model = Rooms
@@ -1237,8 +1237,8 @@ class RoomsUpdateForm(forms.ModelForm):
                  'equipment1', 
                  'equipment2',             
                   ]
-        widgets = {'equipment1':forms.Select(attrs={'class': 'form-control'}), 'equipment2':forms.Select(attrs={'class': 'form-control'}),}
-        labels = {'equipment1': 'Барометр', 'equipment2': 'Гигрометр',}
+        widgets = {'equipment1':forms.Select(attrs={'class': 'form-control'}), 'equipment2':forms.Select(attrs={'class': 'form-control'}), 'roomnumber':forms.Select(attrs={'class': 'form-control'}),}
+        labels = {'equipment1': 'Барометр', 'equipment2': 'Гигрометр', 'roomnumber': 'Название комнаты',}
 
 
 # блок 7 - формы для микроклимата
