@@ -67,7 +67,6 @@ urlpatterns = [
     path('testingsearres/', views.TEcharacterssearresView.as_view(), name='testingsearres'),
     path('metro/', views.MetrologicalEnsuringView.as_view(), name='metro'),
     path('verificationlabels/', views.VerificationLabelsView.as_view(), name='verificationlabels'),
-    path('contactsverreg/<str:str>/', views.ContactsVerregView.as_view(), name='contactsverreg'),
     path('haveorder/<int:pk>/', views.HaveorderVerView.as_view(), name='haveorder'),
     path('haveorderatt/<int:pk>/', views.HaveorderAttView.as_view(), name='haveorderatt'),
     path('meteoroom/<int:pk>/', views.MeteorologicalParametersRoomView.as_view(), name='meteoroom'),
