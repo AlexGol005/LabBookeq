@@ -460,7 +460,7 @@ class RoomschangeFormView(View):
             'dop': dop,
             'form': form,
         }
-        template_name = 'equipment/reg.html'
+        template_name = 'equipment/roomreg.html'
         return render(request, template_name, context)
 
     def post(self, request, str, *args, **kwargs):
