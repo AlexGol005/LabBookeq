@@ -19,11 +19,13 @@
      <table class="table table-bordered flexy">
        
         <tr>
-              <th>Комната</th> <th>Ред.</th>
+              <th>Комната</th> <th>Ред.</th><th>Барометр № Заводской</th><th>Гигрометр № Заводской</th>
         </tr>
         {% for r in rooms %}
         <tr>              
             <td>{{ r.roomnumber }}</td> 
+            <td>{{ r.equipment1.lot }}</td> 
+            <td>{{ r.equipment2.lot }}</td> 
             <td> <a href="{% url 'roomupdate' r.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>                
         </tr>
         {% endfor %}
