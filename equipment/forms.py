@@ -1222,17 +1222,22 @@ class RoomschangeForm(forms.ModelForm):
 
 class RoomsUpdateForm(forms.ModelForm):
     """форма для создания обновления названия комнаты и оборудования"""
-    roomnumber = forms.CharField(label='Название комнаты', widget=forms.TextInput(attrs={'class': 'form-control',}))
-
+    def __init__(self, ruser, *args, **kwargs):
+        super(RoomsUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['equipment1'].queryset = Equipment.objects.filter(pointer = ruser).filter(charakters__name__contains='Барометр')
+        self.fields['equipment2'].queryset = Equipment.objects.filter(pointer = ruser).filter(charakters__name__contains='Гигрометр')
+        
+        roomnumber = forms.CharField(label='Название комнаты', widget=forms.TextInput(attrs={'class': 'form-control',})).filter(charakters__name__contains='Гигрометр')
                              
     class Meta:
         model = Rooms
         fields = [
                  'roomnumber', 
-                'equipment1', 
-                'equipment2', 
-            
+                 'equipment1', 
+                 'equipment2',             
                   ]
+        widgets = {'equipment1':forms.Select(attrs={'class': 'form-control'}), 'equipment2':forms.Select(attrs={'class': 'form-control'}),}
+        labels = {'equipment1': 'Барометр', 'equipment2': 'Гигрометр',}
 
 
 # блок 7 - формы для микроклимата
