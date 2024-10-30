@@ -738,10 +738,15 @@ class MeteorologicalParameters(models.Model):
     pressure = models.CharField('Давление, кПа', max_length=90, blank=True, null=True)
     temperature = models.CharField('Температура, °С', max_length=90, blank=True, null=True)
     humidity = models.CharField('Влажность, %', max_length=90, blank=True, null=True)
+    equipments = models.CharField('СИ', max_length=190, blank=True, null=True)
     
 
     def __str__(self):
         return f' {self.date} , {self.roomnumber.roomnumber}'
+            
+    def save(self, *args, **kwargs):
+        self.equipments = self.roomnumber.equipment1
+        return super(MeteorologicalParameters, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Комнаты: Микроклимат в помещении'
