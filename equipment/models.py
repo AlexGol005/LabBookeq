@@ -129,23 +129,7 @@ class VerificatorPerson(models.Model):
         verbose_name_plural = 'Поверители сотрудники'
 
 
-class Rooms(models.Model):
-    """Комнаты лаборатории/производства"""
-    roomnumber = models.CharField('Номер комнаты', max_length=100, default='')
-    person = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
-    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
-    equipment1 = models.ForeignKey("MeasurEquipment", verbose_name='Барометр', null=True,
-                                   on_delete=models.PROTECT, blank=True)
-    equipment2 = models.ForeignKey("MeasurEquipment", verbose_name='Гигрометр', null=True,
-                                   on_delete=models.PROTECT, blank=True)
 
-    def __str__(self):
-        return self.roomnumber
-
-    class Meta:
-        unique_together = ('roomnumber', 'pointer',)
-        verbose_name = 'Комната'
-        verbose_name_plural = 'Комнаты: список'
 
 
 # блок 3 - оборудование в целом, характеристики СИ ИО ВО, сами СИ ИО ВО
@@ -356,6 +340,24 @@ class HelpingEquipment(models.Model):
 
 
 # блок 4 - смена комнаты, ответственного, добавление принадлежностей к оборудованию
+class Rooms(models.Model):
+    """Комнаты лаборатории/производства"""
+    roomnumber = models.CharField('Номер комнаты', max_length=100, default='')
+    person = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
+    equipment1 = models.ForeignKey(MeasurEquipment, verbose_name='Барометр', null=True,
+                                   on_delete=models.PROTECT, blank=True)
+    equipment2 = models.ForeignKey(MeasurEquipment, verbose_name='Гигрометр', null=True,
+                                   on_delete=models.PROTECT, blank=True)
+
+    def __str__(self):
+        return self.roomnumber
+
+    class Meta:
+        unique_together = ('roomnumber', 'pointer',)
+        verbose_name = 'Комната'
+        verbose_name_plural = 'Комнаты: список'
+            
 
 class Personchange(models.Model):
     person = models.ForeignKey(Employees, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
