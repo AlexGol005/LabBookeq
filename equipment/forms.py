@@ -1236,7 +1236,7 @@ class RoomsUpdateForm(forms.ModelForm):
                  'equipment2', 
                 'person'
                   ]
-        widgets = {'equipment1':forms.Select(attrs={'class': 'form-control'}), 'equipment2':forms.Select(attrs={'class': 'form-control'}), 'roomnumber':forms.TextInput(attrs={'class': 'form-control'}),'person':forms.TextInput(attrs={'class': 'form-control'}),}
+        widgets = {'equipment1':forms.Select(attrs={'class': 'form-control'}), 'equipment2':forms.Select(attrs={'class': 'form-control'}), 'roomnumber':forms.TextInput(attrs={'class': 'form-control'}),'person':forms.Select(attrs={'class': 'form-control'}),}
         labels = {'equipment1': 'Барометр', 'equipment2': 'Гигрометр', 'roomnumber': 'Название комнаты','person': 'Ответственный за комнату'}
 
 
