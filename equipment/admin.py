@@ -70,7 +70,7 @@ class EquipmentAdmin(admin.ModelAdmin):
         'manufacturer': 'manufacturer_tag'
     })
 
-@admin.register(Equipment)
+@admin.register(MeasurEquipment)
 class MeasurEquipmentAdmin(admin.ModelAdmin):
 
     form = make_ajax_form(MeasurEquipment, {
