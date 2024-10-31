@@ -478,7 +478,7 @@ class MeteorologicalParametersRoomView(ListView):
                 context['USER'] = False
         except:
             context['USER'] = False
-        get_eq = MeteorologicalParameters.objects.last()
+        get_eq = MeteorologicalParameters.objects.filter(roomnumber=Rooms.objects.get(id=self.kwargs['pk']).pk).last()
         context['me'] = get_eq.equipments 
         context['title'] = Rooms.objects.get(id=self.kwargs['pk']).roomnumber
         context['titlepk'] = Rooms.objects.get(id=self.kwargs['pk']).pk
