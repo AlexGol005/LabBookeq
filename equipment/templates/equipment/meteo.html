@@ -23,6 +23,8 @@
             <thead>
                 <tr>
                     <th>Комната</th>
+                    <th> Вн. № Барометра</th>
+                    <th> Вн. Гигрометра</th>
                     <th> Смотреть журнал микроклимата </th>
                  </tr>
             </thead>
@@ -30,6 +32,8 @@
             {% for obj in objects %}
                 <tr>
                     <td>{{ obj.roomnumber }}</td>
+                    <td>{{  obj.equipment1.equipment.exnumber| slice:':5' }}</td> 
+                    <td>{{  obj.equipment2.equipment.exnumber| slice:':5' }}</td> 
                     <td> <a href="{% url 'meteoroom' obj.pk %}"  class="btn btn-outline-warning mt-3">см</a></td>
                 </tr>
             {% endfor %}
