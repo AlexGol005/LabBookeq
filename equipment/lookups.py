@@ -22,6 +22,16 @@ class ManufacturerLookup(LookupChannel):
     def format_item_display(self, item):
         return item.companyName
 
+@register('mecharakters_tag')
+class MeasurEquipmentCharaktersLookup(LookupChannel):
+    model = MeasurEquipmentCharakters
+
+    def get_query(self, q, request):
+        return self.model.objects.filter(name__icontains=q).order_by('name')[:50]
+
+    def format_item_display(self, item):
+        return item.name
+
  
 
 
