@@ -699,6 +699,15 @@ class MeasurEquipmentCreateForm(forms.ModelForm):
         fields = [
             'charakters',
                   ]
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('charakters', css_class='form-group col-md-10 mb-0'),
+                ),
+            Submit('submit', 'Внести'))
 
 
 class TestingEquipmentCreateForm(forms.ModelForm):
