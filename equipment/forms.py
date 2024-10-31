@@ -254,9 +254,7 @@ class EquipmentCreateForm(forms.ModelForm):
                           widget=forms.TextInput(attrs={'class': 'form-control'}))
     yearmanuf = forms.CharField(label='Год выпуска прибора', max_length=10000, initial=datetime.now().year,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
-    manufacturer = forms.ModelChoiceField(label='Производитель прибора',
-                                          queryset=Manufacturer.objects.all(),
-                                          widget=forms.Select(attrs={'class': 'form-control'}))
+    manufacturer = AutoCompleteSelectField('manufacturer_tag', label='Производитель прибора', required=True, help_text='Начните вводить полное название организации', show_help_text=False)
     status = forms.ChoiceField(label='Статус (эксплуатация, ремонт и тд)', initial='Эксплуатация',
                                choices=CHOICES,
                                widget=forms.Select(attrs={'class': 'form-control'}))
@@ -905,10 +903,6 @@ class VerificationRegForm(forms.ModelForm):
     statusver = forms.ChoiceField(label='Результат поверки',
                                   choices=CHOICESVERIFIC,
                                   widget=forms.Select(attrs={'class': 'form-control'}))
-
-    # verificator = forms.ModelChoiceField(label='Организация-поверитель',
-    #                                      queryset=Verificators.objects.all(),
-    #                                      widget=forms.Select(attrs={'class': 'form-control'}))
     verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False)
     place = forms.ChoiceField(label='Место поверки',
                               choices=CHOICESPLACE,
