@@ -74,7 +74,7 @@ class EquipmentAdmin(admin.ModelAdmin):
 class MeasurEquipmentAdmin(admin.ModelAdmin):
 
     form = make_ajax_form(MeasurEquipment, {
-        'charakter': 'mecharakters_tag'
+        'charakters': 'mecharakters_tag'
     })
 
 
