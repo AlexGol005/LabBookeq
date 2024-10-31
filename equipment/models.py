@@ -745,9 +745,9 @@ class MeteorologicalParameters(models.Model):
         return f' {self.date} , {self.roomnumber.roomnumber}'
             
     def save(self, *args, **kwargs):
-        self.equipments = f'{self.roomnumber.equipment1.charakters.name} тип {self.roomnumber.equipment1.charakters.typename}, заводской номер {self.roomnumber.equipment1.lot}, '\
+        self.equipments = f'{self.roomnumber.equipment1.charakters.name} тип {self.roomnumber.equipment1.charakters.typename}, заводской номер {self.roomnumber.equipment1.equipment.lot}, '\
         f'свидетельство о поверке № {self.roomnumber.equipment1.newcertnumber}, действительно до {self.roomnumber.equipment1.newdatedead}; '\
-        f'{self.roomnumber.equipment2.charakters.name} тип {self.roomnumber.equipment2.charakters.typename}, заводской номер {self.roomnumber.equipment2.lot}, '\
+        f'{self.roomnumber.equipment2.charakters.name} тип {self.roomnumber.equipment2.charakters.typename}, заводской номер {self.roomnumber.equipment2.equipment.lot}, '\
         f'свидетельство о поверке № {self.roomnumber.equipment2.newcertnumber}, действительно до {self.roomnumber.equipment2.newdatedead};'
         return super(MeteorologicalParameters, self).save(*args, **kwargs)
 
