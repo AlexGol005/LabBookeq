@@ -479,7 +479,10 @@ class MeteorologicalParametersRoomView(ListView):
         except:
             context['USER'] = False
         get_eq = MeteorologicalParameters.objects.filter(roomnumber=Rooms.objects.get(id=self.kwargs['pk']).pk).last()
-        context['me'] = get_eq.equipments 
+        try:
+            context['me'] = get_eq.equipments 
+        except:
+            context['me'] = 'добавьте первую запись о условиях микроклимата'
         context['title'] = Rooms.objects.get(id=self.kwargs['pk']).roomnumber
         context['titlepk'] = Rooms.objects.get(id=self.kwargs['pk']).pk
         context['form'] = DateForm()
