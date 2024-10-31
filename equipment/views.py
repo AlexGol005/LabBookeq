@@ -305,13 +305,16 @@ def RoomsCreateView(request):
                 order.save()
                 messages.success(request, "Помещение успешно добавлено")
                 return redirect('rooms')
+            else:
+                messages.success(request, 'Эта комната уже есть')
+                return redirect('roomreg')
         else:
             form = RoomsCreateForm()
         data = {'form': form, }                   
         return render(request, template_name, data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
-        return redirect('employees')
+        return redirect('roomreg')
 
 
 class VerificatorsCreationView(LoginRequiredMixin, SuccessMessageMixin, ListView):
