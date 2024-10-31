@@ -29,7 +29,7 @@ admin.site.register(MeasurEquipmentCharakters, MeasurEquipmentCharaktersAdmin)
 admin.site.register(Manufacturer)
 admin.site.register(Rooms)
 admin.site.register(Personchange)
-admin.site.register(MeasurEquipment)
+# admin.site.register(MeasurEquipment)
 # admin.site.register(Equipment)
 admin.site.register(CommentsEquipment)
 admin.site.register(Roomschange)
@@ -70,26 +70,11 @@ class EquipmentAdmin(admin.ModelAdmin):
         'manufacturer': 'manufacturer_tag'
     })
 
+@admin.register(Equipment)
+class MeasurEquipmentAdmin(admin.ModelAdmin):
 
-# admin.site.register(Verificationequipment)
+    form = make_ajax_form(MeasurEquipment, {
+        'charakter': 'mecharakters_tag'
+    })
 
-# @admin.register(Verificationequipment)
-# class VerificationequipmentAdmin(AjaxSelectAdmin):
-
-#     form = make_ajax_form(Verificationequipment, {
-#         # fieldname: channel_name
-#         'verificator': 'verificator_tag'
-#     })
-#-------------------------------------------------------
-# class ChoiceAdmin(admin.ModelAdmin):
-    
-# @admin.register(Verificationequipment)
-# class NoteAdmin(admin.ModelAdmin):
-#     autocomplete_fields = ['companyName']
-
-# это для поиска по выпадающему списку
-# class VerificationequipmentCycleAdmin(admin.ModelAdmin):
-#     autocomplete_fields = ['companyName']
-
-# admin.site.register(Verificationequipment, VerificationequipmentCycleAdmin)
 
