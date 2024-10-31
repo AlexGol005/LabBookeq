@@ -449,7 +449,7 @@ class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                str = order.pk
+                str = order.room.pk
                 return redirect(f'/equipment/meteoroom/{str}/') 
             else:
                 messages.success(request, f'Условия уже добавлены ранее')
