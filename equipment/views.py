@@ -487,7 +487,7 @@ class MeteorologicalParametersRoomView(ListView):
             context['me'] = get_eq.equipments 
         except:
             context['me'] = 'добавьте средства измерения для комнаты и  первую запись о условиях микроклимата'
-                try:
+        try:
             context['rp'] = get_eq.person 
         except:
             context['rp'] = 'добавьте ответственного для комнаты и  первую запись о условиях микроклимата'
