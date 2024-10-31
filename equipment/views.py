@@ -428,7 +428,7 @@ class RoomschangeFormView(LoginRequiredMixin, View):
 # блок 5 - микроклимат: журналы, формы регистрации
 
 class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin, View):
-    """ выводит форму добавления метеопараметров """
+    """ выводит форму добавления условий микроклимата """
     def get(self, request):
         ruser=request.user.profile.userid
         title = 'Добавить условия окружающей среды'
@@ -448,8 +448,9 @@ class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
+                str = order.pk
                 order.save()
-                return redirect(f'/equipment/meteo/')
+                return redirect(f'/equipment/meteoroom/{str}/') 
             else:
                 messages.success(request, f'Условия уже добавлены ранее')
                 return redirect(f'/equipment/meteoreg/')
