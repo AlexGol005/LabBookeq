@@ -343,12 +343,13 @@ class HelpingEquipment(models.Model):
 class Rooms(models.Model):
     """Комнаты лаборатории/производства"""
     roomnumber = models.CharField('Номер комнаты', max_length=100, default='')
-    person = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True)
+    person = models.ForeignKey(Employees, on_delete=models.PROTECT, blank=True, null=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
     equipment1 = models.ForeignKey(MeasurEquipment, verbose_name='Барометр', null=True,
                                    on_delete=models.PROTECT, blank=True, related_name='equipment1rooms')
     equipment2 = models.ForeignKey(MeasurEquipment, verbose_name='Гигрометр', null=True, related_name='equipment2rooms',
                                    on_delete=models.PROTECT, blank=True)
+        
 
     def __str__(self):
         return self.roomnumber
@@ -739,6 +740,7 @@ class MeteorologicalParameters(models.Model):
     temperature = models.CharField('Температура, °С', max_length=90, blank=True, null=True)
     humidity = models.CharField('Влажность, %', max_length=90, blank=True, null=True)
     equipments = models.CharField('СИ', max_length=190, blank=True, null=True)
+    person = models.CharField('Исполнитель ФИО', max_length=190, blank=True, null=True)
     
 
     def __str__(self):
@@ -749,6 +751,7 @@ class MeteorologicalParameters(models.Model):
         f'свидетельство о поверке № {self.roomnumber.equipment1.newcertnumber}, действительно до {self.roomnumber.equipment1.newdatedead}; '\
         f'{self.roomnumber.equipment2.charakters.name} тип {self.roomnumber.equipment2.charakters.typename}, заводской номер {self.roomnumber.equipment2.equipment.lot}, '\
         f'свидетельство о поверке № {self.roomnumber.equipment2.newcertnumber}, действительно до {self.roomnumber.equipment2.newdatedead};'
+        self.person = self.roomnumber.person.name
         return super(MeteorologicalParameters, self).save(*args, **kwargs)
 
     class Meta:
