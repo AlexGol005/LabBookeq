@@ -1226,19 +1226,18 @@ class RoomsUpdateForm(forms.ModelForm):
         super(RoomsUpdateForm, self).__init__(*args, **kwargs)
         self.fields['equipment1'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser).filter(charakters__name__contains='Барометр')
         self.fields['equipment2'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser).filter(charakters__name__contains='Гигрометр')
-
-        
-
-                             
+        self.fields['person'].queryset = Employees.objects.filter(userid__userid = ruser)
+                                 
     class Meta:
         model = Rooms
         fields = [
                  'roomnumber', 
                  'equipment1', 
-                 'equipment2',             
+                 'equipment2', 
+                'person'
                   ]
-        widgets = {'equipment1':forms.Select(attrs={'class': 'form-control'}), 'equipment2':forms.Select(attrs={'class': 'form-control'}), 'roomnumber':forms.TextInput(attrs={'class': 'form-control'}),}
-        labels = {'equipment1': 'Барометр', 'equipment2': 'Гигрометр', 'roomnumber': 'Название комнаты',}
+        widgets = {'equipment1':forms.Select(attrs={'class': 'form-control'}), 'equipment2':forms.Select(attrs={'class': 'form-control'}), 'roomnumber':forms.TextInput(attrs={'class': 'form-control'}),'person':forms.TextInput(attrs={'class': 'form-control'}),}
+        labels = {'equipment1': 'Барометр', 'equipment2': 'Гигрометр', 'roomnumber': 'Название комнаты','person': 'Ответственный за комнату'}
 
 
 # блок 7 - формы для микроклимата
