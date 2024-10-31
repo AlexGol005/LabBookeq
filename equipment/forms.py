@@ -692,9 +692,7 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
 
 class MeasurEquipmentCreateForm(forms.ModelForm):
     """форма для внесения СИ"""
-    charakters = forms.ModelChoiceField(label='Госреестр', required=False,
-                                        queryset=MeasurEquipmentCharakters.objects.all(),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
+    charakters = AutoCompleteSelectField(mecharakters_tag', label='Госреестр', required=True, help_text='Начните вводить название прибора строчными или с заглавной буквы', show_help_text=False)
 
     class Meta:
         model = MeasurEquipment
