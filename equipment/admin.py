@@ -30,7 +30,7 @@ admin.site.register(Manufacturer)
 admin.site.register(Rooms)
 admin.site.register(Personchange)
 admin.site.register(MeasurEquipment)
-admin.site.register(Equipment)
+# admin.site.register(Equipment)
 admin.site.register(CommentsEquipment)
 admin.site.register(Roomschange)
 admin.site.register(VerificatorPerson)
@@ -61,6 +61,13 @@ class CalibrationequipmentAdmin(admin.ModelAdmin):
 
     form = make_ajax_form(Calibrationequipment, {
         'verificator': 'verificator_tag'
+    })
+
+@admin.register(Equipment)
+class EquipmentAdmin(admin.ModelAdmin):
+
+    form = make_ajax_form(Equipment, {
+        'manufacturer': 'manufacturer_tag'
     })
 
 
