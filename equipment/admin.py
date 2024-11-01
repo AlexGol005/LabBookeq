@@ -29,12 +29,8 @@ admin.site.register(MeasurEquipmentCharakters, MeasurEquipmentCharaktersAdmin)
 admin.site.register(Manufacturer)
 admin.site.register(Rooms)
 admin.site.register(Personchange)
-# admin.site.register(MeasurEquipment)
-# admin.site.register(Equipment)
 admin.site.register(CommentsEquipment)
 admin.site.register(Roomschange)
-admin.site.register(VerificatorPerson)
-# admin.site.register(Verificators)
 admin.site.register(DocsCons)
 admin.site.register(CompanyCard)
 admin.site.register(MeteorologicalParameters)
@@ -76,5 +72,3 @@ class MeasurEquipmentAdmin(admin.ModelAdmin):
     form = make_ajax_form(MeasurEquipment, {
         'charakters': 'mecharakters_tag'
     })
-
-
