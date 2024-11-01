@@ -1451,7 +1451,7 @@ def export_meteo_xls(request, pk):
         'temperature',
         'humidity',
         'pressure',
-        'performer__username',
+        'person',
     ).order_by('date')
 
     for row in rows:
