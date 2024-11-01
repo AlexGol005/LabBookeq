@@ -60,7 +60,6 @@ urlpatterns = [
     path(r'^export10/xls/$/<int:pk>', exel.export_exvercard_xls, name='export_exvercard_xls'),
     path(r'^export100/xls/$/<int:pk>', exel.export_exvercardteste_xls, name='export_exvercardteste_xls'),
     path(r'^export2/xls/$/', exel.export_verificlabel_xls, name='export_verificlabel_xls'),
-    path('chromato/', views.ChromatoView.as_view(), name='chromato'),
     path('reestrsearres/', views.ReestrsearresView.as_view(), name='reestrsearres'),
     path('verificatorssearres/', views.SearchPersonverregView.as_view(), name='verificatorssearres'),
     path('testingsearres/', views.TEcharacterssearresView.as_view(), name='testingsearres'),
