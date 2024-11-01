@@ -4769,7 +4769,7 @@ def export_maintenance_schedule_xls(request):
     wb.save(response)
     return response
 
-# блок 13.d - график поверки и иаттестации
+# график поверки и иаттестации
 def export_me_xls(request):
     '''представление для выгрузки графика поверки и аттестации'''
     response = HttpResponse(content_type='application/ms-excel')
@@ -4875,11 +4875,11 @@ def export_me_xls(request):
                 'Статус',
                 'Ссылка на сведения о поверке',
                 'Номер свидетельства',
-                'Дата поверки/калибровки',
+                'Дата поверки',
                 'Дата окончания свидетельства',
-                'Дата заказа поверки/калибровки',
+                'Дата заказа поверки',
                 'Дата заказа замены',
-                'Периодичность поверки /калибровки (месяцы)',
+                'Периодичность поверки(месяцы)',
                 'Инвентарный номер',
                 'Диапазон измерений',
                 'Метрологические характеристики',
@@ -4888,7 +4888,7 @@ def export_me_xls(request):
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
 
-    rows = MeasurEquipment.objects.all().\
+    rows = MeasurEquipment.objects.filter(pointer=self.request.user.profile.userid).\
         annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
     manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
         filter(equipment__roomschange__in=setroom).\
@@ -4906,7 +4906,7 @@ def export_me_xls(request):
             'equipment__yearintoservice',
             'manuf_country',
             'equipment__roomschange__roomnumber__roomnumber',
-            'equipment__personchange__person__username',
+            'equipment__personchange__person__name',
             'equipment__status',
             'equipmentSM_ver__arshin',
             'equipmentSM_ver__certnumber',
@@ -4968,7 +4968,7 @@ def export_me_xls(request):
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style10)
 
-    rows = TestingEquipment.objects.all(). \
+    rows = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid). \
         annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName')). \
@@ -4986,7 +4986,7 @@ def export_me_xls(request):
         'equipment__yearintoservice',
         'manuf_country',
         'equipment__roomschange__roomnumber__roomnumber',
-        'equipment__personchange__person__username',
+        'equipment__personchange__person__name',
         'equipment__status',
         'equipmentSM_att__certnumber',
         'equipmentSM_att__date',
