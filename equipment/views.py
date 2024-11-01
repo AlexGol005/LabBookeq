@@ -1140,7 +1140,6 @@ class VerificationequipmentView(LoginRequiredMixin, View):
             comment = ''
         form = CommentsVerificationCreationForm(initial={'comment': comment})
         data = {'note': note,
-                'note2': note2,
                 'title': title,
                 'calinterval': calinterval,
                 'now': now,
@@ -1190,7 +1189,6 @@ class CalibrationequipmentView(LoginRequiredMixin, View):
             comment = ''
         form = CommentsVerificationCreationForm(initial={'comment': comment})
         data = {'note': note,
-                'note2': note2,
                 'title': title,
                 'calinterval': calinterval,
                 'now': now,
@@ -1240,7 +1238,6 @@ class AttestationequipmentView(LoginRequiredMixin, View):
             comment = ''
         form = CommentsAttestationequipmentForm(initial={'comment': comment})
         data = {'note': note,
-                'note2': note2,
                 'title': title,
                 'calinterval': calinterval,
                 'now': now,
