@@ -774,50 +774,6 @@ class VerificatorsCreationForm(forms.ModelForm):
                   ]
 
 
-class VerificatorPersonCreationForm(forms.ModelForm):
-    """форма для внесения сотрудника поверителя"""
-    company = forms.ModelChoiceField(label='Организация', required=False,
-                                     queryset=Verificators.objects.all(),
-                                     widget=forms.Select(attrs={'class': 'form-control'}))
-    name = forms.CharField(label='ФИО', max_length=10000000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': ''}))
-    position = forms.CharField(label='Должность', max_length=10000000, required=False,
-                               widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'placeholder': ''}))
-    departamentn = forms.CharField(label='Отдел №', max_length=10000000, required=False,
-                                   widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                 'placeholder': ''}))
-    departament = forms.CharField(label='Отдел название', max_length=10000000, required=False,
-                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                'placeholder': ''}))
-    departamentadress = forms.CharField(label='Расположение отдела', max_length=10000000, required=False,
-                                        widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                      'placeholder': ''}))
-    telnumber = forms.CharField(label='Телефон', max_length=10000000, required=False,
-                                widget=forms.TextInput(attrs={'class': 'form-control',
-                                                              'placeholder': ''}))
-    email = forms.CharField(label='email', max_length=10000000, required=False,
-                            widget=forms.TextInput(attrs={'class': 'form-control',
-                                                          'placeholder': ''}))
-    dop = forms.CharField(label='Примечание', max_length=10000000, required=False,
-                          widget=forms.TextInput(attrs={'class': 'form-control',
-                                                        'placeholder': ''}))
-
-    class Meta:
-        model = VerificatorPerson
-        fields = [
-            'company',
-            'name',
-            'position',
-            'departamentn',
-            'departament',
-            'departamentadress',
-            'telnumber', 'email',
-            'dop'
-                  ]
-
-
 class RoomsCreateForm(forms.ModelForm):
     """форма для внесения комнаты"""
     roomnumber = forms.CharField(label='Номер комнаты', widget=forms.TextInput(attrs={'class': 'form-control'}))
