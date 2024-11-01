@@ -5,58 +5,57 @@
 {#название страницы#}
 {#стандартная#}
 {% block title %}
-ЛО
+    ЛО
 {% endblock %}
 {#конец названия страницы#}
 
 {% block content %}
+<div class="col-8">
 
-{#заголовок#}
-{#стандартная#}
-    <div style="text-align: center;">
-<div style="text-align: center;"><h4> Лабораторное оборудование</h4></div>
-<br>
-{#конец заголовка #}
-
-{#основная таблица#}
-{# уникальная #}
-<table class="table table-bordered">
-    <thead>
+    {#стандартная#}
+    <center><h4> Лабораторное оборудование</h4></center>
+    <br>
+    {#конец заголовка #}
+    
+    {#основная таблица#}
+    <center>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Внут.№</th>
+                <th> Заводской № </th>
+                <th> Год вып. </th>
+                <th> Статус </th>
+                <th> Категория </th>
+             </tr>
+        </thead>
+        <tbody>
+        {% for obj in objects %}
         <tr>
-            <th>Внут.№</th>
-            <th> Заводской № </th>
-            <th> Год вып. </th>
-            <th> Статус </th>
-            <th> Категория </th>
-         </tr>
-    </thead>
-    <tbody>
-    {% for obj in objects %}
-    <tr>
-        <td>{{ obj.exnumber|slice:":5" }}</td>
-        <td> {{ obj.lot }}</td>
-        <td> {{ obj.yearmanuf }}</td>
-        <td> {{ obj.status }}</td>
-        <td>{{ obj.kategory }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{#конец основной таблицы#}
-
-{#пагинация#}
-{# стандартная #}
-{% if is_paginated %}
-    {% if page_obj.has_previous %}
-       <a href="?page=1" class="btn btn-outline-primary">Начало</a>
-       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
-  {% endif %}
-    {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
-       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
-  {% endif %}
-  {% endif %}
-{#конец пагинации#}
+            <td>{{ obj.exnumber|slice:":5" }}</td>
+            <td> {{ obj.lot }}</td>
+            <td> {{ obj.yearmanuf }}</td>
+            <td> {{ obj.status }}</td>
+            <td>{{ obj.kategory }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </center>
+    {#конец основной таблицы#}
+    
+    {#пагинация#}
+    {# стандартная #}
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+           <a href="?page=1" class="btn btn-outline-primary">Начало</a>
+           <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
+      {% endif %}
+        {% if page_obj.has_next %}
+           <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
+           <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
+      {% endif %}
+      {% endif %}
+    {#конец пагинации#}
 </div>
 {% endblock %}
-{#конец блока {% block content %}"""#}
