@@ -10,12 +10,6 @@ from .forms import AttestationJForm
 from .models import AttestationJ, ResultValueJ
 
 
-class About(View):
-    """выводит страницу О сайте"""
-    def get(self, request):
-        return render(request, 'main/about.html')
-
-
 class Contacts(View):
     """выводит страницу контакты"""
     def get(self, request):
