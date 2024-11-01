@@ -1046,9 +1046,6 @@ class AttestationRegForm(forms.ModelForm):
     verificator = forms.ModelChoiceField(label='Организация-поверитель',
                                          queryset=Verificators.objects.all(),
                                          widget=forms.Select(attrs={'class': 'form-control'}))
-    verificatorperson = forms.ModelChoiceField(label='Имя поверителя', required=False,
-                                               queryset=VerificatorPerson.objects.all(),
-                                               widget=forms.Select(attrs={'class': 'form-control'}))
     place = forms.ChoiceField(label='Место аттестации',
                               choices=CHOICESPLACE, initial='В ПА',
                               widget=forms.Select(attrs={'class': 'form-control'}))
@@ -1072,7 +1069,7 @@ class AttestationRegForm(forms.ModelForm):
     class Meta:
         model = Attestationequipment
         fields = ['date', 'datedead', 'dateorder', 'certnumber',
-                  'price', 'statusver',  'verificator', 'verificatorperson',
+                  'price', 'statusver',  'verificator', 
                   'place',
                   'year',
                   'dateordernew',
