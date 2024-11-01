@@ -10,9 +10,7 @@
 блок 5 - поверка СИ, аттестация ИО, проверка характеристик ВО
 блок 6 - комментарии
 блок 7 - микроклимат в помещении
-блок 8 - карточка предприятия
-блок 9 - контакты поверителей -  связывает контакты поверителя с оборудованием
-блок 10 - техобслуживание
+блок 8 - техобслуживание
 """
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -742,61 +740,7 @@ class MeteorologicalParameters(models.Model):
         unique_together = ('date', 'roomnumber',)
 
 
-# блок 8 - карточка предприятия
-
-
-class CompanyCard(models.Model):
-    """Карточка предприятия"""
-    objects = None
-    name = models.CharField('Название', max_length=90, blank=True, null=True)
-    nameboss = models.CharField('ФИО руководителя организации', max_length=90, blank=True, null=True)
-    positionboss = models.CharField('Должность руководителя организации', max_length=90, blank=True, null=True)
-    namebosslab = models.CharField('ФИО руководителя лаборатории', max_length=90, blank=True, null=True)
-    positionbosslab = models.CharField('Должность руководителя лаборатории', max_length=90, blank=True, null=True)
-    positionsupmen = models.CharField('Должность завхоза', max_length=90, blank=True, null=True)
-    namesupmen = models.CharField('ФИО завхоза', max_length=90, blank=True, null=True)
-    positionmetrologequipment = models.CharField('Должность инжененера по оборудованию', max_length=90,
-                                                 blank=True, null=True)
-    namemetrologequipment = models.CharField('ФИО инжененера по оборудованию', max_length=90, blank=True, null=True)
-    sertificat = models.TextField('Документ сертификата', blank=True, null=True)
-    sertificat9001 = models.CharField('Номер сертификата', max_length=500, blank=True, null=True)
-    affirmationproduction = models.CharField('Утверждаю начальник производства', max_length=190, blank=True, null=True)
-    affirmationcompanyboss = models.CharField('Утверждаю генеральный директор', max_length=190, blank=True, null=True)
-    adress = models.CharField('Юридический адрес', max_length=500, blank=True, null=True)
-    prohibitet = models.TextField('Запрет на тираж протокола',  blank=True, null=True)
-    imglogoadress = models.ImageField('Картинка логотип с адресом', upload_to='user_images', blank=True, null=True,
-                                      default='user_images/default.png')
-    imglogoadress_mini = models.ImageField('Картинка логотип с адресом малая', upload_to='user_images',
-                                           blank=True, null=True,  default='user_images/default.png')
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        if not self.pk and CompanyCard.objects.exists():
-            raise ValidationError('Можно создать только одну запись. '
-                                  'Для внесения изменений измените существующую запись')
-        return super(CompanyCard, self).save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = 'Карточка предприятия'
-        verbose_name_plural = 'Карточка предприятия'
-
-
-# блок 9 - контакты поверителей -  связывает контакты поверителя с оборудованием
-
-class ContactsVer(models.Model):
-    """контакты поверителей -  связывает контакты поверителя с оборудованием"""
-    equipment = models.ForeignKey(Equipment, verbose_name='Прибор', on_delete=models.PROTECT)
-    verificators = models.ForeignKey(VerificatorPerson, verbose_name='Организация', on_delete=models.PROTECT)
-    dop = models.CharField('Примечание', max_length=200, blank=True, null=True)
-
-    class Meta:
-        verbose_name = 'Контакты поверителей для прибора'
-        verbose_name_plural = 'Контакты поверителей для прибора'
-
-
-# блок 10 - техобслуживание
+# блок 8 - техобслуживание
 
 class ServiceEquipmentME(models.Model):
     """Техобслуживание СИ"""
