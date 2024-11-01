@@ -738,22 +738,6 @@ class HelpingEquipmentCreateForm(forms.ModelForm):
 
 # блок 4 - формы для внесения производителей, поверителей, комнат, принадлежностей
 
-class ContactsVerForm(ModelForm):
-    """форма для добавления контактов поверителей"""
-    verificators = forms.ModelChoiceField(label='Контактная информация',
-                                          queryset=VerificatorPerson.objects.all(),
-                                          widget=forms.Select(attrs={'class': 'form-control'}))
-    dop = forms.CharField(label='Примечание', required=False,
-                          widget=forms.TextInput(attrs={'class': 'form-control'}))
-
-    class Meta:
-        model = ContactsVer
-        fields = [
-                  'verificators',
-                  'dop'
-        ]
-
-
 class ManufacturerCreateForm(forms.ModelForm):
     """форма для внесения производителя"""
     companyName = forms.CharField(label='Название компании', max_length=10000,
