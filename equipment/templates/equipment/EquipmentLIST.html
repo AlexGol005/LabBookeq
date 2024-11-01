@@ -33,7 +33,7 @@
     <tbody>
     {% for obj in objects %}
     <tr>
-        <td>{{ obj.exnumber }}</td>
+        <td>{{ obj.exnumber|slice:":5" }}</td>
         <td> {{ obj.lot }}</td>
         <td> {{ obj.yearmanuf }}</td>
         <td> {{ obj.status }}</td>
