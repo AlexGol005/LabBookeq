@@ -4888,8 +4888,8 @@ def export_me_xls(request):
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
 
-    rows = MeasurEquipment.objects.filter(pointer=request.user.profile.userid).\
-        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+    rows = MeasurEquipment.objects.filter(pointer=request.user.profile.userid)
+    rows =  rows.annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
     manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
         filter(equipment__roomschange__in=setroom).\
         filter(equipment__personchange__in=setperson).\
@@ -4968,8 +4968,8 @@ def export_me_xls(request):
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style10)
 
-    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid). \
-        annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
+    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid)
+    rows = rows.annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName')). \
         filter(equipment__roomschange__in=setroom). \
