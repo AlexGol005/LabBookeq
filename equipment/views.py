@@ -300,11 +300,15 @@ def RoomsCreateView(request):
         if request.method == "POST":
             form = RoomsCreateForm(request.POST, request.FILES)
             if form.is_valid():
-                order = form.save(commit=False)
-                order.pointer = request.user.profile.userid
-                order.save()
-                messages.success(request, "Помещение успешно добавлено")
-                return redirect('rooms')
+                try:
+                    order = form.save(commit=False)
+                    order.pointer = request.user.profile.userid
+                    order.save()
+                    messages.success(request, "Помещение успешно добавлено")
+                    return redirect('rooms')
+                except: 
+                    messages.success(request, 'Эта комната уже есть')
+                    return redirect('roomreg')                  
             else:
                 messages.success(request, 'Эта комната уже есть')
                 return redirect('roomreg')
