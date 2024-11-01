@@ -490,8 +490,6 @@ class Calibrationequipment(models.Model):
                                  verbose_name='Статус')
     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
                                     verbose_name='Поверитель', blank=True, null=True)
-    verificatorperson = models.ForeignKey(VerificatorPerson, on_delete=models.PROTECT,
-                                          verbose_name='Поверитель имя', blank=True, null=True)
     place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
                              verbose_name='Место калибровки')
     note = models.CharField('Примечание', max_length=900, blank=True, null=True)
@@ -559,10 +557,6 @@ class Attestationequipment(models.Model):
                                  verbose_name='Статус')
     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
                                     verbose_name='Поверитель', blank=True, null=True)
-
-    verificatorperson = models.ForeignKey(VerificatorPerson, on_delete=models.PROTECT,
-                                          verbose_name='Поверитель имя', blank=True, null=True)
-
     place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
                              verbose_name='Место аттестации')
     note = models.CharField('Примечание', max_length=900, blank=True, null=True)
