@@ -1308,7 +1308,7 @@ def export_mustver_xls(request):
         'equipment__yearmanuf',
         'equipment__roomschange__roomnumber__roomnumber',
         'equipmentSM_ver__place',
-        'equipment__personchange__person__username',
+        'equipment__personchange__person__name',
         'equipment__notemetrology',
         'equipmentSM_ver__extra',
     ).order_by('-equipmentSM_ver__place')
@@ -1338,7 +1338,7 @@ def export_mustver_xls(request):
         'equipment__yearmanuf',
         'equipment__roomschange__roomnumber__roomnumber',
         'equipmentSM_att__place',
-        'equipment__personchange__person__username',
+        'equipment__personchange__person__name',
         'equipment__notemetrology',
         'equipmentSM_att__extra'
     ).order_by('-equipmentSM_att__place')
