@@ -169,15 +169,18 @@ def RoomsUpdateView(request, str):
 
 class EquipmentView(LoginRequiredMixin, ListView):
     """ Выводит список Всего ЛО """
-    model = Equipment
     template_name = URL + '/EquipmentLIST.html'
     context_object_name = 'objects'
     ordering = ['exnumber']
     paginate_by = 12
 
+    def get_queryset(self):
+        queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)
+        return queryset
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(EquipmentView, self).get_context_data(**kwargs)
-        context['company'] = CompanyCard.objects.get(pk=1).name
+        context['company'] =  Company.objects.get(userid=user.profile.userid).name
         return context
 
 
@@ -252,7 +255,7 @@ class TestingEquipmentView(LoginRequiredMixin, ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = TestingEquipment.objects.exclude(equipment__status='С')
+        queryset = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid).exclude(equipment__status='С')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -270,7 +273,7 @@ class HelpingEquipmentView(LoginRequiredMixin, ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = HelpingEquipment.objects.exclude(equipment__status='С')
+        queryset = HelpingEquipment.objects.filter(pointer=self.request.user.profile.userid).exclude(equipment__status='С')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -314,7 +317,6 @@ def RoomsCreateView(request):
 class VerificatorsCreationView(LoginRequiredMixin, SuccessMessageMixin, ListView):
     """ выводит форму добавления компании поверителя и список поверителей """
     template_name = URL + '/verificatorsreglist.html'
-    # form_class = VerificatorsCreationForm
     success_url = '/equipment/verificatorsreg/'
     success_message = "Организация поверитель успешно добавлена"
     context_object_name = 'objects'
@@ -947,32 +949,32 @@ class SearchResultTestingEquipmentView(LoginRequiredMixin, TemplateView):
             set.append(n.get('id_actual'))
 
         if name and not lot and not exnumber:
-            objects = TestingEquipment.objects.\
+            objects = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid).\
             filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 order_by('charakters__name')
             context['objects'] = objects
         if lot and not name  and not exnumber:
-            objects = TestingEquipment.objects.filter(equipment__lot=lot).order_by('charakters__name')
+            objects = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
         if exnumber and not name and not lot:
-            objects = TestingEquipment.objects.filter(equipment__exnumber=exnumber).order_by('charakters__name')
+            objects = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber=exnumber).order_by('charakters__name')
             context['objects'] = objects
         if exnumber and name and lot:
-            objects = TestingEquipment.objects.filter(equipment__exnumber=exnumber).\
+            objects = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber=exnumber).\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
         if exnumber and name and not lot:
-            objects = TestingEquipment.objects.filter(equipment__exnumber=exnumber).\
+            objects = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber=exnumber).\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 order_by('charakters__name')
             context['objects'] = objects
         if exnumber and not name and lot:
-            objects = TestingEquipment.objects.filter(equipment__exnumber=exnumber).\
+            objects = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber=exnumber).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
         if lot and name and not exnumber:
-            objects = TestingEquipment.objects.\
+            objects = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid).\
                 filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
                 filter(equipment__lot=lot).order_by('charakters__name')
             context['objects'] = objects
@@ -1119,7 +1121,6 @@ class VerificationequipmentView(LoginRequiredMixin, View):
 
     def get(self, request, str):
         note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
-        note2 = ContactsVer.objects.filter(equipment__exnumber=str).order_by('-pk')
         try:
             strreg = note.latest('pk').equipmentSM.equipment.exnumber
         except:
@@ -1170,7 +1171,6 @@ class CalibrationequipmentView(LoginRequiredMixin, View):
 
     def get(self, request, str):
         note = Calibrationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
-        note2 = ContactsVer.objects.filter(equipment__exnumber=str).order_by('-pk')
         try:
             strreg = note.latest('pk').equipmentSM.equipment.exnumber
         except:
@@ -1221,7 +1221,6 @@ class AttestationequipmentView(LoginRequiredMixin, View):
 
     def get(self, request, str):
         note = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
-        note2 = ContactsVer.objects.filter(equipment__exnumber=str).order_by('-pk')
         try:
             strreg = note.latest('pk').equipmentSM.equipment.exnumber
         except:
@@ -1467,7 +1466,7 @@ class SearchMustAttView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = TestingEquipment.objects.filter(id__in=set1).filter(equipment__status='Э')
+        queryset = TestingEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
         return queryset
 
 
@@ -1501,7 +1500,7 @@ class SearchNotVerView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = MeasurEquipment.objects.filter(id__in=set1).exclude(equipment__status='C')
+        queryset = MeasurEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
         return queryset
 
 
@@ -1535,7 +1534,7 @@ class SearchNotAttView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = TestingEquipment.objects.filter(id__in=set1).exclude(equipment__status='C')
+        queryset = TestingEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
         return queryset
 
 
@@ -1590,7 +1589,7 @@ class SearchMustOrderView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = MeasurEquipment.objects.filter(id__in=set1).filter(equipment__status='Э')
+        queryset = MeasurEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
         return queryset
 
 
