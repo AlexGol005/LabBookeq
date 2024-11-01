@@ -114,13 +114,14 @@ _tmr.push({id: "3475315", type: "pageView", start: (new Date()).getTime()});
     {# конец шапки #}
             
     {# здесь рисуем всплывающие при разных действиях сообщения  #}       
-<div class="col-8">
+    <div class="col-8">
+        <center><h3>
             {% if messages %}
                 {% for mess in messages %}
-                    <div class="alert alert=success">{{ mess }}</div>
+                    <font size="6" color="#fa8e47" face="serif">{{ mess }}</font>
                 {% endfor %}
             {% endif %}
-
+        </h3></center>
     </div>
     {# конец сообщений #}           
         <div class="container">
