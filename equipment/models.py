@@ -108,35 +108,7 @@ class Verificators(models.Model):
         verbose_name_plural = 'Поверители организации'
 
 
-class VerificatorPerson(models.Model):
-    """Сотрудники компаний поверителей поверители оборудования"""
-    company = models.ForeignKey(Verificators, on_delete=models.PROTECT, verbose_name='Компания',
-                                related_name='Verificators_company', blank=True, null=True)
-    name = models.CharField('ИМЯ', max_length=100, blank=True, null=True, default=' ')
-    position = models.CharField('Должность', max_length=100, blank=True, null=True, default=' ')
-    departamentn = models.CharField('№ отдела', max_length=100, blank=True, null=True, default='-')
-    departament = models.CharField('Название отдела', max_length=100, blank=True, null=True)
-    departamentadress = models.CharField('Расположение отдела', max_length=100, blank=True, null=True)
-    telnumber = models.CharField('Телефон', max_length=200, default='', blank=True)
-    email = models.CharField('email', max_length=200, default='', blank=True)
-    dop = models.CharField('Примечание', max_length=200, blank=True, null=True)
-
-    def __str__(self):
-        return f'{self.name}, {self.position}, {self.telnumber}, отдел {self.departamentn} {self.departament}'
-
-    class Meta:
-        verbose_name = 'Поверитель сотрудник'
-        verbose_name_plural = 'Поверители сотрудники'
-
-
-
-
-
 # блок 3 - оборудование в целом, характеристики СИ ИО ВО, сами СИ ИО ВО
-
-
-
-
 
 class Equipment(models.Model):
     """Лабораторное оборудование - базовая индивидуальная сущность"""
@@ -176,6 +148,7 @@ class Equipment(models.Model):
         verbose_name = 'Оборудование'
         verbose_name_plural = 'Оборудование: список всего оборудования'
 
+
 class MeasurEquipmentCharakters(models.Model):
     """Характеристики средств измерений (госреестры в связке с модификациями/типами/диапазонами)"""
     name = models.CharField('Название прибора', max_length=100, default='')
@@ -201,7 +174,6 @@ class MeasurEquipmentCharakters(models.Model):
     aim = models.CharField('примечание', max_length=90, blank=True, null=True)
     cod = models.CharField('виды измерений, тип (группа) средств измерений по МИ 2314' , max_length=200, blank=True, null=True)
                            
-
     def __str__(self):
         return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
 
@@ -210,7 +182,6 @@ class MeasurEquipmentCharakters(models.Model):
         verbose_name_plural = 'Средства измерения: описания типов'
         unique_together = ('reestr', 'modificname', 'typename', 'name')
         
-
 
 class TestingEquipmentCharakters(models.Model):
     """Характеристики ИО"""
@@ -289,11 +260,16 @@ class MeasurEquipment(models.Model):
     newcertnumbercal = models.CharField('Номер последнего сертификата калибровки', max_length=90, blank=True, null=True)
     newdatecal = models.CharField('Дата последнего сертификата калибровки', blank=True, null=True, max_length=90)
     newdatedeadcal = models.CharField('Дата окончания сертификата калибровки', blank=True, null=True, max_length=90)
-    pointer =  models.CharField('Указатель организации (ИНН_дата добавления ГГММДД)', max_length=500, blank=True, null=True) 
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
 
     def __str__(self):
         return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
                f' № реестр {self.charakters.reestr} - pk {self.pk}'
+
+    def save(self, *args, **kwargs):
+        super().save()
+        self.pointer = self.equipment.pointer
+        return super(MeasurEquipment, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Средство измерения'
@@ -311,9 +287,16 @@ class TestingEquipment(models.Model):
     newcertnumber = models.CharField('Номер последнего аттестата', max_length=90, blank=True, null=True)
     newdate = models.CharField('Дата последней аттестации', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней аттестации', blank=True, null=True, max_length=90)
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
 
     def __str__(self):
-        return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} - pk {self.pk}'
+        return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
+               f' № реестр {self.charakters.reestr} - pk {self.pk}'
+
+    def save(self, *args, **kwargs):
+        super().save()
+        self.pointer = self.equipment.pointer
+        return super(TestingEquipment, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Испытательное оборудование'
@@ -328,9 +311,16 @@ class HelpingEquipment(models.Model):
                                    verbose_name='Характеристики ВО', blank=True, null=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
 
     def __str__(self):
-        return f'Вн № {self.equipment.exnumber}  {self.charakters.name}  Зав № {self.equipment.lot} - pk {self.pk}'
+        return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
+               f' № реестр {self.charakters.reestr} - pk {self.pk}'
+
+    def save(self, *args, **kwargs):
+        super().save()
+        self.pointer = self.equipment.pointer
+        return super(HelpingEquipment, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Вспомогательное оборудование'
