@@ -112,11 +112,12 @@ _tmr.push({id: "3475315", type: "pageView", start: (new Date()).getTime()});
     </div> -->
     
     {# конец шапки #}
-{# 1 строка ниже убирает отступ слева, закрывашка от нее в самом низу над боди #}   
-<div class="container mt-5 table-list no-gutters">     
+    <div class="container mt-5 table-list no-gutters">
+        <div class="row no-gutters">
+            <div class="col-md-9 no-gutters">  
     
     {# здесь рисуем всплывающие при разных действиях сообщения  #}       
-    <div class="col-8">
+    
         <div style="text-align: center; margin-top: 20px"><h5>
             {% if messages %}
                 {% for mess in messages %}
@@ -124,6 +125,9 @@ _tmr.push({id: "3475315", type: "pageView", start: (new Date()).getTime()});
                 {% endfor %}
             {% endif %}
         </h5></div>
+                
+            </div>
+         </div>
     </div>
     {# конец сообщений #}           
         <div class="container">
