@@ -2793,9 +2793,6 @@ def export_exvercard_xls(request, pk):
         facthumid = 'указать'
         factpress = 'указать'
 
-
-
-
     row_num +=2
     columns = [
         f'2.2 Соответствие  требованиям к условиям эксплуатации в помещении № {room}'
@@ -2839,8 +2836,6 @@ def export_exvercard_xls(request, pk):
             st = style11
         else:
             st = style1
-
-
 
         row_num += 1
         columns = [
@@ -3057,8 +3052,6 @@ def export_exvercard_xls(request, pk):
             ws.merge(row_num, row_num, 0, 6, st)
         ws.row(row_num).height_mismatch = True
         ws.row(row_num).height = 500
-
-
 
     row_num += 2
     columns = [
