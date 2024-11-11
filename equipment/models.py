@@ -246,19 +246,62 @@ class HelpingEquipmentCharakters(models.Model):
 
 class MeasurEquipment(models.Model):
     """СИ: составлено из ЛО и характеристик СИ"""
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
     charakters = models.ForeignKey(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики СИ', blank=True, null=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
     aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
                            max_length=90, blank=True, null=True)
-    newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
+        
+    newperson = models.ForeignKey(Employees, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
+    newpersondate = models.DateField('Дата изменения ответственного', blank=True, null=True,)
+        
+    newroomnumber = models.CharField('Номер комнаты', max_length=100, blank=True, null=True,)
+    newroomnumberdate = models.DateField('Дата перемещения')
+                                    
     newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
-    newcertnumbercal = models.CharField('Номер последнего сертификата калибровки', max_length=90, blank=True, null=True)
-    newdatecal = models.CharField('Дата последнего сертификата калибровки', blank=True, null=True, max_length=90)
-    newdatedeadcal = models.CharField('Дата окончания сертификата калибровки', blank=True, null=True, max_length=90)
-    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
+    newdateorder = models.DateField('Дата заказа следующей поверки', blank=True, null=True)
+    newarshin = models.TextField('Ссылка на сведения о поверке в Аршин', blank=True, null=True)
+    newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
+    newcertnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
+    newprice = models.DecimalField('Стоимость данной поверки', max_digits=100, decimal_places=2, null=True, blank=True)
+    newstatusver = models.CharField(max_length=300, default='Поверен', null=True,
+                                 verbose_name='Статус')
+    newverificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
+                                    verbose_name='Поверитель', blank=True, null=True)
+    newplace = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
+                             verbose_name='Место поверки')
+    newnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
+    newyear = models.CharField('Год поверки (если нет точных дат)', max_length=900, blank=True, null=True)
+    newdateordernew = models.DateField('Дата заказа нового оборудования (если поверять не выгодно)', blank=True, null=True)                                    
+    newhaveorder = models.BooleanField(verbose_name='Заказана следующая поверка (или новое СИ)', default=False,  blank=True)                                 
+    newcust = models.BooleanField(verbose_name='Поверку организует Поставщик', default=False, blank=True)                            
+    newextra = models.TextField('Дополнительная информация', blank=True, null=True)
+
+    calnewdate = models.DateField('Дата калибровки', blank=True, null=True)
+    calnewdatedead = models.DateField('Дата окончания калибровки', blank=True, null=True)
+    calnewdateorder = models.DateField('Дата заказа следующей калибровки', blank=True, null=True)
+    calnewarshin = models.TextField('Ссылка на скан сертификата', blank=True, null=True)
+    calnewcertnumber = models.CharField('Номер сертификата калибровки', max_length=90, blank=True, null=True)
+    calnewcertnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
+    calnewprice = models.DecimalField('Стоимость данной калибровки', max_digits=100, decimal_places=2, null=True, blank=True)
+    calnewstatusver = models.CharField(max_length=300,  default='Калиброван', null=True,
+                                 verbose_name='Статус')
+    calnewverificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
+                                    verbose_name='Поверитель', blank=True, null=True)
+    calnewplace = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
+                             verbose_name='Место калибровки')
+    calnewnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
+    calnewyear = models.CharField('Год калибровки (если нет точных дат)', max_length=900, blank=True, null=True)
+    calnewdateordernew = models.DateField('Дата заказа нового оборудования (если калибровать не выгодно)',
+                                    blank=True, null=True)
+    calnewhaveorder = models.BooleanField(verbose_name='Заказана следующая калибровка (или новое СИ)', default=False,
+                                    blank=True)
+    calnewcust = models.BooleanField(verbose_name='Калибровку организует Поставщик', default=False,
+                               blank=True)
+    calnewextra = models.TextField('Дополнительная информация', blank=True, null=True)
 
     def __str__(self):
         return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
@@ -358,6 +401,17 @@ class Personchange(models.Model):
             return f'{self.equipment.exnumber} Изменён ответственный {self.date}'
         except:
             return '&'
+                
+    def save(self, *args, **kwargs):
+        super().save()
+            # добавляем последнего ответственого к СИ
+        try:
+            note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
+            note.newperson = self.person
+            note.newpersondate = self.date          
+            note.save()
+        except:
+            pass
 
     class Meta:
         verbose_name = 'Оборудование: дата изменения ответственного'
@@ -372,6 +426,17 @@ class Roomschange(models.Model):
 
     def __str__(self):
         return f'{self.equipment} Перемещено {self.date} '
+
+    def save(self, *args, **kwargs):
+        super().save()
+            # добавляем последнего ответственого к СИ
+        try:
+            note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
+            note.newroomnumber = self.roomnumber
+            note.newroomnumberdate = self.date          
+            note.save()
+        except:
+            pass
 
     class Meta:
         verbose_name = 'Оборудование: Дата перемещения прибора'
@@ -449,21 +514,29 @@ class Verificationequipment(models.Model):
 
     def save(self, *args, **kwargs):
         super().save()
-        # для картинок
-        if self.img:
-            image = Image.open(self.img.path)
-            if image.height > 500 or image.width > 500:
-                resize = (500, 500)
-                image.thumbnail(resize)
-                image.save(self.img.path)
-        # добавляем последнюю поверку к оборудованию
+        # добавляем последнюю поверку к СИ
         try:
             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
             note.newcertnumber = self.certnumber
+            note.newarshin = self.arshin
+            note.newcertnumbershort = self.certnumbershort
+            note.newprice = self.price
+            note.newstatusver = self.statusver
+            note.newverificator = self.verificator
+            note.newplace = self.place
+            note.newnote = self.note
+            note.newyear = self.year
+            note.newhaveorder = self.haveorder
+            note.newcust = self.cust
+            note.newextra = self.extra      
             newdate = self.get_dateformat(self.date)
             note.newdate = newdate
             newdatedead = self.get_dateformat(self.datedead)
             note.newdatedead = newdatedead
+            newdateorder = self.get_dateformat(self.dateorder)
+            note.newdateorder = newdateorder
+            newdateordernew = self.get_dateformat(self.dateordernew)
+            note.newdateordernew = newdateordernew            
             note.save()
         except:
             pass
@@ -526,11 +599,26 @@ class Calibrationequipment(models.Model):
         # добавляем последнюю калибровку к оборудованию
         try:
             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
-            note.newcertnumbercal = self.certnumber
-            newdate = self.get_dateformat(self.date)
-            note.newdatecal = newdate
-            newdatedeadcal = self.get_dateformat(self.datedead)
-            note.newdatedeadcal = newdatedeadcal
+            note.calnewcertnumber = self.certnumber
+            note.calnewarshin = self.arshin
+            note.calnewcertnumbershort = self.certnumbershort
+            note.calnewprice = self.price
+            note.calnewstatusver = self.statusver
+            note.calnewverificator = self.verificator
+            note.calnewplace = self.place
+            note.calnewnote = self.note
+            note.calnewyear = self.year
+            note.calnewhaveorder = self.haveorder
+            note.calnewcust = self.cust
+            note.calnewextra = self.extra      
+            calnewdate = self.get_dateformat(self.date)
+            note.calnewdate = calnewdate
+            calnewdatedead = self.get_dateformat(self.datedead)
+            note.calnewdatedead = calnewdatedead
+            calnewdateorder = self.get_dateformat(self.dateorder)
+            note.calnewdateorder = calnewdateorder
+            calnewdateordernew = self.get_dateformat(self.dateordernew)
+            note.calnewdateordernew = calnewdateordernew            
             note.save()
         except:
             pass
