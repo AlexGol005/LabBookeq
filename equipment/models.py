@@ -269,7 +269,7 @@ class MeasurEquipment(models.Model):
     newprice = models.DecimalField('Стоимость данной поверки', max_digits=100, decimal_places=2, null=True, blank=True)
     newstatusver = models.CharField(max_length=300, default='Поверен', null=True,
                                  verbose_name='Статус')
-    newverificator = models.ForeignKey(verbose_name='Поверитель поверка', blank=True, null=True, max_length=200)
+    newverificator = models.CharField(verbose_name='Поверитель поверка', blank=True, null=True, max_length=200)
     newplace = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
                              verbose_name='Место поверки')
     newnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
@@ -288,7 +288,7 @@ class MeasurEquipment(models.Model):
     calnewprice = models.DecimalField('Стоимость данной калибровки', max_digits=100, decimal_places=2, null=True, blank=True)
     calnewstatusver = models.CharField(max_length=300,  default='Калиброван', null=True,
                                  verbose_name='Статус')
-    calnewverificator = models.ForeignKey(verbose_name='Поверитель калибровка', blank=True, null=True, max_length=200)
+    calnewverificator = models.CharField(verbose_name='Поверитель калибровка', blank=True, null=True, max_length=200)
     calnewplace = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
                              verbose_name='Место калибровки')
     calnewnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
