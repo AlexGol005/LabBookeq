@@ -265,7 +265,7 @@ class MeasurEquipment(models.Model):
                                     
     newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
-    newdateorder = models.CharField('Дата заказа следующей поверки', blank=True, null=True, max_length=90)
+    newdateorder = models.CharField('Дата заказа следующей поверки', blank=True, null=True, max_length=90, default='-')
     newarshin = models.TextField('Ссылка на сведения о поверке в Аршин', blank=True, null=True)
     newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
     newcertnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
@@ -284,7 +284,7 @@ class MeasurEquipment(models.Model):
 
     calnewdate = models.CharField('Дата калибровки', blank=True, null=True, max_length=90)
     calnewdatedead = models.CharField('Дата окончания калибровки', blank=True, null=True, max_length=90)
-    calnewdateorder = models.CharField('Дата заказа следующей калибровки', blank=True, null=True, max_length=90)
+    calnewdateorder = models.CharField('Дата заказа следующей калибровки', blank=True, null=True, max_length=90, default='-')
     calnewarshin = models.TextField('Ссылка на скан сертификата', blank=True, null=True)
     calnewcertnumber = models.CharField('Номер сертификата калибровки', max_length=90, blank=True, null=True)
     calnewcertnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
@@ -531,10 +531,12 @@ class Verificationequipment(models.Model):
             note.newdate = newdate
             newdatedead = get_dateformat(self.datedead)
             note.newdatedead = newdatedead
-            newdateorder = get_dateformat(self.dateorder)
-            note.newdateorder = newdateorder
-            newdateordernew = get_dateformat(self.dateordernew)
-            note.newdateordernew = newdateordernew            
+            if self.dateorder
+                    newdateorder = get_dateformat(self.dateorder)
+                    note.newdateorder = newdateorder
+            if self.dateordernew
+                    newdateordernew = get_dateformat(self.dateordernew)
+                    note.newdateordernew = newdateordernew            
             note.save()
 
     class Meta:
@@ -607,10 +609,12 @@ class Calibrationequipment(models.Model):
             note.calnewdate = calnewdate
             calnewdatedead = get_dateformat(self.datedead)
             note.calnewdatedead = calnewdatedead
-            calnewdateorder = get_dateformat(self.dateorder)
-            note.calnewdateorder = calnewdateorder
-            calnewdateordernew = get_dateformat(self.dateordernew)
-            note.calnewdateordernew = calnewdateordernew            
+            if self.dateorder
+                    calnewdateorder = get_dateformat(self.dateorder)
+                    note.calnewdateorder = calnewdateorder
+            if self.dateordernew
+                    calnewdateordernew = get_dateformat(self.dateordernew)
+                    note.calnewdateordernew = calnewdateordernew            
             note.save()
 
     class Meta:
