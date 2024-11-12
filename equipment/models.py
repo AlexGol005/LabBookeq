@@ -416,8 +416,7 @@ class Personchange(models.Model):
             newpersondate = self.get_dateformat(self.date)
             note.newpersondate = newpersondate        
             note.save()
-        except:
-            pass
+
 
     class Meta:
         verbose_name = 'Оборудование: дата изменения ответственного'
