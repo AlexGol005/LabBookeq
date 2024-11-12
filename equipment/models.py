@@ -22,6 +22,7 @@ from decimal import *
 from django.urls import reverse
 
 from users.models import Employees
+from functstandart import get_dateformat
 
 # блок 1 -  неизменяемые непользовательские константы для полей с выбором значений в моделях
 from django.views.generic import DetailView
@@ -402,13 +403,18 @@ class Personchange(models.Model):
         except:
             return '&'
                 
+
     def save(self, *args, **kwargs):
         super().save()
-            # добавляем последнего ответственого к СИ
+        # добавляем последнего ответственого к СИ
         try:
             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
+        except:
+            pass
+        if note:
             note.newperson = self.person.name
-            note.newpersondate = self.date          
+            newpersondate = self.get_dateformat(self.date)
+            note.newpersondate = newpersondate        
             note.save()
         except:
             pass
@@ -503,14 +509,7 @@ class Verificationequipment(models.Model):
         """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
         return reverse('measureequipmentver', kwargs={'str': self.equipmentSM.equipment.exnumber})
 
-    @staticmethod
-    def get_dateformat(dateneed):
-        dateformat = str(dateneed)
-        day = dateformat[8:]
-        month = dateformat[5:7]
-        year = dateformat[:4]
-        rdate = f'{day}.{month}.{year}'
-        return rdate
+
 
     def save(self, *args, **kwargs):
         super().save()
@@ -586,19 +585,15 @@ class Calibrationequipment(models.Model):
         """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
         return reverse('measureequipmentcal', kwargs={'str': self.equipmentSM.equipment.exnumber})
 
-    @staticmethod
-    def get_dateformat(dateneed):
-        dateformat = str(dateneed)
-        day = dateformat[8:]
-        month = dateformat[5:7]
-        year = dateformat[:4]
-        rdate = f'{day}.{month}.{year}'
-        return rdate
 
     def save(self, *args, **kwargs):
         super().save()
         # добавляем последнюю калибровку к оборудованию
         try:
+            note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
+        except:
+            pass
+        if note:
             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
             note.calnewcertnumber = self.certnumber
             note.calnewarshin = self.arshin
@@ -668,15 +663,6 @@ class Attestationequipment(models.Model):
         """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
         return reverse('testingequipmentatt', kwargs={'str': self.equipmentSM.equipment.exnumber})
 
-    @staticmethod
-    def get_dateformat(dateneed):
-        dateformat = str(dateneed)
-        day = dateformat[8:]
-        month = dateformat[5:7]
-        year = dateformat[:4]
-        rdate = f'{day}.{month}.{year}'
-        return rdate
-
     def save(self, *args, **kwargs):
         super().save()
         if self.img:
@@ -723,15 +709,6 @@ class Checkequipment(models.Model):
     def get_absolute_url(self):
         """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
         return reverse('helpingequipmentcheck', kwargs={'str': self.equipmentSM.equipment.exnumber})
-
-    @staticmethod
-    def get_dateformat(dateneed):
-        dateformat = str(dateneed)
-        day = dateformat[8:]
-        month = dateformat[5:7]
-        year = dateformat[:4]
-        rdate = f'{day}.{month}.{year}'
-        return rdate
 
     class Meta:
         verbose_name = 'Вспомогательное оборудование: проверка характеристик'
