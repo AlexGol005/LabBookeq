@@ -257,7 +257,7 @@ class MeasurEquipment(models.Model):
                            max_length=90, blank=True, null=True)
         
     newperson = models.ForeignKey(Employees, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование', blank=True, null=True,)
-    newpersondate =  models.DateField('Дата изменения ответственного',  default=date.today )
+    newpersondate =  models.DateField('Дата изменения ответственного',  default=date.today, blank=True, null=True )
         
     newroomnumber = models.CharField('Номер комнаты', max_length=100, blank=True, null=True,)
     newroomnumberdate = models.DateField('Дата перемещения', blank=True, null=True)
