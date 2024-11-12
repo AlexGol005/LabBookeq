@@ -34,7 +34,6 @@ from users.models import Profile, Company
 
 URL = 'equipment'
 now = date.today()
-serdate = request.GET['date']
 company = Company.objects.get(userid=request.user.profile.userid)
 affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
 author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
