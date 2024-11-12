@@ -412,7 +412,7 @@ class Personchange(models.Model):
             pass
         if note:
             note.newperson = self.person.name
-            newpersondate = self.get_dateformat(self.date)
+            newpersondate = get_dateformat(self.date)
             note.newpersondate = newpersondate        
             note.save()
 
@@ -436,7 +436,7 @@ class Roomschange(models.Model):
         try:
             note = Equipment.objects.get(pk=self.equipment.pk)
             note.newroomnumber = self.roomnumber.roomnumber
-            newroomnumberdate = self.get_dateformat(self.date)
+            newroomnumberdate = get_dateformat(self.date)
             note.newroomnumberdate = newroomnumberdate  
             note.save()
         except:
@@ -529,13 +529,13 @@ class Verificationequipment(models.Model):
             note.newhaveorder = self.haveorder
             note.newcust = self.cust
             note.newextra = self.extra      
-            newdate = self.get_dateformat(self.date)
+            newdate = get_dateformat(self.date)
             note.newdate = newdate
-            newdatedead = self.get_dateformat(self.datedead)
+            newdatedead = get_dateformat(self.datedead)
             note.newdatedead = newdatedead
-            newdateorder = self.get_dateformat(self.dateorder)
+            newdateorder = get_dateformat(self.dateorder)
             note.newdateorder = newdateorder
-            newdateordernew = self.get_dateformat(self.dateordernew)
+            newdateordernew = get_dateformat(self.dateordernew)
             note.newdateordernew = newdateordernew            
             note.save()
 
@@ -605,13 +605,13 @@ class Calibrationequipment(models.Model):
             note.calnewhaveorder = self.haveorder
             note.calnewcust = self.cust
             note.calnewextra = self.extra      
-            calnewdate = self.get_dateformat(self.date)
+            calnewdate = get_dateformat(self.date)
             note.calnewdate = calnewdate
-            calnewdatedead = self.get_dateformat(self.datedead)
+            calnewdatedead = get_dateformat(self.datedead)
             note.calnewdatedead = calnewdatedead
-            calnewdateorder = self.get_dateformat(self.dateorder)
+            calnewdateorder = get_dateformat(self.dateorder)
             note.calnewdateorder = calnewdateorder
-            calnewdateordernew = self.get_dateformat(self.dateordernew)
+            calnewdateordernew = get_dateformat(self.dateordernew)
             note.calnewdateordernew = calnewdateordernew            
             note.save()
 
@@ -671,9 +671,9 @@ class Attestationequipment(models.Model):
         try:
             note = TestingEquipment.objects.get(pk=self.equipmentSM.pk)
             note.newcertnumber = self.certnumber
-            newdate = self.get_dateformat(self.date)
+            newdate = get_dateformat(self.date)
             note.newdate = newdate
-            newdatedead = self.get_dateformat(self.datedead)
+            newdatedead = get_dateformat(self.datedead)
             note.newdatedead = newdatedead
             note.save()
         except:
