@@ -277,7 +277,7 @@ class MeasurEquipment(models.Model):
                              verbose_name='Место поверки')
     newnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
     newyear = models.CharField('Год поверки (если нет точных дат)', max_length=900, blank=True, null=True)
-    newdateordernew = models.CharField('Дата заказа нового оборудования (если поверять не выгодно)', blank=True, null=True, max_length=90, default='')                                    
+    newdateordernew = models.CharField('Дата заказа нового оборудования (если поверять не выгодно)', max_length=90, default='-')                                    
     newhaveorder = models.BooleanField(verbose_name='Заказана следующая поверка (или новое СИ)', default=False,  blank=True)                                 
     newcust = models.BooleanField(verbose_name='Поверку организует Поставщик', default=False, blank=True)                            
     newextra = models.TextField('Дополнительная информация', blank=True, null=True)
@@ -296,10 +296,8 @@ class MeasurEquipment(models.Model):
                              verbose_name='Место калибровки')
     calnewnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
     calnewyear = models.CharField('Год калибровки (если нет точных дат)', max_length=900, blank=True, null=True)
-    calnewdateordernew = models.CharField('Дата заказа нового оборудования (если калибровать не выгодно)', max_length=90, default='',
-                                    blank=True, null=True)
-    calnewhaveorder = models.BooleanField(verbose_name='Заказана следующая калибровка (или новое СИ)', default=False,
-                                    blank=True)
+    calnewdateordernew = models.CharField('Дата заказа нового оборудования (если калибровать не выгодно)', max_length=90, default='-')
+    calnewhaveorder = models.BooleanField(verbose_name='Заказана следующая калибровка (или новое СИ)', default=False, blank=True)                                   
     calnewcust = models.BooleanField(verbose_name='Калибровку организует Поставщик', default=False,
                                blank=True)
     calnewextra = models.TextField('Дополнительная информация', blank=True, null=True)
