@@ -4883,7 +4883,7 @@ def export_me_xls(request):
 
     rows = MeasurEquipment.objects.annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
     manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
-        filter(equipment__pointer=request.user.userid).\
+        filter(equipment__pointer=request.user.profile.userid).\
         exclude(equipment__status='С').\
         values_list(
             'equipment__exnumber',
