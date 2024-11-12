@@ -138,10 +138,10 @@ class Equipment(models.Model):
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)   
 
     newperson = models.CharField(verbose_name='Ответственный за оборудование', max_length=90, blank=True, null=True)
-    newpersondate =  models.DateField('Дата изменения ответственного', blank=True, null=True )
+    newpersondate =  models.CharField('Дата изменения ответственного', blank=True, null=True, max_length=90 )
         
     newroomnumber = models.CharField('Номер комнаты', max_length=100, blank=True, null=True,)
-    newroomnumberdate = models.DateField('Дата перемещения', blank=True, null=True)
+    newroomnumberdate = models.CharField('Дата перемещения', blank=True, null=True, max_length=90)
 
     def __str__(self):
         return f'{self.pointer}: {self.exnumber} - {self.lot}'
