@@ -408,7 +408,7 @@ class Personchange(models.Model):
         super().save()
         # добавляем последнего ответственого к СИ
         try:
-            note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
+            note = Equipment.objects.get(pk=self.equipment.pk)
         except:
             pass
         try:
@@ -438,9 +438,10 @@ class Roomschange(models.Model):
         super().save()
             # добавляем последнего ответственого к СИ
         try:
-            note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
+            note = Equipment.objects.get(pk=self.equipment.pk)
             note.newroomnumber = self.roomnumber.roomnumber
-            note.newroomnumberdate = self.date          
+            newroomnumberdate = self.get_dateformat(self.date)
+            note.newroomnumberdate = newroomnumberdate  
             note.save()
         except:
             pass
