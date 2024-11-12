@@ -4883,9 +4883,7 @@ def export_me_xls(request):
 
     rows = MeasurEquipment.objects.annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
     manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
-        filter(equipment__roomschange__in=setroom).\
-        filter(equipment__personchange__in=setperson).\
-        filter(equipmentSM_ver__in=setver).\
+        filter(equipment__pointer=request.user.userid).\
         exclude(equipment__status='С').\
         values_list(
             'equipment__exnumber',
@@ -4897,20 +4895,20 @@ def export_me_xls(request):
             'equipment__new',
             'equipment__yearintoservice',
             'manuf_country',
-            'equipment__roomschange__roomnumber__roomnumber',
-            'equipment__personchange__person__name',
+            'equipment__newroomnumber',
+            'equipment__newperson',
             'equipment__status',
-            'equipmentSM_ver__arshin',
-            'equipmentSM_ver__certnumber',
-            'equipmentSM_ver__date',
-            'equipmentSM_ver__datedead',
-            'equipmentSM_ver__dateorder',
-            'equipmentSM_ver__dateordernew',
+            'equipmentSM_newarshin',
+            'equipmentSM_newcertnumber',
+            'equipmentSM_newdate',
+            'equipmentSM_newdatedead',
+            'equipmentSM_newdateorder',
+            'equipmentSM_newdateordernew',
             'charakters__calinterval',
             'equipment__invnumber',
             'charakters__measurydiapason',
             'charakters__accuracity',
-            'equipmentSM_ver__extra'
+            'equipmentSM_newextra'
         )
 
     for row in rows:
