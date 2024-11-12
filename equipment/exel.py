@@ -34,18 +34,16 @@ from users.models import Profile, Company
 
 URL = 'equipment'
 now = date.today()
-def get_company(Company, request):
-        company = Company.objects.get(userid=request.user.profile.userid)
-        return company
+
 
 
 def get_affirmation(Company, request):
-        get_company(Company, request)
-        affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{get_company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+        company = Company.objects.get(userid=request.user.profile.userid)
+        affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
         return affirmation
 
 def get_author(Company, request):
-        get_company(Company, request)
+        company = Company.objects.get(userid=request.user.profile.userid)
         author = f'Разработал: \n{get_company(Company, request).manager_position} _____________ /{get_company(Company, request).manager_name}/'
         return author
         
