@@ -34,9 +34,12 @@ from users.models import Profile, Company
 
 URL = 'equipment'
 now = date.today()
-company = Company.objects.get(userid=request.user.profile.userid)
-affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
-author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
+def get_company(Company, request):
+        company = Company.objects.get(userid=request.user.profile.userid)
+        return company
+
+affirmation = f'УТВЕРЖДАЮ \n{get_company.direktor_position}\n{get_company.name}\n____________/{get_company.direktor_name}/\n«__» ________20__ г.'
+author = f'Разработал: \n{get_company.manager_position} _____________ /{get_company.manager_name}/'
 
 
 # блок 1
