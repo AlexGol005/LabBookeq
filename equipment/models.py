@@ -615,8 +615,6 @@ class Calibrationequipment(models.Model):
             calnewdateordernew = self.get_dateformat(self.dateordernew)
             note.calnewdateordernew = calnewdateordernew            
             note.save()
-        except:
-            pass
 
     class Meta:
         verbose_name = 'Средство измерения: калибровка'
