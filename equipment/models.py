@@ -258,7 +258,7 @@ class MeasurEquipment(models.Model):
     newpersondate = models.DateField('Дата изменения ответственного', blank=True, null=True,)
         
     newroomnumber = models.CharField('Номер комнаты', max_length=100, blank=True, null=True,)
-    newroomnumberdate = models.DateField('Дата перемещения')
+    newroomnumberdate = models.DateField('Дата перемещения', blank=True, null=True)
                                     
     newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
