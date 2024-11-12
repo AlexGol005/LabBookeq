@@ -34,6 +34,10 @@ from users.models import Profile, Company
 
 URL = 'equipment'
 now = date.today()
+serdate = request.GET['date']
+company = Company.objects.get(userid=request.user.profile.userid)
+affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
 
 
 # блок 1
@@ -695,8 +699,6 @@ def export_metroyearcust_xls(request):
     helping_e_months = []
     serdate = request.GET['date']
     company = Company.objects.get(userid=request.user.profile.userid)
-    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
-    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     nameME = f'Средства измерений - отчет по поверке в {company.name} за {serdate} год'
     nameTE = f'Испытательное оборудование - отчет по аттестации в {company.name} за {serdate} год'
     nameHE = ''
@@ -807,14 +809,7 @@ def export_metroyearprice_xls(request):
         's1',
     )
 
-    helping_e_months = []
-    serdate = request.GET['date']
-    company = Company.objects.get(userid=request.user.profile.userid)
-    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
-    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
-    nameME = f'Средства измерений - отчет по поверке в {company.name} за {serdate} год (только те, где известна стоимость)'
-    nameTE = f'Испытательное оборудование - отчет по аттестации в {company.name} за {serdate} год (только те, где известна стоимость)'
-    nameHE = ''
+
 
     return base_planreport_xls(request, exel_file_name,
                         measure_e, testing_e, helping_e,
@@ -895,9 +890,6 @@ def export_metroyear_xls(request):
 
     helping_e_months = []
     serdate = request.GET['date']
-    company = Company.objects.get(userid=request.user.profile.userid)
-    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
-    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     nameME = f'Средства измерений - отчет по поверке в {company.name} за {serdate} год (включая купленное с поверкой)'
     nameTE = f'Испытательное оборудование - отчет по аттестации в {company.name} за {serdate} год (включая купленное с аттестацией)'
     nameHE = ''
@@ -1018,10 +1010,7 @@ def export_metronewyear_xls(request):
         'dcount2',
         's2',
     )
-    serdate = request.GET['date']
-    company = Company.objects.get(userid=request.user.profile.userid)
-    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
-    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
+
     nameME = f'Средства измерений введенные в эксплуатацию в {company.name} за {serdate} год'
     nameTE = f'Испытательное оборудование введенное в эксплуатацию  в {company.name} за {serdate} год'
     nameHE = f'Вспомогательное оборудование введенное в эксплуатацию  в {company.name} за {serdate} год'
@@ -1122,10 +1111,6 @@ def export_planmetro_xls(request):
         's',
     )
     helping_e_months = []
-    serdate = request.GET['date']
-    company = Company.objects.get(userid=request.user.profile.userid)
-    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
-    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     nameME = f'План поверки средств измерений в {company.name} на {serdate} год'
     nameTE = f'План аттестации испытательного оборудования в {company.name} за {serdate} год'
     nameHE = f'План проверки характеристик вспомогательного оборудования в {company.name} за {serdate} год'
@@ -1852,8 +1837,6 @@ def export_mecard_xls(request, pk):
 def export_tecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (ИО) в ексель'''
     note = TestingEquipment.objects.get(pk=pk)
-    company = Company.objects.get(userid=request.user.profile.userid)
-    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
     author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     cardname = pytils.translit.translify(note.equipment.exnumber) + ' ' +\
                 pytils.translit.translify(note.charakters.name) +\
@@ -2424,9 +2407,6 @@ def export_verificlabel_xls(request):
 def export_exvercard_xls(request, pk):
     '''представление для выгрузки протокола верификации СИ в ексель'''
     note = MeasurEquipment.objects.get(pk=pk)
-    company = Company.objects.get(userid=request.user.profile.userid)
-    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
-    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     try:
         room = Roomschange.objects.filter(equipment__exnumber=note.equipment.exnumber)
         room = room.last().roomnumber
@@ -3221,9 +3201,6 @@ def export_exvercard_xls(request, pk):
 def export_exvercardteste_xls(request, pk):
     '''представление для выгрузки протокола верификации ИО в ексель'''
     note = TestingEquipment.objects.get(pk=pk)
-    company = Company.objects.get(userid=request.user.profile.userid)
-    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
-    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     try:
         room = Roomschange.objects.filter(equipment__exnumber=note.equipment.exnumber)
         room = room.last().roomnumber
