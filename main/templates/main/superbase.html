@@ -117,9 +117,8 @@ _tmr.push({id: "3475315", type: "pageView", start: (new Date()).getTime()});
 
 
     {# здесь рисуем всплывающие при разных действиях сообщения  #}   
-<div class="container mt-5 table-list no-gutters">
+<div class="container mt-3 table-list no-gutters">
     <div class="row no-gutters">
-        <div class="col-md-9 no-gutters">
         {% if messages %}
             {% for mess in messages %}
                 <div class="alert alert=success">{{ mess }}</div>
@@ -127,7 +126,6 @@ _tmr.push({id: "3475315", type: "pageView", start: (new Date()).getTime()});
         {% endif %}
         </div>
      </div>
-</div>
     {# конец сообщений #}           
     
            
