@@ -4886,7 +4886,7 @@ def export_me_xls(request):
         filter(equipment__pointer=request.user.profile.userid).\
         exclude(equipment__status='С').\
         values_list(
-            'equipment__exnumber'[:5],
+            f'{'equipment__exnumber'}',
             'charakters__reestr',
             'charakters__name',
             'mod_type',
