@@ -4762,7 +4762,7 @@ def export_maintenance_schedule_xls(request):
     wb.save(response)
     return response
 
-# график поверки и иаттестации
+# график поверки и и аттестации
 def export_me_xls(request):
     '''представление для выгрузки графика поверки и аттестации'''
     response = HttpResponse(content_type='application/ms-excel')
@@ -4886,7 +4886,7 @@ def export_me_xls(request):
         filter(equipment__pointer=request.user.profile.userid).\
         exclude(equipment__status='С').\
         values_list(
-            'equipment__exnumber',
+            f'{equipment__exnumber[:5]}',
             'charakters__reestr',
             'charakters__name',
             'mod_type',
