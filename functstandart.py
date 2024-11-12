@@ -150,6 +150,13 @@ def get_round_signif_digit(x_avg: Decimal, numdig: int) -> Decimal:
 
 
 
+def get_dateformat(dateneed):
+    dateformat = str(dateneed)
+    day = dateformat[8:]
+    month = dateformat[5:7]
+    year = dateformat[:4]
+    rdate = f'{day}.{month}.{year}'
+    return rdate
 
 
 
