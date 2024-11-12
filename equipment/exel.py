@@ -4501,7 +4501,9 @@ def export_maintenance_schedule_xls(request):
     ws.col(17).width = 1200
     ws.col(18).width = 4500
     ws.col(19).width = 4000
-
+        
+    get_affirmation()
+        
     # шапка
     row_num = 2
     columns = [
