@@ -411,11 +411,13 @@ class Personchange(models.Model):
             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
         except:
             pass
-        if note:
+        try:
             note.newperson = self.person.name
             newpersondate = self.get_dateformat(self.date)
             note.newpersondate = newpersondate        
             note.save()
+        except:
+            pass
 
 
     class Meta:
