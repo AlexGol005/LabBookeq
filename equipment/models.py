@@ -12,7 +12,7 @@
 блок 7 - микроклимат в помещении
 блок 8 - техобслуживание
 """
-import datetime
+from datetime import date
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -257,7 +257,7 @@ class MeasurEquipment(models.Model):
                            max_length=90, blank=True, null=True)
         
     newperson = models.ForeignKey(Employees, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование', blank=True, null=True,)
-    newpersondate =  models.DateField('Дата изменения ответственного',  default=datetime.now() )
+    newpersondate =  models.DateField('Дата изменения ответственного',  default=date.today )
         
     newroomnumber = models.CharField('Номер комнаты', max_length=100, blank=True, null=True,)
     newroomnumberdate = models.DateField('Дата перемещения', blank=True, null=True)
