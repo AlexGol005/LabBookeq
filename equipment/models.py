@@ -532,7 +532,7 @@ class Verificationequipment(models.Model):
             note.newcertnumbershort = self.certnumbershort
             note.newprice = self.price
             note.newstatusver = self.statusver
-            note.newverificator = self.verificator
+            note.newverificator = self.verificator.companyName
             note.newplace = self.place
             note.newnote = self.note
             note.newyear = self.year
@@ -612,7 +612,7 @@ class Calibrationequipment(models.Model):
             note.calnewcertnumbershort = self.certnumbershort
             note.calnewprice = self.price
             note.calnewstatusver = self.statusver
-            note.calnewverificator = self.verificator
+            note.calnewverificator = self.verificator.companyName
             note.calnewplace = self.place
             note.calnewnote = self.note
             note.calnewyear = self.year
