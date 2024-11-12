@@ -514,7 +514,14 @@ class Verificationequipment(models.Model):
 
     def save(self, *args, **kwargs):
         super().save()
-        # добавляем последнюю поверку к СИ
+        # для картинок
+        if self.img:
+            image = Image.open(self.img.path)
+            if image.height > 500 or image.width > 500:
+                resize = (500, 500)
+                image.thumbnail(resize)
+                image.save(self.img.path)
+        # добавляем последнюю поверку к оборудованию
         try:
             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
             note.newcertnumber = self.certnumber
