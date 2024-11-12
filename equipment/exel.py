@@ -4898,17 +4898,17 @@ def export_me_xls(request):
             'equipment__newroomnumber',
             'equipment__newperson',
             'equipment__status',
-            'equipmentSM_newarshin',
-            'equipmentSM_newcertnumber',
-            'equipmentSM_newdate',
-            'equipmentSM_newdatedead',
-            'equipmentSM_newdateorder',
-            'equipmentSM_newdateordernew',
+            'newarshin',
+            'newcertnumber',
+            'newdate',
+            'newdatedead',
+            'newdateorder',
+            'newdateordernew',
             'charakters__calinterval',
             'equipment__invnumber',
             'charakters__measurydiapason',
             'charakters__accuracity',
-            'equipmentSM_newextra'
+            'newextra'
         )
 
     for row in rows:
