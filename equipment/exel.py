@@ -38,8 +38,18 @@ def get_company(Company, request):
         company = Company.objects.get(userid=request.user.profile.userid)
         return company
 
-affirmation = f'УТВЕРЖДАЮ \n{get_company(Company, request).direktor_position}\n{get_company.name}\n____________/{get_company(Company, request).direktor_name}/\n«__» ________20__ г.'
-author = f'Разработал: \n{get_company(Company, request).manager_position} _____________ /{get_company(Company, request).manager_name}/'
+
+def get_affirmation():
+        get_company(Company, request)
+        affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{get_company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
+        return affirmation
+
+def get_author():
+        get_company(Company, request)
+        author = f'Разработал: \n{get_company(Company, request).manager_position} _____________ /{get_company(Company, request).manager_name}/'
+        return author
+        
+
 
 
 # блок 1
