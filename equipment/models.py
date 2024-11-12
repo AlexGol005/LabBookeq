@@ -432,7 +432,7 @@ class Roomschange(models.Model):
             # добавляем последнего ответственого к СИ
         try:
             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
-            note.newroomnumber = self.roomnumber
+            note.newroomnumber = self.roomnumber.roomnumber
             note.newroomnumberdate = self.date          
             note.save()
         except:
