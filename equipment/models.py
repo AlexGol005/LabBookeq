@@ -254,7 +254,7 @@ class MeasurEquipment(models.Model):
     aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
                            max_length=90, blank=True, null=True)
         
-    newperson = models.ForeignKey(Employees, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
+    newperson = models.CharField(verbose_name='Ответственный за оборудование', max_length=100, blank=True, null=True)
     newpersondate = models.DateField('Дата изменения ответственного', blank=True, null=True,)
         
     newroomnumber = models.CharField('Номер комнаты', max_length=100, blank=True, null=True,)
@@ -405,7 +405,7 @@ class Personchange(models.Model):
             # добавляем последнего ответственого к СИ
         try:
             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
-            note.newperson = self.person
+            note.newperson = self.person.name
             note.newpersondate = self.date          
             note.save()
         except:
