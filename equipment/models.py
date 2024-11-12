@@ -407,7 +407,7 @@ class Personchange(models.Model):
         super().save()
         # добавляем последнего ответственого к СИ
         try:
-            note = MeasureEquipment.objects.get(pk=self.equipment.pk)
+            note = Equipment.objects.get(pk=self.equipment.pk)
         except:
             pass
         if note:
