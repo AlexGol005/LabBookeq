@@ -524,6 +524,9 @@ class Verificationequipment(models.Model):
         # добавляем последнюю поверку к оборудованию
         try:
             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
+        except:
+            pass
+        if note:       
             note.newcertnumber = self.certnumber
             note.newarshin = self.arshin
             note.newcertnumbershort = self.certnumbershort
@@ -545,8 +548,6 @@ class Verificationequipment(models.Model):
             newdateordernew = self.get_dateformat(self.dateordernew)
             note.newdateordernew = newdateordernew            
             note.save()
-        except:
-            pass
 
     class Meta:
         verbose_name = 'Средство измерения: поверка'
