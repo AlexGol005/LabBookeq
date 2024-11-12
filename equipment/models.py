@@ -135,7 +135,13 @@ class Equipment(models.Model):
     pravo = models.CharField('Право владения прибором (например, номер и дата накладной)', max_length=1000,  blank=True, null=True)
     aim = models.CharField('Предназначение', max_length=500, blank=True, null=True)                           
     aim2 = models.CharField('Наименование испытуемых групп объектов', max_length=500, blank=True, null=True)
-    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)                       
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)   
+
+    newperson = models.CharField(verbose_name='Ответственный за оборудование', max_length=90, blank=True, null=True)
+    newpersondate =  models.DateField('Дата изменения ответственного', blank=True, null=True )
+        
+    newroomnumber = models.CharField('Номер комнаты', max_length=100, blank=True, null=True,)
+    newroomnumberdate = models.DateField('Дата перемещения', blank=True, null=True)
 
     def __str__(self):
         return f'{self.pointer}: {self.exnumber} - {self.lot}'
@@ -256,12 +262,6 @@ class MeasurEquipment(models.Model):
                                   verbose_name='Оборудование')
     aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
                            max_length=90, blank=True, null=True)
-        
-    newperson = models.CharField(verbose_name='Ответственный за оборудование', max_length=90, blank=True, null=True)
-    newpersondate =  models.DateField('Дата изменения ответственного', blank=True, null=True )
-        
-    newroomnumber = models.CharField('Номер комнаты', max_length=100, blank=True, null=True,)
-    newroomnumberdate = models.DateField('Дата перемещения', blank=True, null=True)
                                     
     newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
@@ -407,7 +407,7 @@ class Personchange(models.Model):
         super().save()
         # добавляем последнего ответственого к СИ
         try:
-            note = Equipment.objects.get(pk=self.equipment.pk)
+            note = MeasureEquipment.objects.get(pk=self.equipment.pk)
         except:
             pass
         if note:
