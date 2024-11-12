@@ -4465,7 +4465,8 @@ def get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MO
 # график тоир техобслуживания
 def export_maintenance_schedule_xls(request):
     """представление для выгрузки графика ТО на указанную дату"""
-
+    get_affirmation(Company, request) 
+        
     # получаем дату от пользователя
     serdate = request.GET['date']
     year_search = str(serdate)[0:4]
