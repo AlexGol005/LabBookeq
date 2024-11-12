@@ -264,7 +264,7 @@ class MeasurEquipment(models.Model):
                                     
     newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
-    newdateorder = models.DateField('Дата заказа следующей поверки', blank=True, null=True)
+    newdateorder = models.CharField('Дата заказа следующей поверки', blank=True, null=True, max_length=90)
     newarshin = models.TextField('Ссылка на сведения о поверке в Аршин', blank=True, null=True)
     newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
     newcertnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
@@ -276,14 +276,14 @@ class MeasurEquipment(models.Model):
                              verbose_name='Место поверки')
     newnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
     newyear = models.CharField('Год поверки (если нет точных дат)', max_length=900, blank=True, null=True)
-    newdateordernew = models.DateField('Дата заказа нового оборудования (если поверять не выгодно)', blank=True, null=True)                                    
+    newdateordernew = models.CharField('Дата заказа нового оборудования (если поверять не выгодно)', blank=True, null=True, max_length=90)                                    
     newhaveorder = models.BooleanField(verbose_name='Заказана следующая поверка (или новое СИ)', default=False,  blank=True)                                 
     newcust = models.BooleanField(verbose_name='Поверку организует Поставщик', default=False, blank=True)                            
     newextra = models.TextField('Дополнительная информация', blank=True, null=True)
 
-    calnewdate = models.DateField('Дата калибровки', blank=True, null=True)
-    calnewdatedead = models.DateField('Дата окончания калибровки', blank=True, null=True)
-    calnewdateorder = models.DateField('Дата заказа следующей калибровки', blank=True, null=True)
+    calnewdate = models.CharField('Дата калибровки', blank=True, null=True, max_length=90)
+    calnewdatedead = models.CharField('Дата окончания калибровки', blank=True, null=True, max_length=90)
+    calnewdateorder = models.CharField('Дата заказа следующей калибровки', blank=True, null=True, max_length=90)
     calnewarshin = models.TextField('Ссылка на скан сертификата', blank=True, null=True)
     calnewcertnumber = models.CharField('Номер сертификата калибровки', max_length=90, blank=True, null=True)
     calnewcertnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
@@ -295,7 +295,7 @@ class MeasurEquipment(models.Model):
                              verbose_name='Место калибровки')
     calnewnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
     calnewyear = models.CharField('Год калибровки (если нет точных дат)', max_length=900, blank=True, null=True)
-    calnewdateordernew = models.DateField('Дата заказа нового оборудования (если калибровать не выгодно)',
+    calnewdateordernew = models.CharField('Дата заказа нового оборудования (если калибровать не выгодно)', max_length=90,
                                     blank=True, null=True)
     calnewhaveorder = models.BooleanField(verbose_name='Заказана следующая калибровка (или новое СИ)', default=False,
                                     blank=True)
