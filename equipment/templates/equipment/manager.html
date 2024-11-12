@@ -7,10 +7,10 @@
 {% block content %} 
   <div class="col-8">
     <center><h3>Управление оборудованием лаборатории</h4></center>
-    <center><a href="{% url 'equipmentreg' %}" class="btn btn-primary mr-2 ml-2 mt-4">Добавить новое ЛО</a></center>
-    <center><a href="{% url 'roomreg' %}" class="btn btn-primary mr-2 ml-2 mt-4">Добавить новое помещение</a></center>
-    <center><a href="{% url 'metro' %}" class="btn btn-primary mr-2 ml-2 mt-4" >Метрологическое обеспечение лабораторного оборудования</a></center>
-    <center><a href="{% url 'reports' %}" class="btn btn-primary mt-4" >Графики, планы, отчеты</a></center>
+    <center><a href="{% url 'equipmentreg' %}" class="btn btn-primary mr-2 ml-2 mt-4" style="width: 80%">Добавить новое ЛО</a></center>
+    <center><a href="{% url 'roomreg' %}" class="btn btn-primary mr-2 ml-2 mt-4"style="width: 80%">Добавить новое помещение</a></center>
+    <center><a href="{% url 'metro' %}" class="btn btn-primary mr-2 ml-2 mt-4"style="width: 80%" >Метрологическое обеспечение лабораторного оборудования</a></center>
+    <center><a href="{% url 'reports' %}" class="btn btn-primary mt-4" style="width: 80%" >Графики, планы, отчеты</a></center>
 
 
 <!--     раздел для суперпользователей сайта -->
@@ -19,15 +19,15 @@
     <hr>
     <center><h5>Госреестры и описания типов: смотреть и добавить</h5></center>
     <center>
-        <a href="{% url 'measurequipmentcharacterslist' %}" target="blank" class="btn btn-warning mr-2 ml-2 mt-4" style="width: 150px">Госреестры</a>
-        <a href="{% url 'testingequipmentcharacterslist' %}" class="btn btn-warning mr-2 ml-2 mt-4" style="width: 150px">Описания ИО</a>
-        <a href="{% url 'helpingequipmentcharacterslist' %}" class="btn btn-warning  mr-2 ml-2 mt-4" style="width: 150px">Описания ВО</a>
+        <a href="{% url 'measurequipmentcharacterslist' %}" target="blank" class="btn btn-primary mr-2 ml-2 mt-4" style="width: 30%">Госреестры</a>
+        <a href="{% url 'testingequipmentcharacterslist' %}" class="btn btn-primary mr-2 ml-2 mt-4" style="width: 30%">Описания ИО</a>
+        <a href="{% url 'helpingequipmentcharacterslist' %}" class="btn btn-primary  mr-2 ml-2 mt-4" style="width: 30%">Описания ВО</a>
     </center>
     <br>
        <hr>
     <center><h5>Производители: смотреть и добавить</h5></center>
     <center>
-        <a href="{% url 'manufacturerlist' %}" target="blank" class="btn btn-warning mr-2 ml-2 mt-4" style="width: 150px">Производители ЛО</a>
+        <a href="{% url 'manufacturerlist' %}" target="blank" class="btn btn-primary mr-2 ml-2 mt-4" style="width: 80%">Производители ЛО</a>
     </center>
     <br>
 {% endif %}
