@@ -532,11 +532,15 @@ class Verificationequipment(models.Model):
             newdatedead = get_dateformat(self.datedead)
             note.newdatedead = newdatedead
             if self.dateorder:
-                    newdateorder = get_dateformat(self.dateorder)
-                    note.newdateorder = newdateorder
+                newdateorder = get_dateformat(self.dateorder)
+                note.newdateorder = newdateorder
+            else:
+                note.newdateorder = '-' 
             if self.dateordernew:
-                    newdateordernew = get_dateformat(self.dateordernew)
-                    note.newdateordernew = newdateordernew            
+                newdateordernew = get_dateformat(self.dateordernew)
+                note.newdateordernew = newdateordernew  
+            else:
+                note.newdateordernew = '-' 
             note.save()
 
     class Meta:
@@ -610,11 +614,15 @@ class Calibrationequipment(models.Model):
             calnewdatedead = get_dateformat(self.datedead)
             note.calnewdatedead = calnewdatedead
             if self.dateorder:
-                    calnewdateorder = get_dateformat(self.dateorder)
-                    note.calnewdateorder = calnewdateorder
+                calnewdateorder = get_dateformat(self.dateorder)
+                note.calnewdateorder = calnewdateorder
+            else:
+                note.calnewdateorder = '-' 
             if self.dateordernew:
-                    calnewdateordernew = get_dateformat(self.dateordernew)
-                    note.calnewdateordernew = calnewdateordernew            
+                calnewdateordernew = get_dateformat(self.dateordernew)
+                note.calnewdateordernew = calnewdateordernew  
+            else:
+                note.calnewdateordernew = '-'            
             note.save()
 
     class Meta:
