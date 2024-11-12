@@ -401,8 +401,7 @@ class Personchange(models.Model):
         try:
             return f'{self.equipment.exnumber} Изменён ответственный {self.date}'
         except:
-            return '&'
-                
+            return '&'             
 
     def save(self, *args, **kwargs):
         super().save()
@@ -411,14 +410,11 @@ class Personchange(models.Model):
             note = Equipment.objects.get(pk=self.equipment.pk)
         except:
             pass
-        try:
+        if note:
             note.newperson = self.person.name
             newpersondate = self.get_dateformat(self.date)
             note.newpersondate = newpersondate        
             note.save()
-        except:
-            pass
-
 
     class Meta:
         verbose_name = 'Оборудование: дата изменения ответственного'
