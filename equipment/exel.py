@@ -275,7 +275,7 @@ def base_planreport_xls(request, exel_file_name,
                                str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE):
     """базовое шаблон представление для выгрузки планов и отчетов по СИ, ИО, ВО к которому обращаются частные представления"""
 
-
+    get_affirmation()    
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="{exel_file_name}.xls"'
 
@@ -4007,7 +4007,7 @@ def export_exvercardteste_xls(request, pk):
 size = 11
 
 def get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search):
-
+    get_affirmation()    
     row_num += 1
     columns = [
         f'{equipment_type}'
