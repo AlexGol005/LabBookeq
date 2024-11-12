@@ -19,7 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse, request
 from django.db.models import Max, Q, Value, CharField, Count, Sum
-from django.db.models.functions import Concat
+from django.db.models.functions import Concat, Substr 
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
