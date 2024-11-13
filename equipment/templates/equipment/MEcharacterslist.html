@@ -74,7 +74,7 @@
             {% if obj.serviceequipmentme %}
             <td> есть</td> 
             {% else %}
-            <td> нету</td>
+            <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% endif %}
         </tr>
         {% endfor %}
