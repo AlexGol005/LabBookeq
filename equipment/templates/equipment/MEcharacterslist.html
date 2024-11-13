@@ -64,6 +64,7 @@
             <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> 
             {% else %}
             <td> ред. админ.</td>
+            {% endif %}
         </tr>
         {% endfor %}
         </tbody>
