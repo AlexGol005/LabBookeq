@@ -1611,7 +1611,11 @@ def ServiceEquipmentregView(request, str):
     charakters = MeasurEquipmentCharakters.objects.get(pk=str)    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            form = ServiceEquipmentregForm(request.POST)                                                       
+            try: 
+                ServiceEquipmentME.objects.get(charakters=charakters)
+                form = ServiceEquipmentregForm(request.POST, instance=ServiceEquipmentME.objects.get(charakters=charakters))  
+            except:
+                form = ServiceEquipmentregForm(request.POST)  
             if form.is_valid():
                 order = form.save(commit=False)
                 order.charakters = charakters
