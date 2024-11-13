@@ -1617,7 +1617,7 @@ def ServiceEquipmentregView(request, str):
                 order.save()
                 return redirect('measurequipmentcharacterslist')
         else:
-            form = RoomsUpdateForm(ruser, initial={'ruser': ruser,})
+            form = ServiceEquipmentregForm(ruser, initial={'ruser': ruser,})
         data = {'form': form,}                
         return render(request, 'equipment/toreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
