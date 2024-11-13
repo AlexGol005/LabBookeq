@@ -12,7 +12,7 @@
 {% block content %}
 <div class="col-12">  
 {#заголовок#}
-    <a href="{% url 'measurequipmentcharacterslist' %}">
+    <a href="/equipment/measurequipmentcharacterslist/">
     <div style="text-align: center;"><h4> {{ title }}</h4></div>
     </a>
     <br>
@@ -20,7 +20,7 @@
 
     <br>
     <div style="text-align: center;">
-        <a href="{% url /equipment/measurequipmentcharacterslist/ %}"  target="blank" class="btn btn-info" style="width: 350px">
+        <a href="{% url 'measurequipmentcharactersreg' %}"  target="blank" class="btn btn-info" style="width: 350px">
             Добавить госреестр, тип, модификацию
         </a>
     </div>
