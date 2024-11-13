@@ -11,6 +11,7 @@
 # блок 5 - формы для внесения внесения сведений о поверке, аттестации, проверке характеристик плюс формы изменения
 # блок 6 - смена ответственного и помещения, изменение названия комнат
 # блок 7 - формы для микроклимата
+# блок 8 - формы для ТОИР
 # """
 
 
@@ -1213,3 +1214,23 @@ class MeteorologicalParametersRegForm(ModelForm):
                   ]
         widgets = {'roomnumber':forms.Select(attrs={'class': 'form-control'}),}
         labels = {'roomnumber': 'название или номер помещения'}
+
+
+# блок 8 - формы для ТОИР
+
+class ServiceEquipmentregForm(forms.ModelForm):
+    """форма для  внесения постоянного описания ТОИР к госреестрам"""
+    descriptiont0 = forms.CharField(label='Объем технического обслуживания ТО 0', max_length=10000,
+                           widget=forms.Textarea(attrs={'class': 'form-control',
+                                                        'placeholder': 'введите текст записи о приборе'}))
+    descriptiont1 = forms.CharField(label='Объем технического обслуживания ТО 1', max_length=10000,
+                           widget=forms.Textarea(attrs={'class': 'form-control',
+                                                        'placeholder': 'введите текст записи о приборе'}))
+    descriptiont2 = forms.CharField(label='Объем технического обслуживания ТО 2', max_length=10000,
+                           widget=forms.Textarea(attrs={'class': 'form-control',
+                                                        'placeholder': 'введите текст записи о приборе'}))
+
+
+    class Meta:
+        model = ServiceEquipmentME
+        fields = ['descriptiont0', 'descriptiont1', 'descriptiont2', ]
