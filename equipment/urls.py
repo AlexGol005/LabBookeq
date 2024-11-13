@@ -78,5 +78,5 @@ urlpatterns = [
     path(r'^export75/xls/$', exel.export_plan_purchaesing_xls, name='export_plan_purchaesing_xls'),
     path(r'^export80/xls/$', exel.export_maintenance_schedule_xls, name='export_maintenance_schedule_xls'),
     path(r'^export90/xls/$/<int:pk>', exel.export_meteo_xls, name='export_meteo_xls'),
-    path('toreg/<str:str>/', views.ServiceEquipmentView, name='toreg'),
+    path('toreg/<str:str>/', views.ServiceEquipmentregView, name='toreg'),
 ]
