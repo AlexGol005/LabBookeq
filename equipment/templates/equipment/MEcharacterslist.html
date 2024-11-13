@@ -65,7 +65,7 @@
             <td> {{ obj.calinterval }}</td>
             <td> {{ obj.measurydiapason }}</td>
             <td> {{ obj.cod|default_if_none:' ' }}</td>
-            {% if POINTER == obj.pointer or obj.pointer == False %}
+            {% if POINTER == obj.pointer %}
             <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> 
             {% else %}
             <td> ред. админ.</td>
