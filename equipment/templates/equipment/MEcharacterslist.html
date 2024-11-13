@@ -47,7 +47,7 @@
                 <th> Межпов. <br> интервал, <br>мес. </th>
                 <th> Диапазон измерений </th>
                 <th> По Ми 2314 </th>
-<!--                 <th> Ред </th> -->
+                <th> Ред </th>
              </tr>
         </thead>
         <tbody>
@@ -60,7 +60,10 @@
             <td> {{ obj.calinterval }}</td>
             <td> {{ obj.measurydiapason }}</td>
             <td> {{ obj.cod|default_if_none:' ' }}</td>
-<!--         <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> -->
+            {% if POINTER == obj.pointer or obj.pointer == False %}
+            <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> 
+            {% else %}
+            <td> ред. админ.</td>
         </tr>
         {% endfor %}
         </tbody>
