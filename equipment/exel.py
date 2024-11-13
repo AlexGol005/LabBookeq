@@ -4596,9 +4596,9 @@ def export_maintenance_schedule_xls(request):
     to3 = 'Аттестация'
 
 
-    get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search)
+    get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search)
 
-    row_num = get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
+    row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
 
     equipment_type = 'ВО'
     MODEL = HelpingEquipment.objects.filter(charakters__kvasyattestation=True).exclude(equipment__status='С')
