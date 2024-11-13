@@ -15,6 +15,7 @@
 блок 10 - индивидуальные страницы СИ ИО ВО их поверок и аттестаций
 блок 11 - все комментарии ко всему
 блок 12 - вывод списков и форм  для метрологического обеспечения
+блок 13 - ТОиР
 """
 
 
@@ -1599,3 +1600,26 @@ class VerificationLabelsView(LoginRequiredMixin, TemplateView):
         context = super(VerificationLabelsView, self).get_context_data(**kwargs)
         context['form'] = LabelEquipmentform()
         return context
+
+
+# блок 13 - ТОиР
+
+@login_required
+def ServiceEquipmentregView(request, str):
+    """выводит форму для добавления постоянного ТОИР"""
+    ruser=request.user.profile.userid
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = ServiceEquipmentregForm(ruser, request.POST, initial={'ruser': ruser,})                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.charakters = MeasurEquipmentCharakters.objects.get(pk=str)
+                order.save()
+                return redirect('measurequipmentcharacterslist')
+        else:
+            form = RoomsUpdateForm(ruser, initial={'ruser': ruser,})
+        data = {'form': form,}                
+        return render(request, 'equipment/toreg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('measurequipmentcharacterslist')
