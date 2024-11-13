@@ -53,6 +53,7 @@
                 <th> Диапазон измерений </th>
                 <th> По Ми 2314 </th>
                 <th> Ред </th>
+                <th> ТОиР </th>
              </tr>
         </thead>
         <tbody>
@@ -69,6 +70,11 @@
             <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> 
             {% else %}
             <td> ред. админ.</td>
+            {% endif %}
+            {% if obj.serviceequipmentme %}
+            <td> есть</td> 
+            {% else %}
+            <td> нету</td>
             {% endif %}
         </tr>
         {% endfor %}
