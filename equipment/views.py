@@ -1608,12 +1608,13 @@ class VerificationLabelsView(LoginRequiredMixin, TemplateView):
 def ServiceEquipmentregView(request, str):
     """выводит форму для добавления постоянного ТОИР"""
     ruser=request.user.profile.userid
+    charakters = MeasurEquipmentCharakters.objects.get(pk=str)
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = ServiceEquipmentregForm(ruser, request.POST, initial={'ruser': ruser,})                                                       
             if form.is_valid():
                 order = form.save(commit=False)
-                order.charakters = MeasurEquipmentCharakters.objects.get(pk=str)
+                order.charakters = charakters
                 order.save()
                 return redirect('measurequipmentcharacterslist')
         else:
