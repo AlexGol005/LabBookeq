@@ -71,3 +71,11 @@ class MeasurEquipmentAdmin(admin.ModelAdmin):
     form = make_ajax_form(MeasurEquipment, {
         'charakters': 'mecharakters_tag'
     })
+
+
+@admin.register(ServiceEquipmentME)
+class ServiceEquipmentMEAdmin(admin.ModelAdmin):
+
+    form = make_ajax_form(ServiceEquipmentME, {
+        'charakters': 'mecharakters_tag'
+    })
