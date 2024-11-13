@@ -38,7 +38,7 @@ now = date.today()
 
 
 def get_affirmation(model, request):
-        company = model.objects.get(userid=request.user.profile.userid)
+        company = Company.objects.get(userid=request.user.profile.userid)
         affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
         return affirmation
 
@@ -272,7 +272,7 @@ def base_planreport_xls(request, exel_file_name,
                                u_headers_me, u_headers_te, u_headers_he,
                                str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE):
     """базовое шаблон представление для выгрузки планов и отчетов по СИ, ИО, ВО к которому обращаются частные представления"""
-    company = model.objects.get(userid=request.user.profile.userid)
+    company = Company.objects.get(userid=request.user.profile.userid)
     affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'    
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="{exel_file_name}.xls"'
@@ -4005,7 +4005,7 @@ def export_exvercardteste_xls(request, pk):
 size = 11
 
 def get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search):
-    company = model.objects.get(userid=request.user.profile.userid)
+    company = Company.objects.get(userid=request.user.profile.userid)
     affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'     
     row_num += 1
     columns = [
@@ -4464,7 +4464,7 @@ def get_rows_service_shedule(row_num, ws, MODEL, to3, equipment_type, MODEL2, MO
 # график тоир техобслуживания
 def export_maintenance_schedule_xls(request):
     """представление для выгрузки графика ТО на указанную дату"""
-    company = model.objects.get(userid=request.user.profile.userid)
+    company = Company.objects.get(userid=request.user.profile.userid)
     affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'
         
     # получаем дату от пользователя
