@@ -198,6 +198,7 @@ class MeasurEquipmentCharaktersView(LoginRequiredMixin, ListView):
         context['form'] = Searchreestrform()
         context['title'] = 'Госреестры, типы, модификации средств измерений'
         context['POINTER'] = self.request.user.profile.userid
+        user = User.objects.get(username=self.request.user)
         return context
 
 
@@ -1617,7 +1618,11 @@ def ServiceEquipmentregView(request, str):
                 order.save()
                 return redirect('measurequipmentcharacterslist')
         else:
-            form = ServiceEquipmentregForm()
+            try: 
+                ServiceEquipmentME.objects.get(charakters=charakters)
+                form = ServiceEquipmentregForm(instance=ServiceEquipmentME.objects.get(charakters=charakters))
+            except:
+                form = ServiceEquipmentregForm()
         data = {'form': form,}                
         return render(request, 'equipment/toreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
