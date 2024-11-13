@@ -180,6 +180,7 @@ class MeasurEquipmentCharakters(models.Model):
                                     default='', blank=True, null=True)
     aim = models.CharField('примечание', max_length=90, blank=True, null=True)
     cod = models.CharField('виды измерений, тип (группа) средств измерений по МИ 2314' , max_length=200, blank=True, null=True)
+    pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True) 
                            
     def __str__(self):
         return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
