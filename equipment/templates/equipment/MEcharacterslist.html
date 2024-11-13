@@ -70,12 +70,16 @@
             <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> 
             {% else %}
             <td> ред. админ.</td>
+            
             {% endif %}
-            {% if obj.serviceequipmentme %}
+            {% if obj.serviceequipmentme and POINTER == obj.pointer %}
+              <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
+            {% elif obj.serviceequipmentme and POINTER != obj.pointer %}
             <td> есть</td> 
             {% else %}
             <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% endif %}
+            
         </tr>
         {% endfor %}
         </tbody>
