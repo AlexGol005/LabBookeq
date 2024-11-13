@@ -196,6 +196,7 @@ class MeasurEquipmentCharaktersView(LoginRequiredMixin, ListView):
         context = super(MeasurEquipmentCharaktersView, self).get_context_data(**kwargs)
         context['form'] = Searchreestrform()
         context['title'] = 'Госреестры, типы, модификации средств измерений'
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
