@@ -4227,7 +4227,7 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             '',
             f'{note.charakters.name}, {note.charakters.modificname}, {note.charakters.typename}',
             f'{note.charakters.name}, {note.charakters.modificname}, {note.charakters.typename}',
-            f'{note.equipment.exnumber}',
+            f'{note.exnumber}',
             f'{note.equipment.lot}',
             '',
             'январь',
@@ -4506,7 +4506,7 @@ def export_maintenance_schedule_xls(request):
 
         
     # шапка
-    row_num = 2
+    row_num = 1
     columns = [
         '',
         '',
@@ -4535,7 +4535,7 @@ def export_maintenance_schedule_xls(request):
         ws.row(row_num).height_mismatch = True
         ws.row(row_num).height = 2000
 
-    row_num += 8
+    row_num += 7
     columns = [
         f'График технического обслуживания и ремонта лабораторного оборудования'
     ]
@@ -4547,7 +4547,7 @@ def export_maintenance_schedule_xls(request):
 
 
     # заголовки ТОиР
-    row_num += 4
+    row_num += 3
     columns = [
         '',
         'Наименование, модификация, тип',
@@ -4580,7 +4580,7 @@ def export_maintenance_schedule_xls(request):
 
 
     equipment_type = 'СИ'
-    MODEL = MeasurEquipment.objects.exclude(equipment__status='С')
+    MODEL = MeasurEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5)
     MODEL2 = ServiceEquipmentME
     MODEL3 = Verificationequipment
     to3 = 'Поверка'
@@ -4590,7 +4590,7 @@ def export_maintenance_schedule_xls(request):
     row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
 
     equipment_type = 'ИО'
-    MODEL = TestingEquipment.objects.exclude(equipment__status='С')
+    MODEL = TestingEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5)
     MODEL2 = ServiceEquipmentTE
     MODEL3 = Attestationequipment
     to3 = 'Аттестация'
@@ -4601,7 +4601,7 @@ def export_maintenance_schedule_xls(request):
     row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
 
     equipment_type = 'ВО'
-    MODEL = HelpingEquipment.objects.filter(charakters__kvasyattestation=True).exclude(equipment__status='С')
+    MODEL = HelpingEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5)
     MODEL2 = ServiceEquipmentHE
     MODEL3 = Checkequipment
     to3 = 'Проверка технических характеристик'
