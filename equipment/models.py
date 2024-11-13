@@ -817,7 +817,7 @@ class MeteorologicalParameters(models.Model):
 
 class ServiceEquipmentME(models.Model):
     """Техобслуживание СИ - постоянная информация из паспортов и инструкций"""
-    charakters = models.ForeignKey(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
+    charakters = models.OneToOneField(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики СИ')
     # ТО 0
     descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
