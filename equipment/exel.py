@@ -7,6 +7,7 @@
 блок 2 блок стили  для стилей полей документа exel
 блок 3 - выгрузка данных в формате ексель (вначале блока идет общий класс base_planreport_xls, который наследуется частными классами)
 блок 4 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки) 
+блок 5 - ТОИР 
 """
 
 
@@ -4004,7 +4005,9 @@ def export_exvercardteste_xls(request, pk):
 # размер шрифта
 size = 11
 
-def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search):
+def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, MODEL4, year_search):
+    """создает и пересчитывает строки графика для класса выгрузки поверки(ниже):  MODEL = тип ЛО (СИ, ИО, ВО); MODEL2 = ServiceEquipment...; MODEL3 = поверка/аттестация; MODEL4 = ServiceEquipmentU..."""
+
     company = Company.objects.get(userid=request.user.profile.userid) 
     affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'     
     row_num += 1
@@ -4028,7 +4031,6 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             descriptiont0 = note2.descriptiont0
             descriptiont1 = note2.descriptiont1
             descriptiont2 = note2.descriptiont2
-            commentservice = note2.commentservice
             if note2.descriptiont0:
                 to0_shed = 'ежедневно'
             else:
@@ -4037,59 +4039,65 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
                 to1_shed = 'ежемесячно'
             else:
                 to1_shed = ' '
-            if note2.t2month1 == True:
-                t2month1 = 'V'
-            else:
-                t2month1 = ' '
-            if note2.t2month2 == True:
-                t2month2 = 'V'
-            else:
-                t2month2 = ' '
-            if note2.t2month3 == True:
-                t2month3 = 'V'
-            else:
-                t2month3 = ' '
-            if note2.t2month4 == True:
-                t2month4 = 'V'
-            else:
-                t2month4 = ' '
-            if note2.t2month5 == True:
-                t2month5 = 'V'
-            else:
-                t2month5 = ' '
-            if note2.t2month6 == True:
-                t2month6 = 'V'
-            else:
-                t2month6 = ' '
-            if note2.t2month7 == True:
-                t2month7 = 'V'
-            else:
-                t2month7 = ' '
-            if note2.t2month8 == True:
-                t2month8 = 'V'
-            else:
-                t2month8 = ' '
-            if note2.t2month9 == True:
-                t2month9 = 'V'
-            else:
-                t2month9 = ' '
-            if note2.t2month10 == True:
-                t2month10 = 'V'
-            else:
-                t2month10 = ' '
-            if note2.t2month11 == True:
-                t2month11 = 'V'
-            else:
-                t2month11 = ' '
-            if note2.t2month12 == True:
-                t2month12 = 'V'
-            else:
-                t2month12 = ' '
-
         except:
             descriptiont0 = ' '
             descriptiont1 = ' '
             descriptiont2 = ' '
+            to0_shed = ''
+            to1_shed = ''
+
+        try:
+            note4 = MODEL4.objects.get(equipment__pk=note.equipment.pk)
+            commentservice = note4.commentservice
+            if note4.t2month1 == True:
+                t2month1 = 'V'
+            else:
+                t2month1 = ' '
+            if note4.t2month2 == True:
+                t2month2 = 'V'
+            else:
+                t2month2 = ' '
+            if note4.t2month3 == True:
+                t2month3 = 'V'
+            else:
+                t2month3 = ' '
+            if note4.t2month4 == True:
+                t2month4 = 'V'
+            else:
+                t2month4 = ' '
+            if note4.t2month5 == True:
+                t2month5 = 'V'
+            else:
+                t2month5 = ' '
+            if note4.t2month6 == True:
+                t2month6 = 'V'
+            else:
+                t2month6 = ' '
+            if note4.t2month7 == True:
+                t2month7 = 'V'
+            else:
+                t2month7 = ' '
+            if note4.t2month8 == True:
+                t2month8 = 'V'
+            else:
+                t2month8 = ' '
+            if note4.t2month9 == True:
+                t2month9 = 'V'
+            else:
+                t2month9 = ' '
+            if note4.t2month10 == True:
+                t2month10 = 'V'
+            else:
+                t2month10 = ' '
+            if note4.t2month11 == True:
+                t2month11 = 'V'
+            else:
+                t2month11 = ' '
+            if note4.t2month12 == True:
+                t2month12 = 'V'
+            else:
+                t2month12 = ' '
+        except:
             commentservice = ' '
             t2month1 = ''
             t2month2 = ''
@@ -4103,8 +4111,6 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             t2month10 = ''
             t2month11 = ''
             t2month12 = ''
-            to0_shed = ''
-            to1_shed = ''
 
         t3month1 = ''
         t3month2 = ''
@@ -4583,32 +4589,33 @@ def export_maintenance_schedule_xls(request):
     MODEL = MeasurEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5))
     MODEL2 = ServiceEquipmentME
     MODEL3 = Verificationequipment
+    MODEL4 = ServiceEquipmentUME
     to3 = 'Поверка'
 
-    get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search)
+    get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, MODEL4, year_search)
 
-    row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
+    row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, MODEL4, year_search) + 1
 
-    equipment_type = 'ИО'
-    MODEL = TestingEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5))
-    MODEL2 = ServiceEquipmentTE
-    MODEL3 = Attestationequipment
-    to3 = 'Аттестация'
+    # equipment_type = 'ИО'
+    # MODEL = TestingEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5))
+    # MODEL2 = ServiceEquipmentTE
+    # MODEL3 = Attestationequipment
+    # to3 = 'Аттестация'
 
 
-    get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search)
+    # get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search)
 
-    row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
+    # row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
 
-    equipment_type = 'ВО'
-    MODEL = HelpingEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5))
-    MODEL2 = ServiceEquipmentHE
-    MODEL3 = Checkequipment
-    to3 = 'Проверка технических характеристик'
+    # equipment_type = 'ВО'
+    # MODEL = HelpingEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5))
+    # MODEL2 = ServiceEquipmentHE
+    # MODEL3 = Checkequipment
+    # to3 = 'Проверка технических характеристик'
 
-    get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search)
+    # get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search)
 
-    row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
+    # row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, year_search) + 1
 
     row_num += 2
     columns = [
