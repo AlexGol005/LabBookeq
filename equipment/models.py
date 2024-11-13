@@ -815,15 +815,9 @@ class MeteorologicalParameters(models.Model):
 # блок 8 - техобслуживание
 
 class ServiceEquipmentME(models.Model):
-    """Техобслуживание СИ"""
+    """Техобслуживание СИ - постоянная информация из паспортов и инструкций"""
     charakters = models.ForeignKey(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики СИ')
-
-    equipment = models.ForeignKey(Equipment, on_delete=models.SET_NULL, blank=True, null=True,
-                                  verbose_name='Оборудование')
-
-    commentservice = models.TextField('Примечание к ТОиР', default='')
-
     # ТО 0
     descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
 
@@ -832,16 +826,31 @@ class ServiceEquipmentME(models.Model):
 
     # ТО 2
     descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
-    t2month1 = models.BooleanField('ТО 2 в месяце 1', default=False)
+
+    def __str__(self):
+        return f'{self.charakters.name}, pk = {self.pk}'
+
+    class Meta:
+        verbose_name = 'Средство измерения: Техобслуживание постоянная информация'
+        verbose_name_plural = 'Средства измерения: Техобслуживание постоянная информация'
+
+
+class ServiceEquipmentUME(models.Model):
+    """Техобслуживание СИ индивидуальная информация"""
+    equipment = models.ForeignKey(Equipment, on_delete=models.SET_NULL, blank=True, null=True,
+                                  verbose_name='Оборудование')
+    commentservice = models.TextField('Примечание к ТОиР', default='')
+    # ТО 2
+    t2month1 = models.BooleanField('ТО 2 в месяце 1', default=True)
     t2month2 = models.BooleanField('ТО 2 в месяце 2', default=False)
     t2month3 = models.BooleanField('ТО 2 в месяце 3', default=False)
-    t2month4 = models.BooleanField('ТО 2 в месяце 4', default=False)
+    t2month4 = models.BooleanField('ТО 2 в месяце 4', default=True)
     t2month5 = models.BooleanField('ТО 2 в месяце 5', default=False)
     t2month6 = models.BooleanField('ТО 2 в месяце 6', default=False)
-    t2month7 = models.BooleanField('ТО 2 в месяце 7', default=False)
+    t2month7 = models.BooleanField('ТО 2 в месяце 7', default=True)
     t2month8 = models.BooleanField('ТО 2 в месяце 8', default=False)
     t2month9 = models.BooleanField('ТО 2 в месяце 9', default=False)
-    t2month10 = models.BooleanField('ТО 2 в месяце 10', default=False)
+    t2month10 = models.BooleanField('ТО 2 в месяце 10', default=True)
     t2month11 = models.BooleanField('ТО 2 в месяце 11', default=False)
     t2month12 = models.BooleanField('ТО 2 в месяце 12', default=False)
 
@@ -849,8 +858,8 @@ class ServiceEquipmentME(models.Model):
         return f'{self.charakters.name}, pk = {self.pk}'
 
     class Meta:
-        verbose_name = 'Средство измерения: Техобслуживание'
-        verbose_name_plural = 'Средства измерения: Техобслуживание'
+        verbose_name = 'Средство измерения: Техобслуживание индивидуальная информация'
+        verbose_name_plural = 'Средства измерения: Техобслуживание индивидуальная информация'
 
 
 class ServiceEquipmentTE(models.Model):
