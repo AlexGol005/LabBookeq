@@ -862,7 +862,7 @@ class ServiceEquipmentU(models.Model):
             
     def save(self, *args, **kwargs):
         self.pointer = self.equipment.pointer
-        return super(MeasurEquipment, self).save(*args, **kwargs)
+        return super(ServiceEquipmentU, self).save(*args, **kwargs)
     
     class Meta:
         verbose_name = 'Оборудование: Техобслуживание индивидуальная информация'
