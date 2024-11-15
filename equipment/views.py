@@ -37,7 +37,7 @@ from xlwt import Alignment, Borders
 from equipment.constants import servicedesc0
 from equipment.forms import*
 from equipment.models import*
-from formstandart import YearForm
+from formstandart import YearForm, SimpleSearchForm
 from functstandart import get_dateformat
 from users.models import Profile, Company
 
@@ -1649,6 +1649,6 @@ class ServiceView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ServiceView, self).get_context_data(**kwargs)
         context['URL'] = URL
-        context['form'] = SearchMEForm()
+        context['form'] = SimpleSearchForm()
         return context
 
