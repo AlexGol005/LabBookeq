@@ -1643,7 +1643,7 @@ class ServiceView(LoginRequiredMixin, ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).exclude(equipment__status='С')
+        queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid)
         return queryset
 
     def get_context_data(self, **kwargs):
