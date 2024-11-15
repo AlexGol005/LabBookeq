@@ -274,7 +274,8 @@ def base_planreport_xls(request, exel_file_name,
                                str1, str2, str3, str4, str5, str6, nameME, nameTE, nameHE):
     """базовое шаблон представление для выгрузки планов и отчетов по СИ, ИО, ВО к которому обращаются частные представления"""
     company = Company.objects.get(userid=request.user.profile.userid)
-    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'    
+    affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'  
+    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="{exel_file_name}.xls"'
 
