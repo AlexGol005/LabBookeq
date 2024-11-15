@@ -148,7 +148,7 @@ class Equipment(models.Model):
 
     def save(self, *args, **kwargs):
         super().save()
-        a = ServiceEquipmentU.objects.create(equipment=instance)
+        a = ServiceEquipmentU.objects.create(equipment=self)
         a.save()
         super(Equipment, self).save(*args, **kwargs)
 
