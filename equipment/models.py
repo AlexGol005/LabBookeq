@@ -148,6 +148,8 @@ class Equipment(models.Model):
 
     def save(self, *args, **kwargs):
         super().save()
+        a = ServiceEquipmentU.objects.create(equipment=instance)
+        a.save()
         super(Equipment, self).save(*args, **kwargs)
 
     class Meta:
