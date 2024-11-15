@@ -858,7 +858,7 @@ class ServiceEquipmentU(models.Model):
     t2month12 = models.BooleanField('ТО 2 в месяце 12', default=False)
 
     def __str__(self):
-        return f'{self.charakters.name}, pk = {self.pk}'
+        return f'pk = {self.pk}'
             
     def save(self, *args, **kwargs):
         self.pointer = 1
