@@ -862,7 +862,7 @@ class ServiceEquipmentU(models.Model):
         return f'pk = {self.pk}'
             
     def save(self, *args, **kwargs):
-        self.pointer = 1
+        self.pointer = self.equipment.pointer
         return super(ServiceEquipmentU, self).save(*args, **kwargs)
     
     class Meta:
