@@ -1632,3 +1632,23 @@ def ServiceEquipmentregView(request, str):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
         return redirect('measurequipmentcharacterslist')
+
+
+
+class ServiceView(LoginRequiredMixin, ListView):
+    """Выводит главную страницу просмотра и планирования ТОиР"""
+    template_name = URL + '/cervice.html'
+    context_object_name = 'objects'
+    ordering = ['charakters_name']
+    paginate_by = 12
+
+    def get_queryset(self):
+        queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid).exclude(equipment__status='С')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(MeasurEquipmentView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['form'] = SearchMEForm()
+        return context
+
