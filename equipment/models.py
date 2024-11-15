@@ -838,6 +838,7 @@ class ServiceEquipmentME(models.Model):
 
 class ServiceEquipmentU(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация"""
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
     equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
     commentservice = models.TextField('Примечание к ТОиР', default='')
@@ -857,7 +858,12 @@ class ServiceEquipmentU(models.Model):
 
     def __str__(self):
         return f'{self.charakters.name}, pk = {self.pk}'
-
+            
+    def save(self, *args, **kwargs):
+        super().save()
+        self.pointer = self.equipment.pointer
+        return super(MeasurEquipment, self).save(*args, **kwargs)
+    
     class Meta:
         verbose_name = 'Оборудование: Техобслуживание индивидуальная информация'
         verbose_name_plural = 'Оборудование: Техобслуживание индивидуальная информация'
