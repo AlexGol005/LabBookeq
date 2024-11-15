@@ -1637,7 +1637,7 @@ def ServiceEquipmentregView(request, str):
 
 class ServiceView(LoginRequiredMixin, ListView):
     """Выводит главную страницу просмотра и планирования ТОиР"""
-    template_name = URL + '/cervice.html'
+    template_name = URL + '/service.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
     paginate_by = 12
