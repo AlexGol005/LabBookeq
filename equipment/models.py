@@ -147,7 +147,6 @@ class Equipment(models.Model):
         return f'{self.pointer}: {self.exnumber} - {self.lot}'
 
     def save(self, *args, **kwargs):
-        super().save()
         a = ServiceEquipmentU.objects.create(equipment=self)
         a.save()
         super(Equipment, self).save(*args, **kwargs)
