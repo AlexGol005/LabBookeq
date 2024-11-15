@@ -15,7 +15,6 @@
     <a href="{% url 'measurequipmentcharacterslist' %}">
     <div style="text-align: center;"><h4> Периодическое техническое обслуживание лабораторного оборудования</h4></div>
     </a>
-    <br>
 {#конец заголовка #}
 
     
@@ -49,7 +48,7 @@
             {% elif obj.equipment.helpingequipment_set %}
             <td> <a href="{% url 'helpingequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
             {% else %}
-            <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
+            <td> {{obj.equipment.exnumber| slice:":5"}}11</td>            
             {% endif %}
             <td> ///</td> 
             <td> ///</td> 
