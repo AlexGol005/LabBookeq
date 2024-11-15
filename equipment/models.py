@@ -861,7 +861,7 @@ class ServiceEquipmentU(models.Model):
         return f'{self.charakters.name}, pk = {self.pk}'
             
     def save(self, *args, **kwargs):
-        self.pointer = self.equipment.pointer
+        self.pointer = 1
         return super(ServiceEquipmentU, self).save(*args, **kwargs)
     
     class Meta:
