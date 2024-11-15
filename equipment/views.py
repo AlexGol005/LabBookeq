@@ -1647,7 +1647,7 @@ class ServiceView(LoginRequiredMixin, ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
-        context = super(MeasurEquipmentView, self).get_context_data(**kwargs)
+        context = super(ServiceView, self).get_context_data(**kwargs)
         context['URL'] = URL
         context['form'] = SearchMEForm()
         return context
