@@ -13,17 +13,11 @@
 <div class="col-8">  
 {#заголовок#}
     <a href="{% url 'measurequipmentcharacterslist' %}">
-    <div style="text-align: center;"><h4> {{ title }}</h4></div>
+    <div style="text-align: center;"><h4> Периодическое техническое обслуживание лабораторного оборудования</h4></div>
     </a>
     <br>
 {#конец заголовка #}
 
-    <br>
-    <div style="text-align: center;">
-        <a href="{% url 'measurequipmentcharactersreg' %}"  target="blank" class="btn btn-info" style="width: 350px">
-            Периодическое техническое обслуживание лабораторного оборудования
-        </a>
-    </div>
     
 {#форма для поиска по полям #}
     <br><br>
@@ -48,11 +42,11 @@
         <tbody>
         {% for obj in objects %}
         <tr>
-            {% if obj.equipment.exnumber.measureequipment_set %}
+            {% if obj.equipment.measureequipment_set %}
             <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
-            {% elif obj.equipment.exnumber.testingequipment_set %}
+            {% elif obj.equipment.testingequipment_set %}
             <td> <a href="{% url 'testingequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
-            {% elif obj.equipment.exnumber.helpingequipment_set %}
+            {% elif obj.equipment.helpingequipment_set %}
             <td> <a href="{% url 'helpingequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
             {% else %}
             <td> {obj.equipment.exnumber| slice:":5"}}</td>            
