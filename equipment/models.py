@@ -861,7 +861,6 @@ class ServiceEquipmentU(models.Model):
         return f'{self.charakters.name}, pk = {self.pk}'
             
     def save(self, *args, **kwargs):
-        super().save()
         self.pointer = self.equipment.pointer
         return super(MeasurEquipment, self).save(*args, **kwargs)
     
