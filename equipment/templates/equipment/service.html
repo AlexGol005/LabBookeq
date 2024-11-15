@@ -49,7 +49,7 @@
             {% elif obj.equipment.helpingequipment_set %}
             <td> <a href="{% url 'helpingequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
             {% else %}
-            <td> {obj.equipment.exnumber| slice:":5"}}</td>            
+            <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
             {% endif %}
             <td> ///</td> 
             <td> ///</td> 
