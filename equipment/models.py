@@ -836,9 +836,9 @@ class ServiceEquipmentME(models.Model):
         verbose_name_plural = 'Средства измерения: Техобслуживание постоянная информация'
 
 
-class ServiceEquipmentUME(models.Model):
-    """Техобслуживание СИ индивидуальная информация"""
-    equipment = models.ForeignKey(Equipment, on_delete=models.SET_NULL, blank=True, null=True,
+class ServiceEquipmentU(models.Model):
+    """Техобслуживание всего лабораторного оборудования индивидуальная информация"""
+    equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
     commentservice = models.TextField('Примечание к ТОиР', default='')
     # ТО 2
@@ -859,8 +859,8 @@ class ServiceEquipmentUME(models.Model):
         return f'{self.charakters.name}, pk = {self.pk}'
 
     class Meta:
-        verbose_name = 'Средство измерения: Техобслуживание индивидуальная информация'
-        verbose_name_plural = 'Средства измерения: Техобслуживание индивидуальная информация'
+        verbose_name = 'Оборудование: Техобслуживание индивидуальная информация'
+        verbose_name_plural = 'Оборудование: Техобслуживание индивидуальная информация'
 
 
 class ServiceEquipmentTE(models.Model):
