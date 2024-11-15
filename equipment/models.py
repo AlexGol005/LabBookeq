@@ -842,7 +842,7 @@ class ServiceEquipmentU(models.Model):
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
     equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
-    commentservice = models.TextField('Примечание к ТОиР', default='')
+    commentservice = models.TextField('Примечание к ТОиР', default='', blank=True, null=True)
     # ТО 2
     t2month1 = models.BooleanField('ТО 2 в месяце 1', default=True)
     t2month2 = models.BooleanField('ТО 2 в месяце 2', default=False)
