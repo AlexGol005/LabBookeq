@@ -146,10 +146,10 @@ class Equipment(models.Model):
     def __str__(self):
         return f'{self.pointer}: {self.exnumber} - {self.lot}'
 
-    # def save(self, *args, **kwargs):
-    #     a = ServiceEquipmentU.objects.create(equipment=self)
-    #     a.save()
-    #     super(Equipment, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        a = ServiceEquipmentU.objects.create(equipment=self)
+        a.save()
+        super(Equipment, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = ('exnumber', 'pointer',)
