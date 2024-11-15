@@ -40,8 +40,9 @@
         </thead>
         <tbody>
         {% for obj in objects %}
-        ttttt
+       
         <tr>
+            <td> ttttt </td>
             {% if obj.equipment.measureequipment_set %}
             <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
             {% elif obj.equipment.testingequipment_set %}
