@@ -40,6 +40,7 @@
         </thead>
         <tbody>
         {% for obj in objects %}
+        ttttt
         <tr>
             {% if obj.equipment.measureequipment_set %}
             <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
