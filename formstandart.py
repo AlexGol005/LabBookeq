@@ -46,9 +46,8 @@ class YearForm(forms.Form):
 
 class SimpleSearchForm(forms.Form):
     """форма для поиска"""
-    qwery = forms.CharField(label='Поисковый запрос,
-                           widget=forms.TextInput(
-                               attrs={'class': 'form-control'}))
+    qwery =  = forms.CharField(label='Поисковый запрос', required=False,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
     def __init__(self, *args, **kwargs):
