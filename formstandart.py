@@ -46,7 +46,7 @@ class YearForm(forms.Form):
 
 class SimpleSearchForm(forms.Form):
     """форма для поиска"""
-    qwery = forms.TextField(label='Поисковый запрос,
+    qwery = forms.CharField(label='Поисковый запрос,
                            widget=forms.TextInput(
                                attrs={'class': 'form-control'}))
 
