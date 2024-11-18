@@ -1652,3 +1652,12 @@ class ServiceView(LoginRequiredMixin, ListView):
         context['form'] = SimpleSearchForm()
         return context
 
+
+class ServiceViewStrView(LoginRequiredMixin, View):
+    """ выводит отдельную страницу плана ТО2 """
+    def get(self, request, str):
+        obj = get_object_or_404(ServiceEquipmentU, pk=str)
+        context = {
+            'obj': obj,
+        }
+        return render(request, URL + '/serviceplan.html', context)
