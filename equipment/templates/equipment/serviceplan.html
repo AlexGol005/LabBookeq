@@ -16,13 +16,16 @@
     <div style="text-align: center;"><h4> Периодическое техническое обслуживание {{obj.equipment.exnumber}}</h4></div>
     </a>
 {#конец заголовка #}
-
     
-
+ <center><h6>Примечание</h6></center>
+     <table class="table table-bordered">
+      <tr>{{obj.commentservice }}</tr>
+</table>
+    
 {#основная таблица#}
   <div class="col-6"> 
-    <center>План</center>
-<div style="text-align: center; margin-top: 25px">
+    <center><h6>План</h6></center>
+    <div style="text-align: center; margin-top: 25px">
     <table class="table table-bordered">
       <tr><th>Январь</th> <td>{{obj.t2month1|yesno}}</td></tr> 
       <tr><th>Февраль</th> <td>{{obj.t2month2|yesno}}</td></tr>
@@ -36,10 +39,11 @@
       <tr><th>Октябрь</th> <td>{{obj.t2month10|yesno}}</td></tr>
       <tr><th>Ноябрь</th> <td>{{obj.t2month11|yesno}}</td></tr>
       <tr><th>Январь</th> <td>{{obj.t2month12|yesno}}</td></tr>
-      
-                
-   
     </table>
+    </div>
+
+
+    
   </div>
 </div>
 {#конец основной таблицы#}
