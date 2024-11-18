@@ -5,7 +5,7 @@
 {#название страницы#}
 {#стандартная#}
 {% block title %}
-    Госреестры СИ
+    ТОиР
 {% endblock %}
 {#конец названия страницы#}
 
@@ -13,7 +13,7 @@
 <div class="col-8">  
 {#заголовок#}
     <a href="{% url 'measurequipmentcharacterslist' %}">
-    <div style="text-align: center;"><h4> Периодическое техническое обслуживание лабораторного оборудования</h4></div>
+    <div style="text-align: center;"><h4> Периодическое техническое обслуживание лабораторного оборудования ТО-2</h4></div>
     </a>
 {#конец заголовка #}
 
@@ -34,7 +34,7 @@
         <thead>
             <tr>
                 <th>Оборудование (внутренний номер)</th>
-                <th>План по ТОиР (смотреть и планировать)</th>
+                <th>План по ТО-2 (смотреть и планировать)</th>
                 <th> Отметить факт техобслуживания </th>
              </tr>
         </thead>
@@ -52,7 +52,6 @@
             <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
             {% endif %}
             <td> <a href="{% url 'serviceplan' obj.pk %}"  class="btn btn-outline-primary">СМ</a></td> 
-            <td> ///</td> 
             <td> ///</td> 
         </tr>
         {% endfor %}
