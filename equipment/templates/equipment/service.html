@@ -42,7 +42,6 @@
         {% for obj in objects %}
        
         <tr>
-            <td> ttttt </td>
             {% if obj.equipment.measurequipment_set.all %}
             <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
             {% elif obj.equipment.testingequipment_set.all  %}
@@ -52,6 +51,9 @@
             {% else %}
             <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
             {% endif %}
+            {% if obj.equipment.serviceequipmentu_set.all %}
+            <td> <a href="/"  class="btn btn-outline-primary">{{obj.equipment.serviceequipmentu_set.pk}}</a></td> 
+            <td> ///</td> 
             <td> ///</td> 
         </tr>
         {% endfor %}
