@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{#название страницы#}
+{#стандартная#}
+{% block title %}
+    ТОиР
+{% endblock %}
+{#конец названия страницы#}
+
+{% block content %}
+<div class="col-8">  
+{#заголовок#}
+    <a href="{% url 'service' %}">
+    <div style="text-align: center;"><h4> Периодическое техническое обслуживание {{obj.equipment.exnumber}}</h4></div>
+    </a>
+{#конец заголовка #}
+
+    
+
+{#основная таблица#}
+  <div class="col-6"> 
+    <center>План</center>
+<div style="text-align: center; margin-top: 25px">
+    <table class="table table-bordered">
+      <tr><th>Январь</th> <td>{{obj.t2month1|yesno}}</td></tr> 
+      <tr><th>Февраль</th> <td>{{obj.t2month2|yesno}}</td></tr>
+      <tr><th>Март</th> <td>{{obj.t2month3|yesno}}</td></tr>
+      <tr><th>Апрель</th> <td>{{obj.t2month4|yesno}}</td></tr>
+      <tr><th>Май</th> <td>{{obj.t2month5|yesno}}</td></tr>
+      <tr><th>Июнь</th> <td>{{obj.t2month6|yesno}}</td></tr>
+      <tr><th>Июль</th> <td>{{obj.t2month7|yesno}}</td></tr>
+      <tr><th>Август</th> <td>{{obj.t2month8|yesno}}</td></tr>
+      <tr><th>Сентябрь</th> <td>{{obj.t2month9|yesno}}</td></tr>
+      <tr><th>Октябрь</th> <td>{{obj.t2month10|yesno}}</td></tr>
+      <tr><th>Ноябрь</th> <td>{{obj.t2month11|yesno}}</td></tr>
+      <tr><th>Январь</th> <td>{{obj.t2month12|yesno}}</td></tr>
+      
+                
+   
+    </table>
+  </div>
+</div>
+{#конец основной таблицы#}
+
+
+</div>
+{% endblock %}
