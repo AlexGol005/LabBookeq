@@ -13,7 +13,7 @@
 <div class="col-8">  
 {#заголовок#}
     <a href="{% url 'service' %}">
-    <center><h4> Периодическое техническое обслуживание {{obj.equipment.exnumber}}</h4></center>
+    <center><h4> Периодическое техническое обслуживание {{obj.equipment.exnumber|slise:":5"}}</h4></center>
     </a>
 {#конец заголовка #}
     
@@ -51,12 +51,10 @@
 <center><h6>Факт</h6></center>
         
 </div>
-
-
+        
+</div>
+</div>
     
-  
-
-{#конец основной таблицы#}
 
 
 </div>
