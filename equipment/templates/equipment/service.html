@@ -44,7 +44,7 @@
         <tr>
             <td> ttttt </td>
             {% if obj.equipment.measurequipment_set %}
-            <td> <a href="{% url 'measurequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}} {{obj.equipment.measurequipment_set}}</a></td> 
+            <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}} {{obj.equipment.measurequipment_set}}</a></td> 
             {% elif obj.equipment.testingequipment_set  %}
             <td> <a href="{% url 'testequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
             {% elif obj.equipment.helpingequipment_set %}
