@@ -1651,6 +1651,7 @@ class ServiceView(LoginRequiredMixin, ListView):
         context['URL'] = URL
         context['form'] = SimpleSearchForm()
         context['year'] = now.year
+        context['yearform'] = YearForm()
         return context
 
 
