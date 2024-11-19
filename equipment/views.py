@@ -1718,7 +1718,7 @@ def ServiceEquipmentUFactUpdateView(request, str):
 
 @login_required
 def ServiceCreateView(request):
-    queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid).exclude(equipment__status='C')
+    queryset = Equipment.objects.filter(pointer=request.user.profile.userid).exclude(equipment__status='C')
     year = request.GET['year']
     for i in queryset:
         ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
