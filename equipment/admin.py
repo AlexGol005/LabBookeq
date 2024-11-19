@@ -39,6 +39,7 @@ admin.site.register(Attestationequipment)
 admin.site.register(HelpingEquipmentCharakters)
 admin.site.register(HelpingEquipment) 
 admin.site.register(ServiceEquipmentU) 
+admin.site.register(ServiceEquipmentUFact)
 
 @admin.register(Verificators)
 class VerificatorsAdmin(admin.ModelAdmin):
