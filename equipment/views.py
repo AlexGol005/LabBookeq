@@ -1664,3 +1664,25 @@ class ServiceStrView(LoginRequiredMixin, View):
             'obj': obj, 'obj2': obj2, 'year': year,
         }
         return render(request, URL + '/serviceplan.html', context)
+
+
+
+@login_required
+def ServiceEquipmentUUpdateView(request, str):
+    """выводит форму для обновления данных о ТО-2 план"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = ServiceEquipmentUUpdateForm(request.POST,
+                                                       instance=ServiceEquipmentU.objects.get(pk=str))
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect(reverse('serviceplan', kwargs={'str': str}))
+        else:
+            form = ServiceEquipmentUUpdateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/Echaractersreg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect(reverse('serviceplan', kwargs={'str': str}))
