@@ -1718,10 +1718,11 @@ def ServiceEquipmentUFactUpdateView(request, str):
 
 @login_required
 def ServiceCreateView(request):
-      if request.method == 'POST':
-          year = request.POST['year']
-          queryset = Equipment.objects.filter(pointer=request.user.profile.userid)
-          for i in queryset:
-              ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
-              ServiceEquipmentUFact.objects.get_or_create(equipment=i, year=year)
-          return redirect('service')
+    queryset = Equipment.objects.filter(pointer=request.user.profile.userid)
+    if request.method == 'POST':
+        year = request.POST['year']
+          
+    for i in queryset:
+        ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
+        ServiceEquipmentUFact.objects.get_or_create(equipment=i, year=year)
+    return redirect('service')
