@@ -1682,7 +1682,7 @@ def ServiceEquipmentUUpdateView(request, str):
             form = ServiceEquipmentUUpdateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
         data = {'form': form,
                 }
-        return render(request, 'equipment/Echaractersreg.html', data)
+        return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только инженеру по оборудованию')
         return redirect(reverse('serviceplan', kwargs={'str': str}))
