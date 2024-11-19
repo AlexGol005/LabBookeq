@@ -1643,8 +1643,8 @@ class ServiceView(LoginRequiredMixin, ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = ServiceEquipmentU.objects.all()
-        return queryset
+        queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).(year=str(now.year))
+        return querysetnow
 
     def get_context_data(self, **kwargs):
         context = super(ServiceView, self).get_context_data(**kwargs)
@@ -1657,7 +1657,8 @@ class ServiceStrView(LoginRequiredMixin, View):
     """ выводит отдельную страницу плана ТО2 """
     def get(self, request, str):
         obj = get_object_or_404(ServiceEquipmentU, pk=str)
+        obj2 = get_object_or_404(ServiceEquipmentUFact, pk=obj.pk)
         context = {
-            'obj': obj,
+            'obj': obj, 'obj2': obj2,
         }
         return render(request, URL + '/serviceplan.html', context)
