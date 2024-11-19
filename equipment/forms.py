@@ -1239,7 +1239,7 @@ class ServiceEquipmentregForm(forms.ModelForm):
 
 class ServiceEquipmentUUpdateForm(forms.ModelForm):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация ПЛАН"""
-    commentservice = forms.CharField(label='Примечание к ТОиР', max_length=10000,  required=False
+    commentservice = forms.CharField(label='Примечание к ТОиР', max_length=10000,  required=False,
                            widget=forms.Textarea(attrs={'class': 'form-control', }))
                                                        
     t2month1 = forms.BooleanField(label='ТО 2 в месяце 1', required=False)    
