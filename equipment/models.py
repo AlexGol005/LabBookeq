@@ -898,7 +898,7 @@ class ServiceEquipmentUFact(models.Model):
             
     def save(self, *args, **kwargs):
         self.pointer = self.equipment.pointer
-        return super(ServiceEquipmentU, self).save(*args, **kwargs)
+        return super(ServiceEquipmentUFact, self).save(*args, **kwargs)
     
     class Meta:
         verbose_name = 'Оборудование: ТО-2 факт'
