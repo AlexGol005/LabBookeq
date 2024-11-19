@@ -16,6 +16,12 @@
     <div style="text-align: center;"><h4> Периодическое техническое обслуживание лабораторного оборудования ТО-2</h4></div>
     </a>
 {#конец заголовка #}
+    
+{#форма для массового формирования ТОИР на год #}
+<div style="text-align: center; margin-top: 25px">
+    Сформировать график ТОиР
+</div>
+{#конец формы #}
 
     
 {#форма для поиска по полям #}
@@ -28,19 +34,21 @@
     </div>
 {#конец формы для поиска#}
 
+
+
+
+    
 {#основная таблица#}
 <div style="text-align: center; margin-top: 25px">
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Оборудование (внутренний номер)</th>
-                <th>План по ТО-2 (смотреть и планировать)</th>
-                <th> Отметить факт техобслуживания </th>
+                <th>План по ТО-2 (планировать и отмечать)</th>
              </tr>
         </thead>
         <tbody>
         {% for obj in objects %}
-       
         <tr>
             {% if obj.equipment.measurequipment_set.all %}
             <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
@@ -52,7 +60,6 @@
             <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
             {% endif %}
             <td> <a href="{% url 'serviceplan' obj.pk %}"  class="btn btn-outline-primary">СМ</a></td> 
-            <td> ///</td> 
         </tr>
         {% endfor %}
         </tbody>
