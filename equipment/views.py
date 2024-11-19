@@ -1668,7 +1668,8 @@ class ServiceStrView(LoginRequiredMixin, View):
             }
             return render(request, URL + '/serviceplan.html', context)
     except:
-        return '/'
+        def get(self, request, str):
+            return '/'
 
 
 
