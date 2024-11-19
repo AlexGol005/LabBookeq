@@ -1656,9 +1656,11 @@ class ServiceView(LoginRequiredMixin, ListView):
 
 class ServiceStrView(LoginRequiredMixin, View):
     """ выводит отдельную страницу плана ТО2 """
+    a=ServiceEquipmentU.objects.filter(year=str(now.year).get(pk=str)
+    b=a.equipment
     def get(self, request, str):
         obj = get_object_or_404(ServiceEquipmentU, pk=str)
-        obj2 = get_object_or_404(ServiceEquipmentUFact, pk=obj.pk)
+        obj2 = get_object_or_404(ServiceEquipmentUFact, equipment=b)
         year = now.year
         context = {
             'obj': obj, 'obj2': obj2, 'year': year,
@@ -1670,6 +1672,7 @@ class ServiceStrView(LoginRequiredMixin, View):
 @login_required
 def ServiceEquipmentUUpdateView(request, str):
     """выводит форму для обновления данных о ТО-2 план"""
+    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = ServiceEquipmentUUpdateForm(request.POST, instance=ServiceEquipmentU.objects.get(pk=str))                                                    
@@ -1679,6 +1682,27 @@ def ServiceEquipmentUUpdateView(request, str):
                 return redirect(reverse('serviceplan', kwargs={'str': str}))
         else:
             form = ServiceEquipmentUUpdateForm(instance=ServiceEquipmentU.objects.get(pk=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect(reverse('serviceplan', kwargs={'str': str}))
+
+
+
+@login_required
+def ServiceEquipmentUFactUpdateView(request, str):
+    """выводит форму для обновления данных о ТО-2 факт"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = ServiceEquipmentUFactUpdateViewForm(request.POST, instance=ServiceEquipmentUFact.objects.get(pk=str))                                                    
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect(reverse('serviceplan', kwargs={'str': str}))
+        else:
+            form = ServiceEquipmentUFactUpdateViewForm(instance=ServiceEquipmentUFact.objects.get(pk=str))
         data = {'form': form,
                 }
         return render(request, 'equipment/reg.html', data)
