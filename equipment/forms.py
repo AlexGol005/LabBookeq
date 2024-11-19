@@ -1267,3 +1267,30 @@ class ServiceEquipmentUUpdateForm(forms.ModelForm):
                   't2month12',
                   ]
 
+
+class ServiceEquipmentUFactUpdateViewForm(forms.ModelForm):
+    """Техобслуживание всего лабораторного оборудования индивидуальная информация ПЛАН"""
+    t2month1 = forms.BooleanField(label='ТО 2 в месяце 1', required=False)    
+    t2month2 = forms.BooleanField(label='ТО 2 в месяце 2', required=False)
+    t2month3 = forms.BooleanField(label='ТО 2 в месяце 3', required=False )
+    t2month4 = forms.BooleanField(label='ТО 2 в месяце 4', required=False)
+    t2month5 = forms.BooleanField(label='ТО 2 в месяце 5', required=False)
+    t2month6 = forms.BooleanField(label='ТО 2 в месяце 6', required=False)
+    t2month7 = forms.BooleanField(label='ТО 2 в месяце 7', required=False)
+    t2month8 = forms.BooleanField(label='ТО 2 в месяце 8', required=False)
+    t2month9 = forms.BooleanField(label='ТО 2 в месяце 9', required=False)
+    t2month10 = forms.BooleanField(label='ТО 2 в месяце 10',required=False)
+    t2month11 = forms.BooleanField(label='ТО 2 в месяце 11', required=False)
+    t2month12 = forms.BooleanField(label='ТО 2 в месяце 12', required=False)
+
+    class Meta:
+        model = ServiceEquipmentUFact
+        fields = [ 't2month1', 't2month2', 't2month3',
+                  't2month4', 't2month5',  't2month6', 
+                  't2month7',
+                  't2month8',
+                  't2month9',
+                  't2month10',
+                  't2month11',
+                  't2month12',
+                  ]
