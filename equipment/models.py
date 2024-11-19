@@ -149,7 +149,8 @@ class Equipment(models.Model):
     def save(self, *args, **kwargs):
         super(Equipment, self).save(*args, **kwargs)
         a = ServiceEquipmentU(equipment=self)
-        a.save()
+        b = ServiceEquipmentUFact(equipment=self)
+        b.save()
         
 
     class Meta:
