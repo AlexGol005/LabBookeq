@@ -1242,18 +1242,18 @@ class ServiceEquipmentUUpdateForm(forms.ModelForm):
     commentservice = forms.CharField(label='Примечание к ТОиР', max_length=10000,
                            widget=forms.Textarea(attrs={'class': 'form-control', }))
                                                        
-    t2month1 = forms.BooleanField('ТО 2 в месяце 1', default=True)    
-    t2month2 = forms.BooleanField('ТО 2 в месяце 2', default=False)
-    t2month3 = forms.BooleanField('ТО 2 в месяце 3', default=False)
-    t2month4 = forms.BooleanField('ТО 2 в месяце 4', default=True)
-    t2month5 = forms.BooleanField('ТО 2 в месяце 5', default=False)
-    t2month6 = forms.BooleanField('ТО 2 в месяце 6', default=False)
-    t2month7 = forms.BooleanField('ТО 2 в месяце 7', default=True)
-    t2month8 = forms.BooleanField('ТО 2 в месяце 8', default=False)
-    t2month9 = forms.BooleanField('ТО 2 в месяце 9', default=False)
-    t2month10 = forms.BooleanField('ТО 2 в месяце 10', default=True)
-    t2month11 = forms.BooleanField('ТО 2 в месяце 11', default=False)
-    t2month12 = forms.BooleanField('ТО 2 в месяце 12', default=False)
+    t2month1 = forms.BooleanField(label='ТО 2 в месяце 1', default=True)    
+    t2month2 = forms.BooleanField(label='ТО 2 в месяце 2', default=False)
+    t2month3 = forms.BooleanField(label='ТО 2 в месяце 3', default=False)
+    t2month4 = forms.BooleanField(label='ТО 2 в месяце 4', default=True)
+    t2month5 = forms.BooleanField(label='ТО 2 в месяце 5', default=False)
+    t2month6 = forms.BooleanField(label='ТО 2 в месяце 6', default=False)
+    t2month7 = forms.BooleanField(label='ТО 2 в месяце 7', default=True)
+    t2month8 = forms.BooleanField(label='ТО 2 в месяце 8', default=False)
+    t2month9 = forms.BooleanField(label='ТО 2 в месяце 9', default=False)
+    t2month10 = forms.BooleanField(label='ТО 2 в месяце 10', default=True)
+    t2month11 = forms.BooleanField(label='ТО 2 в месяце 11', default=False)
+    t2month12 = forms.BooleanField(label='ТО 2 в месяце 12', default=False)
 
     class Meta:
         model = ServiceEquipmentU
