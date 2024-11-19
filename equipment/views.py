@@ -1644,12 +1644,13 @@ class ServiceView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=str(now.year))
-        return querysetnow
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(ServiceView, self).get_context_data(**kwargs)
         context['URL'] = URL
         context['form'] = SimpleSearchForm()
+        context['year'] = now.year
         return context
 
 
