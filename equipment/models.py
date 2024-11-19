@@ -839,8 +839,9 @@ class ServiceEquipmentME(models.Model):
 
 
 class ServiceEquipmentU(models.Model):
-    """Техобслуживание всего лабораторного оборудования индивидуальная информация"""
-    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
+    """Техобслуживание всего лабораторного оборудования индивидуальная информация ПЛАН"""
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
+    year =  models.CharField('Год ТО-2 план', max_length=4, blank=True, null=True)
     equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
     commentservice = models.TextField('Примечание к ТОиР', default='', blank=True, null=True)
@@ -866,8 +867,42 @@ class ServiceEquipmentU(models.Model):
         return super(ServiceEquipmentU, self).save(*args, **kwargs)
     
     class Meta:
-        verbose_name = 'Оборудование: Техобслуживание индивидуальная информация'
-        verbose_name_plural = 'Оборудование: Техобслуживание индивидуальная информация'
+        verbose_name = 'Оборудование: ТО-2 план'
+        verbose_name_plural = 'Оборудование: ТО-2 план'
+
+
+
+
+class ServiceEquipmentUFact(models.Model):
+    """Техобслуживание всего лабораторного оборудования индивидуальная информация факт"""
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
+    year =  models.CharField('Год ТО-2 план', max_length=4, blank=True, null=True)
+    equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+                                  verbose_name='Оборудование')
+    # ТО 2
+    t2month1 = models.BooleanField('ТО 2 в месяце 1', default=True)
+    t2month2 = models.BooleanField('ТО 2 в месяце 2', default=False)
+    t2month3 = models.BooleanField('ТО 2 в месяце 3', default=False)
+    t2month4 = models.BooleanField('ТО 2 в месяце 4', default=True)
+    t2month5 = models.BooleanField('ТО 2 в месяце 5', default=False)
+    t2month6 = models.BooleanField('ТО 2 в месяце 6', default=False)
+    t2month7 = models.BooleanField('ТО 2 в месяце 7', default=True)
+    t2month8 = models.BooleanField('ТО 2 в месяце 8', default=False)
+    t2month9 = models.BooleanField('ТО 2 в месяце 9', default=False)
+    t2month10 = models.BooleanField('ТО 2 в месяце 10', default=True)
+    t2month11 = models.BooleanField('ТО 2 в месяце 11', default=False)
+    t2month12 = models.BooleanField('ТО 2 в месяце 12', default=False)
+
+    def __str__(self):
+        return f'pk = {self.pk}'
+            
+    def save(self, *args, **kwargs):
+        self.pointer = self.equipment.pointer
+        return super(ServiceEquipmentU, self).save(*args, **kwargs)
+    
+    class Meta:
+        verbose_name = 'Оборудование: ТО-2 факт'
+        verbose_name_plural = 'Оборудование: ТО-2 факт'
 
 
 class ServiceEquipmentTE(models.Model):
