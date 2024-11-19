@@ -1656,11 +1656,9 @@ class ServiceView(LoginRequiredMixin, ListView):
 
 class ServiceStrView(LoginRequiredMixin, View):
     """ выводит отдельную страницу плана ТО2 """
-    a=ServiceEquipmentU.objects.filter(year=str(now.year).get(pk=str)
-    b=a.equipment
     def get(self, request, str):
         obj = get_object_or_404(ServiceEquipmentU, pk=str)
-        obj2 = get_object_or_404(ServiceEquipmentUFact, equipment=b)
+        obj2 = get_object_or_404(ServiceEquipmentUFact, pk=str)
         year = now.year
         context = {
             'obj': obj, 'obj2': obj2, 'year': year,
