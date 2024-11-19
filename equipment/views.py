@@ -1659,7 +1659,8 @@ class ServiceStrView(LoginRequiredMixin, View):
     def get(self, request, str):
         obj = get_object_or_404(ServiceEquipmentU, pk=str)
         obj2 = get_object_or_404(ServiceEquipmentUFact, pk=obj.pk)
+        year = now.year
         context = {
-            'obj': obj, 'obj2': obj2,
+            'obj': obj, 'obj2': obj2, 'year': year,
         }
         return render(request, URL + '/serviceplan.html', context)
