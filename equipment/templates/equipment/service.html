@@ -23,7 +23,7 @@
 </div>
     <br>
     <div style="text-align: center; margin-top: 25px">
-        <form action="{% url 'create' %}" method="GET">
+        <form action="{% url 'create' %}" method="POST">
             {% csrf_token %}
             {% crispy yearform %}
         </form>
