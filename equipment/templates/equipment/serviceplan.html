@@ -13,14 +13,25 @@
 <div class="col-8">  
 {#заголовок#}
     <a href="{% url 'service' %}">
-    <center><h4> ТО-2 ежеквартальное техобслуживание для оборудования вн.№ {{obj.equipment.exnumber|slice:":5"}}</h4></center>
+    <center><h4> ТО-2 ежеквартальное техобслуживание для оборудования вн.№ {{obj.equipment.exnumber|slice:":5"}} за {{obj.year}} год</h4></center>
     </a>
+    <br>
+    
 {#конец заголовка #}
     
  <center><h6>Примечание</h6></center>
     <center>  <table class="table table-bordered">
       <tr><td>{{obj.commentservice }}</td></tr>
 </table></center>
+    <br>
+
+    {#записи о приборе#}
+    <div style="text-align: center; margin-top: 10px"><h4>Внести запись о ТО-2 в карточку прибора (если требуется) </h4></div>    
+    <div style="text-align: center; margin-top: 10px">
+     <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/comments/"  class="btn btn-primary mt-2">
+         Внести запись о приборе и смотреть записи (для всех пользователей)</a></div>
+    {#конец записи о приборе#}
+
     
 {#основная таблица#}
 <div class="container">
@@ -28,6 +39,8 @@
 <div class="col-6"> 
 
     <center><h5>План</h5></center>
+         <a href="/"  class="btn btn-primary mt-2 mb-2">Поменять план</a></div>
+         
     <center>
     <table class="table table-bordered">
       <tr><th>Январь</th> <td>{{obj.t2month1|yesno}}</td></tr> 
@@ -48,8 +61,24 @@
 
 <div class="col-6"> 
 
-<center><h5>Факт</h5></center>
-        
+    <center><h5>Факт</h5></center>
+    <a href="/"  class="btn btn-primary mt-2 mb-2">Поменять факт</a></div>
+    <center>
+    <table class="table table-bordered">
+      <tr><th>Январь</th> <td>{{obj2.t2month1|yesno}}</td></tr> 
+      <tr><th>Февраль</th> <td>{{obj2.t2month2|yesno}}</td></tr>
+      <tr><th>Март</th> <td>{{obj2.t2month3|yesno}}</td></tr>
+      <tr><th>Апрель</th> <td>{{obj2.t2month4|yesno}}</td></tr>
+      <tr><th>Май</th> <td>{{obj2.t2month5|yesno}}</td></tr>
+      <tr><th>Июнь</th> <td>{{obj2.t2month6|yesno}}</td></tr>
+      <tr><th>Июль</th> <td>{{obj2.t2month7|yesno}}</td></tr>
+      <tr><th>Август</th> <td>{{obj2.t2month8|yesno}}</td></tr>
+      <tr><th>Сентябрь</th> <td>{{obj2.t2month9|yesno}}</td></tr>
+      <tr><th>Октябрь</th> <td>{{obj2.t2month10|yesno}}</td></tr>
+      <tr><th>Ноябрь</th> <td>{{obj2.t2month11|yesno}}</td></tr>
+      <tr><th>Январь</th> <td>{{obj2.t2month12|yesno}}</td></tr>
+    </table>
+        </center>
 </div>
         
 </div>
