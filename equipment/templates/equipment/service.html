@@ -21,9 +21,16 @@
 <div style="text-align: center; margin-top: 25px">
     Сформировать график ТОиР
 </div>
+    <br>
+    <div style="text-align: center; margin-top: 25px">
+        <form action="create" method="GET">
+            {% csrf_token %}
+            {% crispy yearform %}
+        </form>
+    </div>
 {#конец формы #}
 
-    
+    create
 {#форма для поиска по полям #}
     <br><br>
     <div style="text-align: center; margin-top: 25px">
