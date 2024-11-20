@@ -842,7 +842,7 @@ class ServiceEquipmentU(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация ПЛАН"""
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
     year =  models.CharField('Год ТО-2 план', max_length=4, blank=True, null=True)
-    equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+    equipment = models.OneToOneField(Equipment, on_delete=models.CASCADE, blank=True, null=True,
                                   verbose_name='Оборудование')
     commentservice = models.TextField('Примечание к ТОиР', default='', blank=True, null=True)
     # ТО 2
