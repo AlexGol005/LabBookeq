@@ -63,9 +63,9 @@ class SimpleSearchForm(forms.Form):
 
 class DubleSearchForm(forms.Form):
     """форма для поиска"""
-    qwery = forms.CharField(label='Внутренний номер', required=False,
+    qwery = forms.CharField(label='Внутренний номер', 
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
-    qwery1 = forms.CharField(label='Год', required=False, 
+    qwery1 = forms.CharField(label='Год',
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
