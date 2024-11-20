@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{#название страницы#}
+{#стандартная#}
+{% block title %}
+    ТОиР заголовок
+{% endblock %}
+{#конец названия страницы#}
+
+{% block content %}
+<div class="col-8">  
+{#заголовок#}
+    <a href="{% url 'managerequipment' %}">
+    <div style="text-align: center;"><h4> Периодическое техническое обслуживание лабораторного оборудования ТО-2</h4></div>
+    </a>
+{#конец заголовка #}
+ <hr>   
+{#форма для массового формирования ТОИР на год #}
+<div style="text-align: center; margin-top: 25px">
+   <h6>Сформировать график ТОиР в базе данных на год (введите нужный год в форме ниже)</h6> 
+</div>
+    <div style="text-align: center; margin-top: 25px">
+        <form action="{% url 'create' %}" method="GET">
+            {% csrf_token %}
+            {% crispy yearform %}
+        </form>
+    </div>
+{#конец формы #}
+<hr>
+
+
+{#смотреть ТОИР на год #}
+<div style="text-align: center; margin-top: 25px">
+   <h6>Смотреть и редактировать график ТОиР на год (введите нужный год в форме ниже)</h6> 
+</div>
+    <div style="text-align: center; margin-top: 25px">
+        <form action="{% url 'service' date %}" method="GET">
+            {% csrf_token %}
+            {% crispy yearform %}
+        </form>
+    </div>
+{#конец формы #}
+<hr>
+
+
+  
+</div>
+{% endblock %}
