@@ -1728,3 +1728,23 @@ class ServiceHeadView(LoginRequiredMixin, TemplateView):
         context = super(ServiceHeadView, self).get_context_data(**kwargs)
         context['yearform'] = YearForm()
         return context
+
+
+class PersonchangeFormView(LoginRequiredMixin, View):
+    """вывод страницы - ТОИР за год, год передан в форме поиска на предыдущей странице"""
+    def get(self, request, str):
+        date = self.request.GET['date']
+        objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
+        form =  SimpleSearchForm()
+        URL= URL
+        year= date
+        yearform = YearForm()
+        context = {
+            'objects': objects,
+            'URL': URL,
+            'form': form,
+            'yearform': yearform,
+            'year': year,
+        }
+        template_name = 'equipment/service.html'
+        return render(request, template_name, context)
