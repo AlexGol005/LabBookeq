@@ -1725,3 +1725,5 @@ def ServiceCreateView(request):
     for i in queryset:
         ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
     return redirect('service')
+
+
