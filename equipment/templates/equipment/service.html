@@ -43,19 +43,26 @@
     </div>
 {#конец формы #}
 <hr>
-
     
-    
-{#форма для поиска по полям #}
-    <br><br>
+  
+<div style="text-align: center; margin-top: 25px">
+    <h6>Выгрузить график ТОиР в exel за год (укажите год в форме ниже) </h6>  
+</div>
     <div style="text-align: center; margin-top: 25px">
-        <form action="/equipment/reestrsearres/" method="GET">
+        <form action="{% url 'serviceyear' %}" method="GET">
             {% csrf_token %}
-            {% crispy form %}
+            {% crispy yearform %}
         </form>
     </div>
-{#конец формы для поиска#}
+{#конец формы #}
+<hr>
 
+
+    <div style="text-align: center; margin-top: 25px">
+    <h6>Выгрузить график ТОиР в exel на сегодняшнюю дату за текущий год </h6>  
+</div>
+здесь кнопка
+{#конец формы #}
 <hr>
 
 
