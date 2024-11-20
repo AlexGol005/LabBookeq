@@ -31,7 +31,7 @@ class SearchDateForm(forms.Form):
 
 class YearForm(forms.Form):
     """форма для поиска записей по году"""
-    date = forms.DateField(label='Год в формате ГГГГ',
+    date = forms.DateField(label='Год в формате ГГГГ', initial=datetime.date.today.year,
                            widget=forms.DateInput(
                                attrs={'class': 'form-control', 'placeholder': '2022'}))
 
