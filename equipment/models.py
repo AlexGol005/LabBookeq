@@ -149,8 +149,7 @@ class Equipment(models.Model):
     def save(self, *args, **kwargs):
         super(Equipment, self).save(*args, **kwargs)
         a = ServiceEquipmentU(equipment=self)
-        b = ServiceEquipmentUFact(equipment=self)
-        b.save()
+        a.save()
         
 
     class Meta:
@@ -865,8 +864,10 @@ class ServiceEquipmentU(models.Model):
             
     def save(self, *args, **kwargs):
         self.pointer = self.equipment.pointer
-        return super(ServiceEquipmentU, self).save(*args, **kwargs)
-    
+        super(ServiceEquipmentU, self).save(*args, **kwargs)
+        b = ServiceEquipmentUFact(equipment=self.equipment, pk_pointer=self.pk)
+        b.save()
+                    
     class Meta:
         verbose_name = 'Оборудование: ТО-2 план'
         verbose_name_plural = 'Оборудование: ТО-2 план'
@@ -880,6 +881,7 @@ class ServiceEquipmentUFact(models.Model):
     year =  models.CharField('Год ТО-2 план', max_length=4, blank=True, null=True)
     equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
+    pk_pointer=models.CharField('указатель на pk соответствующего ТО-2 план', max_length=20, blank=True, null=True)
     # ТО 2
     t2month1 = models.BooleanField('ТО 2 в месяце 1', default=True)
     t2month2 = models.BooleanField('ТО 2 в месяце 2', default=False)
