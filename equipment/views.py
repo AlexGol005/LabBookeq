@@ -1713,9 +1713,7 @@ def ServiceEquipmentUFactUpdateView(request, str):
 def ServiceCreateView(request):
     queryset = Equipment.objects.filter(pointer=request.user.profile.userid)
     if request.method == 'GET':
-        # year = request.GET.get('year')
-        year=request.GET['year']
-        yeard=year
+        year = request.GET.get('date')
     for i in queryset:
         ServiceEquipmentU.objects.get_or_create(equipment=i, year=yeard)
     return redirect('service')
