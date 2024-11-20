@@ -11,6 +11,7 @@ input_formats = (
     '%d.%m.%Y',
 )
 
+now = date.today()
 
 class SearchDateForm(forms.Form):
     """форма для поиска записей по датам"""
