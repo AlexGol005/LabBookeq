@@ -1740,3 +1740,25 @@ def ServiceCreateView(request):
     for i in queryset:
         ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
     return redirect('service')
+
+
+
+class ServiceSearchResultView(LoginRequiredMixin, ListView):
+    """ выводит результаты поиска по списку ТО-2 по номеру оборудования """
+
+    template_name = URL + '/service.html'
+    context_object_name = 'objects'
+    success_url = '/equipment/service/'
+
+    def get_context_data(self, **kwargs):
+        context = super(ServiceSearchResultView, self).get_context_data(**kwargs)
+        context['URL'] = URL
+        context['year'] = 1
+        context['form'] = SimpleSearchForm()
+        return context
+
+    def get_queryset(self):
+        name = self.request.GET['name']
+        queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber_startwith=name)
+        return queryset
+
