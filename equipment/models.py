@@ -148,7 +148,7 @@ class Equipment(models.Model):
 
     def save(self, *args, **kwargs):
         super(Equipment, self).save(*args, **kwargs)
-        a = ServiceEquipmentU(equipment=self, year=str(now.year))
+        a = ServiceEquipmentU(equipment=self, year=self.yearintoservice)
         a.save()
         
 
