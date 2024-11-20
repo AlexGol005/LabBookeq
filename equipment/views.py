@@ -1717,7 +1717,7 @@ class ServiceYearView(LoginRequiredMixin, View):
         date = self.request.GET['date']
         objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
         form =  SimpleSearchForm()
-        URL= URL
+        URL = 'equipment'
         year= date
         yearform = YearForm()
         context = {
