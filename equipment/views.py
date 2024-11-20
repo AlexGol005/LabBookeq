@@ -1729,3 +1729,14 @@ class ServiceYearView(LoginRequiredMixin, View):
         }
         template_name = 'equipment/service.html'
         return render(request, template_name, context)
+
+
+
+@login_required
+def ServiceCreateView(request):
+    queryset = Equipment.objects.filter(pointer=request.user.profile.userid)
+    if request.method == 'GET':
+        year = request.GET.get('date')
+    for i in queryset:
+        ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
+    return redirect('service')
