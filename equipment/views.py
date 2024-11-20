@@ -1662,7 +1662,7 @@ class ServiceStrView(LoginRequiredMixin, View):
     
         def get(self, request, str):
             obj = get_object_or_404(ServiceEquipmentU, pk=str)
-            obj2 = get_object_or_404(ServiceEquipmentUFact, pk=str)
+            obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
             year = now.year
             context = {
                 'obj': obj, 'obj2': obj2, 'year': year,
@@ -1701,13 +1701,13 @@ def ServiceEquipmentUFactUpdateView(request, str):
     """выводит форму для обновления данных о ТО-2 факт"""
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            form = ServiceEquipmentUFactUpdateViewForm(request.POST, instance=ServiceEquipmentUFact.objects.get(pk=str))                                                    
+            form = ServiceEquipmentUFactUpdateViewForm(request.POST, instance=ServiceEquipmentUFact.objects.get(pk_pointer=str))                                                    
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
                 return redirect(reverse('serviceplan', kwargs={'str': str}))
         else:
-            form = ServiceEquipmentUFactUpdateViewForm(instance=ServiceEquipmentUFact.objects.get(pk=str))
+            form = ServiceEquipmentUFactUpdateViewForm(instance=ServiceEquipmentUFact.objects.get(pk_pointer=str))
         data = {'form': form,
                 }
         return render(request, 'equipment/reg.html', data)
@@ -1724,5 +1724,4 @@ def ServiceCreateView(request):
         year=str(year)
     for i in queryset:
         ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
-        ServiceEquipmentUFact.objects.get_or_create(equipment=i, year=year)
     return redirect('service')
