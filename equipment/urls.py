@@ -84,4 +84,5 @@ urlpatterns = [
     path('serviceplanupdate/<str:str>/', views.ServiceEquipmentUUpdateView, name='serviceplanupdate'),
     path('servicefactupdate/<str:str>/', views.ServiceEquipmentUFactUpdateView, name='servicefactupdate'),
     path('serviceyear/', views.ServiceYearView.as_view(), name='serviceyear'),
+    path('create/', views.ServiceCreateView, name='create'),
 ]
