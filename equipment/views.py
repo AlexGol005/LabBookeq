@@ -1747,13 +1747,12 @@ class ServiceSearchResultView(LoginRequiredMixin, ListView):
     """ выводит результаты поиска по списку ТО-2 по номеру оборудования """
 
     template_name = URL + '/serviceyear.html'
-    context_object_name = 'objects'
-    
+    context_object_name = 'objects' 
 
     def get_context_data(self, **kwargs):
         context = super(ServiceSearchResultView, self).get_context_data(**kwargs)
         context['URL'] = URL
-        context['year'] = 2024
+        context['year'] = 2023
         context['form'] = SimpleSearchForm()
         return context
 
