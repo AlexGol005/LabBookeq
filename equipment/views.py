@@ -1719,3 +1719,12 @@ def ServiceCreateView(request):
     return redirect('service')
 
 
+class ServiceHeadView(LoginRequiredMixin, TemplateView):
+    """Выводит заглавную страницу просмотра и планирования ТОиР"""
+    template_name = URL + '/servicehead.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super(ServiceHeadView, self).get_context_data(**kwargs)
+        context['yearform'] = YearForm()
+        return context
