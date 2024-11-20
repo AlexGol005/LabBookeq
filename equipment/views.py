@@ -1716,7 +1716,7 @@ def ServiceCreateView(request):
         year = request.GET.get('year')
         year=str(year)
     for i in queryset:
-        ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
+        ServiceEquipmentU.objects.get_or_create(equipment=i, year='2026')
     return redirect('service')
 
 
