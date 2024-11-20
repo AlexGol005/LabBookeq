@@ -61,11 +61,11 @@ class SimpleSearchForm(forms.Form):
                 Submit('submit', 'найти', css_class='btn  btn-primary col-md-6 mb-3 mt-4 ml-2 mr-2')))
 
 
-class SimpleSearchForm(forms.Form):
+class DubleSearchForm(forms.Form):
     """форма для поиска"""
     qwery = forms.CharField(label='Внутренний номер', required=False,
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
-    qwery1 = forms.CharField(label='Год', required=False,
+    qwery1 = forms.CharField(label='Год', required=False, initial=str(datetime.date.today),
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
