@@ -865,8 +865,7 @@ class ServiceEquipmentU(models.Model):
     def save(self, *args, **kwargs):
         self.pointer = self.equipment.pointer
         super(ServiceEquipmentU, self).save(*args, **kwargs)
-        b = ServiceEquipmentUFact(equipment=self.equipment, pk_pointer=self.pk, year=self.year)
-        b.save()
+        ServiceEquipmentU.objects.get_or_create(equipment=self.equipment, pk_pointer=self.pk, year=self.year)
                     
     class Meta:
         verbose_name = 'Оборудование: ТО-2 план'
