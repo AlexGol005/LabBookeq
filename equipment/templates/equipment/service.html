@@ -59,54 +59,6 @@
 <hr>
 
 
-    
-{#основная таблица#}
-
-    <div style="text-align: center; margin-top: 25px">
-   <h6>Смотреть и редактировать график ТОиР на {{year}} год </h6> 
-</div>
-<div style="text-align: center; margin-top: 25px">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Оборудование (внутренний номер)</th>
-                <th>План по ТО-2 (планировать и отмечать)</th>
-             </tr>
-        </thead>
-        <tbody>
-        {% for obj in objects %}
-        <tr>
-            {% if obj.equipment.measurequipment_set.all %}
-            <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
-            {% elif obj.equipment.testingequipment_set.all  %}
-            <td> <a href="{% url 'testequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
-            {% elif obj.equipment.helpingequipment_set.all %}
-            <td> <a href="{% url 'helpingequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td>
-            {% else %}
-            <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
-            {% endif %}
-            <td> <a href="{% url 'serviceplan' obj.pk %}"  class="btn btn-outline-primary">СМ</a></td> 
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
-{#конец основной таблицы#}
-
-{#пагинация#}
-{# стандартная #}
-{% if is_paginated %}
-    {% if page_obj.has_previous %}
-       <a href="?page=1" class="btn btn-outline-primary">Начало</a>
-       <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Предыдущая</a>
-  {% endif %}
-    {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Следующая</a>
-       <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Последняя</a>
-  {% endif %}
-  {% endif %}
-{#конец пагинации#}
-  
 </div>
 {% endblock %}
 
