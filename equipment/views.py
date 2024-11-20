@@ -1657,21 +1657,14 @@ class ServiceView(LoginRequiredMixin, ListView):
 
 class ServiceStrView(LoginRequiredMixin, View):
     """ выводит отдельную страницу плана ТО2 """
-    try:
-        ServiceEquipmentU.objects.get(pk=str)
-    
-        def get(self, request, str):
-            obj = get_object_or_404(ServiceEquipmentU, pk=str)
-            obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
-            year = now.year
-            context = {
-                'obj': obj, 'obj2': obj2, 'year': year,
+    def get(self, request, str):
+        obj = get_object_or_404(ServiceEquipmentU, pk=str)
+        obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
+        year = now.year
+        context = {
+            'obj': obj, 'obj2': obj2, 'year': year,
             }
-            return render(request, URL + '/serviceplan.html', context)
-    except:
-        def get(self, request, str):
-            return '/'
-
+        return render(request, URL + '/serviceplan.html', context)
 
 
 @login_required
