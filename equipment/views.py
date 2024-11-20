@@ -1635,40 +1635,24 @@ def ServiceEquipmentregView(request, str):
 
 
 
-# class ServiceView(LoginRequiredMixin, ListView):
-#     """Выводит главную страницу просмотра и планирования ТОиР"""
-#     template_name = URL + '/service.html'
-#     context_object_name = 'objects'
-#     ordering = ['charakters_name']
-#     paginate_by = 12
+class ServiceView(LoginRequiredMixin, ListView):
+    """Выводит главную страницу просмотра и планирования ТОиР"""
+    template_name = URL + '/service.html'
+    context_object_name = 'objects'
+    ordering = ['charakters_name']
+    paginate_by = 12
 
-#     def get_queryset(self):
-#         queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=str(now.year))
-#         return queryset
+    def get_queryset(self):
+        queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=str(now.year))
+        return queryset
 
-#     def get_context_data(self, **kwargs):
-#         context = super(ServiceView, self).get_context_data(**kwargs)
-#         context['URL'] = URL
-#         context['form'] = SimpleSearchForm()
-#         context['year'] = now.year
-#         context['yearform'] = YearForm()
-#         return context
-
-
-class ServiceView(LoginRequiredMixin, View):
-    """Выводит годовую страницу просмотра и планирования ТОиР"""
-    def get(self, request, date):
-        objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
+    def get_context_data(self, **kwargs):
+        context = super(ServiceView, self).get_context_data(**kwargs)
+        context['URL'] = URL
         context['form'] = SimpleSearchForm()
+        context['year'] = now.year
         context['yearform'] = YearForm()
-        context = {
-            'objects': objects,
-            'form': form,
-            'yearform': yearform,
-        }
-        return render(request, URL + '/service.html', context)
-
-
+        return context
 
 
 class ServiceStrView(LoginRequiredMixin, View):
