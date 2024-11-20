@@ -865,7 +865,7 @@ class ServiceEquipmentU(models.Model):
     def save(self, *args, **kwargs):
         self.pointer = self.equipment.pointer
         super(ServiceEquipmentU, self).save(*args, **kwargs)
-        b = ServiceEquipmentUFact(equipment=self.equipment, pk_pointer=self.pk, , year=str(year.now))
+        b = ServiceEquipmentUFact(equipment=self.equipment, pk_pointer=self.pk, year=str(year.now))
         b.save()
                     
     class Meta:
