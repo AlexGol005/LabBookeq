@@ -1709,28 +1709,9 @@ def ServiceEquipmentUFactUpdateView(request, str):
         return redirect(reverse('serviceplan', kwargs={'str': str}))
 
 
-@login_required
-def ServiceCreateView(request):
-    queryset = Equipment.objects.filter(pointer=request.user.profile.userid)
-    if request.method == 'GET':
-        year = request.GET.get('date')
-    for i in queryset:
-        ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
-    return redirect('service')
 
 
-class ServiceHeadView(LoginRequiredMixin, TemplateView):
-    """Выводит заглавную страницу просмотра и планирования ТОиР"""
-    template_name = URL + '/servicehead.html'
-
-
-    def get_context_data(self, **kwargs):
-        context = super(ServiceHeadView, self).get_context_data(**kwargs)
-        context['yearform'] = YearForm()
-        return context
-
-
-class PersonchangeFormView(LoginRequiredMixin, View):
+class ServiceYearView(LoginRequiredMixin, View):
     """вывод страницы - ТОИР за год, год передан в форме поиска на предыдущей странице"""
     def get(self, request, str):
         date = self.request.GET['date']
