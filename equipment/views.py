@@ -1758,7 +1758,7 @@ class ServiceSearchResultView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        name = self.request.GET.get('name')
-        queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber__startswith=name)
+        qwery = self.request.GET.get('qwery')
+        queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber__startswith=qwery)
         return queryset
 
