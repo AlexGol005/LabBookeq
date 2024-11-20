@@ -18,7 +18,7 @@
    <h6>Найти оборудование по внутреннему номеру </h6> 
 </div>
     <div style="text-align: center; margin-top: 25px">
-        <form action="serviceyearsearchresult" method="GET">
+        <form action={% url "serviceyearsearchresult" %} method="GET">
             {% csrf_token %}
             {% crispy form %}
         </form>
