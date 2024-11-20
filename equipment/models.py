@@ -148,7 +148,7 @@ class Equipment(models.Model):
 
     def save(self, *args, **kwargs):
         super(Equipment, self).save(*args, **kwargs)
-        a = ServiceEquipmentU(equipment=self, year=str(year.now))
+        a = ServiceEquipmentU(equipment=self, year=str(now.year))
         a.save()
         
 
@@ -878,7 +878,7 @@ class ServiceEquipmentU(models.Model):
 class ServiceEquipmentUFact(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация факт"""
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
-    year =  models.CharField('Год ТО-2 план', max_length=4, blank=True, null=True)
+    year =  models.CharField('Год ТО-2 факт', max_length=4, blank=True, null=True)
     equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
     pk_pointer=models.CharField('указатель на pk соответствующего ТО-2 план', max_length=20, blank=True, null=True)
