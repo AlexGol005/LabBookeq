@@ -1748,12 +1748,12 @@ class ServiceSearchResultView(LoginRequiredMixin, ListView):
 
     template_name = URL + '/service.html'
     context_object_name = 'objects'
-    success_url = '/equipment/service/'
+    
 
     def get_context_data(self, **kwargs):
         context = super(ServiceSearchResultView, self).get_context_data(**kwargs)
         context['URL'] = URL
-        context['year'] = 1
+        context['year'] = 2024
         context['form'] = SimpleSearchForm()
         return context
 
