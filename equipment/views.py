@@ -1713,7 +1713,7 @@ def ServiceEquipmentUFactUpdateView(request, str):
 
 class ServiceYearView(LoginRequiredMixin, View):
     """вывод страницы - ТОИР за год, год передан в форме поиска на предыдущей странице"""
-    def get(self, request, str):
+    def get(self, request):
         date = self.request.GET['date']
         objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
         form =  SimpleSearchForm()
