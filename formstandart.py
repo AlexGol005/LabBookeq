@@ -59,3 +59,21 @@ class SimpleSearchForm(forms.Form):
             Row(
                 Column('qwery', css_class='form-group col-md-4 mb-0 ml-2 mr-2'),
                 Submit('submit', 'найти', css_class='btn  btn-primary col-md-6 mb-3 mt-4 ml-2 mr-2')))
+
+
+class SimpleSearchForm(forms.Form):
+    """форма для поиска"""
+    qwery = forms.CharField(label='Внутренний номер', required=False,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+    qwery1 = forms.CharField(label='Год', required=False,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('qwery', css_class='form-group col-md-4 mb-0 ml-2 mr-2'),
+                Column('qwery1', css_class='form-group col-md-4 mb-0 ml-2 mr-2'),
+                Submit('submit', 'найти', css_class='btn  btn-primary col-md-6 mb-3 mt-4 ml-2 mr-2')))
