@@ -1658,7 +1658,7 @@ class ServiceView(LoginRequiredMixin, ListView):
 class ServiceStrView(LoginRequiredMixin, View):
     """ выводит отдельную страницу плана ТО2 """
     try:
-        # ServiceEquipmentU.objects.get(pk=str)
+        ServiceEquipmentU.objects.get(pk=str)
     
         def get(self, request, str):
             obj = get_object_or_404(ServiceEquipmentU, pk=str)
