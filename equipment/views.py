@@ -1727,7 +1727,7 @@ class ServiceYearView(LoginRequiredMixin, View):
             'yearform': yearform,
             'year': year,
         }
-        template_name = 'equipment/service.html'
+        template_name = 'equipment/serviceyear.html'
         return render(request, template_name, context)
 
 
