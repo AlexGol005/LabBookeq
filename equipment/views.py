@@ -1,4 +1,4 @@
-"""
+r"""
 Модуль проекта LabJournal, приложения equipment.
 Приложение equipment это обширное приложение, включает все про лабораторное оборудование и лабораторные помещения
 Данный модуль views.py выводит представления для вывода форм и информации.
@@ -1746,7 +1746,7 @@ def ServiceCreateView(request):
 class ServiceSearchResultView(LoginRequiredMixin, ListView):
     """ выводит результаты поиска по списку ТО-2 по номеру оборудования """
 
-    template_name = URL + '/service.html'
+    template_name = URL + '/serviceyear.html'
     context_object_name = 'objects'
     
 
