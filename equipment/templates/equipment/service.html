@@ -29,6 +29,22 @@
     </div>
 {#конец формы #}
 <hr>
+
+    
+{#форма дляграфика ТОИР на определенный год #}
+<div style="text-align: center; margin-top: 25px">
+   <h6>Сформировать график ТОиР</h6> 
+</div>
+    <div style="text-align: center; margin-top: 25px">
+        <form action="{% url 'serviceyear' %}" method="GET">
+            {% csrf_token %}
+            {% crispy yearform %}
+        </form>
+    </div>
+{#конец формы #}
+<hr>
+
+    
     
 {#форма для поиска по полям #}
     <br><br>
