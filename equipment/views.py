@@ -1752,12 +1752,13 @@ class ServiceSearchResultView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ServiceSearchResultView, self).get_context_data(**kwargs)
         context['URL'] = URL
-        context['year'] = 2023
-        context['form'] = SimpleSearchForm()
+        context['year'] = self.request.GET.get('qwery1')
+        context['form'] = DubleSearchForm()
         return context
 
     def get_queryset(self):
         qwery = self.request.GET.get('qwery')
-        queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber__startswith=qwery)
+        year = self.request.GET.get('qwery1')
+        queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber__startswith=qwery).filter(year=year)
         return queryset
 
