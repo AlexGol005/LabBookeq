@@ -4114,6 +4114,71 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             t2month11 = ''
             t2month12 = ''
 
+        try:
+            note5 = MODEL5.objects.get(equipment__pk=note.equipment.pk)
+            if note5.t2month1 == True:
+                t2month1f = 'V'
+            else:
+                t2month1f = ' '
+            if note5.t2month2 == True:
+                t2month2f = 'V'
+            else:
+                t2month2f = ' '
+            if note5.t2month3 == True:
+                t2month3f = 'V'
+            else:
+                t2month3f = ' '
+            if note5.t2month4 == True:
+                t2month4f = 'V'
+            else:
+                t2month4f = ' '
+            if note5.t2month5 == True:
+                t2month5f = 'V'
+            else:
+                t2month5f = ' '
+            if note5.t2month6 == True:
+                t2month6f = 'V'
+            else:
+                t2month6 = ' '
+            if note5.t2month7 == True:
+                t2month7f = 'V'
+            else:
+                t2month7f = ' '
+            if note5.t2month8 == True:
+                t2month8f = 'V'
+            else:
+                t2month8f = ' '
+            if note5.t2month9 == True:
+                t2month9f = 'V'
+            else:
+                t2month9f = ' '
+            if note5.t2month10 == True:
+                t2month10f = 'V'
+            else:
+                t2month10f = ' '
+            if note5.t2month11 == True:
+                t2month11f = 'V'
+            else:
+                t2month11f = ' '
+            if note5.t2month12 == True:
+                t2month12f = 'V'
+            else:
+                t2month12f = ' '
+        except:
+            t2month1f = ''
+            t2month2f = ''
+            t2month3f = ''
+            t2month4f = ''
+            t2month5f = ''
+            t2month6f = ''
+            t2month7f = ''
+            t2month8f = ''
+            t2month9f = ''
+            t2month10f = ''
+            t2month11f = ''
+            t2month12f = ''
+
+            
         t3month1 = ''
         t3month2 = ''
         t3month3 = ''
@@ -4390,6 +4455,35 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             t2month12,
             f'{person}',
             f'{commentservice}',
+        ]
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], style_plain)
+            ws.merge(row_num, row_num, 2, 4, style_plain)
+            ws.row(row_num).height_mismatch = True
+            ws.row(row_num).height = 2500
+
+        row_num += 1
+        columns = [
+            '',
+            f'ТО 2',
+            f'{descriptiont2}',
+            f'{descriptiont2}',
+            f'{descriptiont2}',
+            '',
+            t2month1f,
+            t2month2f,
+            t2month3f,
+            t2month4f,
+            t2month5f,
+            t2month6f,
+            t2month7f,
+            t2month8f,
+            t2month9f,
+            t2month10f,
+            t2month11f,
+            t2month12f,
+            f'{person}',
+            f'',
         ]
         for col_num in range(len(columns)):
             ws.write(row_num, col_num, columns[col_num], style_plain)
