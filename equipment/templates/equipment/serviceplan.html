@@ -30,7 +30,25 @@
         {#описание ТО#}
     <div style="text-align: center; margin-top: 10px"><h4>Описание мероприятий по ТО </h4></div>    
     <div style="text-align: center; margin-top: 10px">
-     <a href="/"  class="btn btn-primary mt-2">
+
+
+        
+
+            {% if obj.equipment.measurequipment_set.all %}
+            <a href="{% url 'tome' obj.equipment.measurequipment.characters %}"  class="btn btn-outline-primary">
+            {% else %}
+            <a href="/"  class="btn btn-outline-primary">            
+            {% endif %}
+
+
+
+
+
+        
+
+
+
+    
          Смотреть</a></div>
      <br>
      <hr>
