@@ -1571,6 +1571,7 @@ class LastNewEquipmentView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid).order_by('-pk')
+        return queryset
 
             
 # .filter()[Total-10:Total]
