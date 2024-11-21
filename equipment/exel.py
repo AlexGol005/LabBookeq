@@ -4399,7 +4399,7 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
         for col_num in range(len(columns)):
             ws.write(row_num, col_num, columns[col_num], style_plain)
             ws.merge(row_num, row_num, 2, 4, style_plain)
-            ws.merge(row_num, row_num, 6, 17, style_plain)
+            ws.merge(row_num, row_num, 6, 18, style_plain)
             ws.row(row_num).height_mismatch = True
             ws.row(row_num).height = 2500
 
