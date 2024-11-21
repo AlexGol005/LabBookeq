@@ -1559,7 +1559,7 @@ class LastNewEquipmentView(LoginRequiredMixin, ListView):
 
     template_name = URL + '/EquipmentLIST.html'
     context_object_name = 'objects'
-    ordering = ['pk']
+    ordering = ['pk']  
     paginate_by = 12
 
     def get_context_data(self, **kwargs):
