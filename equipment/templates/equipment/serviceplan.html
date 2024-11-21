@@ -28,14 +28,14 @@
 
 
         {#описание ТО#}
-    <div style="text-align: center; margin-top: 10px"><h4>Описание мероприятий по ТО </h4></div>    
+    <div style="text-align: center; margin-top: 10px"><h6>Описание мероприятий по ТО </h6></div>    
     <div style="text-align: center; margin-top: 10px">
 
 
         
 
             {% if obj.equipment.measurequipment_set.all %}
-            <a href="{% url 'tome' obj.pk %}"  class="btn btn-outline-primary">
+            <a href="{% url 'tome' obj.equipment.measurequipment_set.serviceequipmentme.pk %}"  class="btn btn-primary">
             {% else %}
             <a href="/"  class="btn btn-outline-primary">            
             {% endif %}
@@ -56,7 +56,7 @@
     
 
     {#записи о приборе#}
-    <div style="text-align: center; margin-top: 10px"><h4>Внести запись о ТО-2 в карточку прибора (если требуется) </h4></div>    
+    <div style="text-align: center; margin-top: 10px"><h6>Внести запись о ТО-2 в карточку прибора (если требуется) </h6></div>    
     <div style="text-align: center; margin-top: 10px">
      <a href="/equipment/measureequipment/{{ obj.equipment.exnumber }}/comments/"  class="btn btn-primary mt-2">
          Внести запись о приборе и смотреть записи (для всех пользователей)</a></div>
