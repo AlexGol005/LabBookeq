@@ -1763,11 +1763,12 @@ class ServiceSearchResultView(LoginRequiredMixin, ListView):
         return queryset
 
 
-class ToMEView(LoginRequiredMixin, TemplateView):
+class ToMEView(LoginRequiredMixin, View):
     """выводит описание ТО для СИ """
     template_name = URL + '/to.html'
 
-    def get_context_data(self, **kwargs, str):
-        context = super(ToView, self).get_context_data(**kwargs)
+    def get(self, request, str):
         obj = ServiceEquipmentME.objects.get(pk=str)
-        return context
+        return render(request, template_name, {'obj': obj,})
+
+
