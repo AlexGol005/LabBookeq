@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+ТО
+{% endblock %}
+
+
+{% block content %}
+<div class="col-8">
+  
+      <center><h5>Описание ТО</h5></center>
+  
+
+<div style="text-align: center; margin-top: 25px">
+    <table class="table table-bordered">
+            <tr><th>ТО-0</th><td>ежедневное</td><td>{{ obj.descriptiont0 }}</td></tr>
+            <tr><th>ТО-0</th><td>ежемесячное</td><td>{{ obj.descriptiont1 }}</td></tr>
+            <tr><th>ТО-0</th><td>ежеквартальное</td><td>{{ obj.descriptiont2 }}</td></tr>
+            <tr><th>ТО-0</th><td>по графику</td><td>для СИ/ИО -поверка/аттестация</td></tr>            
+    </table>
+</div>
+
+  
+</div>
+{% endblock %}
