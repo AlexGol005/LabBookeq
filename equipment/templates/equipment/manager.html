@@ -9,9 +9,8 @@
     <center><h3>Управление оборудованием лаборатории</h4></center>
     <center><a href="{% url 'equipmentreg' %}" class="btn btn-primary mr-2 ml-2 mt-3" style="width: 50%">Добавить новое ЛО</a></center>
     <center><a href="{% url 'service' %}" class="btn btn-primary mr-2 ml-2 mt-5" style="width: 50%">Техническое обслуживание ЛО (ТОиР)</a></center>
-    <center><a href="{% url 'roomreg' %}" class="btn btn-primary mr-2 ml-2 mt-5"style="width: 50%">Добавить новое помещение</a></center>
-    <center><a href="{% url 'metro' %}" class="btn btn-primary mr-2 ml-2 mt-5"style="width: 50%" >Метрологическое обеспечение лабораторного оборудования</a></center>
-    <center><a href="{% url 'reports' %}" class="btn btn-primary mr-2 ml-2 mt-5"style="width: 50%" >Графики, планы, отчеты</a></center>
+    <center><a href="{% url 'metro' %}" class="btn btn-primary mr-2 ml-2 mt-5"style="width: 80%" >Списки оборудования, требующего поверки/калибровки/аттестации</a></center>
+    <center><a href="{% url 'reports' %}" class="btn btn-primary mr-2 ml-2 mt-5"style="width: 80%" >Графики, планы, годовые отчеты, отчеты по формам аккредитующих органов</a></center>
 
 
 <!--     раздел для суперпользователей сайта -->
@@ -29,6 +28,11 @@
     <center><h5>Производители: смотреть и добавить</h5></center>
     <center>
         <a href="{% url 'manufacturerlist' %}" target="blank" class="btn btn-primary mr-2 ml-2 mt-4" style="width: 50%">Производители ЛО</a>
+    </center>
+
+     <center><h5>Поверители: смотреть и добавить</h5></center>
+         <center>
+      <a href="{% url 'verificatorsreg' %}" target="blank" class="btn btn-primary mr-2 ml-2 mt-4" style="width: 50%">Поверители ЛО</a>
     </center>
     <br>
 {% endif %}
