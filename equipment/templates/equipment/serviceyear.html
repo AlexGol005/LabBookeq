@@ -11,12 +11,12 @@
 
 {% block content %}
 <div class="col-8">  
-    <script> 
-let num = null
-if (localStorage.getItem('year')) {
-  num = localStorage.getItem('year')
-}
-    </script>
+
+
+    <a href="{% url 'service' %}">
+    <div style="text-align: center;"><h4> Смотреть и редактировать график ТОиР на {{year}} год</h4></div>
+    </a>
+    
     
 {#форма для поиска по полям #}
       <div style="text-align: center; margin-top: 25px">
@@ -36,9 +36,7 @@ if (localStorage.getItem('year')) {
     
 {#основная таблица#}
 
-    <div style="text-align: center; margin-top: 25px">
-   <h6>Смотреть и редактировать график ТОиР на {{year}} год </h6> 
-</div>
+
 <div style="text-align: center; margin-top: 25px">
     <table class="table table-bordered">
         <thead>
@@ -80,12 +78,6 @@ if (localStorage.getItem('year')) {
   {% endif %}
   {% endif %}
 {#конец пагинации#}
-
-    <script> 
-        function go_to() {
-  localStorage.setItem('year', input1.value);
-}
-    </script>
 
     
 </div>
