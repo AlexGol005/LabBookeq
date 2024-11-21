@@ -35,8 +35,8 @@
             <td>{{ obj.exnumber|slice:":5" }}</td>
             <td> {{ obj.lot }}</td>
             <td> {{ obj.kategory }}</td>
-            <td><a href="/equipment/measureequipment/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>
-            <td></td>
+            <td><a href="/equipment/measureequipment/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>  
+            <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-info mt-3">удалить</a></td>
         </tr>
         {% endfor %}
         </tbody>
@@ -59,3 +59,8 @@
     {#конец пагинации#}
 </div>
 {% endblock %}
+
+
+
+
+
