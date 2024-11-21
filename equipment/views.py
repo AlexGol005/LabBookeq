@@ -1769,6 +1769,6 @@ class ToMEView(LoginRequiredMixin, View):
 
     def get(self, request, str):
         obj = ServiceEquipmentME.objects.get(pk=str)
-        return render(request, template_name, {'obj': obj,})
+        return render(request, URL + '/to.html', {'obj': obj,})
 
 
