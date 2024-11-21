@@ -166,6 +166,7 @@ def RoomsUpdateView(request, str):
 
 
 
+
 # блок 3 - списки: Все оборудование, СИ, ИО, ВО, госреестры, характеристики ИО, характеристики ВО
 
 class EquipmentView(LoginRequiredMixin, ListView):
@@ -557,6 +558,15 @@ def EquipmentReg(request):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только инженеру по оборудованию')
         return redirect('/equipment/')
+
+
+@login_required
+def EquipmentDeleteView(request, str):
+    """для кнопки удаления ЛО"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        ruser=request.user.profile.userid
+        note = Equipment.objects.filter(pointer=ruser).get(pk=str)
+        note.delete()
 
 
 class MeasurEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
