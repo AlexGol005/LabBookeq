@@ -41,9 +41,20 @@
             {% elif obj.equipment.helpingequipment_set.all and obj.equipment.helpingequipment_set.last.charakters.serviceequipmenthe.pk%}
             <a href="{% url 'tome' obj.equipment.helpingequipment_set.last.charakters.serviceequipmenthe.pk %}"  class="btn btn-primary">Смотреть</a></div>
             {% else %}
-             Не описано      
-            {% endif %}
+             Не описано,  
+{% if obj.equipment.measurequipment_set.all%}
+<a href="{% url 'measurequipmentcharacterslist' %}"  class="btn btn-primary">Добавить</a></div>
+{% elif obj.equipment.testingequipment_set.all%}
+<a href="{% url 'testingequipmentcharacterslist' %}"  class="btn btn-primary">Добавить</a></div>
+{% elif obj.equipment.helpingequipment_set.all%}
+<a href="{% url 'helpingequipmentcharacterslist' %}"  class="btn btn-primary">Добавить</a></div>
+{% else %}
+             Не описано
 
+</div>    
+
+            {% endif %}
+{% endif %}
 
 
 
