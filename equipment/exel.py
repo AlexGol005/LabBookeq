@@ -4440,7 +4440,7 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             f'{descriptiont2}',
             f'{descriptiont2}',
             f'{descriptiont2}',
-            '',
+            'план',
             t2month1,
             t2month2,
             t2month3,
@@ -4459,8 +4459,11 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
         for col_num in range(len(columns)):
             ws.write(row_num, col_num, columns[col_num], style_plain)
             ws.merge(row_num, row_num, 2, 4, style_plain)
+            ws.merge(row_num, row_num + 1, 1, 1, style_plain)
+            ws.merge(row_num, row_num + 1, 2, 4, style_plain)
+            ws.merge(row_num, row_num + 1, 18, 18, style_plain)
             ws.row(row_num).height_mismatch = True
-            ws.row(row_num).height = 2500
+            ws.row(row_num).height = 1300
 
         row_num += 1
         columns = [
@@ -4469,7 +4472,7 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             f'{descriptiont2}',
             f'{descriptiont2}',
             f'{descriptiont2}',
-            '',
+            'факт',
             t2month1f,
             t2month2f,
             t2month3f,
@@ -4489,7 +4492,7 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             ws.write(row_num, col_num, columns[col_num], style_plain)
             ws.merge(row_num, row_num, 2, 4, style_plain)
             ws.row(row_num).height_mismatch = True
-            ws.row(row_num).height = 2500
+            ws.row(row_num).height = 1300
 
         row_num += 1
         columns = [
