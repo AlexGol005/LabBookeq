@@ -4337,7 +4337,7 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             ws.merge(row_num, row_num + 1, 17, 17, style_plain_90)
         for col_num in range(18, len(columns)):
             ws.write(row_num, col_num, columns[col_num], style_plain)
-            ws.merge(row_num, row_num + 4, 18, 18, style_plain)
+            ws.merge(row_num, row_num + 1, 18, 18, style_plain)
             ws.merge(row_num, row_num + 7, 19, 19, style_plain)
             ws.merge(row_num, row_num + 3, 5, 5, style_plain)
             ws.merge(row_num, row_num + 6, 0, 0, style_plain)
