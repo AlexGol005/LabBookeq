@@ -1561,8 +1561,7 @@ class LastNewEquipmentView(LoginRequiredMixin, ListView):
     """ выводит список добавленных приборов"""
 
     template_name = URL + '/EquipmentLIST.html'
-    context_object_name = 'objects'
-    ordering = ['-id']  
+    context_object_name = 'objects'  
     paginate_by = 12
 
     def get_context_data(self, **kwargs):
@@ -1571,12 +1570,9 @@ class LastNewEquipmentView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        Total = Equipment.objects.count()
-        if Total > 10:
-            queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)
-        else:
-            queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)            
-        return queryset
+        queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid).order_by('-pk')
+
+            
 # .filter()[Total-10:Total]
 
 class SearchMustOrderView(LoginRequiredMixin, ListView):
