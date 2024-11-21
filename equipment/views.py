@@ -1762,3 +1762,12 @@ class ServiceSearchResultView(LoginRequiredMixin, ListView):
         queryset = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber__startswith=qwery).filter(year=year)
         return queryset
 
+
+class ToMEView(LoginRequiredMixin, TemplateView):
+    """выводит описание ТО для СИ """
+    template_name = URL + '/to.html'
+
+    def get_context_data(self, **kwargs, str):
+        context = super(ToView, self).get_context_data(**kwargs)
+        obj = ServiceEquipmentME.objects.get(pk=str)
+        return context
