@@ -35,7 +35,7 @@
         
 
             {% if obj.equipment.measurequipment_set.all %}
-            <a href="{% url 'tome' obj.equipment.measurequipment.characters %}"  class="btn btn-outline-primary">
+            <a href="{% url 'tome' obj.equipment.measurequipment.characters.pk %}"  class="btn btn-outline-primary">
             {% else %}
             <a href="/"  class="btn btn-outline-primary">            
             {% endif %}
