@@ -4006,8 +4006,8 @@ def export_exvercardteste_xls(request, pk):
 # размер шрифта
 size = 11
 
-def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, MODEL4, year_search):
-    """создает и пересчитывает строки графика для класса выгрузки поверки(ниже):  MODEL = тип ЛО (СИ, ИО, ВО); MODEL2 = ServiceEquipment...; MODEL3 = поверка/аттестация; MODEL4 = ServiceEquipmentU..."""
+def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, MODEL4, MODEL5, year_search):
+    """создает и пересчитывает строки графика для класса выгрузки поверки(ниже):  MODEL = тип ЛО (СИ, ИО, ВО); MODEL2 = ServiceEquipment...; MODEL3 = поверка/аттестация; MODEL4 = ServiceEquipmentU...MODEL4 = ServiceEquipmentUFact..."""
 
     company = Company.objects.get(userid=request.user.profile.userid) 
     affirmation = f'УТВЕРЖДАЮ \n{company.direktor_position}\n{company.name}\n____________/{company.direktor_name}/\n«__» ________20__ г.'     
@@ -4590,12 +4590,13 @@ def export_maintenance_schedule_xls(request):
     MODEL = MeasurEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5))
     MODEL2 = ServiceEquipmentME
     MODEL3 = Verificationequipment
-    MODEL4 = ServiceEquipmentUME
+    MODEL4 = ServiceEquipmentU
+    MODEL5 = ServiceEquipmentUFact
     to3 = 'Поверка'
 
-    get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, MODEL4, year_search)
+    get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, MODEL4, MODEL5, year_search)
 
-    row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, MODEL4, year_search) + 1
+    row_num = get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, MODEL4, MODEL5, year_search) + 1
 
     # equipment_type = 'ИО'
     # MODEL = TestingEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5))
