@@ -13,7 +13,7 @@
 <div class="col-8">
 
     {#стандартная#}
-    <center><h4> Лабораторное оборудование</h4></center>
+    <center><h4> Лабораторное оборудование - все приборы</h4></center>
     <br>
     {#конец заголовка #}
     
@@ -24,9 +24,9 @@
             <tr>
                 <th>Внут.№</th>
                 <th> Заводской № </th>
-                <th> Год вып. </th>
-                <th> Статус </th>
                 <th> Категория </th>
+                <th> Редактировать </th>
+                <th> Удалить </th>
              </tr>
         </thead>
         <tbody>
@@ -34,9 +34,8 @@
         <tr>
             <td>{{ obj.exnumber|slice:":5" }}</td>
             <td> {{ obj.lot }}</td>
-            <td> {{ obj.yearmanuf }}</td>
-            <td> {{ obj.status }}</td>
-            <td>{{ obj.kategory }}</td>
+            <td><a href="/equipment/measureequipment/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>
+            <td></td>
         </tr>
         {% endfor %}
         </tbody>
