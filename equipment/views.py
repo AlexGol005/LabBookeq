@@ -1539,7 +1539,7 @@ class SearchNotAttView(LoginRequiredMixin, ListView):
 
 
 class LastNewEquipmentView(LoginRequiredMixin, ListView):
-    """ выводит список 10 приборов, которые были добавлены последними"""
+    """ выводит список добавленных приборов"""
 
     template_name = URL + '/EquipmentLIST.html'
     context_object_name = 'objects'
@@ -1553,11 +1553,11 @@ class LastNewEquipmentView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         Total = Equipment.objects.count()
         if Total > 10:
-            queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter()[Total-10:Total]
+            queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)
         else:
             queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)            
         return queryset
-
+# .filter()[Total-10:Total]
 
 class SearchMustOrderView(LoginRequiredMixin, ListView):
     """ выводит список СИ у которых месяц заказа поверки совпадает с указанным либо раньше него"""
