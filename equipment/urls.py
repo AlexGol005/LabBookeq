@@ -86,5 +86,5 @@ urlpatterns = [
     path('serviceyear/', views.ServiceYearView.as_view(), name='serviceyear'),
     path('create/', views.ServiceCreateView, name='create'), 
     path('serviceyearsearchresult/', views.ServiceSearchResultView.as_view(), name='serviceyearsearchresult'),
-    path('tome/<str:str>/', views.ToMEView.as_view(, name='tome'),
+    path('tome/<str:str>/', views.ToMEView.as_view(), name='tome'),
 ]
