@@ -4139,7 +4139,7 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             if note5.t2month6 == True:
                 t2month6f = 'V'
             else:
-                t2month6 = ' '
+                t2month6f = ' '
             if note5.t2month7 == True:
                 t2month7f = 'V'
             else:
