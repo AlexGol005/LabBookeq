@@ -4337,10 +4337,10 @@ def get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, M
             ws.merge(row_num, row_num + 1, 17, 17, style_plain_90)
         for col_num in range(18, len(columns)):
             ws.write(row_num, col_num, columns[col_num], style_plain)
-            ws.merge(row_num, row_num + 3, 18, 18, style_plain)
-            ws.merge(row_num, row_num + 5, 19, 19, style_plain)
-            ws.merge(row_num, row_num + 5, 5, 5, style_plain)
-            ws.merge(row_num, row_num + 7, 0, 0, style_plain)
+            ws.merge(row_num, row_num + 6, 18, 18, style_plain)
+            ws.merge(row_num, row_num + 8, 19, 19, style_plain)
+            ws.merge(row_num, row_num + 4, 5, 5, style_plain)
+            ws.merge(row_num, row_num + 6, 0, 0, style_plain)
             ws.row(row_num).height_mismatch = True
             ws.row(row_num).height = 2400
 
