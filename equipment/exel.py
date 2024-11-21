@@ -4591,8 +4591,8 @@ def export_maintenance_schedule_xls(request):
     MODEL = MeasurEquipment.objects.filter(equipment__pointer=request.user.profile.userid).exclude(equipment__status='С').annotate(exnumber=Substr('equipment__exnumber',1,5))
     MODEL2 = ServiceEquipmentME
     MODEL3 = Verificationequipment
-    MODEL4 = ServiceEquipmentUFact.objects.filter(pointer=request.user.profile.userid)
-    MODEL5 = ServiceEquipmentU.objects.filter(pointer=request.user.profile.userid)
+    MODEL4 = ServiceEquipmentUFact
+    MODEL5 = ServiceEquipmentU
     to3 = 'Поверка'
 
     get_rows_service_shedule(request, row_num, ws, MODEL, to3, equipment_type, MODEL2, MODEL3, MODEL4, MODEL5, year_search)
