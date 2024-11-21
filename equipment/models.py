@@ -148,9 +148,7 @@ class Equipment(models.Model):
 
     def save(self, *args, **kwargs):
         super(Equipment, self).save(*args, **kwargs)
-        a = ServiceEquipmentU(equipment=self, year=self.yearintoservice)
-        a.save()
-        
+        ServiceEquipmentU.objects.get_or_create(equipment=self, year=self.yearintoservice)
 
     class Meta:
         unique_together = ('exnumber', 'pointer',)
