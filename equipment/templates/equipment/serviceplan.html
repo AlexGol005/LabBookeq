@@ -34,10 +34,14 @@
 
         
 
-            {% if obj.equipment.measurequipment_set.all %}
+            {% if obj.equipment.measurequipment_set.all and obj.equipment.measurequipment_set.last.charakters.serviceequipmentme.pk%}
             <a href="{% url 'tome' obj.equipment.measurequipment_set.last.charakters.serviceequipmentme.pk %}"  class="btn btn-primary">Смотреть</a></div>
+            {% elif obj.equipment.testingequipment_set.all and obj.equipment.testingequipment_set.last.charakters.serviceequipmentte.pk%}
+            <a href="{% url 'tome' obj.equipment.testingequipment_set.last.charakters.serviceequipmentte.pk %}"  class="btn btn-primary">Смотреть</a></div>
+            {% elif obj.equipment.helpingequipment_set.all and obj.equipment.helpingequipment_set.last.charakters.serviceequipmenthe.pk%}
+            <a href="{% url 'tome' obj.equipment.helpingequipment_set.last.charakters.serviceequipmenthe.pk %}"  class="btn btn-primary">Смотреть</a></div>
             {% else %}
-            <a href="/"  class="btn btn-outline-primary">  Смотреть</a></div>          
+             Не описано      
             {% endif %}
 
 
