@@ -564,9 +564,12 @@ def EquipmentReg(request):
 def EquipmentDeleteView(request, str):
     """для кнопки удаления ЛО"""
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        ruser=request.user.profile.userid
-        note = Equipment.objects.filter(pointer=ruser).get(pk=str)
-        note.delete()
+        try:
+            ruser=request.user.profile.userid
+            note = Equipment.objects.filter(pointer=ruser).get(pk=str)
+            note.delete()
+        except:
+            messages.success(request, 'Оборудование невозможно удалить, так как она зарегистрировано в качестве СИ, ИО или ВО. Вы можете поменять статус оборудования на "Списано"')
 
 
 class MeasurEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
