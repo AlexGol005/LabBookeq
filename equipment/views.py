@@ -569,6 +569,7 @@ def EquipmentDeleteView(request, str):
             note = Equipment.objects.filter(pointer=ruser).get(pk=str)
             note.delete()
             return redirect('/equipment/lasttenequipment/')
+            messages.success(request, 'Оборудование удалено!')
         except:
             messages.success(request, 'Оборудование невозможно удалить, так как она зарегистрировано в качестве СИ, ИО или ВО. Вы можете поменять статус оборудования на "Списано"')
             return redirect('/equipment/lasttenequipment/')
