@@ -35,7 +35,7 @@
         
 
             {% if obj.equipment.measurequipment_set.all %}
-            <a href="{% url 'tome' obj.pk %}"  class="btn btn-primary">Смотреть  1- {{obj.equipment.measurequipment_set.all.pk}}    2 - {{obj.equipment.measurequipment_set.last.serviceequipmentme.pk}}  </a></div>
+            <a href="{% url 'tome' obj.pk %}"  class="btn btn-primary">Смотреть  1- {{obj.equipment.measurequipment_set.last.pk}}    2 - {{obj.equipment.measurequipment_set.last.serviceequipmentme.pk}}  </a></div>
             {% else %}
             <a href="/"  class="btn btn-outline-primary">  Смотреть</a></div>          
             {% endif %}
