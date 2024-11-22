@@ -1296,6 +1296,7 @@ def export_mustver_xls(request):
         filter(equipment__roomschange__in=setroom). \
         filter(equipment__status='Э'). \
         filter(equipmentSM_ver__in=setver). \
+        filter(equipment__pointer=request.profile.userid). \
         values_list(
         'exnumber',
         'charakters__reestr',
@@ -1327,6 +1328,7 @@ def export_mustver_xls(request):
         filter(equipment__roomschange__in=setroom). \
         filter(equipment__status='Э'). \
         filter(equipmentSM_att__in=setatt). \
+        filter(equipment__pointer=request.profile.userid). \
         values_list(
         'exnumber',
         'charakters__name',
