@@ -10,14 +10,16 @@
   <div class="col-8">
 <div style="text-align: center; margin-top: 20px">
 <h4>Планы и отчёты по оборудованию</h4>
-
 </div>
 <hr>
+    
 <div style="text-align: center; margin-top: 20px">
 <h5>Выгрузить в EXEL Графики поверки и аттестации СИ и ИО</h5>
 <a href="{% url 'export_me_xls' %}" class="btn btn-warning mt-3" style="width: 310px; height: 45px" >сформировать</a>
 </div>
 <hr>
+
+    
 <div style="text-align: center; margin-top: 20px">
 <h5>Выгрузить в EXEL График ТОиР СИ ИО ВО</h5>
  <form action="{% url 'export_maintenance_schedule_xls' %}" target="blank" method="GET">
@@ -26,27 +28,29 @@
     </form>
 </div>
 <hr>
+
+    
 <div style="text-align: center; margin-top: 20px">
 <h5>Список СИ и ИО прошедших поверку/аттестацию в указанном году, включая ЛО купленное с поверкой/аттестацией</h5>
- <form action="{% url 'export_metroyear_xls' %}" target="blank" method="GET">
+<form action="{% url 'export_metroyear_xls' %}" target="blank" method="GET">
         {% csrf_token %}
         {% crispy form %}
     </form>
 </div>
-<br>
 <hr>
-    <div style="text-align: center; margin-top: 20px">
+
+    
+<div style="text-align: center; margin-top: 20px">
 <h5>Список СИ и ИО прошедших поверку/аттестацию в указанном году, исключая ЛО купленное с поверкой/аттестацией</h5>
- <form action="{% url 'export_metroyearcust_xls' %}" target="blank" method="GET">
+<form action="{% url 'export_metroyearcust_xls' %}" target="blank" method="GET">
         {% csrf_token %}
         {% crispy form %}
     </form>
 </div>
-<br>
 <hr>
 
     <div style="text-align: center; margin-top: 20px">
-<h5>Список купленного за год оборудования </h5>
+<h5>Список введенного в эксплуатацию за год оборудования </h5>
  <form action="{% url 'export_metronewyear_xls' %}" target="blank" method="GET">
         {% csrf_token %}
         {% crispy form %}
