@@ -19,7 +19,7 @@
     
     {#основная таблица#}
     <center>
-    <table class="table table-bordered">
+    <table class="table table-bordered flexy">
         <thead>
             <tr>
                 <th>Внут.№</th>
@@ -27,6 +27,7 @@
                 <th> Категория </th>
                 <th> Редактировать </th>
                 <th> Удалить </th>
+                <th> Характеристики СИ/ИО/ВО </th>
              </tr>
         </thead>
         <tbody>
@@ -37,6 +38,11 @@
             <td> {{ obj.kategory }}</td>
             <td><a href="/equipment/measureequipment/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>  
             <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-info mt-3">удалить</a></td>
+            {% if obj.measureequipment_set.all %}
+            <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-info mt-3">да</a></td>
+            {% else %}
+            <td>нет</td>
+            {% endif %}
         </tr>
         {% endfor %}
         </tbody>
