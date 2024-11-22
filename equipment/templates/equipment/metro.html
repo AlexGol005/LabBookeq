@@ -15,8 +15,19 @@
         <br>
         <hr>
         
-       
-        <div style="text-align: center; margin-top: 20px"><h5>Неповеренные к указанной дате СИ</h5></div>        
+
+        <div style="text-align: center; margin-top: 20px"><h5>Список СИ которое пора поверять на указанную дату - выгрузить в exel</h5></div>        
+        <div style="text-align: center; margin-top: 10px "width: 100%"> 
+            <form action="{% url 'export_mustver_xls' %}" target="blank" method="GET">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </div>  
+        <hr>
+
+
+    
+        <div style="text-align: center; margin-top: 20px"><h5>Список СИ требующих поверки к указанной дате (по дате заказа поверки)</h5></div>        
         <div style="text-align: center; margin-top: 10px "width: 100%">      
              <form action="{% url 'mustver' %}" target="blank" method="GET">
                 {% csrf_token %}
@@ -26,7 +37,7 @@
         <hr>
 
 
-        <div style="text-align: center; margin-top: 20px"><h5>Список СИ требующих поверки к указанной дате</h5></div>        
+        <div style="text-align: center; margin-top: 20px"><h5>Список ИО требующего аттестации к указанной дате (по дате заказа аттестации)</h5></div>        
         <div style="text-align: center; margin-top: 10px "width: 100%"> 
             <form action="{% url 'mustatt' %}" target="blank" method="GET">
                 {% csrf_token %}
@@ -36,7 +47,7 @@
         <hr>
 
 
-        <div style="text-align: center; margin-top: 20px"><h5>Выгрузить в EXEL список СИ для поверки и ИО для аттестации</h5></div>        
+        <div style="text-align: center; margin-top: 20px"><h5>Список СИ не поверенного к указанной дате (по дате окончания поверки)</h5></div>        
         <div style="text-align: center; margin-top: 10px "width: 100%"> 
             <form action="{% url 'notver' %}" target="blank" method="GET">
                 {% csrf_token %}
@@ -46,15 +57,24 @@
         <hr>
 
 
-        <div style="text-align: center; margin-top: 20px"><h5>Список СИ для заказа взамен СИ с истёкшей поверкой</h5></div>        
+        <div style="text-align: center; margin-top: 20px"><h5>Список ИО не аттестованного к указанной дате (по дате окончания аттестации)</h5></div>        
         <div style="text-align: center; margin-top: 10px "width: 100%"> 
             <form action="{% url 'notatt' %}" target="blank" method="GET">
                 {% csrf_token %}
                 {% crispy form %}
             </form>
         </div>  
-        <br>
-    
+        <hr>
+
+
+        <div style="text-align: center; margin-top: 20px"><h5>Список СИ которое пора заказывать на указанную дату (если поверка не выгодна и заказываем замену)</h5></div>        
+        <div style="text-align: center; margin-top: 10px "width: 100%"> 
+            <form action="{% url 'mustorder' %}" target="blank" method="GET">
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </div>  
+        <hr>
 
 
 </div>
