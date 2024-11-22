@@ -47,11 +47,11 @@
             <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, см. ВО</a></td>
             {% elif obj.testingequipment_set.all  %}
             {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'СИ' %}
-            <td><a href="/equipment/measureequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики СИ/a> </td> 
+            <td><a href="/equipment/measureequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики СИ</a> </td> 
             {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'ИО' %}
-            <td><a href="/equipment/testequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики ИО/a> </td> 
+            <td><a href="/equipment/testequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики ИО</a> </td> 
             {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'ИО' %}
-            <td><a href="/equipment/helpequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики ВО/a> </td>  
+            <td><a href="/equipment/helpequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики ВО</a> </td>  
             {% else %}
             <td> --- </td>       
             {% endif %}
