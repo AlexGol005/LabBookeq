@@ -49,7 +49,7 @@ class TestView(LoginRequiredMixin, TemplateView):
     template_name = URL + '/test.html'
 
     def get_context_data(self, **kwargs):
-        context = super(TesttView, self).get_context_data(**kwargs)
+        context = super(TestView, self).get_context_data(**kwargs)
         list = MeasurEquipment.objects.all()
         return context
 
