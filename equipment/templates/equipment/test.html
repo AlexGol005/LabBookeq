@@ -12,16 +12,20 @@
 
 <center>Заголовок</center>
    <br>
+   
 <center>
-  <form action="{% url 'remove_members' %}" method="POST">
-    {% csrf_token %}
-      {% for member in list %}
-      <input type='checkbox' name='member' value="{{member.id}}">{{ member }}</input>
-     <br>
-     {% endfor %}
-    <button type="submit">записать!!</button>
+<form action="{% url 'remove_members' %}" method="post">
+    {% for item in list %}
+        <input type="checkbox" value="{{item.id}}" name="my_object">
+        {{ item.id }}
+   <br>
+    {% endfor %}
+    <button type="submit" name="delete">Delete</button>
+    <button type="submit" name="mark_read">Mark read</button>
 </form>
 </center>
+---------------------------------------------------------
+
 
 
   
