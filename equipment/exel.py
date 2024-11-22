@@ -927,6 +927,7 @@ def export_metronewyear_xls(request):
     """представление для выгрузки -
     Список купленного (введенного в эксплуатацию) СИ и ИО в указанном году"""
     serdate = request.GET['date']
+    company = Company.objects.get(userid=request.user.profile.userid)
     exel_file_name = f'purchased_equipment_{serdate}'
     str1 = 'СИ'
     str2 = 'ИО'
@@ -1049,6 +1050,7 @@ def export_metronewyear_xls(request):
 def export_planmetro_xls(request):
     """представление для выгрузки плана поверки и аттестации на указанный год"""
     serdate = request.GET['date']
+    company = Company.objects.get(userid=request.user.profile.userid)
     exel_file_name = f'planmetro {serdate}'
     str1 = 'СИ'
     str2 = 'ИО'
@@ -1154,6 +1156,7 @@ def export_planmetro_xls(request):
 def export_plan_purchaesing_xls(request):
     """представление для выгрузки плана закупки ЛО по поверке и аттестации на указанный год"""
     serdate = request.GET['date']
+    company = Company.objects.get(userid=request.user.profile.userid)
     exel_file_name = f'plan_purchaesing_{serdate}'
     str1 = 'СИ'
     str2 = 'ИО'
@@ -1258,6 +1261,7 @@ def export_mustver_xls(request):
     """представление для выгрузки СИ требующих поверки и ИО требующих аттестации"""
     # выборка из ексель по поиску по дате
     serdate = request.GET['date']
+    company = Company.objects.get(userid=request.user.profile.userid)
     exel_file_name = f'mustveratt_{serdate}'
     str1 = 'СИ'
     str2 = 'ИО'
@@ -1383,6 +1387,7 @@ def export_mustver_xls(request):
 def export_meteo_xls(request, pk):
     '''представление для выгрузки журнала микроклимата'''
     serdate = request.GET['date']
+    company = Company.objects.get(userid=request.user.profile.userid)
     note = MeteorologicalParameters.objects.filter(roomnumber_id=pk).filter(date__year=serdate)
     try:
         roomname = note.last().roomnumber
@@ -1494,7 +1499,7 @@ def export_meteo_xls(request, pk):
 
 def export_mecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (СИ) в ексель'''
-
+    company = Company.objects.get(userid=request.user.profile.userid)
     note = MeasurEquipment.objects.get(pk=pk)
     cardname = pytils.translit.translify(note.equipment.exnumber[:5]) + ' ' +\
                 pytils.translit.translify(note.charakters.name) +\
