@@ -51,12 +51,22 @@ class TestView(LoginRequiredMixin, ListView):
     model = MeasurEquipment
 
 
+# def remove_members(request):
+#     group = MeasurEquipment.objects.all()
+#     members = request.POST.getlist('member')
+#     for member in checkbox_values:
+#         group.joined.remove(member)
+#     return redirect('test')
+
+
+
 def remove_members(request):
-    group = MeasurEquipment.objects.all()
-    members = request.POST.getlist('member')
-    for member in checkbox_values:
-        group.joined.remove(member)
-    return redirect('test')
+    if request.method == 'POST':
+        object_ids = request.POST.getlist('my_object')
+        MeasurEquipment.objects.filter(id__in=object_ids).delete()  # Начинается массовое удаление
+        return redirect('test')
+
+
 
 
 
