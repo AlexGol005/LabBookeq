@@ -1036,9 +1036,9 @@ def export_metronewyear_xls(request):
         's2',
     )
 
-    nameME = f'Средства измерений введенные в эксплуатацию в {company.name} за {serdate} год'
-    nameTE = f'Испытательное оборудование введенное в эксплуатацию  в {company.name} за {serdate} год'
-    nameHE = f'Вспомогательное оборудование введенное в эксплуатацию  в {company.name} за {serdate} год'
+    nameME = f'CИ введенные в эксплуатацию в {company.name} за {serdate} год'
+    nameTE = f'ИО введенное в эксплуатацию  в {company.name} за {serdate} год'
+    nameHE = f'ВО введенное в эксплуатацию  в {company.name} за {serdate} год'
 
     return base_planreport_xls(request, exel_file_name,
                         measure_e, testing_e, helping_e,
