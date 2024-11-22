@@ -88,6 +88,6 @@ urlpatterns = [
     path('serviceyearsearchresult/', views.ServiceSearchResultView.as_view(), name='serviceyearsearchresult'),
     path('tome/<str:str>/', views.ToMEView.as_view(), name='tome'),
     path('equipmentdelete/<str:str>/', views.EquipmentDeleteView, name='equipmentdelete'),
-    path('test', views.TestView.as_view(), name='test'),
-    path('remove_members', views.remove_members, name='remove_members'),
+    path('orderverification', views.OrderVerificationView.as_view(), name='orderverification'),
+    path('orderverificationchange', views.OrderVerificationchange, name='orderverificationchange'),
 ]
