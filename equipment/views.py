@@ -45,13 +45,12 @@ URL = 'equipment'
 now = date.today()
 
 
-class TestView(LoginRequiredMixin, TemplateView):
+class TestView(LoginRequiredMixin, ListView):
     template_name = URL + '/test.html'
+    context_object_name = 'list'
+    model = MeasurEquipment
 
-    def get_context_data(self, **kwargs):
-        context = super(TestView, self).get_context_data(**kwargs)
-        list = MeasurEquipment.objects.all()
-        return context
+
 
 
 
