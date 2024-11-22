@@ -1437,6 +1437,7 @@ class SearchMustVerView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         serdate = self.request.GET['date']
         queryset_get = Verificationequipment.objects.filter(haveorder=False).\
+            filter(equipment__pointer=self.request.user.profile.userid)
             select_related('equipmentSM').values('equipmentSM'). \
             annotate(id_actual=Max('id')).values('id_actual')
         b = list(queryset_get)
