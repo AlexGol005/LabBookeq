@@ -1249,7 +1249,7 @@ def export_mustver_xls(request):
 
     queryset_get = Verificationequipment.objects.filter(haveorder=False). \
         select_related('equipmentSM').values('equipmentSM'). \
-        annotate(id_actual=Max('id')).values('id_actual')
+        annotate(id_actual=Max('id')).values('id_actual')  
     b = list(queryset_get)
     set = []
     for i in b:
@@ -1289,7 +1289,7 @@ def export_mustver_xls(request):
                     ]
 
     measure_e = MeasurEquipment.objects.filter(id__in=set1). \
-        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
+        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname', exnumber=Substr('equipment__exnumber',1,5)),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName')). \
         filter(equipment__personchange__in=setperson). \
@@ -1297,7 +1297,7 @@ def export_mustver_xls(request):
         filter(equipment__status='Э'). \
         filter(equipmentSM_ver__in=setver). \
         values_list(
-        'equipment__exnumber',
+        'exnumber',
         'charakters__reestr',
         'charakters__name',
         'mod_type',
@@ -1320,7 +1320,7 @@ def export_mustver_xls(request):
                     ]
 
     testing_e = TestingEquipment.objects.filter(id__in=set10). \
-        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
+        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname',  exnumber=Substr('equipment__exnumber',1,5)),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName')). \
         filter(equipment__personchange__in=setperson). \
@@ -1328,7 +1328,7 @@ def export_mustver_xls(request):
         filter(equipment__status='Э'). \
         filter(equipmentSM_att__in=setatt). \
         values_list(
-        'equipment__exnumber',
+        'exnumber',
         'charakters__name',
         'mod_type',
         'equipment__lot',
