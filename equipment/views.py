@@ -51,10 +51,7 @@ class TestView(LoginRequiredMixin, ListView):
     model = MeasurEquipment
 
 
-
-
-
-def remove_members(request, pk):
+def remove_members(request):
     group = MeasurEquipment.objects.get(id=request.POST.get('group_id'))
     members = request.POST.getlist('member')
     for member in checkbox_values:
