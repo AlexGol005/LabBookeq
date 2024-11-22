@@ -39,17 +39,21 @@
             <td><a href="/equipment/measureequipment/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>  
             <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-info mt-3">удалить</a></td>
             
-            {% if obj.equipment.measurequipment_set.all %}
-            <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть СИ</a></td> 
-            {% elif obj.equipment.testingequipment_set.all  %}
-            <td> <a href="{% url 'testequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть ИО</a></td> 
-            {% elif obj.equipment.helpingequipment_set.all %}
-            <td> <a href="{% url 'helpingequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть ВО</a></td>
-            
-  
-            
+            {% if obj.measurequipment_set.all %}
+            <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть СИ</a></td> 
+            {% elif obj.testingequipment_set.all  %}
+            <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть ИО</a></td> 
+            {% elif obj.helpingequipment_set.all %}
+            <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть ВО</a></td>
+            {% elif obj.testingequipment_set.all  %}
+            {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'СИ' %}
+            <td>Добавить характеристики СИ </td> 
+            {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'ИО' %}
+            <td>Добавить характеристики ИО </td> 
+            {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'ИО' %}
+            <td>Добавить характеристики ИО </td> 
             {% else %}
-            <td>......  </td>       
+            <td> - </td>       
             {% endif %}
         </tr>
         {% endfor %}
