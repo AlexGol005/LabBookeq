@@ -45,22 +45,14 @@ URL = 'equipment'
 now = date.today()
 
 
-class TestView(LoginRequiredMixin, ListView):
+class OrderVerificationView(LoginRequiredMixin, ListView):
     template_name = URL + '/test.html'
     context_object_name = 'list'
     model = MeasurEquipment
 
 
-# def remove_members(request):
-#     group = MeasurEquipment.objects.all()
-#     members = request.POST.getlist('member')
-#     for member in checkbox_values:
-#         group.joined.remove(member)
-#     return redirect('test')
 
-
-
-def remove_members(request):
+def OrderVerificationchange(request):
     if request.method == 'POST':
         object_ids = request.POST.getlist('my_object')
         note = MeasurEquipment.objects.filter(id__in=object_ids) 
