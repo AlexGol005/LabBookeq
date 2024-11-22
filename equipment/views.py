@@ -63,7 +63,9 @@ class TestView(LoginRequiredMixin, ListView):
 def remove_members(request):
     if request.method == 'POST':
         object_ids = request.POST.getlist('my_object')
-        MeasurEquipment.objects.filter(id__in=object_ids).delete()  # Начинается массовое удаление
+        note = MeasurEquipment.objects.filter(id__in=object_ids)  
+        for i in note:
+            i.update(newhaveorder=True)
         return redirect('test')
 
 
