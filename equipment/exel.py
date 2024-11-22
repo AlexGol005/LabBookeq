@@ -1289,9 +1289,9 @@ def export_mustver_xls(request):
                     ]
 
     measure_e = MeasurEquipment.objects.filter(id__in=set1). \
-        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname', exnumber=Substr('equipment__exnumber',1,5)),
+        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
-                                      'equipment__manufacturer__companyName')). \
+                                      'equipment__manufacturer__companyName'), exnumber=Substr('equipment__exnumber',1,5)). \
         filter(equipment__personchange__in=setperson). \
         filter(equipment__roomschange__in=setroom). \
         filter(equipment__status='Э'). \
@@ -1320,7 +1320,7 @@ def export_mustver_xls(request):
                     ]
 
     testing_e = TestingEquipment.objects.filter(id__in=set10). \
-        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname',  exnumber=Substr('equipment__exnumber',1,5)),
+        annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname', exnumber=Substr('equipment__exnumber',1,5)),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName')). \
         filter(equipment__personchange__in=setperson). \
