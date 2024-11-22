@@ -45,6 +45,26 @@ URL = 'equipment'
 now = date.today()
 
 
+class TestView(LoginRequiredMixin, TemplateView):
+    template_name = URL + '/test.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TesttView, self).get_context_data(**kwargs)
+        list = MeasurEquipment.objects.all()
+        return context
+
+
+
+def remove_members(request, pk):
+    group = MeasurEquipment.objects.get(id=request.POST.get('group_id'))
+    members = request.POST.getlist('member')
+    for member in checkbox_values:
+        group.joined.remove(member)
+    return redirect('test')
+
+
+
+
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
 
 class ManagerEquipmentView(LoginRequiredMixin, TemplateView):
