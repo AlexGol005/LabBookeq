@@ -15,7 +15,7 @@
   <form action="{% url 'remove_members' %}" method="POST">
     {% csrf_token %}
       {% for member in list %}
-        <input type='checkbox' name='member' value="{{member.id}}">{{ member }}</input>
+        <input type='checkbox' name='member' value="{{member.id}}">{{ member.id }}</input>
       {% endfor %}
     <button type="submit">записать!!</button>
 </form>
