@@ -630,7 +630,7 @@ def export_metroyearcust_xls(request):
         annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName'), exnumber=Substr('equipment__exnumber',1,5)). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         filter(equipment__personchange__in=setperson). \
         filter(equipment__roomschange__in=setroom). \
         filter(equipmentSM_ver__in=setver). \
@@ -658,7 +658,7 @@ def export_metroyearcust_xls(request):
         annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName'), exnumber=Substr('equipment__exnumber',1,5)). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         filter(equipment__personchange__in=setperson). \
         filter(equipment__roomschange__in=setroom). \
         filter(equipmentSM_att__in=setatt). \
@@ -752,7 +752,7 @@ def export_metroyearprice_xls(request):
         filter(equipmentSM_ver__in=setver). \
         filter(equipmentSM_ver__date__year=serdate). \
         filter(equipmentSM_ver__price__isnull=False). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         values_list(
         'exnumber',
         'charakters__reestr',
