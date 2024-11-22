@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+   Тест
+{% endblock %}
+
+
+{% block content %}
+<div class="col-8">
+  
+<!-- тестовый код тут -->
+
+
+
+  <form action="{% url 'remove_members' group.pk %}" method="POST">
+    {% csrf_token %}
+      {% for member in list %}
+        <input type='checkbox' name='member' value="{{member.id}}">{{ member }}</input>
+      {% endfor %}
+    <button type="submit">записать!!</button>
+</form>
+
+
+
+  
+<!--   конец тестового кода -->
+  
+</div>
+{% endblock %}
