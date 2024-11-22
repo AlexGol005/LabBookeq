@@ -1577,7 +1577,7 @@ class LastNewEquipmentView(LoginRequiredMixin, ListView):
 # .filter()[Total-10:Total]
 
 class SearchMustOrderView(LoginRequiredMixin, ListView):
-    """ выводит список СИ у которых месяц заказа поверки совпадает с указанным либо раньше него"""
+    """ выводит список СИ у которых месяц заказа новых совпадает с указанным либо раньше него"""
 
     template_name = URL + '/MEequipmentLIST.html'
     context_object_name = 'objects'
