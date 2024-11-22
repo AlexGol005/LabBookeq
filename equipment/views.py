@@ -46,7 +46,7 @@ now = date.today()
 
 
 class OrderVerificationView(LoginRequiredMixin, ListView):
-    template_name = URL + '/test.html'
+    template_name = URL + '/orderverification.html'
     context_object_name = 'list'
     model = MeasurEquipment
 
@@ -59,7 +59,7 @@ def OrderVerificationchange(request):
         for i in note:
             i.newhaveorder=True
             i.save()
-        return redirect('test')
+        return redirect('orderverification')
 
 
 
