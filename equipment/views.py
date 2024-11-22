@@ -64,8 +64,7 @@ def remove_members(request):
     if request.method == 'POST':
         object_ids = request.POST.getlist('my_object')
         note = MeasurEquipment.objects.filter(id__in=object_ids)  
-        for i in note:
-            i.update(newhaveorder=True)
+        note.objects.update(newhaveorder=True)
         return redirect('test')
 
 
