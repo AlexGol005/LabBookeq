@@ -38,10 +38,20 @@
             <td> {{ obj.kategory }}</td>
             <td><a href="/equipment/measureequipment/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>  
             <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-info mt-3">удалить</a></td>
-            {% if obj.measurequipment_set.all %}
-            <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-info mt-3">да</a></td>
+            {% if obj.equipment.measurequipment_set.all %}
+            <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть СИ</a></td> 
+            {% elif obj.equipment.testingequipment_set.all  %}
+            <td> <a href="{% url 'testequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть ИО</a></td> 
+            {% elif obj.equipment.helpingequipment_set.all %}
+            <td> <a href="{% url 'helpingequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть ВО</a></td>
             {% else %}
-            <td>нет</td>
+            {% if obj.kategory == 'СИ' %}
+            <td> добавить си</td>            
+            {% else %}
+            <td>......  </td>       
+            {% endif %}
+            {% else %}
+            <td>22222</td>  
             {% endif %}
         </tr>
         {% endfor %}
