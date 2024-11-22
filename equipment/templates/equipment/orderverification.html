@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 
 {% block title %}
-   Тест
+   Заказ поверки
 {% endblock %}
 
 
@@ -12,6 +12,13 @@
 
 <center><h5></h>Сформировать заявку на поверку/аттестацию и отметить в базе данных что прибор в поверке/аттестации</h5></center>
    <br>
+
+        <br>
+        <center>
+            <a href="/" class="btn btn-primary ml-1 mr-1"  style="width: 50%">Кнопочка для выбора списка приборов</a>
+        </center>
+        <br>
+
    
 <center>
 <form action="{% url 'orderverificationchange' %}" method="post">
@@ -31,7 +38,7 @@
 
     {% endfor %}
       </table>
-    <button type="submit" name="delete">Сформировать заявку</button>
+    <button type="submit" class="btn btn-primary>Сформировать заявку</button>
    
 </form>
 </center>
