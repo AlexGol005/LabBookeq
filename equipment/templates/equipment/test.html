@@ -10,8 +10,8 @@
   
 <!-- тестовый код тут -->
 
-
-
+<center>Заголовок</center>
+<center>
   <form action="{% url 'remove_members' %}" method="POST">
     {% csrf_token %}
       {% for member in list %}
@@ -19,7 +19,7 @@
       {% endfor %}
     <button type="submit">записать!!</button>
 </form>
-
+</center>
 
 
   
