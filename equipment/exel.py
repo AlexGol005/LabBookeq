@@ -978,6 +978,7 @@ def export_metronewyear_xls(request):
         filter(equipment__roomschange__in=setroom). \
         filter(equipment__personchange__in=setperson). \
         filter(equipment__yearintoservice=serdate). \
+        filter(equipment__pointer=request.profile.userid). \
         values_list(
         'equipment__exnumber',
         'charakters__name',
@@ -1064,6 +1065,7 @@ def export_planmetro_xls(request):
                                 filter(equipment__personchange__in=setperson). \
                                 filter(equipmentSM_ver__in=setver). \
                                 filter(equipmentSM_ver__dateorder__year=serdate). \
+                                filter(equipment__pointer=request.profile.userid). \
                                 values_list(
                                 'equipment__exnumber',
                                 'charakters__reestr',
@@ -1104,6 +1106,7 @@ def export_planmetro_xls(request):
     u_headers_he = []
     helping_e = []
     measure_e_months = MeasurEquipment.objects.\
+        filter(equipment__pointer=request.profile.userid). \
         filter(equipment__personchange__in=setperson).\
         filter(equipmentSM_ver__dateorder__year=serdate).\
         values('equipmentSM_ver__dateorder__month').\
@@ -1164,6 +1167,7 @@ def export_plan_purchaesing_xls(request):
                                 filter(equipment__personchange__in=setperson). \
                                 filter(equipmentSM_ver__dateordernew__year=serdate). \
                                 filter(equipmentSM_ver__haveorder=False). \
+                                filter(equipment__pointer=request.profile.userid). \
                                 values_list(
                                 'equipment__exnumber',
                                 'charakters__reestr',
@@ -1296,11 +1300,11 @@ def export_mustver_xls(request):
         annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName')).annotate(exnumber=Substr('equipment__exnumber',1,5)). \
+        filter(equipment__pointer=request.profile.userid). \
         filter(equipment__personchange__in=setperson). \
         filter(equipment__roomschange__in=setroom). \
         filter(equipment__status='Э'). \
         filter(equipmentSM_ver__in=setver). \
-        filter(equipment__pointer=request.profile.userid). \
         values_list(
         'exnumber',
         'charakters__reestr',
