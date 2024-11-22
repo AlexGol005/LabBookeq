@@ -17,10 +17,16 @@
 <form action="{% url 'remove_members' %}" method="post">
    {% csrf_token %}
    <table class="table table-bordered">
+             <tr>
+          <th> выберите</th>
+        <th>Внутренний номер</th>
+          <th>Поверка</th>
+       </tr>
     {% for item in list %}
-       <tr> <input type="checkbox" value="{{item.id}}" name="my_object">
+       <tr>
+          <td> <input type="checkbox" value="{{item.id}}" name="my_object"></td>
         <td>{{ item.equipment.exnumber }}</td>
-          <td>{{ item.newhaveorder }}</td>
+          <td>{{ item.newhaveorder|yesno:"Заказана,не заказана" }}</td>
        </tr>
 
     {% endfor %}
@@ -29,7 +35,7 @@
    
 </form>
 </center>
----------------------------------------------------------
+
 
 
 
