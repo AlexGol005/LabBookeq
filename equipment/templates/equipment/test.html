@@ -25,8 +25,8 @@
     {% for item in list %}
        <tr>
           <td> <input type="checkbox" value="{{item.id}}" name="my_object"></td>
-        <td>{{ item.equipment.exnumber }}</td>
-          <td>{{ item.newhaveorder|yesno:"Заказана,не заказана" }}</td>
+        <td>{{ item.equipment.exnumber|slice:':5' }}</td>
+          <td>{{ item.newhaveorder|yesno:"Заказана,Не заказана" }}</td>
        </tr>
 
     {% endfor %}
