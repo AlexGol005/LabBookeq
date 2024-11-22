@@ -834,6 +834,7 @@ def export_metroyearprice_xls(request):
 def export_metroyear_xls(request):
     """Список СИ и ИО прошедших поверку/аттестацию в указанном году, включая ЛО купленное с поверкой/аттестацие"""
     serdate = request.GET['date']
+    company = Company.objects.get(userid=request.user.profile.userid)
     exel_file_name = f'report_all_metro {serdate}'
     str1 = 'СИ'
     str2 = 'ИО'
