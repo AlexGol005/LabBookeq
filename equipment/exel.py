@@ -610,6 +610,7 @@ def base_planreport_xls(request, exel_file_name,
 def export_metroyearcust_xls(request):
     """Список СИ и ИО прошедших поверку/аттестацию в указанном году, исключая ЛО купленное с поверкой/аттестацией"""
     serdate = request.GET['date']
+    company = Company.objects.get(userid=request.user.profile.userid)
     exel_file_name = f'report_inner_metro {serdate}'
     str1 = 'СИ'
     str2 = 'ИО'
