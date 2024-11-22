@@ -40,20 +40,20 @@
             <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-info mt-3">удалить</a></td>
             
             {% if obj.measurequipment_set.all %}
-            <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть СИ</a></td> 
+            <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, см. СИ</a></td> 
             {% elif obj.testingequipment_set.all  %}
-            <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть ИО</a></td> 
+            <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, см. ИО</a></td> 
             {% elif obj.helpingequipment_set.all %}
-            <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, смотреть ВО</a></td>
+            <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, см. ВО</a></td>
             {% elif obj.testingequipment_set.all  %}
             {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'СИ' %}
-            <td>Добавить характеристики СИ </td> 
+            <td><a href="/equipment/measureequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики СИ/a> </td> 
             {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'ИО' %}
-            <td>Добавить характеристики ИО </td> 
+            <td><a href="/equipment/testequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики ИО/a> </td> 
             {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'ИО' %}
-            <td>Добавить характеристики ИО </td> 
+            <td><a href="/equipment/helpequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики ВО/a> </td>  
             {% else %}
-            <td> - </td>       
+            <td> --- </td>       
             {% endif %}
         </tr>
         {% endfor %}
