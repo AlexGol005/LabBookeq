@@ -851,13 +851,14 @@ def export_metroyear_xls(request):
     measure_e = MeasurEquipment.objects. \
         annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
-                                      'equipment__manufacturer__companyName')). \
+                                      'equipment__manufacturer__companyName'), exnumber=Substr('equipment__exnumber',1,5)). \
         filter(equipment__personchange__in=setperson). \
         filter(equipment__roomschange__in=setroom). \
         filter(equipmentSM_ver__in=setver). \
         filter(equipmentSM_ver__date__year=serdate). \
+        filter(equipment__pointer=request.user.profile.userid).\
         values_list(
-        'equipment__exnumber',
+        'exnumber',
         'charakters__reestr',
         'charakters__name',
         'mod_type',
@@ -877,11 +878,12 @@ def export_metroyear_xls(request):
     testing_e = TestingEquipment.objects. \
         annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
-                                      'equipment__manufacturer__companyName')). \
+                                      'equipment__manufacturer__companyName'), exnumber=Substr('equipment__exnumber',1,5)). \
         filter(equipment__roomschange__in=setroom). \
         filter(equipment__personchange__in=setperson). \
         filter(equipmentSM_att__in=setatt). \
         filter(equipmentSM_att__date__year=serdate). \
+        filter(equipment__pointer=request.user.profile.userid).\
         values_list(
         'equipment__exnumber',
         'charakters__name',
