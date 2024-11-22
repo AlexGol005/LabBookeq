@@ -622,7 +622,7 @@ def export_metroyearcust_xls(request):
 
     u_headers_me = ['Номер свидетельства',
                     'Стоимость поверки, руб.',
-                    'Дата поверки/калибровки',
+                    'Дата поверки',
                     'Дата окончания свидетельства',
                     ]
 
@@ -739,7 +739,7 @@ def export_metroyearprice_xls(request):
 
     u_headers_me = ['Номер свидетельства',
                     'Стоимость поверки, руб.',
-                    'Дата поверки/калибровки',
+                    'Дата поверки',
                     'Дата окончания свидетельства',
                     ]
 
@@ -780,7 +780,7 @@ def export_metroyearprice_xls(request):
         filter(equipmentSM_att__in=setatt). \
         filter(equipmentSM_att__date__year=serdate). \
         filter(equipmentSM_att__price__isnull=False). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         values_list(
         'exnumber',
         'charakters__name',
@@ -802,7 +802,7 @@ def export_metroyearprice_xls(request):
         filter(equipmentSM_ver__date__year=serdate). \
         filter(equipmentSM_ver__price__isnull=False).\
         values('equipmentSM_ver__date__month').\
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         annotate(dcount=Count('equipmentSM_ver__date__month'), s=Sum('equipmentSM_ver__price')).\
         order_by().\
         values_list(
@@ -817,7 +817,7 @@ def export_metroyearprice_xls(request):
         filter(equipmentSM_att__in=setatt). \
         filter(equipmentSM_att__date__year=serdate). \
         filter(equipmentSM_att__price__isnull=False). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         values('equipmentSM_att__date__month'). \
         annotate(dcount1=Count('equipmentSM_att__date__month'), s1=Sum('equipmentSM_att__price')). \
         order_by(). \
@@ -851,7 +851,7 @@ def export_metroyear_xls(request):
 
     u_headers_me = ['Номер свидетельства',
                     'Стоимость поверки, руб.',
-                    'Дата поверки/калибровки',
+                    'Дата поверки',
                     'Дата окончания свидетельства',
                     ]
 
@@ -947,7 +947,7 @@ def export_metronewyear_xls(request):
         filter(equipment__roomschange__in=setroom). \
         filter(equipmentSM_ver__in=setver). \
         filter(equipment__yearintoservice=serdate). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         values_list(
         'exnumber',
         'charakters__reestr',
@@ -968,7 +968,7 @@ def export_metronewyear_xls(request):
         filter(equipment__personchange__in=setperson). \
         filter(equipmentSM_att__in=setatt). \
         filter(equipment__yearintoservice=serdate). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         values_list(
         'exnumber',
         'charakters__name',
@@ -985,7 +985,7 @@ def export_metronewyear_xls(request):
         filter(equipment__roomschange__in=setroom). \
         filter(equipment__personchange__in=setperson). \
         filter(equipment__yearintoservice=serdate). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         values_list(
         'exnumber',
         'charakters__name',
@@ -1072,7 +1072,7 @@ def export_planmetro_xls(request):
                                 filter(equipment__personchange__in=setperson). \
                                 filter(equipmentSM_ver__in=setver). \
                                 filter(equipmentSM_ver__dateorder__year=serdate). \
-                                filter(equipment__pointer=request.profile.userid). \
+                                filter(equipment__pointer=request.user.profile.userid). \
                                 values_list(
                                 'exnumber',
                                 'charakters__reestr',
@@ -1099,7 +1099,7 @@ def export_planmetro_xls(request):
         filter(equipment__personchange__in=setperson). \
         filter(equipmentSM_att__in=setatt). \
         filter(equipmentSM_att__dateorder__year=serdate). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         values_list(
         'exnumber',
         'charakters__name',
@@ -1114,7 +1114,7 @@ def export_planmetro_xls(request):
     u_headers_he = []
     helping_e = []
     measure_e_months = MeasurEquipment.objects.\
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         filter(equipment__personchange__in=setperson).\
         filter(equipmentSM_ver__dateorder__year=serdate).\
         values('equipmentSM_ver__dateorder__month').\
@@ -1127,7 +1127,7 @@ def export_planmetro_xls(request):
     )
 
     testing_e_months = TestingEquipment.objects.\
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         filter(equipment__personchange__in=setperson).\
         filter(equipmentSM_att__dateorder__year=serdate).\
         values('equipmentSM_att__dateorder__month').\
@@ -1176,7 +1176,7 @@ def export_plan_purchaesing_xls(request):
                                 filter(equipment__personchange__in=setperson). \
                                 filter(equipmentSM_ver__dateordernew__year=serdate). \
                                 filter(equipmentSM_ver__haveorder=False). \
-                                filter(equipment__pointer=request.profile.userid). \
+                                filter(equipment__pointer=request.user.profile.userid). \
                                 values_list(
                                 'exnumber',
                                 'charakters__reestr',
@@ -1214,7 +1214,7 @@ def export_plan_purchaesing_xls(request):
     u_headers_he = []
     helping_e = []
     measure_e_months = MeasurEquipment.objects.\
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         filter(equipment__personchange__in=setperson).\
         filter(equipmentSM_ver__dateordernew__year=serdate). \
         filter(equipmentSM_ver__haveorder=False). \
@@ -1229,7 +1229,7 @@ def export_plan_purchaesing_xls(request):
     )
 
     testing_e_months = TestingEquipment.objects.\
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         filter(equipment__personchange__in=setperson).\
         filter(equipmentSM_att__dateordernew__year=serdate).\
         values('equipmentSM_att__dateordernew__month').\
@@ -1311,7 +1311,7 @@ def export_mustver_xls(request):
         annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName')).annotate(exnumber=Substr('equipment__exnumber',1,5)). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         filter(equipment__personchange__in=setperson). \
         filter(equipment__roomschange__in=setroom). \
         filter(equipment__status='Э'). \
@@ -1347,7 +1347,7 @@ def export_mustver_xls(request):
         filter(equipment__roomschange__in=setroom). \
         filter(equipment__status='Э'). \
         filter(equipmentSM_att__in=setatt). \
-        filter(equipment__pointer=request.profile.userid). \
+        filter(equipment__pointer=request.user.profile.userid). \
         values_list(
         'exnumber',
         'charakters__name',
