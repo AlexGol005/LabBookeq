@@ -9,14 +9,15 @@
 <div class="col-8">
   
 <!-- тестовый код тут -->
-
+{list}}
 <center>Заголовок</center>
 <center>
   <form action="{% url 'remove_members' %}" method="POST">
     {% csrf_token %}
       {% for member in list %}
-        <input type='checkbox' name='member' value="{{member.id}}">{{ member.id }}</input>
-      {% endfor %}
+      <input type="checkbox" id=" member.pk">
+       {{ member.pk }}
+     {% endfor %}
     <button type="submit">записать!!</button>
 </form>
 </center>
