@@ -52,12 +52,22 @@ class OrderVerificationView(LoginRequiredMixin, ListView):
 
 
 
-def OrderVerificationchange(request):
+def OrderVerificationchangeYes(request):
     if request.method == 'POST':
         object_ids = request.POST.getlist('my_object')
         note = MeasurEquipment.objects.filter(id__in=object_ids) 
         for i in note:
             i.newhaveorder=True
+            i.save()
+        return redirect('orderverification')
+
+
+def OrderVerificationchangeNo(request):
+    if request.method == 'POST':
+        object_ids = request.POST.getlist('my_object')
+        note = MeasurEquipment.objects.filter(id__in=object_ids) 
+        for i in note:
+            i.newhaveorder=False
             i.save()
         return redirect('orderverification')
 
