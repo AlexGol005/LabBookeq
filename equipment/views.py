@@ -59,10 +59,10 @@ def OrderVerificationchange(request):
             note = Equipment.objects.filter(id__in=object_ids) 
             for i in note:
                 if i.kategory == 'СИ':               
-                    i.measurequipment_set.last().newhaveorder=True
+                    i.measurequipment.newhaveorder=True
                     i.save()
                 if i.kategory == 'ИО':               
-                    i.testingequipment_set.last().newhaveorder=True
+                    i.testingequipment.newhaveorder=True
                     i.save()
             return redirect('orderverification')
         if 'false' in request.POST:
@@ -70,10 +70,10 @@ def OrderVerificationchange(request):
             note = Equipment.objects.filter(id__in=object_ids) 
             for i in note:
                 if i.kategory == 'СИ':               
-                    i.measurequipment_set.last().newhaveorder=False
+                    i.measurequipment.newhaveorder=False
                     i.save()
                 if i.kategory == 'ИО':               
-                    i.testingequipment_set.last().newhaveorder=False
+                    i.testingequipment.newhaveorder=False
                     i.save()
             return redirect('orderverification')
        
