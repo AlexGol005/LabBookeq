@@ -48,7 +48,7 @@ now = date.today()
 class OrderVerificationView(LoginRequiredMixin, ListView):
     template_name = URL + '/orderverification.html'
     context_object_name = 'list'
-    model = MeasurEquipment
+    model = Equipment
 
 
 
@@ -58,15 +58,23 @@ def OrderVerificationchange(request):
             object_ids = request.POST.getlist('my_object')
             note = Equipment.objects.filter(id__in=object_ids) 
             for i in note:
-                i.newhaveorder=True
-                i.save()
+                if i.kategory == 'СИ':               
+                    i.measurequipment_set.newhaveorder=True
+                    i.save()
+                if i.kategory == 'ИО':               
+                    i.testingequipment_set.newhaveorder=True
+                    i.save()
             return redirect('orderverification')
         if 'false' in request.POST:
             object_ids = request.POST.getlist('my_object')
-            note = MeasurEquipment.objects.filter(id__in=object_ids) 
+            note = Equipment.objects.filter(id__in=object_ids) 
             for i in note:
-                i.newhaveorder=False
-                i.save()
+                if i.kategory == 'СИ':               
+                    i.measurequipment_set.newhaveorder=False
+                    i.save()
+                if i.kategory == 'ИО':               
+                    i.testingequipment_set.newhaveorder=False
+                    i.save()
             return redirect('orderverification')
        
 
