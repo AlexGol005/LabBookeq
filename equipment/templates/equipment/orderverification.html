@@ -52,16 +52,18 @@
             {% if obj.measurequipment %}
           <td>{{obj.measurequipment.newverificator|default_if_none:" "}}</td> 
             <td>{{obj.measurequipment.newplace|default_if_none:" "}}</td> 
+          <td> {{ obj.measurequipment.newhaveorder|yesno:"Заказана,Не заказана" }}</td>
           
             {% elif obj.testingequipment %}
           <td>{{obj.testingequipment.newverificator|default_if_none:" "}}</td>
             <td>{{obj.testingequipment.newplace|default_if_none:" "}}</td>
-          
+          <td> {{ obj.testingequipment.newhaveorder|yesno:"Заказана,Не заказана" }}</td>
           {% else %}
           <td>-</td>
           <td>-</td>
+          <td>-</td>
            {% endif %}
-          <td>{{ obj.newhaveorder|yesno:"Заказана,Не заказана" }}</td>
+
        </tr>
 
     {% endfor %}
