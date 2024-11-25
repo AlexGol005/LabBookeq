@@ -36,20 +36,21 @@
        <tr>
           <td> <input type="checkbox" value="{{item.id}}" name="my_object"></td>
             {% if obj.measurequipment_set.all %}
-            <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
+            <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td> 
             {% elif obj.testingequipment_set.all  %}
-            <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
+            <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">{obj.exnumber| slice:":5"}}</a></td> 
             {% elif obj.helpingequipment_set.all %}
-            <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td>
+            <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td>
             {% else %}
             <td> {{obj.exnumber| slice:":5"}}</td>            
             {% endif %}
+          
             {% if obj.measurequipment_set.all %}
-            <td>{{obj.measureequipment.newplace}}</td> 
-          <td>{{obj.measureequipment.newverificator}}</td> 
+            <td>{{obj.measurequipment_set.newplace}}</td> 
+          <td>{{obj.measurequipment_set.newverificator}}</td> 
             {% elif obj.testingequipment_set.all %}
-            <td>{{obj.testingequipment.newplace}}</td>
-          <td>{{obj.testingequipment.newverificator}}</td>
+            <td>{{obj.testingequipment_set.newplace}}</td>
+          <td>{{obj.testingequipment_set.newverificator}}</td>
           {% else %}
           <td>-</td>
           <td>-</td>
