@@ -36,11 +36,11 @@
     {% for obj in list %}
        <tr>
           <td> <input type="checkbox" value="{{obj.id}}" name="my_object"></td>
-            {% if obj.measurequipment_set.all %}
+            {% if obj.measurequipment %}
             <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td> 
-            {% elif obj.testingequipment_set.all  %}
+            {% elif obj.testingequipment  %}
             <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td> 
-            {% elif obj.helpingequipment_set.all %}
+            {% elif obj.helpingequipment %}
             <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td>
             {% else %}
             <td> {{obj.exnumber| slice:":5"}}</td>            
@@ -48,13 +48,13 @@
 
           <td> {{obj.kategory}}</td> 
           
-            {% if obj.measurequipment_set.all %}
-          <td>{{obj.measurequipment_set.last.newverificator|default_if_none:" "}}</td> 
-            <td>{{obj.measurequipment_set.last.newplace|default_if_none:" "}}</td> 
+            {% if obj.measurequipment %}
+          <td>{{obj.measurequipment.newverificator|default_if_none:" "}}</td> 
+            <td>{{obj.measurequipment.newplace|default_if_none:" "}}</td> 
           
-            {% elif obj.testingequipment_set.all %}
-          <td>{{obj.testingequipment_set.last.newverificator|default_if_none:" "}}</td>
-            <td>{{obj.testingequipment_set.last.newplace|default_if_none:" "}}</td>
+            {% elif obj.testingequipment %}
+          <td>{{obj.testingequipment.newverificator|default_if_none:" "}}</td>
+            <td>{{obj.testingequipment.newplace|default_if_none:" "}}</td>
           
           {% else %}
           <td>-</td>
