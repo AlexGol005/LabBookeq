@@ -35,21 +35,21 @@
     {% for item in list %}
        <tr>
           <td> <input type="checkbox" value="{{item.id}}" name="my_object"></td>
-                    {% if obj.equipment.measurequipment_set.all %}
-            <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
-            {% elif obj.equipment.testingequipment_set.all  %}
-            <td> <a href="{% url 'testequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
-            {% elif obj.equipment.helpingequipment_set.all %}
-            <td> <a href="{% url 'helpingequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td>
+            {% if obj.measurequipment_set.all %}
+            <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
+            {% elif obj.testingequipment_set.all  %}
+            <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
+            {% elif obj.helpingequipment_set.all %}
+            <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td>
             {% else %}
-            <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
+            <td> {{obj.exnumber| slice:":5"}}</td>            
             {% endif %}
-            {% if obj.equipment.measurequipment_set.all %}
-            <td>{{obj.equipment.measureequipment.newplace}}</td> 
-          <td>{{obj.equipment.measureequipment.newverificator}}</td> 
-            {% elif obj.equipment.testingequipment_set.all %}
-            <td>{{obj.equipment.testingequipment.newplace}}</td>
-          <td>{{obj.equipment.testingequipment.newverificator}}</td>
+            {% if obj.measurequipment_set.all %}
+            <td>{{obj.measureequipment.newplace}}</td> 
+          <td>{{obj.measureequipment.newverificator}}</td> 
+            {% elif obj.testingequipment_set.all %}
+            <td>{{obj.testingequipment.newplace}}</td>
+          <td>{{obj.testingequipment.newverificator}}</td>
           {% else %}
           <td>-</td>
           <td>-</td>
