@@ -59,9 +59,9 @@ def OrderVerificationchange(request):
             note = Equipment.objects.filter(id__in=object_ids) 
             for i in note:
                 if i.kategory == 'СИ':               
-                    i.kategory='ИО'
+                    i.measurequipment.newhaveorder=True
                     i.save()
-                if i.kategory == 'ИО':               
+                elif i.kategory == 'ИО':               
                     i.testingequipment.newhaveorder=True
                     i.save()
             return redirect('orderverification')
@@ -72,7 +72,7 @@ def OrderVerificationchange(request):
                 if i.kategory == 'СИ':               
                     i.measurequipment.newhaveorder=False
                     i.save()
-                if i.kategory == 'ИО':               
+                elif i.kategory == 'ИО':               
                     i.testingequipment.newhaveorder=False
                     i.save()
             return redirect('orderverification')
