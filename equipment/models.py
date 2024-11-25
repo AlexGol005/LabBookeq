@@ -328,10 +328,27 @@ class TestingEquipment(models.Model):
                                    verbose_name='Характеристики ИО', blank=True, null=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
-    newcertnumber = models.CharField('Номер последнего аттестата', max_length=90, blank=True, null=True)
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
+        
     newdate = models.CharField('Дата последней аттестации', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней аттестации', blank=True, null=True, max_length=90)
-    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
+    newdateorder = models.CharField('Дата заказа следующей аттестации', blank=True, null=True, max_length=90, default='-')
+    newarshin = models.TextField('Ссылка на скан аттестата', blank=True, null=True)
+    newcertnumber = models.CharField('Номер последнего аттестата', max_length=90, blank=True, null=True)
+    newcertnumbershort = models.CharField('Краткий номер последнего аттестата', max_length=90, blank=True, null=True)
+    newprice = models.DecimalField('Стоимость данной аттестации', max_digits=100, decimal_places=2, null=True, blank=True)
+    newstatusver = models.CharField(max_length=300, default='Поверен', null=True,
+                                 verbose_name='Статус')
+    newverificator = models.CharField(verbose_name='Поверитель аттестации', blank=True, null=True, max_length=200)
+    newplace = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
+                             verbose_name='Место аттестации')
+    newnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
+    newyear = models.CharField('Год аттестации (если нет точных дат)', max_length=900, blank=True, null=True)
+    newdateordernew = models.CharField('Дата заказа нового оборудования (если аттестация не выгодна)', max_length=90, default='-')                                    
+    newhaveorder = models.BooleanField(verbose_name='Заказана следующая аттестация (или новое ИО)', default=False,  blank=True)                                 
+    newcust = models.BooleanField(verbose_name='Аттестацию организует Поставщик', default=False, blank=True)                            
+    newextra = models.TextField('Дополнительная информация', blank=True, null=True)
+
 
     def __str__(self):
         return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
