@@ -49,11 +49,11 @@
           <td> {{obj.kategory}}</td> 
           
             {% if obj.measurequipment_set.all %}
-            <td>{{obj.measurequipment.last.newplace}}ррр</td> 
-          <td>{{obj.measurequipment.last.newverificator}}</td> 
+            <td>{{obj.measurequipment_set.last.newplace}}ррр</td> 
+          <td>{{obj.measurequipment_set.last.newverificator}}</td> 
             {% elif obj.testingequipment_set.all %}
-            <td>{{obj.testingequipment.last.newplace}}</td>
-          <td>{{obj.testingequipment.last.newverificator}}</td>
+            <td>{{obj.testingequipment_set.last.newplace}}</td>
+          <td>{{obj.testingequipment_set.last.newverificator}}</td>
           {% else %}
           <td>-</td>
           <td>-</td>
