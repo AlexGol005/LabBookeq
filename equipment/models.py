@@ -260,9 +260,9 @@ class HelpingEquipmentCharakters(models.Model):
 class MeasurEquipment(models.Model):
     """СИ: составлено из ЛО и характеристик СИ"""
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
-    charakters = models.OneToOneField(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
+    charakters = models.ForeignKey(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики СИ', blank=True, null=True)
-    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+    equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
     aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
                            max_length=90, blank=True, null=True)
