@@ -35,11 +35,7 @@
        </tr>
     {% for obj in list %}
        <tr>
-          {% if obj.measurequipment %}
-          <td> <input type="checkbox" value="{{obj.measureequipment.id}}" name="my_object"></td>
-            {% elif obj.testingequipment %}
-          <td> <input type="checkbox" value="{{obj.testingequipment.id}}" name="my_object"></td>
-           {% endif %}
+          <td> <input type="checkbox" value="{{obj.id}}" name="my_object"></td>
           
             {% if obj.measurequipment %}
             <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td> 
