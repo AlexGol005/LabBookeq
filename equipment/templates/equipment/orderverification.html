@@ -32,7 +32,7 @@
           <th>Поверка</th>
                 
        </tr>
-    {% for item in list %}
+    {% for obj in list %}
        <tr>
           <td> <input type="checkbox" value="{{item.id}}" name="my_object"></td>
             {% if obj.measurequipment_set.all %}
@@ -55,7 +55,7 @@
           <td>-</td>
           <td>-</td>
            {% endif %}
-          <td>{{ item.newhaveorder|yesno:"Заказана,Не заказана" }}</td>
+          <td>{{ obj.newhaveorder|yesno:"Заказана,Не заказана" }}</td>
        </tr>
 
     {% endfor %}
