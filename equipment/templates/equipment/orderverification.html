@@ -27,18 +27,40 @@
              <tr>
           <th> выберите</th>
         <th>Внутренний номер</th>
+                <th>Последняя организация-поверитель</th>
+                <th>Место последней поверки</th>
           <th>Поверка</th>
+                
        </tr>
     {% for item in list %}
        <tr>
           <td> <input type="checkbox" value="{{item.id}}" name="my_object"></td>
-        <td>{{ item.equipment.exnumber|slice:':5' }}</td>
+                    {% if obj.equipment.measurequipment_set.all %}
+            <td> <a href="{% url 'measureequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
+            {% elif obj.equipment.testingequipment_set.all  %}
+            <td> <a href="{% url 'testequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td> 
+            {% elif obj.equipment.helpingequipment_set.all %}
+            <td> <a href="{% url 'helpingequipment' obj.equipment.exnumber %}"  class="btn btn-outline-primary">{{obj.equipment.exnumber| slice:":5"}}</a></td>
+            {% else %}
+            <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
+            {% endif %}
+            {% if obj.equipment.measurequipment_set.all %}
+            <td>{{obj.equipment.measureequipment.newplace}}</td> 
+          <td>{{obj.equipment.measureequipment.newverificator}}</td> 
+            {% elif obj.equipment.testingequipment_set.all %}
+            <td>{{obj.equipment.testingequipment.newplace}}</td>
+          <td>{{obj.equipment.testingequipment.newverificator}}</td>
+          {% else %}
+          <td>-</td>
+          <td>-</td>
+           {% endif %}
           <td>{{ item.newhaveorder|yesno:"Заказана,Не заказана" }}</td>
        </tr>
 
     {% endfor %}
       </table>
-    <button type="submit" name="delete">Добавить в список "поверка заказана"</button>
+    <button type="submit" name="true">Добавить в список "поверка/аттестация заказана"</button>
+    <button type="submit" name="false">Добавить в список "поверка/аттестация не заказана"</button>
   
 </form>
 </center>
