@@ -56,7 +56,7 @@ def OrderVerificationchange(request):
     if request.method == 'POST':
         if 'true' in request.POST:
             object_ids = request.POST.getlist('my_object')
-            note = MeasurEquipment.objects.filter(id__in=object_ids) 
+            note = Equipment.objects.filter(id__in=object_ids) 
             for i in note:
                 i.newhaveorder=True
                 i.save()
