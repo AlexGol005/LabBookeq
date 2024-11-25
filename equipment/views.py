@@ -59,7 +59,7 @@ def OrderVerificationchange(request):
             note = Equipment.objects.filter(id__in=object_ids) 
             for i in note:
                 if i.kategory == 'СИ':               
-                    i.kategory == 'ВО'
+                    i.kategory == 'ИО'
                     i.save()
                 elif i.kategory == 'ИО':               
                     i.testingequipment.newhaveorder=True
