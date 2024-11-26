@@ -274,6 +274,7 @@ def export_orderverification_xls(request, note):
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('1', cell_overwrite_ok=True)
     rows = note
+    row_num = 1
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
