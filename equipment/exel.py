@@ -273,7 +273,7 @@ def export_orderverification_xls(request, str):
     response['Content-Disposition'] = f'attachment; filename="1.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('1', cell_overwrite_ok=True)
-    q = str[9:-2].split("','")    
+    q = str[10:-2].split("', '")    
     note = Equipment.objects.filter(id__in=q)
     rows = note.values_list(
         'pk')
