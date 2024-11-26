@@ -273,7 +273,8 @@ def export_orderverification_xls(request, note):
     response['Content-Disposition'] = f'attachment; filename="1.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('1', cell_overwrite_ok=True)
-    rows = note
+    rows = note.values_list(
+        'pk')
     row_num = 1
     for row in rows:
         row_num += 1
