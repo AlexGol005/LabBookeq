@@ -64,7 +64,7 @@ def OrderVerificationchange(request):
                 elif i.kategory == 'ИО':               
                     i.testingequipment.newhaveorder=True
                     i.testingequipment.save()
-            return redirect('orderverification')
+            return redirect('export_me_xls')
         if 'false' in request.POST:
             object_ids = request.POST.getlist('my_object')
             note = Equipment.objects.filter(id__in=object_ids) 
