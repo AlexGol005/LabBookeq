@@ -63,7 +63,7 @@ def OrderVerificationchange(request):
                     i.measurequipment.save()
                 elif i.kategory == 'ИО':               
                     i.testingequipment.newhaveorder=True
-                    i.save()
+                    i.testingequipment.save()
             return redirect('orderverification')
         if 'false' in request.POST:
             object_ids = request.POST.getlist('my_object')
@@ -71,10 +71,10 @@ def OrderVerificationchange(request):
             for i in note:
                 if i.kategory == 'СИ':               
                     i.measurequipment.newhaveorder=False
-                    i.save()
+                    i.measurequipment.save()
                 elif i.kategory == 'ИО':               
-                    i.testingequipmentt.newhaveorder=False
-                    i.save()
+                    i.testingequipment.newhaveorder=False
+                    i.testingequipment.save()
             return redirect('orderverification')
        
 
