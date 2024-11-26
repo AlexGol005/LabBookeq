@@ -266,7 +266,7 @@ style_black.pattern = pattern_black
 # вначале идет общая базовая  функция.
 # В ней объединено все общее для всех планов и отчетов. Базовая функция  выполняется в индивидуальных функциях)
 
-def export_orderverification_xls(request):
+def export_orderverification_xls(request, note):
     '''представление для выгрузки списка на поверку'''
     company = Company.objects.get(userid=request.user.profile.userid)
     response = HttpResponse(content_type='application/ms-excel')
