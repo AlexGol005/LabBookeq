@@ -266,6 +266,29 @@ style_black.pattern = pattern_black
 # вначале идет общая базовая  функция.
 # В ней объединено все общее для всех планов и отчетов. Базовая функция  выполняется в индивидуальных функциях)
 
+def export_orderverification_xls(request, note):
+    '''представление для выгрузки списка на поверку'''
+    company = Company.objects.get(userid=request.user.profile.userid)
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="1.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('1', cell_overwrite_ok=True)
+    rows = note
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], style_plain_r)
+    wb.save(response)
+    return response
+
+    
+        
+        
+            
+
+
+
+
 
 def base_planreport_xls(request, exel_file_name,
                                measure_e, testing_e, helping_e,
