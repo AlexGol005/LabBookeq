@@ -64,7 +64,6 @@ def OrderVerificationchange(request):
                 elif i.kategory == 'ИО':               
                     i.testingequipment.newhaveorder=True
                     i.testingequipment.save()
-                    redirect('export_mustver_xls')
             return redirect('orderverification')
         if 'false' in request.POST:
             object_ids = request.POST.getlist('my_object')
