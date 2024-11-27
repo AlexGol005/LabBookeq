@@ -151,3 +151,16 @@ class EmployeesUpdateForm(forms.ModelForm):
                  'name', 
                 'position', 
                   ]
+
+
+class OrderformForm(forms.ModelForm):
+    """форма для выбора формы заявки на поверку"""
+    orderform = forms.ChoiceField(label='Выберите форму заявки на поверку по поверителю, если нет нужной вам формы - обратитесь к администрации сайта', required=True,
+                             choices=ORDERFORMCHOISE,
+                             widget=forms.Select(attrs={'class': 'form-control'}))
+                             
+    class Meta:
+        model = Company
+        fields = [
+                 'orderform', 
+                  ]
