@@ -94,9 +94,12 @@ class CompanyCreateForm(forms.ModelForm):
     email = forms.CharField(label='email', widget=forms.TextInput(attrs={'class': 'form-control',}))
     attestat = forms.CharField(label='Данные аттестата аккредитации', required=False, widget=forms.Textarea(attrs={'class': 'form-control',}))
     manager_position = forms.CharField(label='Должность лица ответственного за оборудование', widget=forms.TextInput(attrs={'class': 'form-control',}))
-    manager_name = forms.CharField(label='ФИО лица ответственного за оборудованиеи', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    manager_name = forms.CharField(label='ФИО лица ответственного за оборудование', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    manager_phone = forms.CharField(label='Телефон лица ответственного за оборудование', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    manager_email = forms.CharField(label='email лица ответственного за оборудование', widget=forms.TextInput(attrs={'class': 'form-control',}))
     caretaker_position = forms.CharField(label='Должность завхоза', widget=forms.TextInput(attrs={'class': 'form-control',}))
     caretaker_name = forms.CharField(label='ФИО завхоза', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    
                              
 
     class Meta:
@@ -117,7 +120,9 @@ class CompanyCreateForm(forms.ModelForm):
                 'manager_position',
                 'manager_name',
                 'caretaker_position',
-                'caretaker_name'            
+                'caretaker_name' ,
+                'manager_phone',
+                'manager_email',
                   ]
 
 
