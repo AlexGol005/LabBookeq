@@ -35,12 +35,12 @@
         <tr>
             {% if obj.measurequipment %}
             <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td> 
-            {% elif obj.equipment  %}
+            {% elif obj.testingequipment  %}
             <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td> 
             {% elif obj.helpingequipment %}
             <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td>
             {% else %}
-            <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
+            <td> {{obj.exnumber| slice:":5"}}</td>            
             {% endif %}
             <td> {{ obj.lot }}</td>
             <td> {{ obj.kategory }}</td>
