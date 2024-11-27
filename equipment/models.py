@@ -123,7 +123,7 @@ class Equipment(models.Model):
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, verbose_name='Производитель')
     status = models.CharField(max_length=300, choices=CHOICES, default='В эксплуатации', null=True,
                               verbose_name='Статус')
-    standard_number = models.CharField('номер в качестве эталона в ФИФ, разряд по ГПС, ЛПС, и т. п.',  default='', blank=True, null=True)
+    standard_number = models.CharField('номер в качестве эталона в ФИФ, разряд по ГПС, ЛПС, и т. п.',  default='', blank=True, null=True, max_length=90)
     yearintoservice = models.IntegerField('Год ввода в эксплуатацию', default='0', blank=True, null=True)
     new = models.CharField('Новый или б/у', max_length=100, default='новый')
     invnumber = models.CharField('Инвентарный номер', max_length=100, default='', blank=True, null=True)
