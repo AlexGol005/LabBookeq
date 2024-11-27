@@ -53,9 +53,14 @@ class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
     form_class = OrderformForm
     success_url = '/equipment/orderverification'
     error_message = "Раздел доступен только инженеру по оборудованию"
-    object =  Company.objects.get(userid=self.request.user.profile.userid)
+
     
 
+    def get_object(self, queryset=None):
+        q = Company.objects.get(userid=self.request.user.profile.userid)
+        return q
+    
+    
     def form_valid(self, form):
         order = form.save(commit=False)
         user = User.objects.get(username=self.request.user)
@@ -711,7 +716,7 @@ class TestingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
         return context
 
 @login_required
-def TestingEquipmentCharaktersUpdateView(request, str):
+def TestingEquipmentCharakters(request, str):
     """выводит форму для обновления данных о характеристиках ИО"""
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
@@ -756,7 +761,7 @@ class HelpingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
         return context
 
 @login_required
-def HelpingEquipmentCharaktersUpdateView(request, str):
+def HelpingEquipmentCharakters(request, str):
     """выводит форму для обновления данных о характеристиках ВО"""
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
