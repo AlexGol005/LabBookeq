@@ -3,6 +3,13 @@ from django.contrib.auth.models import User
 from PIL import  Image
 
 
+ORDERFORMCHOISE = (
+        ('ФБУ «Тест-С.-Петербург»', 'ФБУ «Тест-С.-Петербург»'),
+    )
+
+
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)    
     name = models.CharField('ФИО/роль', max_length=40, default=None, null=True)
@@ -56,6 +63,8 @@ class Company(models.Model):
     ver_agreement_head_position = models.CharField('Кому: должность лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
     ver_agreement_head_organisation = models.CharField('Кому: название организации-поверителя', max_length=100, default=None, null=True, blank=True)
     ver_agreement_head_name = models.CharField('Кому: имя лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
+    orderform = models.CharField(max_length=300, choices=ORDERFORMCHOISE,  null=True, verbose_name='Форма заявки на поверку')
+                              
     
     pay = models.BooleanField ('Оплачено', default=True)
     
