@@ -158,7 +158,10 @@ class OrderformForm(forms.ModelForm):
     # orderform = forms.ChoiceField(label='Выберите форму заявки на поверку по поверителю, если нет нужной вам формы - обратитесь к администрации сайта', required=True,
     #                          choices=ORDERFORMCHOISE,
     #                          widget=forms.Select(attrs={'class': 'form-control'}))
-    orderform = forms.CharField(label='ФИО', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    orderform = forms.ChoiceField(label='Новый или б/у', initial='новый',
+                            choices=(
+                                     ('новый', 'новый'),
+                                     ('б/у', 'б/у')),
                              
     class Meta:
         model = Company
