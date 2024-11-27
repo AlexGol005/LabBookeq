@@ -52,6 +52,8 @@ class OrderVerificationView(LoginRequiredMixin, FormMixin, ListView):
     context_object_name = 'list'
     form_class = OrderformForm
     success_url = '/equipment/orderverification'
+    company = Company.objects.get(userid=self.request.user.profile.userid)
+    initial = {'orderform': company.orderform}
 
     def get_queryset(self):
         queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)        
@@ -59,8 +61,7 @@ class OrderVerificationView(LoginRequiredMixin, FormMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(OrderVerificationView, self).get_context_data(**kwargs)
-        company = Company.objects.get(userid=self.request.user.profile.userid)
-        a = company.orderform
+
         context['form'] = OrderformForm(initial={'orderform': company.orderform})
         return context
 
