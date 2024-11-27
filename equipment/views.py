@@ -1,4 +1,4 @@
-r"""
+"""
 Модуль проекта LabJournal, приложения equipment.
 Приложение equipment это обширное приложение, включает все про лабораторное оборудование и лабораторные помещения
 Данный модуль views.py выводит представления для вывода форм и информации.
@@ -45,26 +45,6 @@ from users.models import Profile, Company
 
 URL = 'equipment'
 now = date.today()
-
-@login_required
-def TestingEquipmentCharaktersUpdateView(request, str):
-    """выводит форму для обновления данных о характеристиках ИО"""
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        if request.method == "POST":
-            form = TestingEquipmentCharaktersCreateForm(request.POST,
-                                                       instance=TestingEquipmentCharakters.objects.get(pk=str))
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.save()
-                return redirect('testingequipmentcharacterslist')
-        else:
-            form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
-        data = {'form': form,
-                }
-        return render(request, 'equipment/Echaractersreg.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
-        return redirect('/equipment/testingequipmentcharacterslist/')
 
 
 
@@ -739,7 +719,7 @@ class TestingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
         return context
 
 @login_required
-def TestingEquipmentCharakters(request, str):
+def TestingEquipmentCharaktersUpdateView(request, str):
     """выводит форму для обновления данных о характеристиках ИО"""
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
@@ -784,7 +764,7 @@ class HelpingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
         return context
 
 @login_required
-def HelpingEquipmentCharakters(request, str):
+def HelpingEquipmentCharaktersUpdateView(request, str):
     """выводит форму для обновления данных о характеристиках ВО"""
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
