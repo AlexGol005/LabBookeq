@@ -285,6 +285,11 @@ class EquipmentCreateForm(forms.ModelForm):
     repair = forms.CharField(label='Контакты для ремонта', max_length=1000,  required=False)    
     yearintoservice = forms.CharField(label='Год ввода в эксплуатацию', max_length=10000, initial=datetime.now().year,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
+    standard_number = forms.CharField(label='номер в качестве эталона в ФИФ, разряд по ГПС, ЛПС, и т. п', max_length=10000, required=False,
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
+    pravo_have = forms.ChoiceField(label='Собственность или аренда', initial='собственность',
+                            choices=( ('собственность', 'собственность'),
+                                     ('аренда', 'аренда')), widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Equipment
@@ -292,7 +297,8 @@ class EquipmentCreateForm(forms.ModelForm):
             'exnumber', 'lot', 'yearmanuf', 'manufacturer', 'status', 
             'new', 'invnumber', 'kategory', 'individuality', 'notemaster', 'price',
             'pasport', 'instruction',
-             'notemetrology', 'repair', 'yearintoservice', 'pravo'
+             'notemetrology', 'repair', 'yearintoservice', 'pravo', 
+            'standard_number', 'pravo_have',
         ]
 
     def __init__(self, *args, **kwargs):
@@ -325,6 +331,12 @@ class EquipmentCreateForm(forms.ModelForm):
                 Column('notemetrology', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('repair', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('standard_number', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('pravo', css_class='form-group col-md-6 mb-0'),
+                Column('pravo_have', css_class='form-group col-md-6 mb-0'),
+                ),
             Row(Submit('submit', 'Записать', css_class='btn btn-primary col-md-11 mb-3 mt-4 ml-4')))
 
 
@@ -345,12 +357,18 @@ class EquipmentUpdateForm(forms.ModelForm):
     instruction = forms.CharField(label='Основная инструкция по эксплуатации', max_length=10000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': 'добавьте ссылку на инструкцию'}))
-    pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)', max_length=10000,  required=False,
-                            widget=forms.TextInput(attrs={'class': 'form-control'}))
     invnumber = forms.CharField(label='Инвентарный номер', max_length=10000, initial='б/н', required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     repair = forms.CharField(label='Контакты для ремонта', max_length=10000,  required=False,
                              widget=forms.TextInput(attrs={'class': 'form-control'}))
+    standard_number = forms.CharField(label='номер в качестве эталона в ФИФ, разряд по ГПС, ЛПС, и т. п', max_length=10000, required=False,
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
+    pravo = forms.CharField(label='Право владения прибором (например, номер и дата накладной)', max_length=10000,  required=False,
+                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+    pravo_have = forms.ChoiceField(label='Собственность или аренда', initial='собственность',
+                            choices=( ('собственность', 'собственность'),
+                                     ('аренда', 'аренда')), widget=forms.Select(attrs={'class': 'form-control'}))
+                                    
 
     class Meta:
         model = Equipment
@@ -359,7 +377,8 @@ class EquipmentUpdateForm(forms.ModelForm):
             'pasport', 'instruction',
             'pravo',
              'invnumber',
-            'repair', 'notemetrology'
+            'repair', 'notemetrology',
+            'standard_number', 'pravo_have',
                   ]
 
 
