@@ -51,6 +51,7 @@ class OrderVerificationView(LoginRequiredMixin, FormMixin, ListView):
     template_name = URL + '/orderverification.html'
     context_object_name = 'list'
     form_class = OrderformForm
+    success_url = '/equipment/orderverification/'
 
     def get_queryset(self):
         queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)        
@@ -75,9 +76,6 @@ class OrderVerificationView(LoginRequiredMixin, FormMixin, ListView):
         
         return super().form_valid(form)
 
-
-    def get_success_url(self):
-        return redirect('orderverification')
 
 
 
