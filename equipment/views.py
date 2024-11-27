@@ -58,10 +58,8 @@ class OrderVerificationView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(OrderVerificationView, self).get_context_data(**kwargs)
         company = Company.objects.get(userid=self.request.user.profile.userid)
-        # a = company.orderform
-        # form = OrderformForm(initial={'orderform': company.orderform})
-
-        form = OrderformForm()
+        a = company.orderform
+        context['form'] = OrderformForm(initial={'orderform': company.orderform})
         return context
 
 
