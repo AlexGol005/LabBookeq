@@ -99,6 +99,8 @@ class CompanyCreateForm(forms.ModelForm):
     manager_email = forms.CharField(label='email лица ответственного за оборудование', widget=forms.TextInput(attrs={'class': 'form-control',}))
     caretaker_position = forms.CharField(label='Должность завхоза', widget=forms.TextInput(attrs={'class': 'form-control',}))
     caretaker_name = forms.CharField(label='ФИО завхоза', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    ver_agreement_number = forms.CharField(label='Номер договора с организацией-поверителем', widget=forms.TextInput(attrs={'class': 'form-control',}))
+    ver_agreement_date = forms.CharField(label='дата договора с организацией-поверителем', widget=forms.TextInput(attrs={'class': 'form-control',}))
     
                              
 
@@ -123,6 +125,10 @@ class CompanyCreateForm(forms.ModelForm):
                 'caretaker_name' ,
                 'manager_phone',
                 'manager_email',
+                'ver_agreement_number', 
+                'ver_agreement_date', 
+            
+            
                   ]
 
 
