@@ -34,7 +34,7 @@
         {% for obj in objects %}
         <tr>
             {% if obj.measurequipment %}
-            <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.xnumber| slice:":5"}}</a></td> 
+            <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td> 
             {% elif obj.equipment  %}
             <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td> 
             {% elif obj.helpingequipment %}
