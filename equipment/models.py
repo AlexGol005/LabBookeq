@@ -73,6 +73,9 @@ CHOICESPLACE = (
         ('На месте эксплуатации', 'На месте эксплуатации'),
     )
 
+HAVE = (('собственность', 'собственность'),
+                                     ('аренда', 'аренда'))
+
 
 # блок 2 -  производители и поверители
 
@@ -120,6 +123,7 @@ class Equipment(models.Model):
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, verbose_name='Производитель')
     status = models.CharField(max_length=300, choices=CHOICES, default='В эксплуатации', null=True,
                               verbose_name='Статус')
+    standard_number = models.CharField('номер в качестве эталона в ФИФ, разряд по ГПС, ЛПС, и т. п.',  default='', blank=True, null=True)
     yearintoservice = models.IntegerField('Год ввода в эксплуатацию', default='0', blank=True, null=True)
     new = models.CharField('Новый или б/у', max_length=100, default='новый')
     invnumber = models.CharField('Инвентарный номер', max_length=100, default='', blank=True, null=True)
@@ -133,6 +137,8 @@ class Equipment(models.Model):
     instruction = models.CharField('Инструкция по эксплуатации (ссылка)', max_length=1000,  blank=True, null=True)
     repair = models.CharField('Контакты для ремонта', max_length=1000,  blank=True, null=True)
     pravo = models.CharField('Право владения прибором (например, номер и дата накладной)', max_length=1000,  blank=True, null=True)
+    pravo_have = models.CharField(max_length=300, choices=HAVE, default='cобственность', null=True,
+                              verbose_name='Собственность или аренда')
     aim = models.CharField('Предназначение', max_length=500, blank=True, null=True)                           
     aim2 = models.CharField('Наименование испытуемых групп объектов', max_length=500, blank=True, null=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)   
