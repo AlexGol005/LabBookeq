@@ -39,18 +39,18 @@
             <td><a href="/equipment/measureequipment/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>  
             <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-info mt-3">удалить</a></td>
             
-            {% if obj.measurequipment_set.all %}
+            {% if obj.measurequipment %}
             <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, см. СИ</a></td> 
-            {% elif obj.testingequipment_set.all  %}
+            {% elif obj.testingequipment  %}
             <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, см. ИО</a></td> 
-            {% elif obj.helpingequipment_set.all %}
+            {% elif obj.helpingequipment %}
             <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, см. ВО</a></td>
-            {% elif obj.testingequipment_set.all  %}
+            {% elif obj.testingequipment  %}
             {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'СИ' %}
             <td><a href="/equipment/measureequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики СИ</a> </td> 
-            {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'ИО' %}
+            {% elif not obj.measurequipment and not obj.testingequipment and not  obj.helpingequipment and obj.kategory == 'ИО' %}
             <td><a href="/equipment/testequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики ИО</a> </td> 
-            {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'ИО' %}
+            {% elif not obj.measurequipment and not obj.testingequipment and not  obj.helpingequipment and obj.kategory == 'ИО' %}
             <td><a href="/equipment/helpequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики ВО</a> </td>  
             {% else %}
             <td> --- </td>       
