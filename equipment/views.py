@@ -60,6 +60,9 @@ class OrderVerificationView(LoginRequiredMixin, ListView):
         company = Company.objects.get(userid=self.request.user.profile.userid)
         a = company.orderform
         context['form'] = OrderformForm(initial={'orderform': company.orderform})
+        form = OrderformForm()
+        if form.is_valid():
+            return context
         return context
 
 
