@@ -47,12 +47,14 @@ URL = 'equipment'
 now = date.today()
 
 
-class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """ выводит страницу для заказа поверки/аттестации """
     template_name = URL + '/orderverification.html'
     form_class = OrderformForm
     success_url = '/equipment/orderverification'
     error_message = "Раздел доступен только инженеру по оборудованию"
+    object =  Company.objects.get(userid=request.user.profile.userid)
+    
 
     def form_valid(self, form):
         order = form.save(commit=False)
