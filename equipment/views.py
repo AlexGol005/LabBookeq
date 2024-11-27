@@ -72,8 +72,12 @@ class OrderVerificationView(LoginRequiredMixin, FormMixin, ListView):
 
 
     def form_valid(self, form):
-        redirect('orderverification')
+        
         return super().form_valid(form)
+
+
+    def get_success_url(self):
+        return redirect('orderverification')
 
 
 
