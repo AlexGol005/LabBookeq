@@ -50,8 +50,18 @@ class OrderVerificationView(LoginRequiredMixin, ListView):
     context_object_name = 'list'
     model = Equipment
 
+    def get_queryset(self):
+        queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)        
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        company = Company.objects.filter(userid=self.request.user.profile.userid)
+        a = company.orderform
+        form = OrderformForm(initial={'orderform': company.orderform})
+        return context
 
 
+@login_required
 def OrderVerificationchange(request):
     if request.method == 'POST':
         if 'true' in request.POST:
