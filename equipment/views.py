@@ -47,33 +47,28 @@ URL = 'equipment'
 now = date.today()
 
 
-class OrderVerificationView(LoginRequiredMixin, FormMixin, ListView):
+class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    """ выводит страницу для заказа поверки/аттестации """
     template_name = URL + '/orderverification.html'
-    context_object_name = 'list'
     form_class = OrderformForm
     success_url = '/equipment/orderverification'
-
-
-    def get_queryset(self):
-        queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)        
-        return queryset
-
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():           
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
+    error_message = "Раздел доступен только инженеру по оборудованию"
 
     def form_valid(self, form):
-        
-        return super().form_valid(form)
+        order = form.save(commit=False)
+        user = User.objects.get(username=self.request.user)
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.pointer = self.request.user.profile.userid
+            order.save()
+            return super().form_valid(form)
+        else:
+            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            return redirect('/equipment/measurequipmentcharacterslist/')
 
-
-
-
-
+    def get_context_data(self, **kwargs):
+        context = super(OrderVerificationView, self).get_context_data(**kwargs)
+        context['list'] = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
+        return context
 
 
 @login_required
