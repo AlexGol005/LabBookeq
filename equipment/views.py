@@ -64,12 +64,19 @@ class OrderVerificationView(LoginRequiredMixin, FormMixin, ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        """ Обработка POST при использовани FormMixin в DetailView """
-        form = OrderformForm(request.POST)
+        form = self.get_form()
         if form.is_valid():
-            order = form.save(commit=False)
-            order.save()
-            return redirect('orderverification')
+           
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+
+
 
 
 
