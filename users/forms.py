@@ -161,7 +161,7 @@ class OrderformForm(forms.ModelForm):
     orderform = forms.ChoiceField(label='Новый или б/у', initial='новый',
                             choices=(
                                      ('новый', 'новый'),
-                                     ('б/у', 'б/у')),
+                                     ('б/у', 'б/у')),widget=forms.Select(attrs={'class': 'form-control'}))
                              
     class Meta:
         model = Company
