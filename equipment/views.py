@@ -53,7 +53,7 @@ class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
     form_class = OrderformForm
     success_url = '/equipment/orderverification'
     error_message = "Раздел доступен только инженеру по оборудованию"
-    object =  Company.objects.get(userid=request.user.profile.userid)
+    object =  Company.objects.get(userid=self.request.user.profile.userid)
     
 
     def form_valid(self, form):
