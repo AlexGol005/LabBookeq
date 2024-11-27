@@ -32,6 +32,7 @@ from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
+from django.views.generic.edit import FormMixin
 from xlwt import Alignment, Borders
 
 from equipment.constants import servicedesc0
