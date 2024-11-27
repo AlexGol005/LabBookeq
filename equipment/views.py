@@ -46,6 +46,29 @@ from users.models import Profile, Company
 URL = 'equipment'
 now = date.today()
 
+@login_required
+def TestingEquipmentCharaktersUpdateView(request, str):
+    """выводит форму для обновления данных о характеристиках ИО"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = TestingEquipmentCharaktersCreateForm(request.POST,
+                                                       instance=TestingEquipmentCharakters.objects.get(pk=str))
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect('testingequipmentcharacterslist')
+        else:
+            form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/Echaractersreg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect('/equipment/testingequipmentcharacterslist/')
+
+
+
+
 
 class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """ выводит страницу для заказа поверки/аттестации """
