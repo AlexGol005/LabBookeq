@@ -46,10 +46,10 @@ URL = 'equipment'
 now = date.today()
 
 
-class OrderVerificationView(LoginRequiredMixin, ListView):
+class OrderVerificationView(LoginRequiredMixin, FormMixin, ListView):
     template_name = URL + '/orderverification.html'
     context_object_name = 'list'
-    model = Equipment
+    form_class = OrderformForm
 
     def get_queryset(self):
         queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)        
@@ -60,10 +60,21 @@ class OrderVerificationView(LoginRequiredMixin, ListView):
         company = Company.objects.get(userid=self.request.user.profile.userid)
         a = company.orderform
         context['form'] = OrderformForm(initial={'orderform': company.orderform})
-        form = OrderformForm()
-        if form.is_valid():
-            return context
         return context
+
+    def post(self, request, *args, **kwargs):
+        """ Обработка POST при использовани FormMixin в DetailView """
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
 
 
 @login_required
