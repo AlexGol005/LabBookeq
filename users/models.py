@@ -31,7 +31,9 @@ class Profile(models.Model):
 
 class Company(models.Model):
     userid = models.CharField('Идентификатор организации (10 случайных цифр)', max_length=50, default=None, null=True, blank=True, unique=True)
-    name = models.CharField('Название организации', max_length=100, default=None, null=True, blank=True)
+    name = models.CharField('Название организации краткое', max_length=100, default=None, null=True, blank=True)
+    name_big = models.CharField('Название организации полное', max_length=100, default=None, null=True, blank=True)
+    attestat = models.CharField('Аттестат аккредитации', max_length=200, default=None, null=True, blank=True)
     requisits =  models.TextField('Реквизиты организации', default=None, null=True, blank=True)
     adress =  models.TextField('Адрес организации юридический', max_length=100, default=None, null=True, blank=True)
     adress_lab =  models.TextField('Адрес лаборатории физический', max_length=100, default=None, null=True, blank=True)
@@ -48,7 +50,13 @@ class Company(models.Model):
     caretaker_position = models.CharField('Должность завхоза', max_length=100, default=None, null=True, blank=True)
     caretaker_name = models.CharField('ФИО завхоза', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
-    attestat = models.CharField('Аттестат аккредитации', max_length=200, default=None, null=True, blank=True)
+    ver_agreement_number = models.CharField('Номер договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
+    ver_agreement_date = models.CharField('Дата договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
+    ver_agreement_card = models.CharField('Номер учетной карточки у с организации-поверителя', max_length=100, default=None, null=True, blank=True)
+    ver_agreement_head_position = models.CharField('Кому: должность лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
+    ver_agreement_head_organisation = models.CharField('Кому: название организации-поверителя', max_length=100, default=None, null=True, blank=True)
+    ver_agreement_head_name = models.CharField('Кому: имя лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
+    
     pay = models.BooleanField ('Оплачено', default=True)
     
 
