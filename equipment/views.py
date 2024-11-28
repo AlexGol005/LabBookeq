@@ -387,18 +387,15 @@ def RoomsCreateView(request):
         return redirect('roomreg')
 
 
-class VerificatorsCreationView(LoginRequiredMixin, SuccessMessageMixin, ListView):
-    """ выводит форму добавления компании поверителя и список поверителей """
+class VerificatorsCreationView(LoginRequiredMixin,  ListView):
+    """ выводит список поверителей """
     template_name = URL + '/verificatorsreglist.html'
-    success_url = '/equipment/verificatorsreg/'
-    success_message = "Организация поверитель успешно добавлена"
     context_object_name = 'objects'
 
     def get_context_data(self, **kwargs):
         context = super(VerificatorsCreationView, self).get_context_data(**kwargs)
         context['title'] = 'Внести организацию поверителя'
-        context['serform'] = Searchtestingform
-        context['form'] = VerificatorsCreationForm       
+        context['serform'] = Searchtestingform     
         return context
 
     def get_queryset(self):
@@ -417,6 +414,42 @@ class ManufacturerRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         context = super(ManufacturerRegView, self).get_context_data(**kwargs)
         context['title'] = 'Добавить производителя ЛО'
         return context
+
+
+class VerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    """ выводит форму добавления поверителя """
+    template_name = URL + '/reg.html'
+    form_class = VerificatorsCreationForm
+    success_url = '/equipment/verificatorsreg/'
+    success_message = "Поверитель успешно добавлен"
+
+    def get_context_data(self, **kwargs):
+        context = super(VerificatorRegView, self).get_context_data(**kwargs)
+        context['title'] = 'Добавить компанию-поверителя ЛО'
+        return context
+
+
+class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    """ выводит форму добавления договора с поверителем """
+    template_name = URL + '/reg.html'
+    form_class = AgreementVerificatorsCreationForm
+    success_url = '/equipment/verificatorsreg/'
+    success_message = "Договор с поверителем успешно добавлен"
+
+    def get_context_data(self, **kwargs):
+        context = super(AgreementVerificatorRegView, self).get_context_data(**kwargs)
+        context['title'] = 'Добавить договор с компанией-поверителем ЛО'
+        return context
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.company = Company.objects.get(userid=self.request.user.profile.userid)
+            order.save()
+            return super().form_valid(form)
+        else:
+            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            return redirect('/equipment/verificatorsreg/')
 
 
 class PersonchangeFormView(LoginRequiredMixin, View):
