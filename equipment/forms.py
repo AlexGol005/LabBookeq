@@ -789,7 +789,7 @@ class VerificatorsCreationForm(forms.ModelForm):
     companyAdress = forms.CharField(label='Название организации', max_length=10000000,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    telnumber = forms.CharField(label=Телефон', max_length=10000000,
+    telnumber = forms.CharField(label='Телефон', max_length=10000000,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     email = forms.CharField(label='email', max_length=10000000,
