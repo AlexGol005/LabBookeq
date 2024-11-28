@@ -231,8 +231,9 @@ class AgreementVerificators(LoginRequiredMixin, TemplateView):
         except:
             context['USER'] = False
         company = Company.objects.get(userid=user.profile.userid)
-        objects = Agreementverification.objects.all()
+        objects = Agreementverification.objects.filter(company=company)
         context['company'] = company 
+        context['objects'] = objects
         return context
         
 
