@@ -832,7 +832,7 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
                                                                 'placeholder': ''}))
 
     class Meta:
-        model = Verificators
+        model = Agreementverification
         fields = [
             'verificator',
             'ver_agreement_number',
