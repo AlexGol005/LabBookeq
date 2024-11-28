@@ -58,13 +58,7 @@ class Company(models.Model):
     caretaker_position = models.CharField('Должность завхоза', max_length=100, default=None, null=True, blank=True)
     caretaker_name = models.CharField('ФИО завхоза', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
-    ver_agreement_number = models.CharField('Номер договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
-    ver_agreement_date = models.CharField('Дата договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
-    ver_agreement_card = models.CharField('Номер учетной карточки у с организации-поверителя', max_length=100, default=None, null=True, blank=True)
-    ver_agreement_head_position = models.CharField('Кому: должность лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
-    ver_agreement_head_organisation = models.CharField('Кому: название организации-поверителя', max_length=100, default=None, null=True, blank=True)
-    ver_agreement_head_name = models.CharField('Кому: имя лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
-    orderform = models.CharField(max_length=300, choices=ORDERFORMCHOISE,  null=True, verbose_name='Форма заявки на поверку')
+
                               
     
     pay = models.BooleanField ('Оплачено', default=True)
