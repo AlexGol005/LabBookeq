@@ -443,6 +443,7 @@ class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, Creat
 
     def form_valid(self, form):
         order = form.save(commit=False)
+        user = User.objects.get(username=self.request.user)
         if user.has_perm('equipment.add_equipment') or user.is_superuser:
             order.company = Company.objects.get(userid=self.request.user.profile.userid)
             order.save()
