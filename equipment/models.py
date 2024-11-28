@@ -22,7 +22,7 @@ from django.contrib.auth.models import User
 from decimal import *
 from django.urls import reverse
 
-from users.models import Employees
+from users.models import Employees, Company
 from functstandart import get_dateformat
 
 # блок 1 -  неизменяемые непользовательские константы для полей с выбором значений в моделях
