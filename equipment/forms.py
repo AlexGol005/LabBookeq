@@ -820,14 +820,14 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
     verificator = forms.ModelChoiceField(label='Организация-поверитель',
                                          queryset=Verificators.objects.all(),
                                          widget=forms.Select(attrs={'class': 'form-control'}))
-    ver_agreement_number = forms.CharField(label='Номер договора с организацией-поверителем', max_length=10000000,
+    ver_agreement_number = forms.CharField(label='Номер договора с организацией-поверителем', max_length=10000000,  required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    ver_agreement_date = forms.CharField(label='Дата договора с организацией-поверителем', max_length=10000000,
+    ver_agreement_date = forms.CharField(label='Дата договора с организацией-поверителем', max_length=10000000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
 
-    ver_agreement_card = forms.CharField(label='Номер учетной карточки у с организации-поверителя', max_length=10000000,
+    ver_agreement_card = forms.CharField(label='Номер учетной карточки у с организации-поверителя', max_length=10000000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
 
