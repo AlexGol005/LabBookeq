@@ -814,6 +814,39 @@ class VerificatorsCreationForm(forms.ModelForm):
                   ]
 
 
+class AgreementVerificatorsCreationForm(forms.ModelForm):
+    """форма для внесения договора с компанией поверителем"""
+    verificator = forms.ModelChoiceField(label='Организация-поверитель',
+                                         queryset=Verificators.objects.all(),
+                                         widget=forms.Select(attrs={'class': 'form-control'}))
+    ver_agreement_number = forms.CharField(label='Номер договора с организацией-поверителем', max_length=10000000,
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
+    ver_agreement_date = forms.CharField(label=Дата договора с организацией-поверителем', max_length=10000000,
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
+    ver_agreement_card = forms.CharField(label='Номер учетной карточки у с организации-поверителя', max_length=10000000,
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
+
+
+choi
+    verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT, verbose_name='Поверитель')    
+    ver_agreement_number = models.CharField('Номер договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
+    ver_agreement_date = models.CharField('Дата договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
+    ver_agreement_card = models.CharField('Номер учетной карточки у с организации-поверителя', max_length=100, default=None, null=True, blank=True)
+
+
+    class Meta:
+        model = Verificators
+        fields = [
+            'verificator',
+            'ver_agreement_number',
+            'ver_agreement_date',
+            'ver_agreement_card',
+                  ]
+
+
 class RoomsCreateForm(forms.ModelForm):
     """форма для внесения комнаты"""
     roomnumber = forms.CharField(label='Номер комнаты', widget=forms.TextInput(attrs={'class': 'form-control'}))
