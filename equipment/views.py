@@ -214,6 +214,28 @@ class RoomsView(LoginRequiredMixin, TemplateView):
         context['company'] = company 
         return context
 
+
+
+class AgreementVerificators(LoginRequiredMixin, TemplateView):
+    """выводит страницу договоров с поверителями компании """
+    template_name = 'equipment/veragreements.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(AgreementVerificators, self).get_context_data(**kwargs)
+        try:
+            user = User.objects.get(username=self.request.user)
+            if user.is_staff or user.is_superuser:
+                context['USER'] = True
+            else:
+                context['USER'] = False
+        except:
+            context['USER'] = False
+        company = Company.objects.get(userid=user.profile.userid)
+        rooms = Agreementverification.objects.filter(company=company)
+        context['company'] = company 
+        return context
+        
+
 @login_required
 def RoomsUpdateView(request, str):
     """выводит форму для обновления данных о помещении"""
@@ -451,6 +473,27 @@ class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, Creat
         else:
             messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
             return redirect('/equipment/verificatorsreg/')
+
+
+@login_required
+def AgreementVerificatorUpdateView(request, str):
+    """выводит форму для обновления договора с поверителем"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = AgreementVerificatorsCreationForm(request.POST, instance=Agreementverification.objects.get(pk=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect('agreementcompany')
+        else:
+            form = AgreementVerificatorsCreationForm(instance=Agreementverification.objects.get(pk=str))
+        data = {'form': form,}                
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('rooms')
+
+
 
 
 class PersonchangeFormView(LoginRequiredMixin, View):
