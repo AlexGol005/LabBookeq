@@ -1015,7 +1015,7 @@ class ServiceEquipmentHE(models.Model):
 # блок 9 - отправка в поверку
 class Agreementverification(models.Model):
     """Договоры организации с поверителями"""
-    verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT, verbose_name='Поверитель')    
+    verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT, verbose_name='Поверитель', unique=True)    
     company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Компания')  
     ver_agreement_number = models.CharField('Номер договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
     ver_agreement_date = models.CharField('Дата договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
