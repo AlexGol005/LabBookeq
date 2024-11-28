@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Договоры с поверителями
+{% endblock %}
+
+{% block content %}
+  <div class="col-8">
+      
+     <center><h5>Договоры с поверителями компании {{ company.name }}</h5></center> 
+     <br>
+      
+     {% if USER  %}    
+        <center>
+            <a href="{% url 'agreementcompanyverreg' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:60%"> Добавить договор </a>
+        </center>
+        <br>
+     {% endif %}
+      
+     <table class="table table-bordered flexy">
+       
+        <tr>
+              <th>Название поверителя</th> <th>Номер договора</th><th>Дата договора</th><th>Номер карточки</th><th>Ред.</th>
+        </tr>
+        {% for obj in objects %}
+        <tr>              
+            <td>{{ obj.verificator.companyName }}</td> 
+            <td>{{ obj.ver_agreement_number  }}</td> 
+            <td>{{ obj.ver_agreement_date }}</td> 
+            <td>{{ obj.ver_agreement_card }}</td>
+            <td> <a href="{% url 'agreementcompanyverupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td>                
+        </tr>
+        {% endfor %}
+
+     </table>
+<br>
+</div>
+{% endblock %}
