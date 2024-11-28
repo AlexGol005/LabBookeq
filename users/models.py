@@ -58,9 +58,6 @@ class Company(models.Model):
     caretaker_position = models.CharField('Должность завхоза', max_length=100, default=None, null=True, blank=True)
     caretaker_name = models.CharField('ФИО завхоза', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
-
-                              
-    
     pay = models.BooleanField ('Оплачено', default=True)
     
 
