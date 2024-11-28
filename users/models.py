@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import  Image
 
-from equipment.models import Agreementverification
 
 ORDERFORMCHOISE = (
         ('ФБУ «Тест-С.-Петербург»', 'ФБУ «Тест-С.-Петербург»'),
@@ -60,7 +59,7 @@ class Company(models.Model):
     caretaker_name = models.CharField('ФИО завхоза', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
     pay = models.BooleanField ('Оплачено', default=True)
-    activ_verificator = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='Активный в данный момент оформления договор с компанией-поверителем') 
+    # activ_verificator = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='Активный в данный момент оформления договор с компанией-поверителем') 
 
     def __str__(self):
         return f'Организация: {self.userid}; {self.name}'
