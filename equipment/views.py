@@ -484,7 +484,7 @@ def AgreementVerificatorUpdateView(request, str):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                return redirect('agreementcompanylist')
+                return redirect('/equipment/agreementcompanylist/')
         else:
             form = AgreementVerificatorsCreationForm(instance=Agreementverification.objects.get(pk=str))
         data = {'form': form,}                
