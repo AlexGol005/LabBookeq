@@ -11,6 +11,7 @@
 блок 6 - комментарии
 блок 7 - микроклимат в помещении
 блок 8 - техобслуживание
+блок 9 - отправка в поверку
 """
 from datetime import date
 
@@ -103,6 +104,8 @@ class Verificators(models.Model):
     telnumber = models.CharField('Телефон', max_length=200, default='-', blank=True)
     email = models.CharField('email', max_length=200, default='-', blank=True)
     note = models.CharField('Примечание', max_length=10000, default='-', blank=True)
+    head_position = models.CharField('Кому: должность лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
+    head_name = models.CharField('Кому: имя лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
 
     def __str__(self):
         return f'{self.companyName}'
@@ -1007,3 +1010,13 @@ class ServiceEquipmentHE(models.Model):
     class Meta:
         verbose_name = 'Вспомогательное оборудование: проверка характеристик'
         verbose_name_plural = 'Вспомогательное оборудование: проверка характеристик'
+
+
+# блок 9 - отправка в поверку
+class Agreementverification(models.Model):
+    """Договоры организации с поверителями"""
+    verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT, verbose_name='Поверитель')    
+    company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Компания')  
+    ver_agreement_number = models.CharField('Номер договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
+    ver_agreement_date = models.CharField('Дата договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
+    ver_agreement_card = models.CharField('Номер учетной карточки у с организации-поверителя', max_length=100, default=None, null=True, blank=True)
