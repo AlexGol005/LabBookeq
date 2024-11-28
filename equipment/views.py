@@ -231,7 +231,7 @@ class AgreementVerificators(LoginRequiredMixin, TemplateView):
         except:
             context['USER'] = False
         company = Company.objects.get(userid=user.profile.userid)
-        rooms = Agreementverification.objects.filter(company=company)
+        objects = Agreementverification.objects.filter(company=company)
         context['company'] = company 
         return context
         
@@ -455,7 +455,7 @@ class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, Creat
     """ выводит форму добавления договора с поверителем """
     template_name = URL + '/reg.html'
     form_class = AgreementVerificatorsCreationForm
-    success_url = '/equipment/verificatorsreg/'
+    success_url = '/equipment/agreementcompanylist/'
     success_message = "Договор с поверителем успешно добавлен"
 
     def get_context_data(self, **kwargs):
@@ -484,7 +484,7 @@ def AgreementVerificatorUpdateView(request, str):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                return redirect('agreementcompany')
+                return redirect('agreementcompanylist')
         else:
             form = AgreementVerificatorsCreationForm(instance=Agreementverification.objects.get(pk=str))
         data = {'form': form,}                
