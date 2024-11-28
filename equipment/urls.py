@@ -91,4 +91,5 @@ urlpatterns = [
     path('orderverification', views.OrderVerificationView.as_view(), name='orderverification'),
     path('orderverificationchange', views.OrderVerificationchange, name='orderverificationchange'),
     path(r'^export_orderverification/xls/$/<str:str>/', exel.export_orderverification_xls, name='export_orderverification_xls'),
+    path('companyverreg/', views.VerificatorRegView.as_view(), name='companyverreg'),
 ]
