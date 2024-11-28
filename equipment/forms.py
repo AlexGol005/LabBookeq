@@ -800,6 +800,7 @@ class VerificatorsCreationForm(forms.ModelForm):
                                                                 'placeholder': ''}))
     head_name  = forms.CharField(label='Кому: ФИО лица организации-поверителя (для шапки заявки на поверку)', max_length=10000000,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
 
 
     class Meta:
