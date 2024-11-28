@@ -17,14 +17,21 @@
         {% crispy serform %}
     </form>
     <br>
-    <center><h6>Добавить поверителя</h6></center>
-      <form method="post" enctype="multipart/form-data" class="form-register">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button class="btn btn-prima" type="submit">Записать</button>
-      </form>
-    </center>
-    <br>
+
+
+
+          <center>
+              <a href="{% url 'manufacturerreg' %}"  target="blank" class="btn btn-primary mt-1 mr-1 ml-1" style="width: 40%">
+                  Добавить поверителя
+              </a>
+
+              <a href="{% url 'manufacturerreg' %}"  target="blank" class="btn btn-primary mt-1 mr-1 ml-1" style="width: 40%">
+                  Добавить договор с поверителем
+              </a>
+          </center>
+          <br>
+
+    
     <center><h6>Поверители</h6></center>
     <table class="table table-bordered">
     <thead>
