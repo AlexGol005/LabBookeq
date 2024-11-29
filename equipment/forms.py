@@ -839,6 +839,25 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
             'ver_agreement_card',
                   ]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('verificator', css_class='form-group'),
+                ),
+            Row(
+                Column('ver_agreement_number', css_class='form-group'),
+                ),
+            Row(
+                Column('ver_agreement_date', css_class='form-group'),
+                ),
+            Row(
+                Column('ver_agreement_card', css_class='form-group'),
+                ),
+
+            Submit('submit', 'Внести'))
+
 
 class RoomsCreateForm(forms.ModelForm):
     """форма для внесения комнаты"""
