@@ -33,16 +33,29 @@
 
     
     <center><h6>Поверители</h6></center>
-    <table class="table table-bordered">
+    <table class="table table-bordered flexy">
     <thead>
         <tr>
-            <th>Название организации</th>
+            <th>Название</th>
+            <th>Адрес</th>
+            <th>Телефон</th>
+            <th>емаил</th>
+            <th>Кому: должность лица организации-поверителя</th>
+            <th>Кому: имя лица организации-поверителя</th>
+            <th>Ред.</th>
+            
          </tr>
     </thead>
     <tbody>
     {% for obj in objects %}
     <tr>
         <td>{{ obj.companyName}}</td>
+        <td>{{ obj.companyAdress }}</td>
+        <td>{{ obj.telnumber }}</td>
+        <td>{{ obj.email}}</td>
+        <td>{{ obj.head_position}}</td>
+        <td>{{ obj.head_name}}</td>
+        <td> <a href="{% url 'verupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
     </tr>
     {% endfor %}
     </tbody>
