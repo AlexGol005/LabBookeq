@@ -492,7 +492,27 @@ def AgreementVerificatorUpdateView(request, str):
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
-        return redirect('rooms')
+        return redirect('/equipment/agreementcompanylist')
+
+
+
+@login_required
+def VerificatorUpdateView(request, str):
+    """выводит форму для обновления организации-поверителя"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = VerificatorsCreationForm(request.POST, instance= Verificators.objects.get(pk=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect('/equipment/verificatorsreg')
+        else:
+            form = VerificatorsCreationForm(instance= Verificators.objects.get(pk=str))
+        data = {'form': form,}                
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('/equipment/verificatorsreg')
 
 
 
