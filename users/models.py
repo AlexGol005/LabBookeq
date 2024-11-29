@@ -68,7 +68,7 @@ class Company(models.Model):
         super(Company, self).save(*args, **kwargs)
     def save(self, *args, **kwargs):
         super(Equipment, self).save(*args, **kwargs)
-        ServiceEquipmentU.objects.get_or_create(company=self, verificator=Verificator.objects.get(pk=4))
+        ServiceEquipmentU.objects.get_or_create(company=self, verificator=Verificator.objects.get(pk=12))
 
 
     class Meta:
