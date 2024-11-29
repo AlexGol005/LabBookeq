@@ -40,7 +40,7 @@ admin.site.register(HelpingEquipmentCharakters)
 admin.site.register(HelpingEquipment) 
 admin.site.register(ServiceEquipmentU) 
 admin.site.register(ServiceEquipmentUFact)
-admin.site.register(Agreementverification)
+
 
 @admin.register(Verificators)
 class VerificatorsAdmin(admin.ModelAdmin):
@@ -81,4 +81,12 @@ class ServiceEquipmentMEAdmin(admin.ModelAdmin):
 
     form = make_ajax_form(ServiceEquipmentME, {
         'charakters': 'mecharakters_tag'
+    })
+
+
+@admin.register(Agreementverification)
+class AgreementverificationAdmin(admin.ModelAdmin):
+
+    form = make_ajax_form(Agreementverification, {
+        'verificator': 'verificator_tag'
     })
