@@ -838,7 +838,7 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
             'ver_agreement_date',
             'ver_agreement_card',
                   ]
-
+        widgets = {'verificator':forms.Select(attrs={'class': 'form-control'}),}
 
 class RoomsCreateForm(forms.ModelForm):
     """форма для внесения комнаты"""
