@@ -15,7 +15,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)    
     name = models.CharField('ФИО/роль', max_length=40, default=None, null=True)
     userposition = models.CharField('Должность', max_length=50, null=True, blank=True)
-    userid = models.CharField('Идентификатор организации (10 случайных цифр)', max_length=50, default=None, null=True)
+    userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, default=None, null=True)
     img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
     pay = models.BooleanField ('Оплачено', default=True)
 
@@ -38,7 +38,7 @@ class Profile(models.Model):
 
 
 class Company(models.Model):
-    userid = models.CharField('Идентификатор организации (10 случайных цифр)', max_length=50, default=None, null=True, blank=True, unique=True)
+    userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, default=None, null=True, blank=True, unique=True)
     name = models.CharField('Название организации краткое', max_length=100, default=None, null=True, blank=True)
     name_big = models.CharField('Название организации полное', max_length=100, default=None, null=True, blank=True)
     attestat = models.CharField('Аттестат аккредитации', max_length=200, default=None, null=True, blank=True)
@@ -63,6 +63,13 @@ class Company(models.Model):
 
     def __str__(self):
         return f'Организация: {self.userid}; {self.name}'
+
+    def save(self, *args, **kwargs):
+        super(Company, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        super(Equipment, self).save(*args, **kwargs)
+        ServiceEquipmentU.objects.get_or_create(company=self, verificator=Verificator.objects.get(pk=4))
+
 
     class Meta:
         verbose_name = 'Организация'
