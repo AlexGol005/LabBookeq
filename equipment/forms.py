@@ -23,7 +23,7 @@ from crispy_forms.layout import Layout, Submit, Row, Column
 from django import forms
 from django.forms import ModelForm
 
-from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
+from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField, AutoCompleteSelectWidget
 from .lookups import*
 
 from equipment.models import*
