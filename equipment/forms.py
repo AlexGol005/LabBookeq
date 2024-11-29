@@ -23,7 +23,8 @@ from crispy_forms.layout import Layout, Submit, Row, Column
 from django import forms
 from django.forms import ModelForm
 
-from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField, AutoCompleteSelectWidget
+from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
+from ajax_select import make_ajax_field
 from .lookups import*
 
 from equipment.models import*
@@ -818,11 +819,8 @@ class VerificatorsCreationForm(forms.ModelForm):
 class AgreementVerificatorsCreationForm(forms.ModelForm):
     """форма для внесения договора с компанией поверителем"""
     # verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False)
-    verificator = AutoCompleteSelectField('verificator_tag',
-        label='City please',
-                
-        required=False,
-    )
+    tenant  = make_ajax_field('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False) 
+
    
     ver_agreement_number = forms.CharField(label='Номер договора с организацией-поверителем', max_length=10000000,  required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
