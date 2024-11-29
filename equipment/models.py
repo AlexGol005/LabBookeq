@@ -108,7 +108,7 @@ class Verificators(models.Model):
     head_name = models.CharField('Кому: имя лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.companyName}'
+        return f'pk{self.companyName}-{self.companyName}'
 
     class Meta:
         verbose_name = 'Поверитель организация'
