@@ -817,7 +817,12 @@ class VerificatorsCreationForm(forms.ModelForm):
 
 class AgreementVerificatorsCreationForm(forms.ModelForm):
     """форма для внесения договора с компанией поверителем"""
-    
+    verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False)
+    # city = selectable.AutoCompleteSelectField(
+    #     label='City please',
+    #             lookup_class = common.lookups.CityLookup,
+    #     required=False,
+    # )
    
     ver_agreement_number = forms.CharField(label='Номер договора с организацией-поверителем', max_length=10000000,  required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
@@ -839,7 +844,7 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
             'ver_agreement_card',
                   ]
         widgets = {
-            'verificator': AutoCompleteSelectWidget(VerificatorsLookup)
+            'verificator': AutoCompleteSelectWidget('verificator_tag')
         }
         
 
