@@ -818,7 +818,7 @@ class VerificatorsCreationForm(forms.ModelForm):
 class AgreementVerificatorsCreationForm(forms.ModelForm):
     """форма для внесения договора с компанией поверителем"""
     # verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False)
-    verificator = selectable.AutoCompleteSelectField('verificator_tag',
+    verificator = AutoCompleteSelectField('verificator_tag',
         label='City please',
                 
         required=False,
