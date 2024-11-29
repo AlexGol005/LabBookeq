@@ -49,12 +49,12 @@
     <tbody>
     {% for obj in objects %}
     <tr>
-        <td>{{ obj.companyName}}</td>
-        <td>{{ obj.companyAdress }}</td>
-        <td>{{ obj.telnumber }}</td>
-        <td>{{ obj.email}}</td>
-        <td>{{ obj.head_position}}</td>
-        <td>{{ obj.head_name}}</td>
+        <td>{{ obj.companyName|default_if_none:''}}</td>
+        <td>{{ obj.companyAdress|default_if_none:'' }}</td>
+        <td>{{ obj.telnumber|default_if_none:'' }}</td>
+        <td>{{ obj.email|default_if_none:''}}</td>
+        <td>{{ obj.head_position|default_if_none:''}}</td>
+        <td>{{ obj.head_name|default_if_none:''}}</td>
         <td> <a href="{% url 'verupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
     </tr>
     {% endfor %}
