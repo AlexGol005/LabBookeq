@@ -796,8 +796,8 @@ class VerificatorsCreationForm(forms.ModelForm):
     email = forms.CharField(label='email', max_length=10000000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    head_position = forms.CharField(label='Кому: должность лица организации-поверителя (для шапки заявки на поверку)', max_length=10000000,
-                                  widget=forms.TextInput(attrs={'class': 'form-control', required=False,
+    head_position = forms.CharField(label='Кому: должность лица организации-поверителя (для шапки заявки на поверку)', max_length=10000000,  required=False,
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     head_name  = forms.CharField(label='Кому: ФИО лица организации-поверителя (для шапки заявки на поверку)', max_length=10000000, required=False,
                                   widget=forms.TextInput(attrs={'class': 'form-control',
