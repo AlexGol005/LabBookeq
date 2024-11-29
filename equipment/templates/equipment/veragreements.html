@@ -11,12 +11,16 @@
       
      {% if USER  %}    
           <center>
-              <a href="{% url 'companyverreg' %}"  target="blank" class="btn btn-primary mt-1 mr-1 ml-1" style="width: 40%">
+              <a href="{% url 'companyverreg' %}"  target="blank" class="btn btn-primary mt-1 mr-1 ml-1" style="width: 30%">
                   Добавить поверителя
               </a>
 
-              <a href="{% url 'agreementcompanyverreg' %}"  target="blank" class="btn btn-primary mt-1 mr-1 ml-1" style="width: 40%">
+              <a href="{% url 'agreementcompanyverreg' %}"  target="blank" class="btn btn-primary mt-1 mr-1 ml-1" style="width: 30%">
                   Добавить договор с поверителем
+              </a>
+
+            <a href="{% url 'verificatorsreg' %}"  target="blank" class="btn btn-primary mt-1 mr-1 ml-1" style="width: 30%">
+                  Список поверителей
               </a>
           </center>
           <br>
