@@ -838,6 +838,9 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
             'ver_agreement_date',
             'ver_agreement_card',
                   ]
+        widgets = {
+            'verificator': AutoCompleteSelectWidget(VerificatorsLookup)
+        }
         
 
 class RoomsCreateForm(forms.ModelForm):
