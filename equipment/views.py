@@ -456,7 +456,7 @@ class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, Creat
     """ выводит форму добавления договора с поверителем """
     template_name = URL + '/crispy_reg.html'
     form_class = AgreementVerificatorsCreationForm
-    success_url = '/equipment/agreementcompanylist/'
+    success_url = '/equipment/agreementcompanylist'
     success_message = "Договор с поверителем успешно добавлен"
 
     def get_context_data(self, **kwargs):
