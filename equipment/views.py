@@ -49,7 +49,7 @@ now = date.today()
 
 class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа поверки/аттестации """
-    def get(self, request, str):
+    def get(self, request):
         ruser=request.user.profile.userid
         form =  ActivAqqForm(ruser, initial={'ruser': ruser,})
         list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
@@ -60,7 +60,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
         template_name = URL + '/orderverification.html'
         return render(request, template_name, context)
 
-    def post(self, request, str, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         ruser=request.user.profile.userid
         form = ActivAqqForm(ruser, request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
