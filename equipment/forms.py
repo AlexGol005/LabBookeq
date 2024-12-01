@@ -33,7 +33,7 @@ class ActivAqqForm(forms.Form):
     """форма для активации договора с поверителем"""
     def __init__(self, ruser, *args, **kwargs):
         super(ActivAqqForm, self).__init__(*args, **kwargs)
-        self.fields['choiseagreement'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser)
+        self.fields['choiseagreement'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
 
     
     class Meta:
