@@ -60,7 +60,7 @@ class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, CreateView)
     def form_valid(self, form):
         order = form.save(commit=False)
         user = User.objects.get(username=self.request.user)
-        ruser=request.user.profile.userid
+        ruser=self.request.user.profile.userid
         if user.has_perm('equipment.add_equipment') or user.is_superuser:
             order.q.active = True
             order.save()
