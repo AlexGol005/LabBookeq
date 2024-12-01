@@ -35,8 +35,7 @@ class ActivAqqForm(forms.Form):
     def __init__(self, ruser, *args, **kwargs):
         super(ActivAqqForm, self).__init__(*args, **kwargs)
         self.fields['qa'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser)
-    class Meta:
-        widgets = {'qa':forms.Select(attrs={'class': 'form-control'}),}
+
 
 
 # блок 1 - формы для поисков и распечатки этикеток
