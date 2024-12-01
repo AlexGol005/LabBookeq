@@ -31,18 +31,15 @@ from equipment.models import*
 
 class ActivAqqForm(forms.Form):
     """форма для активации договора с поверителем"""
-    def __init__(self, ruser, *args,**kwargs):
-        ruser = self.ruser
-        super(ActivAqqForm,self).__init__(*args,**kwargs)
-
-
-    choiseagreement = forms.ModelChoiceField(queryset=Agreementverification.objects.filter(company=Company.objects.get(userid=self.ruser)),
-                                             label='Договор с поверителем', required=False, 
-                           widget=forms.Select(attrs={'class': 'form-control'}))
-    
+    def __init__(self, ruser, *args, **kwargs):
+        super(ActivAqqForm, self).__init__(*args, **kwargs)
+        self.fields['choiseagreement'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser)
 
     
     class Meta:
+        fields = [
+            'choiseagreement'
+                  ]
         widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
         labels = {'choiseagreement': 'Договор с поверителем'}
         requireds = {'choiseagreement': False}
