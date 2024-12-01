@@ -35,7 +35,7 @@ class ActivAqqForm(forms.Form):
     #     super(ActivAqqForm, self).__init__(*args, **kwargs)
     #     # self.fields['verificator'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
     #     self.fields['verificator'].queryset = Agreementverification.objects.all()
-    choiseagreement = forms.ModelChoiceField(label='Договор с поверителем',
+    choiseagreement = forms.ModelChoiceField(label='Договор с поверителем', required=False,
                                           queryset=Agreementverification.objects.all(),
                                           widget=forms.Select(attrs={'class': 'form-control'}))
     
