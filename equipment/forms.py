@@ -29,7 +29,10 @@ from .lookups import*
 
 from equipment.models import*
 
-
+class MyModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.description
+        
 class ActivAqqForm(forms.Form):
     """форма для активации договора с поверителем"""
     # def __init__(self, ruser, *args, **kwargs):
