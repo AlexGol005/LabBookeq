@@ -31,6 +31,9 @@ from equipment.models import*
 
 class ActivAqqForm(forms.Form):
     """форма для активации договора с поверителем"""
+    def __init__(self, ruser, *args,**kwargs):
+        ruser = self.ruser
+        super(ActivAqqForm,self).__init__(*args,**kwargs)
 
     queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
         
