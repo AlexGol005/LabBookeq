@@ -1020,3 +1020,4 @@ class Agreementverification(models.Model):
     ver_agreement_number = models.CharField('Номер договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
     ver_agreement_date = models.CharField('Дата договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
     ver_agreement_card = models.CharField('Номер учетной карточки у с организации-поверителя', max_length=100, default=None, null=True, blank=True)
+    active = models.BooleanField('Активный', default=False, blank=True)
