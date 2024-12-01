@@ -33,7 +33,7 @@ from equipment.models import*
 class ActivAqqForm(forms.Form):
     """форма для активации договора с поверителем"""
     q = forms.ModelChoiceField(label='Договор с поверителем',
-                                          queryset=Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
+                                          queryset=Agreementverification.objects.filter(company=Company.objects.get(userid=ruser)),
                                           widget=forms.Select(attrs={'class': 'form-control'}))
 
 # блок 1 - формы для поисков и распечатки этикеток
