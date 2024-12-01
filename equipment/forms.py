@@ -31,7 +31,7 @@ from equipment.models import*
 
 class ActivAqqForm(forms.Form):
     """форма для активации договора с поверителем"""
-    choiseagreement = forms.ModelChoiceField(label='Договор с поверителем', required=False, queryset, 
+    choiseagreement = forms.ModelChoiceField(queryset, label='Договор с поверителем', required=False, 
                            widget=forms.Select(attrs={'class': 'form-control'}))
     
     def get_queryset(self, ruser, *args, **kwargs):
