@@ -36,6 +36,9 @@ class ActivAqqForm(forms.Form):
         self.fields['choiseagreement'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
     
     class Meta:
+        fields = [
+            'choiseagreement'
+                  ]
         widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
         labels = {'choiseagreement': 'Договор с поверителем'}
         requireds = {'choiseagreement': False}
