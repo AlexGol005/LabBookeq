@@ -65,8 +65,8 @@ class OrderVerificationView(LoginRequiredMixin, View):
         form = ActivAqqForm(request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
+                n = self.request.POST.get('choiseagreement')
                 if n:
-                    n = self.request.POST.get('choiseagreement')
                     a=Agreementverification.objects.get(pk=n)
                     a.active = True
                     a.save()
