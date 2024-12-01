@@ -36,7 +36,7 @@ class ActivAqqForm(forms.Form):
         super(MeteorologicalParametersRegForm, self).__init__(*args, **kwargs)
         queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
         
-    choiseagreement = forms.ModelChoiceField(queryset, label='Договор с поверителем', required=False, 
+    choiseagreement = forms.ModelChoiceField(self.queryset, label='Договор с поверителем', required=False, 
                            widget=forms.Select(attrs={'class': 'form-control'}))
     
 
