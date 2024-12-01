@@ -51,7 +51,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа поверки/аттестации """
     def get(self, request):
         ruser=request.user.profile.userid
-        form =  ActivAqqForm()
+        form =  ActivAqqForm(ruser)
         list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
         context = {
             'form': form,
@@ -60,9 +60,9 @@ class OrderVerificationView(LoginRequiredMixin, View):
         template_name = URL + '/orderverification.html'
         return render(request, template_name, context)
 
-    def post(self, request, ruser, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         ruser=request.user.profile.userid
-        form = ActivAqqForm(request.POST)
+        form = ActivAqqForm(ruser, request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 n = self.request.POST.get('choiseagreement')
