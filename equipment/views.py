@@ -47,33 +47,33 @@ URL = 'equipment'
 now = date.today()
 
 
-
-
-
-class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа поверки/аттестации """
-    template_name = URL + '/orderverification.html'
-    form_class = ActivAqqForm
-    success_url = '/equipment/orderverification'
-    error_message = "Раздел доступен только инженеру по оборудованию"
-    
-    def form_valid(self, form):
-        order = form.save(commit=False)
-        user = User.objects.get(username=self.request.user)
-        ruser=self.request.user.profile.userid
-        if user.has_perm('equipment.add_equipment') or user.is_superuser:
-            order.q.active = True
-            order.save()
-            return super().form_valid(form)
+    def get(self, request, str):
+        ruser=request.user.profile.userid
+        form =  ActivAqqForm(ruser, initial={'ruser': ruser,})
+        list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
+        context = {
+            'form': form,
+            'list': list,
+        }
+        template_name = URL + '/orderverification.html'
+        return render(request, template_name, context)
+
+    def post(self, request, str, *args, **kwargs):
+        ruser=request.user.profile.userid
+        form = ActivAqqForm(ruser, request.POST)
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.qa.active = True
+                order.save()                
+                return redirect('/equipment/orderverification/')
+
         else:
             messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
-            return redirect('/equipment/measurequipmentcharacterslist/')
+            return redirect('/equipment/orderverification/')
 
-    def get_context_data(self, **kwargs):
-        context = super(OrderVerificationView, self).get_context_data(**kwargs)
-        ruser=self.request.user.profile.userid
-        context['list'] = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
-        return context
 
 
 @login_required
