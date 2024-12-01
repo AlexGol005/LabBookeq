@@ -34,14 +34,11 @@ class ActivAqqForm(forms.Form):
     def __init__(self, ruser, *args, **kwargs):
         super(ActivAqqForm, self).__init__(*args, **kwargs)
         self.fields['choiseagreement'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
-
     
-    choiseagreement = forms.ModelChoiceField(label='Договор с поверителем', required=False,
-                                        
-                                          widget=forms.Select(attrs={'class': 'form-control'}))
-    
-    # class Meta:
-    #     widgets = {'verificator':forms.Select(attrs={'class': 'form-control'}),}
+    class Meta:
+        widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
+        labels = {'choiseagreement': 'Договор с поверителем'}
+        requireds = {'choiseagreement': False}
 
 
 # блок 1 - формы для поисков и распечатки этикеток
