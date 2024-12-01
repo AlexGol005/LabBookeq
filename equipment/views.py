@@ -50,25 +50,19 @@ now = date.today()
 
 
 
-class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """ выводит страницу для заказа поверки/аттестации """
     template_name = URL + '/orderverification.html'
-    form_class = OrderformForm
+    form_class = ActivAqqForm
     success_url = '/equipment/orderverification'
     error_message = "Раздел доступен только инженеру по оборудованию"
-
-    
-
-    def get_object(self, queryset=None):
-        q = Company.objects.get(userid=self.request.user.profile.userid)
-        return q
-    
     
     def form_valid(self, form):
         order = form.save(commit=False)
         user = User.objects.get(username=self.request.user)
+        ruser=request.user.profile.userid
         if user.has_perm('equipment.add_equipment') or user.is_superuser:
-            order.pointer = self.request.user.profile.userid
+            order.q.active = True
             order.save()
             return super().form_valid(form)
         else:
@@ -83,6 +77,7 @@ class OrderVerificationView(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
 
 @login_required
 def OrderVerificationchange(request):
+    """ на странице для заказа поверки/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на поверку """
     if request.method == 'POST':
         if 'true' in request.POST:
             object_ids = request.POST.getlist('my_object')
@@ -108,9 +103,6 @@ def OrderVerificationchange(request):
                     i.testingequipment.save()
             return redirect('orderverification')
        
-
-
-
 
 
 
