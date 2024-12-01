@@ -69,7 +69,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
                 a=Agreementverification.objects.get(pk=n)
                 a.active = True
                 a.save()
-                for i in Agreementverification.objects.filter(company=Company.objects.filter(pointer=ruser)).exclude(pk=n)
+                for i in Agreementverification.objects.filter(company=Company.objects.filter(pointer=ruser)).exclude(pk=n):
                     i.active=False
                     i.save()
                 return redirect('/equipment/orderverification')
