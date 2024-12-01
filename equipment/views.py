@@ -65,13 +65,19 @@ class OrderVerificationView(LoginRequiredMixin, View):
         form = ActivAqqForm(request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
-                n = self.request.POST.get('choiseagreement')
-                a=Agreementverification.objects.get(pk=n)
-                a.active = True
-                a.save()
-                for i in Agreementverification.objects.filter(company__in=Company.objects.filter(userid=ruser)).exclude(pk=n):
-                    i.active=False
-                    i.save()
+                if n:
+                    n = self.request.POST.get('choiseagreement')
+                    a=Agreementverification.objects.get(pk=n)
+                    a.active = True
+                    a.save()
+                    for i in Agreementverification.objects.filter(company__in=Company.objects.filter(userid=ruser)).exclude(pk=n):
+                        i.active=False
+                        i.save()
+                else:
+                    for i in Agreementverification.objects.filter(company__in=Company.objects.filter(userid=ruser)):
+                        i.active=False
+                        i.save()
+                    
                 return redirect('/equipment/orderverification')
 
         else:
