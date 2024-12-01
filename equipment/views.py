@@ -65,7 +65,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
         form = ActivAqqForm(request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
-                n = request.POST.get('choiseagreement')
+                n = self.request.POST.get('choiseagreement')
                 n.active = True
                 n.save()
                 return redirect('/equipment/orderverification/')
