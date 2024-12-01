@@ -32,13 +32,16 @@ from equipment.models import*
 
 class ActivAqqForm(forms.Form):
     """форма для активации договора с поверителем"""
-    def __init__(self, ruser, *args, **kwargs):
-        super(ActivAqqForm, self).__init__(*args, **kwargs)
-        # self.fields['verificator'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
-        self.fields['verificator'].queryset = Agreementverification.objects.all()
+    # def __init__(self, ruser, *args, **kwargs):
+    #     super(ActivAqqForm, self).__init__(*args, **kwargs)
+    #     # self.fields['verificator'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
+    #     self.fields['verificator'].queryset = Agreementverification.objects.all()
+    verificators = forms.ModelChoiceField(label='Контактная информация',
+                                          queryset=Agreementverification.objects.all(),
+                                          widget=forms.Select(attrs={'class': 'form-control'}))
     
-    class Meta:
-        widgets = {'verificator':forms.Select(attrs={'class': 'form-control'}),}
+    # class Meta:
+    #     widgets = {'verificator':forms.Select(attrs={'class': 'form-control'}),}
 
 
 # блок 1 - формы для поисков и распечатки этикеток
