@@ -49,7 +49,7 @@ now = date.today()
 
 class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа поверки/аттестации """
-    ruser=request.user.profile.userid
+    ruser=self.request.user.profile.userid
     queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
     def get(self, request):
         form =  ActivAqqForm(queryset, initial={'queryset': queryset,})
