@@ -52,13 +52,14 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
     def get(self, request):
         ruser=request.user.profile.userid
-        queryset = (1, 2)
+        query = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
         form =  ActivAqqForm(queryset, initial={'queryset': queryset,})
         list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
         context = {
             'form': form,
             'list': list,
             'ruser':ruser
+            'query':query
         }
         template_name = URL + '/orderverification.html'
         return render(request, template_name, context)
