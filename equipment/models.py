@@ -1021,10 +1021,10 @@ class Agreementverification(models.Model):
     ver_agreement_date = models.CharField('Дата договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
     ver_agreement_card = models.CharField('Номер учетной карточки у организации-поверителя', max_length=100, default=None, null=True, blank=True)
     active = models.BooleanField('Активный', default=False, blank=True)
+        
+def __str__(self):
+        return self.verificator.companyName
+class Meta:
+        verbose_name = 'Договоры организаций с поверителями'
+        verbose_name_plural = 'Договоры организаций с поверителями'
 
-
-
-class Activaqqchange(models.Model):
-    aqq = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='договор с поверителем')
-    company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Компания')  
-    active = models.BooleanField('Активный', default=False, blank=True)
