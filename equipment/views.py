@@ -63,7 +63,8 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         ruser=request.user.profile.userid
-        form = ActivAqqForm(ruser, request.POST)
+        queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
+        form = ActivAqqForm(queryset, request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 n = self.request.POST.get('choiseagreement')
