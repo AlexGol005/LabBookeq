@@ -29,33 +29,13 @@ from .lookups import*
 
 from equipment.models import*
 
-
-
 class ActivAqqForm(forms.Form):
-    """форма для активации договора с поверителем"""
+    """форма для смены ответственного за ЛО"""
     def __init__(self, ruser, *args, **kwargs):
         super(ActivAqqForm, self).__init__(*args, **kwargs)
-    queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
-    choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True, queryset=queryset)
-        
-    self.helper = FormHelper()
-    self.helper.layout = Layout(
-    Row(
-        Column('choiseagreement', css_class='form-group col-md-8 mb-0'),
-        Row(Submit('submit', 'Записать', css_class='btn  btn-prima col-md-9 mb-3 mt-4 ml-4'))))
-                                        
-                                        
-
+        queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
+        choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True, queryset=queryset)
     
-    # class Meta:
-    #     fields = [
-    #         'choiseagreement'
-    #               ]
-    #     widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
-    #     labels = {'choiseagreement': 'Договор с поверителем'}
-    #     requireds = {'choiseagreement': False}
-
-
 
 # блок 1 - формы для поисков и распечатки этикеток
 
