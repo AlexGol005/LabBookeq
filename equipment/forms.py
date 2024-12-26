@@ -52,13 +52,13 @@ class ActivAqqForm(forms.Form):
                                         widget=forms.Select(attrs={'class': 'form-control'}))
 
     
-    # class Meta:
-    #     fields = [
-    #         'choiseagreement'
-    #               ]
-    #     widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
-    #     labels = {'choiseagreement': 'Договор с поверителем'}
-    #     requireds = {'choiseagreement': False}
+    class Meta:
+        fields = [
+            'choiseagreement'
+                  ]
+        widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
+        labels = {'choiseagreement': 'Договор с поверителем'}
+        requireds = {'choiseagreement': False}
 
 
 # блок 1 - формы для поисков и распечатки этикеток
