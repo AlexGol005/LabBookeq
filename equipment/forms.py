@@ -30,14 +30,25 @@ from .lookups import*
 from equipment.models import*
 
 class ActivAqqForm(forms.Form):
-    """форма для смены ответственного за ЛО"""
+    """форма для поиска"""
     def __init__(self, query, *args, **kwargs):
         super(ActivAqqForm, self).__init__(*args, **kwargs)
        
-        # choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True, choices=query, widget=forms.Select(attrs={'class': 'form-control'}))
-        name = forms.CharField(label='Название', required=False,
-                           help_text='введите название частично или полностью',
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+        choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True, choices=query, widget=forms.Select(attrs={'class': 'form-control'}))
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('qwery', css_class='form-group col-md-4 mb-0 ml-2 mr-2'),
+                Submit('submit', 'найти', css_class='btn  btn-primary col-md-6 mb-3 mt-4 ml-2 mr-2')))
+
+
+
+
+
                              
 
 # блок 1 - формы для поисков и распечатки этикеток
