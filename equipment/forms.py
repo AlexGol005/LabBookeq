@@ -29,20 +29,16 @@ from .lookups import*
 
 from equipment.models import*
 
-class  ActivaqqchangeForm(forms.Form):
-    """форма для смены активности договора с поверителем"""
-    def __init__(self, ruser, queryset, *args, **kwargs):
-        super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
-        self.fields['type'].queryset = Agreementverification.objects.filter(pointer=ruser)
 
-    type = forms.ModelChoiceField(label='Выберите договор с поверителем (для печатной формы заявки на поверку/аттестацию)', required=True,
-    
-                             widget=forms.Select(attrs={'class': 'form-control'}))
+class ActivaqqchangeForm(forms.Form):
+    """форма для выбора договора с поверителем"""
+    charakters = forms.ModelChoiceField(label='Договоры с поверителями', required=False,
+                                        queryset=Agreementverification.objects.all(),
+                                        widget=forms.Select(attrs={'class': 'form-control'}))
 
-
-                             
 
 # блок 1 - формы для поисков и распечатки этикеток
+
 
 class SearchMEForm(forms.Form):
     """форма для поиска по полям списка СИ и ИО и ВО"""
