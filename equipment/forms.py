@@ -34,7 +34,10 @@ class ActivAqqForm(forms.Form):
     def __init__(self, query, *args, **kwargs):
         super(ActivAqqForm, self).__init__(*args, **kwargs)
        
-        choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True, choices=query, widget=forms.Select(attrs={'class': 'form-control'}))
+        # choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True, choices=query, widget=forms.Select(attrs={'class': 'form-control'}))
+        name = forms.CharField(label='Название', required=False,
+                           help_text='введите название частично или полностью',
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
                              
 
 # блок 1 - формы для поисков и распечатки этикеток
