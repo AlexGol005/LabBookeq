@@ -1,4 +1,6 @@
 {% extends 'main/base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
 {% block title %}
    Заказ поверки
@@ -14,11 +16,11 @@
    <br>
 
 
-      <form method="post" enctype="multipart/form-data" class="form-register">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button class="btn btn-outline-primary" type="submit">Записать</button>
-      </form>
+    <form method="post" class="form-register">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
+
       <br>
       </center>    
    
