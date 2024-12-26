@@ -36,7 +36,7 @@ class  ActivaqqchangeForm(forms.ModelForm):
         self.fields['verificator'].queryset = Agreementverification.objects.filter(pointer=ruser)
     
     class Meta:
-        model =  Agreementverification
+
         fields = [
             'verificator', 
                   ]
