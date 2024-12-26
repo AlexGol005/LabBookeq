@@ -1020,11 +1020,16 @@ class Agreementverification(models.Model):
     ver_agreement_number = models.CharField('Номер договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
     ver_agreement_date = models.CharField('Дата договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
     ver_agreement_card = models.CharField('Номер учетной карточки у организации-поверителя', max_length=100, default=None, null=True, blank=True)
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
     active = models.BooleanField('Активный', default=False, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.pointer = self.company.userid
+        return super(ServiceEquipmentUFact, self).save(*args, **kwargs)
         
-def __str__(self):
+    def __str__(self):
         return self.verificator.companyName
-class Meta:
+    class Meta:
         verbose_name = 'Договоры организаций с поверителями'
         verbose_name_plural = 'Договоры организаций с поверителями'
 
