@@ -30,15 +30,18 @@ from .lookups import*
 from equipment.models import*
 
 
-class ActivaqqchangeForm(forms.Form):
-    """форма для выбора договора с поверителем"""
-    def __init__(self, *args, **kwargs):
-        ruser = kwargs.pop('ruser')
+       
+class ActivaqqchangeForm(forms.ModelForm):
+    """форма для """
+    def __init__(self, ruser, *args, **kwargs):
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
-        self.fields['choice'].choices = get_choices(Agreementverification.objects.filter(pointer=ruser))
-    choice = forms.ChoiceField()
-        
-
+        self.fields['choice'].queryset = Agreementverification.objects.filter(pointer=ruser)
+    
+    class Meta:
+        fields = [
+            'choice'
+                  ]
+        widgets = {'choice':forms.Select(attrs={'class': 'form-control'}),}
 
 
 # блок 1 - формы для поисков и распечатки этикеток
