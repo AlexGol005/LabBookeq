@@ -29,18 +29,7 @@ from .lookups import*
 
 from equipment.models import*
 
-class PersonchangeForm(forms.ModelForm):
-    """форма для смены ответственного за ЛО"""
-    def __init__(self, ruser, *args, **kwargs):
-        super(PersonchangeForm, self).__init__(*args, **kwargs)
-        self.fields['person'].queryset = Employees.objects.filter(userid__userid = ruser)
-    
-    class Meta:
-        model = Personchange
-        fields = [
-            'person'
-                  ]
-        widgets = {'person':forms.Select(attrs={'class': 'form-control'}),}
+
 
 class ActivAqqForm(forms.Form):
     """форма для активации договора с поверителем"""
@@ -52,13 +41,20 @@ class ActivAqqForm(forms.Form):
                                         widget=forms.Select(attrs={'class': 'form-control'}))
 
     
-    class Meta:
-        fields = [
-            'choiseagreement'
-                  ]
-        widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
-        labels = {'choiseagreement': 'Договор с поверителем'}
-        requireds = {'choiseagreement': False}
+    # class Meta:
+    #     fields = [
+    #         'choiseagreement'
+    #               ]
+    #     widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
+    #     labels = {'choiseagreement': 'Договор с поверителем'}
+    #     requireds = {'choiseagreement': False}
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('choiseagreement', css_class='form-group col-md-4 mb-0'),
+                Row(Submit('submit', 'Записать', css_class='btn  btn-prima col-md-9 mb-3 mt-4 ml-4'))))
 
 
 # блок 1 - формы для поисков и распечатки этикеток
