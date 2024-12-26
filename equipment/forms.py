@@ -33,11 +33,16 @@ from equipment.models import*
 
 class ActivAqqForm(forms.Form):
     """форма для активации договора с поверителем"""
-    def __init__(self, ruser, *args, **kwargs):
-        super(ActivAqqForm, self).__init__(*args, **kwargs)
-        queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
-        choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True,
-                                        queryset=queryset)
+    queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
+    choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True, queryset=queryset)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('choiseagreement', css_class='form-group col-md-8 mb-0'),
+                Row(Submit('submit', 'Записать', css_class='btn  btn-prima col-md-9 mb-3 mt-4 ml-4'))))
+                                        
                                         
 
     
@@ -48,13 +53,7 @@ class ActivAqqForm(forms.Form):
     #     widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
     #     labels = {'choiseagreement': 'Договор с поверителем'}
     #     requireds = {'choiseagreement': False}
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            Row(
-                Column('choiseagreement', css_class='form-group col-md-4 mb-0'),
-                Row(Submit('submit', 'Записать', css_class='btn  btn-prima col-md-9 mb-3 mt-4 ml-4'))))
+
 
 
 # блок 1 - формы для поисков и распечатки этикеток
