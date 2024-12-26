@@ -30,15 +30,15 @@ from .lookups import*
 from equipment.models import*
 
 class  ActivaqqchangeForm(forms.ModelForm):
-    """форма для смены ответственного за ЛО"""
+    """форма для смены активности договора с поверителем"""
     def __init__(self, ruser, *args, **kwargs):
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
-        self.fields['aqq'].queryset = Agreementverification.objects.filter(company__userid = ruser)
+        self.fields['verificator'].queryset = Verificators.objects.filter(companyName = Agreementverification.objects.get(company = Company.objects.get(userid=ruser))
     
     class Meta:
-        model =  Activaqqchange
+        model =  Agreementverification
         fields = [
-            'aqq', 
+            'verificator', 
             'active'
                   ]
         widgets = {'aqq':forms.Select(attrs={'class': 'form-control'}),}
