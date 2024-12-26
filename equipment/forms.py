@@ -32,8 +32,8 @@ from equipment.models import*
 
 class ActivaqqchangeForm(forms.Form):
     """форма для выбора договора с поверителем"""
-    def __init__(self, ruser, *args, **kwargs):
-        self.ruser = ruser
+    def __init__(self, *args, **kwargs):
+        ruser = kwargs.pop('ruser')
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
         
     choiseagreement = forms.ModelChoiceField(label='Договоры с поверителями', required=False,
