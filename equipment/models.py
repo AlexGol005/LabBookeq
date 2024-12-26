@@ -1025,7 +1025,7 @@ class Agreementverification(models.Model):
 
     def save(self, *args, **kwargs):
         self.pointer = self.company.userid
-        return super(ServiceEquipmentUFact, self).save(*args, **kwargs)
+        return super(Agreementverification, self).save(*args, **kwargs)
         
     def __str__(self):
         return self.verificator.companyName
