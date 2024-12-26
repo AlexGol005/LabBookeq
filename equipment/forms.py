@@ -31,11 +31,11 @@ from equipment.models import*
 
 class ActivAqqForm(forms.Form):
     """форма для смены ответственного за ЛО"""
-    def __init__(self, queryset, *args, **kwargs):
+    def __init__(self, query, *args, **kwargs):
         super(ActivAqqForm, self).__init__(*args, **kwargs)
        
-        choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True, choices=queryset)
-    
+        choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True, choices=query, widget=forms.Select(attrs={'class': 'form-control'}))
+                             
 
 # блок 1 - формы для поисков и распечатки этикеток
 
