@@ -52,7 +52,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
     def get(self, request):
         ruser=request.user.profile.userid
-        queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
+        queryset = (1, 2)
         form =  ActivAqqForm(queryset, initial={'queryset': queryset,})
         list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
         context = {
