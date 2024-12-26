@@ -49,9 +49,10 @@ now = date.today()
 
 class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа поверки/аттестации """
+    ruser=request.user.profile.userid
+    queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
     def get(self, request):
-        ruser=request.user.profile.userid
-        form =  ActivAqqForm(ruser, initial={'ruser': ruser,})
+        form =  ActivAqqForm(queryset, initial={'queryset': queryset,})
         list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
         context = {
             'form': form,
@@ -62,8 +63,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
         return render(request, template_name, context)
 
     def post(self, request, *args, **kwargs):
-        ruser=request.user.profile.userid
-        queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
+
         form = ActivAqqForm(queryset, request.POST)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
