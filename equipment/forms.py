@@ -33,7 +33,7 @@ class  ActivaqqchangeForm(forms.Form):
     """форма для смены активности договора с поверителем"""
     def __init__(self, ruser, *args, **kwargs):
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
-        lot = forms.CharField(label='Заводской №', required=False,
+    lot = forms.CharField(label='Заводской №', required=False,
                           help_text='заводской № полностью',
                           widget=forms.TextInput(attrs={'class': 'form-control'}))
 
