@@ -37,8 +37,8 @@ class ActivAqqForm(forms.Form):
         super(ActivAqqForm, self).__init__(*args, **kwargs)
         queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
         choiseagreement = forms.ChoiceField(label='Договор с поверителем', required=True,
-                                        queryset=queryset,
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
+                                        queryset=queryset)
+                                        
 
     
     # class Meta:
