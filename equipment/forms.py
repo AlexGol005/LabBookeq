@@ -29,22 +29,19 @@ from .lookups import*
 
 from equipment.models import*
 
-class ActivAqqForm(forms.Form):
-    """форма для поиска"""
-    def __init__(self, query, *args, **kwargs):
-        super(ActivAqqForm, self).__init__(*args, **kwargs)
-       
-        qwerys = forms.CharField(label='Поисковый запрос', required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
-
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            Row(
-                Column('qwerys', css_class='form-group col-md-4 mb-0 ml-2 mr-2'),
-                Submit('submit', 'найти', css_class='btn  btn-primary col-md-6 mb-3 mt-4 ml-2 mr-2')))
+class  ActivaqqchangeForm(forms.ModelForm):
+    """форма для смены ответственного за ЛО"""
+    def __init__(self, ruser, *args, **kwargs):
+        super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
+        self.fields['aqq'].queryset = Agreementverification.objects.filter(company__userid = ruser)
+    
+    class Meta:
+        model =  Activaqqchange
+        fields = [
+            'aqq', 
+            'active'
+                  ]
+        widgets = {'aqq':forms.Select(attrs={'class': 'form-control'}),}
 
 
 
