@@ -32,7 +32,7 @@ from equipment.models import*
 
 class ActivaqqchangeForm(forms.Form):
     """форма для выбора договора с поверителем"""
-    charakters = forms.ModelChoiceField(label='Договоры с поверителями', required=False,
+    choiseagreement = forms.ModelChoiceField(label='Договоры с поверителями', required=False,
                                         queryset=Agreementverification.objects.all(),
                                         widget=forms.Select(attrs={'class': 'form-control'}))
 
