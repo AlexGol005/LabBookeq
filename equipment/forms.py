@@ -33,9 +33,8 @@ class  ActivaqqchangeForm(forms.Form):
     """форма для смены активности договора с поверителем"""
     def __init__(self, ruser, *args, **kwargs):
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
-        q = Agreementverification.objects.filter(pointer=ruser)
-        verificator = forms.ChoiceField(label='Выберите', required=True,
-                             choices=q,
+        type = forms.ChoiceField(label='Выберите тип события', required=True,
+                             choices=NOTETYPE,
                              widget=forms.Select(attrs={'class': 'form-control'}))
 
 
