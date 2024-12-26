@@ -29,23 +29,36 @@ from .lookups import*
 
 from equipment.models import*
 
+class PersonchangeForm(forms.ModelForm):
+    """форма для смены ответственного за ЛО"""
+    def __init__(self, ruser, *args, **kwargs):
+        super(PersonchangeForm, self).__init__(*args, **kwargs)
+        self.fields['person'].queryset = Employees.objects.filter(userid__userid = ruser)
+    
+    class Meta:
+        model = Personchange
+        fields = [
+            'person'
+                  ]
+        widgets = {'person':forms.Select(attrs={'class': 'form-control'}),}
+
 class ActivAqqForm(forms.Form):
     """форма для активации договора с поверителем"""
     def __init__(self, ruser, *args, **kwargs):
         super(ActivAqqForm, self).__init__(*args, **kwargs)
-        # self.fields['choiseagreement'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
-        choiseagreement = forms.ModelChoiceField(label='Договор с поверителем', required=False,
-                                        queryset=Agreementverification.objects.all(),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
+        self.fields['choiseagreement'].queryset = Agreementverification.objects.filter(company=Company.objects.get(userid=ruser))
+        # choiseagreement = forms.ModelChoiceField(label='Договор с поверителем', required=True,
+        #                                 queryset=Agreementverification.objects.all(),
+        #                                 widget=forms.Select(attrs={'class': 'form-control'}))
 
     
-    class Meta:
-        fields = [
-            'choiseagreement'
-                  ]
-        widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
-        labels = {'choiseagreement': 'Договор с поверителем'}
-        requireds = {'choiseagreement': False}
+    # class Meta:
+    #     fields = [
+    #         'choiseagreement'
+    #               ]
+    #     widgets = {'choiseagreement':forms.Select(attrs={'class': 'form-control'}),}
+    #     labels = {'choiseagreement': 'Договор с поверителем'}
+    #     requireds = {'choiseagreement': False}
 
 
 # блок 1 - формы для поисков и распечатки этикеток
