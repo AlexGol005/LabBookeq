@@ -52,7 +52,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
     def get(self, request):
         ruser=request.user.profile.userid
-        form =  ActivaqqchangeForm(ruser)
+        form =  ActivaqqchangeForm(ruser=ruser)
         list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
         context = {
             'form': form,
@@ -64,7 +64,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         ruser=request.user.profile.userid
-        form = ActivaqqchangeForm(ruser, request.POST)
+        form = ActivaqqchangeForm(request.POST, ruser=ruser)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 n = self.request.POST.get('choiseagreement')
