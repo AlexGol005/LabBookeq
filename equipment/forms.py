@@ -34,7 +34,7 @@ class ActivAqqForm(forms.Form):
     def __init__(self, query, *args, **kwargs):
         super(ActivAqqForm, self).__init__(*args, **kwargs)
        
-            qwerys = forms.CharField(label='Поисковый запрос', required=False,
+        qwerys = forms.CharField(label='Поисковый запрос', required=False,
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
