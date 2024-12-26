@@ -33,13 +33,12 @@ class  ActivaqqchangeForm(forms.ModelForm):
     """форма для смены активности договора с поверителем"""
     def __init__(self, ruser, *args, **kwargs):
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
-        self.fields['verificator'].queryset = Verificators.objects.filter(companyName__in=Agreementverification.objects.filter(pointer=ruser).company.companyName)
+        self.fields['verificator'].queryset = Verificators.objects.filter(companyName__in=('ФГУП "ВНИИМ ИМ. Д.И.МЕНДЕЛЕЕВА"', '1')
     
     class Meta:
         model =  Agreementverification
         fields = [
             'verificator', 
-            'active'
                   ]
         widgets = {'verificator':forms.Select(attrs={'class': 'form-control'}),}
 
