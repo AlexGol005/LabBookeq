@@ -36,7 +36,7 @@ class ActivaqqchangeForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.ruser = ruser
     choiseagreement = forms.ModelChoiceField(label='Договоры с поверителями', required=False,
-                                        queryset=Agreementverification.objects.filter(pointer=ruser),
+                                        queryset=Agreementverification.objects.filter(pointer=self.ruser),
                                         widget=forms.Select(attrs={'class': 'form-control'}))
 
 
