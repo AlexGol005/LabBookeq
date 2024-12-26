@@ -35,7 +35,7 @@ class  ActivaqqchangeForm(forms.Form):
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
         self.ver = Agreementverification.objects.filter(pointer=ruser)
     type = forms.ChoiceField(label='Выберите договор с поверителем (для печатной формы заявки на поверку/аттестацию)', required=True,
-                             choices=ver,
+                             choices=self.ver,
                              widget=forms.Select(attrs={'class': 'form-control'}))
 
 
