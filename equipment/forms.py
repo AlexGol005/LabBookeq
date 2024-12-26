@@ -35,10 +35,10 @@ class ActivaqqchangeForm(forms.Form):
     def __init__(self, *args, **kwargs):
         ruser = kwargs.pop('ruser')
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
+        self.fields['choice'].choices = get_choices(Agreementverification.objects.filter(pointer=ruser))
+    choice = forms.ChoiceField()
         
-    choiseagreement = forms.ModelChoiceField(label='Договоры с поверителями', required=False,
-                                        queryset=Agreementverification.objects.filter(pointer=ruser),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
+
 
 
 # блок 1 - формы для поисков и распечатки этикеток
