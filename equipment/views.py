@@ -51,7 +51,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа поверки/аттестации """
     def get(self, request):
         ruser=request.user.profile.userid
-        form =  ActivAqqForm(ruser)
+        form =  ActivAqqForm(ruser, initial={'ruser': ruser,})
         list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
         context = {
             'form': form,
