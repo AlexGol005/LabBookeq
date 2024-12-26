@@ -58,7 +58,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
         context = {
             'form': form,
             'list': list,
-            'ruser':ruser
+            'ruser':ruser,
             'query':query
         }
         template_name = URL + '/orderverification.html'
