@@ -37,16 +37,6 @@ class  ActivaqqchangeForm(forms.Form):
         verificator = forms.ChoiceField(label='Выберите', required=True,
                              choices=q,
                              widget=forms.Select(attrs={'class': 'form-control'}))
-    
-    class Meta:
-
-        fields = [
-            'verificator', 
-                  ]
-
-
-
-
 
 
                              
