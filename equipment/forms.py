@@ -31,7 +31,7 @@ from equipment.models import*
 
 class  ActivaqqchangeForm(forms.Form):
     """форма для смены активности договора с поверителем"""
-    def __init__(self, ruser, *args, **kwargs):
+    def __init__(self, ruser, queryset, *args, **kwargs):
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
         self.fields['type'].queryset = Agreementverification.objects.filter(pointer=ruser)
 
