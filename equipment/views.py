@@ -52,7 +52,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
     def get(self, request):
         ruser=request.user.profile.userid
-        form =  ActivaqqchangeForm(ruser=ruser)
+        form = ActivaqqchangeForm(ruser, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
         list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
         context = {
             'form': form,
@@ -64,22 +64,11 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         ruser=request.user.profile.userid
-        form = ActivaqqchangeForm(request.POST, ruser=ruser)
+        form = ActivaqqchangeForm(ruser, request.POST, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
-                n = self.request.POST.get('choiseagreement')
-                if n:
-                    a=Agreementverification.objects.get(pk=n)
-                    a.active = True
-                    a.save()
-                    for i in Agreementverification.objects.filter(company__in=Company.objects.filter(userid=ruser)).exclude(pk=n):
-                        i.active=False
-                        i.save()
-                else:
-                    for i in Agreementverification.objects.filter(company__in=Company.objects.filter(userid=ruser)):
-                        i.active=False
-                        i.save()
-                    
+                order = form.save(commit=False)
+                order.save()
                 return redirect('/equipment/orderverification')
 
         else:
