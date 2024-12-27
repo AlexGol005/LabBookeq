@@ -1044,7 +1044,7 @@ class Activeveraqq(models.Model):
     def save(self, *args, **kwargs):
         self.pointer = self.company.userid
             
-        return super(Agreementverification, self).save(*args, **kwargs)
+        return super(Activeveraqq, self).save(*args, **kwargs)
         
     def __str__(self):
         return self.aqq.verificator.companyName
