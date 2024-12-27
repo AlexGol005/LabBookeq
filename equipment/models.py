@@ -1033,3 +1033,21 @@ class Agreementverification(models.Model):
         verbose_name = 'Договоры организаций с поверителями'
         verbose_name_plural = 'Договоры организаций с поверителями'
 
+
+class Activeveraqq(models.Model):
+    """Активный договор с поверителем"""
+    company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Компания')  
+    aqq = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='Договор с поверителем', unique=True) 
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
+         
+    def save(self, *args, **kwargs):
+        self.pointer = self.company.userid
+        return super(Agreementverification, self).save(*args, **kwargs)
+        
+    def __str__(self):
+        return self.aqq.verificator.companyName
+            
+    class Meta:
+        verbose_name = 'Активный договор с поверителем'
+        verbose_name_plural = 'Активный договор с поверителем'
+
