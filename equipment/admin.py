@@ -40,6 +40,7 @@ admin.site.register(HelpingEquipmentCharakters)
 admin.site.register(HelpingEquipment) 
 admin.site.register(ServiceEquipmentU) 
 admin.site.register(ServiceEquipmentUFact)
+admin.site.register(Activeveraqq)
 
 
 @admin.register(Verificators)
