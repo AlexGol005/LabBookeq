@@ -1025,6 +1025,7 @@ class Agreementverification(models.Model):
 
     def save(self, *args, **kwargs):
         self.pointer = self.company.userid
+        Activeveraqq.objects.get_or_create(aqq=self, company=self.company)
         return super(Agreementverification, self).save(*args, **kwargs)
         
     def __str__(self):
@@ -1042,6 +1043,7 @@ class Activeveraqq(models.Model):
          
     def save(self, *args, **kwargs):
         self.pointer = self.company.userid
+            
         return super(Agreementverification, self).save(*args, **kwargs)
         
     def __str__(self):
