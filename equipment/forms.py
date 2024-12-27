@@ -29,19 +29,19 @@ from .lookups import*
 
 from equipment.models import*
 
-
        
-class ActivaqqchangeForm(forms.Form):
-    """форма для """
+class ActivaqqchangeForm(forms.ModelForm):
+    """форма для смены ответственного за ЛО"""
     def __init__(self, ruser, *args, **kwargs):
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
-        self.fields['choice'].queryset = Agreementverification.objects.filter(pointer=ruser)
+        self.fields['aqq'].queryset = Agreementverification.objects.filter(pointer = ruser)
     
     class Meta:
+        model = Activeveraqq
         fields = [
-            'choice'
+            'aqq'
                   ]
-        widgets = {'choice':forms.Select(attrs={'class': 'form-control'}),}
+        widgets = {'aqq':forms.Select(attrs={'class': 'form-control'}),}
 
 
 # блок 1 - формы для поисков и распечатки этикеток
