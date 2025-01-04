@@ -92,8 +92,7 @@ def OrderVerificationchange(request, str):
     """ на странице для заказа поверки/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на поверку """
     if request.method == 'POST':
         if 'true' in request.POST:
-            object_ids = request.POST.getlist('my_object')
-            
+            object_ids = request.POST.getlist('my_object')         
             note = Equipment.objects.filter(id__in=object_ids) 
             for i in note:
                 if i.kategory == 'СИ':               
