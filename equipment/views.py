@@ -88,7 +88,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
 
 @login_required
-def OrderVerificationchange(request):
+def OrderVerificationchange(request, str):
     """ на странице для заказа поверки/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на поверку """
     if request.method == 'POST':
         if 'true' in request.POST:
@@ -113,7 +113,8 @@ def OrderVerificationchange(request):
                 elif i.kategory == 'ИО':               
                     i.testingequipment.newhaveorder=False
                     i.testingequipment.save()
-            return redirect('orderverification')
+            return redirect(f'/equipment/orderverification/{str}/')
+
        
 
 
