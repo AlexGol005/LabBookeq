@@ -153,7 +153,7 @@ class Equipment(models.Model):
     newroomnumberdate = models.CharField('Дата перемещения', blank=True, null=True, max_length=90)
 
     def __str__(self):
-        return f'{self.pointer}: {self.exnumber} - {self.lot}'
+        return f'{self.pointer}: {self.exnumber} - зав№ {self.lot}, pk={self.pk}'
 
     def save(self, *args, **kwargs):
         super(Equipment, self).save(*args, **kwargs)
