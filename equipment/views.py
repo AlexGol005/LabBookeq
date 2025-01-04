@@ -102,9 +102,9 @@ def OrderVerificationchange(request, str):
                 elif i.kategory == 'ИО':               
                     i.testingequipment.newhaveorder=True
                     i.testingequipment.save()  
-            redirect('export_orderverification_xls', {'object_ids': object_ids})
             
-            return redirect(f'/equipment/orderverification/{str}/')
+            
+            return redirect('export_orderverification_xls', {'object_ids': object_ids})
             
         if 'false' in request.POST:
             object_ids = request.POST.getlist('my_object')
