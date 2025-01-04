@@ -59,7 +59,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
         list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
         if str == 0:
             list = list
-        if str == 4:
+        elif str == 4:
             list = list.filter(pk=10)
         
         context = {
