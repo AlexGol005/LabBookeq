@@ -28,10 +28,19 @@
    
    
    <br>
-        <center>
-            <a href="/" class="btn btn-primary ml-1 mr-1"  style="width: 50%">Кнопочка для выбора списка приборов-</a>
-        </center>
-        <br>
+ <center><div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Выбрать список приборов
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{% url 'orderverification' str=0 %}">все приборы</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' str=1 %}">не поверено на сегодняшний день</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' str=2 %}">требует поверки на сегодняшний день</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' str=3 %}">нужно заказать замену на сегодняшний день</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' str=4 %}">поверка заказана</a></li>
+  </ul>
+</div> </center>
+      <br>
 
 
 
