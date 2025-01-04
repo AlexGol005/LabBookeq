@@ -60,7 +60,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
         if str == 0:
             list = list
         if str == 4:
-            list = list.filter(date=now)
+            list = list.filter(pk=10)
         
         context = {
             'form': form,
