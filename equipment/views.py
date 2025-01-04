@@ -61,6 +61,8 @@ class OrderVerificationView(LoginRequiredMixin, View):
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
         if i==34:
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(pk=str)
+        else:
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
         
         context = {
             'form': form,
