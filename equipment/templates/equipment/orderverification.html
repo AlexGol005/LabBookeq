@@ -46,7 +46,7 @@
 
    
 <center>
-<form action="{% url 'orderverificationchange' %}" method="post">
+<form action="{% url 'orderverificationchange' str=0 %}" method="post">
    {% csrf_token %}
    <table class="table table-bordered flex">
              <tr>
