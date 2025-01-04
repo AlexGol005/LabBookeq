@@ -93,7 +93,7 @@ def OrderVerificationchange(request, str):
     if request.method == 'POST':
         if 'true' in request.POST:
             object_ids = request.POST.getlist('my_object')
-            str=object_ids
+            
             note = Equipment.objects.filter(id__in=object_ids) 
             for i in note:
                 if i.kategory == 'СИ':               
@@ -101,8 +101,11 @@ def OrderVerificationchange(request, str):
                     i.measurequipment.save()
                 elif i.kategory == 'ИО':               
                     i.testingequipment.newhaveorder=True
-                    i.testingequipment.save()            
-            return redirect('export_orderverification_xls', {'str': str})
+                    i.testingequipment.save()  
+               redirect('export_orderverification_xls', {'object_ids': object_ids})
+            
+            return redirect(f'/equipment/orderverification/{str}/')
+            
         if 'false' in request.POST:
             object_ids = request.POST.getlist('my_object')
             note = Equipment.objects.filter(id__in=object_ids) 
