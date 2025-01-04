@@ -57,9 +57,9 @@ class OrderVerificationView(LoginRequiredMixin, View):
         ruser=request.user.profile.userid
         form = ActivaqqchangeForm(ruser, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
         i=str
-        if i==0:
+        if i=='0':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
-        if i==34:
+        if i=='34':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(pk=str)
         else:
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
