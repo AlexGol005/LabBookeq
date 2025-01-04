@@ -47,13 +47,21 @@ URL = 'equipment'
 now = date.today()
 
 
+
 class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа поверки/аттестации """
-
-    def get(self, request):
+    CHOISE_LIST = [('все приборы', 'все приборы'),('не поверено на сегодняшний день','не поверено на сегодняшний день'), ('требует поверки на сегодняшний день','требует поверки на сегодняшний день'), 
+               ('нужно заказать замену на сегодняшний день','нужно заказать замену на сегодняшний день'), ('поверка заказана', 'поверка заказана')]
+    
+    def get(self, request, str):
         ruser=request.user.profile.userid
         form = ActivaqqchangeForm(ruser, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
         list = Equipment.objects.filter(pointer=self.request.user.profile.userid) 
+        if str == 0:
+            list = list
+        if str == 4:
+            list = list.filter(date=now)
+        
         context = {
             'form': form,
             'list': list,
