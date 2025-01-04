@@ -56,8 +56,11 @@ class OrderVerificationView(LoginRequiredMixin, View):
     def get(self, request, str):
         ruser=request.user.profile.userid
         form = ActivaqqchangeForm(ruser, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
-
-        list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(pk=str)
+        i=str
+        if i==0:
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
+        if i==34:
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(pk=str)
         
         context = {
             'form': form,
@@ -67,18 +70,18 @@ class OrderVerificationView(LoginRequiredMixin, View):
         template_name = URL + '/orderverification.html'
         return render(request, template_name, context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, str, *args, **kwargs):
         ruser=request.user.profile.userid
         form = ActivaqqchangeForm(ruser, request.POST, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                return redirect('/equipment/orderverification')
+                return redirect(f'/equipment/orderverification/{str}/')
 
         else:
             messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
-            return redirect('/equipment/orderverification/')
+            return redirect('/equipment/orderverification/0/')
 
 
 
