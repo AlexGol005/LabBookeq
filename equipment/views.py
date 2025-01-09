@@ -70,6 +70,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
             'dateform': dateform,
             'list': list,
             'ruser':ruser,
+            'str':str,
         }
         template_name = URL + '/orderverification.html'
         return render(request, template_name, context)
