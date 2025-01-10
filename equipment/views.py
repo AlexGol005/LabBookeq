@@ -55,10 +55,9 @@ class OrderVerificationView(LoginRequiredMixin, View):
     
     def get(self, request, str):
         ruser=request.user.profile.userid
-        # try:
-        #     serdate = request.GET.get('date')
-        # except:
-        serdate = now
+        serdate = request.GET.get('date')
+       if not serdate:
+           serdate = now
         form = ActivaqqchangeForm(ruser, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
         dateform = DateForm()
         i=str
