@@ -61,7 +61,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
         i=str
         if i=='0':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
-        if i=='1':
+        if i=='2':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateorder__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateorder__lte=serdate)
         if i=='4':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newhaveorder=True) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newhaveorder=True)
