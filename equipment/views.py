@@ -55,16 +55,19 @@ class OrderVerificationView(LoginRequiredMixin, View):
     
     def get(self, request, str):
         ruser=request.user.profile.userid
+        serdate = request.GET.get('date')
         form = ActivaqqchangeForm(ruser, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
         dateform = DateForm()
         i=str
         if i=='0':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
+        if i=='1':
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateorder__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateorder__lte=serdate)
         if i=='4':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newhaveorder=True) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newhaveorder=True)
         else:
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
-        
+   
         context = {
             'form': form,
             'dateform': dateform,
