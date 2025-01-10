@@ -54,7 +54,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
                ('нужно заказать замену на сегодняшний день','нужно заказать замену на сегодняшний день'), ('поверка заказана', 'поверка заказана')]
     
     def get(self, request, str):
-        serdate = request.GET['date']
+        serdate = request.GET.get('date')
         ruser=request.user.profile.userid
         form = ActivaqqchangeForm(ruser, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
         dateform = DateForm()
@@ -1031,13 +1031,13 @@ class ReestrsearresView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ReestrsearresView, self).get_context_data(**kwargs)
-        name = self.request.GET['name']
-        reestr = self.request.GET['reestr']
-        if self.request.GET['name']:
-            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
-        reestr = self.request.GET['reestr']
-        if self.request.GET['name']:
-            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
+        name = self.['name']
+        reestr = self.['reestr']
+        if self.['name']:
+            name1 = self.['name'][0].upper() + self.['name'][1:]
+        reestr = self.['reestr']
+        if self.['name']:
+            name1 = self.['name'][0].upper() + self.['name'][1:]
         if name and not reestr:
             objects = MeasurEquipmentCharakters.objects.\
             filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
@@ -1061,11 +1061,11 @@ class TEcharacterssearresView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(TEcharacterssearresView, self).get_context_data(**kwargs)
-        name = self.request.GET['name']
-        if self.request.GET['name']:
-            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
-        if self.request.GET['name']:
-            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
+        name = self.['name']
+        if self.['name']:
+            name1 = self.['name'][0].upper() + self.['name'][1:]
+        if self.['name']:
+            name1 = self.['name'][0].upper() + self.['name'][1:]
         if name:
             objects = TestingEquipmentCharakters.objects.\
             filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
@@ -1083,11 +1083,11 @@ class SearchResultMeasurEquipmentView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultMeasurEquipmentView, self).get_context_data(**kwargs)
-        name = self.request.GET['name']
-        if self.request.GET['name']:
-            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
-        exnumber = self.request.GET['exnumber']
-        lot = self.request.GET['lot']
+        name = self.['name']
+        if self.['name']:
+            name1 = self.['name'][0].upper() + self.['name'][1:]
+        exnumber = self.['exnumber']
+        lot = self.['lot']
 
         get_id_actual = Verificationequipment.objects.select_related('equipmentSM').values('equipmentSM'). \
             annotate(id_actual=Max('id')).values('id_actual')
@@ -1095,8 +1095,8 @@ class SearchResultMeasurEquipmentView(LoginRequiredMixin, TemplateView):
         set = []
         for n in list_:
             set.append(n.get('id_actual'))
-        if self.request.GET['name']:
-            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
+        if self.['name']:
+            name1 = self.['name'][0].upper() + self.['name'][1:]
         if name and not lot and not exnumber:
             objects = MeasurEquipment.objects.filter(pointer=self.request.user.profile.userid).\
             filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).order_by('charakters__name')
@@ -1138,9 +1138,9 @@ class SearchResultTestingEquipmentView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultTestingEquipmentView, self).get_context_data(**kwargs)
-        name = self.request.GET['name']
-        if self.request.GET['name']:
-            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
+        name = self.['name']
+        if self.['name']:
+            name1 = self.['name'][0].upper() + self.request.GET['name'][1:]
         exnumber = self.request.GET['exnumber']
         lot = self.request.GET['lot']
         get_id_actual = TestingEquipment.objects.select_related('equipmentSM_att').values('equipmentSM_att'). \
