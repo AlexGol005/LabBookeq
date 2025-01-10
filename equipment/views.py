@@ -54,17 +54,20 @@ class OrderVerificationView(LoginRequiredMixin, View):
                ('нужно заказать замену на сегодняшний день','нужно заказать замену на сегодняшний день'), ('поверка заказана', 'поверка заказана')]
     
     def get(self, request, str):
+        serdate = request.GET['date']
         ruser=request.user.profile.userid
         form = ActivaqqchangeForm(ruser, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
         dateform = DateForm()
         i=str
         if i=='0':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
+        if i=='1':
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateorder__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateorder__lte=serdate)
         if i=='4':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newhaveorder=True) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newhaveorder=True)
         else:
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
-        
+      
         context = {
             'form': form,
             'dateform': dateform,
@@ -1663,9 +1666,8 @@ class SearchMustAttView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = TestingEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
+        queryset = Attestationequipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
         return queryset
-
 
 class SearchNotVerView(LoginRequiredMixin, ListView):
     """ выводит список СИ у которых дата окончания поверки совпадает с указанной либо раньше неё"""
