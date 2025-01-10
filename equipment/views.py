@@ -1035,9 +1035,6 @@ class ReestrsearresView(LoginRequiredMixin, TemplateView):
         reestr = self.['reestr']
         if self.['name']:
             name1 = self.['name'][0].upper() + self.['name'][1:]
-        reestr = self.['reestr']
-        if self.['name']:
-            name1 = self.['name'][0].upper() + self.['name'][1:]
         if name and not reestr:
             objects = MeasurEquipmentCharakters.objects.\
             filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
