@@ -67,7 +67,7 @@ def export_orderverification_xls(request, object_ids):
     response['Content-Disposition'] = f'attachment; filename="base.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('1', cell_overwrite_ok=True)
-    if object_ids:
+    if object_ids != '':
         q = object_ids[17:-3].split("', '")
     else: 
         q=(1,)
