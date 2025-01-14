@@ -137,6 +137,7 @@
              <tr>
           <th> выберите</th>
         <th>Внутренний номер</th>
+                <th>Название</th>
                 <th>Категория</th>
                 <th>Последняя организация-поверитель</th>
                 <th>Место последней поверки</th>
@@ -149,10 +150,13 @@
           
             {% if obj.measurequipment %}
             <td> <a href="{% url 'measureequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td> 
+          <td> {{obj.measurequipment.charakters.name}}</td>
             {% elif obj.testingequipment  %}
             <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td> 
+          <td> {{obj.testingequipment.charakters.name}}</td>
             {% elif obj.helpingequipment %}
             <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">{{obj.exnumber| slice:":5"}}</a></td>
+          <td> {{obj.helpingequipment.charakters.name}}</td>
             {% else %}
             <td> {{obj.exnumber| slice:":5"}}</td>            
             {% endif %}
