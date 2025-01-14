@@ -50,7 +50,7 @@ a1.wrap = 1
 
 
 # style_plain_border обычные ячейки, с границами ячеек
-style_plain_border = xlwt.XFStyle()
+style_plain = xlwt.XFStyle()
 style_plain.font.name = 'Times New Roman'
 style_plain.borders = b1
 style_plain.alignment = a1
