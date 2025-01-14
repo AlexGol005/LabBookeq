@@ -101,6 +101,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
 @login_required
 def OrderVerificationchange(request, str):
     """ на странице для заказа поверки/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на поверку """
+    ruser=request.user.profile.userid
     if request.method == 'POST':
         if 'true' in request.POST:
             object_ids = request.POST.getlist('my_object')         
@@ -113,10 +114,14 @@ def OrderVerificationchange(request, str):
                     i.testingequipment.newhaveorder=True
                     i.testingequipment.save()  
             
-            num_aq='1'
-            if num_aq == '1':
-            
+            try:
+                Activeveraqq.objects.get(pointer=ruser)
+                get_agreement = 1
                 return redirect('export_orderverification_xls', {'object_ids': object_ids})
+            except:
+                return redirect('export_orderverification_xls', {'object_ids': object_ids})
+           
+                
             
         if 'false' in request.POST:
             object_ids = request.POST.getlist('my_object')
