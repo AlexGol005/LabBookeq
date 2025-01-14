@@ -367,7 +367,7 @@ class TestingEquipment(models.Model):
 
     def __str__(self):
         return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
-               f' № реестр {self.charakters.reestr} - pk {self.pk}'
+               f' - pk {self.pk}'
 
     def save(self, *args, **kwargs):
         super().save()
