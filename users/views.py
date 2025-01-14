@@ -94,10 +94,10 @@ class CompanyProfileView(LoginRequiredMixin, TemplateView):
 @login_required
 def CompanyUpdateView(request):
     """выводит форму для обновления данных о компании"""
-    ruser = request.user
+    ruser = request.user.profile.userid
     if ruser.has_perm('equipment.add_equipment') or ruser.is_superuser:
         if request.method == "POST":
-            form = CompanyCreateForm(request.POST, instance=Company.objects.get(userid=ruser.profile.userid))
+            form = CompanyCreateForm(request.POST, instance=Company.objects.get(userid=ruser))
             if form.is_valid():
                 order = form.save(commit=False)
                 Agreementverification.objects.get_or_create(active=True, company=Company.objects.get(userid=ruser), verificator=Verificators.objects.get(pk=14), pointer=ruser)
