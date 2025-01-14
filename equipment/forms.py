@@ -35,13 +35,14 @@ class ActivaqqchangeForm(forms.ModelForm):
     def __init__(self, ruser, *args, **kwargs):
         super(ActivaqqchangeForm, self).__init__(*args, **kwargs)
         self.fields['aqq'].queryset = Agreementverification.objects.filter(pointer = ruser)
+        self.fields['aqq'].required=False
     
     class Meta:
         model = Activeveraqq
         fields = [
             'aqq'
                   ]
-        widgets = {'aqq':forms.Select(attrs={'class': 'form-control'}),}
+        widgets = {'aqq':forms.Select(attrs={'class': 'form-control'}), }
 
 
 # блок 1 - формы для поисков и распечатки этикеток
