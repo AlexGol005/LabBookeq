@@ -63,7 +63,7 @@ def export_orderverification_xls(request, object_ids):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="1.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('1', cell_overwrite_ok=True)
+    ws = wb.add_sheet('base', cell_overwrite_ok=True)
     q = object_ids[17:-3].split("', '")    
     note = Equipment.objects.filter(id__in=q)
     rows = note.values_list(
