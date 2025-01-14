@@ -106,7 +106,7 @@ def CompanyUpdateView(request):
                 order.save()                
                 return redirect('companyprofile')
         else:
-            form = CompanyCreateForm(instance=Company.objects.get(userid=ruser.profile.userid))
+            form = CompanyCreateForm(instance=Company.objects.get(userid=ruser))
         data = {'form': form,}               
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
