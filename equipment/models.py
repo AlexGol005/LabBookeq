@@ -344,7 +344,9 @@ class TestingEquipment(models.Model):
         
     newdate = models.CharField('Дата последней аттестации', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней аттестации', blank=True, null=True, max_length=90)
+    newdatedead_date = models.DateField('Дата окончания аттестации в формате даты', blank=True, null=True)
     newdateorder = models.CharField('Дата заказа следующей аттестации', blank=True, null=True, max_length=90, default='-')
+    newdateorder_date = models.DateField('Дата заказа следующей аттестации в формате даты', blank=True, null=True)
     newarshin = models.TextField('Ссылка на скан аттестата', blank=True, null=True)
     newcertnumber = models.CharField('Номер последнего аттестата', max_length=90, blank=True, null=True)
     newcertnumbershort = models.CharField('Краткий номер последнего аттестата', max_length=90, blank=True, null=True)
@@ -356,7 +358,8 @@ class TestingEquipment(models.Model):
                              verbose_name='Место аттестации')
     newnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
     newyear = models.CharField('Год аттестации (если нет точных дат)', max_length=900, blank=True, null=True)
-    newdateordernew = models.CharField('Дата заказа нового оборудования (если аттестация не выгодна)', max_length=90, default='-')                                    
+    newdateordernew = models.CharField('Дата заказа нового оборудования (если аттестация не выгодна)', max_length=90, default='-')  
+    newdateordernew_date = models.DateField('Дата заказа нового оборудования в формате даты', blank=True, null=True)
     newhaveorder = models.BooleanField(verbose_name='Заказана следующая аттестация (или новое ИО)', default=False,  blank=True)                                 
     newcust = models.BooleanField(verbose_name='Аттестацию организует Поставщик', default=False, blank=True)                            
     newextra = models.TextField('Дополнительная информация', blank=True, null=True)
@@ -723,6 +726,44 @@ class Attestationequipment(models.Model):
         except:
             pass
 
+
+
+    def save(self, *args, **kwargs):
+        super().save()
+        # добавляем последнюю аттестацию к оборудованию
+        try:
+            note = TestingEquipment.objects.get(pk=self.equipmentSM.pk)
+        except:
+            pass
+        if note:       
+            note.newcertnumber = self.certnumber
+            note.newarshin = self.arshin
+            note.newcertnumbershort = self.certnumbershort
+            note.newprice = self.price
+            note.newstatusver = self.statusver
+            note.newverificator = self.verificator.companyName
+            note.newplace = self.place
+            note.newnote = self.note
+            note.newyear = self.year
+            note.newhaveorder = self.haveorder
+            note.newcust = self.cust
+            note.newextra = self.extra 
+            newdatedead = get_dateformat(self.datedead)
+            note.newdatedead = newdatedead 
+            note.newdatedead_date = self.datedead
+            if self.dateorder:
+                newdateorder = get_dateformat(self.dateorder)
+                note.newdateorder = newdateorder
+                note.newdateorder_date = self.dateorder
+            else:
+                note.newdateorder = '-' 
+            if self.dateordernew:
+                newdateordernew = get_dateformat(self.dateordernew)
+                note.newdateordernew = newdateordernew  
+                note.newdateordernew_date = self.dateordernew
+            else:
+                note.newdateordernew = '-' 
+            note.save()    
     class Meta:
         verbose_name = 'Испытательное оборудование: аттестация'
         verbose_name_plural = 'Испытательное оборудование: аттестации'
