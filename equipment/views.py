@@ -116,7 +116,7 @@ def OrderVerificationchange(request, str):
             num_aq='1'
             if num_aq == '1':
             
-                return redirect('export_orderverification_xls', {'object_ids': object_ids}, {'str': num_aq})
+                return redirect('export_orderverification_xls', {'object_ids': object_ids})
             
         if 'false' in request.POST:
             object_ids = request.POST.getlist('my_object')
