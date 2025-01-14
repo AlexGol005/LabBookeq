@@ -94,9 +94,10 @@ class CompanyProfileView(LoginRequiredMixin, TemplateView):
 @login_required
 def CompanyUpdateView(request):
     """выводит форму для обновления данных о компании"""
-    ruser = request.user
-    if ruser.has_perm('equipment.add_equipment') or ruser.is_superuser:
-        ruser = request.user.profile.userid
+    uruser = request.user
+    ruser = request.user.profile.userid
+    if uruser.has_perm('equipment.add_equipment') or uruser.is_superuser:
+        
         if request.method == "POST":
             form = CompanyCreateForm(request.POST, instance=Company.objects.get(userid=ruser))
             if form.is_valid():
