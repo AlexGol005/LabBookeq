@@ -560,7 +560,7 @@ class Verificationequipment(models.Model):
             note.newhaveorder = self.haveorder
             note.newcust = self.cust
             note.newextra = self.extra 
-            newdatedead = get_dateformat(self.newdatedead)
+            newdatedead = get_dateformat(self.datedead)
             note.newdatedead = newdatedead 
             note.newdatedead_date = self.datedead
             if self.dateorder:
