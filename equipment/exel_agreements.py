@@ -29,7 +29,7 @@ from users.models import Profile, Company
 
 URL = 'equipment'
 now = date.today()
-from exel import get_affirmation, get_author
+from equipment.exel import get_affirmation, get_author
 
 
 
