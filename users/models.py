@@ -66,6 +66,10 @@ class Company(models.Model):
     def __str__(self):
         return f'Организация: {self.userid}; {self.name}'
 
+    def save(self, *args, **kwargs):
+        Agreementverification.objects.get_or_create(active=True, company=self.company, verificator=Verificators.objects.get(pk=14), pointer=self.userid)
+        return super(Company, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'Организация'
         verbose_name_plural = 'Организации'
