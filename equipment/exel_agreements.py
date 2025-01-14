@@ -35,6 +35,9 @@ from equipment.exel import get_affirmation, get_author
 
 
 # Стили
+
+size = 11
+
 # обкновенные границы ячеек
 b1 = Borders()
 b1.left = 1
