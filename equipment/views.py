@@ -63,12 +63,14 @@ class OrderVerificationView(LoginRequiredMixin, View):
         i=str
         if i=='0':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
-        # if i=='2':
-        #     list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateorder__lte=serdate).filter(pk=48) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateorder__lte=serdate).filter(pk=48)
         if i=='4':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newhaveorder=True) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newhaveorder=True)
+        if i=='1':
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdatedead_date__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdatedead_date__lte=serdate)
         if i=='2':
-            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateorder_date__gte=now) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(pk=34)
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateorder_date__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateorder_date__lte=serdate)
+        if i=='3':
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateordernew_date__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateordernew_date__lte=serdate)
         else:
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
    
