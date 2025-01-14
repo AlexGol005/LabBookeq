@@ -278,7 +278,9 @@ class MeasurEquipment(models.Model):
                                     
     newdate = models.CharField('Дата последней поверки', blank=True, null=True, max_length=90)
     newdatedead = models.CharField('Дата окончания последней поверки', blank=True, null=True, max_length=90)
+    newdatedead_date = models.DateField('Дата окончания поверки в формате даты', blank=True, null=True)
     newdateorder = models.CharField('Дата заказа следующей поверки', blank=True, null=True, max_length=90, default='-')
+    newdateorder_date = models.DateField('Дата заказа следующей поверки в формате даты', blank=True, null=True)
     newarshin = models.TextField('Ссылка на сведения о поверке в Аршин', blank=True, null=True)
     newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
     newcertnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
@@ -290,7 +292,8 @@ class MeasurEquipment(models.Model):
                              verbose_name='Место поверки')
     newnote = models.CharField('Примечание', max_length=900, blank=True, null=True)
     newyear = models.CharField('Год поверки (если нет точных дат)', max_length=900, blank=True, null=True)
-    newdateordernew = models.CharField('Дата заказа нового оборудования (если поверять не выгодно)', max_length=90, default='-')                                    
+    newdateordernew = models.CharField('Дата заказа нового оборудования (если поверять не выгодно)', max_length=90, default='-') 
+    newdateordernew_date = models.DateField('Дата заказа нового оборудования в формате даты', blank=True, null=True)
     newhaveorder = models.BooleanField(verbose_name='Заказана следующая поверка (или новое СИ)', default=False,  blank=True)                                 
     newcust = models.BooleanField(verbose_name='Поверку организует Поставщик', default=False, blank=True)                            
     newextra = models.TextField('Дополнительная информация', blank=True, null=True)
@@ -556,19 +559,18 @@ class Verificationequipment(models.Model):
             note.newyear = self.year
             note.newhaveorder = self.haveorder
             note.newcust = self.cust
-            note.newextra = self.extra      
-            newdate = get_dateformat(self.date)
-            note.newdate = newdate
-            newdatedead = get_dateformat(self.datedead)
-            note.newdatedead = newdatedead
+            note.newextra = self.extra 
+            note.newdatedead_date = self.datedead
             if self.dateorder:
                 newdateorder = get_dateformat(self.dateorder)
                 note.newdateorder = newdateorder
+                note.newdateorder_date = get_dateformat(self.dateorder)
             else:
                 note.newdateorder = '-' 
             if self.dateordernew:
                 newdateordernew = get_dateformat(self.dateordernew)
                 note.newdateordernew = newdateordernew  
+                note.newdateordernew_date = self.dateordernew
             else:
                 note.newdateordernew = '-' 
             note.save()
