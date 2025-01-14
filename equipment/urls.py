@@ -1,6 +1,7 @@
 from django.urls import path, re_path
 from . import views
 from . import exel
+from . import exel_agreements
 
 urlpatterns = [
     path('rooms/', views.RoomsView.as_view(), name='rooms'),
@@ -90,7 +91,7 @@ urlpatterns = [
     path('equipmentdelete/<str:str>/', views.EquipmentDeleteView, name='equipmentdelete'),
     path('orderverification/<str:str>/', views.OrderVerificationView.as_view(), name='orderverification'),
     path('orderverificationchange/<str:str>/', views.OrderVerificationchange, name='orderverificationchange'),
-    path(r'^export_orderverification/xls/$/<path:object_ids>/', exel.export_orderverification_xls, name='export_orderverification_xls'),
+    path(r'^export_orderverification/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_xls, name='export_orderverification_xls'),
     path('companyverreg/', views.VerificatorRegView.as_view(), name='companyverreg'),
     path('agreementcompanyverreg/', views.AgreementVerificatorRegView.as_view(), name='agreementcompanyverreg'),  
     path('agreementcompanyverupdate/<str:str>/', views.AgreementVerificatorUpdateView, name='agreementcompanyverupdate'),
