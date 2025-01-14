@@ -114,7 +114,7 @@ def OrderVerificationchange(request, str):
                     i.testingequipment.save()  
             
             str=1
-            if str == '1'
+            if str == '1':
             
                 return redirect('export_orderverification_xls', {'object_ids': object_ids}, {'str': str})
             
