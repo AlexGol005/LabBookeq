@@ -67,8 +67,8 @@ class OrderVerificationView(LoginRequiredMixin, View):
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newhaveorder=True)| Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newhaveorder=True) 
         # if i=='1':
         #     list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdatedead_date__lte=serdate).exclude(measurequipment__newdatedead_date=None) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdatedead_date__lte=serdate)
-        # if i=='2':
-        #     list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateorder_date__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateorder_date__lte=serdate)
+        if i=='2':
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateorder_date__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateorder_date__lte=serdate)
         if i=='3':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateordernew_date__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateordernew_date__lte=serdate)
 
