@@ -53,11 +53,11 @@ a1.wrap = 1
 
 
 # style_plain_border обычные ячейки, с границами ячеек
-style_plain = xlwt.XFStyle()
-style_plain.font.name = 'Times New Roman'
-style_plain.borders = b1
-style_plain.alignment = a1
-style_plain.font.height = 20 * size
+style_plain_border = xlwt.XFStyle()
+style_plain_border.font.name = 'Times New Roman'
+style_plain_border.borders = b1
+style_plain_border.alignment = a1
+style_plain_border.font.height = 20 * size
 
 
 def export_orderverification_xls(request, object_ids):
@@ -67,7 +67,10 @@ def export_orderverification_xls(request, object_ids):
     response['Content-Disposition'] = f'attachment; filename="1.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('base', cell_overwrite_ok=True)
-    q = object_ids[17:-3].split("', '")    
+    if object_ids:
+        q = object_ids[17:-3].split("', '")
+    else: 
+        q=0
     note = Equipment.objects.filter(id__in=q)
     rows = note.values_list(
         'pk', )
