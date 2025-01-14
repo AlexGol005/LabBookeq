@@ -71,8 +71,8 @@ class OrderVerificationView(LoginRequiredMixin, View):
         #     list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateorder_date__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateorder_date__lte=serdate)
         if i=='3':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateordernew_date__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateordernew_date__lte=serdate)
-        # else:
-        #     list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
+        else:
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
    
         context = {
             'form': form,
