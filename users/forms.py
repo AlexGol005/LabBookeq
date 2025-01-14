@@ -100,12 +100,7 @@ class CompanyCreateForm(forms.ModelForm):
     manager_email = forms.CharField(label='email лица ответственного за оборудование', widget=forms.TextInput(attrs={'class': 'form-control',}))
     caretaker_position = forms.CharField(label='Должность завхоза', widget=forms.TextInput(attrs={'class': 'form-control',}))
     caretaker_name = forms.CharField(label='ФИО завхоза', widget=forms.TextInput(attrs={'class': 'form-control',}))
-    ver_agreement_number = forms.CharField(label='Номер договора с организацией-поверителем', widget=forms.TextInput(attrs={'class': 'form-control',}))
-    ver_agreement_date = forms.CharField(label='дата договора с организацией-поверителем', widget=forms.TextInput(attrs={'class': 'form-control',}))
-    ver_agreement_card = forms.CharField(label='Номер учетной карточки у с организации-поверителя', widget=forms.TextInput(attrs={'class': 'form-control',}))
-    ver_agreement_head_position = forms.CharField(label='Кому: должность лица организации-поверителя', widget=forms.TextInput(attrs={'class': 'form-control',}))
-    ver_agreement_head_organisation = forms.CharField(label='Кому: название организации-поверителя', widget=forms.TextInput(attrs={'class': 'form-control',}))
-    ver_agreement_head_name = forms.CharField(label='Кому: имя лица организации-поверителя', widget=forms.TextInput(attrs={'class': 'form-control',}))
+
                         
     class Meta:
         model = Company
@@ -128,15 +123,7 @@ class CompanyCreateForm(forms.ModelForm):
                 'caretaker_position',
                 'caretaker_name' ,
                 'manager_phone',
-                'manager_email',
-                'ver_agreement_number', 
-                'ver_agreement_date', 
-                'ver_agreement_date', 
-                'ver_agreement_card',
-                'ver_agreement_head_position', 
-                'ver_agreement_head_organisation', 
-                'ver_agreement_head_name',
-            
+                'manager_email',            
                   ]
 
 
