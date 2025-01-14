@@ -1083,7 +1083,7 @@ class Agreementverification(models.Model):
 class Activeveraqq(models.Model):
     """Активный договор с поверителем"""
     company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Компания')  
-    aqq = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='Договор с поверителем', unique=True) 
+    aqq = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='Договор с поверителем', unique=True, null=True) 
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
          
     def save(self, *args, **kwargs):
