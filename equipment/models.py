@@ -1069,9 +1069,10 @@ class Agreementverification(models.Model):
     active = models.BooleanField('Активный', default=False, blank=True)
 
     def save(self, *args, **kwargs):
-        return super(Agreementverification, self).save(*args, **kwargs)
+        super().save()        
         self.pointer = self.company.userid
         Activeveraqq.objects.get_or_create(aqq=self, company=self.company)
+        return super(Agreementverification, self).save(*args, **kwargs)
         
         
     def __str__(self):
