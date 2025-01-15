@@ -60,9 +60,8 @@ style_plain_border.alignment = a1
 style_plain_border.font.height = 20 * size
 
 
-def export_orderverification_template_xls(request, object_ids):
-    ruser = request.user.profile.userid
-    company = Company.objects.get(userid=ruser)
+def export_orderverification_template_xls(object_ids):
+
     try:
         a = Activeveraqq.objects.get(pointer=ruser)
         exelnumber = a.aqq.verificator.pk
@@ -79,14 +78,16 @@ def export_orderverification_template_xls(request, object_ids):
         note = Equipment.objects.filter(id=1)
     rows = note.values_list(
         'pk', )
-    rows=111
+
     return rows, ruser, company, wb, ws
 
 
 
 def export_orderverification_xls(request, object_ids):
     '''Поверитель: base если нет специальной формы для данного поверителя и прочие исключения'''
-    export_orderverification_template_xls(request, object_ids)
+    export_orderverification_template_xls(object_ids)
+    ruser = request.user.profile.userid
+    company = Company.objects.get(userid=ruser)
     row_num = 1
     for row in rows:
         row_num += 1
