@@ -1072,8 +1072,7 @@ class Agreementverification(models.Model):
         super().save()        
         self.pointer = self.company.userid
         Activeveraqq.objects.get_or_create(aqq=self, company=self.company)
-        return super(Agreementverification, self).save(*args, **kwargs)
-        
+
         
     def __str__(self):
         return self.verificator.companyName
