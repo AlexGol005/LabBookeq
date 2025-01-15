@@ -60,13 +60,18 @@ style_plain_border.alignment = a1
 style_plain_border.font.height = 20 * size
 
 
-def export_orderverification_xls(request, object_ids):
-    '''Поверитель: base если нет специальной формы для данного поверителя и прочие исключения'''
-    company = Company.objects.get(userid=request.user.profile.userid)
+def export_orderverification_template_xls(request, object_ids):
+    ruser = request.user.profile.userid
+    company = Company.objects.get(userid=ruser)
+    try:
+        a = Activeveraqq.objects.get(pointer=ruser)
+        exelnumber = a.aqq.verificator.pk
+    except:
+        exelnumber = 'list_equipment'
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="base.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('1', cell_overwrite_ok=True)
+    ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
     q = object_ids[17:-3].split("', '")
     try:
         note = Equipment.objects.filter(id__in=q)
@@ -74,6 +79,12 @@ def export_orderverification_xls(request, object_ids):
         note = Equipment.objects.filter(id=1)
     rows = note.values_list(
         'pk', )
+
+
+
+def export_orderverification_xls(request, object_ids):
+    '''Поверитель: base если нет специальной формы для данного поверителя и прочие исключения'''
+    export_orderverification_template_xls(request, object_ids)
     row_num = 1
     for row in rows:
         row_num += 1
@@ -86,21 +97,7 @@ def export_orderverification_xls(request, object_ids):
 
 def export_orderverification_14_xls(request, object_ids):
     '''Поверитель: не указан'''
-    ruser = request.user.profile.userid
-    company = Company.objects.get(userid=ruser)
-    a = Activeveraqq.objects.get(pointer=ruser)
-    exelnumber = a.aqq.verificator.pk
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="base.xls"'
-    wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
-    q = object_ids[17:-3].split("', '")
-    try:
-        note = Equipment.objects.filter(id__in=q)
-    except:
-        note = Equipment.objects.filter(id=1)
-    rows = note.values_list(
-        'pk', )
+    export_orderverification_template_xls(request, object_ids)
     row_num = 1
     for row in rows:
         row_num += 1
@@ -113,21 +110,7 @@ def export_orderverification_14_xls(request, object_ids):
 
 def export_orderverification_1_xls(request, object_ids):
     '''Поверитель: ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ"'''
-    ruser = request.user.profile.userid
-    company = Company.objects.get(userid=ruser)
-    a = Activeveraqq.objects.get(pointer=ruser)
-    exelnumber = a.aqq.verificator.pk
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="base.xls"'
-    wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet(f'{exelnumber}.{exelnumber}.{exelnumber}', cell_overwrite_ok=True)
-    q = object_ids[17:-3].split("', '")
-    try:
-        note = Equipment.objects.filter(id__in=q)
-    except:
-        note = Equipment.objects.filter(id=1)
-    rows = note.values_list(
-        'pk', )
+    export_orderverification_template_xls(request, object_ids)
     row_num = 1
     for row in rows:
         row_num += 1
