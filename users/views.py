@@ -101,12 +101,13 @@ def CompanyUpdateView(request):
         if request.method == "POST":
             form = CompanyCreateForm(request.POST, instance=Company.objects.get(userid=ruser))
             if form.is_valid():
-                order = form.save(commit=False)
-                order.save() 
+
                 n = Agreementverification.objects.get_or_create(active=True, company=Company.objects.get(userid=ruser), verificator=Verificators.objects.get(pk=14), pointer=ruser)
                 n.save()
-                n1=Activeveraqq.objects.get_or_create(aqq=n, company=Company.objects.get(userid=ruser))
-                n1.save()
+                # n1=Activeveraqq.objects.get_or_create(aqq=n, company=Company.objects.get(userid=ruser))
+                # n1.save()
+                order = form.save(commit=False)
+                order.save() 
                                
                 return redirect('companyprofile')
         else:
