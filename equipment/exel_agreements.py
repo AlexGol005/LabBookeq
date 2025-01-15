@@ -120,7 +120,7 @@ def export_orderverification_1_xls(request, object_ids):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="base.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
+    ws = wb.add_sheet(f'{exelnumber}.{exelnumber}.{exelnumber}', cell_overwrite_ok=True)
     q = object_ids[17:-3].split("', '")
     try:
         note = Equipment.objects.filter(id__in=q)
