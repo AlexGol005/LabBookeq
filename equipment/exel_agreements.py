@@ -61,7 +61,7 @@ style_plain_border.font.height = 20 * size
 
 
 def export_orderverification_xls(request, object_ids):
-    '''представление для выгрузки списка на поверку'''
+    '''Поверитель: base если нет специальной формы для данного поверителя и прочие исключения'''
     company = Company.objects.get(userid=request.user.profile.userid)
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="base.xls"'
