@@ -81,3 +81,30 @@ def export_orderverification_xls(request, object_ids):
             ws.write(row_num, col_num, row[col_num], style_plain_border)
     wb.save(response)
     return response
+
+
+
+def export_orderverification_14_xls(request, object_ids):
+    '''представление для выгрузки списка на поверку'''
+    ruser = request.user.profile.userid
+    company = Company.objects.get(userid=ruser)
+    a = Activeveraqq.objects.get(pointer=ruser)
+    exelnumber = a.aqq.verificator.pk
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="base.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
+    q = object_ids[17:-3].split("', '")
+    try:
+        note = Equipment.objects.filter(id__in=q)
+    except:
+        note = Equipment.objects.filter(id=1)
+    rows = note.values_list(
+        'pk', )
+    row_num = 1
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], style_plain_border)
+    wb.save(response)
+    return response
