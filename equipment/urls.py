@@ -92,6 +92,7 @@ urlpatterns = [
     path('orderverification/<str:str>/', views.OrderVerificationView.as_view(), name='orderverification'),
     path('orderverificationchange/<str:str>/', views.OrderVerificationchange, name='orderverificationchange'),
     path(r'^export_orderverification/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_xls, name='export_orderverification_xls'),
+    path(r'^export_orderverification_14/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_14_xls, name='export_orderverification_14_xls'),
     path('companyverreg/', views.VerificatorRegView.as_view(), name='companyverreg'),
     path('agreementcompanyverreg/', views.AgreementVerificatorRegView.as_view(), name='agreementcompanyverreg'),  
     path('agreementcompanyverupdate/<str:str>/', views.AgreementVerificatorUpdateView, name='agreementcompanyverupdate'),
