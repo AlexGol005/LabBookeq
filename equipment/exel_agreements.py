@@ -79,7 +79,7 @@ def export_orderverification_template_xls(object_ids):
     rows = note.values_list(
         'pk', )
 
-    return rows, ruser, company, wb, ws
+    return rows
 
 
 
