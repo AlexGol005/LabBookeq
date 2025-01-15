@@ -98,7 +98,9 @@ def export_orderverification_xls(request, object_ids):
 
 def export_orderverification_14_xls(request, object_ids):
     '''Поверитель: не указан'''
-    export_orderverification_template_xls(request, object_ids)
+    a = request
+    b = object_ids
+    export_orderverification_template_xls(a, b)
     row_num = 1
     for row in rows:
         row_num += 1
