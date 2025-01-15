@@ -118,7 +118,7 @@ def OrderVerificationchange(request, str):
                 note = Activeveraqq.objects.get(pointer=ruser)
                 exelnumber = note.aqq.verificator.pk
                 exelname = f'export_orderverification_{exelnumber}_xls'            
-                return redirect(exelname', {'object_ids': object_ids})
+                return redirect(exelname, {'object_ids': object_ids})
             except:
                 return redirect('export_orderverification_xls', {'object_ids': object_ids})
            
