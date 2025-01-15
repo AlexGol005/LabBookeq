@@ -1071,7 +1071,10 @@ class Agreementverification(models.Model):
     def save(self, *args, **kwargs):
         super().save()        
         self.pointer = self.company.userid
-        Activeveraqq.objects.get_or_create(aqq=self, company=self.company)
+        try:
+            Activeveraqq.objects.get(company=self.company)
+        except:
+            Activeveraqq.objects.get_or_create(aqq=self, company=self.company)
 
         
     def __str__(self):
