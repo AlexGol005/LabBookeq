@@ -1099,7 +1099,7 @@ class Activeveraqq(models.Model):
         try:
             return self.aqq.verificator.companyName
         except: 
-            pass
+            return ''
 
             
     class Meta:
