@@ -79,7 +79,7 @@ def export_orderverification_template_xls(request, object_ids):
         note = Equipment.objects.filter(id=1)
     rows = note.values_list(
         'pk', )
-    return rows, ruser, company, wb, ws
+    return rows=111, ruser, company, wb, ws
 
 
 
@@ -98,9 +98,7 @@ def export_orderverification_xls(request, object_ids):
 
 def export_orderverification_14_xls(request, object_ids):
     '''Поверитель: не указан'''
-    a = request
-    b = object_ids
-    export_orderverification_template_xls(a, b)
+    export_orderverification_template_xls(request, object_ids)
     row_num = 1
     for row in rows:
         row_num += 1
