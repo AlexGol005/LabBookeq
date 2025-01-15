@@ -118,3 +118,15 @@ def export_orderverification_1_xls(request, object_ids):
             ws.write(row_num, col_num, row[col_num], style_plain_border)
     wb.save(response)
     return response
+
+
+def export_orderverification_9_xls(request, object_ids):
+    '''Поверитель: ФГУП "ВНИИМ ИМ. Д.И.МЕНДЕЛЕЕВА"'''
+    export_orderverification_template_xls(request, object_ids)
+    row_num = 1
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], style_plain_border)
+    wb.save(response)
+    return response
