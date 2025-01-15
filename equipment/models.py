@@ -1096,7 +1096,11 @@ class Activeveraqq(models.Model):
         return super(Activeveraqq, self).save(*args, **kwargs)
         
     def __str__(self):
-        return self.aqq.verificator.companyName
+        try:
+            return self.aqq.verificator.companyName
+        except: 
+            pass
+
             
     class Meta:
         verbose_name = 'Активный договор с поверителем'
