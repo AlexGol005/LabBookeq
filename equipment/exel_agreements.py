@@ -100,7 +100,7 @@ def export_orderverification_xls(request, object_ids):
 
 def export_orderverification_14_xls(request, object_ids):
     '''Поверитель: не указан'''
-    export_orderverification_template_xls(request, object_ids)
+    export_orderverification_template_xls(object_ids)
     row_num = 1
     for row in rows:
         row_num += 1
@@ -113,7 +113,7 @@ def export_orderverification_14_xls(request, object_ids):
 
 def export_orderverification_1_xls(request, object_ids):
     '''Поверитель: ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ"'''
-    export_orderverification_template_xls(request, object_ids)
+    export_orderverification_template_xls(object_ids)
     row_num = 1
     for row in rows:
         row_num += 1
@@ -125,7 +125,7 @@ def export_orderverification_1_xls(request, object_ids):
 
 def export_orderverification_9_xls(request, object_ids):
     '''Поверитель: ФГУП "ВНИИМ ИМ. Д.И.МЕНДЕЛЕЕВА"'''
-    export_orderverification_template_xls(request, object_ids)
+    export_orderverification_template_xls(object_ids)
     row_num = 1
     for row in rows:
         row_num += 1
