@@ -234,7 +234,7 @@ def export_orderverification_1_xls(request, object_ids):
     # данные
     rows = note.values_list('measurequipment', )
    
-    rows1= '|note.values_list('testingequipment__characters__name', )'
+    rows1= "|note.values_list('testingequipment__characters__name', )"
     
     # ширина колонок и их количество
     len_sheet = 12
