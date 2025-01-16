@@ -114,6 +114,16 @@ def get_dateformat(date):
     rdate = f'{day}.{month}.{year}'
     return rdate
 
+
+def get_dateformat_to_number(date):
+    """переводит дату из формата гггг-мм-дд в ггммдд01"""
+    dateformat = str(date)
+    day = dateformat[8:]
+    month = dateformat[5:7]
+    year = dateformat[2:4]
+    rdate = f'{year}.{month}.{day}01'
+    return rdate
+
 def get_round_signif_digit(x_avg: Decimal, numdig: int) -> Decimal:
     """округляет число x_avg до числа значащих цифр numdig для чисел соизмеримых со значением вязкости"""
     aa = x_avg.quantize(Decimal('1.000000000000'), ROUND_HALF_UP)
