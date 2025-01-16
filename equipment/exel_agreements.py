@@ -281,10 +281,8 @@ def export_orderverification_1_xls(request, object_ids):
     columns = [f'{outgoing_number}',
                f'{customer_card_number}',               
     ]
-    for col_num in range(1):
     ws.write(row_num, 0, columns[0], style_left_noborder)
     ws.merge(row_num, row_num, 0, 5)
-    for col_num in range(1,2):
     ws.write(row_num, len_sheet-4, columns[1], style_right_noborder)
     ws.merge(row_num, row_num, len_sheet-4, len_sheet)
         
