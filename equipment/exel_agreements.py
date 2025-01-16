@@ -271,18 +271,18 @@ def export_orderverification_1_xls(request, object_ids):
     
     # ширина колонок и их количество
     len_sheet = 12
-    ws.col(0).width = 500
+    ws.col(0).width = 300
     ws.col(1).width = 2000
     ws.col(2).width = 3500
     ws.col(3).width = 5000
     ws.col(4).width = 4500
     ws.col(5).width = 3500
-    ws.col(6).width = 3500
+    ws.col(6).width = 2500
     ws.col(7).width = 2500
     ws.col(8).width = 3500
     ws.col(9).width = 3500
-    ws.col(10).width = 4500
-    ws.col(11).width = 500
+    ws.col(10).width = 3500
+    ws.col(11).width = 300
 
 
     # переменные
