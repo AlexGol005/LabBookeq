@@ -4,7 +4,7 @@
 Данный модуль exel_agreements.py выводит представления для выгрузки заявок на поверку по формам разных компаний-поверителей в формате exel.
 """
 
-
+from itertools import chain
 import xlwt
 import pytils.translit
 from datetime import date
@@ -232,9 +232,10 @@ def export_orderverification_1_xls(request, object_ids):
     # конец стандартной шапки
 
     # данные
-    rows = note.values_list('measurequipment__charakters__name')|note.values_list('testingequipment__charakters__name',)
+    rows1 = note.values_list('measurequipment__charakters__name')
    
-    rows1 = note.values_list('testingequipment__charakters__name',)
+    rows2 = note.values_list('testingequipment__charakters__name',)
+    rows = chain(rows1, rows2)
     
     # ширина колонок и их количество
     len_sheet = 12
