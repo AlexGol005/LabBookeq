@@ -232,8 +232,7 @@ def export_orderverification_1_xls(request, object_ids):
     # конец стандартной шапки
 
     # данные
-    rows = note.values_list('measurequipment__characters__name', )|note.values_list('testingequipment__characters__name', )
-
+    rows = note.values_list('measurequipment__characters__name', )
     # ширина колонок и их количество
     len_sheet = 12
     ws.col(0).width = 500
