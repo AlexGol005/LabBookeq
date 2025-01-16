@@ -74,7 +74,7 @@ style_plain_border.alignment = acc
 style_plain_border.font.height = 20 * size
 
 
-style_bold_borders.font.bold = True
+
 # style_plain_noborder обычные ячейки, без границ
 style_plain_noborder = xlwt.XFStyle()
 style_plain_noborder.font.name = 'Times New Roman'
