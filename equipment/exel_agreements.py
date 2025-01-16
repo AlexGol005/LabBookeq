@@ -272,14 +272,14 @@ def export_orderverification_1_xls(request, object_ids):
     row_num += 1
     columns = [f'{verificator_head_position}'
     ]
-    for col_num in range(len(columns))):
+    for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style_right_noborder)
         ws.merge(row_num, row_num, len_sheet-3, len_sheet)
 
     row_num += 1
     columns = [f'{verificator_companyName}'
     ]
-    for col_num in range(len(columns))):
+    for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style_right_noborder)
         ws.merge(row_num, row_num, len_sheet-3, len_sheet)
 
