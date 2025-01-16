@@ -229,16 +229,16 @@ def export_orderverification_1_xls(request, object_ids):
     # ширина колонок и их количество
     len_sheet = 11
     ws.col(0).width = 500
-    ws.col(1).width = 2000
-    ws.col(2).width = 2000
-    ws.col(3).width = 3000
-    ws.col(4).width = 2000
-    ws.col(5).width = 2000
-    ws.col(6).width = 2000
-    ws.col(7).width = 2000
-    ws.col(8).width = 2000
-    ws.col(9).width = 1500
-    ws.col(10).width = 1500
+    ws.col(1).width = 3000
+    ws.col(2).width = 3000
+    ws.col(3).width = 4500
+    ws.col(4).width = 4500
+    ws.col(5).width = 3000
+    ws.col(6).width = 3000
+    ws.col(7).width = 3000
+    ws.col(8).width = 3000
+    ws.col(9).width = 3000
+    ws.col(10).width = 3000
     ws.col(11).width = 500
 
     # переменные
@@ -253,14 +253,14 @@ def export_orderverification_1_xls(request, object_ids):
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style_plain_noborder)
-        ws.merge(row_num, row_num, 0, len_sheet)
+        ws.merge(row_num, row_num, 1, len_sheet)
 
     row_num += 1
     columns = [f'на выполнение работ (оказание услуг) по поверке (калибровке) СИ, аттестации ИО и иных работ (услуг) в области обеспечения единства'
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style_plain_noborder)
-        ws.merge(row_num, row_num, 0, len_sheet)
+        ws.merge(row_num, row_num, 1, len_sheet)
 
     row_num += 1
     columns = [f'измерений'
@@ -270,10 +270,19 @@ def export_orderverification_1_xls(request, object_ids):
         ws.merge(row_num, row_num, 0, len_sheet)
 
     row_num += 1
-    columns = [f'{verificator_head_position}'
+    columns = [f'{verificator_head_position}',
+               f'{verificator_head_position}',
+               f'{verificator_head_position}',
+               f'{verificator_head_position}',
+               f'{verificator_head_position}',
+               f'{verificator_head_position}',
+               f'{verificator_head_position}',
+               f'{verificator_head_position}',
+               f'{verificator_head_position}',
+               f'{verificator_head_position}',
     ]
     for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style_right_noborder)
+        ws.write(row_num, col_num+len_sheet, columns[col_num], style_right_noborder)
         ws.merge(row_num, row_num, len_sheet-3, len_sheet)
 
     row_num += 1
