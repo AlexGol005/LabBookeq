@@ -427,7 +427,7 @@ def export_orderverification_1_xls(request, object_ids):
         for row_num in range(16, a + 1):
             ws.write(row_num, col_num+1, f'{row_num - 15}', style_plain_border)
 
-    row_num += 1
+    row_num += 2
     columns = [f'{urgency}'
     ]
     ws.write(row_num, 1, columns[0], style_left_noborder)
