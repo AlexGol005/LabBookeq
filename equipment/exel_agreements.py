@@ -236,17 +236,17 @@ def export_orderverification_1_xls(request, object_ids):
     # ширина колонок и их количество
     len_sheet = 11
     ws.col(0).width = 500
-    ws.col(1).width = 3000
-    ws.col(2).width = 3000
-    ws.col(3).width = 4500
-    ws.col(4).width = 4500
-    ws.col(5).width = 3000
-    ws.col(6).width = 3000
-    ws.col(7).width = 3000
-    ws.col(8).width = 3000
-    ws.col(9).width = 3000
-    ws.col(10).width = 3000
-    ws.col(11).width = 500
+    ws.col(1).width = 2000
+    ws.col(2).width = 3500
+    ws.col(3).width = 5000
+    ws.col(4).width = 5000
+    ws.col(5).width = 3500
+    ws.col(6).width = 3500
+    ws.col(7).width = 3500
+    ws.col(8).width = 3500
+    ws.col(9).width = 3500
+    ws.col(10).width = 500
+
 
     # переменные
     one = f'Заявка'
@@ -270,7 +270,7 @@ def export_orderverification_1_xls(request, object_ids):
                      'Год выпуска',
                      'Кол-во СИ (ИО)',
                      'Примечание (поверка/калибровка)',
-                     'Эталон/Разряд/Рег. № ФИФ (указывается для эталонов)'
+                     'Эталон/Разряд/Рег. № ФИФ (указывается для эталонов)',
                      'Владелец (если отличается от заявителя)'
                     ]
 
@@ -360,7 +360,7 @@ def export_orderverification_1_xls(request, object_ids):
          ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border)
 
 
-    
+    row_num += 1
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
