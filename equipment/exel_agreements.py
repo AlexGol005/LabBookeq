@@ -232,7 +232,39 @@ def export_orderverification_1_xls(request, object_ids):
     # конец стандартной шапки
 
     # данные
-    rows = MeasurEquipment.objects.filter(equipment__pk__in=q).values_list('equipment__exnumber',)
+    rows1 = MeasurEquipment.objects.filter(equipment__pk__in=q).\
+    annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),\
+             num=Concat(Value('1'),\
+             note=Concat(Value('поверка'),\
+             cod1=Concat(Value(''),)
+    values_list(
+        'charakters__reestr',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipment__yearmanuf',
+        'num',
+        'note',
+        'cod1',
+        'cod1',
+    )
+    rows2 = TestingEquipment.objects.filter(equipment__pk__in=q).\
+    annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),\
+             num=Concat(Value('1'),\
+             note=Concat(Value('поверка'),\
+             cod1=Concat(Value(''),)
+    values_list(
+        'cod1',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipment__yearmanuf',
+        'num',
+        'note',
+        'cod1',
+        'cod1',
+    )
+
 
  
     
@@ -281,7 +313,19 @@ def export_orderverification_1_xls(request, object_ids):
                      'Эталон/Разряд/Рег. № ФИФ (указывается для эталонов)',
                      'Владелец (если отличается от заявителя)'
                     ]
+    urgency = 'Срочность:	нет	☑	1 день	⬜	3 дня	⬜	5 дней	⬜'
+    req = 'Реквизиты организации '
+    cname =f'- полное и сокращенное наименование предприятия Заказчика: {company.name_big} ({company.name}) '
+    inn_kpp = f'- {company.requisits}'
+    contact_person = f'- Контактное лицо: {company.manager_name}'
+    contact_phone = f'Контактный телефон: {company.manager_phone}'
+    contact_email = f'Эл. почта: {company.manager_email}'
+    signature = f'{company.head_position}__________________________________________{company.head_name}'
+        
 
+
+
+        
     
     row_num = 1
     columns = [f'{one}'
@@ -367,12 +411,67 @@ def export_orderverification_1_xls(request, object_ids):
     for col_num in range(len(table_headers)):
          ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border)
 
-
     row_num += 1
-    for row in rows:
+    for row in rows1:
         row_num += 1
         for col_num in range(len(row)):
             ws.write(row_num, 2, row[col_num], style_plain_border)
+           
+    row_num += 1
+    for row in rows2:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, 2, row[col_num], style_plain_border)
+
+    row_num += 1
+    columns = [f'{urgency}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{req}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{cname}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{inn_kpp}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{contact_person}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{contact_phone}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{contact_email}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{signature}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+                                  
+        
     wb.save(response)
     return response
 
