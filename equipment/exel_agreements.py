@@ -232,7 +232,7 @@ def export_orderverification_1_xls(request, object_ids):
     # конец стандартной шапки
 
     # данные
-    rows = MeasurEquipment.filter(equipment__pk__in=q).values_list('equipment__exnumber',)
+    rows = MeasurEquipment.objects.filter(equipment__pk__in=q).values_list('equipment__exnumber',)
 
  
     
