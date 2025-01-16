@@ -244,7 +244,7 @@ def export_orderverification_1_xls(request, object_ids):
     row_num = 1
     columns = [f'Заявка'
     ]
-    ws.write(row_num, 1, columns[1], style_plain_noborder)
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
     ws.merge(row_num, row_num, 1, len_sheet)
 
     row_num += 1
