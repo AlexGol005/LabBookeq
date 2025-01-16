@@ -5082,7 +5082,7 @@ def export_me_xls(request):
         ws1.write(row_num, col_num, columns[col_num], style10)
 
     rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid)
-    rows = rows.annotate(mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname', exnumber=Substr('equipment__exnumber',1,5)),
+    rows = rows.annotate(exnumber=Substr('equipment__exnumber',1,5), mod_type=Concat('charakters__typename', Value(' '), 'charakters__modificname', 
                  manuf_country=Concat('equipment__manufacturer__country', Value(', '),
                                       'equipment__manufacturer__companyName')). \
         filter(equipment__roomschange__in=setroom). \
