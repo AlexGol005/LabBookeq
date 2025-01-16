@@ -263,28 +263,28 @@ def export_orderverification_1_xls(request, object_ids):
     columns = [f'{verificator_head_position}',
     ]
     ws.write(row_num, len_sheet-4, columns[0], style_right_noborder)
-    ws.merge(row_num, row_num, len_sheet-4, len_sheet)
+    ws.merge(row_num, row_num, len_sheet-4, len_sheet-1)
 
     row_num += 1
     columns = [f'{verificator_companyName}'
     ]
     ws.write(row_num, len_sheet-4, columns[0], style_right_noborder)
-    ws.merge(row_num, row_num, len_sheet-4, len_sheet)
+    ws.merge(row_num, row_num, len_sheet-4, len_sheet-1)
 
     row_num += 1
     columns = [f'{verificator_head_name}'
     ]
     ws.write(row_num, len_sheet-4, columns[0], style_right_noborder)
-    ws.merge(row_num, row_num, len_sheet-4, len_sheet)
+    ws.merge(row_num, row_num, len_sheet-4, len_sheet-1)
 
     row_num += 2
     columns = [f'{outgoing_number}',
                f'{customer_card_number}',               
     ]
-    ws.write(row_num, 0, columns[0], style_left_noborder)
+    ws.write(row_num, 1, columns[0], style_left_noborder)
     ws.merge(row_num, row_num, 0, 5)
     ws.write(row_num, len_sheet-4, columns[1], style_right_noborder)
-    ws.merge(row_num, row_num, len_sheet-4, len_sheet)
+    ws.merge(row_num, row_num, len_sheet-4, len_sheet-1)
         
 
 
