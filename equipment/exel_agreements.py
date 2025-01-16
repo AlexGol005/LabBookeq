@@ -73,11 +73,20 @@ style_plain_border.borders = b1
 style_plain_border.alignment = acc
 style_plain_border.font.height = 20 * size
 
+
+style_bold_borders.font.bold = True
 # style_plain_noborder обычные ячейки, без границ
 style_plain_noborder = xlwt.XFStyle()
 style_plain_noborder.font.name = 'Times New Roman'
 style_plain_noborder.alignment = acc
 style_plain_noborder.font.height = 20 * size
+
+# style_plain_noborder обычные ячейки, без границ, жирный шрифт
+style_plain_noborder_bold = xlwt.XFStyle()
+style_plain_noborder_bold.font.name = 'Times New Roman'
+style_plain_noborder_bold.alignment = acc
+style_plain_noborder_bold.font.height = 20 * size
+style_plain_noborder_bold.font.bold = True
 
 # style_right_noborder обычные ячейки, без границ, выравнивание по правому краю
 style_right_noborder = xlwt.XFStyle()
@@ -240,23 +249,25 @@ def export_orderverification_1_xls(request, object_ids):
     verificator_head_name = a.aqq.verificator.head_name 
     outgoing_number = f'Исх. № {nnow} от {gnow}'
     customer_card_number = f'№ учетной карточки {a.aqq.ver_agreement_card}'
+    contract_request = f'Просим провести периодическую, первичную, после ремонта (нужное подчеркнуть) поверку / калибровку СИ, аттестацию ИО и иных работ (услуг) '
+    f'в области обеспечения единства измерений в соответствии с договором (гос. контрактом) № {a.aqq.ver_agreement_number} от {a.aqq.ver_agreement_date}.'
     
     row_num = 1
     columns = [f'Заявка'
     ]
-    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.write(row_num, 1, columns[0], style_plain_noborder_bold)
     ws.merge(row_num, row_num, 1, len_sheet-1)
 
     row_num += 1
     columns = [f'на выполнение работ (оказание услуг) по поверке (калибровке) СИ, аттестации ИО и иных работ (услуг) в области обеспечения единства'
     ]
-    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.write(row_num, 1, columns[0], style_plain_noborder_bold)
     ws.merge(row_num, row_num, 1, len_sheet-1)
 
     row_num += 1
     columns = [f'измерений'
     ]
-    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.write(row_num, 1, columns[0], style_plain_noborder_bold)
     ws.merge(row_num, row_num, 1, len_sheet-1)
 
     row_num += 1
@@ -285,6 +296,14 @@ def export_orderverification_1_xls(request, object_ids):
     ws.merge(row_num, row_num, 1, 4)
     ws.write(row_num, len_sheet-4, columns[1], style_right_noborder)
     ws.merge(row_num, row_num, len_sheet-4, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{contract_request}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 1000
         
 
 
