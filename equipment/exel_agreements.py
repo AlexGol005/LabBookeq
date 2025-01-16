@@ -72,10 +72,10 @@ style_plain_noborder.alignment = a1
 style_plain_noborder.font.height = 20 * size
 
 # style_right_noborder обычные ячейки, без границ, выравнивание по правому краю
-style_plain_noborder = xlwt.XFStyle()
-style_plain_noborder.font.name = 'Times New Roman'
-style_plain_noborder.alignment = a2
-style_plain_noborder.font.height = 20 * size
+style_right_noborder = xlwt.XFStyle()
+style_right_noborder.font.name = 'Times New Roman'
+style_right_noborder.alignment = a2
+style_right_noborder.font.height = 20 * size
 
 
 def export_orderverification_template_xls(object_ids):
