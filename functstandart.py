@@ -121,7 +121,7 @@ def get_dateformat_to_number(date):
     day = dateformat[8:]
     month = dateformat[5:7]
     year = dateformat[2:4]
-    rdate = f'{year}.{month}.{day}01'
+    rdate = f'{year}{month}{day}01'
     return rdate
 
 def get_round_signif_digit(x_avg: Decimal, numdig: int) -> Decimal:
