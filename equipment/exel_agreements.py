@@ -234,9 +234,9 @@ def export_orderverification_1_xls(request, object_ids):
     # данные
     rows1 = MeasurEquipment.objects.filter(equipment__pk__in=q).\
     annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),\
-             num=Concat(Value('1'),\
-             note=Concat(Value('поверка'),\
-             cod1=Concat(Value(''),).\
+             num=Value('1'),\
+             note=Value('поверка'),\
+             cod1=Value(''),).\
     values_list(
         'charakters__reestr',
         'charakters__name',
@@ -249,6 +249,22 @@ def export_orderverification_1_xls(request, object_ids):
         'cod1',
     )
                          
+    rows2 = TestingEquipment.objects.filter(equipment__pk__in=q).\
+    annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),\
+             num=Value('1'),\
+             note=Value('поверка'),\
+             cod1=Value(''),).\
+    values_list(
+        'cod1',
+        'charakters__name',
+        'mod_type',
+        'equipment__lot',
+        'equipment__yearmanuf',
+        'num',
+        'note',
+        'cod1',
+        'cod1',
+    )
 
 
  
