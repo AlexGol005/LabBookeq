@@ -231,7 +231,22 @@ def export_orderverification_1_xls(request, object_ids):
         note = Equipment.objects.filter(id=1)      
     # конец стандартной шапки
 
-    # данные
+    # ширина колонок и их количество
+    len_sheet = 12
+    ws.col(0).width = 300
+    ws.col(1).width = 2000
+    ws.col(2).width = 3500
+    ws.col(3).width = 5000
+    ws.col(4).width = 4500
+    ws.col(5).width = 3500
+    ws.col(6).width = 2500
+    ws.col(7).width = 2500
+    ws.col(8).width = 3500
+    ws.col(9).width = 3500
+    ws.col(10).width = 3500
+    ws.col(11).width = 300
+
+        # данные
     rows1 = MeasurEquipment.objects.filter(equipment__pk__in=q).\
     annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),\
              num=Value('1'),\
@@ -266,24 +281,7 @@ def export_orderverification_1_xls(request, object_ids):
         'cod1',
     )
 
-
- 
     
-    # ширина колонок и их количество
-    len_sheet = 12
-    ws.col(0).width = 300
-    ws.col(1).width = 2000
-    ws.col(2).width = 3500
-    ws.col(3).width = 5000
-    ws.col(4).width = 4500
-    ws.col(5).width = 3500
-    ws.col(6).width = 2500
-    ws.col(7).width = 2500
-    ws.col(8).width = 3500
-    ws.col(9).width = 3500
-    ws.col(10).width = 3500
-    ws.col(11).width = 300
-
 
     # переменные
     one = f'Заявка'
@@ -322,12 +320,7 @@ def export_orderverification_1_xls(request, object_ids):
     contact_phone = f'Контактный телефон: {company.manager_phone}'
     contact_email = f'Эл. почта: {company.manager_email}'
     signature = f'{company.direktor_position}__________________________________________{company.direktor_name}'
-        
-
-
-
-        
-    
+            
     row_num = 1
     columns = [f'{one}'
     ]
@@ -473,8 +466,7 @@ def export_orderverification_1_xls(request, object_ids):
     columns = [f'{signature}'
     ]
     ws.write(row_num, 1, columns[0], style_plain_noborder)
-    ws.merge(row_num, row_num, 1, len_sheet-1)
-                                  
+    ws.merge(row_num, row_num, 1, len_sheet-1)                                
         
     wb.save(response)
     return response
@@ -500,30 +492,235 @@ def export_orderverification_9_xls(request, object_ids):
     try:
         note = Equipment.objects.filter(id__in=q)
     except:
-        note = Equipment.objects.filter(id=1)
-    rows = note.values_list(
-        'pk', )
+        note = Equipment.objects.filter(id=1)      
     # конец стандартной шапки
-    
-    # ширина колонок и их количество
-    len_sheet = 11
-    ws.col(0).width = 500
-    ws.col(1).width = 500
-    ws.col(2).width = 500
-    ws.col(3).width = 3000
-    ws.col(4).width = 2000
-    ws.col(5).width = 500
-    ws.col(6).width = 500
-    ws.col(7).width = 500
-    ws.col(8).width = 2000
-    ws.col(9).width = 1500
-    ws.col(10).width = 1500
-    ws.col(11).width = 500
 
+    # ширина колонок и их количество
+    len_sheet = 18
+    ws.col(0).width = 300
+    ws.col(1).width = 2000
+    ws.col(2).width = 3500
+    ws.col(3).width = 5000
+    ws.col(4).width = 4500
+    ws.col(5).width = 3500
+    ws.col(6).width = 2500
+    ws.col(7).width = 2500
+    ws.col(8).width = 3500
+    ws.col(9).width = 3500
+    ws.col(10).width = 3500
+    ws.col(11).width = 3500
+    ws.col(12).width = 3500
+    ws.col(13).width = 3500
+    ws.col(14).width = 3500
+    ws.col(15).width = 3500
+    ws.col(16).width = 3500
+    ws.col(17).width = 3500
+    ws.col(18).width = 300
+
+    # данные
+    rows1 = MeasurEquipment.objects.filter(equipment__pk__in=q).\
+    annotate(name_mod_type=Concat('charakters__name', 'charakters__typename', Value('/ '), 'charakters__modificname'),\
+             exnumber_short=Substr('equipment__exnumber',1,5),\
+             num=Value('1'),\
+             note=Value('поверка'),\
+             cod1=Value(''),).\
+             pr1=Value('ПР'),).\
+             sv1=Value('да'),).\
+             period1=Value('месяц'),).\
+    values_list(
+        'name_mod_type'
+        'equipment__yearmanuf',
+        'charakters__reestr',
+        'equipment__lot',
+        'exnumber_short',
+        'cod1',
+        'cod1',
+        'pr1',
+        'cod1',
+        'sv1',
+        'sv1',
+        'period1',
+        'cod1',
+        'cod1',
+    )
+                         
+    rows2 = TestingEquipment.objects.filter(equipment__pk__in=q).\
+    annotate(name_mod_type=Concat('charakters__name', 'charakters__typename', Value('/ '), 'charakters__modificname'),\
+             exnumber_short=Substr('equipment__exnumber',1,5),\
+             num=Value('1'),\
+             note=Value('поверка'),\
+             cod1=Value(''),).\
+             pr1=Value('ПР'),).\
+             sv1=Value('да'),).\
+             period1=Value('месяц'),).\
+    values_list(
+        'name_mod_type'
+        'equipment__yearmanuf',
+        'cod1',
+        'equipment__lot',
+        'exnumber_short',
+        'cod1',
+        'cod1',
+        'pr1',
+        'cod1',
+        'sv1',
+        'sv1',
+        'period1',
+        'cod1',
+        'cod1',
+    )
+
+    
+
+    # переменные
+    one = f'Заявка на проведение работ (оказание услуг) по поверке СИ'
+    two = f'на выполнение работ (оказание услуг) по поверке (калибровке) СИ, аттестации ИО и иных работ (услуг) в области обеспечения единства'
+    three = f'измерений'
+    verificator_head_position = a.aqq.verificator.head_position
+    verificator_companyName  = a.aqq.verificator.companyName 
+    verificator_head_name = a.aqq.verificator.head_name 
+    outgoing_number = f'Исх. № {nnow} от {gnow}'
+    customer_card_number = f'№ учетной карточки {a.aqq.ver_agreement_card}'
+    contract_request = f'Просим провести периодическую, первичную, после ремонта (нужное подчеркнуть) поверку / калибровку СИ, аттестацию ИО и иных работ (услуг) '\
+    f'в области обеспечения единства измерений в соответствии с договором (гос. контрактом) № {a.aqq.ver_agreement_number} от {a.aqq.ver_agreement_date}.'
+    payment_number = f'Если оплата была по предварительному счету обязательно указать номер счета и дату или номер платежного поручения________________________________'
+    agree = f'Согласие на передачу ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
+    if a.aqq.public_agree:
+        yesno = f'ДА   ☑     	НЕТ  ⬜'
+    else:
+        yesno = f'ДА    ⬜     	НЕТ ☑'
+    dop_agree = f'Если заказчик не является владельцем СИ, Заказчик заявляет о получении согласия от владельца СИ на передачу  ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
+    table_headers = ['№ П/П',
+                     '№ гос.реестра', 
+                     'Наименование СИ (ИО), иных работ (услуг) в области обеспечения единства измерений', 
+                     'Тип СИ (ИО) Модификация (класс точности, диапазон измерений, количество каналов или количество штук в наборе)',
+                     'Заводской (инвентарный) номер',
+                     'Год выпуска',
+                     'Кол-во СИ (ИО)',
+                     'Примечание (поверка/калибровка)',
+                     'Эталон/Разряд/Рег. № ФИФ (указывается для эталонов)',
+                     'Владелец (если отличается от заявителя)'
+                    ]
+    urgency = 'Срочность:	нет	☑	1 день	⬜	3 дня	⬜	5 дней	⬜'
+    req = 'Реквизиты организации '
+    cname =f'- полное и сокращенное наименование предприятия Заказчика: {company.name_big} ({company.name}) '
+    inn_kpp = f'- {company.requisits}'
+    contact_person = f'- Контактное лицо: {company.manager_name}'
+    contact_phone = f'Контактный телефон: {company.manager_phone}'
+    contact_email = f'Эл. почта: {company.manager_email}'
+    signature = f'{company.direktor_position}__________________________________________{company.direktor_name}'
+            
     row_num = 1
-    for row in rows:
+    columns = [f'{one}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder_bold)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'В {verificator_companyName}'
+    ]
+    ws.write(row_num, len_sheet-4, columns[0], style_right_noborder)
+    ws.merge(row_num, row_num, len_sheet-4, len_sheet-1)
+
+    row_num += 2
+    columns = [f'{outgoing_number}',
+               f'От кого: {company.name}',               
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, 4)
+    ws.write(row_num, len_sheet-4, columns[1], style_right_noborder)
+    ws.merge(row_num, row_num, len_sheet-4, len_sheet-1)
+
+    row_num += 1
+    columns = [f'Адрес места проведения работ по поверке (в случае выездной поверки): {company.adress_lab}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 800
+
+
+    row_num += 1
+    columns = [f'Соглашение на передачу сведений о владельце СИ в ФИФ по ОЕИ {yesno}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+
+    row_num += 1
+    columns = [f'{dop_agree}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 800
+    
+    row_num += 1
+    for col_num in range(len(table_headers)):
+         ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border)
+
+
+    for row in rows1:
         row_num += 1
         for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], style_plain_border)
+            ws.write(row_num, col_num + 2, row[col_num], style_plain_border)
+    for row in rows2:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num + 2, row[col_num], style_plain_border)
+            
+    a = row_num
+    for col_num in range(1):
+        for row_num in range(16, a + 1):
+            ws.write(row_num, col_num+1, f'{row_num - 15}', style_plain_border)
+
+    row_num += 2
+    columns = [f'{urgency}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 2
+    columns = [f'{req}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{cname}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{inn_kpp}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{contact_person}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{contact_phone}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{contact_email}'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 2
+    columns = [f'{signature}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)                                
+        
     wb.save(response)
     return response
