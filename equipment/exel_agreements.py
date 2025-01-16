@@ -140,12 +140,12 @@ def export_orderverification_xls(request, object_ids):
     ws.col(0).width = 500
     ws.col(1).width = 500
     ws.col(2).width = 500
-    ws.col(3).width = 3000
-    ws.col(4).width = 2000
+    ws.col(3).width = 4000
+    ws.col(4).width = 4000
     ws.col(5).width = 500
     ws.col(6).width = 500
     ws.col(7).width = 500
-    ws.col(8).width = 2000
+    ws.col(8).width = 8000
     ws.col(9).width = 1500
     ws.col(10).width = 1500
     ws.col(11).width = 500
@@ -263,7 +263,16 @@ def export_orderverification_1_xls(request, object_ids):
     agree = f'Согласие на передачу ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
     yesno = f'ДА   ▭     	НЕТ ▭'
     dop_agree = f'Если заказчик не является владельцем СИ, Заказчик заявляет о получении согласия от владельца СИ на передачу  ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
-
+    table_headers = ['№ П/П	№ гос.реестра', 
+                     'Наименование СИ (ИО), иных работ (услуг) в области обеспечения единства измерений', 
+                     'Тип СИ (ИО) Модификация (класс точности, диапазон измерений, количество каналов или количество штук в наборе)',
+                     'Заводской (инвентарный) номер',
+                     'Год выпуска',
+                     'Кол-во СИ (ИО)',
+                     'Примечание (поверка/калибровка),
+                     'Эталон/Разряд/Рег. № ФИФ (указывается для эталонов)'
+                     'Владелец (если отличается от заявителя)'
+                    ]
 
     
     row_num = 1
@@ -337,6 +346,7 @@ def export_orderverification_1_xls(request, object_ids):
     ws.write(row_num, 1, columns[0], style_plain_noborder)
     ws.merge(row_num, row_num, 1, len_sheet-1)
 
+
     row_num += 1
     columns = [f'{dop_agree}'
     ]
@@ -344,8 +354,10 @@ def export_orderverification_1_xls(request, object_ids):
     ws.merge(row_num, row_num, 1, len_sheet-1)
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 800
-
-        
+    
+    row_num += 1
+    for col_num in range(len(table_headers)):
+         ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border)
 
 
     
