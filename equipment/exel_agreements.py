@@ -73,20 +73,25 @@ style_plain_border.borders = b1
 style_plain_border.alignment = acc
 style_plain_border.font.height = 20 * size
 
-
-
 # style_plain_noborder обычные ячейки, без границ
 style_plain_noborder = xlwt.XFStyle()
 style_plain_noborder.font.name = 'Times New Roman'
 style_plain_noborder.alignment = acc
 style_plain_noborder.font.height = 20 * size
 
-# style_plain_noborder обычные ячейки, без границ, жирный шрифт
+# style_plain_noborder_bold обычные ячейки, без границ, жирный шрифт
 style_plain_noborder_bold = xlwt.XFStyle()
 style_plain_noborder_bold.font.name = 'Times New Roman'
 style_plain_noborder_bold.alignment = acc
 style_plain_noborder_bold.font.height = 20 * size
 style_plain_noborder_bold.font.bold = True
+
+# style_plain_noborder_italic обычные ячейки, без границ, курсив
+style_plain_noborder_italic = xlwt.XFStyle()
+style_plain_noborder_italic.font.name = 'Times New Roman'
+style_plain_noborder_italic.alignment = acc
+style_plain_noborder_italic.font.height = 20 * size
+style_plain_noborder_italic.font.italic = True
 
 # style_right_noborder обычные ячейки, без границ, выравнивание по правому краю
 style_right_noborder = xlwt.XFStyle()
@@ -244,6 +249,9 @@ def export_orderverification_1_xls(request, object_ids):
     ws.col(11).width = 500
 
     # переменные
+    one = f'Заявка'
+    two = f'на выполнение работ (оказание услуг) по поверке (калибровке) СИ, аттестации ИО и иных работ (услуг) в области обеспечения единства'
+    three = f'измерений'
     verificator_head_position = a.aqq.verificator.head_position
     verificator_companyName  = a.aqq.verificator.companyName 
     verificator_head_name = a.aqq.verificator.head_name 
@@ -251,21 +259,27 @@ def export_orderverification_1_xls(request, object_ids):
     customer_card_number = f'№ учетной карточки {a.aqq.ver_agreement_card}'
     contract_request = f'Просим провести периодическую, первичную, после ремонта (нужное подчеркнуть) поверку / калибровку СИ, аттестацию ИО и иных работ (услуг) '\
     f'в области обеспечения единства измерений в соответствии с договором (гос. контрактом) № {a.aqq.ver_agreement_number} от {a.aqq.ver_agreement_date}.'
+    payment_number = f'Если оплата была по предварительному счету обязательно указать номер счета и дату или номер платежного поручения________________________________'
+    agree = f'Согласие на передачу ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
+    yesno = f'ДА   ▭     	НЕТ ▭'
+    dop_agree = f'Если заказчик не является владельцем СИ, Заказчик заявляет о получении согласия от владельца СИ на передачу  ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
+
+
     
     row_num = 1
-    columns = [f'Заявка'
+    columns = [f'{one}'
     ]
     ws.write(row_num, 1, columns[0], style_plain_noborder_bold)
     ws.merge(row_num, row_num, 1, len_sheet-1)
 
     row_num += 1
-    columns = [f'на выполнение работ (оказание услуг) по поверке (калибровке) СИ, аттестации ИО и иных работ (услуг) в области обеспечения единства'
+    columns = [f'{two}'
     ]
     ws.write(row_num, 1, columns[0], style_plain_noborder_bold)
     ws.merge(row_num, row_num, 1, len_sheet-1)
 
     row_num += 1
-    columns = [f'измерений'
+    columns = [f'{three}'
     ]
     ws.write(row_num, 1, columns[0], style_plain_noborder_bold)
     ws.merge(row_num, row_num, 1, len_sheet-1)
@@ -303,7 +317,34 @@ def export_orderverification_1_xls(request, object_ids):
     ws.write(row_num, 1, columns[0], style_plain_noborder)
     ws.merge(row_num, row_num, 1, len_sheet-1)
     ws.row(row_num).height_mismatch = True
-    ws.row(row_num).height = 1000
+    ws.row(row_num).height = 800
+
+    row_num += 1
+    columns = [f'{payment_number}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder_italic)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 2
+    columns = [f'{agree}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder_bold)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{yesno}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
+    row_num += 1
+    columns = [f'{dop_agree}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 800
+
         
 
 
