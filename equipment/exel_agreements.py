@@ -228,11 +228,12 @@ def export_orderverification_1_xls(request, object_ids):
     try:
         note = Equipment.objects.filter(id__in=q)
     except:
-        note = Equipment.objects.filter(id=1)
-    rows = note.values_list(
-        'pk', )
+        note = Equipment.objects.filter(id=1)      
     # конец стандартной шапки
-    
+
+    # данные
+    rows = note.values_list('measurequipment__characters__name', )|note.values_list('testingequipment__characters__name', )
+
     # ширина колонок и их количество
     len_sheet = 12
     ws.col(0).width = 500
@@ -262,7 +263,10 @@ def export_orderverification_1_xls(request, object_ids):
     f'в области обеспечения единства измерений в соответствии с договором (гос. контрактом) № {a.aqq.ver_agreement_number} от {a.aqq.ver_agreement_date}.'
     payment_number = f'Если оплата была по предварительному счету обязательно указать номер счета и дату или номер платежного поручения________________________________'
     agree = f'Согласие на передачу ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
-    yesno = f'ДА   ▭     	НЕТ ▭'
+    if a.aqq.public_agree:
+        yesno = f'ДА   ☑     	НЕТ  ⬜'
+    else:
+        yesno = f'ДА    ⬜     	НЕТ ☑
     dop_agree = f'Если заказчик не является владельцем СИ, Заказчик заявляет о получении согласия от владельца СИ на передачу  ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
     table_headers = ['№ П/П',
                      '№ гос.реестра', 
@@ -366,7 +370,7 @@ def export_orderverification_1_xls(request, object_ids):
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], style_plain_border)
+            ws.write(row_num, 2, row[col_num], style_plain_border)
     wb.save(response)
     return response
 
