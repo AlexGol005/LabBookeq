@@ -96,11 +96,6 @@ def export_orderverification_template_xls(object_ids):
     pass
 
 
-
-
-
-
-
 def export_orderverification_xls(request, object_ids):
     '''Поверитель: base если нет специальной формы для данного поверителя и прочие исключения'''
     ruser = request.user.profile.userid
@@ -150,7 +145,6 @@ def export_orderverification_xls(request, object_ids):
     return response
 
 
-
 def export_orderverification_14_xls(request, object_ids):
     '''Поверитель: не указан'''
     ruser = request.user.profile.userid
@@ -198,7 +192,6 @@ def export_orderverification_14_xls(request, object_ids):
             ws.write(row_num, col_num, row[col_num], style_plain_border)
     wb.save(response)
     return response
-
 
 
 def export_orderverification_1_xls(request, object_ids):
@@ -251,16 +244,15 @@ def export_orderverification_1_xls(request, object_ids):
     row_num = 1
     columns = [f'Заявка'
     ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style_plain_noborder)
-        ws.merge(row_num, row_num, 1, len_sheet)
+    ws.write(row_num, 1, columns[1], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet)
 
     row_num += 1
     columns = [f'на выполнение работ (оказание услуг) по поверке (калибровке) СИ, аттестации ИО и иных работ (услуг) в области обеспечения единства'
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style_plain_noborder)
-        ws.merge(row_num, row_num, 1, len_sheet)
+        ws.merge(row_num, row_num, 0, len_sheet)
 
     row_num += 1
     columns = [f'измерений'
