@@ -528,7 +528,7 @@ def export_orderverification_9_xls(request, object_ids):
              sv1=Value('да'),\
              period1=Value('месяц')).\
     values_list(
-        'name_mod_type'
+        'name_mod_type',
         'equipment__yearmanuf',
         'charakters__reestr',
         'equipment__lot',
@@ -554,7 +554,7 @@ def export_orderverification_9_xls(request, object_ids):
              sv1=Value('да'),\
              period1=Value('месяц')).\
     values_list(
-        'name_mod_type'
+        'name_mod_type',
         'equipment__yearmanuf',
         'cod1',
         'equipment__lot',
