@@ -79,7 +79,7 @@ def export_orderverification_xls(request, object_ids):
     except:
         exelnumber = 'list_equipment'
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="base.xls"'
+    response['Content-Disposition'] = f'attachment; filename={exelnumber}'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
     q = object_ids[17:-3].split("', '")
@@ -110,7 +110,7 @@ def export_orderverification_14_xls(request, object_ids):
     except:
         exelnumber = 'list_equipment'
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="base.xls"'
+    response['Content-Disposition'] = f'attachment; filename={exelnumber}'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
     q = object_ids[17:-3].split("', '")
@@ -141,7 +141,7 @@ def export_orderverification_1_xls(request, object_ids):
     except:
         exelnumber = 'list_equipment'
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="base.xls"'
+    response['Content-Disposition'] = f'attachment; filename={exelnumber}'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
     q = object_ids[17:-3].split("', '")
@@ -171,7 +171,7 @@ def export_orderverification_9_xls(request, object_ids):
     except:
         exelnumber = 'list_equipment'
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="base.xls"'
+    response['Content-Disposition'] = f'attachment; filename={exelnumber}'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
     q = object_ids[17:-3].split("', '")
