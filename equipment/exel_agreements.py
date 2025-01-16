@@ -232,8 +232,8 @@ def export_orderverification_1_xls(request, object_ids):
     # конец стандартной шапки
 
     # данные
-    rows = note.filter('measurequipment__pk')
-    # rows = note.values('measurequipment__charakters__name')|note.values('testingequipment__charakters__name',)
+    rows = MeasurEquipment.filter(equipment__pk__in=q).values_list('equipment__exnumber',)
+
  
     
     # ширина колонок и их количество
