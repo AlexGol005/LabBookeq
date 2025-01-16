@@ -266,7 +266,7 @@ def export_orderverification_1_xls(request, object_ids):
     if a.aqq.public_agree:
         yesno = f'ДА   ☑     	НЕТ  ⬜'
     else:
-        yesno = f'ДА    ⬜     	НЕТ ☑
+        yesno = f'ДА    ⬜     	НЕТ ☑'
     dop_agree = f'Если заказчик не является владельцем СИ, Заказчик заявляет о получении согласия от владельца СИ на передачу  ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
     table_headers = ['№ П/П',
                      '№ гос.реестра', 
