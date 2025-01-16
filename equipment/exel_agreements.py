@@ -244,7 +244,7 @@ def export_orderverification_1_xls(request, object_ids):
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style_plain_noborder)
-        ws.merge(row_num, row_num, 0, len_sheet
+        ws.merge(row_num, row_num, 0, len_sheet)
 
     row_num += 1
     columns = [f'измерений'
