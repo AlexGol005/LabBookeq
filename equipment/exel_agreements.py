@@ -252,7 +252,7 @@ def export_orderverification_1_xls(request, object_ids):
     rows2 = TestingEquipment.objects.filter(equipment__pk__in=q).\
     annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),\
              num=Value('1'),\
-             note=Value('поверка'),\
+             note=Value('аттестация'),\
              cod1=Value(''),).\
     values_list(
         'cod1',
@@ -424,13 +424,18 @@ def export_orderverification_1_xls(request, object_ids):
         for col_num in range(len(row)):
             ws.write(row_num, 2, row[col_num], style_plain_border)
 
+    for row in rows1:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], style_plain_border)
+
     row_num += 1
     columns = [f'{urgency}'
     ]
     ws.write(row_num, 1, columns[0], style_left_noborder)
     ws.merge(row_num, row_num, 1, len_sheet-1)
 
-    row_num += 1
+    row_num += 2
     columns = [f'{req}'
     ]
     ws.write(row_num, 1, columns[0], style_left_noborder)
@@ -466,7 +471,7 @@ def export_orderverification_1_xls(request, object_ids):
     ws.write(row_num, 1, columns[0], style_left_noborder)
     ws.merge(row_num, row_num, 1, len_sheet-1)
 
-    row_num += 1
+    row_num += 2
     columns = [f'{signature}'
     ]
     ws.write(row_num, 1, columns[0], style_plain_noborder)
