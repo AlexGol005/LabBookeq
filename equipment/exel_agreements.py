@@ -249,22 +249,6 @@ def export_orderverification_1_xls(request, object_ids):
         'cod1',
     )
                          
-    rows1 = TestingEquipment.objects.filter(equipment__pk__in=q).\
-    annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),\
-             num=Concat(Value('1'),\
-             note=Concat(Value('поверка'),\
-             cod1=Concat(Value(''),).\
-    values_list(
-        'cod1',
-        'charakters__name',
-        'mod_type',
-        'equipment__lot',
-        'equipment__yearmanuf',
-        'num',
-        'note',
-        'cod1',
-        'cod1',
-    )
 
 
  
