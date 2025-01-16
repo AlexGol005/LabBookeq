@@ -61,7 +61,18 @@ style_plain_border.font.height = 20 * size
 
 
 def export_orderverification_template_xls(object_ids):
+    pass
 
+
+
+
+
+
+
+def export_orderverification_xls(request, object_ids):
+    '''Поверитель: base если нет специальной формы для данного поверителя и прочие исключения'''
+    ruser = request.user.profile.userid
+    company = Company.objects.get(userid=ruser)
     try:
         a = Activeveraqq.objects.get(pointer=ruser)
         exelnumber = a.aqq.verificator.pk
@@ -78,16 +89,7 @@ def export_orderverification_template_xls(object_ids):
         note = Equipment.objects.filter(id=1)
     rows = note.values_list(
         'pk', )
-
-    return rows
-
-
-
-def export_orderverification_xls(request, object_ids):
-    '''Поверитель: base если нет специальной формы для данного поверителя и прочие исключения'''
-    export_orderverification_template_xls(object_ids)
-    ruser = request.user.profile.userid
-    company = Company.objects.get(userid=ruser)
+    
     row_num = 1
     for row in rows:
         row_num += 1
@@ -100,19 +102,8 @@ def export_orderverification_xls(request, object_ids):
 
 def export_orderverification_14_xls(request, object_ids):
     '''Поверитель: не указан'''
-    export_orderverification_template_xls(object_ids)
-    row_num = 1
-    for row in rows:
-        row_num += 1
-        for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], style_plain_border)
-    wb.save(response)
-    return response
-
-
-
-def export_orderverification_1_xls(request, object_ids):
-    '''Поверитель: ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ"'''
+    ruser = request.user.profile.userid
+    company = Company.objects.get(userid=ruser)
     try:
         a = Activeveraqq.objects.get(pointer=ruser)
         exelnumber = a.aqq.verificator.pk
@@ -129,6 +120,38 @@ def export_orderverification_1_xls(request, object_ids):
         note = Equipment.objects.filter(id=1)
     rows = note.values_list(
         'pk', )
+    
+    row_num = 1
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], style_plain_border)
+    wb.save(response)
+    return response
+
+
+
+def export_orderverification_1_xls(request, object_ids):
+    '''Поверитель: ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ"'''
+    ruser = request.user.profile.userid
+    company = Company.objects.get(userid=ruser)
+    try:
+        a = Activeveraqq.objects.get(pointer=ruser)
+        exelnumber = a.aqq.verificator.pk
+    except:
+        exelnumber = 'list_equipment'
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="base.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
+    q = object_ids[17:-3].split("', '")
+    try:
+        note = Equipment.objects.filter(id__in=q)
+    except:
+        note = Equipment.objects.filter(id=1)
+    rows = note.values_list(
+        'pk', )
+    
     row_num = 1
     for row in rows:
         row_num += 1
@@ -140,7 +163,25 @@ def export_orderverification_1_xls(request, object_ids):
 
 def export_orderverification_9_xls(request, object_ids):
     '''Поверитель: ФГУП "ВНИИМ ИМ. Д.И.МЕНДЕЛЕЕВА"'''
-    export_orderverification_template_xls(object_ids)
+    ruser = request.user.profile.userid
+    company = Company.objects.get(userid=ruser)
+    try:
+        a = Activeveraqq.objects.get(pointer=ruser)
+        exelnumber = a.aqq.verificator.pk
+    except:
+        exelnumber = 'list_equipment'
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="base.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
+    q = object_ids[17:-3].split("', '")
+    try:
+        note = Equipment.objects.filter(id__in=q)
+    except:
+        note = Equipment.objects.filter(id=1)
+    rows = note.values_list(
+        'pk', )
+
     row_num = 1
     for row in rows:
         row_num += 1
