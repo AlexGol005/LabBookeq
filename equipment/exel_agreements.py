@@ -523,10 +523,10 @@ def export_orderverification_9_xls(request, object_ids):
              exnumber_short=Substr('equipment__exnumber',1,5),\
              num=Value('1'),\
              note=Value('поверка'),\
-             cod1=Value(''),).\
-             pr1=Value('ПР'),).\
-             sv1=Value('да'),).\
-             period1=Value('месяц'),).\
+             cod1=Value('').\
+             pr1=Value('ПР').\
+             sv1=Value('да').\
+             period1=Value('месяц').\
     values_list(
         'name_mod_type'
         'equipment__yearmanuf',
@@ -549,10 +549,10 @@ def export_orderverification_9_xls(request, object_ids):
              exnumber_short=Substr('equipment__exnumber',1,5),\
              num=Value('1'),\
              note=Value('поверка'),\
-             cod1=Value(''),).\
-             pr1=Value('ПР'),).\
-             sv1=Value('да'),).\
-             period1=Value('месяц'),).\
+             cod1=Value('').\
+             pr1=Value('ПР').\
+             sv1=Value('да').\
+             period1=Value('месяц').\
     values_list(
         'name_mod_type'
         'equipment__yearmanuf',
