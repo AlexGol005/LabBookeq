@@ -249,7 +249,7 @@ def export_orderverification_1_xls(request, object_ids):
     verificator_head_name = a.aqq.verificator.head_name 
     outgoing_number = f'Исх. № {nnow} от {gnow}'
     customer_card_number = f'№ учетной карточки {a.aqq.ver_agreement_card}'
-    contract_request = f'Просим провести периодическую, первичную, после ремонта (нужное подчеркнуть) поверку / калибровку СИ, аттестацию ИО и иных работ (услуг) '
+    contract_request = f'Просим провести периодическую, первичную, после ремонта (нужное подчеркнуть) поверку / калибровку СИ, аттестацию ИО и иных работ (услуг) '\
     f'в области обеспечения единства измерений в соответствии с договором (гос. контрактом) № {a.aqq.ver_agreement_number} от {a.aqq.ver_agreement_date}.'
     
     row_num = 1
