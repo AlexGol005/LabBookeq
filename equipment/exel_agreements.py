@@ -24,11 +24,13 @@ from equipment.constants import servicedesc0
 from equipment.forms import*
 from equipment.models import*
 from formstandart import YearForm
-from functstandart import get_dateformat
+from functstandart import get_dateformat, get_dateformat_to_number
 from users.models import Profile, Company
 
 URL = 'equipment'
 now = date.today()
+gnow = get_dateformat(now)
+nnow = get_dateformat_to_number(now)
 from equipment.exel import get_affirmation, get_author
 
 
@@ -45,37 +47,49 @@ b1.right = 1
 b1.top = 1
 b1.bottom = 1
 
-# a1 выравнивание по центру по горизонтали и по вертикали, обтекание wrap тип 1
-a1 = Alignment()
-a1.horz = Alignment.HORZ_CENTER
-a1.vert = Alignment.VERT_CENTER
-a1.wrap = 1
+# acc выравнивание по центру по горизонтали и по вертикали, обтекание wrap тип 1
+acc = Alignment()
+acc.horz = Alignment.HORZ_CENTER
+acc.vert = Alignment.VERT_CENTER
+acc.wrap = 1
 
-# a2 выравнивание по центру по вертикали и справа по горизонтали, обтекание wrap тип 1
-a2 = Alignment()
-a2.horz = Alignment.HORZ_RIGHT
-a2.vert = Alignment.VERT_CENTER
-a2.wrap = 1
+# acr выравнивание по центру по вертикали и справа по горизонтали, обтекание wrap тип 1
+acr = Alignment()
+acr.horz = Alignment.HORZ_RIGHT
+acr.vert = Alignment.VERT_CENTER
+acr.wrap = 1
+
+# acl выравнивание по центру по вертикали и справа по горизонтали, обтекание wrap тип 1
+acl = Alignment()
+acl.horz = Alignment.HORZ_LEFT
+acl.vert = Alignment.VERT_CENTER
+acl.wrap = 1
 
 
 # style_plain_border обычные ячейки, с границами 
 style_plain_border = xlwt.XFStyle()
 style_plain_border.font.name = 'Times New Roman'
 style_plain_border.borders = b1
-style_plain_border.alignment = a1
+style_plain_border.alignment = acc
 style_plain_border.font.height = 20 * size
 
 # style_plain_noborder обычные ячейки, без границ
 style_plain_noborder = xlwt.XFStyle()
 style_plain_noborder.font.name = 'Times New Roman'
-style_plain_noborder.alignment = a1
+style_plain_noborder.alignment = acc
 style_plain_noborder.font.height = 20 * size
 
 # style_right_noborder обычные ячейки, без границ, выравнивание по правому краю
 style_right_noborder = xlwt.XFStyle()
 style_right_noborder.font.name = 'Times New Roman'
-style_right_noborder.alignment = a2
+style_right_noborder.alignment = acr
 style_right_noborder.font.height = 20 * size
+
+# style_left_noborder обычные ячейки, без границ, выравнивание по левому краю
+style_left_noborder = xlwt.XFStyle()
+style_left_noborder.font.name = 'Times New Roman'
+style_left_noborder.alignment = acl
+style_left_noborder.font.height = 20 * size
 
 
 def export_orderverification_template_xls(object_ids):
@@ -215,13 +229,13 @@ def export_orderverification_1_xls(request, object_ids):
     # ширина колонок и их количество
     len_sheet = 11
     ws.col(0).width = 500
-    ws.col(1).width = 500
-    ws.col(2).width = 500
+    ws.col(1).width = 2000
+    ws.col(2).width = 2000
     ws.col(3).width = 3000
     ws.col(4).width = 2000
-    ws.col(5).width = 500
-    ws.col(6).width = 500
-    ws.col(7).width = 500
+    ws.col(5).width = 2000
+    ws.col(6).width = 2000
+    ws.col(7).width = 2000
     ws.col(8).width = 2000
     ws.col(9).width = 1500
     ws.col(10).width = 1500
@@ -231,6 +245,8 @@ def export_orderverification_1_xls(request, object_ids):
     verificator_head_position = a.aqq.verificator.head_position
     verificator_companyName  = a.aqq.verificator.companyName 
     verificator_head_name = a.aqq.verificator.head_name 
+    outgoing_number = f'Исх. № {nnow} от {gnow}'
+    customer_card_number = f'№ учетной карточки {a.aqq.ver_agreement_card}'
     
     row_num = 1
     columns = [f'Заявка'
@@ -254,23 +270,16 @@ def export_orderverification_1_xls(request, object_ids):
         ws.merge(row_num, row_num, 0, len_sheet)
 
     row_num += 1
-    columns = [f'измерений'
-    ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style_plain_noborder)
-        ws.merge(row_num, row_num, 0, len_sheet)
-
-    row_num += 1
     columns = [f'{verificator_head_position}'
     ]
-    for col_num in range(len(columns)):
+    for col_num in range(len(columns))):
         ws.write(row_num, col_num, columns[col_num], style_right_noborder)
         ws.merge(row_num, row_num, len_sheet-3, len_sheet)
 
     row_num += 1
     columns = [f'{verificator_companyName}'
     ]
-    for col_num in range(len(columns)):
+    for col_num in range(len(columns))):
         ws.write(row_num, col_num, columns[col_num], style_right_noborder)
         ws.merge(row_num, row_num, len_sheet-3, len_sheet)
 
@@ -280,6 +289,19 @@ def export_orderverification_1_xls(request, object_ids):
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style_right_noborder)
         ws.merge(row_num, row_num, len_sheet-3, len_sheet)
+
+    row_num += 2
+    columns = [f'{outgoing_number}',
+               f'{customer_card_number}',
+               
+    ]
+    for col_num in range(1):
+        ws.write(row_num, col_num, columns[col_num], style_left_noborder)
+        ws.merge(row_num, row_num, 1, 5)
+    for col_num in range(1,3):
+        ws.write(row_num, col_num, columns[col_num], style_right_noborder)
+        ws.merge(row_num, row_num, 0, len_sheet-4, 0, len_sheet)
+        
 
 
     
