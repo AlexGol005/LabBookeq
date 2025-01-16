@@ -235,7 +235,7 @@ def export_orderverification_1_xls(request, object_ids):
     rows1 = note.values_list('measurequipment__charakters__name')
    
     rows2 = note.values_list('testingequipment__charakters__name',)
-    rows =  list(rows1) + list(rows2)
+    rows =  chain(rows1, rows2).distinct()
     
     # ширина колонок и их количество
     len_sheet = 12
