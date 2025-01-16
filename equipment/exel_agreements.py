@@ -52,7 +52,7 @@ a1.vert = Alignment.VERT_CENTER
 a1.wrap = 1
 
 # a2 выравнивание по центру по вертикали и справа по горизонтали, обтекание wrap тип 1
-a1 = Alignment()
+a2 = Alignment()
 a2.horz = Alignment.HORZ_RIGHT
 a2.vert = Alignment.VERT_CENTER
 a2.wrap = 1
