@@ -232,7 +232,7 @@ def export_orderverification_1_xls(request, object_ids):
     # конец стандартной шапки
 
     # данные
-    rows = note.values_list('measurequipment', )
+    rows = note.values_list('measurequipment__charakters , )
    
     rows1= "|note.values_list('testingequipment__characters__name', )"
     
