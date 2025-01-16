@@ -419,7 +419,7 @@ def export_orderverification_1_xls(request, object_ids):
             ws.write(row_num, col_num + 2, row[col_num], style_plain_border)
     a = row_num
     for col_num in range(1):
-        for row_num in range(4, a + 2):
+        for row_num in range(17, a + 1):
             ws.write(row_num, col_num+1, f'{row_num - 3}', style_plain_border)
 
     row_num += 1
