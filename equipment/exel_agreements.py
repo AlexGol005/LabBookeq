@@ -298,7 +298,7 @@ def export_orderverification_1_xls(request, object_ids):
     for col_num in range(1):
         ws.write(row_num, col_num, columns[col_num], style_left_noborder)
         ws.merge(row_num, row_num, 1, 5)
-    for col_num in range(1,3):
+    for col_num in range(1,2):
         ws.write(row_num, col_num, columns[col_num], style_right_noborder)
         ws.merge(row_num, row_num, len_sheet-4, len_sheet)
         
