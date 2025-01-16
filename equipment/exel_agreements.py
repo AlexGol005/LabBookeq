@@ -245,37 +245,25 @@ def export_orderverification_1_xls(request, object_ids):
     columns = [f'Заявка'
     ]
     ws.write(row_num, 1, columns[0], style_plain_noborder)
-    ws.merge(row_num, row_num, 1, len_sheet)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
 
     row_num += 1
     columns = [f'на выполнение работ (оказание услуг) по поверке (калибровке) СИ, аттестации ИО и иных работ (услуг) в области обеспечения единства'
     ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style_plain_noborder)
-        ws.merge(row_num, row_num, 0, len_sheet)
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
 
     row_num += 1
     columns = [f'измерений'
     ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style_plain_noborder)
-        ws.merge(row_num, row_num, 0, len_sheet)
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
 
     row_num += 1
     columns = [f'{verificator_head_position}',
-               f'{verificator_head_position}',
-               f'{verificator_head_position}',
-               f'{verificator_head_position}',
-               f'{verificator_head_position}',
-               f'{verificator_head_position}',
-               f'{verificator_head_position}',
-               f'{verificator_head_position}',
-               f'{verificator_head_position}',
-               f'{verificator_head_position}',
     ]
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num+len_sheet, columns[col_num], style_right_noborder)
-        ws.merge(row_num, row_num, len_sheet-3, len_sheet)
+    ws.write(row_num, len_sheet-4, columns[0], style_right_noborder)
+    ws.merge(row_num, row_num, len_sheet-4, len_sheet-1)
 
     row_num += 1
     columns = [f'{verificator_companyName}'
