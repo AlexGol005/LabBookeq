@@ -1067,6 +1067,7 @@ class Agreementverification(models.Model):
     ver_agreement_card = models.CharField('Номер учетной карточки у организации-поверителя', max_length=100, default=None, null=True, blank=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
     active = models.BooleanField('Активный', default=False, blank=True)
+    public_agree = models.BooleanField('Согласие на передачу данных в Аршин', default=True, blank=True)
 
     def save(self, *args, **kwargs):
         super().save()        
