@@ -236,7 +236,7 @@ def export_orderverification_1_xls(request, object_ids):
     annotate(mod_type=Concat('charakters__typename', Value('/ '), 'charakters__modificname'),\
              num=Concat(Value('1'),\
              note=Concat(Value('поверка'),\
-             cod1=Concat(Value(''),)
+             cod1=Concat(Value(''),).\
     values_list(
         'charakters__reestr',
         'charakters__name',
