@@ -321,7 +321,7 @@ def export_orderverification_1_xls(request, object_ids):
     contact_person = f'- Контактное лицо: {company.manager_name}'
     contact_phone = f'Контактный телефон: {company.manager_phone}'
     contact_email = f'Эл. почта: {company.manager_email}'
-    signature = f'{company.head_position}__________________________________________{company.head_name}'
+    signature = f'{company.direktor_position}__________________________________________{company.direktor_name}'
         
 
 
