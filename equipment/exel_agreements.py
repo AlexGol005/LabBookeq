@@ -64,7 +64,7 @@ acc90 = Alignment()
 acc90.horz = Alignment.HORZ_CENTER
 acc90.vert = Alignment.VERT_CENTER
 acc90.wrap = 1
-acc90.rota = Alignment.ROTATION_0_ANGLE
+acc90.rota = Alignment.ORIENTATION_90_CW
 
 # acl ыравнивание по центру по вертикали и слева по горизонтали, обтекание wrap тип 1
 acl = Alignment()
@@ -689,15 +689,15 @@ def export_orderverification_9_xls(request, object_ids):
     row_num += 1
     for col_num in range(4):
          ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border_90)
-         ws.merge(row_num, row_num+1, col_num+1, col_num+1)
+         ws.merge(row_num, row_num+1, col_num, col_num)
     for col_num in range(4,5):
         ws.write(row_num, col_num, table_headers[col_num], style_plain_border)
-        ws.merge(row_num, row_num, col_num, col_num+1)
-    for col_num in range(5, len(table_headers)):
+        ws.merge(row_num, row_num, 5, 6)
+    for col_num in range(7, len(table_headers)):
         ws.write(row_num, col_num, table_headers[col_num], style_plain_border_90)
         ws.merge(row_num, row_num+1, col_num, col_num)
 
-    row_num += 3
+    row_num += 2
     columns=[i for i in range(1,17)]
     for col_num in range(len(table_headers)):
          ws.write(row_num, col_num+1, columns[col_num], style_plain_border)
