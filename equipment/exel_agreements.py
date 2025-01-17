@@ -72,16 +72,6 @@ acl.horz = Alignment.HORZ_LEFT
 acl.vert = Alignment.VERT_CENTER
 acl.wrap = 1
 
-a1=Alignment()
-a2=Alignment()
-a3=Alignment()
-a4=Alignment()
-a5=Alignment()
-a6=Alignment()
-a7=Alignment()
-a8=Alignment()
-a9=Alignment()
-
 
 # st90 обычные ячейки, с границами, повернут текст на 90 градусов
 st90 = xlwt.easyxf('align: rotation 90;' 'font: name Times New Roman;' 'borders: left thin, right thin, top thin, bottom thin')
@@ -710,44 +700,6 @@ def export_orderverification_9_xls(request, object_ids):
     for col_num in range(7, len(table_headers)):
         ws.write(row_num, col_num, table_headers[col_num], st90)
         ws.merge(row_num, row_num+1, col_num, col_num)
-
-
-    row_num += 1
-    for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st1)
-         ws.merge(row_num, row_num+1, col_num, col_num)
-    row_num += 1
-    for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st2)
-         ws.merge(row_num, row_num+1, col_num, col_num)
-    row_num += 1
-    for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st3)
-         ws.merge(row_num, row_num+1, col_num, col_num)
-    row_num += 1
-    for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st4)
-         ws.merge(row_num, row_num+1, col_num, col_num)
-    row_num += 1
-    for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st5)
-         ws.merge(row_num, row_num+1, col_num, col_num)
-    row_num += 1
-    for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st6)
-         ws.merge(row_num, row_num+1, col_num, col_num)
-    row_num += 1
-    for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st7)
-         ws.merge(row_num, row_num+1, col_num, col_num)
-    row_num += 1
-    for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st8)
-         ws.merge(row_num, row_num+1, col_num, col_num)
-    row_num += 1
-    for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st9)
-         ws.merge(row_num, row_num+1, col_num, col_num)
 
     row_num += 2
     columns=[i for i in range(1,17)]
