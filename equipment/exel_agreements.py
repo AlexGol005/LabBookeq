@@ -699,6 +699,9 @@ def export_orderverification_9_xls(request, object_ids):
     for col_num in range(2, 4):
          ws.write(row_num, col_num+1, table_headers[col_num], st90)
          ws.merge(row_num, row_num+1, col_num+1, col_num+1, st90)
+    for col_num in range(4, 6):
+         ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border)
+         ws.merge(row_num, row_num, col_num+1, col_num+1)
 
         
 
@@ -720,7 +723,7 @@ def export_orderverification_9_xls(request, object_ids):
     a = row_num
     for col_num in range(1):
         for row_num in range(11, a + 1):
-            ws.write(row_num, col_num+1, f'{row_num - 15}', style_plain_border)
+            ws.write(row_num, col_num+1, f'{row_num - 10}', style_plain_border)
 
     row_num += 2
     columns = [f'{req}'
