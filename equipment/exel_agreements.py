@@ -64,7 +64,7 @@ acc90 = Alignment()
 acc90.horz = Alignment.HORZ_CENTER
 acc90.vert = Alignment.VERT_CENTER
 acc90.wrap = 1
-acc90.rota = Alignment.ORIENTATION_90_CW
+acc90.rota = Alignment.ORIENTATION_ROTATED
 
 # acl ыравнивание по центру по вертикали и слева по горизонтали, обтекание wrap тип 1
 acl = Alignment()
@@ -81,7 +81,7 @@ style_plain_border.borders = b1
 style_plain_border.alignment = acc
 style_plain_border.font.height = 20 * size
 
-# style_plain_border обычные ячейки, с границами, повернут текс на 90 градусов
+# style_plain_border обычные ячейки, с границами, повернут текст на 90 градусов
 style_plain_border_90 = xlwt.XFStyle()
 style_plain_border_90.font.name = 'Times New Roman'
 style_plain_border_90.borders = b1
@@ -700,7 +700,7 @@ def export_orderverification_9_xls(request, object_ids):
     row_num += 2
     columns=[i for i in range(1,17)]
     for col_num in range(len(table_headers)):
-         ws.write(row_num, col_num+1, columns[col_num], style_plain_border)
+         ws.write(row_num, 1, columns[col_num], style_plain_border)
 
     for row in rows1:
         row_num += 1
