@@ -622,16 +622,16 @@ def export_orderverification_9_xls(request, object_ids):
     table_headers = ['№',
                      'Наименование, тип, модификация СИ /отдельные автономные блоки и др.',
                      'Год выпуска СИ',
-                     'Рег. номер типа СИ / регистрационный номер эталона в ФИФ по ОЕИ',
+                     'Рег. номер типа СИ /\n регистрационный номер эталона\n в ФИФ по ОЕИ',
                      'Идентификационный номер СИ 1)',
                      'Идентификационный номер СИ 1)',
-                     'Метрологические характеристики (разряд, КТ, ПГ), предел (диапазон) измерений, каналы, компоненты и т.д',
+                     'Метрологические характеристики\n (разряд, КТ, ПГ), предел\n (диапазон) измерений, каналы,\n компоненты и т.д',
                      'Объем поверки2)',
                      'СИ применяемое в качестве эталона',
                      'Вид поверки 3)',
                      'Поверка по результатам калибровки 4)',
                      'Оформить свидетельство о поверке',
-                     'Оформить свидетельство о поверке',
+                     'Выдать протокол поверки \n(кроме поверки по результатам калибровки)',
                      'Срок предоставления СИ (месяц, год)',
                      'Срочность выполнения 5)',
                      'Примечание',
@@ -691,15 +691,18 @@ def export_orderverification_9_xls(request, object_ids):
     ws.row(row_num).height = 800
     
     row_num += 1
-    for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st90)
-         ws.merge(row_num, row_num+1, col_num, col_num)
-    for col_num in range(4,5):
-        ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border)
+    for col_num in range(2):
+         ws.write(row_num, 1, table_headers[col_num], style_plain_border)
+         ws.merge(row_num, row_num+1, col_num, col_num, style_plain_border)
+    for col_num in range(2, 4):
+         ws.write(row_num, col_num, table_headers[col_num], st90)
+         ws.merge(row_num, row_num+1, col_num, col_num, st90)
+    for col_num in range(5,7):
+        ws.write(row_num, 5, table_headers[col_num], style_plain_border)
         ws.merge(row_num, row_num, 5, 6)
     for col_num in range(7, len(table_headers)):
         ws.write(row_num, col_num, table_headers[col_num], st90)
-        ws.merge(row_num, row_num+1, col_num, col_num)
+        ws.merge(row_num, row_num+1, col_num, col_num, st90)
 
     row_num += 2
     columns=[i for i in range(1,17)]
