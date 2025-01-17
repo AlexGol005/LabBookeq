@@ -61,15 +61,17 @@ acr.wrap = 1
 
 # acc90 выравнивание по центру по горизонтали и по вертикали, обтекание wrap тип 1, повернуто на 90 градусов
 acc90 = Alignment()
-acc90.horz = Alignment.HORZ_LEFT
+acc90.horz = Alignment.HORZ_CENTER
 acc90.vert = Alignment.VERT_CENTER
 acc90.wrap = 1
 acc90.rota = Alignment.ROTATION_STACKED
 
-al100 = Alignment()
-al100.horz = Alignment.HORZ_CENTER
-al100.vert = Alignment.VERT_CENTER
-al100.rota = Alignment.ROTATION_STACKED
+# acl ыравнивание по центру по вертикали и слева по горизонтали, обтекание wrap тип 1
+acl = Alignment()
+acl.horz = Alignment.HORZ_LEFT
+acl.vert = Alignment.VERT_CENTER
+acl.wrap = 1
+
 
 
 # style_plain_border обычные ячейки, с границами 
