@@ -82,12 +82,12 @@ style_plain_border.alignment = acc
 style_plain_border.font.height = 20 * size
 
 # style_plain_border обычные ячейки, с границами, повернут текст на 90 градусов
-style_plain_border_90 = xlwt.XFStyle()
+style_plain_border_90 = xlwt.XFStyle('align: rotation 90')
 style_plain_border_90.font.name = 'Times New Roman'
 style_plain_border_90.borders = b1
 # style_plain_border_90.alignment = acc90
 style_plain_border_90.font.height = 20 * size
-style_plain_border_90.easyxf('align: rotation 90')
+
 
 # style_plain_noborder обычные ячейки, без границ
 style_plain_noborder = xlwt.XFStyle()
