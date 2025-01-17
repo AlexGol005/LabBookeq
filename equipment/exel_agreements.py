@@ -64,7 +64,7 @@ acc90 = Alignment()
 acc90.horz = Alignment.HORZ_CENTER
 acc90.vert = Alignment.VERT_CENTER
 acc90.wrap = 1
-acc90.rota = Alignment.ORIENTATION_90_CC
+acc90.rota = Alignment.ROTATION_90_ANGLE
 
 # acl ыравнивание по центру по вертикали и слева по горизонтали, обтекание wrap тип 1
 acl = Alignment()
