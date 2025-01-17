@@ -695,13 +695,10 @@ def export_orderverification_9_xls(request, object_ids):
         ws.write(row_num, col_num, table_headers[col_num], style_plain_border_90)
         ws.merge(row_num, row_num+1, col_num, col_num)
 
-    row_num += 1
+    row_num += 3
     columns=[i for i in range(1,17)]
     for col_num in range(len(table_headers)):
          ws.write(row_num, col_num+1, columns[col_num], style_plain_border)
-
-
-
 
     for row in rows1:
         row_num += 1
