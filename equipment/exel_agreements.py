@@ -59,11 +59,17 @@ acr.horz = Alignment.HORZ_RIGHT
 acr.vert = Alignment.VERT_CENTER
 acr.wrap = 1
 
-# acl выравнивание по центру по вертикали и справа по горизонтали, обтекание wrap тип 1
-acl = Alignment()
-acl.horz = Alignment.HORZ_LEFT
-acl.vert = Alignment.VERT_CENTER
-acl.wrap = 1
+# acc90 выравнивание по центру по горизонтали и по вертикали, обтекание wrap тип 1, повернуто на 90 градусов
+acc90 = Alignment()
+acc90.horz = Alignment.HORZ_LEFT
+acc90.vert = Alignment.VERT_CENTER
+acc90.wrap = 1
+acc90.rota = Alignment.ROTATION_STACKED
+
+al100 = Alignment()
+al100.horz = Alignment.HORZ_CENTER
+al100.vert = Alignment.VERT_CENTER
+al100.rota = Alignment.ROTATION_STACKED
 
 
 # style_plain_border обычные ячейки, с границами 
@@ -72,6 +78,13 @@ style_plain_border.font.name = 'Times New Roman'
 style_plain_border.borders = b1
 style_plain_border.alignment = acc
 style_plain_border.font.height = 20 * size
+
+# style_plain_border обычные ячейки, с границами, повернут текс на 90 градусов
+style_plain_border_90 = xlwt.XFStyle()
+style_plain_border_90.font.name = 'Times New Roman'
+style_plain_border_90.borders = b1
+style_plain_border_90.alignment = acc90
+style_plain_border_90.font.height = 20 * size
 
 # style_plain_noborder обычные ячейки, без границ
 style_plain_noborder = xlwt.XFStyle()
@@ -104,6 +117,13 @@ style_left_noborder = xlwt.XFStyle()
 style_left_noborder.font.name = 'Times New Roman'
 style_left_noborder.alignment = acl
 style_left_noborder.font.height = 20 * size
+
+# style_left_noborder_bold обычные ячейки, без границ, выравнивание по левому краю, жирный шрифт
+style_left_noborder_bold = xlwt.XFStyle()
+style_left_noborder_bold.font.name = 'Times New Roman'
+style_left_noborder_bold.alignment = acl
+style_left_noborder_bold.font.height = 20 * size
+style_left_noborder_bold.font.bold = True
 
 
 def export_orderverification_template_xls(object_ids):
@@ -297,9 +317,9 @@ def export_orderverification_1_xls(request, object_ids):
     payment_number = f'Если оплата была по предварительному счету обязательно указать номер счета и дату или номер платежного поручения________________________________'
     agree = f'Согласие на передачу ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
     if a.aqq.public_agree:
-        yesno = f'ДА   ☑     	НЕТ  ⬜'
+        yesno = f'ДА   ☑     	НЕТ  ☐'
     else:
-        yesno = f'ДА    ⬜     	НЕТ ☑'
+        yesno = f'ДА    ☐    	НЕТ ☑'
     dop_agree = f'Если заказчик не является владельцем СИ, Заказчик заявляет о получении согласия от владельца СИ на передачу  ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
     table_headers = ['№ П/П',
                      '№ гос.реестра', 
@@ -312,7 +332,7 @@ def export_orderverification_1_xls(request, object_ids):
                      'Эталон/Разряд/Рег. № ФИФ (указывается для эталонов)',
                      'Владелец (если отличается от заявителя)'
                     ]
-    urgency = 'Срочность:	нет	☑	1 день	⬜	3 дня	⬜	5 дней	⬜'
+    urgency = 'Срочность:	нет	☑	1 день	☐	3 дня	☐	5 дней	☐'
     req = 'Реквизиты организации '
     cname =f'- полное и сокращенное наименование предприятия Заказчика: {company.name_big} ({company.name}) '
     inn_kpp = f'- {company.requisits}'
@@ -572,10 +592,8 @@ def export_orderverification_9_xls(request, object_ids):
 
     
 
-    # переменные
+    # переменные ФГУП "ВНИИМ ИМ. Д.И.МЕНДЕЛЕЕВА
     one = f'Заявка на проведение работ (оказание услуг) по поверке СИ'
-    two = f'на выполнение работ (оказание услуг) по поверке (калибровке) СИ, аттестации ИО и иных работ (услуг) в области обеспечения единства'
-    three = f'измерений'
     verificator_head_position = a.aqq.verificator.head_position
     verificator_companyName  = a.aqq.verificator.companyName 
     verificator_head_name = a.aqq.verificator.head_name 
@@ -584,24 +602,34 @@ def export_orderverification_9_xls(request, object_ids):
     contract_request = f'Просим провести периодическую, первичную, после ремонта (нужное подчеркнуть) поверку / калибровку СИ, аттестацию ИО и иных работ (услуг) '\
     f'в области обеспечения единства измерений в соответствии с договором (гос. контрактом) № {a.aqq.ver_agreement_number} от {a.aqq.ver_agreement_date}.'
     payment_number = f'Если оплата была по предварительному счету обязательно указать номер счета и дату или номер платежного поручения________________________________'
-    agree = f'Согласие на передачу ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
     if a.aqq.public_agree:
-        yesno = f'ДА   ☑     	НЕТ  ⬜'
+        yesno = f'ДА   ☑     	НЕТ  ☐'
     else:
-        yesno = f'ДА    ⬜     	НЕТ ☑'
-    dop_agree = f'Если заказчик не является владельцем СИ, Заказчик заявляет о получении согласия от владельца СИ на передачу  ФБУ «Тест-С.-Петербург» сведений о владельце СИ в ФИФ ОЕИ'
-    table_headers = ['№ П/П',
-                     '№ гос.реестра', 
-                     'Наименование СИ (ИО), иных работ (услуг) в области обеспечения единства измерений', 
-                     'Тип СИ (ИО) Модификация (класс точности, диапазон измерений, количество каналов или количество штук в наборе)',
-                     'Заводской (инвентарный) номер',
-                     'Год выпуска',
-                     'Кол-во СИ (ИО)',
-                     'Примечание (поверка/калибровка)',
-                     'Эталон/Разряд/Рег. № ФИФ (указывается для эталонов)',
-                     'Владелец (если отличается от заявителя)'
+        yesno = f'ДА    ☐     	НЕТ ☑'
+    if {a.aqq.ver_agreement_number}:
+        nu = a.aqq.ver_agreement_number
+    else:
+        nu = '(указать номер договора)'
+    dop_agree = f'Прошу ☐ оформить коммерческое предложение / ☐ заключить договор / ☐ выставить счет по договору {nu} /'\
+    f'☐ выставить счет гарантийному письму за проведение поверки следующих средств измерений:'
+
+    table_headers = ['№',
+                     'Наименование, тип, модификация СИ /отдельные автономные блоки и др.',
+                     'Год выпуска СИ',
+                     'Рег. номер типа СИ / регистрационный номер эталона в ФИФ по ОЕИ',
+                     'Идентификационный номер СИ 1)',
+                     'Метрологические характеристики (разряд, КТ, ПГ), предел (диапазон) измерений, каналы, компоненты и т.д',
+                     'Объем поверки2)',
+                     'СИ применяемое в качестве эталона',
+                     'Вид поверки 3)',
+                     'Поверка по результатам калибровки 4)',
+                     'Оформить свидетельство о поверке',
+                     'Оформить свидетельство о поверке',
+                     'Срок предоставления СИ (месяц, год)',
+                     'Срочность выполнения 5)',
+                     'Примечание',
                     ]
-    urgency = 'Срочность:	нет	☑	1 день	⬜	3 дня	⬜	5 дней	⬜'
+
     req = 'Реквизиты организации '
     cname =f'- полное и сокращенное наименование предприятия Заказчика: {company.name_big} ({company.name}) '
     inn_kpp = f'- {company.requisits}'
@@ -634,7 +662,7 @@ def export_orderverification_9_xls(request, object_ids):
     row_num += 1
     columns = [f'Адрес места проведения работ по поверке (в случае выездной поверки): {company.adress_lab}'
     ]
-    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.write(row_num, 1, columns[0], style_left_noborder_bold)
     ws.merge(row_num, row_num, 1, len_sheet-1)
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 800
@@ -643,7 +671,7 @@ def export_orderverification_9_xls(request, object_ids):
     row_num += 1
     columns = [f'Соглашение на передачу сведений о владельце СИ в ФИФ по ОЕИ {yesno}'
     ]
-    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.write(row_num, 1, columns[0], style_left_noborder_bold)
     ws.merge(row_num, row_num, 1, len_sheet-1)
 
 
@@ -656,8 +684,21 @@ def export_orderverification_9_xls(request, object_ids):
     ws.row(row_num).height = 800
     
     row_num += 1
+    for col_num in range(4):
+         ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border_90)
+         ws.merge(row_num, row_num+1, col_num+1, col_num+1)
+    for col_num in range(4,5):
+        ws.write(row_num, col_num, table_headers[col_num], style_plain_border)
+    for col_num in range(5, len(table_headers)):
+        ws.write(row_num, col_num, table_headers[col_num], style_plain_border_90)
+        ws.merge(row_num, row_num+1, col_num, col_num)
+
+    row_num += 1
+    columns=list(i in range(16))
     for col_num in range(len(table_headers)):
-         ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border)
+         ws.write(row_num, col_num+1, i[col_num], style_plain_border)
+
+
 
 
     for row in rows1:
@@ -673,12 +714,6 @@ def export_orderverification_9_xls(request, object_ids):
     for col_num in range(1):
         for row_num in range(16, a + 1):
             ws.write(row_num, col_num+1, f'{row_num - 15}', style_plain_border)
-
-    row_num += 2
-    columns = [f'{urgency}'
-    ]
-    ws.write(row_num, 1, columns[0], style_left_noborder)
-    ws.merge(row_num, row_num, 1, len_sheet-1)
 
     row_num += 2
     columns = [f'{req}'
