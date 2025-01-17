@@ -72,6 +72,35 @@ acl.horz = Alignment.HORZ_LEFT
 acl.vert = Alignment.VERT_CENTER
 acl.wrap = 1
 
+a1.rota = Alignment.VERT_JUSTIFIED
+a2.rota = Alignment.DIRECTION_RL
+a3.rota = Alignment.ORIENTATION_90_CC           
+a4.rota = Alignment.ORIENTATION_90_CW
+a5.rota = Alignment.ROTATION_0_ANGLE
+a6.rota = Alignment.WRAP_AT_RIGHT
+a7.rota = Alignment.NOT_WRAP_AT_RIGHT
+a8.rota = Alignment.SHRINK_TO_FIT
+a9.rota = Alignment.VERT_DISTRIBUTED
+
+st1 = xlwt.XFStyle()
+st1.alignment = a1
+st2 = xlwt.XFStyle()
+st2.alignment = a2
+st3 = xlwt.XFStyle()
+st3.alignment = a3
+st4 = xlwt.XFStyle()
+st4.alignment = a4
+st5 = xlwt.XFStyle()
+st5.alignment = a5
+st6 = xlwt.XFStyle()
+st6.alignment = a6
+st7 = xlwt.XFStyle()
+st7.alignment = a7
+st8 = xlwt.XFStyle()
+st8.alignment = a8
+st9 = xlwt.XFStyle()
+st9.alignment = a9
+st = xlwt.easyxf('align: rotation 90')
 
 
 # style_plain_border обычные ячейки, с границами 
@@ -525,19 +554,19 @@ def export_orderverification_9_xls(request, object_ids):
     ws.col(2).width = 3500
     ws.col(3).width = 5000
     ws.col(4).width = 4500
-    ws.col(5).width = 3500
+    ws.col(5).width = 2500
     ws.col(6).width = 2500
     ws.col(7).width = 2500
-    ws.col(8).width = 3500
-    ws.col(9).width = 3500
-    ws.col(10).width = 3500
-    ws.col(11).width = 3500
-    ws.col(12).width = 3500
-    ws.col(13).width = 3500
-    ws.col(14).width = 3500
-    ws.col(15).width = 3500
-    ws.col(16).width = 3500
-    ws.col(17).width = 3500
+    ws.col(8).width = 2500
+    ws.col(9).width = 2500
+    ws.col(10).width = 2500
+    ws.col(11).width = 2500
+    ws.col(12).width = 2500
+    ws.col(13).width = 2500
+    ws.col(14).width = 2500
+    ws.col(15).width = 2500
+    ws.col(16).width = 2500
+    ws.col(17).width = 2500
     ws.col(18).width = 300
 
     # данные
@@ -689,14 +718,52 @@ def export_orderverification_9_xls(request, object_ids):
     
     row_num += 1
     for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border_90)
+         ws.write(row_num, col_num+1, table_headers[col_num], st)
          ws.merge(row_num, row_num+1, col_num, col_num)
     for col_num in range(4,5):
-        ws.write(row_num, col_num, table_headers[col_num], style_plain_border)
+        ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border)
         ws.merge(row_num, row_num, 5, 6)
     for col_num in range(7, len(table_headers)):
         ws.write(row_num, col_num, table_headers[col_num], style_plain_border_90)
         ws.merge(row_num, row_num+1, col_num, col_num)
+
+
+    row_num += 1
+    for col_num in range(4):
+         ws.write(row_num, col_num+1, table_headers[col_num], st1)
+         ws.merge(row_num, row_num+1, col_num, col_num)
+    row_num += 1
+    for col_num in range(4):
+         ws.write(row_num, col_num+1, table_headers[col_num], st2)
+         ws.merge(row_num, row_num+1, col_num, col_num)
+    row_num += 1
+    for col_num in range(4):
+         ws.write(row_num, col_num+1, table_headers[col_num], st3)
+         ws.merge(row_num, row_num+1, col_num, col_num)
+    row_num += 1
+    for col_num in range(4):
+         ws.write(row_num, col_num+1, table_headers[col_num], st4)
+         ws.merge(row_num, row_num+1, col_num, col_num)
+    row_num += 1
+    for col_num in range(4):
+         ws.write(row_num, col_num+1, table_headers[col_num], st5)
+         ws.merge(row_num, row_num+1, col_num, col_num)
+    row_num += 1
+    for col_num in range(4):
+         ws.write(row_num, col_num+1, table_headers[col_num], st6)
+         ws.merge(row_num, row_num+1, col_num, col_num)
+    row_num += 1
+    for col_num in range(4):
+         ws.write(row_num, col_num+1, table_headers[col_num], st7)
+         ws.merge(row_num, row_num+1, col_num, col_num)
+    row_num += 1
+    for col_num in range(4):
+         ws.write(row_num, col_num+1, table_headers[col_num], st8)
+         ws.merge(row_num, row_num+1, col_num, col_num)
+    row_num += 1
+    for col_num in range(4):
+         ws.write(row_num, col_num+1, table_headers[col_num], st9)
+         ws.merge(row_num, row_num+1, col_num, col_num)
 
     row_num += 2
     columns=[i for i in range(1,17)]
