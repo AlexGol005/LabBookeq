@@ -64,7 +64,7 @@ acc90 = Alignment()
 acc90.horz = Alignment.HORZ_CENTER
 acc90.vert = Alignment.VERT_CENTER
 acc90.wrap = 1
-acc90.rota = Alignment.ROTATION_STACKED
+acc90.rota = Alignment.ORIENTATION_90_CC
 
 # acl ыравнивание по центру по вертикали и слева по горизонтали, обтекание wrap тип 1
 acl = Alignment()
@@ -620,6 +620,7 @@ def export_orderverification_9_xls(request, object_ids):
                      'Год выпуска СИ',
                      'Рег. номер типа СИ / регистрационный номер эталона в ФИФ по ОЕИ',
                      'Идентификационный номер СИ 1)',
+                     'Идентификационный номер СИ 1)',
                      'Метрологические характеристики (разряд, КТ, ПГ), предел (диапазон) измерений, каналы, компоненты и т.д',
                      'Объем поверки2)',
                      'СИ применяемое в качестве эталона',
@@ -691,6 +692,7 @@ def export_orderverification_9_xls(request, object_ids):
          ws.merge(row_num, row_num+1, col_num+1, col_num+1)
     for col_num in range(4,5):
         ws.write(row_num, col_num, table_headers[col_num], style_plain_border)
+        ws.merge(row_num, row_num, col_num, col_num+1)
     for col_num in range(5, len(table_headers)):
         ws.write(row_num, col_num, table_headers[col_num], style_plain_border_90)
         ws.merge(row_num, row_num+1, col_num, col_num)
