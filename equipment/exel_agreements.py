@@ -72,6 +72,17 @@ acl.horz = Alignment.HORZ_LEFT
 acl.vert = Alignment.VERT_CENTER
 acl.wrap = 1
 
+a1=Alignment()
+a2=Alignment()
+a3=Alignment()
+a4=Alignment()
+a5=Alignment()
+a6=Alignment()
+a7=Alignment()
+a8=Alignment()
+a9=Alignment()
+
+
 a1.rota = Alignment.VERT_JUSTIFIED
 a2.rota = Alignment.DIRECTION_RL
 a3.rota = Alignment.ORIENTATION_90_CC           
