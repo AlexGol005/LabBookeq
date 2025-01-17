@@ -522,7 +522,7 @@ def export_orderverification_9_xls(request, object_ids):
     # конец стандартной шапки
 
     # ширина колонок и их количество
-    len_sheet = 18
+    len_sheet = 17
     ws.col(0).width = 300
     ws.col(1).width = 2000
     ws.col(2).width = 3500
@@ -693,7 +693,7 @@ def export_orderverification_9_xls(request, object_ids):
     row_num += 1
     for col_num in range(0, 2):
          ws.write(row_num, col_num + 1, table_headers[col_num], style_plain_border)
-         ws.merge(row_num, row_num+1, col_num+1, col_num+1)
+         ws.merge(row_num, row_num+1, col_num, col_num)
 
 
     row_num += 3
