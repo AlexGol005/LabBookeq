@@ -701,7 +701,7 @@ def export_orderverification_9_xls(request, object_ids):
          ws.merge(row_num, row_num+1, col_num+1, col_num+1, st90)
     for col_num in range(4, 6):
          ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border)
-         ws.merge(row_num, row_num, col_num+1, col_num+1)
+         ws.merge(row_num, row_num, col_num+1, col_num+2)
 
         
 
