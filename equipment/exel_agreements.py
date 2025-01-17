@@ -525,8 +525,8 @@ def export_orderverification_9_xls(request, object_ids):
     len_sheet = 17
     ws.col(0).width = 300
     ws.col(1).width = 2000
-    ws.col(2).width = 3500
-    ws.col(3).width = 5000
+    ws.col(2).width = 4500
+    ws.col(3).width = 2000
     ws.col(4).width = 4500
     ws.col(5).width = 2500
     ws.col(6).width = 2500
@@ -696,7 +696,10 @@ def export_orderverification_9_xls(request, object_ids):
          ws.merge(row_num, row_num+1, col_num+1, col_num+1, style_plain_border)
     for col_num in range(2, 4):
          ws.write(row_num, col_num+1, table_headers[col_num], st90)
-         ws.merge(row_num, row_num+1, col_num, col_num, st90)
+         ws.merge(row_num, row_num+1, col_num+1, col_num+1, st90)
+    for col_num in range(4, 6):
+         ws.write(row_num, col_num + 1, table_headers[col_num], style_plain_border)
+         ws.merge(row_num, row_num, col_num+1, col_num+2, style_plain_border)
         
 
 
