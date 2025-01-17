@@ -568,6 +568,7 @@ def export_orderverification_9_xls(request, object_ids):
         'period1',
         'cod1',
         'cod1',
+        'cod1',
     )
                          
     rows2 = TestingEquipment.objects.filter(equipment__pk__in=q).\
@@ -592,6 +593,7 @@ def export_orderverification_9_xls(request, object_ids):
         'sv1',
         'sv1',
         'period1',
+        'cod1',
         'cod1',
         'cod1',
     )
@@ -694,9 +696,9 @@ def export_orderverification_9_xls(request, object_ids):
     for col_num in range(0, 2):
          ws.write(row_num, col_num + 1, table_headers[col_num], style_plain_border)
          ws.merge(row_num, row_num+1, col_num+1, col_num+1, style_plain_border)
-    # for col_num in range(2, 4):
-    #      ws.write(row_num, col_num+1, table_headers[col_num], st90)
-    #      ws.merge(row_num, row_num+1, col_num+1, col_num+1, st90)
+    for col_num in range(2, 4):
+         ws.write(row_num, col_num+1, table_headers[col_num], st90)
+         ws.merge(row_num, row_num+1, col_num+1, col_num+1, st90)
 
         
 
@@ -717,7 +719,7 @@ def export_orderverification_9_xls(request, object_ids):
             
     a = row_num
     for col_num in range(1):
-        for row_num in range(16, a + 1):
+        for row_num in range(11, a + 1):
             ws.write(row_num, col_num+1, f'{row_num - 15}', style_plain_border)
 
     row_num += 2
