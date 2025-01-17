@@ -83,35 +83,8 @@ a8=Alignment()
 a9=Alignment()
 
 
-a1.rota = Alignment.VERT_JUSTIFIED
-a2.rota = Alignment.DIRECTION_RL
-a3.rota = Alignment.ORIENTATION_90_CC           
-a4.rota = Alignment.ORIENTATION_90_CW
-a5.rota = Alignment.ROTATION_0_ANGLE
-a6.rota = Alignment.WRAP_AT_RIGHT
-a7.rota = Alignment.NOT_WRAP_AT_RIGHT
-a8.rota = Alignment.SHRINK_TO_FIT
-a9.rota = Alignment.VERT_DISTRIBUTED
-
-st1 = xlwt.XFStyle()
-st1.alignment = a1
-st2 = xlwt.XFStyle()
-st2.alignment = a2
-st3 = xlwt.XFStyle()
-st3.alignment = a3
-st4 = xlwt.XFStyle()
-st4.alignment = a4
-st5 = xlwt.XFStyle()
-st5.alignment = a5
-st6 = xlwt.XFStyle()
-st6.alignment = a6
-st7 = xlwt.XFStyle()
-st7.alignment = a7
-st8 = xlwt.XFStyle()
-st8.alignment = a8
-st9 = xlwt.XFStyle()
-st9.alignment = a9
-st = xlwt.easyxf('align: rotation 90')
+# st90 обычные ячейки, с границами, повернут текст на 90 градусов
+st90 = xlwt.easyxf('align: rotation 90;' 'font: name Times New Roman;' 'borders: left thin, right thin, top thin, bottom thin')
 
 
 # style_plain_border обычные ячейки, с границами 
@@ -121,7 +94,7 @@ style_plain_border.borders = b1
 style_plain_border.alignment = acc
 style_plain_border.font.height = 20 * size
 
-# style_plain_border обычные ячейки, с границами, повернут текст на 90 градусов
+# style_plain_border_90 обычные ячейки, с границами, повернут текст на 90 градусов
 style_plain_border_90 = xlwt.XFStyle()
 style_plain_border_90.font.name = 'Times New Roman'
 style_plain_border_90.borders = b1
@@ -729,13 +702,13 @@ def export_orderverification_9_xls(request, object_ids):
     
     row_num += 1
     for col_num in range(4):
-         ws.write(row_num, col_num+1, table_headers[col_num], st)
+         ws.write(row_num, col_num+1, table_headers[col_num], st90)
          ws.merge(row_num, row_num+1, col_num, col_num)
     for col_num in range(4,5):
         ws.write(row_num, col_num+1, table_headers[col_num], style_plain_border)
         ws.merge(row_num, row_num, 5, 6)
     for col_num in range(7, len(table_headers)):
-        ws.write(row_num, col_num, table_headers[col_num], style_plain_border_90)
+        ws.write(row_num, col_num, table_headers[col_num], st90)
         ws.merge(row_num, row_num+1, col_num, col_num)
 
 
