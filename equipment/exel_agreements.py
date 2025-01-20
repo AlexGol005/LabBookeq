@@ -74,7 +74,7 @@ acl.wrap = 1
 
 
 # st90 обычные ячейки, с границами, повернут текст на 90 градусов
-st90 = xlwt.easyxf('align: rotation 90;' 'font: name Times New Roman;' 'borders: left thin, right thin, top thin, bottom thin')
+st90 = xlwt.easyxf('align: rotation 90;' 'font: name Times New Roman, height 220;' 'borders: left thin, right thin, top thin, bottom thin'; 'alignment: horizontal center, vertical center')
 
 
 # style_plain_border обычные ячейки, с границами 
@@ -569,7 +569,6 @@ def export_orderverification_9_xls(request, object_ids):
         'period1',
         'cod1',
         'cod1',
-        'cod1',
     )
                          
     rows2 = TestingEquipment.objects.filter(equipment__pk__in=q).\
@@ -595,7 +594,6 @@ def export_orderverification_9_xls(request, object_ids):
         'sv1',
         'sv1',
         'period1',
-        'cod1',
         'cod1',
         'cod1',
     )
@@ -708,7 +706,15 @@ def export_orderverification_9_xls(request, object_ids):
         ws.write(row_num, col_num, table_headers[col_num-1], st90)
         ws.merge(row_num, row_num+1, col_num, col_num, st90)
 
-        
+    row_num += 1
+    columns = [f'Заводской номер',
+               f'Инвентарный или буквенно-цифровое обозначение',
+    ]
+    i=0
+    for col_num in range(5, 7):
+         ws.write(row_num, col_num, columns[i], st90)
+         i +=1
+       
 
 
     row_num += 2
