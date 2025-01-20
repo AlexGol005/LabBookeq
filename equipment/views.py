@@ -1818,7 +1818,7 @@ class VerificationLabelsView(LoginRequiredMixin, TemplateView):
 # блок 13 - ТОиР
 
 @login_required
-def ServiceEquipmentregView(request, str):
+def ServiceEquipmentregMEView(request, str):
     """выводит форму для добавления постоянного ТОИР к СИ"""
     charakters = MeasurEquipmentCharakters.objects.get(pk=str) 
     etype = 1
