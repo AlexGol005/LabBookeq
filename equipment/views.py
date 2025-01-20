@@ -1847,7 +1847,7 @@ def ServiceEquipmentregView(request, str):
 
 
 @login_required
-def ServiceEquipmentregView(request, str):
+def ServiceEquipmentregTEView(request, str):
     """выводит форму для добавления постоянного ТОИР к ИО"""
     charakters = TestingEquipmentCharakters.objects.get(pk=str)    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
