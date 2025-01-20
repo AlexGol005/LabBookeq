@@ -1,29 +1,112 @@
-{% extends 'main/base.html' %}
+{% extends 'main/superbase.html' %}
 {% load crispy_forms_tags %}
 
 {% block title %}
-Внести аттестацию
+    Аттестация испытательного оборудования
 {% endblock %}
+
+
 {% block content %}
-<div style="text-align: center;"><h6>
-<br> <a href="/equipment/testequipment/{{ title.exnumber }}/">
-{{ title.exnumber }}, {{title.testingequipment_set.all.last.charakters}}, зав. № {{title.lot}}  </a> </h6></div>
-<br>
-<div style="text-align: center;"><h5> Внести сведения об аттестации </h5></div>
-<form method="post" enctype="multipart/form-data" class="form-register">
-<form method="post" class="form-register">
-{% csrf_token %}
-{% crispy form %}
-</form>
-</form>
-<br>
-<br>
+<div class="col-12">
+    <center><h5>История аттестаций:
+    <a href="/equipment/testequipment/{{ title.exnumber }}/">
+        {{title.testingequipment_set.all.last.charakters}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+     </h5></center>
+     <br>
+ 
+    <center><h6> Межаттестационный интервал {{ calinterval }} мес. </h6></center>
+ 
+    {% if dateorder %}
+    <div style="text-align: center; margin-top: 20px; margin-bottom: 15px"><h5> Планируемая дата отправки на аттестацию: {{ dateorder|date:"m.Y"|default_if_none:" " }} </h5></div>
+    {% endif %}
+    {% if dateordernew %}
+    <div style="text-align: center; margin-top: 20px; margin-bottom: 15px"><h5> Планируемая дата заказа замены: {{ dateordernew|date:"m.Y"|default_if_none:" " }} </h5></div>
+    {% endif %}
+ 
+    {#таблица для вывода комментария#}
+    {% if comment != '' %}
+    <table class="table table-bordered">
+    <td colspan="6">
+    <div class="TransactionAmount Badresult">
+    <b>Комментарий ответственного за поверку: {{ comment }}</b>
+    </div>
+    </td>
+    </table>
+    {%  endif %}
+    {#конец таблицы для вывода комментария#}
     <div style="text-align: center; margin-top: 20px">
-<a href="{% url 'verificatorsreg' %}" class="btn btn-warning mr-2 mt-3" style="width: 210px" target="blank">
-Добавить организацию поверителя</a>
-<a href="{% url 'verificatorspersonsreg' %}" class="btn btn-warning  mt-3" style="width: 210px" target="blank">
-Добавить сотрудника поверителя</a>
-<a href="{% url 'verificatorpersons' %}" class="btn btn-warning  ml-2 mt-3" style="width: 210px" target="blank">
-Контакты всех поверителей</a>
+            <a href="/equipment/testingequipment/attestationreg/{{ strreg }}/"  class="btn btn-info mt-2 mr-2 ml-2 mb-2">
+     Внести запись об  аттестации</a>
+    </div>
+    
+     <center><h5>История поверок</h5></center>
+    
+    {#таблица для вывода поверки#}
+    <div style="text-align: center; margin-top: 20px">
+    <table class="table table-bordered mt-2">
+        <thead>
+            <tr>
+                <th>Аттестация от</th>
+                <th> Аттестация до </th>
+                <th> Ссылка на скан атестата</th>
+                <th> Место аттестации </th>
+                <th> Организация поверитель </th>
+                <th> Результат </th>
+                <th> Стоимость, <br> руб </th>
+                <th> Документ </th>
+                <th> Дополнительная информация </th>
+             </tr>
+        </thead>
+        <tbody>
+        {% for obj in note %}
+                <tr>
+             <td> {{ obj.date|date:"d.m.y"|default:" " }}{{ obj.year|default:" "}} </td>
+              <td> {{ obj.datedead|date:"d.m.y"|default:" " }}</td>
+             <td>
+             {% if obj.arshin  %}
+                  <a href="{{ obj.arshin }}"  target="blank" >
+                 Аршин
+                      </a>
+                 {% endif %}
+             </td>
+            <td> {{ obj.place }}</td>
+             <td> {{ obj.verificator.companyName }}</td>
+            <td> {{ obj.statusver|default:" " }}</td>
+             <td>{{ obj.price|default:" "  }}</td>
+             <td>
+                {% if obj.img %}
+            <a href="{{ obj.arshin}}"  target="blank" >
+                 {{ obj.certnumber|default:" "}}
+                      </a>
+                {% endif %}
+            {{ obj.certnumber|default:" "}}
+            </td>
+             <td> {{ obj.extra|default:" " }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        </div>
+    {#конец таблицы для вывода поверки#}
+    
+    {#форма для комментария#}
+        <div style="text-align: center; margin-top: 20px">
+    <form method="post" enctype="multipart/form-data" class="form-register">
+        <form method="post" class="form-register">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
+    </form>
+    {#конец формы для комментария#}
+    <div style="text-align: center; margin-top: 20px">
+  <h6> Примечание о метрологическом обеспечении прибора (телефоны поверителей и так далее)</h6>
+        </div>
+    <div style="text-align: center; margin-top: 10px">
+    <table class="table table-bordered mt-2">
+        <tr></tr> <td>
+        {{ title.notemetrology|default_if_none:' '}}
+    </tr>   </td> </table>
+        </div>
+ <br>  
 </div>
 {% endblock %}
