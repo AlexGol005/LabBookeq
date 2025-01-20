@@ -13,6 +13,7 @@
           <h4><a href="{% url 'measurequipmentcharacterslist' %}">Внести требуемое по технической документации техническое обслуживание СИ</a></h4>   
          {% elif etype == 2 %}
           <h4><a href="{% url 'testingequipmentcharacterslist' %}">Внести требуемое по технической документации техническое обслуживание ИО</a></h4>  
+         {% endif %}
       </center>
   
       <center><h4>{{ dop.exnumber |slice:":5"}}</h4>
