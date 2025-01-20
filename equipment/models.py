@@ -1033,8 +1033,8 @@ class ServiceEquipmentTE(models.Model):
         return self.charakters.name
 
     class Meta:
-        verbose_name = 'Испытательное оборудование: Техобслуживание'
-        verbose_name_plural = 'Испытательное оборудование: Техобслуживание'
+        verbose_name = 'Испытательное оборудование: Техобслуживание постоянная информация'
+        verbose_name_plural = 'Испытательное оборудование: Техобслуживание постоянная информация'
 
 
 class ServiceEquipmentHE(models.Model):
