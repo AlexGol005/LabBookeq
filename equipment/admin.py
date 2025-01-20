@@ -41,8 +41,7 @@ admin.site.register(HelpingEquipment)
 admin.site.register(ServiceEquipmentU) 
 admin.site.register(ServiceEquipmentUFact)
 admin.site.register(Activeveraqq)
-admin.site.register(ServiceEquipmentME)
-admin.site.register(ServiceEquipmentTE)
+
 
 
 @admin.register(Verificators)
@@ -84,6 +83,13 @@ class ServiceEquipmentMEAdmin(admin.ModelAdmin):
 
     form = make_ajax_form(ServiceEquipmentME, {
         'charakters': 'mecharakters_tag'
+    })
+
+@admin.register(ServiceEquipmentTE)
+class ServiceEquipmentTEAdmin(admin.ModelAdmin):
+
+    form = make_ajax_form(ServiceEquipmentTE, {
+        'charakters': 'techarakters_tag'
     })
 
 
