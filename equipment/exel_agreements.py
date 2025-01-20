@@ -119,6 +119,13 @@ style_plain_noborder_italic.alignment = acc
 style_plain_noborder_italic.font.height = 20 * size
 style_plain_noborder_italic.font.italic = True
 
+# style_left_noborder_italic обычные ячейки, без границ, курсив, выравнивание по левому краю
+style_left_noborder_italic = xlwt.XFStyle()
+style_left_noborder_italic.font.name = 'Times New Roman'
+style_left_noborder_italic.alignment = acl
+style_left_noborder_italic.font.height = 20 * size
+style_left_noborder_italic.font.italic = True
+
 # style_right_noborder обычные ячейки, без границ, выравнивание по правому краю
 style_right_noborder = xlwt.XFStyle()
 style_right_noborder.font.name = 'Times New Roman'
@@ -663,8 +670,9 @@ def export_orderverification_9_xls(request, object_ids):
     contact_person = f'- Контактное лицо: {company.manager_name}'
     contact_phone = f'Контактный телефон: {company.manager_phone}'
     contact_email = f'Эл. почта: {company.manager_email}'
-    signature = f'{company.direktor_position       }__________________________________________{       company.direktor_name}'
-    signature2 = f'ФИО контактного лица: {company.manager_name          }Телефон: {company.manager_phone          }		E-mail: {company.manager_email }	'
+    blanc = "            "
+    signature = f'{company.direktor_position       }{blanc}__________________________________________{blanc}{       company.direktor_name}'
+    signature2 = f'ФИО контактного лица: {company.manager_name          }{blanc}Телефон: {company.manager_phone          }	{blanc}	E-mail: {company.manager_email }	'
             
     row_num = 1
     columns = [f'{one}'
@@ -762,12 +770,16 @@ def export_orderverification_9_xls(request, object_ids):
     ]
     ws.write(row_num, 1, columns[0], style_left_border)
     ws.merge(row_num, row_num, 1, len_sheet-1, style_left_border)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 2000
     
     row_num += 1
     columns = [f'{foot2}'
     ]
     ws.write(row_num, 1, columns[0], style_plain_noborder_italic)
-    ws.merge(row_num, row_num, 1, len_sheet-1, style_plain_noborder_italic)
+    ws.merge(row_num, row_num, 1, len_sheet-1, style_left_noborder_italic)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 2000
 
     row_num += 2
     columns = [f'Реквизиты организации согласно учётной карточке предприятия прилагаю.'
@@ -786,6 +798,7 @@ def export_orderverification_9_xls(request, object_ids):
     ]
     ws.write(row_num, 1, columns[0], style_plain_noborder)
     ws.merge(row_num, row_num, 1, len_sheet-1) 
+
         
     wb.save(response)
     return response
