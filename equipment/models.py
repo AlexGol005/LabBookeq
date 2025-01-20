@@ -157,10 +157,10 @@ class Equipment(models.Model):
 
     def save(self, *args, **kwargs):
         super(Equipment, self).save(*args, **kwargs)
-        # try:
-        #     ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
-        # except:
-        #     ServiceEquipmentU.objects.get_or_create(equipment=self, year=str(self.yearintoservice))
+        try:
+            ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
+        except:
+            ServiceEquipmentU.objects.get_or_create(equipment=self, year=str(self.yearintoservice))
 
     class Meta:
         unique_together = ('exnumber', 'pointer',)
@@ -914,7 +914,7 @@ class ServiceEquipmentU(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация ПЛАН"""
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
     year =  models.CharField('Год ТО-2 план', max_length=4, blank=True, null=True)
-    equipment = models.OneToOneField(Equipment, on_delete=models.CASCADE, blank=True, null=True,
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE, blank=True, null=True,
                                   verbose_name='Оборудование')
     commentservice = models.TextField('Примечание к ТОиР', default='', blank=True, null=True)
     # ТО 2
