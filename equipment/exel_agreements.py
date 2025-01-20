@@ -531,14 +531,14 @@ def export_orderverification_9_xls(request, object_ids):
     ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
     ws.header_str = b' '
     ws.footer_str = b' '
-    try:
-        q = object_ids[17:-3].split("', '")
-    except:
-        q = [1]
+
+    q = object_ids[17:-3].split("', '")
+
     try:
         note = Equipment.objects.filter(id__in=q)
     except:
-        note = Equipment.objects.filter(id=1)      
+        note = Equipment.objects.filter(id=1)  
+        q = [1]
     # конец стандартной шапки
 
     # ширина колонок и их количество
