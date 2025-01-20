@@ -84,6 +84,13 @@ style_plain_border.borders = b1
 style_plain_border.alignment = acc
 style_plain_border.font.height = 20 * size
 
+# style_left_border обычные ячейки, с границами, выравнивание по левому краю 
+style_left_border = xlwt.XFStyle()
+style_left_border.font.name = 'Times New Roman'
+style_left_border.borders = b1
+style_left_border.alignment = acl
+style_left_border.font.height = 20 * size
+
 # style_plain_border_90 обычные ячейки, с границами, повернут текст на 90 градусов
 style_plain_border_90 = xlwt.XFStyle()
 style_plain_border_90.font.name = 'Times New Roman'
