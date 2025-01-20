@@ -333,6 +333,8 @@ class TestingEquipmentCharaktersView(LoginRequiredMixin, ListView):
         context = super(TestingEquipmentCharaktersView, self).get_context_data(**kwargs)
         context['form'] = Searchtestingform()
         context['title'] = 'Характеристики, типы, испытательного оборудования'
+        context['POINTER'] = self.request.user.profile.userid
+        user = User.objects.get(username=self.request.user)
         return context
 
 
