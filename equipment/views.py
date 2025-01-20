@@ -1819,7 +1819,7 @@ class VerificationLabelsView(LoginRequiredMixin, TemplateView):
 
 @login_required
 def ServiceEquipmentregView(request, str):
-    """выводит форму для добавления постоянного ТОИР"""
+    """выводит форму для добавления постоянного ТОИР к СИ"""
     charakters = MeasurEquipmentCharakters.objects.get(pk=str)    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
@@ -1844,6 +1844,35 @@ def ServiceEquipmentregView(request, str):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
         return redirect('measurequipmentcharacterslist')
+
+
+@login_required
+def ServiceEquipmentregView(request, str):
+    """выводит форму для добавления постоянного ТОИР к ИО"""
+    charakters = TestingEquipmentCharakters.objects.get(pk=str)    
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            try: 
+                ServiceEquipmentTE.objects.get(charakters=charakters)
+                form = ServiceEquipmentregTEForm(request.POST, instance=ServiceEquipmentTEE.objects.get(charakters=charakters))  
+            except:
+                form = ServiceEquipmentregTEForm(request.POST)  
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.charakters = charakters
+                order.save()
+                return redirect('testingequipmentcharacterslist')
+        else:
+            try: 
+                ServiceEquipmentTE.objects.get(charakters=charakters)
+                form = ServiceEquipmentregTEForm(instance=ServiceEquipmentTE.objects.get(charakters=charakters))
+            except:
+                form = ServiceEquipmentregTEForm()
+        data = {'form': form,}                
+        return render(request, 'equipment/toreg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('testingequipmentcharacterslist')
 
 
 
