@@ -823,13 +823,14 @@ class TestingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
     template_name = URL + '/Echaractersreg.html'
     form_class = TestingEquipmentCharaktersCreateForm
     success_url = '/equipment/testingequipmentcharacterslist/'
-    success_message = "Характеристики ИО успешно добавлены"
+    success_message = "Характеристики ИО успешно добавлены. Для внесения изменений обратитесь к администрации сайта"
     error_message = "Раздел доступен только инженеру по оборудованию"
 
     def form_valid(self, form):
         order = form.save(commit=False)
         user = User.objects.get(username=self.request.user)
         if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.pointer = self.request.user.profile.userid
             order.save()
             return super().form_valid(form)
         else:
