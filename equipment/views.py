@@ -1820,7 +1820,8 @@ class VerificationLabelsView(LoginRequiredMixin, TemplateView):
 @login_required
 def ServiceEquipmentregView(request, str):
     """выводит форму для добавления постоянного ТОИР к СИ"""
-    charakters = MeasurEquipmentCharakters.objects.get(pk=str)    
+    charakters = MeasurEquipmentCharakters.objects.get(pk=str) 
+    etype = 1
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             try: 
@@ -1848,6 +1849,7 @@ def ServiceEquipmentregView(request, str):
 
 @login_required
 def ServiceEquipmentregTEView(request, str):
+    etype = 2
     """выводит форму для добавления постоянного ТОИР к ИО"""
     charakters = TestingEquipmentCharakters.objects.get(pk=str)    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
