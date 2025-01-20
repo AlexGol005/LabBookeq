@@ -663,8 +663,8 @@ def export_orderverification_9_xls(request, object_ids):
     contact_person = f'- Контактное лицо: {company.manager_name}'
     contact_phone = f'Контактный телефон: {company.manager_phone}'
     contact_email = f'Эл. почта: {company.manager_email}'
-    signature = f'{company.direktor_position}__________________________________________{company.direktor_name}'
-    signature2 = f'ФИО контактного лица: {company.manager_name}		Телефон: {company.manager_phone}		E-mail: {company.manager_email}	'
+    signature = f'{company.direktor_position       }__________________________________________{       company.direktor_name}'
+    signature2 = f'ФИО контактного лица: {company.manager_name          }Телефон: {company.manager_phone          }		E-mail: {company.manager_email }	'
             
     row_num = 1
     columns = [f'{one}'
@@ -758,16 +758,16 @@ def export_orderverification_9_xls(request, object_ids):
             ws.write(row_num, col_num+1, f'{row_num - 10}', style_plain_border)
 
     row_num += 1
-    columns = [f'footnote'
+    columns = [f'{footnote}'
     ]
     ws.write(row_num, 1, columns[0], style_left_border)
-    ws.merge(row_num, row_num, 1, len_sheet-1)
+    ws.merge(row_num, row_num, 1, len_sheet-1, style_left_border)
     
     row_num += 1
-    columns = [f'foot2'
+    columns = [f'{foot2}'
     ]
     ws.write(row_num, 1, columns[0], style_plain_noborder_italic)
-    ws.merge(row_num, row_num, 1, len_sheet-1)
+    ws.merge(row_num, row_num, 1, len_sheet-1, style_plain_noborder_italic)
 
     row_num += 2
     columns = [f'Реквизиты организации согласно учётной карточке предприятия прилагаю.'
