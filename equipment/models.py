@@ -669,6 +669,7 @@ class Calibrationequipment(models.Model):
 
 class Attestationequipment(models.Model):
     """Аттестация ИО"""
+    arshin = models.TextField('Ссылка на скан аттестата', blank=True, null=True)
     equipmentSM = models.ForeignKey(TestingEquipment, verbose_name='ИО',
                                     on_delete=models.PROTECT, related_name='equipmentSM_att', blank=True, null=True)
     date = models.DateField('Дата аттестации', blank=True, null=True)
@@ -708,23 +709,40 @@ class Attestationequipment(models.Model):
 
     def save(self, *args, **kwargs):
         super().save()
-        if self.img:
-            image = Image.open(self.img.path)
-            if image.height > 500 or image.width > 500:
-                resize = (500, 500)
-                image.thumbnail(resize)
-                image.save(self.img.path)
-                # добавляем последнюю аттестацию к оборудованию
+        # добавляем последнюю аттестацию к оборудованию
         try:
             note = TestingEquipment.objects.get(pk=self.equipmentSM.pk)
-            note.newcertnumber = self.certnumber
-            newdate = get_dateformat(self.date)
-            note.newdate = newdate
-            newdatedead = get_dateformat(self.datedead)
-            note.newdatedead = newdatedead
-            note.save()
         except:
             pass
+        if note:       
+            note.newcertnumber = self.certnumber
+            note.newarshin = self.arshin
+            note.newcertnumbershort = self.certnumbershort
+            note.newprice = self.price
+            note.newstatusver = self.statusver
+            note.newverificator = self.verificator.companyName
+            note.newplace = self.place
+            note.newnote = self.note
+            note.newyear = self.year
+            note.newhaveorder = self.haveorder
+            note.newcust = self.cust
+            note.newextra = self.extra 
+            newdatedead = get_dateformat(self.datedead)
+            note.newdatedead = newdatedead 
+            note.newdatedead_date = self.datedead
+            if self.dateorder:
+                newdateorder = get_dateformat(self.dateorder)
+                note.newdateorder = newdateorder
+                note.newdateorder_date = self.dateorder
+            else:
+                note.newdateorder = '-' 
+            if self.dateordernew:
+                newdateordernew = get_dateformat(self.dateordernew)
+                note.newdateordernew = newdateordernew  
+                note.newdateordernew_date = self.dateordernew
+            else:
+                note.newdateordernew = '-' 
+            note.save()
 
 
 
