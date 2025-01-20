@@ -225,6 +225,7 @@ class TestingEquipmentCharakters(models.Model):
     needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
     complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
     expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
+    pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True) 
 
     def __str__(self):
         return f'{self.name}  {self.modificname}'
@@ -254,8 +255,7 @@ class HelpingEquipmentCharakters(models.Model):
     needsetplace = models.BooleanField('Установка не требуется', default=False, blank=True)
     complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
     expresstest = models.BooleanField('Тестирование возможно? да/нет', default=False, blank=True)
-    kvasyattestation = models.BooleanField('применяется внутренняя аттестация (проверка зарактеристик)',
-                                           default=False, blank=True)
+    pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True) 
 
     def __str__(self):
         return f'{self.name}  {self.modificname}'
