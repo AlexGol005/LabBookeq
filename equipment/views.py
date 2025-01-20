@@ -350,6 +350,8 @@ class HelpingEquipmentCharaktersView(LoginRequiredMixin, ListView):
         context = super(HelpingEquipmentCharaktersView, self).get_context_data(**kwargs)
         context['form'] = Searchtestingform()
         context['title'] = 'Характеристики, типы, вспомогательного оборудования'
+        context['POINTER'] = self.request.user.profile.userid
+        user = User.objects.get(username=self.request.user)
         return context
 
 
