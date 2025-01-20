@@ -950,7 +950,7 @@ class ServiceEquipmentUFact(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация факт"""
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
     year =  models.CharField('Год ТО-2 факт', max_length=4, blank=True, null=True)
-    equipment = models.OneToOneField(Equipment, on_delete=models.CASCADE, blank=True, null=True,
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE, blank=True, null=True,
                                   verbose_name='Оборудование')
     pk_pointer=models.CharField('указатель на pk соответствующего ТО-2 план', max_length=20, blank=True, null=True)
     # ТО 2
