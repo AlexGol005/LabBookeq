@@ -32,6 +32,17 @@ class MeasurEquipmentCharaktersLookup(LookupChannel):
     def format_item_display(self, item):
         return item.name
 
+
+@register('techarakters_tag')
+class TestingEquipmentCharaktersLookup(LookupChannel):
+    model = TestingEquipmentCharakters
+
+    def get_query(self, q, request):
+        return self.model.objects.filter(name__icontains=q).order_by('name')[:50]
+
+    def format_item_display(self, item):
+        return item.name
+
  
 
 
