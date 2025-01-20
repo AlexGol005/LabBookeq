@@ -74,7 +74,7 @@ acl.wrap = 1
 
 
 # st90 обычные ячейки, с границами, повернут текст на 90 градусов
-st90 = xlwt.easyxf('align: rotation 90;' 'font: name Times New Roman, height 220;' 'borders: left thin, right thin, top thin, bottom thin'; 'alignment: horizontal center, vertical center')
+st90 = xlwt.easyxf('align: rotation 90;' 'font: name Times New Roman, height 220;' 'borders: left thin, right thin, top thin, bottom thin;' 'alignment: horizontal center, vertical center;')
 
 
 # style_plain_border обычные ячейки, с границами 
