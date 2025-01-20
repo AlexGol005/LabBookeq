@@ -561,6 +561,7 @@ def export_orderverification_9_xls(request, object_ids):
         'exnumber_short',
         'cod1',
         'cod1',
+        'cod1',
         'pr1',
         'cod1',
         'sv1',
@@ -586,6 +587,7 @@ def export_orderverification_9_xls(request, object_ids):
         'cod1',
         'equipment__lot',
         'exnumber_short',
+        'cod1',
         'cod1',
         'cod1',
         'pr1',
@@ -702,7 +704,7 @@ def export_orderverification_9_xls(request, object_ids):
     for col_num in range(4, 6):
          ws.write(row_num, 5, table_headers[4], style_plain_border)
          ws.merge(row_num, row_num, 5, 6, style_plain_border)
-    for col_num in range(7, len(table_headers)):
+    for col_num in range(7, len(table_headers)+1):
         ws.write(row_num, col_num, table_headers[col_num-1], st90)
         ws.merge(row_num, row_num+1, col_num, col_num, st90)
 
