@@ -216,6 +216,8 @@ def export_orderverification_14_xls(request, object_ids):
     ws.footer_str = b' '
     
     q = object_ids[17:-3].split("', '")
+    if not q:
+        q = ['1']
     try:
         note = Equipment.objects.filter(id__in=q)
     except:
@@ -265,6 +267,8 @@ def export_orderverification_1_xls(request, object_ids):
     ws.footer_str = b' '
     
     q = object_ids[17:-3].split("', '")
+    if not q:
+        q = ['1']
     try:
         note = Equipment.objects.filter(id__in=q)
     except:
@@ -529,6 +533,8 @@ def export_orderverification_9_xls(request, object_ids):
     ws.footer_str = b' '
     
     q = object_ids[17:-3].split("', '")
+    if not q:
+        q = ['1']
     try:
         note = Equipment.objects.filter(id__in=q)
     except:
