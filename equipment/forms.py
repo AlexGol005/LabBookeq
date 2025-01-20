@@ -1336,6 +1336,24 @@ class ServiceEquipmentregForm(forms.ModelForm):
         fields = ['descriptiont0', 'descriptiont1', 'descriptiont2', ]
 
 
+class ServiceEquipmentregTEForm(forms.ModelForm):
+    """форма для  внесения постоянного описания ТОИР к ИО"""
+    descriptiont0 = forms.CharField(label='Объем технического обслуживания ТО 0', max_length=10000,
+                           widget=forms.Textarea(attrs={'class': 'form-control',
+                                                        'placeholder': 'введите текст записи о приборе'}))
+    descriptiont1 = forms.CharField(label='Объем технического обслуживания ТО 1', max_length=10000,
+                           widget=forms.Textarea(attrs={'class': 'form-control',
+                                                        'placeholder': 'введите текст записи о приборе'}))
+    descriptiont2 = forms.CharField(label='Объем технического обслуживания ТО 2', max_length=10000,
+                           widget=forms.Textarea(attrs={'class': 'form-control',
+                                                        'placeholder': 'введите текст записи о приборе'}))
+
+
+    class Meta:
+        model = ServiceEquipmentTE
+        fields = ['descriptiont0', 'descriptiont1', 'descriptiont2', ]
+
+
 
 class ServiceEquipmentUUpdateForm(forms.ModelForm):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация ПЛАН"""
