@@ -1003,9 +1003,6 @@ class ServiceEquipmentTE(models.Model):
     charakters = models.ForeignKey(TestingEquipmentCharakters, on_delete=models.PROTECT,
                                    verbose_name='Характеристики ИО')
 
-    equipment = models.ForeignKey(Equipment, on_delete=models.SET_NULL, blank=True, null=True,
-                                  verbose_name='Оборудование')
-
     commentservice = models.TextField('Примечание к ТОиР', default='')
 
     # ТО 0
