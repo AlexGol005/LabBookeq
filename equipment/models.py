@@ -942,7 +942,7 @@ class ServiceEquipmentTE(models.Model):
     descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
 
     def __str__(self):
-        return f'{self.charakters.name}, pk = {self.pk}'
+        return f'{self.charakters.name},,pk = {self.pk}'
 
     class Meta:
         verbose_name = 'Испытательное оборудование: Техобслуживание постоянная информация'
