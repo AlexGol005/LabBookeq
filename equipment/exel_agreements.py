@@ -534,7 +534,7 @@ def export_orderverification_9_xls(request, object_ids):
     try:
         q = object_ids[17:-3].split("', '")
     except:
-        q = ['1']
+        q = [1]
     try:
         note = Equipment.objects.filter(id__in=q)
     except:
