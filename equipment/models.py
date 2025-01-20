@@ -157,10 +157,10 @@ class Equipment(models.Model):
 
     def save(self, *args, **kwargs):
         super(Equipment, self).save(*args, **kwargs)
-        try:
-            ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
-        except:
-            ServiceEquipmentU.objects.get_or_create(equipment=self, year=str(self.yearintoservice))
+        # try:
+        #     ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
+        # except:
+        #     ServiceEquipmentU.objects.get_or_create(equipment=self, year=str(self.yearintoservice))
 
     class Meta:
         unique_together = ('exnumber', 'pointer',)
