@@ -670,7 +670,7 @@ def export_orderverification_9_xls(request, object_ids):
     contact_person = f'- Контактное лицо: {company.manager_name}'
     contact_phone = f'Контактный телефон: {company.manager_phone}'
     contact_email = f'Эл. почта: {company.manager_email}'
-    blanc = "            "
+    blanc = "                          "
     signature = f'{company.direktor_position       }{blanc}__________________________________________{blanc}{       company.direktor_name}'
     signature2 = f'ФИО контактного лица: {company.manager_name          }{blanc}Телефон: {company.manager_phone          }	{blanc}	E-mail: {company.manager_email }	'
             
@@ -776,10 +776,10 @@ def export_orderverification_9_xls(request, object_ids):
     row_num += 1
     columns = [f'{foot2}'
     ]
-    ws.write(row_num, 1, columns[0], style_plain_noborder_italic)
+    ws.write(row_num, 1, columns[0], style_left_noborder_italic)
     ws.merge(row_num, row_num, 1, len_sheet-1, style_left_noborder_italic)
     ws.row(row_num).height_mismatch = True
-    ws.row(row_num).height = 2000
+    ws.row(row_num).height = 800
 
     row_num += 2
     columns = [f'Реквизиты организации согласно учётной карточке предприятия прилагаю.'
