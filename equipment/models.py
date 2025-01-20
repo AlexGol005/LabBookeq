@@ -928,26 +928,6 @@ class ServiceEquipmentME(models.Model):
         verbose_name_plural = 'Средства измерения: Техобслуживание постоянная информация'
 
 
-class ServiceEquipmentTE(models.Model):
-    """Техобслуживание ИО - постоянная информация из паспортов и инструкций"""
-    charakters = models.OneToOneField(TestingEquipmentCharakters,  on_delete=models.PROTECT,
-                                   verbose_name='Характеристики ИО')
-    # ТО 0
-    descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
-
-    # ТО 1
-    descriptiont1 = models.TextField('Объем технического обслуживания ТО 1',  default='', blank=True)
-
-    # ТО 2
-    descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
-
-    def __str__(self):
-        return f'{self.charakters.name},,pk = {self.pk}'
-
-    class Meta:
-        verbose_name = 'Испытательное оборудование: Техобслуживание постоянная информация'
-        verbose_name_plural = 'Испытательное оборудование: Техобслуживание постоянная информация'
-
 
 class ServiceEquipmentU(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация ПЛАН"""
