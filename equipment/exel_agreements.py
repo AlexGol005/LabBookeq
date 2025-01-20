@@ -639,6 +639,17 @@ def export_orderverification_9_xls(request, object_ids):
                      'Примечание',
                     ]
 
+    footnote = '1) при отсутствии необходимости в публикации заводского номера в ФИФ по ОЕИ необходимо дополнительно указать инвентарный номер или другое буквенно-цифровое обозначение, который(ое) будет передан(о) в ФИФ по ОЕИ.\n'\
+    '2) графа заполняется в случае поверки в сокращенном объеме.\n'\
+    '3) периодическая – ПР; первичная – П.\n'\
+    '4) в соответствии с Постановлением Правительства РФ от 2 апреля 2015 г. № 311 «Об утверждении Положения о признании результатов калибровки при поверке средств измерений'\
+    'в сфере государственного регулирования обеспечения единства измерений».\n'\ 
+    '5) по предварительному согласованию с подразделением-исполнителем (за доп. плату).\n'
+
+    foot2 ='Заявитель подтверждает, что указанные в заявке средства измерений не входят в перечень средств измерений, периодическая поверка которых осуществляется только аккредитованными в установленном порядке 
+    в области обеспечения единства измерений государственными региональными центрами метрологии, утвержденный постановлением Правительства Российской Федерации от 20 апреля 2010 г. № 250.'
+
+
     req = 'Реквизиты организации '
     cname =f'- полное и сокращенное наименование предприятия Заказчика: {company.name_big} ({company.name}) '
     inn_kpp = f'- {company.requisits}'
@@ -646,6 +657,7 @@ def export_orderverification_9_xls(request, object_ids):
     contact_phone = f'Контактный телефон: {company.manager_phone}'
     contact_email = f'Эл. почта: {company.manager_email}'
     signature = f'{company.direktor_position}__________________________________________{company.direktor_name}'
+    signature2 = f'ФИО контактного лица: {company.manager_name}		Телефон: {company.manager_phone}		E-mail: {company.manager_email}	'
             
     row_num = 1
     columns = [f'{one}'
@@ -738,47 +750,35 @@ def export_orderverification_9_xls(request, object_ids):
         for row_num in range(11, a + 1):
             ws.write(row_num, col_num+1, f'{row_num - 10}', style_plain_border)
 
+    row_num += 1
+    columns = [f'footnote'
+    ]
+    ws.write(row_num, 1, columns[0], style_left_border)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+    
+    row_num += 1
+    columns = [f'foot2'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder_italic)
+    ws.merge(row_num, row_num, 1, len_sheet-1)
+
     row_num += 2
-    columns = [f'{req}'
+    columns = [f'Реквизиты организации согласно учётной карточке предприятия прилагаю.'
     ]
-    ws.write(row_num, 1, columns[0], style_left_noborder)
-    ws.merge(row_num, row_num, 1, len_sheet-1)
-
-    row_num += 1
-    columns = [f'{cname}'
-    ]
-    ws.write(row_num, 1, columns[0], style_left_noborder)
-    ws.merge(row_num, row_num, 1, len_sheet-1)
-
-    row_num += 1
-    columns = [f'{inn_kpp}'
-    ]
-    ws.write(row_num, 1, columns[0], style_left_noborder)
-    ws.merge(row_num, row_num, 1, len_sheet-1)
-
-    row_num += 1
-    columns = [f'{contact_person}'
-    ]
-    ws.write(row_num, 1, columns[0], style_left_noborder)
-    ws.merge(row_num, row_num, 1, len_sheet-1)
-
-    row_num += 1
-    columns = [f'{contact_phone}'
-    ]
-    ws.write(row_num, 1, columns[0], style_left_noborder)
-    ws.merge(row_num, row_num, 1, len_sheet-1)
-
-    row_num += 1
-    columns = [f'{contact_email}'
-    ]
-    ws.write(row_num, 1, columns[0], style_left_noborder)
+    ws.write(row_num, 1, columns[0], style_left_noborder_bold)
     ws.merge(row_num, row_num, 1, len_sheet-1)
 
     row_num += 2
     columns = [f'{signature}'
     ]
     ws.write(row_num, 1, columns[0], style_plain_noborder)
-    ws.merge(row_num, row_num, 1, len_sheet-1)                                
+    ws.merge(row_num, row_num, 1, len_sheet-1) 
+
+    row_num += 2
+    columns = [f'{signature2}'
+    ]
+    ws.write(row_num, 1, columns[0], style_plain_noborder)
+    ws.merge(row_num, row_num, 1, len_sheet-1) 
         
     wb.save(response)
     return response
