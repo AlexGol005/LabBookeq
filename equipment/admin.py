@@ -41,6 +41,8 @@ admin.site.register(HelpingEquipment)
 admin.site.register(ServiceEquipmentU) 
 admin.site.register(ServiceEquipmentUFact)
 admin.site.register(Activeveraqq)
+admin.site.register(ServiceEquipmentME)
+admin.site.register(ServiceEquipmentTE)
 
 
 @admin.register(Verificators)
