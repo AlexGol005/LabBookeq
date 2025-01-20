@@ -74,7 +74,7 @@ acl.wrap = 1
 
 
 # st90 обычные ячейки, с границами, повернут текст на 90 градусов
-st90 = xlwt.easyxf('align: rotation 90;' 'font: name Times New Roman, height 220;' 'borders: left thin, right thin, top thin, bottom thin;' 'alignment: horizontal center, vertical center;')
+st90 = xlwt.easyxf('align: rotation 90;' 'font: name Times New Roman, height 220;' 'borders: left thin, right thin, top thin, bottom thin;' 'alignment: wrap on, horizontal center, vertical center;')
 
 
 # style_plain_border обычные ячейки, с границами 
@@ -708,7 +708,7 @@ def export_orderverification_9_xls(request, object_ids):
 
     row_num += 1
     columns = [f'Заводской номер',
-               f'Инвентарный или буквенно-цифровое обозначение',
+               f'Инвентарный\n или буквенно-\nцифровое\n обозначение',
     ]
     i=0
     for col_num in range(5, 7):
@@ -717,7 +717,7 @@ def export_orderverification_9_xls(request, object_ids):
        
 
 
-    row_num += 2
+    row_num += 1
     columns=[i for i in range(1,17)]
     for col_num in range(len(table_headers)):
          ws.write(row_num, col_num+1, columns[col_num], style_plain_border)
