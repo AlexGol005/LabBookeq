@@ -71,18 +71,17 @@
         <td> {{ obj.equipment.get_status_display }}</td>
         <td> {{ obj.equipmentSM_att.all.last.datedead|date:"d.m.Y"  }}</td>
             <td> {{ obj.equipmentSM_att.all.last.dateorder|date:"m.Y"  }}</td>
-        <td>
-            {% if obj.equipmentSM_att.all.last.haveorder %}
-            да
-            {% else %}
-        <a href="{% url 'haveorderatt' obj.pk %}" target="blank" class="btn btn-outline-warning mt-3">
-            нет</a>
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                    <td>
+                        {% if obj.equipmentSM_ver.all.last.haveorder %}
+                        да
+                        {% else %}
+                        нет
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 {#конец основной таблицы#}
 
 {#пагинация#}
