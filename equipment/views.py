@@ -1744,9 +1744,9 @@ class SearchNotAttView(LoginRequiredMixin, ListView):
         return queryset
 
 
-class LastNewEquipmentView(LoginRequiredMixin, ListView):
-    """ выводит список добавленных приборов"""
-
+class EquipmentAllView(LoginRequiredMixin, ListView):
+    """ выводит список всех добавленных приборов"""
+    # path('euipmentall/', views.EquipmentAllView.as_view(), name='euipmentall'),
     template_name = URL + '/EquipmentLIST.html'
     context_object_name = 'objects'  
     paginate_by = 12
