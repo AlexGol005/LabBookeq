@@ -788,32 +788,6 @@ class Attestationequipment(models.Model):
         verbose_name_plural = 'Испытательное оборудование: аттестации'
 
 
-class Checkequipment(models.Model):
-    """Проверка характеристик ВО"""
-    equipmentSM = models.ForeignKey(HelpingEquipment, verbose_name='ИО',
-                                    on_delete=models.PROTECT, related_name='equipmentSM_att', blank=True, null=True)
-    date = models.DateField('Дата проверки', blank=True, null=True)
-    datedead = models.DateField('Дата окончания срока проверки', blank=True, null=True)
-    dateorder = models.DateField('Дата следующей проверки план', blank=True, null=True)
-    certnumber = models.CharField('Номер протокола проверки', max_length=90, blank=True, null=True)
-    extra = models.TextField('Дополнительная информация', blank=True, null=True)
-
-    def __str__(self):
-        try:
-            return f'Проверка характеристик  вн № ' \
-                   f'  {self.equipmentSM.equipment.exnumber} {self.equipmentSM.charakters.name} от {self.date} до' \
-                   f' {self.datedead}'
-        except:
-            return '&'
-
-    def get_absolute_url(self):
-        """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
-        return reverse('helpingequipmentcheck', kwargs={'str': self.equipmentSM.equipment.exnumber})
-
-    class Meta:
-        verbose_name = 'Вспомогательное оборудование: проверка характеристик'
-        verbose_name_plural = 'Вспомогательное оборудование: проверка характеристик'
-
 
 # блок 6 - комментарии
 
