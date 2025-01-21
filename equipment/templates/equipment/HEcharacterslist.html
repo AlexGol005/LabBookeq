@@ -10,7 +10,7 @@
 {#конец названия страницы#}
 
 {% block content %}
-
+<div class="col-12">  
 {#заголовок#}
     <a href="{% url 'helpingequipmentcharacterslist' %}">
     <div style="text-align: center;"><h4> {{ title }}</h4></div>
@@ -20,11 +20,16 @@
 
     <br>
     <div style="text-align: center;">
-        <a href="{% url 'helpingequipmentcharactersreg' %}"  target="blank" class="btn btn-info" style="width: 350px">
-            Добавить характеристики, тип
+        <a href="{% url 'measurequipmentcharactersreg' %}"  target="blank" class="btn btn-info" style="width: 350px">
+            Добавить характеристики ВО
         </a>
     </div>
-
+    <br>
+        <p><i><font color="red"><b>ППеред регистрацией проверьте, что отсутствуют необходимые характеристики в сочетании с типом и модификацией.
+            Вашу запись вы можете редактировать, 
+            если необходимо внести изменения в чужую запись, пожалуйста обратитесь к администрации сайта: sandra.005@mail.ru или через форму обратной связи.
+       </b></font> </i></p>
+    
 {#форма для поиска по полям #}
     <br><br>
     <div style="text-align: center; margin-top: 25px">
@@ -40,24 +45,34 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-            <th>Название</th>
-            <th> Модификация </th>
-            <th> Тип </th>
-            <th> &nbsp&nbsp&nbsp&nbsp&nbsp&nbspОсновные&nbspтехнические&nbspхарактеристики&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp </th>
-            <th> &nbsp&nbsp&nbsp&nbspМетодики&nbspиспытаний&nbsp&nbsp&nbsp&nbsp </th>
-            <th> Ред </th>
+                <th>Название</th>
+                <th> Модификация </th>
+                <th> Тип </th>
+                <th> Ред </th>
+                <th> Описание ТО по технической документации </th>
              </tr>
         </thead>
         <tbody>
         {% for obj in objects %}
-    <tr>
-        <td>{{ obj.name }}</td>
-        <td>{{ obj.modificname }}</td>
-        <td>{{ obj.typename }}</td>
-        <td> {{ obj.measurydiapason }}</td>
-        <td> {{ obj.ndoc }}</td>
-    <td> <a href="{% url 'helpequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>
-    </tr>
+        <tr>
+            <td>{{ obj.name }}</td>
+            <td>{{ obj.modificname }}</td>
+            <td>{{ obj.typename }}</td>
+            {% if POINTER == obj.pointer %}
+            <td> <a href="{% url 'helpequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> 
+            {% else %}
+            <td> ред. админ.</td>
+            
+            {% endif %}
+            {% if obj.serviceequipmenthe and POINTER == obj.pointer %}
+              <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
+            {% elif obj.serviceequipmenthe and POINTER != obj.pointer %}
+            <td> есть</td> 
+            {% else %}
+            <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
+            {% endif %}
+            
+        </tr>
         {% endfor %}
         </tbody>
     </table>
@@ -77,6 +92,6 @@
   {% endif %}
   {% endif %}
 {#конец пагинации#}
-
+</div>
 {% endblock %}
-{#конец блока {% block content %}#}
+{#конец блока {% block content %}"""#}
