@@ -901,6 +901,57 @@ class ServiceEquipmentME(models.Model):
         verbose_name_plural = 'Средства измерения: Техобслуживание постоянная информация'
 
 
+class ServiceEquipmentTE(models.Model):
+    """Техобслуживание ИО"""
+    charakters = models.OneToOneField(TestingEquipmentCharakters, on_delete=models.PROTECT,
+                                   verbose_name='Характеристики ИО')
+
+    commentservice = models.TextField('Примечание к ТОиР', default='')
+
+    # ТО 0
+    descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
+
+    # ТО 1
+    descriptiont1 = models.TextField('Объем технического обслуживания ТО 1',  default='', blank=True)
+
+    # ТО 2
+    descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
+
+    def __str__(self):
+        return self.charakters.name
+
+    class Meta:
+        verbose_name = 'Испытательное оборудование: Техобслуживание постоянная информация'
+        verbose_name_plural = 'Испытательное оборудование: Техобслуживание постоянная информация'
+
+
+class ServiceEquipmentHE(models.Model):
+    """Техобслуживание ВО"""
+    charakters = models.OneToOneField(HelpingEquipmentCharakters, on_delete=models.PROTECT,
+                                   verbose_name='Характеристики ВО')
+
+    equipment = models.ForeignKey(Equipment, on_delete=models.SET_NULL, blank=True, null=True,
+                                  verbose_name='Оборудование')
+
+    commentservice = models.TextField('Примечание к ТОиР', default='')
+
+    # ТО 0
+    descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
+
+    # ТО 1
+    descriptiont1 = models.TextField('Объем технического обслуживания ТО 1',  default='', blank=True)
+
+    # ТО 2
+    descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
+
+
+    def __str__(self):
+        return self.charakters.name
+
+    class Meta:
+        verbose_name = 'Вспомогательное оборудование: Техобслуживание постоянная информация'
+        verbose_name_plural = 'Вспомогательное оборудование: Техобслуживание постоянная информацияк'
+
 
 class ServiceEquipmentU(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация ПЛАН"""
@@ -971,79 +1022,7 @@ class ServiceEquipmentUFact(models.Model):
         verbose_name_plural = 'Оборудование: ТО-2 факт'
 
 
-class ServiceEquipmentTE(models.Model):
-    """Техобслуживание ИО"""
-    charakters = models.OneToOneField(TestingEquipmentCharakters, on_delete=models.PROTECT,
-                                   verbose_name='Характеристики ИО')
 
-    commentservice = models.TextField('Примечание к ТОиР', default='')
-
-    # ТО 0
-    descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
-
-    # ТО 1
-    descriptiont1 = models.TextField('Объем технического обслуживания ТО 1',  default='', blank=True)
-
-    # ТО 2
-    descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
-    t2month1 = models.BooleanField('ТО 2 в месяце 1', default=False)
-    t2month2 = models.BooleanField('ТО 2 в месяце 2', default=False)
-    t2month3 = models.BooleanField('ТО 2 в месяце 3', default=False)
-    t2month4 = models.BooleanField('ТО 2 в месяце 4', default=False)
-    t2month5 = models.BooleanField('ТО 2 в месяце 5', default=False)
-    t2month6 = models.BooleanField('ТО 2 в месяце 6', default=False)
-    t2month7 = models.BooleanField('ТО 2 в месяце 7', default=False)
-    t2month8 = models.BooleanField('ТО 2 в месяце 8', default=False)
-    t2month9 = models.BooleanField('ТО 2 в месяце 9', default=False)
-    t2month10 = models.BooleanField('ТО 2 в месяце 10', default=False)
-    t2month11 = models.BooleanField('ТО 2 в месяце 11', default=False)
-    t2month12 = models.BooleanField('ТО 2 в месяце 12', default=False)
-
-    def __str__(self):
-        return self.charakters.name
-
-    class Meta:
-        verbose_name = 'Испытательное оборудование: Техобслуживание постоянная информация'
-        verbose_name_plural = 'Испытательное оборудование: Техобслуживание постоянная информация'
-
-
-class ServiceEquipmentHE(models.Model):
-    """Техобслуживание ВО"""
-    charakters = models.ForeignKey(HelpingEquipmentCharakters, on_delete=models.PROTECT,
-                                   verbose_name='Характеристики ВО')
-
-    equipment = models.ForeignKey(Equipment, on_delete=models.SET_NULL, blank=True, null=True,
-                                  verbose_name='Оборудование')
-
-    commentservice = models.TextField('Примечание к ТОиР', default='')
-
-    # ТО 0
-    descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
-
-    # ТО 1
-    descriptiont1 = models.TextField('Объем технического обслуживания ТО 1',  default='', blank=True)
-
-    # ТО 2
-    descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
-    t2month1 = models.BooleanField('ТО 2 в месяце 1', default=False)
-    t2month2 = models.BooleanField('ТО 2 в месяце 2', default=False)
-    t2month3 = models.BooleanField('ТО 2 в месяце 3', default=False)
-    t2month4 = models.BooleanField('ТО 2 в месяце 4', default=False)
-    t2month5 = models.BooleanField('ТО 2 в месяце 5', default=False)
-    t2month6 = models.BooleanField('ТО 2 в месяце 6', default=False)
-    t2month7 = models.BooleanField('ТО 2 в месяце 7', default=False)
-    t2month8 = models.BooleanField('ТО 2 в месяце 8', default=False)
-    t2month9 = models.BooleanField('ТО 2 в месяце 9', default=False)
-    t2month10 = models.BooleanField('ТО 2 в месяце 10', default=False)
-    t2month11 = models.BooleanField('ТО 2 в месяце 11', default=False)
-    t2month12 = models.BooleanField('ТО 2 в месяце 12', default=False)
-
-    def __str__(self):
-        return self.charakters.name
-
-    class Meta:
-        verbose_name = 'Вспомогательное оборудование: проверка характеристик'
-        verbose_name_plural = 'Вспомогательное оборудование: проверка характеристик'
 
 
 # блок 9 - отправка в поверку
