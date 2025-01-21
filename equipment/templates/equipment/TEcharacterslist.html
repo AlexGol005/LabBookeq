@@ -65,10 +65,10 @@
             {% if POINTER == obj.pointer %}
             <td> <a href="{% url 'testequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> 
             {% else %}
-            <td> ред. админ.</td>
-            
+            <td> ред. админ.</td>          
             {% endif %}
-            {% if obj.serviceequipmentte and POINTER == obj.pointer %}
+            
+            {% if  POINTER == obj.pointer %}
               <td> <a href="{% url 'toregte' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
             {% elif obj.serviceequipmentte and POINTER != obj.pointer %}
             <td> есть</td> 
