@@ -1853,7 +1853,7 @@ def ServiceEquipmentregMEView(request, str):
 
 @login_required
 def ServiceEquipmentregTEView(request, str):
-    """выводит форму для добавления постоянного ТОИР к СИ"""
+    """выводит форму для добавления постоянного ТОИР к ИО"""
     charakters = TestingEquipmentCharakters.objects.get(pk=str) 
     etype = 2
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
@@ -1870,8 +1870,8 @@ def ServiceEquipmentregTEView(request, str):
                 return redirect('testingequipmentcharacterslist')
         else:
             try: 
-                ServiceEquipmentME.objects.get(charakters=charakters)
-                form = ServiceEquipmentregTEForm(instance=ServiceEquipmentME.objects.get(charakters=charakters))
+                ServiceEquipmentTE.objects.get(charakters=charakters)
+                form = ServiceEquipmentregTEForm(instance=ServiceEquipmentTE.objects.get(charakters=charakters))
             except:
                 form = ServiceEquipmentregTEForm()
         data = {'form': form,}                
