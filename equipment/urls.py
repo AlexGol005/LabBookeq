@@ -54,7 +54,6 @@ urlpatterns = [
     path('roomreg/', views.RoomsCreateView, name='roomreg'),
     path('meteoreg/', views.MeteorologicalParametersCreateView.as_view(), name='meteoreg'),
     path('docsreg/<str:str>/', views.DocsConsView.as_view(), name='docsreg'),
-    path('verificators/', views.VerificatorsView.as_view(), name='verificators'),
     path('verificatorsreg/', views.VerificatorsCreationView.as_view(), name='verificatorsreg'),
     path(r'^export1/xls/$/<int:pk>', exel.export_mecard_xls, name='export_mecard_xls'),
     path(r'^export111/xls/$/<int:pk>', exel.export_tecard_xls, name='export_tecard_xls'),
