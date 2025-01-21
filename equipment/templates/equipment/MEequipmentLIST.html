@@ -11,20 +11,19 @@
 
 {% block content %}
 
-    {#заголовок с ссылкой#}
-    {#стандартная#}
-
+       {#заголовок с ссылкой#}
        <div class="col-12">
             <center><h4><a href="/{{ URL }}/"> Средства измерения</a></h4></center>
             <br>
-            {#конец заголовка со ссылкой#}
-            {# Выгрузка полного списка в ексель #}
+        {#конец заголовка со ссылкой#}
+
            <center>
             <a href="{% url 'testingequipmentall' %}" class="btn btn-primary mr-1 ml-1 mt-3" style="width: 25%">Перейти к ИО</a>
             <a href="{% url 'helpingequipmentall' %}" class="btn btn-primary mr-1 ml-1 mt-3" style="width: 25%">Перейти к ВО</a>
             <a href="{% url 'export_me_xls' %}" class="btn btn-primary  mr-1 ml-1 mt-3" style="width: 25%">Скачать график поверки и аттестации </a>
             </center>
                 <br>
+           
             {#форма для поиска по полям #}
             {#стандартная#}
             <center>
