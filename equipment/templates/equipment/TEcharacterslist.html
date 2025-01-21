@@ -33,7 +33,7 @@
 {#форма для поиска по полям #}
     <br><br>
     <div style="text-align: center; margin-top: 25px">
-        <form action="/equipment/reestrsearres/" method="GET">
+        <form action="/equipment/testingsearres/" method="GET">
             {% csrf_token %}
             {% crispy form %}
         </form>
@@ -68,7 +68,7 @@
             <td> ред. админ.</td>          
             {% endif %}
             
-            {% if  POINTER == obj.pointer %}
+            {% if  obj.serviceequipmentte and POINTER == obj.pointer %}
               <td> <a href="{% url 'toregte' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
             {% elif obj.serviceequipmentte and POINTER != obj.pointer %}
             <td> есть</td> 
