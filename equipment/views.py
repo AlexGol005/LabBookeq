@@ -3,10 +3,11 @@
 Приложение equipment это обширное приложение, включает все про лабораторное оборудование и лабораторные помещения
 Данный модуль views.py выводит представления для вывода форм и информации.
 Список блоков:
+блок 0 - заказ поверки
 блок 1 - заглавные страницы с кнопками, структурирующие разделы. (Самая верхняя страница - записана в приложении main)
 блок 2 - списки и обновление: комнаты, поверители, персоны поверители, производители
 блок 3 - списки: Все оборудование, СИ, ИО, ВО, госреестры, характеристики ИО, характеристики ВО
-блок 4 - формы регистрации и обновления: комнаты, поверители, персоны поверители, производители, контакты поверителей
+блок 4 - формы регистрации и обновления: комнаты, поверители, производители плюс список поверителей и производителей, договоры с поверителями
 блок 5 - микроклимат: журналы, формы регистрации
 блок 6 - регистрация госреестры, характеристики, ЛО - внесение, обновление
 блок 7 - все поисковики
@@ -46,6 +47,7 @@ from users.models import Profile, Company
 URL = 'equipment'
 now = date.today()
 
+# блок 0 - заказ поверки
 
 
 class OrderVerificationView(LoginRequiredMixin, View):
@@ -71,8 +73,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateorder_date__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateorder_date__lte=serdate)
         if i=='3':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newdateordernew_date__lte=serdate) | Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newdateordernew_date__lte=serdate)
-
-   
+  
         context = {
             'form': form,
             'dateform': dateform,
@@ -95,7 +96,6 @@ class OrderVerificationView(LoginRequiredMixin, View):
         else:
             messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
             return redirect('/equipment/orderverification/0/')
-
 
 
 @login_required
@@ -121,9 +121,7 @@ def OrderVerificationchange(request, str):
                 return redirect(exelname, {'object_ids': object_ids})
             except:
                 return redirect('export_orderverification_xls', {'object_ids': object_ids})
-           
-                
-            
+                    
         if 'false' in request.POST:
             object_ids = request.POST.getlist('my_object')
             note = Equipment.objects.filter(id__in=object_ids) 
@@ -137,8 +135,6 @@ def OrderVerificationchange(request, str):
             return redirect(f'/equipment/orderverification/{str}/')
 
        
-
-
 
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
 
@@ -202,15 +198,8 @@ class ReportsView(LoginRequiredMixin, TemplateView):
         return context
 
 
+
 # блок 2 - списки: комнаты, поверители, персоны поверители, производители
-
-
-class VerificatorsView(ListView):
-    """ Выводит список всех организаций поверителей """
-    model = Verificators
-    template_name = 'main/plainlist.html'
-    context_object_name = 'objects'
-
 
 class ManufacturerView(ListView):
     """ Выводит список всех производителей """
@@ -239,7 +228,6 @@ class RoomsView(LoginRequiredMixin, TemplateView):
         context['rooms'] = rooms
         context['company'] = company 
         return context
-
 
 
 class AgreementVerificators(LoginRequiredMixin, TemplateView):
@@ -281,7 +269,6 @@ def RoomsUpdateView(request, str):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
         return redirect('rooms')
-
 
 
 
@@ -409,7 +396,8 @@ class HelpingEquipmentView(LoginRequiredMixin, ListView):
         return context
 
 
-# блок 4 - формы регистрации и обновления: комнаты, поверители, производители
+
+# блок 4 - формы регистрации и обновления: комнаты, поверители, производители плюс список поверителей и производителей, договоры с поверителями
 
 @login_required
 def RoomsCreateView(request):
@@ -525,7 +513,6 @@ def AgreementVerificatorUpdateView(request, str):
         return redirect('/equipment/agreementcompanylist')
 
 
-
 @login_required
 def VerificatorUpdateView(request, str):
     """выводит форму для обновления организации-поверителя"""
@@ -543,8 +530,6 @@ def VerificatorUpdateView(request, str):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
         return redirect('/equipment/verificatorsreg')
-
-
 
 
 class PersonchangeFormView(LoginRequiredMixin, View):
@@ -625,6 +610,7 @@ class RoomschangeFormView(LoginRequiredMixin, View):
                 return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
 
+
 # блок 5 - микроклимат: журналы, формы регистрации
 
 class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin, View):
@@ -697,6 +683,9 @@ class MeteorologicalParametersRoomView(LoginRequiredMixin, ListView):
 
 
 class MeteorologicalParametersRoomSearchResultView(ListView):
+    # path('meteoroomser/<int:pk>/', views.MeteorologicalParametersRoomSearchResultView.as_view(), name='meteoroomser')
+    """показывает результаты поиска Найти условия микроклимата на дату:"""
+    
     model = MeteorologicalParameters
     template_name = URL + '/meteoroom.html'
     context_object_name = 'objects'
@@ -716,6 +705,7 @@ class MeteorologicalParametersRoomSearchResultView(ListView):
         context['form'] = DateForm(initial={'date': serdate})
         context['form1'] = YearForm(initial={'date': now.year})
         return context
+
 
 
 # блок 6 - регистрация госреестры, характеристики, ЛО - внесение, обновление
@@ -1019,16 +1009,16 @@ def EquipmentUpdate(request, str):
             return redirect(reverse('supequipment', kwargs={'str': str}))
 
 
+
 # блок 7 - все поисковики
 
 class SearchPersonverregView(LoginRequiredMixin, SuccessMessageMixin, ListView):
-    """ Представление, которое выводит результаты поиска по списку поверителей организаций """
+    """ выводит результаты поиска по списку поверителей организаций """
 
     template_name = URL + '/verificatorsreglist.html'
     context_object_name = 'objects'
     success_url = '/equipment/verificatorsreg/'
     success_message = "Организация поверитель успешно добавлена"
-
 
     def get_context_data(self, **kwargs):
         context = super(SearchPersonverregView, self).get_context_data(**kwargs)
@@ -1043,8 +1033,7 @@ class SearchPersonverregView(LoginRequiredMixin, SuccessMessageMixin, ListView):
 
 
 class ReestrsearresView(LoginRequiredMixin, TemplateView):
-    """ Представление, которое выводит результаты поиска по списку госреестров """
-
+    """ выводит результаты поиска по списку госреестров """
     template_name = URL + '/MEcharacterslist.html'
 
     def get_context_data(self, **kwargs):
@@ -1073,8 +1062,7 @@ class ReestrsearresView(LoginRequiredMixin, TemplateView):
         return context
 
 class TEcharacterssearresView(LoginRequiredMixin, TemplateView):
-    """ Представление, которое выводит результаты поиска по списку характеристик ИО """
-
+    """ выводит результаты поиска по списку характеристик ИО """
     template_name = URL + '/TEcharacterslist.html'
 
     def get_context_data(self, **kwargs):
@@ -1095,8 +1083,7 @@ class TEcharacterssearresView(LoginRequiredMixin, TemplateView):
 
 
 class SearchResultMeasurEquipmentView(LoginRequiredMixin, TemplateView):
-    """ Представление, которое выводит результаты поиска по списку средств измерений """
-
+    """ выводит результаты поиска по списку средств измерений """
     template_name = URL + '/MEequipmentLIST.html'
 
     def get_context_data(self, **kwargs):
@@ -1150,8 +1137,7 @@ class SearchResultMeasurEquipmentView(LoginRequiredMixin, TemplateView):
 
 
 class SearchResultTestingEquipmentView(LoginRequiredMixin, TemplateView):
-    """ Представление, которое выводит результаты поиска по списку испытательного оборудования """
-    
+    """ выводит результаты поиска по списку испытательного оборудования """    
     template_name = URL + '/TEequipmentLIST.html'
 
     def get_context_data(self, **kwargs):
@@ -1203,6 +1189,7 @@ class SearchResultTestingEquipmentView(LoginRequiredMixin, TemplateView):
         return context
 
 
+
 # блок 8  принадлежности к оборудованию
 
 class DocsConsView(LoginRequiredMixin, View, SuccessMessageMixin):
@@ -1230,6 +1217,7 @@ class DocsConsView(LoginRequiredMixin, View, SuccessMessageMixin):
         else:
             messages.add_message(request, messages.SUCCESS, 'Раздел доступен только инженеру по оборудованию')
             return redirect(f'/equipment/docsreg/{str}')
+
 
 
 # блок 9 - внесение и обновление поверка и аттестация
@@ -1551,6 +1539,7 @@ class HaveorderAttView(LoginRequiredMixin, UpdateView):
         return context
 
 
+
 # блок 10 - индивидуальные страницы СИ ИО ВО их поверок и аттестаций
 
 class StrMeasurEquipmentView(LoginRequiredMixin, View):
@@ -1580,11 +1569,9 @@ class StrTestEquipmentView(LoginRequiredMixin, View):
 class StrHelpEquipmentView(LoginRequiredMixin, View):
     """ выводит отдельную страницу ВО """
     def get(self, request, str):
-        note = Checkequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
         obj = get_object_or_404(HelpingEquipment, equipment__exnumber=str)
         context = {
             'obj': obj,
-            'note': note,
         }
         return render(request, URL + '/HEequipmentSTR.html', context)
 
@@ -1615,6 +1602,7 @@ class CommentsView(View):
             order.save()
             messages.success(request, f'Запись добавлена!')
             return redirect(order)
+
 
 
 # блок 12 - вывод списков и форм  для метрологического обеспечения
@@ -1819,6 +1807,7 @@ class VerificationLabelsView(LoginRequiredMixin, TemplateView):
         return context
 
 
+
 # блок 13 - ТОиР
 
 @login_required
@@ -1879,8 +1868,6 @@ def ServiceEquipmentregTEView(request, str):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
         return redirect('testingequipmentcharacterslist')
-
-
 
 
 class ServiceView(LoginRequiredMixin, ListView):
@@ -1957,8 +1944,6 @@ def ServiceEquipmentUFactUpdateView(request, str):
         return redirect(reverse('serviceplan', kwargs={'str': str}))
 
 
-
-
 class ServiceYearView(LoginRequiredMixin, View):
     """вывод страницы - ТОИР за год, год передан в форме поиска на предыдущей странице"""
     def get(self, request):
@@ -1977,18 +1962,6 @@ class ServiceYearView(LoginRequiredMixin, View):
         }
         template_name = 'equipment/serviceyear.html'
         return render(request, template_name, context)
-
-
-
-@login_required
-def ServiceCreateView(request):
-    queryset = Equipment.objects.filter(pointer=request.user.profile.userid)
-    if request.method == 'GET':
-        year = request.GET.get('date')
-    for i in queryset:
-        ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
-    return redirect('service')
-
 
 
 class ServiceSearchResultView(LoginRequiredMixin, ListView):
