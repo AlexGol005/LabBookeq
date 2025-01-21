@@ -1870,6 +1870,36 @@ def ServiceEquipmentregTEView(request, str):
         return redirect('testingequipmentcharacterslist')
 
 
+@login_required
+def ServiceEquipmentregHEView(request, str):
+    """выводит форму для добавления постоянного ТОИР к ВО"""
+    charakters = HelpingEquipmentCharakters.objects.get(pk=str) 
+    etype = 3
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            try: 
+                ServiceEquipmentHE.objects.get(charakters=charakters)
+                form = ServiceEquipmentregTEForm(request.POST, instance=ServiceEquipmentHE.objects.get(charakters=charakters))  
+            except:
+                form = ServiceEquipmentregTEForm(request.POST)  
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.charakters = charakters
+                order.save()
+                return redirect('helpingequipmentcharacterslist')
+        else:
+            try: 
+                ServiceEquipmentTE.objects.get(charakters=charakters)
+                form = ServiceEquipmentregHEForm(instance=ServiceEquipmentHE.objects.get(charakters=charakters))
+            except:
+                form = ServiceEquipmentregHEForm()
+        data = {'form': form,}                
+        return render(request, 'equipment/toreg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел недоступен')
+        return redirect('helpingequipmentcharacterslist')
+
+
 class ServiceView(LoginRequiredMixin, ListView):
     """Выводит главную страницу просмотра и планирования ТОиР"""
     template_name = URL + '/service.html'
