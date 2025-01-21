@@ -11,20 +11,19 @@
 
 {% block content %}
 
-{#заголовок с ссылкой#}
-{#стандартная#}
-<div class=".col-24 mt-2 no-gutters" >
-<div style="text-align: center;"><h4><a href="/{{ URL }}/"> Вспомогательное оборудование </a></h4></div>
-<br>
-{#конец заголовка со ссылкой#}
-{# Выгрузка полного списка в ексель #}
-    <div style="text-align: center;">
-<a href="{% url 'measureequipmentall' %}" class="btn btn-warning mr-1 ml-1 mt-3" >Перейти к СИ</a>
-<a href="{% url 'testingequipmentall' %}" class="btn btn-warning mr-1 ml-1 mt-3" >Перейти к ИО</a>
+       {#заголовок с ссылкой#}
+       <div class="col-12">
+            <center><h4><a href="/{{ URL }}/"> Средства измерения</a></h4></center>
+            <br>
+        {#конец заголовка со ссылкой#}
 
-</div>
+           <center>
+<a href="{% url 'measureequipmentall' %}" class="btn btn-primary mr-1 ml-1 mt-3" style="width: 25%" >Перейти к СИ</a>
+<a href="{% url 'testingequipmentall' %}" class="btn btn-primary mr-1 ml-1 mt-3" style="width: 25%" >Перейти к ИО</a>
+
+</center>
      <br>
-     <br>
+
 {#форма для поиска по полям #}
 {#стандартная#}
     <div style="text-align: center;">
@@ -35,12 +34,11 @@
 {#конец формы для поиска по#}
 </div>
 
-<div class=".col-24 mt-2 no-gutters" >
-{#основная таблица#}
-{# уникальная #}
-<table class="table table-bordered">
-    <thead>
-        <tr>
+            {#основная таблица#}
+            {# уникальная #}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
             <th>  См </th>
             <th>Внут.№</th>
             <th> Название </th>
@@ -49,9 +47,8 @@
             <th> Год вып. </th>
             <th> Ком.№ </th>
             <th class="ind" > Отв-й  </th>
-            <th> Статус прибора</th>
-            <th> Проверены характеристики до  </th>
-            <th> Проверка характеристик план  </th>
+            <th> Статус</th>
+
          </tr>
     </thead>
     <tbody>
@@ -67,8 +64,6 @@
         <td> {{ obj.equipment.roomschange_set.all.last.roomnumber.roomnumber }}</td>
         <td> {{ obj.equipment.personchange_set.all.last.person }}</td>
         <td> {{ obj.equipment.get_status_display }}</td>
-        <td> {{ obj.equipmentSM_att.all.last.datedead|date:"d.m.Y"  }}</td>
-        <td> {{ obj.equipmentSM_att.all.last.dateorder|date:"m.Y"  }}</td>
     {% endfor %}
     </tbody>
 </table>
