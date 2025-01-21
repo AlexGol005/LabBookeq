@@ -20,12 +20,12 @@
 
     <br>
     <div style="text-align: center;">
-        <a href="{% url 'measurequipmentcharactersreg' %}"  target="blank" class="btn btn-info" style="width: 350px">
+        <a href="{% url 'helpingequipmentcharacterslist' %}"  target="blank" class="btn btn-info" style="width: 350px">
             Добавить характеристики ВО
         </a>
     </div>
     <br>
-        <p><i><font color="red"><b>ППеред регистрацией проверьте, что отсутствуют необходимые характеристики в сочетании с типом и модификацией.
+        <p><i><font color="red"><b>Перед регистрацией проверьте, что отсутствуют необходимые характеристики в сочетании с типом и модификацией.
             Вашу запись вы можете редактировать, 
             если необходимо внести изменения в чужую запись, пожалуйста обратитесь к администрации сайта: sandra.005@mail.ru или через форму обратной связи.
        </b></font> </i></p>
@@ -33,7 +33,7 @@
 {#форма для поиска по полям #}
     <br><br>
     <div style="text-align: center; margin-top: 25px">
-        <form action="/equipment/testingsearres/" method="GET">
+        <form action="/equipment/helpingsearres/" method="GET">
             {% csrf_token %}
             {% crispy form %}
         </form>
