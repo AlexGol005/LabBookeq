@@ -1853,14 +1853,14 @@ def ServiceEquipmentregMEView(request, str):
 
 @login_required
 def ServiceEquipmentregTEView(request, str):
+    """выводит форму для добавления постоянного ТОИР к СИ"""
+    charakters = TestingEquipmentCharakters.objects.get(pk=str) 
     etype = 2
-    """выводит форму для добавления постоянного ТОИР к ИО"""
-    charakters = TestingEquipmentCharakters.objects.get(pk=str)    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             try: 
                 ServiceEquipmentTE.objects.get(charakters=charakters)
-                form = ServiceEquipmentregTEForm(request.POST, instance=ServiceEquipmentTEE.objects.get(charakters=charakters))  
+                form = ServiceEquipmentregTEForm(request.POST, instance=ServiceEquipmentTE.objects.get(charakters=charakters))  
             except:
                 form = ServiceEquipmentregTEForm(request.POST)  
             if form.is_valid():
@@ -1870,8 +1870,8 @@ def ServiceEquipmentregTEView(request, str):
                 return redirect('testingequipmentcharacterslist')
         else:
             try: 
-                ServiceEquipmentTE.objects.get(charakters=charakters)
-                form = ServiceEquipmentregTEForm(instance=ServiceEquipmentTE.objects.get(charakters=charakters))
+                ServiceEquipmentME.objects.get(charakters=charakters)
+                form = ServiceEquipmentregTEForm(instance=ServiceEquipmentME.objects.get(charakters=charakters))
             except:
                 form = ServiceEquipmentregTEForm()
         data = {'form': form,}                
@@ -1879,6 +1879,7 @@ def ServiceEquipmentregTEView(request, str):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
         return redirect('testingequipmentcharacterslist')
+
 
 
 
