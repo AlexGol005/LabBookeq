@@ -1088,7 +1088,7 @@ class TEcharacterssearresView(LoginRequiredMixin, TemplateView):
             objects = TestingEquipmentCharakters.objects.\
             filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
             context['objects'] = objects
-        context['form'] = Searchreestrform(initial={'name': name})
+        context['form'] = Searchtestingform(initial={'name': name})
         context['URL'] = URL
         context['title'] = 'Характеристики, типы, испытательного оборудования'
         return context
