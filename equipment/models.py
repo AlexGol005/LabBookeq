@@ -1001,7 +1001,7 @@ class ServiceEquipmentUFact(models.Model):
 
 class ServiceEquipmentTE(models.Model):
     """Техобслуживание ИО"""
-    charakters = models.ForeignKey(TestingEquipmentCharakters, on_delete=models.PROTECT,
+    charakters = models.OneToOneField(TestingEquipmentCharakters, on_delete=models.PROTECT,
                                    verbose_name='Характеристики ИО')
 
     commentservice = models.TextField('Примечание к ТОиР', default='')
