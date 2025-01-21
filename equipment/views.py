@@ -1082,6 +1082,27 @@ class TEcharacterssearresView(LoginRequiredMixin, TemplateView):
         return context
 
 
+class HEcharacterssearresView(LoginRequiredMixin, TemplateView):
+    """ выводит результаты поиска по списку характеристик ВО """
+    template_name = URL + '/HEcharacterslist.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HEcharacterssearresView, self).get_context_data(**kwargs)
+        name = self.request.GET['name']
+        if self.request.GET['name']:
+            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
+        if self.request.GET['name']:
+            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
+        if name:
+            objects = Helping.objects.\
+            filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
+            context['objects'] = objects
+        context['form'] = Searchtestingform(initial={'name': name})
+        context['URL'] = URL
+        context['title'] = 'Характеристики, типы, вспомогательного оборудования'
+        return context
+
+
 class SearchResultMeasurEquipmentView(LoginRequiredMixin, TemplateView):
     """ выводит результаты поиска по списку средств измерений """
     template_name = URL + '/MEequipmentLIST.html'
