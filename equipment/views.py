@@ -1752,7 +1752,7 @@ class EquipmentAllView(LoginRequiredMixin, ListView):
     paginate_by = 12
 
     def get_context_data(self, **kwargs):
-        context = super(LastNewEquipmentView, self).get_context_data(**kwargs)
+        context = super(EquipmentAllView, self).get_context_data(**kwargs)
         context['URL'] = URL
         return context
 
