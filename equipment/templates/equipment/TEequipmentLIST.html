@@ -11,20 +11,21 @@
 
 {% block content %}
 
-{#заголовок с ссылкой#}
-{#стандартная#}
-<div class=".col-24 mt-2 no-gutters" >
-<div style="text-align: center;"><h4><a href="/{{ URL }}/"> Испытательное оборудование </a></h4></div>
-<br>
-{#конец заголовка со ссылкой#}
-{# Выгрузка полного списка в ексель #}
-    <div style="text-align: center;">
-<a href="{% url 'measureequipmentall' %}" class="btn btn-warning mr-1 ml-1 mt-3" >Перейти к СИ</a>
-<a href="{% url 'helpingequipmentall' %}" class="btn btn-warning mr-1 ml-1 mt-3" >Перейти к ВО</a>
-<a href="{% url 'export_me_xls' %}" class="btn btn-warning mr-1 ml-1 mt-3">Скачать график поверки и аттестации</a>
-    <br>
-</div>
-<br>
+    {#заголовок с ссылкой#}
+    {#стандартная#}
+
+       <div class="col-12">
+            <center><h4><a href="/{{ URL }}/"> Испытательное оборудование</a></h4></center>
+            <br>
+            {#конец заголовка со ссылкой#}
+
+           <center>
+           <a href="{% url 'measureequipmentall' %}" class="btn btn-primary mr-1 ml-1 mt-3" style="width: 25%" >Перейти к СИ</a>
+           <a href="{% url 'helpingequipmentall' %}" class="btn btn-primary mr-1 ml-1 mt-3" style="width: 25%" >Перейти к ВО</a>
+           <a href="{% url 'export_me_xls' %}" class="btn btn-primary mr-1 ml-1 mt-3" style="width: 25%">Скачать график поверки и аттестации</a>
+           </center>
+            <br>
+           
 {#форма для поиска по полям #}
 {#стандартная#}
         <div style="text-align: center;">
@@ -35,26 +36,24 @@
             </div>
 {#конец формы для поиска по#}
 
-{#основная таблица#}
-{# уникальная #}
-    <div class=".col-24 mt-2 no-gutters" >
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>  См </th>
-            <th>Внут.№</th>
-            <th> Название </th>
-            <th> Тип/модификация</th>
-            <th> Заводской № </th>
-            <th> Год вып. </th>
-            <th> Ком.№ </th>
-            <th class="ind" > Отв-й  </th>
-            <th> Статус прибора</th>
-            <th> Аттестован до  </th>
-            <th> Аттестация план  </th>
-            <th> Заказана аттестация или замена </th>
-         </tr>
+            {#основная таблица#}
+            {# уникальная #}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>  См </th>
+                        <th>Внут.№</th>
+                        <th> Название </th>
+                        <th> Тип/модификация</th>
+                        <th> Заводской № </th>
+                        <th> Год вып. </th>
+                        <th> Ком.№ </th>
+                        <th class="ind" > Отв-й  </th>
+                        <th> Статус</th>
+                        <th> Аттестован до  </th>
+                        <th> Аттестация план  </th>
+                        <th> Заказана аттестация или замена </th>
+                     </tr>
     </thead>
     <tbody>
     {% for obj in objects %}
