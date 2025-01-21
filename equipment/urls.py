@@ -63,6 +63,7 @@ urlpatterns = [
     path('reestrsearres/', views.ReestrsearresView.as_view(), name='reestrsearres'),
     path('verificatorssearres/', views.SearchPersonverregView.as_view(), name='verificatorssearres'),
     path('testingsearres/', views.TEcharacterssearresView.as_view(), name='testingsearres'),
+    path('helpingsearres/', views.HEcharacterssearresView.as_view(), name='helpingsearres'),
     path('metro/', views.MetrologicalEnsuringView.as_view(), name='metro'),
     path('verificationlabels/', views.VerificationLabelsView.as_view(), name='verificationlabels'),
     path('haveorder/<int:pk>/', views.HaveorderVerView.as_view(), name='haveorder'),
