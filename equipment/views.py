@@ -1900,9 +1900,9 @@ def ServiceEquipmentregHEView(request, str):
         if request.method == "POST":
             try: 
                 ServiceEquipmentHE.objects.get(charakters=charakters)
-                form = ServiceEquipmentregTEForm(request.POST, instance=ServiceEquipmentHE.objects.get(charakters=charakters))  
+                form = ServiceEquipmentregHEForm(request.POST, instance=ServiceEquipmentHE.objects.get(charakters=charakters))  
             except:
-                form = ServiceEquipmentregTEForm(request.POST)  
+                form = ServiceEquipmentregHEForm(request.POST)  
             if form.is_valid():
                 order = form.save(commit=False)
                 order.charakters = charakters
