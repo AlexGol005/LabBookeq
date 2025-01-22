@@ -65,11 +65,11 @@
             
             {% endif %}
             {% if obj.serviceequipmenthe and POINTER == obj.pointer %}
-              <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
+              <td> <a href="{% url 'toreghe' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
             {% elif obj.serviceequipmenthe and POINTER != obj.pointer %}
             <td> есть</td> 
             {% else %}
-            <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
+            <td> <a href="{% url 'toreghe' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% endif %}
             
         </tr>
