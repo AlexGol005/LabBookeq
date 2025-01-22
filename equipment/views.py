@@ -1094,7 +1094,7 @@ class HEcharacterssearresView(LoginRequiredMixin, TemplateView):
         if self.request.GET['name']:
             name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
         if name:
-            objects = Helping.objects.\
+            objects = HelpingEquipmentCharakters.objects.\
             filter(Q(name__icontains=name)|Q(name__icontains=name1)).order_by('name')
             context['objects'] = objects
         context['form'] = Searchtestingform(initial={'name': name})
