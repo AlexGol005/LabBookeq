@@ -1856,7 +1856,7 @@ def ServiceEquipmentregMEView(request, str):
                 form = ServiceEquipmentregForm(instance=ServiceEquipmentME.objects.get(charakters=charakters))
             except:
                 form = ServiceEquipmentregForm()
-        data = {'form': form,}                
+        data = {'form': form, 'etype': etype,}                
         return render(request, 'equipment/toreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
@@ -1887,7 +1887,7 @@ def ServiceEquipmentregTEView(request, str):
                 form = ServiceEquipmentregTEForm(instance=ServiceEquipmentTE.objects.get(charakters=charakters))
             except:
                 form = ServiceEquipmentregTEForm()
-        data = {'form': form,}                
+        data = {'form': form, 'etype': etype,}                
         return render(request, 'equipment/toreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
@@ -1914,11 +1914,11 @@ def ServiceEquipmentregHEView(request, str):
                 return redirect('helpingequipmentcharacterslist')
         else:
             try: 
-                ServiceEquipmentTE.objects.get(charakters=charakters)
-                form = ServiceEquipmentregHEForm(instance=ServiceEquipmentHE.objects.get(charakters=charakters))
+                ServiceEquipmentHE.objects.get(charakters=charakters)
+                form = ServiceEquipmentregHEForm(instance=instance=ServiceEquipmentHE.objects.get(charakters=charakters))
             except:
                 form = ServiceEquipmentregHEForm()
-        data = {'form': form,}                
+        data = {'form': form, 'etype': etype,}                
         return render(request, 'equipment/toreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел недоступен')
