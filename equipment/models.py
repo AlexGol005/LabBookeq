@@ -908,8 +908,6 @@ class ServiceEquipmentTE(models.Model):
     charakters = models.OneToOneField(TestingEquipmentCharakters, on_delete=models.PROTECT,
                                    verbose_name='Характеристики ИО')
 
-    commentservice = models.TextField('Примечание к ТОиР', default='')
-
     # ТО 0
     descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
 
@@ -932,12 +930,7 @@ class ServiceEquipmentHE(models.Model):
     pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
     charakters = models.OneToOneField(HelpingEquipmentCharakters, on_delete=models.PROTECT,
                                    verbose_name='Характеристики ВО')
-
-    equipment = models.ForeignKey(Equipment, on_delete=models.SET_NULL, blank=True, null=True,
-                                  verbose_name='Оборудование')
-
-    commentservice = models.TextField('Примечание к ТОиР', default='')
-
+    
     # ТО 0
     descriptiont0 = models.TextField('Объем технического обслуживания ТО 0',  default='', blank=True)
 
