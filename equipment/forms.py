@@ -749,24 +749,22 @@ class MeasurEquipmentCreateForm(forms.ModelForm):
 
 class TestingEquipmentCreateForm(forms.ModelForm):
     """форма для внесения ИО"""
-       charakters = AutoCompleteSelectField('techarakters_tag', label='Характеристики ИО', required=True, help_text='Начните вводить название прибора строчными или с заглавной буквы', show_help_text=False)
+    charakters = AutoCompleteSelectField('techarakters_tag', label='Характеристики ИО', required=True, help_text='Начните вводить название прибора строчными или с заглавной буквы', show_help_text=False)
 
-       class Meta:
-              model = TestingEquipment
-              fields = [
+    class Meta:
+        model = TestingEquipment
+        fields = [
                    'charakters',
                   ]
 
         def __init__(self, *args, **kwargs):
-               super().__init__(*args, **kwargs)
-               self.helper = FormHelper()
-               self.helper.layout = Layout(
+            super().__init__(*args, **kwargs)
+            self.helper = FormHelper()
+            self.helper.layout = Layout(
                    Row(
                        Column('charakters', css_class='form-group col-md-10 mb-0'),
                        ),
                Submit('submit', 'Внести'))
-
-       
 
 
 
@@ -780,10 +778,10 @@ class HelpingEquipmentCreateForm(forms.ModelForm):
             'charakters',
                   ]
 
-    def __init__(self, *args, **kwargs):
-               super().__init__(*args, **kwargs)
-               self.helper = FormHelper()
-               self.helper.layout = Layout(
+     def __init__(self, *args, **kwargs):
+         super().__init__(*args, **kwargs)
+         self.helper = FormHelper()
+         self.helper.layout = Layout(
                    Row(
                        Column('charakters', css_class='form-group col-md-10 mb-0'),
                        ),
