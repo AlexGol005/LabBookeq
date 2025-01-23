@@ -2039,6 +2039,17 @@ class ServiceSearchResultView(LoginRequiredMixin, ListView):
         return queryset
 
 
+@login_required
+def ServiceCreateView(request):
+    """формирует график ТОИР на указанный год """
+    queryset = Equipment.objects.filter(pointer=request.user.profile.userid)
+    if request.method == 'GET':
+        year = request.GET.get('date')
+    for i in queryset:
+        ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
+    return redirect('service')
+
+
 class ToMEView(LoginRequiredMixin, View):
     """выводит описание ТО для СИ """
     template_name = URL + '/to.html'
