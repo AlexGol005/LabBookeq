@@ -1727,7 +1727,7 @@ class SearchNotVerView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = MeasurEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
+        queryset = MeasurEquipment.objects.filter(equipment__=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
         return queryset
 
 
@@ -1761,7 +1761,7 @@ class SearchNotAttView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = TestingEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
+        queryset = TestingEquipment.objects.filter(equipment__=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
         return queryset
 
 
@@ -1778,7 +1778,7 @@ class EquipmentAllView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid).order_by('-pk')
+        queryset = Equipment.objects.filter(=self.request.user.profile.userid).order_by('-pk')
         return queryset
 
             
@@ -1814,7 +1814,7 @@ class SearchMustOrderView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = MeasurEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
+        queryset = MeasurEquipment.objects.filter(equipment__=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
         return queryset
 
 
@@ -1845,6 +1845,7 @@ def ServiceEquipmentregMEView(request, str):
                 form = ServiceEquipmentregForm(request.POST)  
             if form.is_valid():
                 order = form.save(commit=False)
+                order.pointer = self.request.user.profile.userid
                 order.charakters = charakters
                 order.save()
                 return redirect('measurequipmentcharacterslist')
@@ -1875,6 +1876,7 @@ def ServiceEquipmentregTEView(request, str):
                 form = ServiceEquipmentregTEForm(request.POST)  
             if form.is_valid():
                 order = form.save(commit=False)
+                order.pointer = self.request.user.profile.userid
                 order.charakters = charakters
                 order.save()
                 return redirect('testingequipmentcharacterslist')
@@ -1905,6 +1907,7 @@ def ServiceEquipmentregHEView(request, str):
                 form = ServiceEquipmentregHEForm(request.POST)  
             if form.is_valid():
                 order = form.save(commit=False)
+                order.pointer = self.request.user.profile.userid
                 order.charakters = charakters
                 order.save()
                 return redirect('helpingequipmentcharacterslist')
