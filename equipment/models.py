@@ -946,7 +946,7 @@ class ServiceEquipmentHE(models.Model):
 
     class Meta:
         verbose_name = 'Вспомогательное оборудование: Техобслуживание постоянная информация'
-        verbose_name_plural = 'Вспомогательное оборудование: Техобслуживание постоянная информацияк'
+        verbose_name_plural = 'Вспомогательное оборудование: Техобслуживание постоянная информация'
 
 
 class ServiceEquipmentU(models.Model):
