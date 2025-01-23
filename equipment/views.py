@@ -1778,7 +1778,7 @@ class EquipmentAllView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset = Equipment.objects.filter(=self.request.user.profile.userid).order_by('-pk')
+        queryset = Equipment.objects.filter(self.request.user.profile.userid).order_by('-pk')
         return queryset
 
             
