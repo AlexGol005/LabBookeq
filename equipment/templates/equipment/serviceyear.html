@@ -42,6 +42,8 @@
         <thead>
             <tr>
                 <th>Оборудование (внутренний номер)</th>
+                <th>Тип оборудования</th>
+                <th>Название оборудования</th>
                 <th>План по ТО-2 (планировать и отмечать)</th>
              </tr>
         </thead>
@@ -57,6 +59,23 @@
             {% else %}
             <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
             {% endif %}
+
+            <td> {{obj.equipment.kategory}}</a></td> 
+
+            {% if obj.equipment.measurequipment %}
+            <td> {{obj.equipment.measurequipment.characters.name}}</td> 
+            {% elif obj.equipment.testingequipment  %}
+            <td> {{obj.equipment.testingequipment.characters.name}}</td> 
+            {% elif obj.equipment.helpingequipment %}
+            <td> {{obj.equipment.helpingequipment.characters.name}}</td>
+            {% else %}
+            <td> {{obj.equipment.exnumber| slice:":5"}}</td>            
+            {% endif %}
+
+
+
+
+            
             <td> <a href="{% url 'serviceplan' obj.pk %}"  class="btn btn-outline-primary">СМ</a></td> 
         </tr>
         {% endfor %}
