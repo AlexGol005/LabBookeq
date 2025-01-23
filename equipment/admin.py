@@ -92,6 +92,13 @@ class ServiceEquipmentTEAdmin(admin.ModelAdmin):
         'charakters': 'techarakters_tag'
     })
 
+@admin.register(ServiceEquipmentHE)
+class ServiceEquipmentHEAdmin(admin.ModelAdmin):
+
+    form = make_ajax_form(ServiceEquipmentHE, {
+        'charakters': 'hecharakters_tag'
+    })
+
 
 @admin.register(Agreementverification)
 class AgreementverificationAdmin(admin.ModelAdmin):
