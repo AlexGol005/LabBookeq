@@ -907,7 +907,7 @@ def HelpingEquipmentCharaktersUpdateView(request, str):
 class MeasureequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации СИ на основе ЛО и Госреестра """
     form_class = MeasurEquipmentCreateForm
-    template_name = 'equipment/crispy_reg.html'
+    template_name = 'equipment/metehereg.html'
     success_url = f'/equipment/measureequipment/{str}'
 
     def get_object(self, queryset=None):
@@ -930,7 +930,7 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
 class TestingequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации ИО на основе ЛО и характеристик ИО """
     form_class = TestingEquipmentCreateForm
-    template_name = 'equipment/crispy_reg.html'
+    template_name = 'equipment/metehereg.html'
     success_url = f'/equipment/testequipmentreg/{str}'
 
     def get_object(self, queryset=None):
@@ -953,7 +953,7 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
 class HelpingequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации ВО на основе ЛО и характеристик ВО """
     form_class = HelpingEquipmentCreateForm
-    template_name = 'equipment/crispy_reg.html'
+    template_name = 'equipment/metehereg.html'
     success_url = f'/equipment/helpequipmentreg/{str}'
 
     def get_object(self, queryset=None):
