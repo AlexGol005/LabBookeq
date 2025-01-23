@@ -1915,7 +1915,7 @@ def ServiceEquipmentregHEView(request, str):
         else:
             try: 
                 ServiceEquipmentHE.objects.get(charakters=charakters)
-                form = ServiceEquipmentregHEForm(instance=instance=ServiceEquipmentHE.objects.get(charakters=charakters))
+                form = ServiceEquipmentregHEForm(instance=ServiceEquipmentHE.objects.get(charakters=charakters))
             except:
                 form = ServiceEquipmentregHEForm()
         data = {'form': form, 'etype': etype,}                
