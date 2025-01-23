@@ -2046,7 +2046,7 @@ def ServiceCreateView(request):
     """формирует график ТОИР на указанный год """
     if request.method == 'GET':
         year = request.GET.get('date')
-        queryset = Equipment.objects.filter(pointer=request.user.profile.userid).filter(yearintoservice__gte=year)
+        queryset = Equipment.objects.filter(pointer=request.user.profile.userid).filter(yearintoservice__lte=year)
     for i in queryset:
         ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
     return redirect('service')
