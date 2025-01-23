@@ -13,6 +13,8 @@
           <h4><a href="{% url 'measurequipmentcharacterslist' %}">Внести требуемое по технической документации техническое обслуживание СИ</a></h4>   
          {% elif etype == 2 %}
           <h4><a href="{% url 'testingequipmentcharacterslist' %}">Внести требуемое по технической документации техническое обслуживание ИО</a></h4>  
+         {% elif etype == 3 %}
+          <h4><a href="{% url 'helpingequipmentcharacterslist' %}">Внести требуемое по технической документации техническое обслуживание ВО</a></h4> 
          {% endif %}
       </center>
   
