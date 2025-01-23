@@ -749,28 +749,48 @@ class MeasurEquipmentCreateForm(forms.ModelForm):
 
 class TestingEquipmentCreateForm(forms.ModelForm):
     """форма для внесения ИО"""
-    charakters = forms.ModelChoiceField(label='Характеристики испытательного оборудования', required=False,
-                                        queryset=TestingEquipmentCharakters.objects.all().order_by('name'),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
+       charakters = AutoCompleteSelectField('techarakters_tag', label='Характеристики ИО', required=True, help_text='Начните вводить название прибора строчными или с заглавной буквы', show_help_text=False)
 
-    class Meta:
-        model = TestingEquipment
-        fields = [
-            'charakters',
+       class Meta:
+              model = TestingEquipment
+              fields = [
+                   'charakters',
                   ]
+
+        def __init__(self, *args, **kwargs):
+               super().__init__(*args, **kwargs)
+               self.helper = FormHelper()
+               self.helper.layout = Layout(
+                   Row(
+                       Column('charakters', css_class='form-group col-md-10 mb-0'),
+                       ),
+               Submit('submit', 'Внести'))
+
+       
+
 
 
 class HelpingEquipmentCreateForm(forms.ModelForm):
     """форма для внесения ВО"""
-    charakters = forms.ModelChoiceField(label='Характеристики вспомогательного оборудования', required=False,
-                                        queryset=HelpingEquipmentCharakters.objects.all().order_by('name'),
-                                        widget=forms.Select(attrs={'class': 'form-control'}))
+    charakters = AutoCompleteSelectField('hecharakters_tag', label='Характеристики ИО', required=True, help_text='Начните вводить название прибора строчными или с заглавной буквы', show_help_text=False)
 
     class Meta:
         model = HelpingEquipment
         fields = [
             'charakters',
                   ]
+
+    def __init__(self, *args, **kwargs):
+               super().__init__(*args, **kwargs)
+               self.helper = FormHelper()
+               self.helper.layout = Layout(
+                   Row(
+                       Column('charakters', css_class='form-group col-md-10 mb-0'),
+                       ),
+               Submit('submit', 'Внести'))
+
+
+
 
 
 # блок 4 - формы для внесения производителей, поверителей, комнат, принадлежностей
