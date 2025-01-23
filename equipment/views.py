@@ -870,6 +870,7 @@ class HelpingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
         order = form.save(commit=False)
         user = User.objects.get(username=self.request.user)
         if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.pointer = self.request.user.profile.userid
             order.save()
             return super().form_valid(form)
         else:
