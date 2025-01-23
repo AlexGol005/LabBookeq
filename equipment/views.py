@@ -930,7 +930,8 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
 class TestingequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации ИО на основе ЛО и характеристик ИО """
     form_class = TestingEquipmentCreateForm
-    template_name = 'equipment/reg.html'
+    template_name = 'equipment/crispy_reg.html'
+    success_url = f'/equipment/testequipmentreg/{str}'
 
     def get_object(self, queryset=None):
         return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
@@ -952,7 +953,8 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
 class HelpingequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации ВО на основе ЛО и характеристик ВО """
     form_class = HelpingEquipmentCreateForm
-    template_name = 'equipment/reg.html'
+    template_name = 'equipment/crispy_reg.html'
+    success_url = f'/equipment/helpequipmentreg/{str}'
 
     def get_object(self, queryset=None):
         return get_object_or_404(Equipment, exnumber=self.kwargs['str'])
