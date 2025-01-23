@@ -2059,3 +2059,20 @@ class ToMEView(LoginRequiredMixin, View):
     def get(self, request, str):
         obj = ServiceEquipmentME.objects.get(pk=str)
         return render(request, URL + '/to.html', {'obj': obj,})
+
+
+class ToTEView(LoginRequiredMixin, View):
+    """выводит описание ТО для ИО """
+    template_name = URL + '/to.html'
+
+    def get(self, request, str):
+        obj = ServiceEquipmentTE.objects.get(pk=str)
+        return render(request, URL + '/to.html', {'obj': obj,})
+
+class ToHEView(LoginRequiredMixin, View):
+    """выводит описание ТО для ВО """
+    template_name = URL + '/to.html'
+
+    def get(self, request, str):
+        obj = ServiceEquipmentHE.objects.get(pk=str)
+        return render(request, URL + '/to.html', {'obj': obj,})
