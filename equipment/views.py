@@ -1846,7 +1846,7 @@ def ServiceEquipmentregMEView(request, str):
                 form = ServiceEquipmentregForm(request.POST)  
             if form.is_valid():
                 order = form.save(commit=False)
-                order.pointer = self.request.user.profile.userid
+                order.pointer = request.user.profile.userid
                 order.charakters = charakters
                 order.save()
                 return redirect('measurequipmentcharacterslist')
@@ -1877,7 +1877,7 @@ def ServiceEquipmentregTEView(request, str):
                 form = ServiceEquipmentregTEForm(request.POST)  
             if form.is_valid():
                 order = form.save(commit=False)
-                order.pointer = self.request.user.profile.userid
+                order.pointer = request.user.profile.userid
                 order.charakters = charakters
                 order.save()
                 return redirect('testingequipmentcharacterslist')
@@ -1908,7 +1908,7 @@ def ServiceEquipmentregHEView(request, str):
                 form = ServiceEquipmentregHEForm(request.POST)  
             if form.is_valid():
                 order = form.save(commit=False)
-                order.pointer = self.request.user.profile.userid
+                order.pointer = request.user.profile.userid
                 order.charakters = charakters
                 order.save()
                 return redirect('helpingequipmentcharacterslist')
