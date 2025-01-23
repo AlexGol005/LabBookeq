@@ -772,7 +772,7 @@ class TestingEquipmentCreateForm(forms.ModelForm):
 
 class HelpingEquipmentCreateForm(forms.ModelForm):
     """форма для внесения ВО"""
-    charakters = AutoCompleteSelectField('hecharakters_tag', label='Характеристики ИО', required=True, help_text='Начните вводить название прибора строчными или с заглавной буквы', show_help_text=False)
+    charakters = AutoCompleteSelectField('hecharakters_tag', label='Характеристики ВО', required=True, help_text='Начните вводить название прибора строчными или с заглавной буквы', show_help_text=False)
 
     class Meta:
         model = HelpingEquipment
