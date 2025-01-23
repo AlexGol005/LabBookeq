@@ -882,6 +882,7 @@ class MeteorologicalParameters(models.Model):
 
 class ServiceEquipmentME(models.Model):
     """Техобслуживание СИ - постоянная информация из паспортов и инструкций"""
+    pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
     charakters = models.OneToOneField(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики СИ')
     # ТО 0
@@ -903,6 +904,7 @@ class ServiceEquipmentME(models.Model):
 
 class ServiceEquipmentTE(models.Model):
     """Техобслуживание ИО"""
+    pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
     charakters = models.OneToOneField(TestingEquipmentCharakters, on_delete=models.PROTECT,
                                    verbose_name='Характеристики ИО')
 
@@ -927,6 +929,7 @@ class ServiceEquipmentTE(models.Model):
 
 class ServiceEquipmentHE(models.Model):
     """Техобслуживание ВО"""
+    pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
     charakters = models.OneToOneField(HelpingEquipmentCharakters, on_delete=models.PROTECT,
                                    verbose_name='Характеристики ВО')
 
