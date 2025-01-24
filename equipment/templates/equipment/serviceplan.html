@@ -35,7 +35,7 @@
         
 
             {% if obj.equipment.measurequipment %}
-            <a href="{% url 'tome' obj.equipment.measurequipment_set.last.charakters.serviceequipmentme.pk %}"  class="btn btn-primary">Смотреть</a></div>
+            <a href="{% url 'tome' obj.equipment.measurequipment.last.charakters.serviceequipmentme.pk %}"  class="btn btn-primary">Смотреть</a></div>
             {% elif obj.equipment.testingequipment and obj.equipment.testingequipment.last.charakters.serviceequipmentte.pk%}
             <a href="{% url 'tote' obj.equipment.testingequipment.last.charakters.serviceequipmentte.pk %}"  class="btn btn-primary">Смотреть</a></div>
             {% elif obj.equipment.helpingequipment and obj.equipment.helpingequipment.last.charakters.serviceequipmenthe.pk%}
