@@ -2043,13 +2043,21 @@ class ServiceSearchResultView(LoginRequiredMixin, ListView):
 
 @login_required
 def ServiceCreateView(request):
-    """формирует график ТОИР на указанный год """
+    """формирует график ТОИР на указанный год """       
     if request.method == 'GET':
         year = request.GET.get('date')
         queryset = Equipment.objects.filter(pointer=request.user.profile.userid).filter(yearintoservice__lte=year)
-    for i in queryset:
-        ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
-    return redirect('service')
+        if: 
+            len(list(ServiceEquipmentU.objects.filter(pointer=request.user.profile.userid).filter(year=year))) !=0:
+            messages.success(request, f'График ТОиР на {year} год уже был сформирован ранее, добавить в график новый прибор можно через блок ТОиР на индивидуальной странице прибора')
+            return redirect('service')
+        else:
+            for i in queryset:
+                ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
+            messages.success(request, f'График ТОиР на {year} год успешно сформирован')
+                return redirect('service')
+
+
 
 
 class ToMEView(LoginRequiredMixin, View):
