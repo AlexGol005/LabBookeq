@@ -1,0 +1,52 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+СИ/ИО/ВО
+{% endblock %}
+
+
+{% block content %}
+<div class="col-8">
+      {% if obj.charakters.measurequipment_set %}
+      <center><h5> Характеристики {{ obj.charakters.measurequipment_set.last.equipment.kategory}}:  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
+      {% elif obj.charakters.testingequipment_set %}
+      <center><h5> Характеристики {{ obj.charakters.testingequipment_set.last.equipment.kategory}}:  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
+      {% elif obj.charakters.helpingequipment_set %}
+      <center><h5> Характеристики {{ obj.charakters.helpingequipment_set.last.equipment.kategory}}:  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
+      {% endif %}
+      
+  
+
+<div style="text-align: center; margin-top: 25px">
+    <table class="table table-bordered flexy">
+            <tr><th>Название прибора</th><td>{{ obj.name|default_if_none:'' }}</td></tr>
+            <tr><th>Номер в Госреестре</th><td>{{ obj.reestr|default_if_none:'' }}</td></tr>
+            <tr><th>МежМетрологический интервал, месяцев</th><td>{{ obj.calinterval|default_if_none:'' }}</td></tr>
+            <tr><th>Модификация прибора</th><td>{{ obj.modificname|default_if_none:'' }}</td></tr> 
+            <tr><th>Тип прибора </th><td>{{ obj.typename|default_if_none:'' }}</td></tr>
+            <tr><th>Название прибора</th><td>{{ obj.name|default_if_none:'' }}</td></tr>
+            <tr><th>Номер в Госреестре</th><td>{{ obj.reestr|default_if_none:'' }}</td></tr>
+            <tr><th>МежМетрологический интервал, месяцев</th><td>{{ obj.calinterval|default_if_none:'' }}</td></tr>
+            <tr><th>Модификация прибора</th><td>{{ obj.modificname|default_if_none:'' }}</td></tr> 
+            <tr><th>Диапазон измерений </th><td>{{ obj.typename|default_if_none:'' }}</td></tr>
+            <tr><th>Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)</th><td>{{ obj.name }}</td></tr>
+            <tr><th>Работает от сети</th><td>{{ obj.power|yesno:"да,нет"  }}</td></tr>
+            <tr><th>напряжение</th><td>{{ obj.voltage|default_if_none:''e }}</td></tr>
+            <tr><th>частота</th><td>{{ obj.frequency }}</td></tr> 
+            <tr><th>температура </th><td>{{ obj.temperature|default_if_none:'' }}</td></tr>
+            <tr><th>влажность</th><td>{{ obj.humidicity|default_if_none:'' }}</td></tr>
+            <tr><th>давление</th><td>{{ obj.pressure|default_if_none:'' }}</td></tr> 
+            <tr><th>описание мероприятий по установке </th><td>{{ obj.setplace|default_if_none:'' }}</td></tr>
+            <tr><th>установка не требуется</th><td>{{ obj.needsetplace|yesno:"да,нет" }}</td></tr>
+            <tr><th>где в паспорте комплектация</th><td>{{ obj.complectlist }}</td></tr> 
+            <tr><th>тестирование возможно? да/нет </th><td>{{ obj.expresstest|yesno:"да,нет" }}</td></tr>
+            <tr><th>Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)</th><td>{{ obj.traceability |default_if_none:''}}</td></tr>
+            <tr><th>примечание</th><td>{{ obj.aim }}</td></tr> 
+            <tr><th>виды измерений, тип (группа) средств измерений по МИ 2314 </th><td>{{ obj.cod|default_if_none:'' }}</td></tr>
+            <tr><th>Наименование испытуемых групп объектов</th><td>{{ obj.aim2|default_if_none:'' }}</td></tr>
+    </table>
+</div>
+
+  
+</div>
+{% endblock %}
