@@ -2047,8 +2047,7 @@ def ServiceCreateView(request):
     if request.method == 'GET':
         year = request.GET.get('date')
         queryset = Equipment.objects.filter(pointer=request.user.profile.userid).filter(yearintoservice__lte=year)
-        if: 
-            len(list(ServiceEquipmentU.objects.filter(pointer=request.user.profile.userid).filter(year=year))) !=0:
+        if len(list(ServiceEquipmentU.objects.filter(pointer=request.user.profile.userid).filter(year=year))) !=0:        
             messages.success(request, f'График ТОиР на {year} год уже был сформирован ранее, добавить в график новый прибор можно через блок ТОиР на индивидуальной странице прибора')
             return redirect('service')
         else:
