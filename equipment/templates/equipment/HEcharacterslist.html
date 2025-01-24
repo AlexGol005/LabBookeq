@@ -58,10 +58,13 @@
             <td>{{ obj.name }}</td>
             <td>{{ obj.modificname }}</td>
             <td>{{ obj.typename }}</td>
+
             {% if POINTER == obj.pointer %}
-            <td> <a href="{% url 'helpequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> 
+            <td> <a href="{% url 'helpequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">редактировать</a></td> 
+            {% elif POINTER != obj.pointer %}
+            <td> <a href="{% url 'hecharaktersstr' obj.pk %}"  class="btn btn-outline-info mt-3">смотреть</a></td>             
             {% else %}
-            <td> ред. админ.</td>           
+            <td> ред. админ.</td>
             {% endif %}
             
             {% if obj.serviceequipmenthe and POINTER == obj.serviceequipmenthe.pointer %}
