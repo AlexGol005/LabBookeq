@@ -31,7 +31,7 @@
             <tr><th>Диапазон измерений </th><td>{{ obj.typename|default_if_none:'' }}</td></tr>
             <tr><th>Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)</th><td>{{ obj.name }}</td></tr>
             <tr><th>Работает от сети</th><td>{{ obj.power|yesno:"да,нет"  }}</td></tr>
-            <tr><th>напряжение</th><td>{{ obj.voltage|default_if_none:''e }}</td></tr>
+            <tr><th>напряжение</th><td>{{ obj.voltage|default_if_none:'' }}</td></tr>
             <tr><th>частота</th><td>{{ obj.frequency }}</td></tr> 
             <tr><th>температура </th><td>{{ obj.temperature|default_if_none:'' }}</td></tr>
             <tr><th>влажность</th><td>{{ obj.humidicity|default_if_none:'' }}</td></tr>
