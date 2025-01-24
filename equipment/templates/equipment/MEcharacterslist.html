@@ -67,7 +67,10 @@
             <td> {{ obj.measurydiapason }}</td>
             <td> {{ obj.cod|default_if_none:' ' }}</td>
             {% if POINTER == obj.pointer %}
-            <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> 
+            <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">редактировать</a></td> 
+            {% if POINTER != obj.pointer %}
+            <td> <a href="{% url 'mecharaktersstr' obj.pk %}"  class="btn btn-outline-info mt-3">смотреть</a></td> 
+            
             {% else %}
             <td> ред. админ.</td>
             {% endif %}
