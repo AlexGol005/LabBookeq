@@ -8,9 +8,11 @@
 {% block content %}
 <div class="col-8">
       {% if obj.charakters.measurequipment_set %}
-      <center><h5>Описание ТО для {{ obj.charakters.measurequipment_set.last.equipment.kategory}}  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
+      <center><h5>Описание ТО для {{ obj.charakters.measurequipment_set.last.equipment.kategory}}:  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
       {% elif obj.charakters.testingequipment_set %}
-      fff
+      <center><h5>Описание ТО для {{ obj.charakters.testingequipment_set.last.equipment.kategory}}:  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
+      {% elif obj.charakters.helpingequipment_set %}
+      <center><h5>Описание ТО для {{ obj.charakters.helpingequipment_set.last.equipment.kategory}}:  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
       {% endif %}
       
   
