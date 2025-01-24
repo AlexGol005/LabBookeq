@@ -19,7 +19,7 @@
     
 {#конец заголовка #}
     
- <center><h6>Примечание</h6></center>
+ <center><h6>Примечание по ТО</h6></center>
     <center>  <table class="table table-bordered">
       <tr><td>{{obj.commentservice }}</td></tr>
 </table></center>
@@ -34,11 +34,11 @@
 
         
 
-            {% if obj.equipment.measurequipment_set.all and obj.equipment.measurequipment_set.last.charakters.serviceequipmentme.pk%}
+            {% if obj.equipment.measurequipment and obj.equipment.measurequipment.last.charakters.serviceequipmentme.pk%}
             <a href="{% url 'tome' obj.equipment.measurequipment_set.last.charakters.serviceequipmentme.pk %}"  class="btn btn-primary">Смотреть</a></div>
-            {% elif obj.equipment.testingequipment_set.all and obj.equipment.testingequipment_set.last.charakters.serviceequipmentte.pk%}
-            <a href="{% url 'tote' obj.equipment.testingequipment_set.last.charakters.serviceequipmentte.pk %}"  class="btn btn-primary">Смотреть</a></div>
-            {% elif obj.equipment.helpingequipment_set.all and obj.equipment.helpingequipment_set.last.charakters.serviceequipmenthe.pk%}
+            {% elif obj.equipment.testingequipment and obj.equipment.testingequipment.last.charakters.serviceequipmentte.pk%}
+            <a href="{% url 'tote' obj.equipment.testingequipment.last.charakters.serviceequipmentte.pk %}"  class="btn btn-primary">Смотреть</a></div>
+            {% elif obj.equipment.helpingequipment and obj.equipment.helpingequipment.last.charakters.serviceequipmenthe.pk%}
             <a href="{% url 'tohe' obj.equipment.helpingequipment_set.last.charakters.serviceequipmenthe.pk %}"  class="btn btn-primary">Смотреть</a></div>
             {% else %}
              Не описано,  
