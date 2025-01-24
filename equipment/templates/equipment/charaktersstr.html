@@ -13,6 +13,8 @@
       <center><a href={% url 'testingequipmentcharacterslist' %}><h5> Характеристики {{ obj.testingequipment_set.last.equipment.kategory}}:  {{ obj.name }}  {{ obj.modificname }}  {{ obj.typename }}</a></h5></center>
       {% elif modelname == HelpingEquipmentCharakters %}
       <center><a href={% url 'helpingequipmentcharacterslist' %}><h5> Характеристики {{ obj.helpingequipment_set.last.equipment.kategory}}:  {{ obj.name }}  {{ obj.modificname }}  {{ obj.typename }}</a></h5></center>
+      {%else %}
+      {{modelname}}
       {% endif %}
       
   
