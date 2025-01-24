@@ -402,7 +402,7 @@ class MeasurEquipmentCharaktersStrView(TemplateView):
     def get_context_data(self, str, **kwargs):
         context = super(MeasurEquipmentCharaktersStrView, self).get_context_data(**kwargs)
         context['obj'] = MeasurEquipmentCharakters.objects.get(pk=str)
-        context['modelname'] = MeasurEquipmentCharakters
+        context['modelname'] = 1
         return context
 
 
@@ -413,7 +413,7 @@ class TestingEquipmentCharaktersStrView(TemplateView):
     def get_context_data(self, str, **kwargs):
         context = super(TestingEquipmentCharaktersStrView, self).get_context_data(**kwargs)
         context['obj'] = TestingEquipmentCharakters.objects.get(pk=str)
-        context['modelname'] = TestingEquipmentCharakters
+        context['modelname'] = 2
         return context
 
 
@@ -424,7 +424,7 @@ class HelpingEquipmentCharaktersStrView(TemplateView):
     def get_context_data(self, str, **kwargs):
         context = super(HelpingEquipmentCharaktersStrView, self).get_context_data(**kwargs)
         context['obj'] = HelpingEquipmentCharakters.objects.get(pk=str)
-        context['modelname'] = HelpingEquipmentCharakters
+        context['modelname'] = 3
         return context
 
 
