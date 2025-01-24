@@ -34,20 +34,20 @@
 
         
 
-            {% if obj.equipment.measurequipment %}
+            {% if obj.equipment.measurequipment and obj.equipment.measurequipment.charakters.serviceequipmentme.pk %}
             <a href="{% url 'tome' obj.equipment.measurequipment.charakters.serviceequipmentme.pk %}"  class="btn btn-primary">Смотреть</a></div>
-            {% elif obj.equipment.testingequipment and obj.equipment.testingequipment.last.charakters.serviceequipmentte.pk%}
-            <a href="{% url 'tote' obj.equipment.testingequipment.last.charakters.serviceequipmentte.pk %}"  class="btn btn-primary">Смотреть</a></div>
-            {% elif obj.equipment.helpingequipment and obj.equipment.helpingequipment.last.charakters.serviceequipmenthe.pk%}
-            <a href="{% url 'tohe' obj.equipment.helpingequipment_set.last.charakters.serviceequipmenthe.pk %}"  class="btn btn-primary">Смотреть</a></div>
+            {% elif obj.equipment.testingequipment and obj.equipment.testingequipment.charakters.serviceequipmentte.pk %}
+            <a href="{% url 'tote' obj.equipment.testingequipment.charakters.serviceequipmentte.pk %}"  class="btn btn-primary">Смотреть</a></div>
+            {% elif obj.equipment.helpingequipment and obj.equipment.helpingequipment.charakters.serviceequipmenthe.pk %}
+            <a href="{% url 'tohe' obj.equipment.helpingequipment.charakters.serviceequipmenthe.pk %}"  class="btn btn-primary">Смотреть</a></div>
             {% else %}
-             Не описано,  
+             Не описано  
 
-{% if obj.equipment.measurequipment_set.all%}
+{% if obj.equipment.measurequipment %}
 <a href="{% url 'measurequipmentcharacterslist' %}"  class="btn btn-primary">Добавить</a></div>
-{% elif obj.equipment.testingequipment_set.all%}
+{% elif obj.equipment.testingequipment %}
 <a href="{% url 'testingequipmentcharacterslist' %}"  class="btn btn-primary">Добавить</a></div>
-{% elif obj.equipment.helpingequipment_set.all%}
+{% elif obj.equipment.helpingequipment %}
 <a href="{% url 'helpingequipmentcharacterslist' %}"  class="btn btn-primary">Добавить</a></div>
 {% else %}
              Не описано
