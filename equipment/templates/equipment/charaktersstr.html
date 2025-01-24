@@ -41,7 +41,7 @@
             <tr><th>где в паспорте комплектация</th><td>{{ obj.complectlist }}</td></tr> 
             <tr><th>тестирование возможно? да/нет </th><td>{{ obj.expresstest|yesno:"да,нет" }}</td></tr>
             <tr><th>Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)</th><td>{{ obj.traceability |default_if_none:''}}</td></tr>
-            <tr><th>примечание</th><td>{{ obj.aim }}</td></tr> 
+            <tr><th>примечание</th><td>{{ obj.aim|default_if_none:'' }}</td></tr> 
             <tr><th>виды измерений, тип (группа) средств измерений по МИ 2314 </th><td>{{ obj.cod|default_if_none:'' }}</td></tr>
             <tr><th>Наименование испытуемых групп объектов</th><td>{{ obj.aim2|default_if_none:'' }}</td></tr>
     </table>
