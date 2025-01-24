@@ -37,7 +37,7 @@
             <tr><th>влажность</th><td>{{ obj.humidicity|default_if_none:'' }}</td></tr>
             <tr><th>давление</th><td>{{ obj.pressure|default_if_none:'' }}</td></tr> 
             <tr><th>описание мероприятий по установке </th><td>{{ obj.setplace|default_if_none:'' }}</td></tr>
-            <tr><th>установка не требуется</th><td>{{ obj.needsetplace|yesno:"да,нет" }}</td></tr>
+            <tr><th>установка</th><td>{{ obj.needsetplace|yesno:"не требуется,требуется" }}</td></tr>
             <tr><th>где в паспорте комплектация</th><td>{{ obj.complectlist }}</td></tr> 
             <tr><th>тестирование возможно? да/нет </th><td>{{ obj.expresstest|yesno:"да,нет" }}</td></tr>
             <tr><th>Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)</th><td>{{ obj.traceability |default_if_none:''}}</td></tr>
