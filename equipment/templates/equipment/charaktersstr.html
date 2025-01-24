@@ -7,12 +7,12 @@
 
 {% block content %}
 <div class="col-8">
-      {% if obj.charakters.measurequipment_set %}
-      <center><h5> Характеристики {{ obj.charakters.measurequipment_set.last.equipment.kategory}}:  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
-      {% elif obj.charakters.testingequipment_set %}
-      <center><h5> Характеристики {{ obj.charakters.testingequipment_set.last.equipment.kategory}}:  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
-      {% elif obj.charakters.helpingequipment_set %}
-      <center><h5> Характеристики {{ obj.charakters.helpingequipment_set.last.equipment.kategory}}:  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
+      {% if obj.reestr %}
+      <center><h5> Характеристики {{ obj.measurequipment_set.last.equipment.kategory}}:  {{ obj.name }}  {{ obj.modificname }}  {{ obj.typename }}</h5></center>
+      {% elif obj.aim2 %}
+      <center><h5> Характеристики {{ obj.charakters.testingequipment_set.last.equipment.kategory}}:  {{ obj.name }}  {{ obj.modificname }}  {{ obj.typename }}</h5></center>
+      {% else %}
+      <center><h5> Характеристики:  {{ obj.name }}  {{ obj.modificname }}  {{ obj.typename }}</h5></center>
       {% endif %}
       
   
