@@ -63,7 +63,7 @@ class CreateYearForm(forms.Form):
                 Submit('submit', 'сформировать', css_class='btn  btn-primary col-md-6 mb-3 mt-4 ml-2 mr-2')))
 
 
-class lookYearForm(forms.Form):
+class LookYearForm(forms.Form):
     """форма для поиска записей по году"""
     date = forms.DateField(label='Год в формате ГГГГ', initial=now.year,
                            widget=forms.DateInput(
