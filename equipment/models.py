@@ -894,6 +894,8 @@ class ServiceEquipmentME(models.Model):
     # ТО 2
     descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
 
+    comment = models.TextField('Комментарий к постоянным особенностям ТО',  default='', blank=True)
+
     def __str__(self):
         return f'{self.charakters.name}, pk = {self.pk}'
 
@@ -917,6 +919,8 @@ class ServiceEquipmentTE(models.Model):
     # ТО 2
     descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
 
+    comment = models.TextField('Комментарий к постоянным особенностям ТО',  default='', blank=True)
+
     def __str__(self):
         return self.charakters.name
 
@@ -939,6 +943,8 @@ class ServiceEquipmentHE(models.Model):
 
     # ТО 2
     descriptiont2 = models.TextField('Объем технического обслуживания ТО 2',  default='', blank=True)
+        
+    comment = models.TextField('Комментарий к постоянным особенностям ТО',  default='', blank=True)
 
 
     def __str__(self):
