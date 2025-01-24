@@ -405,6 +405,26 @@ class MeasurEquipmentCharaktersStrView(TemplateView):
         return context
 
 
+class TestingEquipmentCharaktersStrView(TemplateView):
+    """выводит индивидуальную страницу с описанием характеристик ИО """
+    template_name = URL + '/charaktersstr.html'
+
+    def get_context_data(self, str, **kwargs):
+        context = super(TestingEquipmentCharaktersStrView, self).get_context_data(**kwargs)
+        context['obj'] = TestingEquipmentCharakters.objects.get(pk=str)
+        return context
+
+
+class HelpingEquipmentCharaktersStrView(TemplateView):
+    """выводит индивидуальную страницу с описанием характеристик ВО """
+    template_name = URL + '/charaktersstr.html'
+
+    def get_context_data(self, str, **kwargs):
+        context = super(HelpingEquipmentCharaktersStrView, self).get_context_data(**kwargs)
+        context['obj'] = HelpingEquipmentCharakters.objects.get(pk=str)
+        return context
+
+
 
 # блок 4 - формы регистрации и обновления: комнаты, поверители, производители плюс список поверителей и производителей, договоры с поверителями
 
