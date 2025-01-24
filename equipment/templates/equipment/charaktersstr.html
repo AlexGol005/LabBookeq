@@ -8,7 +8,7 @@
 {% block content %}
 <div class="col-8">
       {% if obj.reestr %}
-      <center><h5> Характеристики {{ obj.measurequipment_set.last.equipment.kategory}}:  {{ obj.name }}  {{ obj.modificname }}  {{ obj.typename }}</h5></center>
+      <center><a href={% url 'measurequipmentcharacterslist' %}><h5> Характеристики {{ obj.measurequipment_set.last.equipment.kategory}}:  {{ obj.name }}  {{ obj.modificname }}  {{ obj.typename }}</a></h5></center>
       {% elif obj.aim2 %}
       <center><h5> Характеристики {{ obj.charakters.testingequipment_set.last.equipment.kategory}}:  {{ obj.name }}  {{ obj.modificname }}  {{ obj.typename }}</h5></center>
       {% else %}
