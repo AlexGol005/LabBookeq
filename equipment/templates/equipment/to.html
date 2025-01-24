@@ -7,8 +7,12 @@
 
 {% block content %}
 <div class="col-8">
-  
-      <center><h5>Описание ТО для {{ obj.charakters}}  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
+      {% if obj.charakters.measurequipment_set %}
+      <center><h5>Описание ТО для {{ obj.charaktersmeasurequipment_set.last.kategory}}  {{ obj.charakters.name }}  {{ obj.charakters.modificname }}  {{ obj.charakters.typename }}</h5></center>
+      {% elif obj.charakters.testingequipment_set %}
+      fff
+      {% endif %}
+      
   
 
 <div style="text-align: center; margin-top: 25px">
