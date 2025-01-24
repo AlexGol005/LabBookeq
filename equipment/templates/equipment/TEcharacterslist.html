@@ -68,10 +68,10 @@
             <td> ред. админ.</td>          
             {% endif %}
             
-            {% if  obj.serviceequipmentte and POINTER == obj.pointer %}
+            {% if obj.serviceequipmentte and POINTER == obj.serviceequipmentte.pointer %}
               <td> <a href="{% url 'toregte' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
-            {% elif obj.serviceequipmentte and POINTER != obj.pointer %}
-            <td> есть</td> 
+            {% elif obj.serviceequipmentte and POINTER != obj.serviceequipmentte.pointer %}
+             <td> <a href="{% url 'tote' obj.serviceequipmentte.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td>  
             {% else %}
             <td> <a href="{% url 'toregte' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% endif %}
