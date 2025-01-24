@@ -61,13 +61,13 @@
             {% if POINTER == obj.pointer %}
             <td> <a href="{% url 'helpequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">ред</a></td> 
             {% else %}
-            <td> ред. админ.</td>
-            
+            <td> ред. админ.</td>           
             {% endif %}
+            
             {% if obj.serviceequipmenthe and POINTER == obj.serviceequipmenthe.pointer %}
               <td> <a href="{% url 'toreghe' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
             {% elif obj.serviceequipmenthe and POINTER != obj.serviceequipmenthe.pointer %}
-            <td> смотреть </td> 
+             <td> <a href="{% url 'tohe' obj.serviceequipmenthe.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td>  
             {% else %}
             <td> <a href="{% url 'toreghe' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% endif %}
