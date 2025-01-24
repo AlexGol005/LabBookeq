@@ -395,6 +395,15 @@ class HelpingEquipmentView(LoginRequiredMixin, ListView):
         context['form'] = SearchMEForm()
         return context
 
+class MeasurEquipmentCharaktersStrView(TemplateView):
+    """выводит индивидуальную страницу с описанием характеристик СИ """
+    template_name = URL + '/charaktersstr.html'
+
+    def get_context_data(self, str, **kwargs):
+        context = super(MeasurEquipmentCharaktersStrView, self).get_context_data(**kwargs)
+        context['obj'] = MeasurEquipmentCharakters.objects.get(pk=str)
+        return context
+
 
 
 # блок 4 - формы регистрации и обновления: комнаты, поверители, производители плюс список поверителей и производителей, договоры с поверителями
