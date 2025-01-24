@@ -32,13 +32,13 @@
             <tr><th>Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)</th><td>{{ obj.name }}</td></tr>
             <tr><th>Работает от сети</th><td>{{ obj.power|yesno:"да,нет"  }}</td></tr>
             <tr><th>напряжение</th><td>{{ obj.voltage|default_if_none:'' }}</td></tr>
-            <tr><th>частота</th><td>{{ obj.frequency }}</td></tr> 
+            <tr><th>частота</th><td>{{ obj.frequency|default_if_none:'' }}</td></tr> 
             <tr><th>температура </th><td>{{ obj.temperature|default_if_none:'' }}</td></tr>
             <tr><th>влажность</th><td>{{ obj.humidicity|default_if_none:'' }}</td></tr>
             <tr><th>давление</th><td>{{ obj.pressure|default_if_none:'' }}</td></tr> 
             <tr><th>описание мероприятий по установке </th><td>{{ obj.setplace|default_if_none:'' }}</td></tr>
             <tr><th>установка</th><td>{{ obj.needsetplace|yesno:"не требуется,требуется" }}</td></tr>
-            <tr><th>где в паспорте комплектация</th><td>{{ obj.complectlist }}</td></tr> 
+            <tr><th>где в паспорте комплектация</th><td>{{ obj.complectlist|default_if_none:'' }}</td></tr> 
             <tr><th>тестирование возможно? да/нет </th><td>{{ obj.expresstest|yesno:"да,нет" }}</td></tr>
             <tr><th>Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)</th><td>{{ obj.traceability |default_if_none:''}}</td></tr>
             <tr><th>примечание</th><td>{{ obj.aim|default_if_none:'' }}</td></tr> 
