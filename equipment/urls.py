@@ -105,4 +105,6 @@ urlpatterns = [
     path('agreementcompanylist', views.AgreementVerificators.as_view(), name='agreementcompanylist'),
     path('verupdate/<str:str>/', views.VerificatorUpdateView, name='verupdate'),
     path('mecharaktersstr/<str:str>/', views.MeasurEquipmentCharaktersStrView.as_view(), name='mecharaktersstr'),
+    path('techaraktersstr/<str:str>/', views.TestingEquipmentCharaktersStrView.as_view(), name='techaraktersstr'),
+    path('hecharaktersstr/<str:str>/', views.HelpingEquipmentCharaktersStrView.as_view(), name='hecharaktersstr'),
 ]
