@@ -2054,7 +2054,7 @@ def ServiceCreateView(request):
             for i in queryset:
                 ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
             messages.success(request, f'График ТОиР на {year} год успешно сформирован')
-                return redirect('service')
+            return redirect('service')
 
 
 
