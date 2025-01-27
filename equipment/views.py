@@ -1607,7 +1607,7 @@ class StrMeasurEquipmentView(LoginRequiredMixin, View):
         context = {
             'obj': obj,
             'note': note,
-            'note': note,
+            'POINTER': POINTER,
         }
         return render(request, URL + '/MEequipmentSTR.html', context)
 
