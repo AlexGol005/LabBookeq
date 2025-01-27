@@ -299,7 +299,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th> Описание пероприятий по ТО</th>
+                <th> Описание мероприятий по ТО</th>
                 <th> План по ТО-2 (планировать и отмечать) </th>
                 <th> Добавить/удалить прибор в график ТОиР </th>
              </tr>
@@ -314,9 +314,9 @@
             <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% endif %}
         
-             <td> <a href="{% url 'serviceplan' obj.equipment.pk %}"  class="btn btn-outline-primary">СМ</a></td> 
+             <td> <a href="{% url 'service' %}"  class="btn btn-outline-primary">СМ</a></td> 
             
-            <td> {{ obj.equipment.pravo|default:" " }}</td>
+            <td> <a href="{% url 'servicecreateitem' obj.equipment.exnumber %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
         </tr>
         </tbody>
     </table>
