@@ -290,6 +290,30 @@
         </tr>
     </table>
     </div>
+
+    {# ТОиР  #}
+    <div style="text-align: center; margin-top: 40px"><h4>
+    Техническое обслуживание (ТОиР)</h4></div>
+    
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Описание пероприятий по ТО</th>
+                <th> План по ТО-2 (планировать и отмечать) </th>
+                <th> Добавить/удалить прибор в график ТОиР </th>
+             </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td> obj.equipment.price</td>
+            <td> {{ obj.equipment.invnumber|default:"б/н" }}</td>
+            <td> {{ obj.equipment.pravo|default:" " }}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    
     {# бухгалтерия  #}
     <div style="text-align: center; margin-top: 40px"><h4>
     Бухгалтерские сведения</h4></div>
