@@ -2093,6 +2093,37 @@ def ServiceCreateView(request):
             return redirect('service')
 
 
+@login_required
+def ServiceCreateIndividualView(request, str):
+    """добавляет и удаляет прибор из графика ТОиР """ 
+    
+    if request.method == 'GET':
+        year = request.GET.get('date')
+        item = Equipment.objects.get(exnumber=str)
+        ServiceEquipmentU.objects.get_or_create(equipment=item, year=year)
+        messages.success(request, f'прибор успешно добавлен в график ТОиР на {year} год')
+        return redirect('service')
+        
+
+@login_required
+def ServiceCreateIndividualView(request, str):
+    """добавляет и удаляет прибор из графика ТОиР """
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == 'GET':
+            form = YearForm()
+            year = request.GET.get('date')
+            item = Equipment.objects.get(exnumber=str)
+            ServiceEquipmentU.objects.get_or_create(equipment=item, year=year)
+            messages.success(request, f'прибор успешно добавлен в график ТОиР на {year} год')
+            return redirect('service')
+        else:
+            form = YearForm() 
+        data = {'form': form,
+                }
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        return redirect('service')
 
 
 class ToMEView(LoginRequiredMixin, View):
