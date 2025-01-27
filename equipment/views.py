@@ -2093,16 +2093,16 @@ def ServiceCreateView(request):
             return redirect('service')
 
 
-@login_required
-def ServiceCreateIndividualView(request, str):
-    """добавляет и удаляет прибор из графика ТОиР """ 
-    
-    if request.method == 'GET':
-        year = request.GET.get('date')
-        item = Equipment.objects.get(exnumber=str)
-        ServiceEquipmentU.objects.get_or_create(equipment=item, year=year)
-        messages.success(request, f'прибор успешно добавлен в график ТОиР на {year} год')
-        return redirect('service')
+class ServiceCreateIndividualView(LoginRequiredMixin, TemplateView):
+    """добавляет и удаляет прибор из графика ТОиР """
+    template_name = URL + '/crispy_reg.html'
+
+    def get_context_data(self, str, **kwargs):
+        context = super(ServiceCreateIndividualView, self).get_context_data(**kwargs)
+        context['item'] = Equipment.objects.get(exnumber=str)
+        context['year'] = now.year
+        context['form'] = CreateYearForm()
+        return context
         
 
 @login_required
