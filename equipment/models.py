@@ -149,7 +149,7 @@ class Equipment(models.Model):
         
     newroomnumber = models.CharField('Номер комнаты', max_length=100, blank=True, null=True,)
     newroomnumberdate = models.CharField('Дата перемещения', blank=True, null=True, max_length=90)
-    serviceneed = models.Booleanfield('Включать в график ТО?', default=True, blank=True)
+    serviceneed = models.BooleanField('Включать в график ТО', default=True, blank=True)
 
     def __str__(self):
         return f'{self.pointer}: {self.exnumber} - зав№ {self.lot}, pk={self.pk}'
