@@ -19,7 +19,6 @@
 блок 13 - ТОиР
 """
 
-
 import xlwt
 import pytils.translit
 from datetime import date
