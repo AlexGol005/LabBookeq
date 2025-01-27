@@ -314,7 +314,7 @@
             <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% endif %}
         
-             <td> <a href="{% url 'serviceplan' obj.equipment.serviceequipmentu.pk %}"  class="btn btn-outline-primary">СМ</a></td> 
+             <td> <a href="{% url 'serviceplan' obj.equipment.pk %}"  class="btn btn-outline-primary">СМ</a></td> 
             
             <td> {{ obj.equipment.pravo|default:" " }}</td>
         </tr>
