@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+планы и отчёты
+{% endblock %}
+
+{% block content %}
+  <div class="col-8">
+<div style="text-align: center; margin-top: 20px">
+<h5>{{obj.exnumber|slice:":5"|default:" "}}  график ТОиР </h5>
+</div>
+
+<div style="text-align: center; margin-top: 20px">
+<h5>за год</h5>
+ <form action="{% url 'export_maintenance_schedule_xls' %}" target="blank" method="GET">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
+</div>
+
+  </div>
+{% endblock %}
