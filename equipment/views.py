@@ -2137,6 +2137,20 @@ def AddserviceitemView(request, str):
         year = request.GET.get('date')
         i = Equipment.objects.get(pk=str)
         ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
+        messages.success(request, 'Прибор успешно добавлен в график ТОиР')
+        return redirect(f'/equipment/itemserviceupdate/{i.str}/')
+
+
+@login_required
+def DelserviceitemView(request, str):
+    """удаляет единицу оборудования из график ТОиР на указанный год """
+    if request.method == 'GET':
+        year = request.GET.get('date')
+        i = Equipment.objects.get(pk=str)
+        ServiceEquipmentU.objects.delete(equipment=i, year=year)
+        messages.success(request, 'Прибор успешно удален из графика ТОиР')
+        return redirect(f'/equipment/itemserviceupdate/{i.str}/')
+        
 
 
 
