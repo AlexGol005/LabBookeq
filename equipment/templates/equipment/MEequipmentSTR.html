@@ -314,9 +314,9 @@
             <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% endif %}
 
-            <td> <a href="{% url 'itemserviceupdate' obj.equipment.pk %}"  class="btn btn-outline-primary">добавить</a></td>
-        
+            
              <td> <a href="{% url 'service' %}"  class="btn btn-outline-primary">СМ</a></td> 
+            <td> <a href="{% url 'itemserviceupdate' obj.equipment.pk %}"  class="btn btn-outline-primary">добавить/удалить</a></td>
             
             
             
