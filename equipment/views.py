@@ -1601,10 +1601,12 @@ class HaveorderAttView(LoginRequiredMixin, UpdateView):
 class StrMeasurEquipmentView(LoginRequiredMixin, View):
     """ выводит отдельную страницу СИ """
     def get(self, request, str):
+        POINTER = request.profile.userid
         note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
         obj = get_object_or_404(MeasurEquipment, equipment__exnumber=str)
         context = {
             'obj': obj,
+            'note': note,
             'note': note,
         }
         return render(request, URL + '/MEequipmentSTR.html', context)
