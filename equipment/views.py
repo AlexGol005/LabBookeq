@@ -2135,7 +2135,7 @@ def AddserviceitemView(request, str):
     """добавляет единицу оборудования в график ТОиР на указанный год """
     if request.method == 'GET':
         year = request.GET.get('date')
-        Equipment.objects.get(pk=str)
+        i = Equipment.objects.get(pk=str)
         ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
 
 
