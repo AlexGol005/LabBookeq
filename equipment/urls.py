@@ -4,6 +4,7 @@ from . import exel
 from . import exel_agreements
 
 urlpatterns = [
+    path('itemserviceupdate/<str:str>/', views.ServiceCreateIndividualView.as_view(), name='itemserviceupdate'),
     path('rooms/', views.RoomsView.as_view(), name='rooms'),
     path('create/', views.ServiceCreateView, name='create'),
     path('roomupdate/<str:str>/', views.RoomsUpdateView, name='roomupdate'),
@@ -107,5 +108,5 @@ urlpatterns = [
     path('mecharaktersstr/<str:str>/', views.MeasurEquipmentCharaktersStrView.as_view(), name='mecharaktersstr'),
     path('techaraktersstr/<str:str>/', views.TestingEquipmentCharaktersStrView.as_view(), name='techaraktersstr'),
     path('hecharaktersstr/<str:str>/', views.HelpingEquipmentCharaktersStrView.as_view(), name='hecharaktersstr'),
-    path('itemserviceupdate/<str:str>/', views.ServiceCreateIndividualView.as_view(), name='itemserviceupdate'),
+    
 ]
