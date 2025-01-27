@@ -306,8 +306,16 @@
         </thead>
         <tbody>
         <tr>
-            <td> obj.equipment.price</td>
-            <td> {{ obj.equipment.invnumber|default:"б/н" }}</td>
+            {% if obj.charakters.serviceequipmentme and POINTER == obj.charakters.serviceequipmentme.pointer %}
+              <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
+            {% elif obj.charakters.serviceequipmentme and POINTER != obj.charakters.serviceequipmentme.pointer %}
+             <td> <a href="{% url 'tome' obj.serviceequipmentme.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td>  
+            {% else %}
+            <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
+            {% endif %}
+        
+             <td> <a href="{% url 'serviceplan' obj.equipment.serviceEquipmentu.pk %}"  class="btn btn-outline-primary">СМ</a></td> 
+            
             <td> {{ obj.equipment.pravo|default:" " }}</td>
         </tr>
         </tbody>
