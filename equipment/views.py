@@ -2125,5 +2125,18 @@ class ServiceCreateIndividualView(TemplateView):
     def get_context_data(self, str, **kwargs):
         context = super(ServiceCreateIndividualView, self).get_context_data(**kwargs)
         context['obj'] = Equipment.objects.get(pk=str)
-        context['form'] = YearForm()
+        context['addform'] = AddYearForm()
+        context['delform'] = DelYearForm()
         return context
+
+
+@login_required
+def AddserviceitemView(request, str):
+    """добавляет единицу оборудования в график ТОиР на указанный год """
+    if request.method == 'GET':
+        year = request.GET.get('date')
+        Equipment.objects.get(pk=str)
+        ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
+
+
+
