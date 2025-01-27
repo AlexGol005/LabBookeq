@@ -307,6 +307,7 @@ class EquipmentCreateForm(forms.ModelForm):
     pravo_have = forms.ChoiceField(label='Собственность или аренда', initial='собственность',
                             choices=( ('собственность', 'собственность'),
                                      ('аренда', 'аренда')), widget=forms.Select(attrs={'class': 'form-control'}))
+    serviceneed = forms.BooleanField(label='Включать в график ТОиР приа втоформировании графика', required=False, initial=True)      
 
     class Meta:
         model = Equipment
@@ -316,6 +317,7 @@ class EquipmentCreateForm(forms.ModelForm):
             'pasport', 'instruction',
              'notemetrology', 'repair', 'yearintoservice', 'pravo', 
             'standard_number', 'pravo_have',
+               'serviceneed',
         ]
 
     def __init__(self, *args, **kwargs):
@@ -354,6 +356,8 @@ class EquipmentCreateForm(forms.ModelForm):
                 Column('pravo', css_class='form-group col-md-6 mb-0'),
                 Column('pravo_have', css_class='form-group col-md-6 mb-0'),
                 ),
+            Row(
+                Column('serviceneed', css_class='form-group col-md-12 mb-0')),
             Row(Submit('submit', 'Записать', css_class='btn btn-primary col-md-11 mb-3 mt-4 ml-4')))
 
 
@@ -385,6 +389,7 @@ class EquipmentUpdateForm(forms.ModelForm):
     pravo_have = forms.ChoiceField(label='Собственность или аренда', initial='собственность',
                             choices=( ('собственность', 'собственность'),
                                      ('аренда', 'аренда')), widget=forms.Select(attrs={'class': 'form-control'}))
+    serviceneed = forms.BooleanField(label='Включать в график ТОиР приа втоформировании графика', required=False, initial=True)
                                     
 
     class Meta:
@@ -396,6 +401,7 @@ class EquipmentUpdateForm(forms.ModelForm):
              'invnumber',
             'repair', 'notemetrology',
             'standard_number', 'pravo_have',
+               'serviceneed',
                   ]
 
 
