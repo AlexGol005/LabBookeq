@@ -1248,7 +1248,7 @@ class SearchResultTestingEquipmentView(LoginRequiredMixin, TemplateView):
 
 # блок 8  принадлежности к оборудованию
 
-class DocsConsView(, SuccessMessageMixin):
+class DocsConsView(View, SuccessMessageMixin):
     """ выводит список принадлежностей прибора и форму для добавления принадлежности """
     def get(self, request, str):
         template_name = 'equipment/Edocsconslist.html'
