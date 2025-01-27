@@ -78,6 +78,37 @@ class LookYearForm(forms.Form):
                 Column('date', css_class='form-group col-md-4 mb-0 ml-2 mr-2'),
                 Submit('submit', 'посмотреть', css_class='btn  btn-primary col-md-6 mb-3 mt-4 ml-2 mr-2')))
 
+
+class AddYearForm(forms.Form):
+    """форма для поиска и добавления по году"""
+    date = forms.DateField(label='Год в формате ГГГГ', initial=now.year,
+                           widget=forms.DateInput(
+                               attrs={'class': 'form-control', 'placeholder': '2022'}))
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('date', css_class='form-group col-md-4 mb-0 ml-2 mr-2'),
+                Submit('submit', 'добавить', css_class='btn  btn-primary col-md-6 mb-3 mt-4 ml-2 mr-2')))
+
+class DelYearForm(forms.Form):
+    """форма для поиска и удаления по году"""
+    date = forms.DateField(label='Год в формате ГГГГ', initial=now.year,
+                           widget=forms.DateInput(
+                               attrs={'class': 'form-control', 'placeholder': '2022'}))
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('date', css_class='form-group col-md-4 mb-0 ml-2 mr-2'),
+                Submit('submit', 'удалить', css_class='btn  btn-primary col-md-6 mb-3 mt-4 ml-2 mr-2')))
+
 class GetYearForm(forms.Form):
     """форма для поиска записей по году"""
     date = forms.DateField(label='Год в формате ГГГГ', initial=now.year,
