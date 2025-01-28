@@ -1603,10 +1603,12 @@ class StrMeasurEquipmentView(LoginRequiredMixin, View):
         POINTER = request.user.profile.userid
         note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
         obj = get_object_or_404(MeasurEquipment, equipment__exnumber=str)
+        lookyearform = LookYearForm()
         context = {
             'obj': obj,
             'note': note,
             'POINTER': POINTER,
+            'lookyearform': lookyearform,
         }
         return render(request, URL + '/MEequipmentSTR.html', context)
 
@@ -1617,10 +1619,12 @@ class StrTestEquipmentView(LoginRequiredMixin, View):
         POINTER = request.user.profile.userid
         note = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
         obj = get_object_or_404(TestingEquipment, equipment__exnumber=str)
+        lookyearform = LookYearForm()
         context = {
             'obj': obj,
             'note': note,
             'POINTER': POINTER,
+            'lookyearform': lookyearform,
         }
         return render(request, URL + '/TEequipmentSTR.html', context)
 
@@ -1630,9 +1634,11 @@ class StrHelpEquipmentView(LoginRequiredMixin, View):
     def get(self, request, str):
         POINTER = request.user.profile.userid
         obj = get_object_or_404(HelpingEquipment, equipment__exnumber=str)
+        lookyearform = LookYearForm()
         context = {
             'obj': obj,
             'POINTER': POINTER,
+            'lookyearform': lookyearform,
         }
         return render(request, URL + '/HEequipmentSTR.html', context)
 
