@@ -8,7 +8,16 @@
 {% block content %}
   <div class="col-8">
 <div style="text-align: center; margin-top: 20px">
-<h5>{{obj.exnumber|slice:":5"|default:" "}}  график ТОиР </h5>
+{% if obj.measureequipment %}
+  <a href="{% url 'measureequipment' obj.exnumber %}">
+    <h5>{{obj.exnumber|slice:":5"|default:" "}},  {{obj.measureequipment.name|default:" "}} - в график ТОиР </h5></a>
+{% elif obj.testingequipment %}
+  <a href="{% url 'testequipment' obj.exnumber %}">
+    <h5>{{obj.exnumber|slice:":5"|default:" "}},  {{obj.testingequipment.name|default:" "}} - в график ТОиР </h5></a>
+{% elif obj.helpingequipment %}
+  <a href="{% url 'helpequipment' obj.exnumber %}">
+    <h5>{{obj.exnumber|slice:":5"|default:" "}},  {{obj.helpingequipment.name|default:" "}} - в график ТОиР </h5></a>
+{% endif %}  
 </div>
 
 
