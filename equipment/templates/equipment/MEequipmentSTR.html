@@ -313,8 +313,19 @@
             {% else %}
             <td> <a href="{% url 'toreg' obj.charakters.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% endif %}
-       
-             <td> <a href="{% url 'service' %}"  class="btn btn-outline-primary">СМ</a></td> 
+
+            
+             <td>         
+            <form action="{% url 'serviceyear' %}" method="GET">
+            {% csrf_token %}
+            {% crispy lookyearform %}
+            </form>
+             
+             </td> 
+
+
+
+            
             <td> <a href="{% url 'itemserviceupdate' obj.equipment.pk %}"  class="btn btn-outline-primary">добавить/удалить</a></td>        
         </tr>
         </tbody>
