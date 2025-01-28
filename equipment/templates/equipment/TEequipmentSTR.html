@@ -242,6 +242,40 @@
         </tr>
     </table>
     </div>
+
+    
+    {# ТОиР  #}
+    <div style="text-align: center; margin-top: 40px"><h4>
+    Техническое обслуживание (ТОиР)</h4></div>
+    
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Описание мероприятий по ТО</th>
+                <th> План по ТО-2 (планировать и отмечать) </th>
+                <th> Добавить/удалить прибор в график ТОиР </th>
+             </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% if obj.charakters.serviceequipmentme and POINTER == obj.charakters.serviceequipmentme.pointer %}
+              <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
+            {% elif obj.charakters.serviceequipmentme and POINTER != obj.charakters.serviceequipmentme.pointer %}
+             <td> <a href="{% url 'tome' obj.serviceequipmentme.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td>  
+            {% else %}
+            <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
+            {% endif %}
+
+            
+             <td> <a href="{% url 'service' %}"  class="btn btn-outline-primary">СМ</a></td> 
+            <td> <a href="{% url 'itemserviceupdate' obj.equipment.pk %}"  class="btn btn-outline-primary">добавить/удалить</a></td>           
+        </tr>
+        </tbody>
+    </table>
+    </div>
+
+    
     {# бухгалтерия  #}
     <div style="text-align: center; margin-top: 40px"><h4>
     Бухгалтерские сведения</h4></div>
