@@ -1999,8 +1999,8 @@ class ServiceStrView(LoginRequiredMixin, View):
         obj = get_object_or_404(ServiceEquipmentU, pk=str)
         if obj.year in request.POST:
             year = obj.year
-        else^
-        year='tttttttt'
+        else:
+            year='tttttttt'
             
         obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
         # year = obj.year
