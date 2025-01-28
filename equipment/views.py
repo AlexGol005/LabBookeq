@@ -1614,11 +1614,13 @@ class StrMeasurEquipmentView(LoginRequiredMixin, View):
 class StrTestEquipmentView(LoginRequiredMixin, View):
     """ выводит отдельную страницу ИО """
     def get(self, request, str):
+        POINTER = request.user.profile.userid
         note = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
         obj = get_object_or_404(TestingEquipment, equipment__exnumber=str)
         context = {
             'obj': obj,
             'note': note,
+            'POINTER': POINTER,
         }
         return render(request, URL + '/TEequipmentSTR.html', context)
 
@@ -1626,9 +1628,11 @@ class StrTestEquipmentView(LoginRequiredMixin, View):
 class StrHelpEquipmentView(LoginRequiredMixin, View):
     """ выводит отдельную страницу ВО """
     def get(self, request, str):
+        POINTER = request.user.profile.userid
         obj = get_object_or_404(HelpingEquipment, equipment__exnumber=str)
         context = {
             'obj': obj,
+            'POINTER': POINTER,
         }
         return render(request, URL + '/HEequipmentSTR.html', context)
 
