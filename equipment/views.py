@@ -2147,7 +2147,7 @@ def DelserviceitemView(request, str):
     if request.method == 'GET':
         year = request.GET.get('date')
         i = Equipment.objects.get(pk=str)
-        ServiceEquipmentU.objects.delete(equipment=i, year=year)
+        ServiceEquipmentU.objects.get(equipment=i, year=year).delete()
         messages.success(request, 'Прибор успешно удален из графика ТОиР')
         return redirect(f'/equipment/itemserviceupdate/{str}/')
         
