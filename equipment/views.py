@@ -2138,7 +2138,7 @@ def AddserviceitemView(request, str):
         i = Equipment.objects.get(pk=str)
         ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
         messages.success(request, 'Прибор успешно добавлен в график ТОиР')
-        return redirect(f'/equipment/itemserviceupdate/{i.str}/')
+        return redirect(f'/equipment/itemserviceupdate/{str}/')
 
 
 @login_required
