@@ -21,7 +21,7 @@
     </div>
 
     <div style="text-align: center; margin-top: 25px">
-        <form action="{% url 'addserviceitem' obj.pk %}" method="GET">
+        <form action="{% url 'delserviceitem' obj.pk %}" method="GET">
             {% csrf_token %}
             {% crispy delform %}
         </form>
