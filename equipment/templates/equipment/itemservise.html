@@ -18,7 +18,7 @@
   <a href="{% url 'helpequipment' obj.exnumber %}">
     <h5>{{obj.exnumber|slice:":5"|default:" "}},  {{obj.helpingequipment.name|default:" "}} - в график ТОиР </h5></a>
   {% else%}
-  в график ТОиР {{obj.exnumber|slice:":5"|default:" "}},  {{obj.measureequipment.name|default:" "}}
+  в график ТОиР {{obj.exnumber|slice:":5"|default:" "}},  {{obj.measureequipment_set.name|default:" "}}
 {% endif %}  
 </div>
 
