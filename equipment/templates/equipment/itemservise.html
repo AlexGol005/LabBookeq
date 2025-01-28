@@ -10,13 +10,13 @@
 <div style="text-align: center; margin-top: 20px">
 {% if obj.measurequipment %}
   <a href="{% url 'measureequipment' obj.exnumber %}">
-    <h5>{{obj.exnumber|slice:":5"|default:" "}},  {{obj.measureequipment.name|default:" "}} - в график ТОиР </h5></a>
+    <h5>{{obj.exnumber|slice:":5"|default:" "}},  {{obj.measurequipment.charakters.name|default:" "}} - в график ТОиР </h5></a>
 {% elif obj.testingequipment %}
   <a href="{% url 'testequipment' obj.exnumber %}">
-    <h5>{{obj.exnumber|slice:":5"|default:" "}},  {{obj.testingequipment.name|default:" "}} - в график ТОиР </h5></a>
+    <h5>{{obj.exnumber|slice:":5"|default:" "}},  {{obj.testingequipment.charakters.name|default:" "}} - в график ТОиР </h5></a>
 {% elif obj.helpingequipment %}
   <a href="{% url 'helpequipment' obj.exnumber %}">
-    <h5>{{obj.exnumber|slice:":5"|default:" "}},  {{obj.helpingequipment.name|default:" "}} - в график ТОиР </h5></a>
+    <h5>{{obj.exnumber|slice:":5"|default:" "}},  {{obj.helpingequipment.charakters.name|default:" "}} - в график ТОиР </h5></a>
   {% else%}
   в график ТОиР
 {% endif %}  
