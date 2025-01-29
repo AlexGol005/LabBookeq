@@ -2173,7 +2173,7 @@ def ServiceStrView(request,  str):
         return render(request, URL + '/serviceplan.html', context)
     except:
         messages.success(request, 'Этого прибора в графике ТОиР на указанный год нет')
-        # return redirect('rooms')
+        return redirect('equipment')
         
 
 
