@@ -2052,6 +2052,12 @@ class ServiceYearView(LoginRequiredMixin, View):
         }
         template_name = 'equipment/serviceyear.html'
         return render(request, template_name, context)
+        
+    def post(self, request, *args, **kwargs):
+        if 'getyear' in request.POST:
+            y='изпост'
+            return y
+
 
 
 class ServiceSearchResultView(LoginRequiredMixin, ListView):
@@ -2171,15 +2177,11 @@ def DelserviceitemView(request, str):
 
 
 @login_required
-def ServiceStrView(request, str):
+def ServiceStrView(request, y, str):
     """ выводит отдельную страницу плана ТО2 """
-    ruser=request.user.profile.userid
-    if request.method == 'POST':
-        if 'getyear' in request.POST:
-            year='изпост'
-            return year
     obj = get_object_or_404(ServiceEquipmentU, pk=str)
     obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
+    year=y
     context = {
     'obj': obj, 'obj2': obj2, 'year': year,
             }
