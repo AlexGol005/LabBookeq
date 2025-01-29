@@ -2152,10 +2152,7 @@ class ServiceYearView(LoginRequiredMixin, View):
     """вывод страницы - ТОИР за год, год передан в форме поиска на предыдущей странице"""
     def get(self, request):
         date = self.request.GET['date']
-        # try:
         m = self.request.GET.get('m')
-        # except:
-        #     m = 'exex'
         objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
         form =  DubleSearchForm()
         URL = 'equipment'
@@ -2182,10 +2179,15 @@ class ServiceYearView(LoginRequiredMixin, View):
 @login_required
 def ServiceStrView(request,  str):
     """ выводит отдельную страницу плана ТО2 """
-    y = request.GET.get('y')
-    obj = get_object_or_404(ServiceEquipmentU, pk=str)
+    try:
+        self.request.GET.get('equipment_pk')
+        str = self.request.GET.get('equipment_pk')
+        date = self.request.GET['date']
+        obj = get_object_or_404(ServiceEquipmentU, pk=str, year=date)
+    except:
+        obj = get_object_or_404(ServiceEquipmentU, pk=str)
     obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
-    year='hh'
+    year=obj.year
     context = {
     'obj': obj, 'obj2': obj2, 'year': year,
             }
