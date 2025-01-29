@@ -2167,11 +2167,11 @@ class ServiceYearView(LoginRequiredMixin, View):
         template_name = 'equipment/serviceyear.html'
         return render(request, template_name, context)
         
-    def post(self, request, *args, **kwargs):
-        if 'getyear' in self.request.POST:
-            y='изпост'
-        else:
-            y='1'
+    # def post(self, request, *args, **kwargs):
+    #     if 'getyear' in self.request.POST:
+    #         y='изпост'
+    #     else:
+    #         y='1'
          
 
 @login_required
