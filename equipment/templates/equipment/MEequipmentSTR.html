@@ -320,7 +320,7 @@
             
              <td>         
             <form action="{% url 'serviceyear' %}" method="GET">
-            <input type="hidden" name="m" value="find">
+            <input type="hidden" name="m" value="{{obj.equipment.pk}} {{obj.equipment.exnumber}}">
             {% csrf_token %}
             {% crispy lookyearform %}
                 
