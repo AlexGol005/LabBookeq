@@ -2180,7 +2180,7 @@ class ServiceYearView(LoginRequiredMixin, View):
 def ServiceStrView(request,  str):
     """ выводит отдельную страницу плана ТО2 """
     try:
-        self.request.GET.get('equipment_pk')
+        request.GET.get('equipment_pk')
         str = self.request.GET.get('equipment_pk')
         date = self.request.GET['date']
         obj = get_object_or_404(ServiceEquipmentU, pk=str, year=date)
