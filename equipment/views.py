@@ -2180,7 +2180,7 @@ def ServiceStrView(request,  str):
     y = request.GET.get('y')
     obj = get_object_or_404(ServiceEquipmentU, pk=str)
     obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
-    year=y
+    year='hh'
     context = {
     'obj': obj, 'obj2': obj2, 'year': year,
             }
