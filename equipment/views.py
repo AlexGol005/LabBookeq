@@ -2130,29 +2130,10 @@ def DelserviceitemView(request, str):
         return redirect(f'/equipment/itemserviceupdate/{str}/')
         
 
-# class ServiceStrView(LoginRequiredMixin, View):
-#     """ выводит отдельную страницу плана ТО2 """
-#     def get(self, request, str):
-        
-#         obj = get_object_or_404(ServiceEquipmentU, pk=str)
-#         if obj.year in request.POST:
-#             year = obj.year
-#         else:
-#             year='tttttttt'
-            
-#         obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
-#         # year = obj.year
-#         # year = now.year
-#         context = {
-#             'obj': obj, 'obj2': obj2, 'year': year,
-#             }
-#         return render(request, URL + '/serviceplan.html', context)
-
 class ServiceYearView(LoginRequiredMixin, View):
     """вывод страницы - ТОИР за год, год передан в форме поиска на предыдущей странице"""
     def get(self, request):
         date = self.request.GET['date']
-        m = self.request.GET.get('m')
         objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
         form =  DubleSearchForm()
         URL = 'equipment'
@@ -2164,17 +2145,10 @@ class ServiceYearView(LoginRequiredMixin, View):
             'form': form,
             'yearform': yearform,
             'year': year,
-            'm': m,
         }
         template_name = 'equipment/serviceyear.html'
         return render(request, template_name, context)
         
-    # def post(self, request, *args, **kwargs):
-    #     if 'getyear' in self.request.POST:
-    #         y='изпост'
-    #     else:
-    #         y='1'
-         
 
 @login_required
 def ServiceStrView(request,  str):
