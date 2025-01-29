@@ -260,16 +260,25 @@
         <tbody>
         <tr>
             {% if obj.charakters.serviceequipmentte and POINTER == obj.charakters.serviceequipmentte.pointer %}
-              <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
+              <td> <a href="{% url 'toregte' obj.charakters.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
             {% elif obj.charakters.serviceequipmentte and POINTER != obj.charakters.serviceequipmentte.pointer %}
-             <td> <a href="{% url 'tote' obj.serviceequipmentte.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td>  
+             <td> <a href="{% url 'tote' obj.charakters.serviceequipmentte.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td>  
             {% else %}
-            <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
+            <td> <a href="{% url 'toregte' obj.charakters.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% endif %}
 
             
-             <td> <a href="{% url 'service' %}"  class="btn btn-outline-primary">СМ</a></td> 
-            <td> <a href="{% url 'itemserviceupdate' obj.equipment.pk %}"  class="btn btn-outline-primary">добавить/удалить</a></td>           
+             <td>         
+            <form action="{% url 'serviceplan' obj.equipment.pk %}" method="GET">
+            <input type="hidden" name="equipment_pk" value="{{obj.equipment.pk}}">
+            {% csrf_token %}
+            {% crispy lookyearform %}
+                
+            </form>
+             
+             </td> 
+            
+            <td> <a href="{% url 'itemserviceupdate' obj.equipment.pk %}"  class="btn btn-outline-primary">добавить/удалить</a></td>        
         </tr>
         </tbody>
     </table>
