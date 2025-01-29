@@ -4,6 +4,7 @@ from . import exel
 from . import exel_agreements
 
 urlpatterns = [
+    path('serviceplan/<str:str>/', views.ServiceStrView, name='serviceplan'),
     path('addserviceitem/<str:str>/', views.AddserviceitemView, name='addserviceitem'),
     path('delserviceitem/<str:str>/', views.DelserviceitemView, name='delserviceitem'),
     path('itemserviceupdate/<str:str>/', views.ServiceCreateIndividualView.as_view(), name='itemserviceupdate'),
@@ -86,8 +87,7 @@ urlpatterns = [
     path('toreg/<str:str>/', views.ServiceEquipmentregMEView, name='toreg'),
     path('toregte/<str:str>/', views.ServiceEquipmentregTEView, name='toregte'),
     path('toreghe/<str:str>/', views.ServiceEquipmentregHEView, name='toreghe'),
-    path('service/', views.ServiceView.as_view(), name='service'),
-    path('serviceplan/<str:str>/', views.ServiceStrView.as_view(), name='serviceplan'),
+    path('service/', views.ServiceView.as_view(), name='service'),    
     path('serviceplanupdate/<str:str>/', views.ServiceEquipmentUUpdateView, name='serviceplanupdate'),
     path('servicefactupdate/<str:str>/', views.ServiceEquipmentUFactUpdateView, name='servicefactupdate'),
     path('serviceyear/', views.ServiceYearView.as_view(), name='serviceyear'),
