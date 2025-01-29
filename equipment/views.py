@@ -2176,8 +2176,9 @@ class ServiceYearView(LoginRequiredMixin, View):
             return y
 
 @login_required
-def ServiceStrView(request, y, str):
+def ServiceStrView(request,  str):
     """ выводит отдельную страницу плана ТО2 """
+    y = request.GET.get('y')
     obj = get_object_or_404(ServiceEquipmentU, pk=str)
     obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
     year=y
