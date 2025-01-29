@@ -2176,10 +2176,10 @@ def ServiceStrView(request, str):
     ruser=request.user.profile.userid
     if request.method == 'POST':
         if 'getyear' in request.POST:
-            return 'a'
+            year='изпост'
+            return year
     obj = get_object_or_404(ServiceEquipmentU, pk=str)
     obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
-    year = 'rr'
     context = {
     'obj': obj, 'obj2': obj2, 'year': year,
             }
