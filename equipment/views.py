@@ -2152,6 +2152,10 @@ class ServiceYearView(LoginRequiredMixin, View):
     """вывод страницы - ТОИР за год, год передан в форме поиска на предыдущей странице"""
     def get(self, request):
         date = self.request.GET['date']
+        try:
+            m = self.request.GET['m']
+        except:
+            m = 'exex'
         objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
         form =  DubleSearchForm()
         URL = 'equipment'
@@ -2163,6 +2167,7 @@ class ServiceYearView(LoginRequiredMixin, View):
             'form': form,
             'yearform': yearform,
             'year': year,
+            'm': m,
         }
         template_name = 'equipment/serviceyear.html'
         return render(request, template_name, context)
