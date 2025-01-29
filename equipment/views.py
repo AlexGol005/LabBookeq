@@ -2179,17 +2179,22 @@ class ServiceYearView(LoginRequiredMixin, View):
 @login_required
 def ServiceStrView(request,  str):
     """ выводит отдельную страницу плана ТО2 """
-    try:
-        request.GET.get('equipment_pk')
-        str = self.request.GET.get('equipment_pk')
-        date = self.request.GET['date']
-        obj = get_object_or_404(ServiceEquipmentU, pk=str, year=date)
-    except:
-        obj = get_object_or_404(ServiceEquipmentU, pk=str)
-    obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
+    a = self.request.GET.get('equipment_pk')
+    b = self.request.GET['date']
+    # try:
+    #     request.GET.get('equipment_pk')
+    #     str = self.request.GET.get('equipment_pk')
+    #     date = self.request.GET['date']
+    #     obj = get_object_or_404(ServiceEquipmentU, pk=str, year=date)
+    # except:
+    obj = get_object_or_404(ServiceEquipmentU, pk=212)
+    obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=212)
     year=obj.year
     context = {
-    'obj': obj, 'obj2': obj2, 'year': year,
+    'obj': obj, 'obj2': obj2, 
+        'year': year,
+        'a': a,
+        'b': b,
             }
     return render(request, URL + '/serviceplan.html', context)
 
