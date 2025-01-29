@@ -2153,22 +2153,27 @@ class ServiceYearView(LoginRequiredMixin, View):
 @login_required
 def ServiceStrView(request,  str):
     """ выводит отдельную страницу плана ТО2 """
-    a = request.GET.get('equipment_pk')
-    b = request.GET.get('date')
-    if a and b:
-        obj = get_object_or_404(ServiceEquipmentU, equipment__pk=a, year=b)
-        pk_pointer = obj.pk
-        obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=pk_pointer)      
-    else:
-        obj = get_object_or_404(ServiceEquipmentU, pk=str)
-        obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
-    year=obj.year
-    context = {
-    'obj': obj, 'obj2': obj2, 
-        'year': year,
-        'a': a,
-        'b': b,
-            }
-    return render(request, URL + '/serviceplan.html', context)
+    try:
+        a = request.GET.get('equipment_pk')
+        b = request.GET.get('date')
+        if a and b:
+            obj = get_object_or_404(ServiceEquipmentU, equipment__pk=a, year=b)
+            pk_pointer = obj.pk
+            obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=pk_pointer)      
+        else:
+            obj = get_object_or_404(ServiceEquipmentU, pk=str)
+            obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
+        year=obj.year
+        context = {
+        'obj': obj, 'obj2': obj2, 
+            'year': year,
+            'a': a,
+            'b': b,
+                }
+        return render(request, URL + '/serviceplan.html', context)
+    except:
+        messages.success(request, 'Этого прибора в графике ТОиР на указанный год нет')
+        # return redirect('rooms')
+        
 
 
