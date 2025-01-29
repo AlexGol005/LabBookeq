@@ -2034,32 +2034,6 @@ def ServiceEquipmentUFactUpdateView(request, str):
         return redirect(reverse('serviceplan', kwargs={'str': str}))
 
 
-class ServiceYearView(LoginRequiredMixin, View):
-    """вывод страницы - ТОИР за год, год передан в форме поиска на предыдущей странице"""
-    def get(self, request):
-        date = self.request.GET['date']
-        objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
-        form =  DubleSearchForm()
-        URL = 'equipment'
-        year= date
-        yearform = YearForm()
-        context = {
-            'objects': objects,
-            'URL': URL,
-            'form': form,
-            'yearform': yearform,
-            'year': year,
-        }
-        template_name = 'equipment/serviceyear.html'
-        return render(request, template_name, context)
-        
-    def post(self, request, *args, **kwargs):
-        if 'getyear' in request.POST:
-            y='изпост'
-            return y
-
-
-
 class ServiceSearchResultView(LoginRequiredMixin, ListView):
     """ выводит результаты поиска по списку ТО-2 по номеру оборудования """
 
@@ -2174,7 +2148,32 @@ def DelserviceitemView(request, str):
 #             }
 #         return render(request, URL + '/serviceplan.html', context)
 
-
+class ServiceYearView(LoginRequiredMixin, View):
+    """вывод страницы - ТОИР за год, год передан в форме поиска на предыдущей странице"""
+    def get(self, request):
+        date = self.request.GET['date']
+        objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
+        form =  DubleSearchForm()
+        URL = 'equipment'
+        year= date
+        yearform = YearForm()
+        context = {
+            'objects': objects,
+            'URL': URL,
+            'form': form,
+            'yearform': yearform,
+            'year': year,
+        }
+        template_name = 'equipment/serviceyear.html'
+        return render(request, template_name, context)
+        
+    def post(self, request, *args, **kwargs):
+        if 'getyear' in self.request.POST:
+            y='изпост'
+            return y
+        else:
+            y='1'
+            return y
 
 @login_required
 def ServiceStrView(request, y, str):
