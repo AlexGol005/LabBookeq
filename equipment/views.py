@@ -2153,7 +2153,7 @@ class ServiceYearView(LoginRequiredMixin, View):
     def get(self, request):
         date = self.request.GET['date']
         # try:
-        m = self.request.GET['m']
+        m = self.request.GET.get('m')
         # except:
         #     m = 'exex'
         objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
