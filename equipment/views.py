@@ -1992,25 +1992,6 @@ class ServiceView(LoginRequiredMixin, ListView):
         return context
 
 
-class ServiceStrView(LoginRequiredMixin, View):
-    """ выводит отдельную страницу плана ТО2 """
-    def get(self, request, str):
-        
-        obj = get_object_or_404(ServiceEquipmentU, pk=str)
-        if obj.year in request.POST:
-            year = obj.year
-        else:
-            year='tttttttt'
-            
-        obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
-        # year = obj.year
-        # year = now.year
-        context = {
-            'obj': obj, 'obj2': obj2, 'year': year,
-            }
-        return render(request, URL + '/serviceplan.html', context)
-
-
 @login_required
 def ServiceEquipmentUUpdateView(request, str):
     """выводит форму для обновления данных о ТО-2 план"""
@@ -2169,5 +2150,37 @@ def DelserviceitemView(request, str):
         return redirect(f'/equipment/itemserviceupdate/{str}/')
         
 
+# class ServiceStrView(LoginRequiredMixin, View):
+#     """ выводит отдельную страницу плана ТО2 """
+#     def get(self, request, str):
+        
+#         obj = get_object_or_404(ServiceEquipmentU, pk=str)
+#         if obj.year in request.POST:
+#             year = obj.year
+#         else:
+#             year='tttttttt'
+            
+#         obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
+#         # year = obj.year
+#         # year = now.year
+#         context = {
+#             'obj': obj, 'obj2': obj2, 'year': year,
+#             }
+#         return render(request, URL + '/serviceplan.html', context)
 
+
+
+@login_required
+def ServiceStrView(request, str):
+    """ выводит отдельную страницу плана ТО2 """
+    ruser=request.user.profile.userid
+    if request.method == 'POST':
+        if 'getyear' in request.POST:
+            obj = get_object_or_404(ServiceEquipmentU, pk=str)
+            obj2 = get_object_or_404(ServiceEquipmentUFact, pk_pointer=str)
+            year = 'rr'
+            context = {
+            'obj': obj, 'obj2': obj2, 'year': year,
+            }
+            return render(request, URL + '/serviceplan.html', context)
 
