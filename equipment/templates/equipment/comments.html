@@ -16,8 +16,8 @@
     {{ title.exnumber |slice:":5"  }}, {{title.testingequipment.charakters.name}}, зав. № {{title.lot}}  </a> </h4></center>
     <br><br>
     {% elif title.kategory == 'ВО' %}
-    <center><h4>Записи о: <a href="/equipment/measureequipment/{{ title.exnumber }}/">
-    {{ title.exnumber |slice:":5"  }}, {{title.measurequipment.charakters.name}}, зав. № {{title.lot}}  </a> </h4></center>
+    <center><h4>Записи о: <a href="/equipment/helpipment/{{ title.exnumber }}/">
+    {{ title.exnumber |slice:":5"  }}, {{title.helpingquipment.charakters.name}}, зав. № {{title.lot}}  </a> </h4></center>
     <br><br>
     {% endif %}
 
