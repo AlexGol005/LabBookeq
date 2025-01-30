@@ -390,8 +390,8 @@ class HelpingEquipment(models.Model):
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
 
     def __str__(self):
-        return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
-                - pk {self.pk}'
+        return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot}   - pk {self.pk}'
+               
 
     def save(self, *args, **kwargs):
         super().save()
