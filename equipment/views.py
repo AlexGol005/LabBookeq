@@ -1001,7 +1001,7 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
             order = form.save(commit=False)
             order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
             order.save()
-            return redirect(f'/equipment/helpingequipment/{self.kwargs["str"]}')
+            return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
 
 @login_required
