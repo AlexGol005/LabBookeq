@@ -8,8 +8,20 @@
 {% block content %}
 <div class="col-7"> 
 <center><h5>Обновление для ответственного за оборудование: 
+
+    {% if title.measurequipmen %}
     <a href="/equipment/measureequipment/{{ title.exnumber }}/">
-        {{title.measurequipment_set.all.last.charakters}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+    {{title.measurequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+    {% elif title.testingequipment %}
+    <a href="/equipment/testequipment/{{ title.exnumber }}/">
+    {{title.testingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+        {% elif title.helpingequipment %}
+    <a href="/equipment/helpequipment/{{ title.exnumber }}/">
+    {{title.helpingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+        
+        
+
+        
      </h5></center>
      <br>
     
