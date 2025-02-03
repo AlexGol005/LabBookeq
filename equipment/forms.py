@@ -389,7 +389,7 @@ class EquipmentUpdateForm(forms.ModelForm):
     pravo_have = forms.ChoiceField(label='Собственность или аренда', initial='собственность',
                             choices=( ('собственность', 'собственность'),
                                      ('аренда', 'аренда')), widget=forms.Select(attrs={'class': 'form-control'}))
-    serviceneed = forms.BooleanField(label='Включать в график ТОиР приа втоформировании графика', required=False, initial=True)
+    serviceneed = forms.BooleanField(label='Включать в график ТОиР при автоформировании графика', required=False, initial=True)
                                     
 
     class Meta:
