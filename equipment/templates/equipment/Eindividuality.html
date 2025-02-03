@@ -9,7 +9,7 @@
 <div class="col-7"> 
 <center><h5>Обновление для ответственного за оборудование: 
 
-    {% if title.measureequipment %}
+    {% if title.measurequipment %}
     <a href="/equipment/measureequipment/{{ title.exnumber }}/">
     {{title.measureequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
     {% elif title.testingequipment %}
