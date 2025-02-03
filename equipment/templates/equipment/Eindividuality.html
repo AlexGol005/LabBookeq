@@ -11,7 +11,7 @@
 
     {% if title.measurequipment %}
     <a href="/equipment/measureequipment/{{ title.exnumber }}/">
-    {{title.measureequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+    {{title.measurequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
     {% elif title.testingequipment %}
     <a href="/equipment/testequipment/{{ title.exnumber }}/">
     {{title.testingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
