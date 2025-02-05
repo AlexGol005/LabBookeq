@@ -36,14 +36,4 @@ def USER(request):
         }
 
 
-def USER_AUTH(request):
-    '''авторизван пользователь или нет?  Чтобы показывать или скрывать кнопки'''
-    try:
-        user = User.objects.get(username=request.user)
-        USER_AUTH = True
-    except:
-        USER_AUTH = False
-    return {
-                'USER_AUTH': USER_AUTH
-            }
 
