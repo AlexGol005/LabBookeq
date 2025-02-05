@@ -16,6 +16,7 @@ def last_ad(request):
     }
 
 def USER(request):
+    '''что это?'''
     try:
         user = User.objects.get(username=request.user)
         if user.is_staff:
@@ -33,3 +34,16 @@ def USER(request):
         return {
             'last_ad': USER
         }
+
+
+def USER_AUTH(request):
+    '''авторизван пользователь или нет?  Чтобы показывать или скрывать кнопки'''
+    try:
+        user = User.objects.get(username=request.user)
+        USER_AUTH = True
+    except:
+        USER_AUTH = False
+    return {
+                'USER_AUTH': USER_AUTH
+            }
+
