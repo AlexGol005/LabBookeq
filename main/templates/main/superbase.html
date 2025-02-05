@@ -75,9 +75,11 @@ _tmr.push({id: "3475315", type: "pageView", start: (new Date()).getTime()});
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'eq' %}">Инфраструктура</a>
                                 </li>
+                                {% if USER_AUTH %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'managerequipment' %}">Управление ифраструктурой</a>
                                 </li>
+                                {% endif %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'contacts' %}">Контакты</a>
                                 </li>
