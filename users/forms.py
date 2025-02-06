@@ -67,11 +67,6 @@ class UserUdateForm(forms.ModelForm):
 
 class ProfileUdateForm(forms.ModelForm):
     img = forms.ImageField(label='загрузить фото', widget=forms.FileInput)
-    # username = forms.CharField(label='Введите логин',
-    #                            required=True,
-    #                            help_text='Фамилия и инициалы без пробелов',
-    #                            widget=forms.TextInput(attrs={'class': 'form-control',
-    #                            'placeholder': 'ФамилияИО'}))
 
     class Meta:
         model = Profile
@@ -139,16 +134,3 @@ class EmployeesUpdateForm(forms.ModelForm):
                 'position', 
                   ]
 
-
-# class OrderformForm(forms.ModelForm):
-#     """форма для выбора формы заявки на поверку"""
-#     orderform = forms.ChoiceField(label='Выберите форму заявки на поверку по поверителю, если нет нужной вам формы - обратитесь к администрации сайта', required=True,
-#                              choices=ORDERFORMCHOISE,
-#                              widget=forms.Select(attrs={'class': 'form-control'}))
-
-                             
-#     class Meta:
-#         model = Company
-#         fields = [
-#                  'orderform', 
-#                   ]
