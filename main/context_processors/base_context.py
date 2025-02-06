@@ -15,25 +15,19 @@ def last_ad(request):
         'last_ad': ad
     }
 
-def USER(request):
+def USER_HAVE_RIGHTS(request):
     '''что это?'''
     try:
         user = User.objects.get(username=request.user)
         if user.is_staff:
-            USER = True
-            return {
-                'last_ad': USER
-            }
+            USER_HAVE_RIGHTS = True
         if not user.is_staff:
             USER = False
-            return {
-                'last_ad': USER
-            }
     except:
-        USER = False
-        return {
-            'last_ad': USER
-        }
+        USER_HAVE_RIGHTS = False
+    return {
+        'USER_HAVE_RIGHTS': USER_HAVE_RIGHTS
+    }
 
 
 
