@@ -147,19 +147,10 @@ def OrderVerificationchange(request, str):
 
 class ManagerEquipmentView(LoginRequiredMixin, TemplateView):
     """выводит страницу для управляющего оборудованием"""
+    """path('managerequipment/', views.ManagerEquipmentView.as_view(), name='managerequipment'),"""
+    
     template_name = URL + '/manager.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(ManagerEquipmentView, self).get_context_data(**kwargs)
-        try:
-            user = User.objects.get(username=self.request.user)
-            if user.is_staff:
-                context['USER'] = True
-            if not user.is_staff:
-                context['USER'] = False
-        except:
-            context['USER'] = False
-        return context
 
 class MeteorologicalParametersView(LoginRequiredMixin, ListView):
     """Выводит страницу с кнопками для добавления помещений, микроклимата и вывода журнала микроклимата"""
