@@ -22,11 +22,11 @@ def USER_HAVE_RIGHTS(request):
     try:
         user = User.objects.get(username=request.user)
         if user.is_staff:
-            USER_HAVE_RIGHTS = True
+            USER_HAVE_RIGHTS = False
         if not user.is_staff:
-            USER_HAVE_RIGHTS = True
+            USER_HAVE_RIGHTS = False
     except:
-        USER_HAVE_RIGHTS = True
+        USER_HAVE_RIGHTS = False
     return {
         'USER_HAVE_RIGHTS': USER_HAVE_RIGHTS
     }
