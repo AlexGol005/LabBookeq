@@ -8,7 +8,7 @@ register = template.Library()
 def get_USER_HAVE_RIGHTS():
     try:
         user = User.objects.get(username=request.user)
-        USER_HAVE_RIGHTS = True
+        USER_HAVE_RIGHTS = False
     except:
-        USER_HAVE_RIGHTS = True    
+        USER_HAVE_RIGHTS = False    
     return  USER_HAVE_RIGHTS  
