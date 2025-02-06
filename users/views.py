@@ -32,7 +32,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context['employees'] = employees
         context['company'] = company 
         context['user_group'] = user_group 
-        context['ProfileUdateForm'] = ProfileUdateForm(self.request.POST, sels.request.FILES,  instance=sels.request.user.profile) 
+        context['ProfileUdateForm'] = ProfileUdateForm(self.request.POST, self.request.FILES,  instance=self.request.user.profile) 
             
         return context
 
