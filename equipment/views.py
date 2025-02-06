@@ -778,11 +778,14 @@ def EquipmentDeleteView(request, str):
             ruser=request.user.profile.userid
             note = Equipment.objects.filter(pointer=ruser).get(pk=str)
             note.delete()
-            return redirect('equipmentlist')
             messages.success(request, 'Оборудование удалено!')
+            return redirect('equipmentlist')            
         except:
             messages.success(request, 'Оборудование невозможно удалить, так как она зарегистрировано в качестве СИ, ИО или ВО. Вы можете поменять статус оборудования на "Списано"')
             return redirect('equipmentlist')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect('equipmentlist')
 
 
 class MeasurEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
