@@ -17,14 +17,14 @@ def last_ad(request):
 
 
 
-def USER1(request):
+def USER_HAVE_RIGHTS(request):
     '''что это?'''
     try:
         user = User.objects.get(username=request.user)
         if user.is_staff:
             USER = True
         if not user.is_staff:
-            USER = False
+            USER = True
     except:
         USER = True
     return {
