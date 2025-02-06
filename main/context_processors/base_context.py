@@ -15,25 +15,25 @@ def last_ad(request):
         'last_ad': ad
     }
 
-def USER(request):
-    '''что это?'''
-    try:
-        user = User.objects.get(username=request.user)
-        if user.is_staff:
-            USER = True
-            return {
-                'last_ad': USER
-            }
-        if not user.is_staff:
-            USER = False
-            return {
-                'last_ad': USER
-            }
-    except:
-        USER = False
-        return {
-            'last_ad': USER
-        }
+# def USER(request):
+#     '''что это?'''
+#     try:
+#         user = User.objects.get(username=request.user)
+#         if user.is_staff:
+#             USER = True
+#             return {
+#                 'last_ad': USER
+#             }
+#         if not user.is_staff:
+#             USER = False
+#             return {
+#                 'last_ad': USER
+#             }
+#     except:
+#         USER = False
+#         return {
+#             'last_ad': USER
+#         }
 
 
 
