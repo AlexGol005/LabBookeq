@@ -85,6 +85,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
         return render(request, template_name, context)
 
     def post(self, request, str, *args, **kwargs):
+        """выбираем активный договор с поверителем"""
         ruser=request.user.profile.userid
         form = ActivaqqchangeForm(ruser, request.POST, instance=Activeveraqq.objects.get(pointer=ruser), initial={'ruser': ruser,})
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
@@ -94,45 +95,48 @@ class OrderVerificationView(LoginRequiredMixin, View):
                 return redirect(f'/equipment/orderverification/{str}/')
 
         else:
-            messages.success(self.request, "Раздел доступен только менеджеру по оборудованию")
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
             return redirect('/equipment/orderverification/0/')
 
 
 @login_required
 def OrderVerificationchange(request, str):
     """ на странице для заказа поверки/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на поверку """
+    """ никаких страниц эта вьюшка не формирует! """
+    """path('orderverificationchange/<str:str>/', views.OrderVerificationchange, name='orderverificationchange'),"""
     ruser=request.user.profile.userid
-    if request.method == 'POST':
-        if 'true' in request.POST:
-            object_ids = request.POST.getlist('my_object')         
-            note = Equipment.objects.filter(id__in=object_ids) 
-            for i in note:
-                if i.kategory == 'СИ':               
-                    i.measurequipment.newhaveorder = True
-                    i.measurequipment.save()
-                elif i.kategory == 'ИО':               
-                    i.testingequipment.newhaveorder=True
-                    i.testingequipment.save()  
-            
-            try:
-                note = Activeveraqq.objects.get(pointer=ruser)
-                exelnumber = note.aqq.verificator.pk
-                exelname = f'export_orderverification_{exelnumber}_xls'            
-                return redirect(exelname, {'object_ids': object_ids})
-            except:
-                return redirect('export_orderverification_xls', {'object_ids': object_ids})
-                    
-        if 'false' in request.POST:
-            object_ids = request.POST.getlist('my_object')
-            note = Equipment.objects.filter(id__in=object_ids) 
-            for i in note:
-                if i.kategory == 'СИ':               
-                    i.measurequipment.newhaveorder=False
-                    i.measurequipment.save()
-                elif i.kategory == 'ИО':               
-                    i.testingequipment.newhaveorder=False
-                    i.testingequipment.save()
-            return redirect(f'/equipment/orderverification/{str}/')
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == 'POST':
+            if 'true' in request.POST:
+                object_ids = request.POST.getlist('my_object')         
+                note = Equipment.objects.filter(id__in=object_ids) 
+                for i in note:
+                    if i.kategory == 'СИ':               
+                        i.measurequipment.newhaveorder = True
+                        i.measurequipment.save()
+                    elif i.kategory == 'ИО':               
+                        i.testingequipment.newhaveorder=True
+                        i.testingequipment.save()  
+                
+                try:
+                    note = Activeveraqq.objects.get(pointer=ruser)
+                    exelnumber = note.aqq.verificator.pk
+                    exelname = f'export_orderverification_{exelnumber}_xls'            
+                    return redirect(exelname, {'object_ids': object_ids})
+                except:
+                    return redirect('export_orderverification_xls', {'object_ids': object_ids})
+                        
+            if 'false' in request.POST:
+                object_ids = request.POST.getlist('my_object')
+                note = Equipment.objects.filter(id__in=object_ids) 
+                for i in note:
+                    if i.kategory == 'СИ':               
+                        i.measurequipment.newhaveorder=False
+                        i.measurequipment.save()
+                    elif i.kategory == 'ИО':               
+                        i.testingequipment.newhaveorder=False
+                        i.testingequipment.save()
+                return redirect(f'/equipment/orderverification/{str}/')
 
        
 
