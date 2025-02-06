@@ -17,7 +17,7 @@ class Profile(models.Model):
     userposition = models.CharField('Должность', max_length=50, null=True, blank=True)
     userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, default=None, null=True)
     img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
-    rights = models.CharField('Права учетной записи', choices=CHOICES_RIGHTS, defoult='Cотрудник', max_length=40, default=None, null=True)
+    rights = models.CharField('Права учетной записи', choices=CHOICES_RIGHTS, default='Cотрудник', max_length=40, null=True)
     
 
 
