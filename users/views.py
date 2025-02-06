@@ -16,29 +16,25 @@ from equipment.models import *
 @login_required
 def profileupdate(request):
     if request.method == "POST":
-        profailForm = ProfileUdateForm(request.POST, request.FILES,  instance=request.user.profile)
-        userUpdadeForm = UserUdateForm(request.POST, instance=request.user)
-        if profailForm.is_valid() and userUpdadeForm.is_valid():
-            profailForm.save()
-            userUpdadeForm.save()
+        ProfileUdateForm = ProfileUdateForm(request.POST, request.FILES,  instance=request.user.profile)
+        if ProfileUdateForm.is_valid():
+            ProfileUdateForm.save()
             messages.success(request, f'данные были успешно обновлены')
             return redirect('profile')
 
-    else:
-        profailForm = ProfileUdateForm(instance=request.user.profile)
-        userUpdadeForm = UserUdateForm(instance=request.user)
-        try:
-            user = User.objects.get(username=request.user)
-            if user.is_superuser:
-                USER = True
-            if not user.is_superuser:
-                USER = False
-        except:
-            USER = False
+    # else:
+    #     profailForm = ProfileUdateForm(instance=request.user.profile)
+    #     userUpdadeForm = UserUdateForm(instance=request.user)
+    #     try:
+    #         user = User.objects.get(username=request.user)
+    #         if user.is_superuser:
+    #             USER = True
+    #         if not user.is_superuser:
+    #             USER = False
+    #     except:
+    #         USER = False
 
-    data = {'profailForm': profailForm,
-            'userUpdadeForm': userUpdadeForm,
-            'USER': USER
+    data = {'ProfileUdateForm': ProfileUdateForm,
             }
 
     return render(request, 'users/profileupdate.html', data)
