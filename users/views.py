@@ -13,43 +13,7 @@ from equipment.models import *
 
 
 
-@login_required
-def profileupdate(request):
-    ProfileUdateForm = ProfileUdateForm()
-    if request.method == "POST":
-        ProfileUdateForm = ProfileUdateForm(request.POST, request.FILES,  instance=request.user.profile)
-        if ProfileUdateForm.is_valid():
-            ProfileUdateForm.save()
-            messages.success(request, f'данные были успешно обновлены')
-            return redirect('profile')
 
-    # else:
-    #     profailForm = ProfileUdateForm(instance=request.user.profile)
-    #     userUpdadeForm = UserUdateForm(instance=request.user)
-    #     try:
-    #         user = User.objects.get(username=request.user)
-    #         if user.is_superuser:
-    #             USER = True
-    #         if not user.is_superuser:
-    #             USER = False
-    #     except:
-    #         USER = False
-
-        data = {'ProfileUdateForm': ProfileUdateForm,
-                }
-
-        return render(request, 'users/profileupdate.html', data)
-    else:
-        ProfileUdateForm = ProfileUdateForm(instance=request.user.profile)
-        # userUpdadeForm = UserUdateForm(instance=request.user)
-
-    data = {
-            'ProfileUdateForm': ProfileUdateForm,
-            }
-    # 'userUpdadeForm': userUpdadeForm
-
-
-    return render(request, 'users/profile.html', data)
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     """выводит персональную страницу """
