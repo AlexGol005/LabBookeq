@@ -24,10 +24,10 @@
             <strong class="d-block text-gray-dark"><b>Права пользователя:  </b> {{ user_group }}</strong>
     </div>
 
-<!--       Кнопки                                                                                              -->
-{{USER_HAVE_RIGHTS}}
-            {% if USER_HAVE_RIGHTS %}  
+<!--       Кнопки   . USER_HAVE_RIGHTS  зят из /main/context_processors/base_context.py  и их надо регистрировать в сеттингс еще каждый он принимает request, а пользовательские теги - нет   -->
+                                                                                        
 
+            {% if USER_HAVE_RIGHTS %}  
 
              <br>
 
