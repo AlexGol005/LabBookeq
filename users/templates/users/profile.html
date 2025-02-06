@@ -1,5 +1,5 @@
 {% extends 'main/base.html' %}
-{% load all_tags %}
+
 {% block title %}
     Кабинет пользователя
 {% endblock %}
@@ -26,9 +26,8 @@
 
 <!--       Кнопки                                                                                              -->
 
-            {% get_USER_HAVE_RIGHTS as a %}  
-<!--              {% if a  %} -->
-{{a}}
+            {% if USER_HAVE_RIGHTS %}  
+
 
              <br>
 
