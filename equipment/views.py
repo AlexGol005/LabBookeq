@@ -782,7 +782,7 @@ def EquipmentDeleteView(request, str):
             messages.success(request, 'Оборудование удалено!')
         except:
             messages.success(request, 'Оборудование невозможно удалить, так как она зарегистрировано в качестве СИ, ИО или ВО. Вы можете поменять статус оборудования на "Списано"')
-            return redirect('/equipment/lasttenequipment/')
+            return redirect('equipmentlist')
 
 
 class MeasurEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
