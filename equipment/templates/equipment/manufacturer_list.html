@@ -18,7 +18,7 @@
           </a>
           <br>
       {#конец заголовка #}
-      
+      {% if USER_HAVE_RIGHTS %} 
           <br>
           <center>
               <a href="{% url 'manufacturerreg' %}"  target="blank" class="btn btn-info" style="width: 40%">
@@ -26,6 +26,8 @@
               </a>
           </center>
       <br>
+{% endif %}
+    
      {#форма для поиска по полям #}
      {#   #   <br><br>#}
           {# <div style="text-align: center; margin-top: 25px">#}
