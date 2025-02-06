@@ -275,7 +275,7 @@ class EquipmentView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(EquipmentView, self).get_context_data(**kwargs)
-        context['company'] =  Company.objects.get(userid=user.profile.userid).name
+        context['company'] =  Company.objects.get(userid=self.request.user.profile.userid).name
         return context
 
 
