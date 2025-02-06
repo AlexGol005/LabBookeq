@@ -37,7 +37,9 @@
             <td>{{ obj.ver_agreement_number  }}</td> 
             <td>{{ obj.ver_agreement_date }}</td> 
             <td>{{ obj.ver_agreement_card }}</td>
-            <td> <a href="{% url 'agreementcompanyverupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td>                
+            {% if USER_HAVE_RIGHTS  %}  
+            <td> <a href="{% url 'agreementcompanyverupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td>   
+            {% endif %}
         </tr>
         {% endfor %}
 
