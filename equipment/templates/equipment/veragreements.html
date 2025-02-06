@@ -29,7 +29,10 @@
      <table class="table table-bordered flexy">
        
         <tr>
-              <th>Название поверителя</th> <th>Номер договора</th><th>Дата договора</th><th>Номер карточки</th><th>Ред.</th>
+              <th>Название поверителя</th> <th>Номер договора</th><th>Дата договора</th><th>Номер карточки</th>
+            {% if USER_HAVE_RIGHTS  %}
+            <th>Ред.</th>
+            {% endfor %}
         </tr>
         {% for obj in objects %}
         <tr>              
