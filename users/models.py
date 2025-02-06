@@ -11,8 +11,7 @@ class Profile(models.Model):
     userposition = models.CharField('Должность', max_length=50, null=True, blank=True)
     userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, default=None, null=True)
     img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
-    rights = models.CharField('Права учетной записи', max_length=40, null=True)
-    
+
 
     def __str__(self):
         return f'Организация: {self.userid}; пользователь: {self.name}; логин: {self.user.username}'
