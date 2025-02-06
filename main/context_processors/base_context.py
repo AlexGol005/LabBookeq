@@ -24,7 +24,7 @@ def USER_HAVE_RIGHTS(request):
         if user.is_staff:
             USER = False
     except:
-        USER_HAVE_RIGHTS = False
+        USER_HAVE_RIGHTS = True
     return {
         'USER_HAVE_RIGHTS': USER_HAVE_RIGHTS
     }
