@@ -10,5 +10,5 @@ def get_USER_HAVE_RIGHTS():
         user = User.objects.get(username=request.user)
         USER_HAVE_RIGHTS = True
     except:
-        USER_HAVE_RIGHTS = True      
-    return  USER_HAVE_RIGHTS
+        USER_HAVE_RIGHTS =     
+    return  True  
