@@ -45,11 +45,10 @@ from users.models import Profile, Company
 URL = 'equipment'
 now = date.today()
 
-# блок 0 - заказ поверки
-
 
 class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа поверки/аттестации """
+    """'/orderverification.html'"""
     """path('orderverification/<str:str>/', views.OrderVerificationView.as_view(), name='orderverification'),"""
     
     CHOISE_LIST = [('все приборы', 'все приборы'),('не поверено на сегодняшний день','не поверено на сегодняшний день'), ('требует поверки на сегодняшний день','требует поверки на сегодняшний день'), 
@@ -64,7 +63,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
         dateform = DateForm(initial={'date': serdate,})
         i=str
         if i=='0':
-            list = Equipment.objects.filter(pointer=self.request.user.profile.userid)
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment)| Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment) 
         if i=='4':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newhaveorder=True)| Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newhaveorder=True) 
         if i=='1':
@@ -104,6 +103,7 @@ def OrderVerificationchange(request, str):
     """ на странице для заказа поверки/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на поверку """
     """ никаких страниц эта вьюшка не формирует! """
     """path('orderverificationchange/<str:str>/', views.OrderVerificationchange, name='orderverificationchange'),"""
+    
     ruser=request.user.profile.userid
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == 'POST':
