@@ -19,7 +19,10 @@
      <table class="table table-bordered flexy">
        
         <tr>
-              <th>Комната</th> <th>Барометр № Заводской</th><th>Гигрометр № Заводской</th><th>Ответственный</th><th>Ред.</th>
+              <th>Комната</th> <th>Барометр № Заводской</th><th>Гигрометр № Заводской</th><th>Ответственный</th>
+            {% if USER_HAVE_RIGHTS  %}  
+            <th>Ред.</th>
+            {% endif %}
         </tr>
         {% for r in rooms %}
         <tr>              
@@ -27,7 +30,9 @@
             <td>{{ r.equipment1.equipment.lot }}</td> 
             <td>{{ r.equipment2.equipment.lot }}</td> 
             <td>{{ r.person.name }}</td>
-            <td> <a href="{% url 'roomupdate' r.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>                
+            {% if USER_HAVE_RIGHTS  %}  
+            <td> <a href="{% url 'roomupdate' r.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>  
+            {% endif %}
         </tr>
         {% endfor %}
        
