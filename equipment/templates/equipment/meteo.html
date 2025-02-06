@@ -10,10 +10,11 @@
 
 
         <div style="text-align: center; margin-top: 20px">
-            {% if USER %}
+            {% if USER_HAVE_RIGHTS %} 
                 <a href="{% url 'roomreg' %}" class="btn btn-primary mr-2 ml-2 mt-2" style="width: 210px">Добавить помещение</a>
-                <a href="{% url 'meteoreg' %}" class="btn btn-primary  mr-2 ml-2 mt-2" style="width: 210px">Добавить запись о микроклимате</a>
             {% endif %}
+                <a href="{% url 'meteoreg' %}" class="btn btn-primary  mr-2 ml-2 mt-2" style="width: 210px">Добавить запись о микроклимате</a>
+
         </div>
     
         <div style="text-align: center; margin-top: 20px"> <h4>Помещения</h4></div>
