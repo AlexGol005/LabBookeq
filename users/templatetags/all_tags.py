@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.simple_tag()
 def get_USER_HAVE_RIGHTS():
-        user = User.objects.get(username=request.user)
-        USER_HAVE_RIGHTS = user
+    user = User.objects.get(username=request.user)
+    USER_HAVE_RIGHTS = user
  
     return  USER_HAVE_RIGHTS  
