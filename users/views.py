@@ -72,6 +72,17 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             
         return context
 
+    def post(self, request, str, *args, **kwargs):
+        ProfileUdateForm = ProfileUdateForm(request.POST, request.FILES,  instance=request.user.profile)
+            if ProfileUdateForm.is_valid():
+                order = ProfileUdateForm.save(commit=False)
+                order.save()
+                return redirect('/')
+
+        else:
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+            return redirect('/')
+
 
 
 class CompanyProfileView(LoginRequiredMixin, TemplateView):
