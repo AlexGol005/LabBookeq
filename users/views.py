@@ -34,10 +34,10 @@ def profileupdate(request):
     #     except:
     #         USER = False
 
-    data = {'ProfileUdateForm': ProfileUdateForm,
-            }
+        data = {'ProfileUdateForm': ProfileUdateForm,
+                }
 
-    return render(request, 'users/profileupdate.html', data)
+        return render(request, 'users/profileupdate.html', data)
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     """выводит персональную страницу """
