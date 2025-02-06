@@ -14,17 +14,18 @@
             <strong class="d-block text-gray-dark"><b> ______________ </b> </strong>
             <br>
             <strong class="d-block text-gray-dark"><b>Данные учетной записи</b></strong>
+            <br>
             <strong class="d-block text-gray-dark"><b>Логин:  </b> {{ user.username }}</strong>
-            <strong class="d-block text-gray-dark"><b>Имя:  </b> {{ user.profile.name }}</strong>
+            <strong class="d-block text-gray-dark"><b>ФИО:  </b> {{ user.profile.name }}</strong>
             {% if user.profile.position  %}
-            <strong class="d-block text-gray-dark"><b>Должность:  </b> {{ user.profile.position }}</strong>
+            <strong class="d-block text-gray-dark"><b>Должность:  </b> {{ user.profile.userposition }}</strong>
             {% endif %} 
             <strong class="d-block text-gray-dark"><b>Права пользователя:  </b> {{ user_group }}</strong>
     </div>
 
 <!--       Кнопки                                                                                              -->
 
-            {% if USER  %}    
+<!--             {% if USER  %}     -->
              <br>
 
                 <center>
@@ -34,6 +35,6 @@
                     <a href="{% url 'rooms' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:25%"> Помещения </a>
                     <a href="{% url 'agreementcompanylist' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:25%"> Договоры с поверителями </a>
                 </center>
-            {% endif %}
+<!--             {% endif %} -->
 </div>
 {% endblock %}
