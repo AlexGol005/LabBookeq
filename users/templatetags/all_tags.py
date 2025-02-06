@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 register = template.Library()
 
 # name 'request' is not defined!!!
+
+# {%load all_tags%}
 #             {% get_USER_HAVE_RIGHTS as a %}  
 # <!--              {% if a  %} -->
 # {{a}}
