@@ -147,6 +147,7 @@ def OrderVerificationchange(request, str):
 
 class ManagerEquipmentView(LoginRequiredMixin, TemplateView):
     """выводит страницу для управляющего оборудованием"""
+    """кнопка не показывается базовому пользователю"""
     """path('managerequipment/', views.ManagerEquipmentView.as_view(), name='managerequipment'),"""
     
     template_name = URL + '/manager.html'
