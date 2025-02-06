@@ -41,11 +41,11 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         if context['ProfileUdateForm'].is_valid():
             order = context['ProfileUdateForm'].save(commit=False)
             order.save()
-            return redirect('/')
+            return redirect('profile')
 
         else:
             messages.success(self.request, "Раздел доступен только продвинутому пользователю")
-            return redirect('/')
+            return redirect('profile')
 
 
 
