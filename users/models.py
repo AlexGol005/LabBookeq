@@ -5,21 +5,14 @@ from django.contrib.auth.models import User
 from PIL import  Image
 
 
-CHOICES_RIGHTS = (
-        ('Сотрудник', 'Сотрудник'),
-        ('Менеджер', 'Менеджер'),
-    )
-
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)    
     name = models.CharField('ФИО', max_length=40, default=None, null=True)
     userposition = models.CharField('Должность', max_length=50, null=True, blank=True)
     userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, default=None, null=True)
     img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
-    rights = models.CharField('Права учетной записи', choices=CHOICES_RIGHTS, default='Cотрудник', max_length=40, null=True)
+    rights = models.CharField('Права учетной записи', max_length=40, null=True)
     
-
 
     def __str__(self):
         return f'Организация: {self.userid}; пользователь: {self.name}; логин: {self.user.username}'
