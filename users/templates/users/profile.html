@@ -18,12 +18,19 @@
             <br>
             <strong class="d-block text-gray-dark"><b>Логин:  </b> {{ user.username }}</strong>
             <strong class="d-block text-gray-dark"><b>ФИО:  </b> {{ user.profile.name }}</strong>
-            {% if user.profile.position  %}
             <strong class="d-block text-gray-dark"><b>Должность:  </b> {{ user.profile.userposition }}</strong>
-            {% endif %} 
             <strong class="d-block text-gray-dark"><b>Права пользователя:  </b> {{ user_group }}</strong>
     </div>
 
+         <form method="post" enctype="multipart/form-data" class="form-register mt-4">
+        {% csrf_token %}
+{#        {{ userUpdadeForm.as_p }}#}
+        {{ profailForm.as_p }}
+        <button class="btn btn-outline-warning" type="submit">Обновить</button>
+    </form>
+
+
+     
 <!--       Кнопки   . USER_HAVE_RIGHTS  зят из /main/context_processors/base_context.py  и их надо регистрировать в сеттингс еще каждый он принимает request, а пользовательские теги - нет   -->
                                                                                         
 
