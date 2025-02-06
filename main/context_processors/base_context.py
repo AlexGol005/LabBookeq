@@ -19,9 +19,9 @@ def USER_HAVE_RIGHTS(request):
     '''что это?'''
     try:
         user = User.objects.get(username=request.user)
-        if user.is_staff:
-            USER_HAVE_RIGHTS = True
         if not user.is_staff:
+            USER_HAVE_RIGHTS = True
+        if user.is_staff:
             USER = False
     except:
         USER_HAVE_RIGHTS = False
