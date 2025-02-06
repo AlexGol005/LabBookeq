@@ -38,6 +38,17 @@ def profileupdate(request):
                 }
 
         return render(request, 'users/profileupdate.html', data)
+    else:
+        ProfileUdateForm = ProfileUdateForm(instance=request.user.profile)
+        # userUpdadeForm = UserUdateForm(instance=request.user)
+
+    data = {
+            'ProfileUdateForm': ProfileUdateForm,
+            }
+    # 'userUpdadeForm': userUpdadeForm
+
+
+    return render(request, 'users/profile.html', data)
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     """выводит персональную страницу """
