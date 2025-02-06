@@ -155,6 +155,8 @@ class ManagerEquipmentView(LoginRequiredMixin, TemplateView):
 
 class MeteorologicalParametersView(LoginRequiredMixin, ListView):
     """Выводит страницу с кнопками для добавления помещений, микроклимата и вывода журнала микроклимата"""
+    """path('meteo/', views.MeteorologicalParametersView.as_view(), name='meteo'),"""
+    
     template_name = URL + '/meteo.html'
     context_object_name = 'objects'
 
@@ -164,14 +166,6 @@ class MeteorologicalParametersView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MeteorologicalParametersView, self).get_context_data(**kwargs)
-        try:
-            user = User.objects.get(username=self.request.user)
-            if user.is_staff:
-                context['USER'] = True
-            if not user.is_staff:
-                context['USER'] = False
-        except:
-            context['USER'] = False
         context['form'] = DateForm()
         return context
 
@@ -179,6 +173,7 @@ class MeteorologicalParametersView(LoginRequiredMixin, ListView):
 class MetrologicalEnsuringView(LoginRequiredMixin, TemplateView):
     """Выводит заглавную страницу для Этикетки о поверке/аттестации и списки на поверку/аттестацию """
     template_name = URL + '/metro.html'
+    """path('metro/', views.MetrologicalEnsuringView.as_view(), name='metro'),"""
 
     def get_context_data(self, **kwargs):
         context = super(MetrologicalEnsuringView, self).get_context_data(**kwargs)
@@ -188,6 +183,8 @@ class MetrologicalEnsuringView(LoginRequiredMixin, TemplateView):
 
 class ReportsView(LoginRequiredMixin, TemplateView):
     """Выводит страницу с кнопками для вывода планов и отчётов по оборудованию"""
+    """path('reports/', views.ReportsView.as_view(), name='reports'),"""
+    
     template_name = URL + '/reports.html'
 
     def get_context_data(self, **kwargs):
@@ -202,6 +199,8 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
 class ManufacturerView(ListView):
     """ Выводит список всех производителей """
+    """path('manufacturerlist/', views.ManufacturerView.as_view(), name='manufacturerlist'),"""
+    
     model = Manufacturer
     template_name = URL + '/manufacturer_list.html'
     context_object_name = 'objects'
