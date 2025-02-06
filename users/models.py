@@ -5,21 +5,20 @@ from django.contrib.auth.models import User
 from PIL import  Image
 
 
-ORDERFORMCHOISE = (
-        ('ФБУ «Тест-С.-Петербург»', 'ФБУ «Тест-С.-Петербург»'),
-        ('ФГУП "ВНИИМ ИМ. Д.И.МЕНДЕЛЕЕВА"', 'ФГУП "ВНИИМ ИМ. Д.И.МЕНДЕЛЕЕВА"'),
+CHOICES_RIGHTS = (
+        ('Сотрудник', 'Сотрудник'),
+        ('Менеджер', 'Менеджер'),
     )
-
-
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)    
-    name = models.CharField('ФИО/роль', max_length=40, default=None, null=True)
+    name = models.CharField('ФИО', max_length=40, default=None, null=True)
     userposition = models.CharField('Должность', max_length=50, null=True, blank=True)
     userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, default=None, null=True)
     img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
-    pay = models.BooleanField ('Оплачено', default=True)
+    rights = models.CharField('Права учетной записи', choices=CHOICES_RIGHTS, default='Cотрудник', max_length=40, default=None, null=True
+    
 
 
     def __str__(self):
