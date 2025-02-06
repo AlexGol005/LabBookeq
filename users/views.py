@@ -49,20 +49,6 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
         user = User.objects.get(username=self.request.user)
-        
-        # try:
-        #     user = User.objects.get(username=self.request.user)
-        #     if user.is_staff:
-        #         context['USER'] = True
-        #         context['USERTITLE'] = "Продвинутый пользователь"
-        #     if user.is_superuser:
-        #         context['USER'] = True
-        #         context['USERTITLE'] = "Суперпользователь"
-        #     else:
-        #         context['USER'] = False
-        #         context['USERTITLE'] = "Базовый пользователь"
-        # except:
-        #     context['USER'] = False
         l = user.groups.values_list('name',flat = True) 
         try:
             user_group = list(l)[0]
@@ -74,6 +60,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context['employees'] = employees
         context['company'] = company 
         context['user_group'] = user_group 
+        context['ProfileUdateForm'] = ProfileUdateForm 
             
         return context
 
