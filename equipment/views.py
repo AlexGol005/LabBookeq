@@ -137,6 +137,9 @@ def OrderVerificationchange(request, str):
                         i.testingequipment.newhaveorder=False
                         i.testingequipment.save()
                 return redirect(f'/equipment/orderverification/{str}/')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect('/equipment/orderverification/0/')
 
        
 
