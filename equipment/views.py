@@ -63,7 +63,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
         dateform = DateForm(initial={'date': serdate,})
         i=str
         if i=='0':
-            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment)| Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment) 
+            list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__pk__isnull=False)| Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__pk__isnull=False) 
         if i=='4':
             list = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(measurequipment__newhaveorder=True)| Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(testingequipment__newhaveorder=True) 
         if i=='1':
