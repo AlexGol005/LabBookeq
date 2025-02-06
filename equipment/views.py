@@ -510,7 +510,7 @@ class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, Creat
             order.save()
             return super().form_valid(form)
         else:
-            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
             return redirect('/equipment/verificatorsreg/')
 
 
@@ -766,7 +766,7 @@ def EquipmentReg(request):
                     }
             return render(request, 'equipment/Equipmentreg.html', content)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('/equipment/')
 
 
@@ -791,7 +791,7 @@ class MeasurEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, 
     form_class = MeasurEquipmentCharaktersCreateForm
     success_url = '/equipment/measurequipmentcharacterslist/'
     success_message = "Госреестр успешно добавлен. Для внесения изменений обратитесь к администрации сайта"
-    error_message = "Раздел доступен только инженеру по оборудованию"
+    error_message = "Раздел доступен только продвинутому пользователю"
 
     def form_valid(self, form):
         order = form.save(commit=False)
@@ -801,7 +801,7 @@ class MeasurEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, 
             order.save()
             return super().form_valid(form)
         else:
-            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
             return redirect('/equipment/measurequipmentcharacterslist/')
 
     def get_context_data(self, **kwargs):
@@ -828,7 +828,7 @@ def MeasurEquipmentCharaktersUpdateView(request, str):
                 }
         return render(request, 'equipment/Echaractersreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('/equipment/measurequipmentcharacterslist/')
 
 
@@ -838,7 +838,7 @@ class TestingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
     form_class = TestingEquipmentCharaktersCreateForm
     success_url = '/equipment/testingequipmentcharacterslist/'
     success_message = "Характеристики ИО успешно добавлены. Для внесения изменений обратитесь к администрации сайта"
-    error_message = "Раздел доступен только инженеру по оборудованию"
+    error_message = "Раздел доступен только продвинутому пользователю"
 
     def form_valid(self, form):
         order = form.save(commit=False)
@@ -848,7 +848,7 @@ class TestingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
             order.save()
             return super().form_valid(form)
         else:
-            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
             return redirect('/equipment/testingequipmentcharacterslist/')
 
     def get_context_data(self, **kwargs):
@@ -874,7 +874,7 @@ def TestingEquipmentCharaktersUpdateView(request, str):
                 }
         return render(request, 'equipment/Echaractersreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('/equipment/testingequipmentcharacterslist/')
 
 
@@ -884,7 +884,7 @@ class HelpingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
     form_class = HelpingEquipmentCharaktersCreateForm
     success_url = '/equipment/helpingequipmentcharacterslist/'
     success_message = "Характеристики ВО успешно добавлены"
-    error_message = "Раздел доступен только инженеру по оборудованию"
+    error_message = "Раздел доступен только продвинутому пользователю"
 
     def form_valid(self, form):
         order = form.save(commit=False)
@@ -894,7 +894,7 @@ class HelpingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
             order.save()
             return super().form_valid(form)
         else:
-            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
             return redirect('/equipment/helpingequipmentcharacterslist/')
 
     def get_context_data(self, **kwargs):
@@ -920,7 +920,7 @@ def HelpingEquipmentCharaktersUpdateView(request, str):
                 }
         return render(request, 'equipment/Echaractersreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('/equipment/helpingequipmentcharacterslist/')
 
 
@@ -1259,7 +1259,7 @@ class DocsConsView(View, SuccessMessageMixin):
                 order.save()
                 return redirect(f'/equipment/docsreg/{str}')
         else:
-            messages.add_message(request, messages.SUCCESS, 'Раздел доступен только инженеру по оборудованию')
+            messages.add_message(request, messages.SUCCESS, 'Раздел доступен только продвинутому пользователю')
             return redirect(f'/equipment/docsreg/{str}')
 
 
@@ -1279,7 +1279,7 @@ def VerificationReg(request, str):
                 order.save()
                 return redirect(order)
     if not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect(reverse('measureequipmentver', kwargs={'str': str}))
     else:
         form = VerificationRegForm()
@@ -1303,7 +1303,7 @@ def CalibrationReg(request, str):
                 order.save()
                 return redirect(order)
     if not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect(reverse('measureequipmentcal', kwargs={'str': str}))
     else:
         form = CalibrationRegForm()
@@ -1327,7 +1327,7 @@ def AttestationReg(request, str):
                 order.save()
                 return redirect(order)
     if not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
     else:
         form = AttestationRegForm()
@@ -1540,7 +1540,7 @@ class HaveorderVerView(LoginRequiredMixin, UpdateView):
             order.save()
             return redirect('/equipment/measureequipmentall/')
         else:
-            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
             return redirect('/equipment/measureequipmentall/')
 
     def get_context_data(self, **kwargs):
@@ -1574,7 +1574,7 @@ class HaveorderAttView(LoginRequiredMixin, UpdateView):
             order.save()
             return redirect('/equipment/testingequipmentall/')
         else:
-            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
             return redirect('/equipment/testingequipmentall/')
 
     def get_context_data(self, **kwargs):
@@ -1998,7 +1998,7 @@ def ServiceEquipmentUUpdateView(request, str):
                 }
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect(reverse('serviceplan', kwargs={'str': str}))
 
 
@@ -2019,7 +2019,7 @@ def ServiceEquipmentUFactUpdateView(request, str):
                 }
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только инженеру по оборудованию')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect(reverse('serviceplan', kwargs={'str': str}))
 
 
