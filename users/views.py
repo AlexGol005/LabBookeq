@@ -15,6 +15,7 @@ from equipment.models import *
 
 @login_required
 def profileupdate(request):
+    ProfileUdateForm = ProfileUdateForm()
     if request.method == "POST":
         ProfileUdateForm = ProfileUdateForm(request.POST, request.FILES,  instance=request.user.profile)
         if ProfileUdateForm.is_valid():
