@@ -32,13 +32,12 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context['employees'] = employees
         context['company'] = company 
         context['user_group'] = user_group 
-        context['ProfileUdateForm'] = ProfileUdateForm(request.POST, request.FILES,  instance=request.user.profile) 
+        context['ProfileUdateForm'] = ProfileUdateForm(self.request.POST, sels.request.FILES,  instance=sels.request.user.profile) 
             
         return context
 
     def post(self, request, str, *args, **kwargs):
         context = self.get_context_data()
-        ProfileUdateForm = ProfileUdateForm(sels.request.POST, sels.request.FILES,  instance=sels.request.user.profile)
         if context['ProfileUdateForm'].is_valid():
             order = context['ProfileUdateForm'].save(commit=False)
             order.save()
