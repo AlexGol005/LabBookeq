@@ -36,7 +36,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
             
         return context
 
-    def post(self, request, str, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         context = self.get_context_data()
         if context['ProfileUdateForm'].is_valid():
             order = context['ProfileUdateForm'].save(commit=False)
