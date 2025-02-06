@@ -37,7 +37,6 @@ from xlwt import Alignment, Borders
 
 from equipment.constants import servicedesc0
 from equipment.forms import*
-from users.forms import OrderformForm
 from equipment.models import*
 from formstandart import *
 from functstandart import get_dateformat
