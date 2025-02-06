@@ -21,9 +21,9 @@ def USER_HAVE_RIGHTS(request):
     '''что это?'''
     try:
         user = User.objects.get(username=request.user)
-        if user.is_staff:
-            USER_HAVE_RIGHTS = False
-        if not user.is_staff:
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            USER_HAVE_RIGHTS = True
+        else:
             USER_HAVE_RIGHTS = False
     except:
         USER_HAVE_RIGHTS = False
