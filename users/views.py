@@ -48,6 +48,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'users/profile.html'
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
+        user = User.objects.get(username=self.request.user)
+        
         # try:
         #     user = User.objects.get(username=self.request.user)
         #     if user.is_staff:
