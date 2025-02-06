@@ -9,7 +9,7 @@
      <center><h5>Договоры с поверителями компании {{ company.name }}</h5></center> 
      <br>
       
-     {% if USER  %}    
+     {% if USER_HAVE_RIGHTS  %}    
           <center>
               <a href="{% url 'companyverreg' %}"  target="blank" class="btn btn-primary mt-1 mr-1 ml-1" style="width: 30%">
                   Добавить поверителя
