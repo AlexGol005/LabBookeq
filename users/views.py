@@ -60,7 +60,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context['employees'] = employees
         context['company'] = company 
         context['user_group'] = user_group 
-        context['ProfileUdateForm'] = ProfileUdateForm 
+        context['ProfileUdateForm'] = ProfileUdateForm() 
             
         return context
 
