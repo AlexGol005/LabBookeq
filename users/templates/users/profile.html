@@ -26,11 +26,9 @@
 
 <!--       Кнопки                                                                                              -->
 
-            {%  get_USER_HAVE_RIGHTS as objects %}  
+            {%  if get_USER_HAVE_RIGHTS == True %}  
 
-{% for obj in objects %}
-     {{obj}}
-{% endfor %}
+
              <br>
 
                 <center>
@@ -40,6 +38,7 @@
                     <a href="{% url 'rooms' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:25%"> Помещения </a>
                     <a href="{% url 'agreementcompanylist' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:25%"> Договоры с поверителями </a>
                 </center>
+     {% endif %}
        
 </div>
 {% endblock %}
