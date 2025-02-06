@@ -210,17 +210,11 @@ class ManufacturerView(ListView):
 
 class RoomsView(LoginRequiredMixin, TemplateView):
     """выводит страницу комнат компании """
+    """path('rooms/', views.RoomsView.as_view(), name='rooms'),"""
+    
     template_name = 'equipment/rooms.html'
     def get_context_data(self, **kwargs):
         context = super(RoomsView, self).get_context_data(**kwargs)
-        try:
-            user = User.objects.get(username=self.request.user)
-            if user.is_staff or user.is_superuser:
-                context['USER'] = True
-            else:
-                context['USER'] = False
-        except:
-            context['USER'] = False
         rooms = Rooms.objects.filter(pointer=user.profile.userid)
         company = Company.objects.get(userid=user.profile.userid)
         context['rooms'] = rooms
@@ -230,18 +224,12 @@ class RoomsView(LoginRequiredMixin, TemplateView):
 
 class AgreementVerificators(LoginRequiredMixin, TemplateView):
     """выводит страницу договоров с поверителями компании """
+    """path('agreementcompanylist', views.AgreementVerificators.as_view(), name='agreementcompanylist'),"""
+    
     template_name = 'equipment/veragreements.html'
     
     def get_context_data(self, **kwargs):
         context = super(AgreementVerificators, self).get_context_data(**kwargs)
-        try:
-            user = User.objects.get(username=self.request.user)
-            if user.is_staff or user.is_superuser:
-                context['USER'] = True
-            else:
-                context['USER'] = False
-        except:
-            context['USER'] = False
         company = Company.objects.get(userid=user.profile.userid)
         objects = Agreementverification.objects.filter(company=company)
         context['company'] = company 
@@ -265,7 +253,7 @@ def RoomsUpdateView(request, str):
         data = {'form': form,}                
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел недоступен')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('rooms')
 
 
@@ -274,6 +262,8 @@ def RoomsUpdateView(request, str):
 
 class EquipmentView(LoginRequiredMixin, ListView):
     """ Выводит список Всего ЛО """
+    """path('equipmentlist/', views.EquipmentView.as_view(), name='equipmentlist'),"""
+    
     template_name = URL + '/EquipmentLIST.html'
     context_object_name = 'objects'
     ordering = ['exnumber']
