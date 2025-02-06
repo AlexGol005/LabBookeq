@@ -34,13 +34,13 @@ def USER(request):
     try:
         user = User.objects.get(username=request.user)
         if user.is_staff:
-            USER_HAVE_RIGHTS = True
+            USER = True
         if not user.is_staff:
             USER = False
     except:
-        USER_HAVE_RIGHTS = False
+        USER = False
     return {
-        'USER_HAVE_RIGHTS': USER_HAVE_RIGHTS
+        'USER': USER
     }
 
 
