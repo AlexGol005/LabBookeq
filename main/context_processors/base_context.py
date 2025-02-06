@@ -17,7 +17,7 @@ def last_ad(request):
 
 
 
-def USER(request):
+def USER1(request):
     '''что это?'''
     try:
         user = User.objects.get(username=request.user)
