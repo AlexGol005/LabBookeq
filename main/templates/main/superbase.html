@@ -123,7 +123,9 @@ _tmr.push({id: "3475315", type: "pageView", start: (new Date()).getTime()});
             <div class="col-md-9 no-gutters">
             {% if messages %}
                 {% for mess in messages %}
+                <div class="TransactionAmount Badresult">
                     <div class="alert alert=success">{{ mess }}</div>
+                </div>
                 {% endfor %}
             {% endif %}
             </div>
