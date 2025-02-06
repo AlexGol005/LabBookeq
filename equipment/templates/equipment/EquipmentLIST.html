@@ -52,7 +52,7 @@
             {% elif obj.testingequipment  %}
             <td> <a href="{% url 'testequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, см. ИО</a></td> 
             {% elif obj.helpingequipment %}
-            <td> <a href="{% url 'helpingequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, см. ВО</a></td>
+            <td> <a href="{% url 'helpequipment' obj.exnumber %}"  class="btn btn-outline-primary">добавлены, см. ВО</a></td>
             {% elif obj.testingequipment  %}
             {% elif not obj.measurequipment_set.all and not obj.testingequipment_set.all and not  obj.helpingequipment_set.all and obj.kategory == 'СИ' %}
             <td><a href="/equipment/measureequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики СИ</a> </td> 
