@@ -25,7 +25,7 @@
 
 <!--       Кнопки                                                                                              -->
 
-<!--             {% if USER  %}     -->
+            {% if not USER  %}    
              <br>
 
                 <center>
@@ -35,6 +35,6 @@
                     <a href="{% url 'rooms' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:25%"> Помещения </a>
                     <a href="{% url 'agreementcompanylist' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:25%"> Договоры с поверителями </a>
                 </center>
-<!--             {% endif %} -->
+            {% endif %}
 </div>
 {% endblock %}
