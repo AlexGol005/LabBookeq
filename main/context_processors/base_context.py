@@ -38,7 +38,7 @@ def USER(request):
         if not user.is_staff:
             USER = False
     except:
-        USER = False
+        USER = True
     return {
         'USER': USER
     }
