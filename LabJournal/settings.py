@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     'blog',
     'ajax_select',
     'administrator',
-    'all_tags'
 ]
 
 
@@ -102,7 +101,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'main.context_processors.base_context.last_news',
                 'main.context_processors.base_context.last_ad',
-                'main.context_processors.base_context.USER',
+                # 'main.context_processors.base_context.USER',
             ],
         },
     },
