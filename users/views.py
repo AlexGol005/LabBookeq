@@ -64,7 +64,11 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         # except:
         #     context['USER'] = False
         l = user.groups.values_list('name',flat = True) 
-        user_group = list(l)[0]
+        try:
+            user_group = list(l)[0]
+        except:
+             user_group = 'Суперпользователь'
+            
         employees = Employees.objects.filter(userid__userid=user.profile.userid)
         company = Company.objects.get(userid=user.profile.userid)
         context['employees'] = employees
