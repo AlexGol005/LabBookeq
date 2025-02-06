@@ -92,7 +92,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
                 return redirect(f'/equipment/orderverification/{str}/')
 
         else:
-            messages.success(self.request, "Раздел доступен только инженеру по оборудованию")
+            messages.success(self.request, "Раздел доступен только менеджеру по оборудованию")
             return redirect('/equipment/orderverification/0/')
 
 
