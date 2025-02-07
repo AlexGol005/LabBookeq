@@ -1386,7 +1386,7 @@ def CalibrationReg(request, str):
     title = Equipment.objects.get(exnumber=str)
     
     if request.method == "POST":
-            form = CalibrationRegForm(request.POST, request.FILES)
+        form = CalibrationRegForm(request.POST, request.FILES)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
