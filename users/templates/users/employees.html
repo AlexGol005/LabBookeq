@@ -9,7 +9,7 @@
      <center><h5>Сотрудники компании {{ company.name }}</h5></center> 
      <br>
       
-     {% if USER  %}    
+     {% if USER_HAVE_RIGHTS  %}    
         <center>
             <a href="{% url 'employeereg' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:60%"> Добавить сотрудника </a>
         </center>
@@ -20,8 +20,8 @@
        <tr><th>ФИО</th><th>Должность</th><th> Ред </th></tr>
        {% for e in employees %}
         <tr>
-              <td>{{ e.name }}</td>
-              <td>{{ e.position }}</td>  
+              <td>{{ e.username }}</td>
+              <td>{{ e.profile.name }}</td>  
               <td> <a href="{% url 'employeeupdate' e.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>
         </tr>
        {% endfor %}
