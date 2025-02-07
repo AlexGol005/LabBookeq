@@ -36,7 +36,7 @@ class UserRegisterForm(UserCreationForm):
                                  widget=forms.TextInput(attrs={'class': 'form-control',
                                                            'placeholder': 'email'})
                                      )
-    user_email = forms.EmailField(label='Телефон',
+    user_phone = forms.EmailField(label='Телефон',
                                     required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control',
                                                            'placeholder': 'телефон'})
