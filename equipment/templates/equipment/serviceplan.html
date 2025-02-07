@@ -86,8 +86,9 @@
 <div class="col-6"> 
 
     <center><h5>План</h5></center>
+    {% if USER_HAVE_RIGHTS %}
      <center>   <a href="{% url 'serviceplanupdate' obj.pk %}"  class="btn btn-primary mt-2 mb-2">Поменять план</a></center>
-         
+    {% endif %}     
     <center>
     <table class="table table-bordered">
       <tr><th>Январь</th> <td>{{obj.t2month1|yesno}}</td></tr> 
