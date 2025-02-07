@@ -36,13 +36,13 @@ def USER_AND_OWNER_HAVE_RIGHTS(request):
     try:
         user = User.objects.get(username=request.user)
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-            USER_HAVE_RIGHTS = True
+            USER_AND_OWNER_HAVE_RIGHTS = True
         else:
-            USER_HAVE_RIGHTS = False
+            USER_AND_OWNER_HAVE_RIGHTS = False
     except:
-        USER_HAVE_RIGHTS = False
+        USER_AND_OWNER_HAVE_RIGHTS = False
     return {
-        'USER_HAVE_RIGHTS': USER_HAVE_RIGHTS
+        'USER_AND_OWNER_HAVE_RIGHTS': USER_AND_OWNER_HAVE_RIGHTS
     }
 
 
