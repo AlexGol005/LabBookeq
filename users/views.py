@@ -164,9 +164,9 @@ def Employeereg(request):
                 username = form.cleaned_data.get('username')
                 messages.success(request, f'Пользовать {username} был успешно создан!')
                 return redirect('employees')
-            else:
-                messages.success(request, 'Раздел доступен только продвинутому пользователю')
-                return redirect('employees')
+        else:
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect('employees')
     else:
         form = UserRegisterForm()
         data =         {
