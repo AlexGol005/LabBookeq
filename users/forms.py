@@ -11,30 +11,6 @@ class UserRegisterForm(UserCreationForm):
                                help_text='инициалы и фамилия без пробелов',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                'placeholder': 'И.И.Иванов'}))
-    name = forms.CharField(label='ФИО',
-                               required=True,
-                               help_text='ФИО полностью',
-                               widget=forms.TextInput(attrs={'class': 'form-control',
-                               'placeholder': 'Иваонов Иван Иванович'}))
-    # userlastname = forms.CharField(label='Фамилия',
-    #                                required=True,
-    #                                widget=forms.TextInput(attrs={'class': 'form-control',
-    #                                                              'placeholder': 'Фамилия'}))
-    # userfirstname = forms.CharField(label='Имя', required=True,
-    #                                 widget=forms.TextInput(attrs={'class': 'form-control',
-    #                                                               'placeholder': 'Имя'}))
-    # userpatronymic = forms.CharField(label='Отчество',
-    #                                  required=False,
-    #                                  widget=forms.TextInput(attrs={'class': 'form-control',
-    #                                                                'placeholder': 'Отчество'}))
-    userposition = forms.CharField(label='Должность',
-                                   required=True,
-                                   widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                 'placeholder': 'Должность'}))
-    # usertelnumber = forms.CharField(label='Телефон',
-    #                                required=True,
-    #                                widget=forms.TextInput(attrs={'class': 'form-control',
-    #                                                              'placeholder': 'Телефон'}))
     password1 = forms.CharField(label='Введите пароль',
                                 required=True,
                                 widget=forms.PasswordInput(attrs={'class': 'form-control',
@@ -43,6 +19,18 @@ class UserRegisterForm(UserCreationForm):
                                 required=True,
                                 widget=forms.PasswordInput(attrs={'class': 'form-control',
                                                            'placeholder': 'повторно введите пароль' }))
+
+
+    name = forms.CharField(label='ФИО',
+                               required=True,
+                               help_text='ФИО полностью',
+                               widget=forms.TextInput(attrs={'class': 'form-control',
+                               'placeholder': 'Иваонов Иван Иванович'}))
+    userposition = forms.CharField(label='Должность',
+                                   required=True,
+                                   widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                 'placeholder': 'Должность'}))
+
     user_email = forms.EmailField(required=True,
                              widget=forms.TextInput(attrs={'class': 'form-control',
                                                            'placeholder': 'ваш email'})
@@ -52,7 +40,10 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         # fields = ['username', 'userlastname', 'userfirstname', 'userpatronymic', 'userposition', 'email', 'usertelnumber', 'password1', 'password1' ]
-        fields = ['username', 'password1', 'password1', 'user_email', ]
+        fields = ['username', 'password1', 'password1', 
+                  'name', 
+                  'userposition', 
+                  'user_email', ]
 
 class UserUdateForm(forms.ModelForm):
     email = forms.EmailField(required=True,
