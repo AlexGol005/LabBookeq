@@ -22,6 +22,7 @@ urlpatterns = [
     path('helpingequipmentall/', views.HelpingEquipmentView.as_view(), name='helpingequipmentall'),
     path('measureequipmentallsearres/', views.SearchResultMeasurEquipmentView.as_view(), name='measureequipmentallsearres'),
     path('testingequipmentallsearres/', views.SearchResultTestingEquipmentView.as_view(), name='testingequipmentallsearres'),
+    path('helpingequipmentallsearres/', views.SearchResultHelpingEquipmentView.as_view(), name='helpingequipmentallsearres'),
     path('measureequipment/<str:str>/', views.StrMeasurEquipmentView.as_view(), name='measureequipment'),
     path('testequipment/<str:str>/', views.StrTestEquipmentView.as_view(), name='testequipment'),
     path('helpequipment/<str:str>/', views.StrHelpEquipmentView.as_view(), name='helpequipment'),
