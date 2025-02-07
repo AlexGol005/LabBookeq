@@ -163,8 +163,12 @@ def Employeereg(request):
             form = UserRegisterForm(request.POST)
             if form.is_valid():
                 order = form.save(commit=False)
-                order.userid = request.user.profile.userid
                 order.save()
+                form1 = EmployeesUpdateForm(request.POST, instance=order) 
+                if form1.is_valid():
+                    order1 = form1.save(commit=False)
+                    order1.userid = request.user.profile.userid
+                    order1.save()                
                 g = Group.objects.get(name=group_name)
                 g.user_set.add(order)
                 username = form.cleaned_data.get('username')
@@ -179,11 +183,13 @@ def Employeereg(request):
             return redirect('employees')
     else:
         form = UserRegisterForm()
+        form1 = UserRegisterForm()
         data =         {
             'title': 'Страница регистрации',
-            'form': form
+            'form': form,
+            'form1': form1,
         }
-        return render(request,  'equipment/reg.html', data)
+        return render(request,  'user/reg.html', data)
         
        
 
