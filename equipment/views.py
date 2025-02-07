@@ -2110,7 +2110,7 @@ def ServiceEquipmentUUpdateView(request, str):
 def ServiceEquipmentUFactUpdateView(request, str):
     """выводит форму для обновления данных о ТО-2 факт"""
     if request.method == "POST":
-    form = ServiceEquipmentUFactUpdateViewForm(request.POST, instance=ServiceEquipmentUFact.objects.get(pk_pointer=str))                                                    
+        form = ServiceEquipmentUFactUpdateViewForm(request.POST, instance=ServiceEquipmentUFact.objects.get(pk_pointer=str))                                                    
         if form.is_valid():
             order = form.save(commit=False)
             order.save()
