@@ -1497,7 +1497,7 @@ class VerificationequipmentView(LoginRequiredMixin, View):
 
     def post(self, request, str, *args, **kwargs):
         form = CommentsVerificationCreationForm(request.POST)
-        if if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.author = request.user
@@ -1546,7 +1546,7 @@ class CalibrationequipmentView(LoginRequiredMixin, View):
 
     def post(self, request, str, *args, **kwargs):
         form = CommentsVerificationCreationForm(request.POST)
-        if if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if  request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.author = request.user
@@ -1595,7 +1595,7 @@ class AttestationequipmentView(LoginRequiredMixin, View):
 
     def post(self, request, str, *args, **kwargs):
         form = CommentsAttestationequipmentForm(request.POST)
-        if if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.author = request.user
