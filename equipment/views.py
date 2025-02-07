@@ -2223,15 +2223,21 @@ def AddserviceitemView(request, str):
 def DelserviceitemView(request, str):
     """удаляет единицу оборудования из график ТОиР на указанный год """
     if request.method == 'GET':
-        year = request.GET.get('date')
-        i = Equipment.objects.get(pk=str)
-        ServiceEquipmentU.objects.get(equipment=i, year=year).delete()
-        messages.success(request, 'Прибор успешно удален из графика ТОиР')
-        return redirect(f'/equipment/itemserviceupdate/{str}/')
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            year = request.GET.get('date')
+            i = Equipment.objects.get(pk=str)
+            ServiceEquipmentU.objects.get(equipment=i, year=year).delete()
+            messages.success(request, 'Прибор успешно удален из графика ТОиР')
+            return redirect(f'/equipment/itemserviceupdate/{str}/')
+         else:
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect(f'/equipment/itemserviceupdate/{str}/')
         
 
 class ServiceYearView(LoginRequiredMixin, View):
     """вывод страницы - ТОИР за год, год передан в форме поиска на предыдущей странице"""
+    """ path('serviceyear/', views.ServiceYearView.as_view(), name='serviceyear'),"""
+    
     def get(self, request):
         date = self.request.GET['date']
         objects = ServiceEquipmentU.objects.filter(pointer=self.request.user.profile.userid).filter(year=date)
@@ -2253,6 +2259,9 @@ class ServiceYearView(LoginRequiredMixin, View):
 @login_required
 def ServiceStrView(request,  str):
     """ выводит отдельную страницу плана ТО2 """
+    """path('serviceplan/<str:str>/', views.ServiceStrView, name='serviceplan'),"""
+    """URL + '/serviceplan.html'"""
+    
     try:
         a = request.GET.get('equipment_pk')
         b = request.GET.get('date')
