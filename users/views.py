@@ -166,7 +166,6 @@ def Employeereg(request):
                 return redirect('employees')
             else:
                 messages.add_message(request, messages.ERROR, form.errors)
-                messages.success(request, 'Форма заполнена неверно!')
                 return redirect('employees')
                 
         else:
