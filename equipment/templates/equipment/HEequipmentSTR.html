@@ -93,13 +93,15 @@
          Внести запись о приборе и смотреть записи (для всех пользователей)</a></div>
     {#конец записи о приборе#}
     
+    {% if USER_AND_OWNER_HAVE_RIGHTS %}      
     {#изменение сведений о приборе#}
-    <div style="text-align: center; margin-top: 40px"><h4>Обновить сведения о приборе (только для ответственного за прибор или метрологию) </h4></div>
+    <div style="text-align: center; margin-top: 40px"><h4>Обновить сведения о приборе (только для ответственного за прибор или продвинутого пользователя) </h4></div>
     <div style="text-align: center; margin-top: 20px">
      <a href="/equipment/equipmentind/{{ obj.equipment.exnumber }}/individuality/"  class="btn btn-primary mt-2">
-         Добавить особенности работы прибора, инструкцию и пр. (для ответственного за прибор или метрологию)</a></div>
+         Добавить особенности работы прибора, инструкцию и пр. (для ответственного за прибор или продвинутого пользователя)</a></div>
     </div>
     {#конец изменение сведений о приборе#}
+    {% endif %}
     
     
     {#расположение и комплектность#}
@@ -132,10 +134,12 @@
     
     {# расположение кнопки#}
     <div style="text-align: center; margin-top: 10px">
+        {% if USER_HAVE_RIGHTS %}
      <a href="/equipment/personchangereg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-primary mt-2 mr-2 ml-2 style="width:20%"> 
          Поменять ответственного</a>
          <a href="/equipment/roomschangereg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-primary mt-2 mr-2 ml-2 style="width:20%">
          Поменять помещение</a>
+        {% endif %}
      <a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/"  class="btn btn-primary mt-2 mr-2 ml-2 style="width:40%">
          Смотреть список и Добавить документы и принадлежности</a></div>
     
@@ -187,7 +191,9 @@
             <tr>
                 <th> Описание мероприятий по ТО</th>
                 <th> План по ТО-2 (планировать и отмечать) </th>
+                {% if USER_HAVE_RIGHTS %}
                 <th> Добавить/удалить прибор в график ТОиР </th>
+                {% endif %}
              </tr>
         </thead>
         <tbody>
