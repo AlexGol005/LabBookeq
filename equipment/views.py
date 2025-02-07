@@ -1360,17 +1360,17 @@ class DocsConsView(View, SuccessMessageMixin):
 def VerificationReg(request, str):
     """выводит форму для внесения сведений о поверке"""
     title = Equipment.objects.get(exnumber=str)
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        if request.method == "POST":
+    if request.method == "POST":
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             form = VerificationRegForm(request.POST, request.FILES)
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipmentSM = MeasurEquipment.objects.get(equipment__exnumber=str)
                 order.save()
                 return redirect(order)
-    else:
-        messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect(reverse('measureequipmentver', kwargs={'str': str}))
+        else:
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect(reverse('measureequipmentver', kwargs={'str': str}))
     else:
         form = VerificationRegForm()
     data = {
@@ -1384,17 +1384,18 @@ def VerificationReg(request, str):
 def CalibrationReg(request, str):
     """выводит форму для внесения сведений о калибровке"""
     title = Equipment.objects.get(exnumber=str)
-    if if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        if request.method == "POST":
+    
+    if request.method == "POST":
             form = CalibrationRegForm(request.POST, request.FILES)
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipmentSM = MeasurEquipment.objects.get(equipment__exnumber=str)
                 order.save()
                 return redirect(order)
-    else:
-        messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect(reverse('measureequipmentcal', kwargs={'str': str}))
+        else:
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect(reverse('measureequipmentcal', kwargs={'str': str}))
     else:
         form = CalibrationRegForm()
     data = {
@@ -1408,17 +1409,18 @@ def CalibrationReg(request, str):
 def AttestationReg(request, str):
     """выводит форму для внесения сведений об аттестации"""
     title = Equipment.objects.get(exnumber=str)
-    if if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        if request.method == "POST":
+    
+    if request.method == "POST":
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             form = AttestationRegForm(request.POST, request.FILES)
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipmentSM = TestingEquipment.objects.get(equipment__exnumber=str)
                 order.save()
                 return redirect(order)
-    else:
-        messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
+        else:
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
     else:
         form = AttestationRegForm()
     data = {
