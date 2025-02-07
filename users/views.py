@@ -164,7 +164,7 @@ def Employeereg(request):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                form1 = EmployeesUpdateForm(request.POST, instance=order) 
+                form1 = ProfileRegisterForm(request.POST, id=order.id) 
                 if form1.is_valid():
                     order1 = form1.save(commit=False)
                     order1.userid = request.user.profile.userid
@@ -183,7 +183,7 @@ def Employeereg(request):
             return redirect('employees')
     else:
         form = UserRegisterForm()
-        form1 = UserRegisterForm()
+        form1 = ProfileRegisterForm()
         data =         {
             'title': 'Страница регистрации',
             'form': form,
