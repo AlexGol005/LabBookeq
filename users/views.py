@@ -165,6 +165,7 @@ def Employeereg(request):
                 messages.success(request, f'Пользовать {username} был успешно создан!')
                 return redirect('employees')
             else:
+                messages.add_message(request, messages.ERROR, form.errors)
                 messages.success(request, 'Форма заполнена неверно!')
                 return redirect('employees')
                 
