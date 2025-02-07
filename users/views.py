@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # from django.contrib.auth.forms import UserCreationForm
@@ -98,23 +98,20 @@ def CompanyUpdateView(request):
 
 class EmployeesView(LoginRequiredMixin, TemplateView):
     """выводит страницу сотрудников компании """
+    """path('employees/', UserView.EmployeesView.as_view(), name='employees'),"""
+    
     template_name = 'users/employees.html'
+    
     def get_context_data(self, **kwargs):
         context = super(EmployeesView, self).get_context_data(**kwargs)
-        try:
-            user = User.objects.get(username=self.request.user)
-            if user.is_staff or user.is_superuser:
-                context['USER'] = True
-            else:
-                context['USER'] = False
-        except:
-            context['USER'] = False
-        employees = Employees.objects.filter(userid__userid=user.profile.userid)
+        employees = User.objects.filter(profile__userid=user.profile.userid)
         company = Company.objects.get(userid=user.profile.userid)
         context['employees'] = employees
         context['company'] = company 
+   
             
         return context
+
 
 def EmployeeUpdateView(request, str):
     """выводит форму для обновления данных о сотруднике"""
