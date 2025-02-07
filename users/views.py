@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import Group
 from .forms import UserRegisterForm, UserUdateForm, ProfileUdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -157,10 +158,15 @@ def EmployeeUpdateView(request, str):
 @login_required
 def Employeereg(request):
     if request.method == "POST":
+        group_name = 'Базовый пользователь'
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             form = UserRegisterForm(request.POST)
             if form.is_valid():
-                form.save()
+                order = form.save(commit=False)
+                order.userid = request.user.profile.userid
+                order.save()
+                g = Group.objects.get(name=group_name)
+                g.user_set.add(order)
                 username = form.cleaned_data.get('username')
                 messages.success(request, f'Пользовать {username} был успешно создан!')
                 return redirect('employees')
