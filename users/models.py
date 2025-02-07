@@ -7,11 +7,11 @@ from PIL import  Image
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)    
-    name = models.CharField('ФИО', max_length=40, default=None, null=True)
-    user_email = models.CharField('email', max_length=40, default=None, null=True)
-    user_phone = models.CharField('телефон', max_length=40, default=None, null=True)
+    name = models.CharField('ФИО', max_length=40, null=True, blank=True)
+    user_email = models.CharField('email', max_length=40, null=True, blank=True)
+    user_phone = models.CharField('телефон', max_length=40, null=True, blank=True)
     userposition = models.CharField('Должность', max_length=50, null=True, blank=True)
-    userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, default=None, null=True)
+    userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, null=True, blank=True)
     img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
 
 
