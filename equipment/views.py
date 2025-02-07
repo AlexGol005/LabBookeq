@@ -1970,28 +1970,28 @@ def ServiceEquipmentregMEView(request, str):
     
     charakters = MeasurEquipmentCharakters.objects.get(pk=str) 
     etype = 1
-        if request.method == "POST":
-            if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-                try: 
-                    ServiceEquipmentME.objects.get(charakters=charakters)
-                    form = ServiceEquipmentregForm(request.POST, instance=ServiceEquipmentME.objects.get(charakters=charakters))  
-                except:
-                    form = ServiceEquipmentregForm(request.POST)  
-                if form.is_valid():
-                    order = form.save(commit=False)
-                    order.pointer = request.user.profile.userid
-                    order.charakters = charakters
-                    order.save()
-                    return redirect('measurequipmentcharacterslist')
+    if request.method == "POST":
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            try: 
+                ServiceEquipmentME.objects.get(charakters=charakters)
+                form = ServiceEquipmentregForm(request.POST, instance=ServiceEquipmentME.objects.get(charakters=charakters))  
+            except:
+                form = ServiceEquipmentregForm(request.POST)  
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.pointer = request.user.profile.userid
+                order.charakters = charakters
+                order.save()
+                return redirect('measurequipmentcharacterslist')
             else:
                 messages.success(request, 'Раздел доступен только продвинутому пользователю')
                 return redirect('measurequipmentcharacterslist')
-        else:
-            try: 
-                ServiceEquipmentME.objects.get(charakters=charakters)
-                form = ServiceEquipmentregForm(instance=ServiceEquipmentME.objects.get(charakters=charakters))
-            except:
-                form = ServiceEquipmentregForm()
+    else:
+        try: 
+            ServiceEquipmentME.objects.get(charakters=charakters)
+            form = ServiceEquipmentregForm(instance=ServiceEquipmentME.objects.get(charakters=charakters))
+        except:
+            form = ServiceEquipmentregForm()
         data = {'form': form, 'etype': etype,}                
         return render(request, 'equipment/toreg.html', data)
 
