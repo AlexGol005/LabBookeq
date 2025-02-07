@@ -104,8 +104,8 @@ class EmployeesView(LoginRequiredMixin, TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(EmployeesView, self).get_context_data(**kwargs)
-        employees = User.objects.filter(profile__userid=user.profile.userid)
-        company = Company.objects.get(userid=user.profile.userid)
+        employees = User.objects.filter(profile__userid=self.request.user.profile.userid)
+        company = Company.objects.get(userid=self.request.user.profile.userid)
         context['employees'] = employees
         context['company'] = company 
    
