@@ -134,40 +134,46 @@ def EmployeeUpdateView(request, str):
 
 
 
+# @login_required
+# def Employeereg(request):
+#     """выводит форму для регистрации  сотрудника"""
+#     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+#         if request.method == "POST":
+#             form = EmployeesUpdateForm(request.POST, request.FILES)
+#             if form.is_valid():
+#                 order = form.save(commit=False)
+#                 order.userid = Company.objects.get(userid=request.user.profile.userid)
+#                 order.save()
+#                 return redirect('employees')
+#         else:
+#             form = EmployeesUpdateForm()
+#         data = {'form': form, }                   
+#         return render(request, 'equipment/reg.html', data)
+#     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+#         messages.success(request, 'Раздел недоступен')
+#         return redirect('employees')
+
+
 @login_required
 def Employeereg(request):
-    """выводит форму для регистрации  сотрудника"""
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        if request.method == "POST":
-            form = EmployeesUpdateForm(request.POST, request.FILES)
+    if request.method == "POST":
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            form = UserRegisterForm(request.POST)
             if form.is_valid():
-                order = form.save(commit=False)
-                order.userid = Company.objects.get(userid=request.user.profile.userid)
-                order.save()
+                form.save()
+                username = form.cleaned_data.get('username')
+                messages.success(request, f'Пользовать {username} был успешно создан!')
                 return redirect('employees')
-        else:
-            form = EmployeesUpdateForm()
-        data = {'form': form, }                   
-        return render(request, 'equipment/reg.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел недоступен')
-        return redirect('employees')
+            else:
+                messages.success(request, 'Раздел доступен только продвинутому пользователю')
+                return redirect('employees')
+    else:
+        form = UserRegisterForm()
+        data =         {
+            'title': 'Страница регистрации',
+            'form': form
+        }
+        return render(request,  'equipment/reg.html', data)
+        
+       
 
-# def register(request):
-#     if request.method == "POST":
-#         form = UserRegisterForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data.get('username')
-#             messages.success(request, f'Пользовать {username} был успешно создан!')
-#             return redirect('home')
-#     else:
-#         form = UserRegisterForm()
-
-#     return render(
-#         request,
-#         'users/passwords.html',
-#         {
-#             'title': 'Страница регистрации',
-#             'form': form
-#         })
