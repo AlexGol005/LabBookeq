@@ -13,9 +13,8 @@
     <center><a href="{% url 'reports' %}" class="btn btn-primary mr-2 ml-2 mt-5"style="width: 80%" >Графики, планы, годовые отчеты, отчеты по формам аккредитующих органов</a></center>
 
 
-<!--     раздел для суперпользователей сайта -->
 
-{% if USER %}
+
     <hr>
     <center><h5>Госреестры и характеристики ИО и ВО, а также описание мероприятий по ТО из инструкций на приборы: смотреть и добавить</h5></center>
     <center>
@@ -36,6 +35,6 @@
       <a href="{% url 'verificatorsreg' %}" target="blank" class="btn btn-primary mr-2 ml-2 mt-4" style="width: 50%">Поверители ЛО</a>
     </center>
     <br>
-{% endif %}
+
   </div>
 {% endblock %}
