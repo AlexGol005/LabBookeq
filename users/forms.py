@@ -31,19 +31,27 @@ class UserRegisterForm(UserCreationForm):
                                    widget=forms.TextInput(attrs={'class': 'form-control',
                                                                  'placeholder': 'Должность'}))
 
-    user_email = forms.EmailField(required=True,
-                             widget=forms.TextInput(attrs={'class': 'form-control',
-                                                           'placeholder': 'ваш email'})
-                             )
+    user_email = forms.EmailField(label='email',
+                                    required=False,
+                                 widget=forms.TextInput(attrs={'class': 'form-control',
+                                                           'placeholder': 'email'})
+                                     )
+    user_email = forms.EmailField(label='Телефон',
+                                    required=False,
+                                 widget=forms.TextInput(attrs={'class': 'form-control',
+                                                           'placeholder': 'телефон'})
+                                     )
 
 
     class Meta:
         model = User
-        # fields = ['username', 'userlastname', 'userfirstname', 'userpatronymic', 'userposition', 'email', 'usertelnumber', 'password1', 'password1' ]
         fields = ['username', 'password1', 'password1', 
                   'name', 
                   'userposition', 
-                  'user_email', ]
+                  'user_email', 
+                  'user_phone', 
+                 ]
+
 
 class UserUdateForm(forms.ModelForm):
     email = forms.EmailField(required=True,
