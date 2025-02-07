@@ -2002,8 +2002,8 @@ def ServiceEquipmentregTEView(request, str):
     """выводит форму для добавления постоянного ТОИР к ИО"""
     charakters = TestingEquipmentCharakters.objects.get(pk=str) 
     etype = 2
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        if request.method == "POST":
+    if request.method == "POST":
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             try: 
                 ServiceEquipmentTE.objects.get(charakters=charakters)
                 form = ServiceEquipmentregTEForm(request.POST, instance=ServiceEquipmentTE.objects.get(charakters=charakters))  
@@ -2016,16 +2016,17 @@ def ServiceEquipmentregTEView(request, str):
                 order.save()
                 return redirect('testingequipmentcharacterslist')
         else:
-            try: 
-                ServiceEquipmentTE.objects.get(charakters=charakters)
-                form = ServiceEquipmentregTEForm(instance=ServiceEquipmentTE.objects.get(charakters=charakters))
-            except:
-                form = ServiceEquipmentregTEForm()
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect('testingequipmentcharacterslist')
+    else:
+        try: 
+            ServiceEquipmentTE.objects.get(charakters=charakters)
+            form = ServiceEquipmentregTEForm(instance=ServiceEquipmentTE.objects.get(charakters=charakters))
+        except:
+            form = ServiceEquipmentregTEForm()
         data = {'form': form, 'etype': etype,}                
         return render(request, 'equipment/toreg.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect('testingequipmentcharacterslist')
+
 
 
 @login_required
@@ -2033,9 +2034,9 @@ def ServiceEquipmentregHEView(request, str):
     """выводит форму для добавления постоянного ТОИР к ВО"""
     charakters = HelpingEquipmentCharakters.objects.get(pk=str) 
     etype = 3
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        if request.method == "POST":
-            try: 
+    if request.method == "POST":
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            try:  
                 ServiceEquipmentHE.objects.get(charakters=charakters)
                 form = ServiceEquipmentregHEForm(request.POST, instance=ServiceEquipmentHE.objects.get(charakters=charakters))  
             except:
@@ -2047,20 +2048,22 @@ def ServiceEquipmentregHEView(request, str):
                 order.save()
                 return redirect('helpingequipmentcharacterslist')
         else:
-            try: 
-                ServiceEquipmentHE.objects.get(charakters=charakters)
-                form = ServiceEquipmentregHEForm(instance=ServiceEquipmentHE.objects.get(charakters=charakters))
-            except:
-                form = ServiceEquipmentregHEForm()
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect('helpingequipmentcharacterslist')
+    else:
+        try: 
+            ServiceEquipmentHE.objects.get(charakters=charakters)
+            form = ServiceEquipmentregHEForm(instance=ServiceEquipmentHE.objects.get(charakters=charakters))
+        except:
+            form = ServiceEquipmentregHEForm()
         data = {'form': form, 'etype': etype,}                
         return render(request, 'equipment/toreg.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect('helpingequipmentcharacterslist')
 
 
 class ServiceView(LoginRequiredMixin, ListView):
     """Выводит главную страницу просмотра и планирования ТОиР"""
+    """ path('service/', views.ServiceView.as_view(), name='service'), """
+    
     template_name = URL + '/service.html'
     context_object_name = 'objects'
     ordering = ['charakters_name']
@@ -2106,7 +2109,6 @@ def ServiceEquipmentUUpdateView(request, str):
 @login_required
 def ServiceEquipmentUFactUpdateView(request, str):
     """выводит форму для обновления данных о ТО-2 факт"""
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = ServiceEquipmentUFactUpdateViewForm(request.POST, instance=ServiceEquipmentUFact.objects.get(pk_pointer=str))                                                    
             if form.is_valid():
@@ -2118,13 +2120,12 @@ def ServiceEquipmentUFactUpdateView(request, str):
         data = {'form': form,
                 }
         return render(request, 'equipment/reg.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect(reverse('serviceplan', kwargs={'str': str}))
+
 
 
 class ServiceSearchResultView(LoginRequiredMixin, ListView):
     """ выводит результаты поиска по списку ТО-2 по номеру оборудования """
+    """ path('serviceyearsearchresult/', views.ServiceSearchResultView.as_view(), name='serviceyearsearchresult'),"""
 
     template_name = URL + '/serviceyear.html'
     context_object_name = 'objects' 
@@ -2145,7 +2146,9 @@ class ServiceSearchResultView(LoginRequiredMixin, ListView):
 
 @login_required
 def ServiceCreateView(request):
-    """формирует график ТОИР на указанный год """       
+    """формирует график ТОИР на указанный год """   
+    """страницу не выводит, только действие  """ 
+    
     if request.method == 'GET':
         year = request.GET.get('date')
         queryset = Equipment.objects.filter(pointer=request.user.profile.userid).filter(yearintoservice__lte=year).filter(serviceneed=True)
@@ -2187,6 +2190,7 @@ class ToHEView(LoginRequiredMixin, View):
 
 class ServiceCreateIndividualView(TemplateView):
     """выводит форму для добавления или удаления единицы оборудования из графика ТОиР на указанный год """
+    """path('itemserviceupdate/<str:str>/', views.ServiceCreateIndividualView.as_view(), name='itemserviceupdate'),"""
     template_name = URL + '/itemservise.html'
 
     def get_context_data(self, str, **kwargs):
@@ -2200,12 +2204,19 @@ class ServiceCreateIndividualView(TemplateView):
 @login_required
 def AddserviceitemView(request, str):
     """добавляет единицу оборудования в график ТОиР на указанный год """
+    
+    
     if request.method == 'GET':
-        year = request.GET.get('date')
-        i = Equipment.objects.get(pk=str)
-        ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
-        messages.success(request, 'Прибор успешно добавлен в график ТОиР')
-        return redirect(f'/equipment/itemserviceupdate/{str}/')
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            year = request.GET.get('date')
+            i = Equipment.objects.get(pk=str)
+            ServiceEquipmentU.objects.get_or_create(equipment=i, year=year)
+            messages.success(request, 'Прибор успешно добавлен в график ТОиР')
+            return redirect(f'/equipment/itemserviceupdate/{str}/')
+        else:
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect(f'/equipment/itemserviceupdate/{str}/')
+            
 
 
 @login_required
