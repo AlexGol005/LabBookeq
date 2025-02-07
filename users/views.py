@@ -161,16 +161,15 @@ def Employeereg(request):
         group_name = 'Базовый пользователь'
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             form = UserRegisterForm(request.POST)
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.save()
-                form1 = ProfileRegisterForm(request.POST, initial={'user': order}) 
-                if form1.is_valid():
-                    order1 = form1.save(commit=False)
-                    order1.userid = request.user.profile.userid
-                    order1.save()                
+            form1 = ProfileRegisterForm(request.POST) 
+            if form.is_valid() and form1.is_valid():
+                u_f = form.save()
+                p_f = form1.save(commit=False)
+                p_f.user_id = u_f.id
+                p_f.userid = request.user.profile.userid
+                p_f.save()              
                 g = Group.objects.get(name=group_name)
-                g.user_set.add(order)
+                g.user_set.add(u_f)
                 username = form.cleaned_data.get('username')
                 messages.success(request, f'Пользовать {username} был успешно создан!')
                 return redirect('employees')
