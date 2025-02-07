@@ -189,7 +189,7 @@ def Employeereg(request):
             'form': form,
             'form1': form1,
         }
-        return render(request,  'user/reg.html', data)
+        return render(request,  'users/reg.html', data)
         
        
 
