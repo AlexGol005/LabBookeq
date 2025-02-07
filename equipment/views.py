@@ -2109,14 +2109,14 @@ def ServiceEquipmentUUpdateView(request, str):
 @login_required
 def ServiceEquipmentUFactUpdateView(request, str):
     """выводит форму для обновления данных о ТО-2 факт"""
-        if request.method == "POST":
-        form = ServiceEquipmentUFactUpdateViewForm(request.POST, instance=ServiceEquipmentUFact.objects.get(pk_pointer=str))                                                    
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.save()
-                return redirect(reverse('serviceplan', kwargs={'str': str}))
-        else:
-            form = ServiceEquipmentUFactUpdateViewForm(instance=ServiceEquipmentUFact.objects.get(pk_pointer=str))
+    if request.method == "POST":
+    form = ServiceEquipmentUFactUpdateViewForm(request.POST, instance=ServiceEquipmentUFact.objects.get(pk_pointer=str))                                                    
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.save()
+            return redirect(reverse('serviceplan', kwargs={'str': str}))
+    else:
+        form = ServiceEquipmentUFactUpdateViewForm(instance=ServiceEquipmentUFact.objects.get(pk_pointer=str))
         data = {'form': form,
                 }
         return render(request, 'equipment/reg.html', data)
