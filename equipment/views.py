@@ -444,7 +444,7 @@ def RoomsCreateView(request):
         data = {'form': form, }                   
         return render(request, template_name, data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел недоступен')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('roomreg')
 
 
@@ -529,7 +529,7 @@ def AgreementVerificatorUpdateView(request, str):
         data = {'form': form,}                
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел недоступен')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('/equipment/agreementcompanylist')
 
 
@@ -548,7 +548,7 @@ def VerificatorUpdateView(request, str):
         data = {'form': form,}                
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел недоступен')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('/equipment/verificatorsreg')
 
 
@@ -582,7 +582,7 @@ class PersonchangeFormView(LoginRequiredMixin, View):
                 if order.equipment.kategory == 'ВО':
                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
         else:
-            messages.success(request, f'Раздел недоступен')
+            messages.success(request, f'Раздел доступен только продвинутому пользователю')
             if order.equipment.kategory == 'СИ':
                 return redirect(f'/equipment/measureequipment/{str}')
             if order.equipment.kategory == 'ИО':
@@ -621,7 +621,7 @@ class RoomschangeFormView(LoginRequiredMixin, View):
                 if order.equipment.kategory == 'ВО':
                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
         else:
-            messages.success(request, f'Раздел недоступен')
+            messages.success(request, f'Раздел доступен только продвинутому пользователю')
             if order.equipment.kategory == 'СИ':
                 return redirect(f'/equipment/measureequipment/{str}')
             if order.equipment.kategory == 'ИО':
@@ -661,7 +661,7 @@ class MeteorologicalParametersCreateView(LoginRequiredMixin, SuccessMessageMixin
                 messages.success(request, f'Условия уже добавлены ранее')
                 return redirect(f'/equipment/meteoreg/')
         else:
-            messages.success(request, f'Раздел недоступен')
+            messages.success(request, f'Раздел доступен только продвинутому пользователю')
             return redirect(f'/equipment/meteoreg/')
 
 
@@ -733,6 +733,8 @@ class MeteorologicalParametersRoomSearchResultView(ListView):
 @login_required
 def EquipmentReg(request):
     """выводит форму для регистрации  ЛО"""
+    """path('equipmentreg/', views.EquipmentReg, name='equipmentreg'),"""
+    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = EquipmentCreateForm(request.POST, request.FILES)
@@ -773,6 +775,8 @@ def EquipmentReg(request):
 @login_required
 def EquipmentDeleteView(request, str):
     """для кнопки удаления ЛО"""
+    """не выводит страницу, выполняет действие"""
+    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
             ruser=request.user.profile.userid
@@ -790,6 +794,8 @@ def EquipmentDeleteView(request, str):
 
 class MeasurEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """ выводит форму внесения госреестра. """
+    """path('measurequipmentcharactersreg/', views.MeasurEquipmentCharaktersRegView.as_view(), name='measurequipmentcharactersreg'),"""
+    
     template_name = URL + '/Echaractersreg.html'
     form_class = MeasurEquipmentCharaktersCreateForm
     success_url = '/equipment/measurequipmentcharacterslist/'
@@ -817,6 +823,8 @@ class MeasurEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, 
 @login_required
 def MeasurEquipmentCharaktersUpdateView(request, str):
     """выводит форму для обновления данных о госреестре"""
+    """path('measurequipmentcharactersupdate/<str:str>/', views.MeasurEquipmentCharaktersUpdateView, name='measurequipmentcharactersupdate'),"""
+
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = MeasurEquipmentCharaktersCreateForm(request.POST,
@@ -837,6 +845,8 @@ def MeasurEquipmentCharaktersUpdateView(request, str):
 
 class TestingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """ выводит форму внесения характеристик ИО. """
+    """path('testingequipmentcharactersreg/', views.TestingEquipmentCharaktersRegView.as_view(), name='testingequipmentcharactersreg'),"""
+    
     template_name = URL + '/Echaractersreg.html'
     form_class = TestingEquipmentCharaktersCreateForm
     success_url = '/equipment/testingequipmentcharacterslist/'
@@ -860,9 +870,12 @@ class TestingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
         context['dopin'] = 'equipment/testingequipmentcharacterslist'
         return context
 
+
 @login_required
 def TestingEquipmentCharaktersUpdateView(request, str):
     """выводит форму для обновления данных о характеристиках ИО"""
+    """path('testequipmentcharactersupdate/<str:str>/', views.TestingEquipmentCharaktersUpdateView, name='testequipmentcharactersupdate'),"""
+    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = TestingEquipmentCharaktersCreateForm(request.POST,
@@ -883,6 +896,8 @@ def TestingEquipmentCharaktersUpdateView(request, str):
 
 class HelpingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """ выводит форму внесения характеристик ВО. """
+    """path('helpingequipmentcharactersreg/', views.HelpingEquipmentCharaktersRegView.as_view(), name='helpingequipmentcharactersreg'),"""
+    
     template_name = URL + '/Echaractersreg.html'
     form_class = HelpingEquipmentCharaktersCreateForm
     success_url = '/equipment/helpingequipmentcharacterslist/'
@@ -906,9 +921,12 @@ class HelpingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
         context['dopin'] = 'equipment/helpingequipmentcharacterslist'
         return context
 
+
 @login_required
 def HelpingEquipmentCharaktersUpdateView(request, str):
     """выводит форму для обновления данных о характеристиках ВО"""
+    """ path('helpequipmentcharactersupdate/<str:str>/', views.HelpingEquipmentCharaktersUpdateView, name='helpequipmentcharactersupdate'),"""
+    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = HelpingEquipmentCharaktersCreateForm(request.POST,
@@ -929,6 +947,8 @@ def HelpingEquipmentCharaktersUpdateView(request, str):
 
 class MeasureequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации СИ на основе ЛО и Госреестра """
+    """path('measureequipmentreg/<str:str>/', views.MeasureequipmentregView.as_view(), name='measureequipmentreg'),"""
+    
     form_class = MeasurEquipmentCreateForm
     template_name = 'equipment/metehereg.html'
     success_url = f'/equipment/measureequipment/{str}'
@@ -943,11 +963,16 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-            order.save()
-            return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
+        user = self.request.user
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
+                order.save()
+                return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
+        else:
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+            return redirect('/equipment/measureequipment/{self.kwargs["str"]}')
 
 
 class TestingequipmentregView(LoginRequiredMixin, CreateView):
@@ -1896,7 +1921,7 @@ def ServiceEquipmentregMEView(request, str):
         data = {'form': form, 'etype': etype,}                
         return render(request, 'equipment/toreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел недоступен')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('measurequipmentcharacterslist')
 
 
@@ -1927,7 +1952,7 @@ def ServiceEquipmentregTEView(request, str):
         data = {'form': form, 'etype': etype,}                
         return render(request, 'equipment/toreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел недоступен')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('testingequipmentcharacterslist')
 
 
@@ -1958,7 +1983,7 @@ def ServiceEquipmentregHEView(request, str):
         data = {'form': form, 'etype': etype,}                
         return render(request, 'equipment/toreg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел недоступен')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('helpingequipmentcharacterslist')
 
 
