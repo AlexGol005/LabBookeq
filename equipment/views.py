@@ -13,7 +13,7 @@
 блок 7 - все поисковики
 блок 8 - принадлежности к оборудованию
 блок 9 - внесение и обновление поверка и аттестация
-блок 10 - индивидуальные страницы СИ ИО ВО их поверок и аттестаций
+блок 10 - индивидуальные страницы СИ ИО ВО 
 блок 11 - все комментарии ко всему
 блок 12 - вывод списков и форм  для метрологического  обеспечения
 блок 13 - ТОиР
@@ -1676,7 +1676,7 @@ class HaveorderAttView(LoginRequiredMixin, UpdateView):
 
 
 
-# блок 10 - индивидуальные страницы СИ ИО ВО их поверок и аттестаций
+# блок 10 - индивидуальные страницы СИ ИО ВО 
 
 class StrMeasurEquipmentView(LoginRequiredMixin, View):
     """ выводит отдельную страницу СИ """
@@ -1731,6 +1731,8 @@ class StrHelpEquipmentView(LoginRequiredMixin, View):
 
 class CommentsView(View):
     """ выводит комментарии к оборудованию и форму для добавления комментариев """
+    """ path('measureequipment/<str:str>/comments/', views.CommentsView.as_view(), name='measureequipmentcomm'),"""
+    
     form_class = NoteCreationForm
     initial = {'key': 'value'}
     template_name = 'equipment/comments.html'
@@ -1760,6 +1762,7 @@ class CommentsView(View):
 
 class SearchMustVerView(LoginRequiredMixin, ListView):
     """ выводит список СИ у которых дата заказа поверки совпадает с указанной либо раньше неё"""
+    """path('measureequipmentall/mustver/', views.SearchMustVerView.as_view(), name='mustver'),"""
 
     template_name = URL + '/MEequipmentLIST.html'
     context_object_name = 'objects'
@@ -1897,7 +1900,7 @@ class SearchNotAttView(LoginRequiredMixin, ListView):
 
 class EquipmentAllView(LoginRequiredMixin, ListView):
     """ выводит список всех добавленных приборов"""
-    # path('euipmentall/', views.EquipmentAllView.as_view(), name='euipmentall'),
+    """ path('euipmentall/', views.EquipmentAllView.as_view(), name='euipmentall'),"""
     template_name = URL + '/EquipmentLIST.html'
     context_object_name = 'objects'  
     paginate_by = 12
@@ -1964,20 +1967,24 @@ class VerificationLabelsView(LoginRequiredMixin, TemplateView):
 @login_required
 def ServiceEquipmentregMEView(request, str):
     """выводит форму для добавления постоянного ТОИР к СИ"""
+    
     charakters = MeasurEquipmentCharakters.objects.get(pk=str) 
     etype = 1
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            try: 
-                ServiceEquipmentME.objects.get(charakters=charakters)
-                form = ServiceEquipmentregForm(request.POST, instance=ServiceEquipmentME.objects.get(charakters=charakters))  
-            except:
-                form = ServiceEquipmentregForm(request.POST)  
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.pointer = request.user.profile.userid
-                order.charakters = charakters
-                order.save()
+            if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+                try: 
+                    ServiceEquipmentME.objects.get(charakters=charakters)
+                    form = ServiceEquipmentregForm(request.POST, instance=ServiceEquipmentME.objects.get(charakters=charakters))  
+                except:
+                    form = ServiceEquipmentregForm(request.POST)  
+                if form.is_valid():
+                    order = form.save(commit=False)
+                    order.pointer = request.user.profile.userid
+                    order.charakters = charakters
+                    order.save()
+                    return redirect('measurequipmentcharacterslist')
+            else:
+                messages.success(request, 'Раздел доступен только продвинутому пользователю')
                 return redirect('measurequipmentcharacterslist')
         else:
             try: 
@@ -1987,9 +1994,7 @@ def ServiceEquipmentregMEView(request, str):
                 form = ServiceEquipmentregForm()
         data = {'form': form, 'etype': etype,}                
         return render(request, 'equipment/toreg.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect('measurequipmentcharacterslist')
+
 
 
 @login_required
