@@ -2229,7 +2229,7 @@ def DelserviceitemView(request, str):
             ServiceEquipmentU.objects.get(equipment=i, year=year).delete()
             messages.success(request, 'Прибор успешно удален из графика ТОиР')
             return redirect(f'/equipment/itemserviceupdate/{str}/')
-         else:
+        else:
             messages.success(request, 'Раздел доступен только продвинутому пользователю')
             return redirect(f'/equipment/itemserviceupdate/{str}/')
         
