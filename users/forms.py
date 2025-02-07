@@ -25,7 +25,7 @@ class UserRegisterForm(UserCreationForm):
                                required=True,
                                help_text='ФИО полностью',
                                widget=forms.TextInput(attrs={'class': 'form-control',
-                               'placeholder': 'Иваонов Иван Иванович'}))
+                               'placeholder': 'Иванов Иван Иванович'}))
     userposition = forms.CharField(label='Должность',
                                    required=True,
                                    widget=forms.TextInput(attrs={'class': 'form-control',
