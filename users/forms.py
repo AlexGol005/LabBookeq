@@ -74,7 +74,7 @@ class UserRegisterForm(UserCreationForm):
         fields = ['username', 'password1', 'password1', 
                  ]
 
-class ProfileRegisterForm(UserCreationForm):
+class ProfileRegisterForm(forms.ModelForm):
     name = forms.CharField(label='ФИО',
                                required=True,
                                help_text='ФИО полностью',
