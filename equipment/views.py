@@ -991,11 +991,13 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-            order.save()
-            return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+        user = self.request.user
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
+                order.save()
+                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
 
 
 class HelpingequipmentregView(LoginRequiredMixin, CreateView):
@@ -1014,16 +1016,20 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-            order.save()
-            return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+        user = self.request.user
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
+                order.save()
+                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
 
 @login_required
 def EquipmentUpdate(request, str):
-    """выводит форму для обновления разрешенных полей оборудования ответственному за оборудование"""
+    """выводит форму для обновления разрешенных полей оборудования ответственному за оборудование и продвинутому пользователю"""
+    """path('equipmentind/<str:str>/individuality/', views.EquipmentUpdate, name='equipmentind'),"""
+    
     title = Equipment.objects.get(exnumber=str)
     try:
         get_pk = title.personchange_set.latest('pk').pk
@@ -1112,6 +1118,7 @@ class ReestrsearresView(LoginRequiredMixin, TemplateView):
         context['title'] = 'Госреестры, типы, модификации средств измерений'
         return context
 
+
 class TEcharacterssearresView(LoginRequiredMixin, TemplateView):
     """ выводит результаты поиска по списку характеристик ИО """
     template_name = URL + '/TEcharacterslist.html'
@@ -1156,6 +1163,8 @@ class HEcharacterssearresView(LoginRequiredMixin, TemplateView):
 
 class SearchResultMeasurEquipmentView(LoginRequiredMixin, TemplateView):
     """ выводит результаты поиска по списку средств измерений """
+    """path('measureequipmentallsearres/', views.SearchResultMeasurEquipmentView.as_view(), name='measureequipmentallsearres'),"""
+    
     template_name = URL + '/MEequipmentLIST.html'
 
     def get_context_data(self, **kwargs):
@@ -1209,7 +1218,9 @@ class SearchResultMeasurEquipmentView(LoginRequiredMixin, TemplateView):
 
 
 class SearchResultTestingEquipmentView(LoginRequiredMixin, TemplateView):
-    """ выводит результаты поиска по списку испытательного оборудования """    
+    """ выводит результаты поиска по списку испытательного оборудования """ 
+    """path('testingequipmentallsearres/', views.SearchResultTestingEquipmentView.as_view(), name='testingequipmentallsearres'),"""
+    
     template_name = URL + '/TEequipmentLIST.html'
 
     def get_context_data(self, **kwargs):
@@ -1261,11 +1272,62 @@ class SearchResultTestingEquipmentView(LoginRequiredMixin, TemplateView):
         return context
 
 
+class SearchResultHelpingEquipmentView(LoginRequiredMixin, TemplateView):
+    """ выводит результаты поиска по списку вспомогательного оборудования """ 
+    """path('helpingequipmentallsearres/', views.SearchResultHelpingEquipmentView.as_view(), name='helpingequipmentallsearres'),"""
+    
+    template_name = URL + '/TEequipmentLIST.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchResultHelpingEquipmentView, self).get_context_data(**kwargs)
+        name = self.request.GET['name']
+        if self.request.GET['name']:
+            name1 = self.request.GET['name'][0].upper() + self.request.GET['name'][1:]
+        exnumber = self.request.GET['exnumber']
+        lot = self.request.GET['lot']
+
+        if name and not lot and not exnumber:
+            objects = HelpingEquipment.objects.filter(pointer=self.request.user.profile.userid).\
+            filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
+                order_by('charakters__name')
+            context['objects'] = objects
+        if lot and not name  and not exnumber:
+            objects = HelpingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__lot=lot).order_by('charakters__name')
+            context['objects'] = objects
+        if exnumber and not name and not lot:
+            objects = HelpingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber=exnumber).order_by('charakters__name')
+            context['objects'] = objects
+        if exnumber and name and lot:
+            objects = HelpingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber=exnumber).\
+                filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
+                filter(equipment__lot=lot).order_by('charakters__name')
+            context['objects'] = objects
+        if exnumber and name and not lot:
+            objects = HelpingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber=exnumber).\
+                filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
+                order_by('charakters__name')
+            context['objects'] = objects
+        if exnumber and not name and lot:
+            objects = HelpingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__exnumber=exnumber).\
+                filter(equipment__lot=lot).order_by('charakters__name')
+            context['objects'] = objects
+        if lot and name and not exnumber:
+            objects = HelpingEquipment.objects.filter(pointer=self.request.user.profile.userid).\
+                filter(Q(charakters__name__icontains=name)|Q(charakters__name__icontains=name1)).\
+                filter(equipment__lot=lot).order_by('charakters__name')
+            context['objects'] = objects
+        context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber})
+        context['URL'] = URL
+        return context
+
+
 
 # блок 8  принадлежности к оборудованию
 
 class DocsConsView(View, SuccessMessageMixin):
     """ выводит список принадлежностей прибора и форму для добавления принадлежности """
+    """path('docsreg/<str:str>/', views.DocsConsView.as_view(), name='docsreg'),"""
+    
     def get(self, request, str):
         template_name = 'equipment/Edocsconslist.html'
         form = DocsConsCreateForm()
@@ -1298,7 +1360,7 @@ class DocsConsView(View, SuccessMessageMixin):
 def VerificationReg(request, str):
     """выводит форму для внесения сведений о поверке"""
     title = Equipment.objects.get(exnumber=str)
-    if request.user.is_superuser:
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = VerificationRegForm(request.POST, request.FILES)
             if form.is_valid():
@@ -1306,7 +1368,7 @@ def VerificationReg(request, str):
                 order.equipmentSM = MeasurEquipment.objects.get(equipment__exnumber=str)
                 order.save()
                 return redirect(order)
-    if not request.user.is_superuser:
+    else:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect(reverse('measureequipmentver', kwargs={'str': str}))
     else:
@@ -1322,7 +1384,7 @@ def VerificationReg(request, str):
 def CalibrationReg(request, str):
     """выводит форму для внесения сведений о калибровке"""
     title = Equipment.objects.get(exnumber=str)
-    if request.user.is_superuser:
+    if if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = CalibrationRegForm(request.POST, request.FILES)
             if form.is_valid():
@@ -1330,7 +1392,7 @@ def CalibrationReg(request, str):
                 order.equipmentSM = MeasurEquipment.objects.get(equipment__exnumber=str)
                 order.save()
                 return redirect(order)
-    if not request.user.is_superuser:
+    else:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect(reverse('measureequipmentcal', kwargs={'str': str}))
     else:
@@ -1346,7 +1408,7 @@ def CalibrationReg(request, str):
 def AttestationReg(request, str):
     """выводит форму для внесения сведений об аттестации"""
     title = Equipment.objects.get(exnumber=str)
-    if request.user.is_superuser:
+    if if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = AttestationRegForm(request.POST, request.FILES)
             if form.is_valid():
@@ -1354,7 +1416,7 @@ def AttestationReg(request, str):
                 order.equipmentSM = TestingEquipment.objects.get(equipment__exnumber=str)
                 order.save()
                 return redirect(order)
-    if not request.user.is_superuser:
+    else:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect(reverse('testingequipmentatt', kwargs={'str': str}))
     else:
@@ -1433,7 +1495,7 @@ class VerificationequipmentView(LoginRequiredMixin, View):
 
     def post(self, request, str, *args, **kwargs):
         form = CommentsVerificationCreationForm(request.POST)
-        if request.user.is_superuser:
+        if if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.author = request.user
@@ -1482,7 +1544,7 @@ class CalibrationequipmentView(LoginRequiredMixin, View):
 
     def post(self, request, str, *args, **kwargs):
         form = CommentsVerificationCreationForm(request.POST)
-        if request.user.is_superuser:
+        if if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.author = request.user
@@ -1531,7 +1593,7 @@ class AttestationequipmentView(LoginRequiredMixin, View):
 
     def post(self, request, str, *args, **kwargs):
         form = CommentsAttestationequipmentForm(request.POST)
-        if request.user.is_superuser:
+        if if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if form.is_valid():
                 order = form.save(commit=False)
                 order.author = request.user
@@ -1616,6 +1678,9 @@ class HaveorderAttView(LoginRequiredMixin, UpdateView):
 
 class StrMeasurEquipmentView(LoginRequiredMixin, View):
     """ выводит отдельную страницу СИ """
+    """ path('measureequipment/<str:str>/', views.StrMeasurEquipmentView.as_view(), name='measureequipment'),"""
+    """MEequipmentSTR.html"""
+    
     def get(self, request, str):
         POINTER = request.user.profile.userid
         note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
