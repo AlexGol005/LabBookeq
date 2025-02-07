@@ -102,6 +102,7 @@ TEMPLATES = [
                 'main.context_processors.base_context.last_news',
                 'main.context_processors.base_context.last_ad',
                 'main.context_processors.base_context.USER_HAVE_RIGHTS',
+                'main.context_processors.base_context.USER_AND_OWNER_HAVE_RIGHTS',
             ],
         },
     },
