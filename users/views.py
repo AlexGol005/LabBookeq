@@ -164,7 +164,7 @@ def Employeereg(request):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                form1 = ProfileRegisterForm(request.POST, id=order.id) 
+                form1 = ProfileRegisterForm(request.POST) 
                 if form1.is_valid():
                     order1 = form1.save(commit=False)
                     order1.userid = request.user.profile.userid
