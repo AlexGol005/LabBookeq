@@ -1287,7 +1287,7 @@ class RoomsUpdateForm(forms.ModelForm):
         super(RoomsUpdateForm, self).__init__(*args, **kwargs)
         self.fields['equipment1'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser).filter(charakters__name__contains='Барометр')
         self.fields['equipment2'].queryset = MeasurEquipment.objects.filter(equipment__pointer = ruser).filter(charakters__name__contains='Гигрометр')
-        self.fields['person'].queryset = User.objects.filter(userid = ruser)
+        self.fields['person'].queryset = User.objects.filter(profile__userid = ruser)
                                  
     class Meta:
         model = Rooms
