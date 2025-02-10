@@ -112,7 +112,7 @@ class ProfileRegisterForm(forms.ModelForm):
 
 
 class UserUdateForm(forms.ModelForm):
-    username = forms.CharField(label='Введите логин',
+    username = forms.CharField(label='Введите логин для входа в учетную запись',
                                required=True,
                                help_text='Фамилия и инициалы без пробелов',
                                widget=forms.TextInput(attrs={'class': 'form-control',
