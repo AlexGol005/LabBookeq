@@ -445,7 +445,7 @@ class Personchange(models.Model):
         except:
             pass
         if note:
-            note.newperson = self.person.name
+            note.newperson = self.person.profile.name
             newpersondate = get_dateformat(self.date)
             note.newpersondate = newpersondate        
             note.save()
