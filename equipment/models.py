@@ -409,7 +409,7 @@ class HelpingEquipment(models.Model):
 class Rooms(models.Model):
     """Комнаты лаборатории/производства"""
     roomnumber = models.CharField('Номер комнаты', max_length=100, default='')
-    person = models.ForeignKey(Employees, verbose_name='Ответственный за комнату', on_delete=models.PROTECT, blank=True, null=True)
+    person = models.ForeignKey(Users, verbose_name='Ответственный за комнату', on_delete=models.PROTECT, blank=True, null=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
     equipment1 = models.ForeignKey(MeasurEquipment, verbose_name='Барометр', null=True,
                                    on_delete=models.PROTECT, blank=True, related_name='equipment1rooms')
