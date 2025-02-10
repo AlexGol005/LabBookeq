@@ -183,7 +183,7 @@ def EmployeeUpdateView(request, str):
 
         if request.method == "POST":
             form = UserRegisterForm(request.POST, instance=User.objects.get(pk=str))
-            form1 = ProfileRegisterForm(request.POST, instance=User.objects.get(user__pk=str)) 
+            form1 = ProfileRegisterForm(request.POST, instance=Profile.objects.get(user__pk=str)) 
                                                           
             if form.is_valid() and form1.is_valid():
                 order = form.save(commit=False)
