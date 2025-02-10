@@ -1254,7 +1254,7 @@ class PersonchangeForm(forms.ModelForm):
     """форма для смены ответственного за ЛО"""
     def __init__(self, ruser, *args, **kwargs):
         super(PersonchangeForm, self).__init__(*args, **kwargs)
-        self.fields['person'].queryset = Employees.objects.filter(userid__userid = ruser)
+        self.fields['person'].queryset = User.objects.filter(userid__userid = ruser)
     
     class Meta:
         model = Personchange
