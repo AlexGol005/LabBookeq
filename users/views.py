@@ -210,7 +210,7 @@ def EmployeeUpdateView(request, str):
 @login_required
 def HeadEmployeereg(request):
     """выводит форму для добавления первого сотрудника и вместе с ним - профиля компании"""
-    path('heademployeereg/', views.HeadEmployeereg, name='heademployeereg'),
+    """path('heademployeereg/', views.HeadEmployeereg, name='heademployeereg'),"""
     
     if request.method == "POST":
         group_name = 'Продвинутый пользователь'
