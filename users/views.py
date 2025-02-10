@@ -193,7 +193,7 @@ def EmployeeUpdateView(request, str):
                 return redirect('employees')
         else:
             form = UserRegisterForm(instance=User.objects.get(pk=str))
-            form1 = ProfileRegisterForm(instance=User.objects.get(user__pk=str)) 
+            form1 = ProfileRegisterForm(instance=Profile.objects.get(user__pk=str)) 
         data = {'form': form,
                 'form1': form1,
                }                
