@@ -22,7 +22,7 @@ from django.contrib.auth.models import User
 from decimal import *
 from django.urls import reverse
 
-from users.models import Employees, Company
+from users.models import  Company
 from functstandart import get_dateformat
 
 # блок 1 -  неизменяемые непользовательские константы для полей с выбором значений в моделях
@@ -427,7 +427,7 @@ class Rooms(models.Model):
             
 
 class Personchange(models.Model):
-    person = models.ForeignKey(Employees, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
+    person = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
     date = models.DateField('Дата изменения ответственного', auto_now_add=True, db_index=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True)
 
