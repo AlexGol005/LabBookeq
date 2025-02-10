@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.management.utils import get_random_secret_key
 
 # from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
@@ -140,6 +141,7 @@ class EmployeesView(LoginRequiredMixin, TemplateView):
 @login_required
 def Employeereg(request):
     """выводит форму для добавления пользователя (сотрудника) и его профиля"""
+    path('employeereg/', views.Employeereg, name='employeereg'),
     
     if request.method == "POST":
         group_name = 'Базовый пользователь'
@@ -201,3 +203,46 @@ def EmployeeUpdateView(request, str):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('employees')
+
+
+
+
+@login_required
+def HeadEmployeereg(request):
+    """выводит форму для добавления первого сотрудника и вместе с ним - профиля компании"""
+    path('heademployeereg/', views.HeadEmployeereg, name='heademployeereg'),
+    
+    if request.method == "POST":
+        group_name = 'Продвинутый пользователь'
+        form = UserRegisterForm(request.POST)
+        form1 = ProfileRegisterForm(request.POST) 
+        if form.is_valid() and form1.is_valid():
+            u_f = form.save()
+            p_f = form1.save(commit=False)
+            p_f.user_id = u_f.id
+            p_f.userid = get_random_secret_key()
+            newuserid =  p_f.userid
+            p_f.save()              
+            g = Group.objects.get(name=group_name)
+            g.user_set.add(u_f)
+            name_prima = f'замените на название Вашей организации - {newuserid}'
+
+            newcompany = Company.objects.get_or_create(userid=newuserid, pay = False, name=name_prima, name_big=name_prima)
+
+            
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Пользовать {username} был успешно создан!')
+            return redirect('profile')
+        else:
+            messages.add_message(request, messages.ERROR, form.errors)
+            return redirect('heademployeereg')
+                
+    else:
+        form = UserRegisterForm()
+        form1 = ProfileRegisterForm()
+        data =         {
+            'title': 'Страница регистрации',
+            'form': form,
+            'form1': form1,
+        }
+        return render(request,  'users/reg.html', data)
