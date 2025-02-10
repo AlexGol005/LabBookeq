@@ -113,24 +113,7 @@ class EmployeesView(LoginRequiredMixin, TemplateView):
         return context
 
 
-def EmployeeUpdateView(request, str):
-    """выводит форму для обновления данных о сотруднике"""
-    """path('employeeupdate/<str:str>/', views.EmployeeUpdateView, name='employeeupdate'),"""
-    
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        if request.method == "POST":
-            form = EmployeesUpdateForm(request.POST, instance=Employees.objects.get(pk=str))                                                       
-            if form.is_valid():
-                order = form.save(commit=False)
-                order.save()
-                return redirect('employees')
-        else:
-            form = EmployeesUpdateForm(instance=Employees.objects.get(pk=str))
-        data = {'form': form,}                
-        return render(request, 'equipment/reg.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect('employees')
+
 
 
 
@@ -156,6 +139,8 @@ def EmployeeUpdateView(request, str):
 
 @login_required
 def Employeereg(request):
+     """выводит форму для добавления пользователя (сотрудника) и его профиля"""
+    
     if request.method == "POST":
         group_name = 'Базовый пользователь'
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
@@ -190,4 +175,26 @@ def Employeereg(request):
         return render(request,  'users/reg.html', data)
         
        
+def EmployeeUpdateView(request, str):
+    """выводит форму для обновления данных о сотруднике"""
+    """path('employeeupdate/<str:str>/', views.EmployeeUpdateView, name='employeeupdate'),"""
+    
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
 
+        if request.method == "POST":
+            form = UserRegisterForm(request.POST, instance=Users.objects.get(pk=str))
+            form1 = ProfileRegisterForm(request.POST, instance=Users.objects.get(user__pk=str)) 
+                                                          
+            if form.is_valid() and form1.is_valid():
+                order = form.save(commit=False)
+                order1 = form1.save(commit=False)
+                order.save()                
+                order1.save()
+                return redirect('employees')
+        else:
+            form = EmployeesUpdateForm(instance=Employees.objects.get(pk=str))
+        data = {'form': form,}                
+        return render(request, 'users/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
+        return redirect('employees')
