@@ -112,10 +112,6 @@ class ProfileRegisterForm(forms.ModelForm):
 
 
 class UserUdateForm(forms.ModelForm):
-    email = forms.EmailField(required=True,
-                             widget=forms.TextInput(attrs={'class': 'form-control',
-                                                           'placeholder': 'ваш email'})
-                             )
     username = forms.CharField(label='Введите логин',
                                required=True,
                                help_text='Фамилия и инициалы без пробелов',
@@ -125,7 +121,7 @@ class UserUdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['username']
 
 class ProfileUdateForm(forms.ModelForm):
     img = forms.ImageField(label='загрузить фото', widget=forms.FileInput)
