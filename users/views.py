@@ -115,6 +115,8 @@ class EmployeesView(LoginRequiredMixin, TemplateView):
 
 def EmployeeUpdateView(request, str):
     """выводит форму для обновления данных о сотруднике"""
+    """path('employeeupdate/<str:str>/', views.EmployeeUpdateView, name='employeeupdate'),"""
+    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = EmployeesUpdateForm(request.POST, instance=Employees.objects.get(pk=str))                                                       
@@ -127,7 +129,7 @@ def EmployeeUpdateView(request, str):
         data = {'form': form,}                
         return render(request, 'equipment/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел недоступен')
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('employees')
 
 
