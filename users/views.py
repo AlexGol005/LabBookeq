@@ -182,8 +182,8 @@ def EmployeeUpdateView(request, str):
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
 
         if request.method == "POST":
-            form = UserRegisterForm(request.POST, instance=Users.objects.get(pk=str))
-            form1 = ProfileRegisterForm(request.POST, instance=Users.objects.get(user__pk=str)) 
+            form = UserRegisterForm(request.POST, instance=User.objects.get(pk=str))
+            form1 = ProfileRegisterForm(request.POST, instance=User.objects.get(user__pk=str)) 
                                                           
             if form.is_valid() and form1.is_valid():
                 order = form.save(commit=False)
@@ -192,8 +192,8 @@ def EmployeeUpdateView(request, str):
                 order1.save()
                 return redirect('employees')
         else:
-            form = UserRegisterForm(instance=Users.objects.get(pk=str))
-            form1 = ProfileRegisterForm(instance=Users.objects.get(user__pk=str)) 
+            form = UserRegisterForm(instance=User.objects.get(pk=str))
+            form1 = ProfileRegisterForm(instance=User.objects.get(user__pk=str)) 
         data = {'form': form,
                 'form1': form1,
                }                
