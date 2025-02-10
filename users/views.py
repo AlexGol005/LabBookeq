@@ -139,7 +139,7 @@ class EmployeesView(LoginRequiredMixin, TemplateView):
 
 @login_required
 def Employeereg(request):
-     """выводит форму для добавления пользователя (сотрудника) и его профиля"""
+    """выводит форму для добавления пользователя (сотрудника) и его профиля"""
     
     if request.method == "POST":
         group_name = 'Базовый пользователь'
