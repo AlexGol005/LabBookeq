@@ -32,11 +32,11 @@
        {% for e in employees %}
         <tr>
               <td>{{ e.username }}</td>
-            <td>{{ e.groups.last }}</td>
-              <td>{{ e.profile.name }}</td>  
-            <td>{{ e.profile.userposition }}</td> 
-            <td>{{ e.profile.user_email }}</td> 
-            <td>{{ e.profile.user_phone }}</td> 
+            <td>{{ e.groups.last|default_if_none:'' }}</td>
+              <td>{{ e.profile.name|default_if_none:'' }}</td>  
+            <td>{{ e.profile.userposition|default_if_none:'' }}</td> 
+            <td>{{ e.profile.user_email|default_if_none:'' }}</td> 
+            <td>{{ e.profile.user_phone|default_if_none:'' }}</td> 
 {% if USER_HAVE_RIGHTS %}
               <td> <a href="{% url 'employeeupdate' e.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>
             {% endif %}
