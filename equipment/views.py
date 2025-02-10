@@ -215,8 +215,8 @@ class RoomsView(LoginRequiredMixin, TemplateView):
     template_name = 'equipment/rooms.html'
     def get_context_data(self, **kwargs):
         context = super(RoomsView, self).get_context_data(**kwargs)
-        rooms = Rooms.objects.filter(pointer=user.profile.userid)
-        company = Company.objects.get(userid=user.profile.userid)
+        rooms = Rooms.objects.filter(pointer=self.request.user.profile.userid)
+        company = Company.objects.get(userid=self.request.user.profile.userid)
         context['rooms'] = rooms
         context['company'] = company 
         return context
