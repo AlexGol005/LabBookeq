@@ -29,7 +29,7 @@
             <td>{{ r.roomnumber }}</td> 
             <td>{{ r.equipment1.equipment.lot }}</td> 
             <td>{{ r.equipment2.equipment.lot }}</td> 
-            <td>{{ r.person.name }}</td>
+            <td>{{ r.person.profile.name }}</td>
             {% if USER_HAVE_RIGHTS  %}  
             <td> <a href="{% url 'roomupdate' r.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>  
             {% endif %}
