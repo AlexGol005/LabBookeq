@@ -5099,7 +5099,7 @@ def export_me_xls(request):
         'equipment__yearintoservice',
         'manuf_country',
         'equipment__roomschange__roomnumber__roomnumber',
-        'equipment__personchange__person__name',
+        'equipment__newperson',
         'equipment__status',
         'equipmentSM_att__certnumber',
         'equipmentSM_att__date',
