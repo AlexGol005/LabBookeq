@@ -192,8 +192,11 @@ def EmployeeUpdateView(request, str):
                 order1.save()
                 return redirect('employees')
         else:
-            form = EmployeesUpdateForm(instance=Employees.objects.get(pk=str))
-        data = {'form': form,}                
+            form = UserRegisterForm(instance=Users.objects.get(pk=str))
+            form1 = ProfileRegisterForm(instance=Users.objects.get(user__pk=str)) 
+        data = {'form': form,
+                'form1': form1,
+               }                
         return render(request, 'users/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
