@@ -228,10 +228,12 @@ def EmployeeUpdateView(request, str):
     """'users/reg.html'"""
     e=User.objects.get(pk=str)
     a = e.groups.last()
-    if a == "Базовый пользователь":
+    if str(a) == "Базовый пользователь":
         e1 = 'Продвинутый пользователь'
-    if a == "Продвинутый пользователь":
+    if str(a) == "Продвинутый пользователь":
         e1 = 'Базовый пользователь'
+    else:
+        e1 = f'{a} ggggg'
         
    
     if request.method == "POST":
