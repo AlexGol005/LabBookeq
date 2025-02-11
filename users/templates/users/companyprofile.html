@@ -5,7 +5,9 @@
 
 {% block content %}
  <div class="col-8">
-     <center><h5>Данные компании: {{ company.name }}</h5></center> 
+     <a href='profile'>
+     <center><h5>Данные компании: {{ company.name }}</h5></center> </a>
+     
      <br>
      <table class="table table-bordered flexy">
        <tr><th>Идентификатор</th><td>{{ company.userid }}</td></tr>
