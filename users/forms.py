@@ -146,7 +146,7 @@ class CompanyCreateForm(forms.ModelForm):
     headlab_position = forms.CharField(label='Должность главного лица лаборатории', widget=forms.TextInput(attrs={'class': 'form-control',}))
     headlab_name = forms.CharField(label='ФИО главного лица лаборатории', widget=forms.TextInput(attrs={'class': 'form-control',}))
     email = forms.CharField(label='email', widget=forms.TextInput(attrs={'class': 'form-control',}))
-    attestat = forms.CharField(label='Данные аттестата аккредитации', required=False, widget=forms.Textarea(attrs={'class': 'form-control',}))
+    attestat = forms.CharField(label='Данные аттестата аккредитации', required=False, widget=CKEditorUploadingWidget())
     manager_position = forms.CharField(label='Должность лица ответственного за оборудование', widget=forms.TextInput(attrs={'class': 'form-control',}))
     manager_name = forms.CharField(label='ФИО лица ответственного за оборудование', widget=forms.TextInput(attrs={'class': 'form-control',}))
     manager_phone = forms.CharField(label='Телефон лица ответственного за оборудование', widget=forms.TextInput(attrs={'class': 'form-control',}))
