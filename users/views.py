@@ -227,6 +227,11 @@ def EmployeeUpdateView(request, str):
     """path('employeeupdate/<str:str>/', views.EmployeeUpdateView, name='employeeupdate'),"""
     """'users/reg.html'"""
     e=User.objects.get(pk=str)
+    if e.groups.last() == "Базовый пользователь":
+        e1 = 'Продвинутый пользователь'
+    if e.groups.last() == "Продвинутый пользователь":
+        e1 = 'Базовый пользователь'
+        
     e1 = e.groups.last()
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
