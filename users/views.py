@@ -227,9 +227,10 @@ def EmployeeUpdateView(request, str):
     """path('employeeupdate/<str:str>/', views.EmployeeUpdateView, name='employeeupdate'),"""
     """'users/reg.html'"""
     e=User.objects.get(pk=str)
-    if e.groups.last() == "Базовый пользователь":
+    a = e.groups.last()
+    if a == "Базовый пользователь":
         e1 = 'Продвинутый пользователь'
-    if e.groups.last() == "Продвинутый пользователь":
+    if a == "Продвинутый пользователь":
         e1 = 'Базовый пользователь'
         
    
