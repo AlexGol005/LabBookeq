@@ -9,7 +9,7 @@
 <div class="col-8">
                 <center><h3>Автоматизация учета лабораторного оборудования и микроклимата для Вашей лаборатории</h3></center>
                 {% if not user.is_authenticated %}
-                    <center><a href="{% url 'reg' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:20%">регистрация</a>
+                    <center><a href="{% url 'heademployeereg' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:20%">регистрация</a>
                     <a href="{% url 'user' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:20%">войти</a> </center>
                 {% else %}
                     <center><a href="{% url 'profile' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:20%"> ID {{ request.user.username }}</a>
