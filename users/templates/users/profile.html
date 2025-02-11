@@ -22,11 +22,7 @@
             <strong class="d-block text-gray-dark"><b>Права пользователя:  </b> {{ user_group }}</strong>
     </div>
 
-         <form method="post" enctype="multipart/form-data" class="form-register mt-4">
-        {% csrf_token %}
-        {{ ProfileUdateForm.as_p }}
-        <button class="btn btn-outline-primary" type="submit">Обновить</button>
-    </form>
+
 
 
      
@@ -45,6 +41,12 @@
                     <a href="{% url 'agreementcompanylist' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:25%"> Договоры с поверителями </a>
                 </center>
      {% endif %}
+ <br>
+              <form method="post" enctype="multipart/form-data" class="form-register mt-4">
+        {% csrf_token %}
+        {{ ProfileUdateForm.as_p }}
+        <button class="btn btn-outline-primary" type="submit">Обновить</button>
+    </form>
     <br>     <br>  <br>
 </div>
 {% endblock %}
