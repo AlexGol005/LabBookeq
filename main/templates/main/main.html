@@ -11,10 +11,10 @@
        
                     <center><a href="{% url 'heademployeereg' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:20%">регистрация</a>
                     <a href="{% url 'user' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:20%">войти</a> </center>
-<!--                 {% else %} -->
+
                     <center><a href="{% url 'profile' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:20%"> ID {{ request.user.username }}</a>
                     <a href="{% url 'exit' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:20%"> выйти</a> </center>
-<!--                 {% endif %} -->
+
                 <center> <a href="{% url 'contact_page' %}" class="btn btn-primary  mr-2 ml-2 mt-3 " style="width:60%">Задать вопрос администрации сайта</a></center>
                 <center><a href="{% url 'about' %}" class="btn btn-primary  mr-2 ml-2 mt-3 " style="width:60%">Что это за сайт?</a> </center>
                 <br>
