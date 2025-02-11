@@ -11,8 +11,8 @@
        <tr><th>Идентификатор</th><td>{{ company.userid }}</td></tr>
        <tr><th>Название краткое</th><td>{{ company.name }}</d></tr>
        <tr><th>Название полное</th><td>{{ company.name_big }}</d></tr>
-       <tr><th>Данные аттестата аккредитации компании</th><td>{{ company.attestat|default:" "}}</td></tr>
-       <tr><th>Реквизиты</th><td>{{ company.requisits|default:" " }}</td></tr>
+       <tr><th>Данные аттестата аккредитации компании</th><td>{% autoescape off %}{{ company.attestat|default:" "}}{% endautoescape %}</td></tr>
+       <tr><th>Реквизиты</th><td>{% autoescape off %}{{ company.requisits|default:" " }}{% endautoescape %}</td></tr>
        <tr><th>Адрес юридический</th><td>{{ company.adress|default:" " }}</td></tr>
        <tr><th>Адрес физический</th><td>{{ company.adress_lab|default:" " }}</td></tr>
        <tr><th>Телефон</th><td>{{ company.phone|default:" " }}</td></tr>
