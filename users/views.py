@@ -235,7 +235,7 @@ def HeadEmployeereg(request):
             return redirect('profile')
         else:
             messages.add_message(request, messages.ERROR, form.errors)
-            return redirect('heademployeereg')
+            # return redirect('heademployeereg')
                 
     else:
         form = UserRegisterForm()
