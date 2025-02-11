@@ -232,7 +232,7 @@ def EmployeeUpdateView(request, str):
     if e.groups.last() == "Продвинутый пользователь":
         e1 = 'Базовый пользователь'
         
-    e1 = e.groups.last()
+   
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             form = UserUdateForm(request.POST, instance=User.objects.get(pk=str))
