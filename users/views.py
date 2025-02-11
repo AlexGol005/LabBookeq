@@ -54,6 +54,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 class CompanyProfileView(LoginRequiredMixin, TemplateView):
     """выводит страницу данных компании """
     template_name = 'users/companyprofile.html'
+    
     def get_context_data(self, **kwargs):
         context = super(CompanyProfileView, self).get_context_data(**kwargs)
         try:
