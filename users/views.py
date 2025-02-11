@@ -248,6 +248,18 @@ def HeadEmployeereg(request):
         }
         return render(request,  'users/reg.html', data)
 
-
-
+@login_required
+def RightsEmployeereg(request, str):
+    """выполняет действие изменения группы прав пользователя из фронта сайта со страницы редактирования профиля пользователя"""
+    group_name1 = 'Продвинутый пользователь'
+    group_name2 = 'Базовый пользователь'
+    instance=User.objects.get(pk=str)
+    g = Group.objects.get(name=group_name)
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        g.user_set.add(instance)
+        return redirect('employees')
+    else:
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
+        return redirect('employees')
+    
 
