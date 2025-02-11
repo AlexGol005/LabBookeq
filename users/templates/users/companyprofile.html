@@ -5,7 +5,7 @@
 
 {% block content %}
  <div class="col-8">
-     <a href='profile'>
+     <a href= {% url 'profile' %} >
      <center><h5>Данные компании: {{ company.name }}</h5></center> </a>
      
      <br>
