@@ -229,9 +229,9 @@ def EmployeeUpdateView(request, str):
     e=User.objects.get(pk=str)
     a = e.groups.last()
   
-    if a == "Базовый пользователь":
+    if a is "Базовый пользователь":
         e1 = 'Продвинутый пользователь'
-    if a == "Продвинутый пользователь":
+    if a is "Продвинутый пользователь":
         e1 = 'Базовый пользователь'
 
         
