@@ -228,7 +228,7 @@ def EmployeeUpdateView(request, str):
     """'users/reg.html'"""
     
     instance=User.objects.get(pk=str)
-    group = list(instance.groups)[0]
+    group = instance.groups
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
 
         if request.method == "POST":
