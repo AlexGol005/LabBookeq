@@ -36,7 +36,7 @@ class Company(models.Model):
     userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, default=None, null=True, blank=True, unique=True)
     name = models.CharField('Название организации краткое', max_length=100, default=None, null=True, blank=True, unique=True)
     name_big = models.CharField('Название организации полное', max_length=100, default=None, null=True, blank=True, unique=True)
-    attestat = models.CharField('Аттестат аккредитации', max_length=200, default=None, null=True, blank=True)
+    attestat = models.CharField('Аттестат аккредитации', max_length=500, default=None, null=True, blank=True)
     requisits =  models.TextField('Реквизиты организации', default=None, null=True, blank=True)
     adress =  models.TextField('Адрес организации юридический', max_length=100, default=None, null=True, blank=True)
     adress_lab =  models.TextField('Адрес лаборатории физический', max_length=100, default=None, null=True, blank=True)
