@@ -226,12 +226,10 @@ def EmployeeUpdateView(request, str):
     """выводит форму для обновления данных о сотруднике"""
     """path('employeeupdate/<str:str>/', views.EmployeeUpdateView, name='employeeupdate'),"""
     """'users/reg.html'"""
-    
     e=User.objects.get(pk=str)
     
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-
-        if request.method == "POST":
+    if request.method == "POST":
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             form = UserUdateForm(request.POST, instance=User.objects.get(pk=str))
             form1 = ProfileRegisterForm(request.POST, instance=Profile.objects.get(user__pk=str)) 
                                                           
@@ -241,18 +239,19 @@ def EmployeeUpdateView(request, str):
                 order.save()                
                 order1.save()
                 return redirect('employees')
-        else:
-            form = UserUdateForm(instance=User.objects.get(pk=str))
-            form1 = ProfileRegisterForm(instance=Profile.objects.get(user__pk=str)) 
+            else:
+                messages.success(request, 'Раздел доступен только продвинутому пользователю')
+                return redirect('employees')
+    else:
+        form = UserUdateForm(instance=User.objects.get(pk=str))
+        form1 = ProfileRegisterForm(instance=Profile.objects.get(user__pk=str)) 
      
-        data = {'form': form,
+    data = {'form': form,
                 'form1': form1,
                 'e': e,
                }                
-        return render(request, 'users/reg.html', data)
-    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
-        messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect('employees')
+    return render(request, 'users/reg.html', data)
+
 
 
 @login_required
