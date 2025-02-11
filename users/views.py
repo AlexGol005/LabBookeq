@@ -255,14 +255,13 @@ def HeadEmployeereg(request):
     """path('heademployeereg/', views.HeadEmployeereg, name='heademployeereg'),"""
     
     if request.method == "POST":
-        group_name = 'Продвинутый пользователь'
+
         form = UserRegisterForm(request.POST)
 
         if form.is_valid() :
             u_f = form.save()
-             
-            g = Group.objects.get(name=group_name)
-            g.user_set.add(u_f)
+            u_f.save()
+  
             
 
 
