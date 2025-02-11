@@ -227,7 +227,7 @@ def EmployeeUpdateView(request, str):
     """path('employeeupdate/<str:str>/', views.EmployeeUpdateView, name='employeeupdate'),"""
     """'users/reg.html'"""
     e=User.objects.get(pk=str)
-    
+    e1 = e.groups.last()
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             form = UserUdateForm(request.POST, instance=User.objects.get(pk=str))
@@ -249,6 +249,7 @@ def EmployeeUpdateView(request, str):
     data = {'form': form,
                 'form1': form1,
                 'e': e,
+                'e1': e1,
                }                
     return render(request, 'users/reg.html', data)
 
