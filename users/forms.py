@@ -136,7 +136,7 @@ class CompanyCreateForm(forms.ModelForm):
     """форма для обновления профиля компании"""
     name = forms.CharField(label='Название краткое', widget=forms.TextInput(attrs={'class': 'form-control',}))
     name_big = forms.CharField(label='Название полное', widget=forms.TextInput(attrs={'class': 'form-control',}))
-    requisits = forms.CharField(label='Реквизиты', widget=forms.Textarea(attrs={'class': 'form-control',}), CKEditorUploadingWidget())
+    requisits = forms.CharField(label='Реквизиты', widget=CKEditorUploadingWidget())
     adress = forms.CharField(label='Адрес юридический', widget=forms.Textarea(attrs={'class': 'form-control',}))
     adress_lab = forms.CharField(label='Адрес физический', widget=forms.Textarea(attrs={'class': 'form-control',}))
     phone = forms.CharField(label='Телефон', widget=forms.TextInput(attrs={'class': 'form-control',}))
