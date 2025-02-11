@@ -143,6 +143,7 @@ class EmployeesView(LoginRequiredMixin, TemplateView):
 def Employeereg(request):
     """выводит форму для добавления пользователя (сотрудника) и его профиля"""
     """path('employeereg/', views.Employeereg, name='employeereg'),"""
+    """'users/reg.html'"""
     
     if request.method == "POST":
         group_name = 'Базовый пользователь'
@@ -181,7 +182,10 @@ def Employeereg(request):
 def EmployeeUpdateView(request, str):
     """выводит форму для обновления данных о сотруднике"""
     """path('employeeupdate/<str:str>/', views.EmployeeUpdateView, name='employeeupdate'),"""
+    """'users/reg.html'"""
     
+    instance=User.objects.get(pk=str)
+    group = instance.groups[0]
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
 
         if request.method == "POST":
@@ -197,8 +201,10 @@ def EmployeeUpdateView(request, str):
         else:
             form = UserUdateForm(instance=User.objects.get(pk=str))
             form1 = ProfileRegisterForm(instance=Profile.objects.get(user__pk=str)) 
+     
         data = {'form': form,
                 'form1': form1,
+                'group': group,
                }                
         return render(request, 'users/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
@@ -212,6 +218,7 @@ def EmployeeUpdateView(request, str):
 def HeadEmployeereg(request):
     """выводит форму для добавления первого сотрудника и вместе с ним - профиля компании"""
     """path('heademployeereg/', views.HeadEmployeereg, name='heademployeereg'),"""
+    """'users/reg.html'"""
     
     if request.method == "POST":
         group_name = 'Продвинутый пользователь'
@@ -251,13 +258,16 @@ def HeadEmployeereg(request):
 @login_required
 def RightsEmployeereg(request, str):
     """выполняет действие изменения группы прав пользователя из фронта сайта со страницы редактирования профиля пользователя"""
-    group_name1 = 'Продвинутый пользователь'
-    group_name2 = 'Базовый пользователь'
     instance=User.objects.get(pk=str)
     g = Group.objects.get(name=group_name)
+    if request.method == 'POST':
+        if 'Базовый пользователь' in request.POST:
+            group_name = 'Продвинутый пользователь'
+        if 'Продвинутый пользователь' in request.POST:
+            group_name = 'Базовый пользователь'
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         g.user_set.add(instance)
-        return redirect('employees')
+        return redirect(reverse('employeeupdate', kwargs={'str': str}))
     else:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('employees')
