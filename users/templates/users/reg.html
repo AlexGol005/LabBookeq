@@ -29,6 +29,10 @@
       </form>
       <br>
       </center>
-  
+
+  {% if USER_HAVE_RIGHTS %}
+     <button type="submit" name="{{group}}"  class="btn btn-primary mr-1 ml-1 mt-2"> назначить в {{group}} </button>
+
+  {% endif %}
 </div>
 {% endblock %}
