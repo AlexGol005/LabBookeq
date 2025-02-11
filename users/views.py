@@ -227,8 +227,8 @@ def EmployeeUpdateView(request, str):
     """path('employeeupdate/<str:str>/', views.EmployeeUpdateView, name='employeeupdate'),"""
     """'users/reg.html'"""
     
-    instance=User.objects.get(pk=str)
-    group = instance.groups
+    e=User.objects.get(pk=str)
+    
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
 
         if request.method == "POST":
@@ -247,7 +247,7 @@ def EmployeeUpdateView(request, str):
      
         data = {'form': form,
                 'form1': form1,
-                'group': group,
+                'e': e,
                }                
         return render(request, 'users/reg.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
