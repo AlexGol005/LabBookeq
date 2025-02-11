@@ -141,7 +141,7 @@ class EmployeesView(LoginRequiredMixin, TemplateView):
 @login_required
 def Employeereg(request):
     """выводит форму для добавления пользователя (сотрудника) и его профиля"""
-    path('employeereg/', views.Employeereg, name='employeereg'),
+    """path('employeereg/', views.Employeereg, name='employeereg'),"""
     
     if request.method == "POST":
         group_name = 'Базовый пользователь'
@@ -235,7 +235,7 @@ def HeadEmployeereg(request):
             return redirect('profile')
         else:
             messages.add_message(request, messages.ERROR, form.errors)
-            # return redirect('heademployeereg')
+            return redirect('heademployeereg')
                 
     else:
         form = UserRegisterForm()
