@@ -267,6 +267,8 @@ def EmployeeUpdateView(request, str):
 @login_required
 def RightsEmployeereg(request, str):
     """выполняет действие изменения группы прав пользователя из фронта сайта со страницы редактирования профиля пользователя"""
+    """path('groupchange/<str:str>/', views.RightsEmployeereg, name='groupchange'),"""
+    
     instance=User.objects.get(pk=str)
     g = Group.objects.get(name=group_name)
     if request.method == 'POST':
