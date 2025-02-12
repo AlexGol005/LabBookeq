@@ -9,13 +9,7 @@
 <div class="col-8">
   
       <center>
-        {% if dopin %}
-          <h4><a href="/{{ dopin }}">{{ title }}</a></h4>
-        {% elif dop.exnumber %}      
-          <h4><a href="/equipment/measureequipment/{{ dop.exnumber }}/">{{ title }}</a></h4>
-        {% else %}
-          <h6>{{ title }}</h6>
-        {% endif %}        
+ <a href="{% url 'employees' %}" > Редактирование профиля сотрудника </a>    
       </center>
   
       <center><h4>{{ dop.exnumber |slice:":5"}}</h4>
