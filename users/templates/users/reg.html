@@ -30,6 +30,11 @@
        {% csrf_token %}
      <button type="submit" name="{{a}}"  class="btn btn-primary mr-1 ml-1 mt-2"> назначить в {{e1}} </button>
     </form>
+    <form action="" method="post">
+       {% csrf_token %}
+     <button type="submit"  class="btn btn-primary mr-1 ml-1 mt-2"> {{activity}} </button>
+    </form>
+    
 </center> 
   <br><br>
   {% endif %}
