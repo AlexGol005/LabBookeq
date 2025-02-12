@@ -293,5 +293,26 @@ def RightsEmployeereg(request, str):
         else:
             messages.success(request, 'Раздел доступен только продвинутому пользователю')
             return redirect('employees')
+
+
+@login_required
+def Useractivityreg(request, str):
+    """выполняет действие изменения группы прав пользователя из фронта сайта со страницы редактирования профиля пользователя"""
+    """path('useractivity/<str:str>/', views.Useractivityreg, name='useractivity'),"""
+    
+    instance=User.objects.get(pk=str)
+    
+    if request.method == 'POST':
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            if 'деактивировать учетную запись' in request.POST:
+                instance.is_active = False
+                instance.save()
+            if 'активировать учетную запись' in request.POST:
+                instance.is_active = True
+                instance.save()
+            return redirect(reverse('employeeupdate', kwargs={'str': str}))
+        else:
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect('employees')
     
 
