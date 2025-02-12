@@ -228,6 +228,12 @@ def EmployeeUpdateView(request, str):
     """'users/reg.html'"""
     e=User.objects.get(pk=str)
     a = e.groups.last().name
+    activity = e.is_active
+    if activity:
+        activity = 'деактивировать учетную запись'
+    else:
+        activity = 'активировать учетную запись'
+        
   
     if a == "Базовый пользователь":
         e1 = 'Продвинутый пользователь'
@@ -258,6 +264,7 @@ def EmployeeUpdateView(request, str):
                 'e1': e1,
                 'a': a,
                 'a': a,
+            'activity':activity,
                }                
     return render(request, 'users/reg.html', data)
 
