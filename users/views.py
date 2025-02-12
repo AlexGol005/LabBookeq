@@ -258,6 +258,7 @@ def EmployeeUpdateView(request, str):
                 'form1': form1,
                 'e': e,
                 'e1': e1,
+                'a': a,
                }                
     return render(request, 'users/reg.html', data)
 
