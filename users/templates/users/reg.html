@@ -30,9 +30,9 @@
        {% csrf_token %}
      <button type="submit" name="{{a}}"  class="btn btn-primary mr-1 ml-1 mt-2"> назначить в {{e1}} </button>
     </form>
-    <form action="" method="post">
-       {% csrf_token %}
-     <button type="submit"  class="btn btn-primary mr-1 ml-1 mt-2"> {{activity}} </button>
+  
+      
+     <a href="{% url 'useractivity' %}"  class="btn btn-primary mr-1 ml-1 mt-2"> {{activity}} </a>
     </form>
     
 </center> 
