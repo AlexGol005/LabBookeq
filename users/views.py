@@ -232,9 +232,7 @@ def EmployeeUpdateView(request, str):
     if a == "Базовый пользователь":
         e1 = 'Продвинутый пользователь'
     if a == "Продвинутый пользователь":
-        e1 = 'Базовый пользователь'
-
-        
+        e1 = 'Базовый пользователь'      
    
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
@@ -247,9 +245,9 @@ def EmployeeUpdateView(request, str):
                 order.save()                
                 order1.save()
                 return redirect('employees')
-            else:
-                messages.success(request, 'Раздел доступен только продвинутому пользователю')
-                return redirect('employees')
+        else:
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect('employees')
     else:
         form = UserUdateForm(instance=User.objects.get(pk=str))
         form1 = ProfileRegisterForm(instance=Profile.objects.get(user__pk=str)) 
@@ -258,6 +256,7 @@ def EmployeeUpdateView(request, str):
                 'form1': form1,
                 'e': e,
                 'e1': e1,
+                'a': a,
                 'a': a,
                }                
     return render(request, 'users/reg.html', data)
@@ -272,16 +271,20 @@ def RightsEmployeereg(request, str):
     instance=User.objects.get(pk=str)
     
     if request.method == 'POST':
-        if 'Базовый пользователь' in request.POST:
-            group_name = 'Продвинутый пользователь'
-        if 'Продвинутый пользователь' in request.POST:
-            group_name = 'Базовый пользователь'
-        g = Group.objects.get(name=group_name)
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        g.user_set.add(instance)
-        return redirect(reverse('employeeupdate', kwargs={'str': str}))
-    else:
-        messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect('employees')
+        if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+            if 'Базовый пользователь' in request.POST:
+                add_group_name = 'Продвинутый пользователь'
+                rem_group_name = 'Базовый пользователь'
+            if 'Продвинутый пользователь' in request.POST:
+                add_group_name = 'Базовый пользователь'
+                rem_group_name = 'Продвинутый пользователь'
+            g_add = Group.objects.get(name=add_group_name)
+            g_rem = Group.objects.get(name=rem_group_name)    
+            g_add.user_set.add(instance)         
+            g_rem.user_set.remove(instance)
+            return redirect(reverse('employeeupdate', kwargs={'str': str}))
+        else:
+            messages.success(request, 'Раздел доступен только продвинутому пользователю')
+            return redirect('employees')
     
 
