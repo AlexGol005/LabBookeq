@@ -270,12 +270,13 @@ def RightsEmployeereg(request, str):
     """path('groupchange/<str:str>/', views.RightsEmployeereg, name='groupchange'),"""
     
     instance=User.objects.get(pk=str)
-    g = Group.objects.get(name=group_name)
+    
     if request.method == 'POST':
         if 'Базовый пользователь' in request.POST:
             group_name = 'Продвинутый пользователь'
         if 'Продвинутый пользователь' in request.POST:
             group_name = 'Базовый пользователь'
+        g = Group.objects.get(name=group_name)
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         g.user_set.add(instance)
         return redirect(reverse('employeeupdate', kwargs={'str': str}))
