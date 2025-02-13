@@ -187,7 +187,7 @@ def Employeereg(request):
                 data = form.data
                 data1 = form1.data
                 subject = f'Сообщение c JL о регистрации нового пользователя'
-                email_body = f'Для вас создана учетная запись на сайте учета лабораторного обрудования https://www.journallabeq.ru/. Данные для входа на сайт: логин: {username}; пароль: {data1['userposition']}' 
+                email_body = f"Для вас создана учетная запись на сайте учета лабораторного обрудования https://www.journallabeq.ru/. Данные для входа на сайт: логин: {username}; пароль: {data1['userposition']}" 
                 email(subject, email_body)
 
                 
