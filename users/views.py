@@ -65,6 +65,8 @@ def HeadEmployeereg(request):
                                 f"пароль: {password}\n"\
                                  f"Вы создали новую организацию. Войдите в Ващ=шу учетную запись и отредактируйте её данные\n"\
                                  f"По всем вопросам обращайтесь к администрации сайта по email sandra.005@mail.ru или по телефону +79500484071 (включая WhatsApp и Viber)"
+               
+               email(subject, email_body, user_email)
                              
                                  
                                
