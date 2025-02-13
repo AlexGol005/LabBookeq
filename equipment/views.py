@@ -466,23 +466,49 @@ class VerificatorsCreationView(LoginRequiredMixin,  ListView):
 
 class ManufacturerRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """ выводит форму добавления производителя """
+    """path('manufacturerreg/', views.ManufacturerRegView.as_view(), name='manufacturerreg'),"""
+    
     template_name = URL + '/reg.html'
     form_class = ManufacturerCreateForm
     success_url = '/equipment/manufacturerlist/'
     success_message = "Производитель успешно добавлен"
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        user = User.objects.get(username=self.request.user)
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.pointer = self.request.user.profile.userid
+            order.save()
+            return super().form_valid(form)
+        else:
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+            return redirect('manufacturerreg')
 
     def get_context_data(self, **kwargs):
         context = super(ManufacturerRegView, self).get_context_data(**kwargs)
         context['title'] = 'Добавить производителя ЛО'
         return context
 
-# order.pointer = request.user.profile.userid
+
 class VerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """ выводит форму добавления поверителя """
+    """path('companyverreg/', views.VerificatorRegView.as_view(), name='companyverreg'),"""
+    
     template_name = URL + '/reg.html'
     form_class = VerificatorsCreationForm
     success_url = '/equipment/verificatorsreg/'
     success_message = "Поверитель успешно добавлен"
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        user = User.objects.get(username=self.request.user)
+        if user.has_perm('equipment.add_equipment') or user.is_superuser:
+            order.pointer = self.request.user.profile.userid
+            order.save()
+            return super().form_valid(form)
+        else:
+            messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+            return redirect('companyverreg')
 
     def get_context_data(self, **kwargs):
         context = super(VerificatorRegView, self).get_context_data(**kwargs)
