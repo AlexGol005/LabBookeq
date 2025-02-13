@@ -182,6 +182,11 @@ def Employeereg(request):
                 g = Group.objects.get(name=group_name)
                 g.user_set.add(u_f)
                 username = form.cleaned_data.get('username')
+               
+                user = User.objects.get(pk=u_f.pk)
+                password = User.objects.make_random_password()
+                user.set_password(password)
+                user.save(update_fields=['password'])
                 
                 messages.success(request, f'Пользовать {username} был успешно создан!')
                 user_email = form1.cleaned_data.get('user_email')
@@ -194,7 +199,9 @@ def Employeereg(request):
                                 f"ссылка для входа:\n" \
                                 f"https://www.journallabeq.ru/login/\n" \
                                 f"Данные для входа на сайт:\n" \
-                                f"логин: {username};\n"  
+                                f"логин: {username};\n"\
+                                f"пароль: {password};\n"
+                   
    
                    email(subject, email_body, user_email)
 
