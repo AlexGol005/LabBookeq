@@ -8,13 +8,19 @@
 {% block content %}
 <div class="col-8">
   
-      <center>
+     
         {% if e.pk %}
- <a href="{% url 'employees' %}" > <h4>Редактирование профиля сотрудника</h4> </a>    
+ <center> <a href="{% url 'employees' %}" > <h4>Редактирование профиля сотрудника</h4> </a>     </center>
+          
+           
         {% else %}
-         <a href="{% url 'employees' %}" > <h4>Создание профиля сотрудника</h4> </a>    
+    <center>      <a href="{% url 'employees' %}" > <h4>Создание профиля сотрудника</h4> </a>   </center>
+   <br>
+   <center> Пароль будет сгенерирован автоматически и выслан на указанный в форме email</center>
+        <br>
+
         {% endif %}
-      </center>
+
   
       <center><h4>{{ dop.exnumber |slice:":5"}}</h4>
         
