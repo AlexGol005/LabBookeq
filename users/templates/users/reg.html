@@ -9,16 +9,23 @@
 <div class="col-8">
   
      
+   {% if user.is_authenticated %}
         {% if e.pk %}
  <center> <a href="{% url 'employees' %}" > <h4>Редактирование профиля сотрудника</h4> </a>     </center>
           
-           
+          <br>    
         {% else %}
     <center>      <a href="{% url 'employees' %}" > <h4>Создание профиля сотрудника</h4> </a>   </center>
    <br>
    <center> Пароль будет сгенерирован автоматически и выслан на указанный в форме email</center>
         <br>
-
+{% elif not user.is_authenticated %}
+      <center>      <a href="{% url 'employees' %}" > <h4>Создание профиля нового пользователя и профиля его организации </h4> </a>   </center>
+   <br>
+   <center> Пароль будет сгенерирован автоматически и выслан на указанный в форме email</center>
+   <br>
+     <center> Если Ваша организация уже была зарегистрирована, то обратитесь к руководителю/менеджеру/продвинутому пользователю для создания учетной записи </center>
+        <br>
         {% endif %}
 
   
