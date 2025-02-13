@@ -56,14 +56,18 @@ def HeadEmployeereg(request):
 
             if user_email:
                subject = f'Сообщение c JL о регистрации нового пользователя'
-               email_body = f"Для вас создана учетная запись\n" \
+               email_body = f"Добро пожаловать! Для вас создана учетная запись\n" \
                                 f"в базе обслуживания лабораторного обрудования и регистрации микроклимата\n" \
                                 f"ссылка для входа:\n" \
                                 f"https://www.journallabeq.ru/login/\n" \
                                 f"Данные для входа на сайт:\n" \
                                 f"логин: {username};\n"\
-                                f"пароль: {password};\n"\ 
-                                f"Вы создали новую организацию. Перейдите в личный кабинет и внесите данные своей организации"  
+                                f"пароль: {password}\n"\
+                                 f"Вы создали новую организацию. Войдите в Ващ=шу учетную запись и отредактируйте её данные\n"\
+                                 f"По всем вопросам обращайтесь к администрации сайта по email sandra.005@mail.ru или по телефону +79500484071 (включая WhatsApp и Viber)"
+                             
+                                 
+                               
 
             messages.success(request, f'Пользовать {username} и его организация {name_prima} были успешно создан!')
                   
@@ -218,7 +222,7 @@ def Employeereg(request):
                                 f"https://www.journallabeq.ru/login/\n" \
                                 f"Данные для входа на сайт:\n" \
                                 f"логин: {username};\n"\
-                                f"пароль: {password};\n"
+                                f"пароль: {password}\n"
                    
    
                    email(subject, email_body, user_email)
