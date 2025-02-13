@@ -37,9 +37,12 @@ def HeadEmployeereg(request):
             u_f = form.save()
             p_f = form1.save(commit=False)
             p_f.user_id = u_f.id
+            
             p_f.userid = get_random_secret_key()
             newuserid =  p_f.userid
-            p_f.save()              
+            p_f.save()  
+            u_f.email = p_f.user_email
+            u_f.save()
             g = Group.objects.get(name=group_name)
             g.user_set.add(u_f)
             username = form.cleaned_data.get('username')
@@ -211,7 +214,8 @@ def Employeereg(request):
                 password = User.objects.make_random_password()
                 user.set_password(password)
                 user.save(update_fields=['password'])
-                
+                u_f.email = p_f.user_email
+                u_f.save()
                 messages.success(request, f'Пользовать {username} был успешно создан!')
                 user_email = form1.cleaned_data.get('user_email')
 
@@ -277,6 +281,8 @@ def EmployeeUpdateView(request, str):
                 order1 = form1.save(commit=False)
                 order.save()                
                 order1.save()
+                order.email = order1.user_email
+                order.save()
                 return redirect('employees')
         else:
             messages.success(request, 'Раздел доступен только продвинутому пользователю')
