@@ -25,6 +25,7 @@
       </center>
 
   {% if USER_HAVE_RIGHTS %}
+  {% if e.pk %}
   <center>
     <form action="{% url 'groupchange' e.pk %}" method="post">
        {% csrf_token %}
@@ -39,6 +40,6 @@
 </center> 
   <br><br>
   {% endif %}
-  
+  {% endif %}
 </div>
 {% endblock %}
