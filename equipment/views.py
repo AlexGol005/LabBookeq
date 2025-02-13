@@ -487,6 +487,7 @@ class ManufacturerRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(ManufacturerRegView, self).get_context_data(**kwargs)
         context['title'] = 'Добавить производителя ЛО'
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -513,6 +514,7 @@ class VerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(VerificatorRegView, self).get_context_data(**kwargs)
         context['title'] = 'Добавить компанию-поверителя ЛО'
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
