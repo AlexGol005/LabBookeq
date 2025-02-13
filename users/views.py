@@ -182,9 +182,10 @@ def Employeereg(request):
                 g = Group.objects.get(name=group_name)
                 g.user_set.add(u_f)
                 username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
                 messages.success(request, f'Пользовать {username} был успешно создан!')
 
-                data = form.data
+   
 
                 subject = f'Сообщение c JL о регистрации нового пользователя'
                 email_body = f"Для вас создана учетная запись" \
@@ -193,7 +194,7 @@ def Employeereg(request):
                              f"https://www.journallabeq.ru/login/" \
                              f"Данные для входа на сайт:" \
                              f"логин: {username};" \
-                             f"пароль: {data['password']}" 
+                             f"пароль: {password}" 
 
                 email(subject, email_body)
 
