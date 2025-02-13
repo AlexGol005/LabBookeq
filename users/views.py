@@ -15,11 +15,11 @@ from .forms import *
 from equipment.models import *
 
 # Функция отправки сообщения
-def email(subject, content):
+def email(subject, content, user_email):
    send_mail(subject,
       content,
       'sandra.005@mail.ru',
-      ['sandra.005@mail.ru']
+      ['user_email']
    )
 
 
@@ -182,21 +182,21 @@ def Employeereg(request):
                 g = Group.objects.get(name=group_name)
                 g.user_set.add(u_f)
                 username = form.cleaned_data.get('username')
-                password = form.cleaned_data.get('password')
+                
                 messages.success(request, f'Пользовать {username} был успешно создан!')
+                user_email = form1.cleaned_data.get('user_email')
 
+                if user_email:
+
+                   subject = f'Сообщение c JL о регистрации нового пользователя'
+                   email_body = f"Для вас создана учетная запись\n" \
+                                f"в базе обслуживания лабораторного обрудования и регистрации микроклимата\n" \
+                                f"ссылка для входа:\n" \
+                                f"https://www.journallabeq.ru/login/\n" \
+                                f"Данные для входа на сайт:\n" \
+                                f"логин: {username};\n"  
    
-
-                subject = f'Сообщение c JL о регистрации нового пользователя'
-                email_body = f"Для вас создана учетная запись" \
-                             f"в базе обслуживания лабораторного обрудования и регистрации микроклимата" \
-                             f"ссылка для входа:" \
-                             f"https://www.journallabeq.ru/login/" \
-                             f"Данные для входа на сайт:" \
-                             f"логин: {username};" \
-                             f"пароль: {password}" 
-
-                email(subject, email_body)
+                   email(subject, email_body, user_email)
 
                 
                 return redirect('employees')
