@@ -6,7 +6,11 @@
 {% block content %}
   <div class="col-8">
       
-     <center><h5>Договоры с поверителями компании {{ company.name }}</h5></center> 
+     <center>
+         <a href= "{% url 'profile' %}" >
+         <h5>Договоры с поверителями компании {{ company.name }}</h5>
+         </a>
+     </center> 
      <br>
       
      {% if USER_HAVE_RIGHTS  %}    
@@ -36,10 +40,10 @@
         </tr>
         {% for obj in objects %}
         <tr>              
-            <td>{{ obj.verificator.companyName }}</td> 
-            <td>{{ obj.ver_agreement_number  }}</td> 
-            <td>{{ obj.ver_agreement_date }}</td> 
-            <td>{{ obj.ver_agreement_card }}</td>
+            <td>{{ obj.verificator.companyName|default_if_none:'' }}</td> 
+            <td>{{ obj.ver_agreement_number|default_if_none:''  }}</td> 
+            <td>{{ obj.ver_agreement_date|default_if_none:'' }}</td> 
+            <td>{{ obj.ver_agreement_card|default_if_none:'' }}</td>
             {% if USER_HAVE_RIGHTS  %}  
             <td> <a href="{% url 'agreementcompanyverupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td>   
             {% endif %}
