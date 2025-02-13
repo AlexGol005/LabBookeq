@@ -230,7 +230,7 @@ class AgreementVerificators(LoginRequiredMixin, TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(AgreementVerificators, self).get_context_data(**kwargs)
-        company = Company.objects.get(userid=user.profile.userid)
+        company = Company.objects.get(userid=self.request.user.profile.userid)
         objects = Agreementverification.objects.filter(company=company)
         context['company'] = company 
         context['objects'] = objects
