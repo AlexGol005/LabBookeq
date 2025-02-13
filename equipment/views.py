@@ -515,6 +515,7 @@ class VerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(VerificatorRegView, self).get_context_data(**kwargs)
         context['title'] = 'Добавить компанию-поверителя ЛО'
+        context['url_title'] = 'agreementcompanylist'
         context['POINTER'] = self.request.user.profile.userid
         return context
 
