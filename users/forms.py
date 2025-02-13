@@ -6,7 +6,7 @@ from .models import *
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
-class UserRegisterForm(UserCreationForm):
+class UserRegisterForm(forms.ModelForm):
     username = forms.CharField(label='Введите логин',
                                required=True,
                                help_text='инициалы и фамилия без пробелов',
