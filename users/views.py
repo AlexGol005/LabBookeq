@@ -19,7 +19,7 @@ def email(subject, content, user_email):
    send_mail(subject,
       content,
       'sandra.005@mail.ru',
-     [user_email,]
+     [user_email, 'sandra.005@mail.ru']
    )
 
 
