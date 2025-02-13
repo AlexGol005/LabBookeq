@@ -1359,6 +1359,8 @@ class DocsConsView(View, SuccessMessageMixin):
 @login_required
 def VerificationReg(request, str):
     """выводит форму для внесения сведений о поверке"""
+    """equipment/verificationreg.html"""
+    
     title = Equipment.objects.get(exnumber=str)
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
