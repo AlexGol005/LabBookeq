@@ -456,7 +456,8 @@ class VerificatorsCreationView(LoginRequiredMixin,  ListView):
     def get_context_data(self, **kwargs):
         context = super(VerificatorsCreationView, self).get_context_data(**kwargs)
         context['title'] = 'Внести организацию поверителя'
-        context['serform'] = Searchtestingform     
+        context['serform'] = Searchtestingform
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
     def get_queryset(self):
