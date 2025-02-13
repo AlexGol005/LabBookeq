@@ -42,13 +42,39 @@ def HeadEmployeereg(request):
             p_f.save()              
             g = Group.objects.get(name=group_name)
             g.user_set.add(u_f)
+            username = form.cleaned_data.get('username')
+
+            user = User.objects.get(pk=u_f.pk)
+            password = User.objects.make_random_password()
+            user.set_password(password)
+            user.save(update_fields=['password'])
+                
+            messages.success(request, f'Пользовать {username} и его организация были успешно создан!')
+            user_email = form1.cleaned_data.get('user_email')
+
+            if user_email:
+
+               subject = f'Сообщение c JL о регистрации нового пользователя'
+               email_body = f"Для вас создана учетная запись\n" \
+                                f"в базе обслуживания лабораторного обрудования и регистрации микроклимата\n" \
+                                f"ссылка для входа:\n" \
+                                f"https://www.journallabeq.ru/login/\n" \
+                                f"Данные для входа на сайт:\n" \
+                                f"логин: {username};\n"\
+                                f"пароль: {password};\n"           
+
+
+           
             name_prima = f'замените на название Вашей организации - {newuserid}'
 
             newcompany = Company.objects.get_or_create(userid=newuserid, pay = False, name=name_prima, name_big=name_prima)
 
             
-            username = form.cleaned_data.get('username')
+            
             messages.success(request, f'Пользовать {username} был успешно создан!')
+
+
+           
             return redirect('profile')
         else:
             messages.add_message(request, messages.ERROR, form.errors)
