@@ -342,7 +342,4 @@ def Useractivityreg(request, str):
             messages.success(request, 'Раздел доступен только продвинутому пользователю')
             return redirect('employees')
     
-class PasswordRecoveryRequestView(TemplateView):
-    """выводит страницу с формой для отправки письма администрации сайта для восстановления пароля """
-    template_name = 'users/passwordrecoveryrequest.html'
 
