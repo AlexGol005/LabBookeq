@@ -492,6 +492,8 @@ class VerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """ выводит форму добавления договора с поверителем """
+    """  path('agreementcompanyverreg/', views.AgreementVerificatorRegView.as_view(), name='agreementcompanyverreg'),   """
+ 
     template_name = URL + '/crispy_reg.html'
     form_class = AgreementVerificatorsCreationForm
     success_url = '/equipment/agreementcompanylist'
