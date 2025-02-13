@@ -14,7 +14,7 @@
         {% elif dop.exnumber %}      
           <h4><a href="/equipment/measureequipment/{{ dop.exnumber }}/">{{ title }}</a></h4>
         {% else %}
-          <h6>{{ title }}</h6>
+         <a href="{{ url_title }}"> <h6>{{ title }}</h6></a>
         {% endif %}        
       </center>
   
