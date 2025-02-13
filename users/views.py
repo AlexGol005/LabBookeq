@@ -185,9 +185,16 @@ def Employeereg(request):
                 messages.success(request, f'Пользовать {username} был успешно создан!')
 
                 data = form.data
-                data1 = form1.data
+
                 subject = f'Сообщение c JL о регистрации нового пользователя'
-                email_body = f"Для вас создана учетная запись на сайте учета лабораторного обрудования https://www.journallabeq.ru/. Данные для входа на сайт: логин: {username}; пароль: {data1['userposition']}" 
+                email_body = f"Для вас создана учетная запись" \
+                             f"в базе обслуживания лабораторного обрудования и регистрации микроклимата" \
+                             f"ссылка для входа:" \
+                             f"https://www.journallabeq.ru/login/" \
+                             f"Данные для входа на сайт:" \
+                             f"логин: {username};" \
+                             f"пароль: {data['password']}" 
+
                 email(subject, email_body)
 
                 
