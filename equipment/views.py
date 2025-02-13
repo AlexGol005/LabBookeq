@@ -281,6 +281,8 @@ class EquipmentView(LoginRequiredMixin, ListView):
 
 class MeasurEquipmentCharaktersView(LoginRequiredMixin, ListView):
     """ Выводит список госреестров """
+    """path('measurequipmentcharacterslist/', views.MeasurEquipmentCharaktersView.as_view(), name='measurequipmentcharacterslist'),"""
+    
     model = MeasurEquipmentCharakters
     template_name = URL + '/MEcharacterslist.html'
     context_object_name = 'objects'
@@ -385,6 +387,8 @@ class HelpingEquipmentView(LoginRequiredMixin, ListView):
 
 class MeasurEquipmentCharaktersStrView(TemplateView):
     """выводит индивидуальную страницу с описанием характеристик СИ """
+    """path('mecharaktersstr/<str:str>/', views.MeasurEquipmentCharaktersStrView.as_view(), name='mecharaktersstr'),"""
+    
     template_name = URL + '/charaktersstr.html'
 
     def get_context_data(self, str, **kwargs):
