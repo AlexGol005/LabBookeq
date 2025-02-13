@@ -55,7 +55,13 @@
         <td>{{ obj.email|default_if_none:''}}</td>
         <td>{{ obj.head_position|default_if_none:''}}</td>
         <td>{{ obj.head_name|default_if_none:''}}</td>
+                    {% if USER_HAVE_RIGHTS  %}  
+            {% if POINTER == obj.pointer %}
         <td> <a href="{% url 'verupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
+        {% else %}
+             <th> </th>
+            {% endif %}
+        {% endif %}
     </tr>
     {% endfor %}
     </tbody>
