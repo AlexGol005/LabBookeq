@@ -5,52 +5,6 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
-# class UserRegisterForm(UserCreationForm):
-#     username = forms.CharField(label='Введите логин',
-#                                required=True,
-#                                help_text='инициалы и фамилия без пробелов',
-#                                widget=forms.TextInput(attrs={'class': 'form-control',
-#                                'placeholder': 'И.И.Иванов'}))
-#     password1 = forms.CharField(label='Введите пароль',
-#                                 required=True,
-#                                 widget=forms.PasswordInput(attrs={'class': 'form-control',
-#                                                            'placeholder': 'введите пароль' }))
-#     password2 = forms.CharField(label='Подтвердите пароль',
-#                                 required=True,
-#                                 widget=forms.PasswordInput(attrs={'class': 'form-control',
-#                                                            'placeholder': 'повторно введите пароль' }))
-
-
-#     name = forms.CharField(label='ФИО',
-#                                required=True,
-#                                help_text='ФИО полностью',
-#                                widget=forms.TextInput(attrs={'class': 'form-control',
-#                                'placeholder': 'Иванов Иван Иванович'}))
-#     userposition = forms.CharField(label='Должность',
-#                                    required=True,
-#                                    widget=forms.TextInput(attrs={'class': 'form-control',
-#                                                                  'placeholder': 'Должность'}))
-
-#     user_email = forms.EmailField(label='email',
-#                                     required=False,
-#                                  widget=forms.TextInput(attrs={'class': 'form-control',
-#                                                            'placeholder': 'email'})
-#                                      )
-#     user_phone = forms.CharField(label='Телефон',
-#                                     required=False,
-#                                  widget=forms.TextInput(attrs={'class': 'form-control',
-#                                                            'placeholder': 'телефон'})
-#                                      )
-
-
-#     class Meta:
-#         model = User
-#         fields = ['username', 'password1', 'password1', 
-#                   'name', 
-#                   'userposition', 
-#                   'user_email', 
-#                   'user_phone', 
-#                  ]
 
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(label='Введите логин',
@@ -58,20 +12,20 @@ class UserRegisterForm(UserCreationForm):
                                help_text='инициалы и фамилия без пробелов',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                'placeholder': 'И.И.Иванов'}))
-    password1 = forms.CharField(label='Введите пароль',
-                                required=True,
-                                widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                                           'placeholder': 'введите пароль' }))
-    password2 = forms.CharField(label='Подтвердите пароль',
-                                required=True,
-                                widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                                           'placeholder': 'повторно введите пароль' }))
+    # password1 = forms.CharField(label='Введите пароль',
+    #                             required=True,
+    #                             widget=forms.PasswordInput(attrs={'class': 'form-control',
+    #                                                        'placeholder': 'введите пароль' }))
+    # password2 = forms.CharField(label='Подтвердите пароль',
+    #                             required=True,
+    #                             widget=forms.PasswordInput(attrs={'class': 'form-control',
+    #                                                        'placeholder': 'повторно введите пароль' }))
 
 
 
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password1', 
+        fields = ['username', 
                  ]
 
 class ProfileRegisterForm(forms.ModelForm):
