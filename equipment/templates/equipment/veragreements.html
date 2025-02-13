@@ -35,11 +35,9 @@
         <tr>
               <th>Название поверителя</th> <th>Номер договора</th><th>Дата договора</th><th>Номер карточки</th>
             {% if USER_HAVE_RIGHTS  %}
-            {% if POINTER == obj.pointer %}
+            
             <th>Ред.</th>
-            {% else %}
-             <th> </th>
-            {% endif %}
+            
             {% endif %}
         </tr>
         {% for obj in objects %}
@@ -49,7 +47,11 @@
             <td>{{ obj.ver_agreement_date|default_if_none:'' }}</td> 
             <td>{{ obj.ver_agreement_card|default_if_none:'' }}</td>
             {% if USER_HAVE_RIGHTS  %}  
-            <td> <a href="{% url 'agreementcompanyverupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td>   
+            {% if POINTER == obj.pointer %}
+            <td> <a href="{% url 'agreementcompanyverupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
+            {% else %}
+             <th> </th>
+            {% endif %}
             {% endif %}
         </tr>
         {% endfor %}
