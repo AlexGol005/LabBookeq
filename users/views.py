@@ -71,7 +71,7 @@ def HeadEmployeereg(request):
                                  
                                
 
-            messages.success(request, f'Пользовать {username} и {name_prima} были успешно создан!')
+            messages.success(request, f'Пользовать {username} и {name_prima} были успешно созданы!')
                   
             return redirect('profile')
         else:
