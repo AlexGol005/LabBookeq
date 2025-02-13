@@ -49,7 +49,7 @@ def HeadEmployeereg(request):
             user.set_password(password)
             user.save(update_fields=['password'])
                 
-            messages.success(request, f'Пользовать {username} и его организация были успешно создан!')
+            
             user_email = form1.cleaned_data.get('user_email')
 
             if user_email:
@@ -65,13 +65,13 @@ def HeadEmployeereg(request):
 
 
            
-            name_prima = f'замените на название Вашей организации - {newuserid}'
+            name_prima = f'Новая организация пользователя {username} создана! - поменяйте на название организации'
 
             newcompany = Company.objects.get_or_create(userid=newuserid, pay = False, name=name_prima, name_big=name_prima)
 
+            messages.success(request, f'Пользовать {username} и его организация {name_prima} были успешно создан!')
             
-            
-            messages.success(request, f'Пользовать {username} был успешно создан!')
+           
 
 
            
