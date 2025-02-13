@@ -531,6 +531,7 @@ class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, Creat
     def get_context_data(self, **kwargs):
         context = super(AgreementVerificatorRegView, self).get_context_data(**kwargs)
         context['title'] = 'Добавить договор с компанией-поверителем ЛО'
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
     def form_valid(self, form):
