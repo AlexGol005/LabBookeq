@@ -35,7 +35,7 @@ class ProfileRegisterForm(forms.ModelForm):
     user_email = forms.EmailField(label='email',
                                     required=True,
                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                               help_text='При регистрации на этот email придет пароль. Допустимо зарегистрировать несколько пользователей на одинаковый email, если у пользователя нет личного email',
+                                                               'help_text':'При регистрации на этот email придет пароль. Допустимо зарегистрировать несколько пользователей на одинаковый email, если у пользователя нет личного email',
                                                            'placeholder': 'email'})
                                      )
     user_phone = forms.CharField(label='Телефон',
