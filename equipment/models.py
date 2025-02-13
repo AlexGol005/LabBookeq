@@ -86,6 +86,7 @@ class Manufacturer(models.Model):
     telnumber = models.CharField('Телефон', max_length=200, default='', blank=True)
     telnumberhelp = models.CharField('Телефон техподдержки для вопросов по оборудованию',
                                      max_length=200, default='', blank=True)
+    pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True)
 
     def __str__(self):
         return self.companyName
@@ -104,6 +105,7 @@ class Verificators(models.Model):
     note = models.CharField('Примечание', max_length=10000, default='-', blank=True)
     head_position = models.CharField('Кому: должность лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
     head_name = models.CharField('Кому: имя лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
+    pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True)
 
     def __str__(self):
         return f'pk{self.pk}-{self.companyName}'
