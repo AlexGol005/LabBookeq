@@ -343,3 +343,6 @@ def Useractivityreg(request, str):
             return redirect('employees')
     
 
+def Useractivityreg(request, str):
+    """выполняет действие восстановления пароля"""
+    """path('useractivity/<str:str>/', views.Useractivityreg, name='useractivity'),"""
