@@ -9,19 +9,9 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 class UserRegisterForm(forms.ModelForm):
     username = forms.CharField(label='Введите логин',
                                required=True,
-                               help_text='инициалы и фамилия без пробелов',
+                               help_text='Логин для входа в учетную запись',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                'placeholder': 'И.И.Иванов'}))
-    # password1 = forms.CharField(label='Введите пароль',
-    #                             required=True,
-    #                             widget=forms.PasswordInput(attrs={'class': 'form-control',
-    #                                                        'placeholder': 'введите пароль' }))
-    # password2 = forms.CharField(label='Подтвердите пароль',
-    #                             required=True,
-    #                             widget=forms.PasswordInput(attrs={'class': 'form-control',
-    #                                                        'placeholder': 'повторно введите пароль' }))
-
-
 
     class Meta:
         model = User
@@ -31,17 +21,21 @@ class UserRegisterForm(forms.ModelForm):
 class ProfileRegisterForm(forms.ModelForm):
     name = forms.CharField(label='ФИО',
                                required=True,
-                               help_text='ФИО полностью',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                'placeholder': 'Иванов Иван Иванович'}))
+    short_name = forms.CharField(label='ФИО кратко (для документов)',
+                               required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control',
+                               'placeholder': 'И.И.Иванов'}))
     userposition = forms.CharField(label='Должность',
                                    required=True,
                                    widget=forms.TextInput(attrs={'class': 'form-control',
                                                                  'placeholder': 'Должность'}))
 
     user_email = forms.EmailField(label='email',
-                                    required=False,
+                                    required=True,
                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                               help_text='При регистрации на этот email придет пароль. Допустимо зарегистрировать несколько пользователей на одинаковый email, если у пользователя нет личного email',
                                                            'placeholder': 'email'})
                                      )
     user_phone = forms.CharField(label='Телефон',
@@ -55,14 +49,11 @@ class ProfileRegisterForm(forms.ModelForm):
         model = Profile
         fields = [
                   'name', 
+                  'short_name',
                   'userposition', 
                   'user_email', 
                   'user_phone', 
                  ]
-
-
-
-
 
 
 class UserUdateForm(forms.ModelForm):
