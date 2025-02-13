@@ -9,7 +9,11 @@
 <div class="col-8">
   
       <center>
+        {% if e.pk %}
  <a href="{% url 'employees' %}" > <h4>Редактирование профиля сотрудника</h4> </a>    
+        {% else %}
+         <a href="{% url 'employees' %}" > <h4>Создание профиля сотрудника</h4> </a>    
+        {% endif %}
       </center>
   
       <center><h4>{{ dop.exnumber |slice:":5"}}</h4>
