@@ -476,7 +476,7 @@ class ManufacturerRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         context['title'] = 'Добавить производителя ЛО'
         return context
 
-
+# order.pointer = request.user.profile.userid
 class VerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """ выводит форму добавления поверителя """
     template_name = URL + '/reg.html'
