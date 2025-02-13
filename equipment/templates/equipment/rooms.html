@@ -6,7 +6,11 @@
 {% block content %}
   <div class="col-8">
       
-     <center><h5>Помещения компании {{ company.name }}</h5></center> 
+     <center>
+          <a href= "{% url 'profile' %}" >
+         <h5>Помещения компании {{ company.name }}</h5>
+          </a>
+     </center> 
      <br>
       
      {% if USER_HAVE_RIGHTS  %}    
