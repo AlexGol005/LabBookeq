@@ -7,6 +7,28 @@
 
 {% block content %}
 <div class="col-8">  
+    <center><h3>Инфраструктура лаборатории</h3></center>
+    <br>
+    <center><h5>Лабораторное оборудование</h5></center>
+    <center>
+        <a href="{% url 'euipmentall' %}" class="btn btn-primary mr-2 ml-2 mt-2" style="width: 90%"> Все приборы </a>
+        
+    </center>
+    <br><br>
+    <center>
+        <a href="{% url 'measureequipmentall' %}" class="btn btn-primary mr-2 ml-2 mt-2" style="width: 30%"> Средства <br>измерения </a>
+        <a href="{% url 'testingequipmentall' %}" class="btn btn-primary mr-2 ml-2 mt-2" style="width: 30%"> Испытательное <br>оборудование </a>
+        <a href="{% url 'helpingequipmentall' %}" class="btn btn-primary  mr-2 ml-2 mt-2" style="width: 30%">Вспомогательное <br>оборудование </a>
+    </center>
+    <br>
+    <center><h5>Помещения</h5></center>
+    <center><a href="{% url 'rooms' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width: 100%" >Смотреть и добавить помещения</a></center>
+     <br>
+    <center><h5>Микроклимат в помещениях</h5></center>
+    <center><a href="{% url 'meteo' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width: 100%" >Смотреть и добавить условия окружающей среды</a></center>
 
+
+    <center><img width=80% src="{% static 'main/img/10.jpg' %}" class="mr-2 ml-2 mt-3"  ></center>
+    <br>
 </div>
 {% endblock %}
