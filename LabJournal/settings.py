@@ -51,6 +51,8 @@ ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS').split(',')]
 # Application definition
 
 INSTALLED_APPS = [
+    'dal',
+    'dal_select2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,10 +71,6 @@ INSTALLED_APPS = [
     'blog',
     'ajax_select',
     'administrator',
-    'dal',
-    'dal_select2',
-    # 'grappelli',
-    'django.contrib.admin',
 ]
 
 
