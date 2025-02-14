@@ -69,6 +69,10 @@ INSTALLED_APPS = [
     'blog',
     'ajax_select',
     'administrator',
+    'dal',
+    'dal_select2',
+    # 'grappelli',
+    'django.contrib.admin',
 ]
 
 
