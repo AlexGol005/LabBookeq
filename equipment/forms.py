@@ -26,6 +26,7 @@ from django.forms import ModelForm
 from ajax_select.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
 from ajax_select import make_ajax_field
 from .lookups import*
+from .urls import*
 
 from dal import autocomplete
 
@@ -45,6 +46,8 @@ class ActivaqqchangeForm(forms.ModelForm):
             'aqq'
                   ]
         widgets = {'aqq':forms.Select(attrs={'class': 'form-control'}), }
+
+
 
 
 # блок 1 - формы для поисков и распечатки этикеток
@@ -857,30 +860,30 @@ class VerificatorsCreationForm(forms.ModelForm):
                   ]
 
 
-class AgreementVerificatorsCreationForm(forms.ModelForm):
-    """форма для внесения договора с компанией поверителем"""
-    # verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False)
-    verificator = forms.CharField(label='Организация-поверитель', max_length=10000000,  widget=autocomplete.ListSelect2(url='verificators-autocomplete'))
+# class AgreementVerificatorsCreationForm(forms.ModelForm):
+#     """форма для внесения договора с компанией поверителем"""
+#     # verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False)
+#     verificator = forms.CharField(label='Организация-поверитель', max_length=10000000,  widget=autocomplete.ListSelect2(url='verificators-autocomplete'))
                                  
-    ver_agreement_number = forms.CharField(label='Номер договора с организацией-поверителем', max_length=10000000,  required=False,
-                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                'placeholder': ''}))
-    ver_agreement_date = forms.CharField(label='Дата договора с организацией-поверителем', max_length=10000000, required=False,
-                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                'placeholder': ''}))
+#     ver_agreement_number = forms.CharField(label='Номер договора с организацией-поверителем', max_length=10000000,  required=False,
+#                                   widget=forms.TextInput(attrs={'class': 'form-control',
+#                                                                 'placeholder': ''}))
+#     ver_agreement_date = forms.CharField(label='Дата договора с организацией-поверителем', max_length=10000000, required=False,
+#                                   widget=forms.TextInput(attrs={'class': 'form-control',
+#                                                                 'placeholder': ''}))
 
-    ver_agreement_card = forms.CharField(label='Номер учетной карточки у с организации-поверителя', max_length=10000000, required=False,
-                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                'placeholder': ''}))
+#     ver_agreement_card = forms.CharField(label='Номер учетной карточки у с организации-поверителя', max_length=10000000, required=False,
+#                                   widget=forms.TextInput(attrs={'class': 'form-control',
+#                                                                 'placeholder': ''}))
 
-    class Meta:
-        model = Agreementverification
-        fields = [
-            'verificator',
-            'ver_agreement_number',
-            'ver_agreement_date',
-            'ver_agreement_card',
-                  ]
+#     class Meta:
+#         model = Agreementverification
+#         fields = [
+#             'verificator',
+#             'ver_agreement_number',
+#             'ver_agreement_date',
+#             'ver_agreement_card',
+#                   ]
 
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
@@ -900,6 +903,19 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
     #             ),
 
     #         Submit('submit', 'Внести'))
+
+
+class PersonForm(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = ('__all__')
+        widgets = {
+            'verificator': autocomplete.ModelSelect2(url='verificators-autocomplet')
+        }
+
+
+
+
 
 
 class RoomsCreateForm(forms.ModelForm):
