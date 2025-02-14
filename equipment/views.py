@@ -34,6 +34,7 @@ from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from django.views.generic.edit import FormMixin
 from xlwt import Alignment, Borders
+from dal import autocomplete
 
 from equipment.constants import servicedesc0
 from equipment.forms import*
@@ -2323,7 +2324,7 @@ def ServiceStrView(request,  str):
         messages.success(request, 'Этого прибора в графике ТОиР на указанный год нет')
         return redirect('managerequipment')
         
-from dal import autocomplete
+
 class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
     
     def get_queryset(self):
