@@ -2325,6 +2325,7 @@ def ServiceStrView(request,  str):
         
 from dal import autocomplete
 class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
+    
     def get_queryset(self):
         qs =  Verificators.objects.all()
         if self.q:
