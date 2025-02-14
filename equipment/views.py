@@ -528,7 +528,7 @@ class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, Creat
     """ выводит форму добавления договора с поверителем """
     """  path('agreementcompanyverreg/', views.AgreementVerificatorRegView.as_view(), name='agreementcompanyverreg'),   """
  
-    template_name = URL + '/crispy_reg.html'
+    template_name = URL + '/veragreementreg.html'
     form_class = AgreementVerificatorsCreationForm
     success_url = '/equipment/agreementcompanylist'
     success_message = "Договор с поверителем успешно добавлен"
