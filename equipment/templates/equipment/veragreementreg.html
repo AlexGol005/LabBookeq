@@ -23,7 +23,9 @@
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-
+        <table style="display: none">
+            {{ view.formset.empty_form }}
+        </table>
         <table>
             {{ view.formset }}
         </table>
