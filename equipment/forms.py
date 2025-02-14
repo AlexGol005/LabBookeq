@@ -910,7 +910,7 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
         model = Agreementverification
         fields = ('__all__')
         widgets = {
-            'verificator': autocomplete.ModelSelect2(url='verificators-autocomplet')
+            'verificator': autocomplete.ModelSelect2(url='verificators-autocomplete')
         }
 
 
