@@ -905,9 +905,9 @@ class VerificatorsCreationForm(forms.ModelForm):
     #         Submit('submit', 'Внести'))
 
 
-class PersonForm(forms.ModelForm):
+class AgreementVerificatorsCreationForm(forms.ModelForm):
     class Meta:
-        model = Person
+        model = Agreementverification
         fields = ('__all__')
         widgets = {
             'verificator': autocomplete.ModelSelect2(url='verificators-autocomplet')
