@@ -2323,5 +2323,10 @@ def ServiceStrView(request,  str):
         messages.success(request, 'Этого прибора в графике ТОиР на указанный год нет')
         return redirect('managerequipment')
         
-
-
+from dal import autocomplete
+class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs =  Verificators.objects.all()
+        if self.q:
+            qs = qs.filter(companyName__istartswith=self.q)
+        return qs
