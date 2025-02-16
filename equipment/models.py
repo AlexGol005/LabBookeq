@@ -112,8 +112,8 @@ class Verificators(models.Model):
         return f'{self.companyName}'
 
     def save(self, *args, **kwargs):
-        user = current_user
-        self.pointer = user.username
+        # user = current_user
+        # self.pointer = user.username
         super(Verificators, self).save(*args, **kwargs)
 
     class Meta:
