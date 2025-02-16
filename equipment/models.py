@@ -21,6 +21,7 @@ from PIL import Image
 from django.contrib.auth.models import User
 from decimal import *
 from django.urls import reverse
+from django_currentuser.db.models import CurrentUserField
 
 from users.models import  Company
 from functstandart import get_dateformat
@@ -94,7 +95,7 @@ class Manufacturer(models.Model):
         verbose_name = 'Производитель'
         verbose_name_plural = 'Производители'
 
-from django_currentuser.db.models import CurrentUserField
+
 class Verificators(models.Model):
     """Компании поверители оборудования"""
     created_by = CurrentUserField()
@@ -110,10 +111,10 @@ class Verificators(models.Model):
     def __str__(self):
         return f'{self.companyName}'
 
-    # def save(self, *args, **kwargs):
-    #     user = process_request()
-    #     self.pointer = user.username
-    #     super(Verificators, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        user = process_request()
+        self.pointer = self.created_by.profile.userid
+        super(Verificators, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Поверитель организация'
