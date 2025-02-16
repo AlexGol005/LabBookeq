@@ -3,8 +3,8 @@ from dal import autocomplete
 from equipment.models import*
 
 class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
-  "выводит список поверителей для формы"
-  """path(r'^verificators-autocomplete/$', views_autocomplete_list.VerificatorsAutocomplete.as_view(), name='verificators-autocomplete',),"""
+    """выводит список поверителей для формы"""
+    """path(r'^verificators-autocomplete/$', views_autocomplete_list.VerificatorsAutocomplete.as_view(), name='verificators-autocomplete',),"""
     def get_queryset(self):
         qs = Verificators.objects.all()
         if self.q:
