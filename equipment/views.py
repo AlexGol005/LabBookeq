@@ -2326,9 +2326,14 @@ def ServiceStrView(request,  str):
         
 
 class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
-    
     def get_queryset(self):
-        qs =  Verificators.objects.all()
+        # Don't forget to filter out results depending on the visitor !
+        if not self.request.user.is_authenticated:
+            return Verificators.objects.none()
+
+        qs = Verificators.objects.all()
+
         if self.q:
             qs = qs.filter(companyName__istartswith=self.q)
+
         return qs
