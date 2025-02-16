@@ -344,7 +344,7 @@ class EquipmentCreateForm(forms.ModelForm):
                 Column('yearmanuf', css_class='form-group col-md-4 mb-0'),
                 Column('new', css_class='form-group col-md-4 mb-0')),
             Row(
-                Column('manufacturer', css_class='form-group col-md-4 mb-0'),
+                Column('manufacturer', css_class='form-group col-md-4 mb-0')),
             Row(
                 Column('status', css_class='form-group col-md-6 mb-0'),
                 Column('yearintoservice', css_class='form-group col-md-6 mb-0'),
