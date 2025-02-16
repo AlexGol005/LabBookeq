@@ -455,6 +455,8 @@ def RoomsCreateView(request):
 
 class VerificatorsCreationView(LoginRequiredMixin,  ListView):
     """ выводит список поверителей """
+    """path('verificatorsreg/', views.VerificatorsCreationView.as_view(), name='verificatorsreg'),"""
+    
     template_name = URL + '/verificatorsreglist.html'
     context_object_name = 'objects'
 
