@@ -34,3 +34,25 @@ class MeasurEquipmentCharaktersAutocomplete(autocomplete.Select2QuerySetView):
             qs = qs.filter(query)
         return qs
 
+
+class TestingEquipmentCharaktersAutocomplete(autocomplete.Select2QuerySetView):
+    """выводит список характеристик ИО для формы"""
+    """path(r'^techarakters-autocomplete/$', views_autocomplete_list.TestingEquipmentCharaktersAutocomplete.as_view(), name='techarakters-autocomplete',),"""
+    def get_queryset(self):
+        qs = TestingEquipmentCharakters.objects.all()
+        if self.q:
+            query = Q(name__contains=self.q.lower()) | Q(name__contains=self.q.upper())| Q(name__icontains=self.q)
+            qs = qs.filter(query)
+        return qs
+
+
+class HelpingEquipmentCharaktersAutocomplete(autocomplete.Select2QuerySetView):
+    """выводит список характеристик ИО для формы"""
+    """path(r'^hecharakters-autocomplete/$', views_autocomplete_list.HelpingEquipmentCharaktersAutocomplete.as_view(), name='hecharakters-autocomplete',),"""
+    def get_queryset(self):
+        qs = HelpingEquipmentCharakters.objects.all()
+        if self.q:
+            query = Q(name__contains=self.q.lower()) | Q(name__contains=self.q.upper())| Q(name__icontains=self.q)
+            qs = qs.filter(query)
+        return qs
+
