@@ -118,7 +118,7 @@ class Verificators(models.Model):
     note = models.CharField('Примечание', max_length=10000, default='-', blank=True)
     head_position = models.CharField('Кому: должность лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
     head_name = models.CharField('Кому: имя лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
-    pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True, default=get_current_user.username)
+    pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True, default=get_current_user)
 
     def __str__(self):
         return f'{self.companyName}'
