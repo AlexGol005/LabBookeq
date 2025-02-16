@@ -96,7 +96,7 @@ class Manufacturer(models.Model):
         verbose_name = 'Производитель'
         verbose_name_plural = 'Производители'
 
-from  LabJournal.middleware import current_user
+from crum import get_current_request
 class Verificators(models.Model):
     """Компании поверители оборудования"""
     companyName = models.CharField('Поверитель', max_length=100, unique=True)
@@ -112,7 +112,7 @@ class Verificators(models.Model):
         return f'{self.companyName}'
 
     def save(self, *args, **kwargs):
-        user = current_user.get_current_user()
+        user = get_current_user()
         self.pointer = user.username
         super(Verificators, self).save(*args, **kwargs)
 
