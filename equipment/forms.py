@@ -893,7 +893,7 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
                   "ver_agreement_date", "ver_agreement_card",
                  ]
 
-        widgets = {
+        widgets = (
             "verificator" : autocomplete.ModelSelect2(url=reverse_lazy('verificators-autocomplete'), attrs={'class' : 'form-control', 'data-placeholder' : "Name"})
 
                
