@@ -529,7 +529,8 @@ class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, Creat
     """ выводит форму добавления договора с поверителем """
     """  path('agreementcompanyverreg/', views.AgreementVerificatorRegView.as_view(), name='agreementcompanyverreg'),   """
  
-    template_name = URL + '/veragreementreg.html'
+    # template_name = URL + '/veragreementreg.html'
+    template_name = URL + '/va.html'
     form_class = AgreementVerificatorsCreationForm
     success_url = '/equipment/agreementcompanylist'
     success_message = "Договор с поверителем успешно добавлен"
