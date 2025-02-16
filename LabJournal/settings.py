@@ -81,7 +81,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'crum.CurrentRequestUserMiddleware',
+    'crum.CurrentRequestUserMiddleware',
 ]
 
 
@@ -192,7 +192,7 @@ if TOOLBAR_DEBUG:
         from LabJournal import local_settings
 
         INSTALLED_APPS += local_settings.INSTALLED_APPS
-        MIDDLEWARE = local_settings.MIDDLEWARE + MIDDLEWARE
+        # MIDDLEWARE = local_settings.MIDDLEWARE + MIDDLEWARE
 
         INTERNAL_IPS = local_settings.INTERNAL_IPS
     except ImportError as e:
