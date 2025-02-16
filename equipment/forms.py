@@ -472,6 +472,8 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
                                    widget=forms.Textarea(attrs={'class': 'form-control',
                                                                  'placeholder': ''}))
 
+
+
     class Meta:
         model = MeasurEquipmentCharakters
         fields = [
@@ -744,13 +746,16 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
 
 class MeasurEquipmentCreateForm(forms.ModelForm):
     """форма для внесения СИ"""
-    charakters = AutoCompleteSelectField('mecharakters_tag', label='Госреестр', required=True, help_text='Начните вводить название прибора строчными или с заглавной буквы', show_help_text=False)
 
     class Meta:
         model = MeasurEquipment
         fields = [
             'charakters',
                   ]
+        widgets = {
+
+               'charakters': autocomplete.ModelSelect2(url='mecharakters-autocomplete'),
+        }
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
