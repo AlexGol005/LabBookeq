@@ -23,3 +23,14 @@ class ManufacturerAutocomplete(autocomplete.Select2QuerySetView):
             qs = qs.filter(query)
         return qs
 
+
+class MeasurEquipmentCharaktersAutocomplete(autocomplete.Select2QuerySetView):
+    """выводит список характеристик СИ (госреестров) для формы"""
+    """path(r'^mecharakters-autocomplete/$', views_autocomplete_list.MeasurEquipmentCharaktersAutocomplete.as_view(), name='mecharakters-autocomplete',),"""
+    def get_queryset(self):
+        qs = MeasurEquipmentCharakters.objects.all()
+        if self.q:
+            query = Q(name__contains=self.q.lower()) | Q(name__contains=self.q.upper())| Q(reestr__contains=self.q)
+            qs = qs.filter(query)
+        return qs
+
