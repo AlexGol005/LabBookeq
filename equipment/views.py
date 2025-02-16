@@ -17,6 +17,7 @@
 блок 11 - все комментарии ко всему
 блок 12 - вывод списков и форм  для метрологического  обеспечения
 блок 13 - ТОиР
+блок 14 - все кнопки удаления объектов
 """
 
 import pytils.translit
@@ -233,6 +234,7 @@ class AgreementVerificators(LoginRequiredMixin, TemplateView):
         objects = Agreementverification.objects.filter(company=company)
         context['company'] = company 
         context['objects'] = objects
+        context['POINTER'] = self.request.user.profile.userid
         return context
         
 
@@ -806,26 +808,6 @@ def EquipmentReg(request):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('/equipment/')
-
-
-@login_required
-def EquipmentDeleteView(request, str):
-    """для кнопки удаления ЛО"""
-    """не выводит страницу, выполняет действие"""
-    
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        try:
-            ruser=request.user.profile.userid
-            note = Equipment.objects.filter(pointer=ruser).get(pk=str)
-            note.delete()
-            messages.success(request, 'Оборудование удалено!')
-            return redirect('equipmentlist')            
-        except:
-            messages.success(request, 'Оборудование невозможно удалить, так как она зарегистрировано в качестве СИ, ИО или ВО. Вы можете поменять статус оборудования на "Списано"')
-            return redirect('equipmentlist')
-    else:
-        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
-        return redirect('equipmentlist')
 
 
 class MeasurEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -2322,3 +2304,48 @@ def ServiceStrView(request,  str):
         messages.success(request, 'Этого прибора в графике ТОиР на указанный год нет')
         return redirect('managerequipment')
     
+
+
+# блок 14 - все кнопки удаления объектов
+
+@login_required
+def EquipmentDeleteView(request, str):
+    """для кнопки удаления ЛО"""
+    """не выводит страницу, выполняет действие"""
+    """path('equipmentdelete/<str:str>/', views.EquipmentDeleteView, name='equipmentdelete'),"""
+    
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            ruser=request.user.profile.userid
+            note = Equipment.objects.filter(pointer=ruser).get(pk=str)
+            note.delete()
+            messages.success(request, 'Оборудование удалено!')
+            return redirect('equipmentlist')            
+        except:
+            messages.success(request, 'Оборудование невозможно удалить, так как она зарегистрировано в качестве СИ, ИО или ВО. Вы можете поменять статус оборудования на "Списано"')
+            return redirect('equipmentlist')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect('equipmentlist')
+
+
+@login_required
+def VeragreementDeleteView(request, str):
+    """для кнопки удаления договора с поверителем"""
+    """не выводит страницу, выполняет действие"""
+    """path('veragreementdelete/<str:str>/', views.VeragreementDeleteView, name='veragreementdelete'),"""
+    
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            ruser=request.user.profile.userid
+            note = Agreementverification.objects.filter(pointer=ruser).get(pk=str)
+            note.delete()
+            messages.success(request, 'Договор удален!')
+            return redirect('agreementcompanylist')            
+        except:
+            messages.success(request, 'Невозможно удалить')
+            return redirect('agreementcompanylist')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect('agreementcompanylist')
+
