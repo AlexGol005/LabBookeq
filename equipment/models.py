@@ -25,19 +25,7 @@ from django.urls import reverse
 from users.models import  Company
 from functstandart import get_dateformat
 
-from django.conf import settings
-USER_ATTR_NAME = getattr(settings, 'LOCAL_USER_ATTR_NAME', '_current_user')
-
-from threading import local
-
-_user = local()
-
-class CurrentUserMiddleware(object):
-    def process_request(self, request):
-        _user.value = request.user
-
-def get_current_user():
-    return _user.value
+from crum import get_current_user   
 
 # блок 1 - константы неизменяемые непользовательские константы для полей с выбором значений в моделях
 
@@ -124,11 +112,9 @@ class Verificators(models.Model):
         return f'{self.companyName}'
 
     def save(self, *args, **kwargs):
-        super().save()
-        # self.pointer = get_current_user
-        self.pointer = get_current_user()
-        return super(Verificators, self).save(*args, **kwargs)
- 
+        user = get_current_user()
+        self.pointer = user.username
+        super(Verificators, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Поверитель организация'
