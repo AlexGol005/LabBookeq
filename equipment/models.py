@@ -112,7 +112,6 @@ class Verificators(models.Model):
         return f'{self.companyName}'
 
     def save(self, *args, **kwargs):
-        user = process_request()
         self.pointer = self.created_by.profile.userid
         super(Verificators, self).save(*args, **kwargs)
 
