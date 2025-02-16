@@ -125,7 +125,8 @@ class Verificators(models.Model):
 
     def save(self, *args, **kwargs):
         super().save()
-        self.pointer = get_current_user
+        # self.pointer = get_current_user
+        self.pointer = 1
         return super(Verificators, self).save(*args, **kwargs)
  
 
