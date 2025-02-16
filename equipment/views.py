@@ -2324,7 +2324,8 @@ def ServiceStrView(request,  str):
     except:
         messages.success(request, 'Этого прибора в графике ТОиР на указанный год нет')
         return redirect('managerequipment')
-        
+    
+
 
 class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
