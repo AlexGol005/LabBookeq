@@ -1,5 +1,5 @@
 from dal import autocomplete
-
+from django.db.models import Q
 from equipment.models import*
 
 class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
