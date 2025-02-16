@@ -277,7 +277,8 @@ class EquipmentCreateForm(forms.ModelForm):
                           widget=forms.TextInput(attrs={'class': 'form-control'}))
     yearmanuf = forms.CharField(label='Год выпуска прибора', max_length=10000, initial=datetime.now().year,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
-    manufacturer = AutoCompleteSelectField('manufacturer_tag', label='Производитель прибора', required=True, help_text='Начните вводить название строчными или заглавными буквами', show_help_text=False)
+    # manufacturer = AutoCompleteSelectField('manufacturer_tag', label='Производитель прибора', required=True, help_text='Начните вводить название строчными или заглавными буквами', show_help_text=False)
+    manufacturer = AutoCompleteSelectField(label='Производитель прибора', required=True, widget=autocomplete.ModelSelect2(url='manufacturer-autocomplete'))
     status = forms.ChoiceField(label='Статус (эксплуатация, ремонт и тд)', initial='Эксплуатация',
                                choices=CHOICES,
                                widget=forms.Select(attrs={'class': 'form-control'}))
