@@ -94,10 +94,10 @@ class Manufacturer(models.Model):
         verbose_name = 'Производитель'
         verbose_name_plural = 'Производители'
 
-from django_currentuser.db.models import CurrentUserField
+# from django_currentuser.db.models import CurrentUserField
 class Verificators(models.Model):
     """Компании поверители оборудования"""
-    created_by = CurrentUserField()
+    # created_by = CurrentUserField()
     companyName = models.CharField('Поверитель', max_length=100, unique=True)
     companyAdress = models.CharField('Адрес', max_length=200, default='-', blank=True)
     telnumber = models.CharField('Телефон', max_length=200, default='-', blank=True)
