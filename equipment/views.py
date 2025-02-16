@@ -2334,7 +2334,7 @@ def VeragreementDeleteView(request, str):
     """для кнопки удаления договора с поверителем"""
     """не выводит страницу, выполняет действие"""
     """path('veragreementdelete/<str:str>/', views.VeragreementDeleteView, name='veragreementdelete'),"""
-    
+    ruser=request.user.profile.userid
     a = Agreementverification.objects.filter(pointer=ruser).count()
     if ((request.user.has_perm('equipment.add_equipment') or request.user.is_superuser) and a >= 1):
         try:
