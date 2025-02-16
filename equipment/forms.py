@@ -268,7 +268,7 @@ class MetrologyUpdateForm(forms.ModelForm):
 
 class EquipmentCreateForm(forms.ModelForm):
     """форма для внесения ЛО"""
-    exnumber = forms.CharField(label='Внутренний номер', max_length=10000, initial='А',
+    exnumber = forms.CharField(label='Внутренний номер', max_length=1, initial='А',
                                help_text='уникальный, придумайте первую букву номера по названию оборудования (заглавная кириллица, 1 буква)',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': 'А'}))
@@ -311,7 +311,7 @@ class EquipmentCreateForm(forms.ModelForm):
     pravo_have = forms.ChoiceField(label='Собственность или аренда', initial='собственность',
                             choices=( ('собственность', 'собственность'),
                                      ('аренда', 'аренда')), widget=forms.Select(attrs={'class': 'form-control'}))
-    serviceneed = forms.BooleanField(label='Включать в график ТОиР приа автоформировании графика', required=False, initial=True)      
+    serviceneed = forms.BooleanField(label='Включать в график ТОиР при автоформировании графика', required=False, initial=True)      
 
     class Meta:
         model = Equipment
