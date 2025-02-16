@@ -3,7 +3,7 @@
 Приложение equipment это обширное приложение, включает все про лабораторное оборудование и лабораторные помещения
 Данный модуль models.py выводит классы, создающие таблицы в базе данных - далее: модели.
 Список блоков:
-блок 1 - заглавные страницы с кнопками, структурирующие разделы. (Самая верхняя страница - записана в приложении main)
+блок 1 - константы
 блок 2 -  производители и поверители, комнаты лаборатории
 блок 3 - оборудование в целом, характеристики СИ ИО ВО, сами СИ ИО ВО
 блок 4 - смена комнаты, ответственного, добавление принадлежностей к оборудованию
@@ -28,39 +28,18 @@ from functstandart import get_dateformat
 from django.conf import settings
 USER_ATTR_NAME = getattr(settings, 'LOCAL_USER_ATTR_NAME', '_current_user')
 
-try:
-    from threading import local
-except ImportError:
-    from django.utils._threading_local import local
-_thread_locals = local()
+from threading import local
 
-from new import instancemethod
-def _do_set_current_user(user_fun):
-    setattr(_thread_locals, USER_ATTR_NAME, instancemethod(user_fun, _thread_locals, type(_thread_locals)))
+_user = local()
 
-def _set_current_user(user=None):
-    '''
-    Sets current user in local thread.
-
-    Can be used as a hook e.g. for shell jobs (when request object is not
-    available).
-    '''
-    _do_set_current_user(lambda self: user)
-
-class LocalUserMiddleware(object):
+class CurrentUserMiddleware(object):
     def process_request(self, request):
-        # request.user closure; asserts laziness; memoization is implemented in
-        # request.user (non-data descriptor)
-        _do_set_current_user(lambda self: getattr(request, 'user', None))
+        _user.value = request.user
 
 def get_current_user():
-    current_user = getattr(_thread_locals, USER_ATTR_NAME, None)
-    return current_user() if current_user else current_user
+    return _user.value
 
-
-
-# блок 1 -  неизменяемые непользовательские константы для полей с выбором значений в моделях
-from django.views.generic import DetailView
+# блок 1 - константы неизменяемые непользовательские константы для полей с выбором значений в моделях
 
 CHOICES = (
         ('Э', 'Экс.'),
@@ -139,7 +118,7 @@ class Verificators(models.Model):
     note = models.CharField('Примечание', max_length=10000, default='-', blank=True)
     head_position = models.CharField('Кому: должность лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
     head_name = models.CharField('Кому: имя лица организации-поверителя', max_length=100, default=None, null=True, blank=True)
-    pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True, default=get_current_user().username)
+    pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True, default=get_current_user.username)
 
     def __str__(self):
         return f'{self.companyName}'
