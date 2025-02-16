@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'blog',
     'ajax_select',
     'administrator',
+    'crum',
 ]
 
 
