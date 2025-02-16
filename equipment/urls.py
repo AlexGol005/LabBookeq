@@ -5,6 +5,7 @@ from . import exel
 from . import exel_agreements
 
 urlpatterns = [
+    path(r'^mecharakters-autocomplete/$', views_autocomplete_list.MeasurEquipmentCharaktersAutocomplete.as_view(), name='mecharakters-autocomplete',),
     path(r'^manufacturer-autocomplete/$', views_autocomplete_list.ManufacturerAutocomplete.as_view(), name='manufacturer-autocomplete',),
     path(r'^verificators-autocomplete/$', views_autocomplete_list.VerificatorsAutocomplete.as_view(), name='verificators-autocomplete',),
     path('serviceplan/<str:str>/', views.ServiceStrView, name='serviceplan'),
