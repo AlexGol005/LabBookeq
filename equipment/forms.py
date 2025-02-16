@@ -757,54 +757,37 @@ class MeasurEquipmentCreateForm(forms.ModelForm):
                'charakters': autocomplete.ModelSelect2(url='mecharakters-autocomplete'),
         }
         
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            Row(
-                Column('charakters', css_class='form-group col-md-10 mb-0'),
-                ),
-            Submit('submit', 'Внести'))
 
 
 class TestingEquipmentCreateForm(forms.ModelForm):
     """форма для внесения ИО"""
-    charakters = AutoCompleteSelectField('techarakters_tag', label='Характеристики ИО', required=True, help_text='Начните вводить название прибора строчными или с заглавной буквы', show_help_text=False)
 
     class Meta:
         model = TestingEquipment
         fields = [
                    'charakters',
                   ]
+        widgets = {
 
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.helper = FormHelper()
-            self.helper.layout = Layout(
-                   Row(
-                       Column('charakters', css_class='form-group col-md-10 mb-0'),
-                       ),
-               Submit('submit', 'Внести'))
+               'charakters': autocomplete.ModelSelect2(url='techarakters-autocomplete'),
+         }
 
 
 
 class HelpingEquipmentCreateForm(forms.ModelForm):
     """форма для внесения ВО"""
-    charakters = AutoCompleteSelectField('hecharakters_tag', label='Характеристики ВО', required=True, help_text='Начните вводить название прибора строчными или с заглавной буквы', show_help_text=False)
+    
 
     class Meta:
         model = HelpingEquipment
         fields = [
             'charakters',
                   ]
-    def __init__(self, *args, **kwargs):
-         super().__init__(*args, **kwargs)
-         self.helper = FormHelper()
-         self.helper.layout = Layout(
-                   Row(
-                       Column('charakters', css_class='form-group col-md-10 mb-0'),
-                       ),
-               Submit('submit', 'Внести'))
+       
+        widgets = {
+
+               'charakters': autocomplete.ModelSelect2(url='hecharakters-autocomplete'),
+        }
 
 
 
@@ -969,7 +952,6 @@ class VerificationRegForm(forms.ModelForm):
     statusver = forms.ChoiceField(label='Результат поверки',
                                   choices=CHOICESVERIFIC,
                                   widget=forms.Select(attrs={'class': 'form-control'}))
-    verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False)
     place = forms.ChoiceField(label='Место поверки',
                               choices=CHOICESPLACE,
                               widget=forms.Select(attrs={'class': 'form-control'}))
@@ -996,6 +978,11 @@ class VerificationRegForm(forms.ModelForm):
                   'cust',
                   'extra',
                   ]
+
+        widgets = {
+
+               'verificator': autocomplete.ModelSelect2(url='verificators-autocomplete'),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -1068,7 +1055,6 @@ class CalibrationRegForm(forms.ModelForm):
     statusver = forms.ChoiceField(label='Результат калибровки',
                                   choices=CHOICESCAL,
                                   widget=forms.Select(attrs={'class': 'form-control'}))
-    verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False)
     place = forms.ChoiceField(label='Место калибровки',
                               choices=CHOICESPLACE,
                               widget=forms.Select(attrs={'class': 'form-control'}))
@@ -1095,6 +1081,11 @@ class CalibrationRegForm(forms.ModelForm):
                   'cust',
                   'extra',
                   ]
+
+        widgets = {
+
+               'verificator': autocomplete.ModelSelect2(url='verificators-autocomplete'),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -1162,9 +1153,6 @@ class AttestationRegForm(forms.ModelForm):
     statusver = forms.ChoiceField(label='Результат аттестации',
                                   choices=CHOICESATT,
                                   widget=forms.Select(attrs={'class': 'form-control'}))
-    verificator = forms.ModelChoiceField(label='Организация-поверитель',
-                                         queryset=Verificators.objects.all(),
-                                         widget=forms.Select(attrs={'class': 'form-control'}))
     place = forms.ChoiceField(label='Место аттестации',
                               choices=CHOICESPLACE, initial='В ПА',
                               widget=forms.Select(attrs={'class': 'form-control'}))
@@ -1195,6 +1183,10 @@ class AttestationRegForm(forms.ModelForm):
                   'cust',
                   'extra',
                   ]
+        widgets = {
+
+               'verificator': autocomplete.ModelSelect2(url='verificators-autocomplete'),
+         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
