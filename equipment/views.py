@@ -19,7 +19,6 @@
 блок 13 - ТОиР
 """
 
-import xlwt
 import pytils.translit
 from datetime import date
 from django.contrib import messages
@@ -33,8 +32,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from django.views.generic.edit import FormMixin
-from xlwt import Alignment, Borders
-from dal import autocomplete
+
 
 from equipment.constants import servicedesc0
 from equipment.forms import*
@@ -2324,25 +2322,3 @@ def ServiceStrView(request,  str):
         messages.success(request, 'Этого прибора в графике ТОиР на указанный год нет')
         return redirect('managerequipment')
     
-
-
-# class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
-#     def get_queryset(self):
-#         # Don't forget to filter out results depending on the visitor !
-#         if not self.request.user.is_authenticated:
-#             return Verificators.objects.none()
-
-#         qs = Verificators.objects.all()
-
-#         if self.q:
-#             qs = qs.filter(companyName__icontains=self.q)
-
-#         return qs
-
-class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
-    def get_queryset(self):
-        qs = Verificators.objects.all()
-        if self.q:
-            query = Q(companyName__contains=self.q.lower()) | Q(companyName__contains=self.q.upper())
-            qs = qs.filter(query)
-        return qs
