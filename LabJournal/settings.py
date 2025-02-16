@@ -85,17 +85,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'crum.CurrentRequestUserMiddleware',
 ]
 
-# MIDDLEWARE_CLASSES = (
-
-#     'django.contrib.auth.middleware.AuthenticationMiddleware',
-
-#     'current_user.CurrentUserMiddleware',
-
-# )
+MIDDLEWARE += ('crum.CurrentRequestUserMiddleware',)
 
 ROOT_URLCONF = 'LabJournal.urls'
 
