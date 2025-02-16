@@ -278,7 +278,7 @@ class EquipmentCreateForm(forms.ModelForm):
     yearmanuf = forms.CharField(label='Год выпуска прибора', max_length=10000, initial=datetime.now().year,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     # manufacturer = AutoCompleteSelectField('manufacturer_tag', label='Производитель прибора', required=True, help_text='Начните вводить название строчными или заглавными буквами', show_help_text=False)
-    manufacturer = forms.ChoiceField(label='Производитель прибора', required=True, widget=autocomplete.ModelSelect2(url='manufacturer-autocomplete'))
+    # manufacturer = forms.ChoiceField(label='Производитель прибора', required=True, widget=autocomplete.ModelSelect2(url='manufacturer-autocomplete'))
     status = forms.ChoiceField(label='Статус (эксплуатация, ремонт и тд)', initial='Эксплуатация',
                                choices=CHOICES,
                                widget=forms.Select(attrs={'class': 'form-control'}))
@@ -325,6 +325,9 @@ class EquipmentCreateForm(forms.ModelForm):
             'standard_number', 'pravo_have',
                'serviceneed',
         ]
+       widgets = {
+
+               'manufacturer': autocomplete.ModelSelect2(url='manufacturer-autocomplete'),
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -861,31 +864,6 @@ class VerificatorsCreationForm(forms.ModelForm):
                   ]
 
 
-# class AgreementVerificatorsCreationForm(forms.ModelForm):
-#     """форма для внесения договора с компанией поверителем"""
-#     # verificator = AutoCompleteSelectField('verificator_tag', label='Организация-поверитель', required=True,  help_text='Начните вводить название, например: "ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ""', show_help_text=False)
-#     verificator = forms.CharField(label='Организация-поверитель', max_length=10000000,  widget=autocomplete.ModelSelect2(url='verificators-autocomplete'))
-                                 
-#     ver_agreement_number = forms.CharField(label='Номер договора с организацией-поверителем', max_length=10000000,  required=False,
-#                                   widget=forms.TextInput(attrs={'class': 'form-control',
-#                                                                 'placeholder': ''}))
-#     ver_agreement_date = forms.CharField(label='Дата договора с организацией-поверителем', max_length=10000000, required=False,
-#                                   widget=forms.TextInput(attrs={'class': 'form-control',
-#                                                                 'placeholder': ''}))
-
-#     ver_agreement_card = forms.CharField(label='Номер учетной карточки у с организации-поверителя', max_length=10000000, required=False,
-#                                   widget=forms.TextInput(attrs={'class': 'form-control',
-#                                                                 'placeholder': ''}))
-
-#     class Meta:
-#         model = Agreementverification
-#         fields = [
-#             'verificator',
-#             'ver_agreement_number',
-#             'ver_agreement_date',
-#             'ver_agreement_card',
-#                   ]
-
 
 class AgreementVerificatorsCreationForm(forms.ModelForm):
     class Meta:
@@ -908,37 +886,6 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
         }
 
                
-
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.helper = FormHelper()
-    #     self.helper.layout = Layout(
-    #         Row(
-    #             Column('verificator', css_class='form-group'),
-    #             ),
-    #         Row(
-    #             Column('ver_agreement_number', css_class='form-group'),
-    #             ),
-    #         Row(
-    #             Column('ver_agreement_date', css_class='form-group'),
-    #             ),
-    #         Row(
-    #             Column('ver_agreement_card', css_class='form-group'),
-    #             ),
-
-    #         Submit('submit', 'Внести'))
-
-
-# class AgreementVerificatorsCreationForm(forms.ModelForm):
-#     class Meta:
-#         model = Agreementverification
-#         fields = ('__all__')
-#         widgets = {
-#             'verificator': autocomplete.ModelSelect2(url='verificators-autocomplete')
-#         }
-
-
-
 
 
 class RoomsCreateForm(forms.ModelForm):
