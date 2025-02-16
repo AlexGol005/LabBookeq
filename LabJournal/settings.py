@@ -86,7 +86,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'equipment.middleware.current_user.CurrentUserMiddleware',
+    'common.middleware.current_user.CurrentUserMiddleware',
 ]
 
 # MIDDLEWARE_CLASSES = (
