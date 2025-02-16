@@ -2335,7 +2335,8 @@ def VeragreementDeleteView(request, str):
     """не выводит страницу, выполняет действие"""
     """path('veragreementdelete/<str:str>/', views.VeragreementDeleteView, name='veragreementdelete'),"""
     
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+    a = Agreementverification.objects.filter(pointer=ruser).count()
+    if (request.user.has_perm('equipment.add_equipment') or request.user.is_superuser) and a >= 1):
         try:
             ruser=request.user.profile.userid
             note = Agreementverification.objects.filter(pointer=ruser).get(pk=str)
