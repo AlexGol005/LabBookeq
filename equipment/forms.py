@@ -330,46 +330,46 @@ class EquipmentCreateForm(forms.ModelForm):
                'manufacturer': autocomplete.ModelSelect2(url='manufacturer-autocomplete'),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            Row(
-                Column('kategory', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('exnumber', css_class='form-group col-md-4 mb-0'),
-                Column('lot', css_class='form-group col-md-4 mb-0'),
-                Column('invnumber', css_class='form-group col-md-4 mb-0')),
-            Row(
-                Column('yearmanuf', css_class='form-group col-md-4 mb-0'),
-                Column('new', css_class='form-group col-md-4 mb-0')),
-            Row(
-                Column('manufacturer', css_class='form-group col-md-12 mb-1')),
-            Row(
-                Column('status', css_class='form-group col-md-6 mb-0'),
-                Column('yearintoservice', css_class='form-group col-md-6 mb-0'),
-                ),
-            Row(
-                Column('pasport', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('instruction', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('individuality', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('price', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('notemetrology', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('repair', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('standard_number', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('pravo', css_class='form-group col-md-6 mb-0'),
-                Column('pravo_have', css_class='form-group col-md-6 mb-0'),
-                ),
-            Row(
-                Column('serviceneed', css_class='form-group col-md-12 mb-0')),
-            Row(Submit('submit', 'Записать', css_class='btn btn-primary col-md-11 mb-3 mt-4 ml-4')))
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.helper = FormHelper()
+    #     self.helper.layout = Layout(
+    #         Row(
+    #             Column('kategory', css_class='form-group col-md-12 mb-0')),
+    #         Row(
+    #             Column('exnumber', css_class='form-group col-md-4 mb-0'),
+    #             Column('lot', css_class='form-group col-md-4 mb-0'),
+    #             Column('invnumber', css_class='form-group col-md-4 mb-0')),
+    #         Row(
+    #             Column('yearmanuf', css_class='form-group col-md-4 mb-0'),
+    #             Column('new', css_class='form-group col-md-4 mb-0')),
+    #         Row(
+    #             Column('manufacturer', css_class='form-group col-md-12 mb-1')),
+    #         Row(
+    #             Column('status', css_class='form-group col-md-6 mb-0'),
+    #             Column('yearintoservice', css_class='form-group col-md-6 mb-0'),
+    #             ),
+    #         Row(
+    #             Column('pasport', css_class='form-group col-md-12 mb-0')),
+    #         Row(
+    #             Column('instruction', css_class='form-group col-md-12 mb-0')),
+    #         Row(
+    #             Column('individuality', css_class='form-group col-md-12 mb-0')),
+    #         Row(
+    #             Column('price', css_class='form-group col-md-12 mb-0')),
+    #         Row(
+    #             Column('notemetrology', css_class='form-group col-md-12 mb-0')),
+    #         Row(
+    #             Column('repair', css_class='form-group col-md-12 mb-0')),
+    #         Row(
+    #             Column('standard_number', css_class='form-group col-md-12 mb-0')),
+    #         Row(
+    #             Column('pravo', css_class='form-group col-md-6 mb-0'),
+    #             Column('pravo_have', css_class='form-group col-md-6 mb-0'),
+    #             ),
+    #         Row(
+    #             Column('serviceneed', css_class='form-group col-md-12 mb-0')),
+    #         Row(Submit('submit', 'Записать', css_class='btn btn-primary col-md-11 mb-3 mt-4 ml-4')))
 
 
 class EquipmentUpdateForm(forms.ModelForm):
