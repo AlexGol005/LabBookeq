@@ -108,7 +108,7 @@ class Verificators(models.Model):
     pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True)
 
     def __str__(self):
-        return f{self.companyName}'
+        return f'{self.companyName}'
 
     class Meta:
         verbose_name = 'Поверитель организация'
