@@ -41,12 +41,8 @@ admin.site.register(HelpingEquipment)
 admin.site.register(ServiceEquipmentU) 
 admin.site.register(ServiceEquipmentUFact)
 admin.site.register(Activeveraqq)
+admin.site.register(Verificators)
 
-
-
-@admin.register(Verificators)
-class VerificatorsAdmin(admin.ModelAdmin):
-    fields = ['companyName', ]
 
 
 @admin.register(Verificationequipment)
