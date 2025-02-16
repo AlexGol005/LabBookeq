@@ -901,9 +901,9 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
         widgets = {
 
                'verificator': autocomplete.ModelSelect2(url='verificators-autocomplete'),
-               'ver_agreement_number': TextInput(attrs={'class': 'form-control', 'placeholder': ''}),
-               'ver_agreement_date': TextInput(attrs={'class': 'form-control', 'placeholder': ''}),
-               'ver_agreement_card': TextInput(attrs={'class': 'form-control', 'placeholder': ''}),
+               'ver_agreement_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': ''}),
+               'ver_agreement_date': forms.TextInput(attrs={'class': 'form-control', 'placeholder': ''}),
+               'ver_agreement_card': forms.TextInput(attrs={'class': 'form-control', 'placeholder': ''}),
         }
 
                
