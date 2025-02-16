@@ -96,7 +96,7 @@ class Manufacturer(models.Model):
         verbose_name = 'Производитель'
         verbose_name_plural = 'Производители'
 
-from crum import get_current_request
+from crum import *
 class Verificators(models.Model):
     """Компании поверители оборудования"""
     companyName = models.CharField('Поверитель', max_length=100, unique=True)
