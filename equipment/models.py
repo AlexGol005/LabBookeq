@@ -96,7 +96,7 @@ class Manufacturer(models.Model):
         verbose_name = 'Производитель'
         verbose_name_plural = 'Производители'
 
-from  equipment.middleware  import *
+from  LabJournal.middleware  import *
 class Verificators(models.Model):
     """Компании поверители оборудования"""
     companyName = models.CharField('Поверитель', max_length=100, unique=True)
@@ -112,7 +112,7 @@ class Verificators(models.Model):
         return f'{self.companyName}'
 
     def save(self, *args, **kwargs):
-        user = get_current_user
+        user = current_user.get_current_user
         self.pointer = user.username
         super(Verificators, self).save(*args, **kwargs)
 
