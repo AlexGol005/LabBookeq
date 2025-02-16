@@ -25,8 +25,6 @@ from django.urls import reverse
 from users.models import  Company
 from functstandart import get_dateformat
 
-# from crum import get_current_user   
-
 # блок 1 - константы неизменяемые непользовательские константы для полей с выбором значений в моделях
 
 CHOICES = (
@@ -96,9 +94,10 @@ class Manufacturer(models.Model):
         verbose_name = 'Производитель'
         verbose_name_plural = 'Производители'
 
-from users.middleware import *
+from django_currentuser.db.models import CurrentUserField
 class Verificators(models.Model):
     """Компании поверители оборудования"""
+    created_by = CurrentUserField()
     companyName = models.CharField('Поверитель', max_length=100, unique=True)
     companyAdress = models.CharField('Адрес', max_length=200, default='-', blank=True)
     telnumber = models.CharField('Телефон', max_length=200, default='-', blank=True)
@@ -111,10 +110,10 @@ class Verificators(models.Model):
     def __str__(self):
         return f'{self.companyName}'
 
-    def save(self, *args, **kwargs):
-        user = process_request()
-        self.pointer = user.username
-        super(Verificators, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     user = process_request()
+    #     self.pointer = user.username
+    #     super(Verificators, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Поверитель организация'
