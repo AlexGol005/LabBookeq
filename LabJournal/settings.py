@@ -86,7 +86,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'LabJournal.middleware.current_user.CurrentUserMiddleware',
+    'crum.CurrentRequestUserMiddleware',
 ]
 
 # MIDDLEWARE_CLASSES = (
