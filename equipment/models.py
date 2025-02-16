@@ -123,6 +123,12 @@ class Verificators(models.Model):
     def __str__(self):
         return f'{self.companyName}'
 
+    def save(self, *args, **kwargs):
+        super().save()
+        self.pointer = get_current_user
+        return super(Verificators, self).save(*args, **kwargs)
+ 
+
     class Meta:
         verbose_name = 'Поверитель организация'
         verbose_name_plural = 'Поверители организации'
@@ -613,7 +619,7 @@ class Calibrationequipment(models.Model):
     price = models.DecimalField('Стоимость данной калибровки', max_digits=100, decimal_places=2, null=True, blank=True)
     statusver = models.CharField(max_length=300, choices=CHOICESCAL, default='Калиброван', null=True,
                                  verbose_name='Статус')
-    verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
+    verificator = models.ForeignKey(, on_delete=models.PROTECT,
                                     verbose_name='Поверитель', blank=True, null=True)
     place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
                              verbose_name='Место калибровки')
