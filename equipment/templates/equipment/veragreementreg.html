@@ -19,35 +19,16 @@
         <h6>{{ title }}</h6>
         {% endif %}        
       </center>
-
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <table style="display: none">
-            {{ view.formset.empty_form }}
-        </table>
-        <table>
-            {{ view.formset }}
-        </table>
-
-        <span id="add-form" class="button">Add form</span>
-
-        <input type="submit" />
-    </form>
-
-</div>
-
-
-        
+      <center> 
       <br>
       <form method="post" enctype="multipart/form-data" class="form-register">
           {% csrf_token %}
           {{ form.as_p }}
-          <button class="btn btn-outline-warning" type="submit">Записать</button>
+          <button class="btn btn-outline-primary" type="submit">Записать</button>
       </form>
       <br>
       </center>
-
+</div>
 {% endblock %}
 
 
