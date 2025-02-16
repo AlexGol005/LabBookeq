@@ -2326,15 +2326,23 @@ def ServiceStrView(request,  str):
     
 
 
+# class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
+#     def get_queryset(self):
+#         # Don't forget to filter out results depending on the visitor !
+#         if not self.request.user.is_authenticated:
+#             return Verificators.objects.none()
+
+#         qs = Verificators.objects.all()
+
+#         if self.q:
+#             qs = qs.filter(companyName__icontains=self.q)
+
+#         return qs
+
 class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        # Don't forget to filter out results depending on the visitor !
-        if not self.request.user.is_authenticated:
-            return Verificators.objects.none()
-
         qs = Verificators.objects.all()
-
         if self.q:
-            qs = qs.filter(companyName__icontains=self.q)
-
+            query = Q(companyName__contains=self.q.lower()) | Q(companyName__contains=self.q.upper())
+            qs = qs.filter(query)
         return qs
