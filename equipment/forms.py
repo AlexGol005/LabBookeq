@@ -328,6 +328,7 @@ class EquipmentCreateForm(forms.ModelForm):
        widgets = {
 
                'manufacturer': autocomplete.ModelSelect2(url='manufacturer-autocomplete'),
+       }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
