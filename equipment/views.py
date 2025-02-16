@@ -231,7 +231,7 @@ class AgreementVerificators(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(AgreementVerificators, self).get_context_data(**kwargs)
         company = Company.objects.get(userid=self.request.user.profile.userid)
-        objects = Agreementverification.objects.filter(company=company)
+        objects = Agreementverification.objects.filter(company=company).exclude(verificator__companyName='Не указан')
         context['company'] = company 
         context['objects'] = objects
         context['POINTER'] = self.request.user.profile.userid
