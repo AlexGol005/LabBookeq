@@ -50,7 +50,7 @@
             {% if USER_HAVE_RIGHTS  %}  
             {% if POINTER == obj.pointer %}
             <td> <a href="{% url 'agreementcompanyverupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
-            <td> <a href="{% url 'agreementcompanyverupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
+            <td> <a href="{% url 'veragreementdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
             {% else %}
              <th> </th>
             <th> </th>
