@@ -277,8 +277,6 @@ class EquipmentCreateForm(forms.ModelForm):
                           widget=forms.TextInput(attrs={'class': 'form-control'}))
     yearmanuf = forms.CharField(label='Год выпуска прибора', max_length=10000, initial=datetime.now().year,
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
-    # manufacturer = AutoCompleteSelectField('manufacturer_tag', label='Производитель прибора', required=True, help_text='Начните вводить название строчными или заглавными буквами', show_help_text=False)
-    manufacturer = forms.ChoiceField(label='Производитель прибора', required=True, widget=autocomplete.ModelSelect2(url='manufacturer-autocomplete'))
     status = forms.ChoiceField(label='Статус (эксплуатация, ремонт и тд)', initial='Эксплуатация',
                                choices=CHOICES,
                                widget=forms.Select(attrs={'class': 'form-control'}))
@@ -325,10 +323,10 @@ class EquipmentCreateForm(forms.ModelForm):
             'standard_number', 'pravo_have',
                'serviceneed',
         ]
-        # widgets = {
+        widgets = {
 
-        #        'manufacturer': autocomplete.ModelSelect2(url='manufacturer-autocomplete'),
-        # }
+               'manufacturer': autocomplete.ModelSelect2(url='manufacturer-autocomplete'),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -344,7 +342,7 @@ class EquipmentCreateForm(forms.ModelForm):
                 Column('yearmanuf', css_class='form-group col-md-4 mb-0'),
                 Column('new', css_class='form-group col-md-4 mb-0')),
             Row(
-                Column('manufacturer', css_class='form-group col-md-12 mb-1')),
+                Column('manufacturer', css_class='form-group col-md-12 mb-0', use_custom_control = False )),
             Row(
                 Column('status', css_class='form-group col-md-6 mb-0'),
                 Column('yearintoservice', css_class='form-group col-md-6 mb-0'),
