@@ -2336,6 +2336,6 @@ class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
         qs = Verificators.objects.all()
 
         if self.q:
-            qs = qs.filter(companyName__istartswith=self.q)
+            qs = qs.filter(companyName__icontains=self.q)
 
         return qs
