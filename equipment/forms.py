@@ -917,7 +917,6 @@ class AgreementVerificatorsCreationForm(forms.ModelForm):
 
 
 
-
 class RoomsCreateForm(forms.ModelForm):
     """форма для внесения комнаты"""
     roomnumber = forms.CharField(label='Номер комнаты', widget=forms.TextInput(attrs={'class': 'form-control'}))
