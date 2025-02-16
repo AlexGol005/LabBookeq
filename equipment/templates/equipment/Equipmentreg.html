@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     Регистрация ЛО
@@ -30,10 +31,9 @@
 <a href="{% url 'helpingequipmentcharactersreg' %}"  target="blank" class="btn btn-info ml-2 mt-2">
 Добавить характеристики ВО</a>
 </div>
-      <form method="post" enctype="multipart/form-data" class="form-register">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button class="btn btn-outline-primary" type="submit">Записать</button>
-      </form>
+<form method="post" enctype="multipart/form-data" class="form-register"> 
+    {% csrf_token %} 
+    {% crispy form %}
+</form>>
  </div>
 {% endblock %}
