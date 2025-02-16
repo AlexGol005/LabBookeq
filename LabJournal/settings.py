@@ -87,6 +87,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+MIDDLEWARE_CLASSES = (
+    ...
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    ...
+    'current_user.CurrentUserMiddleware',
+    ...
+)
+
 ROOT_URLCONF = 'LabJournal.urls'
 
 TEMPLATES = [
