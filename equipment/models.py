@@ -96,7 +96,7 @@ class Manufacturer(models.Model):
         verbose_name = 'Производитель'
         verbose_name_plural = 'Производители'
 
-from crum import *
+
 class Verificators(models.Model):
     """Компании поверители оборудования"""
     companyName = models.CharField('Поверитель', max_length=100, unique=True)
@@ -111,10 +111,10 @@ class Verificators(models.Model):
     def __str__(self):
         return f'{self.companyName}'
 
-    def save(self, *args, **kwargs):
-        user = get_current_user()
-        self.pointer = user.username
-        super(Verificators, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     user = get_current_user()
+    #     self.pointer = user.username
+    #     super(Verificators, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Поверитель организация'
