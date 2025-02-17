@@ -119,8 +119,8 @@ class Verificators(models.Model):
 
     def save(self, *args, **kwargs):
             if not self.pointer:
-                self.pointer = self.created_by.profile.userid
-        super(Verificators, self).save(*args, **kwargs)
+                    self.pointer = self.created_by.profile.userid
+            super(Verificators, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Поверитель организация'
