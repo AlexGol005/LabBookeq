@@ -119,5 +119,6 @@ urlpatterns = [
     path('mecharaktersstr/<str:str>/', views.MeasurEquipmentCharaktersStrView.as_view(), name='mecharaktersstr'),
     path('techaraktersstr/<str:str>/', views.TestingEquipmentCharaktersStrView.as_view(), name='techaraktersstr'),
     path('hecharaktersstr/<str:str>/', views.HelpingEquipmentCharaktersStrView.as_view(), name='hecharaktersstr'),
+    path('manufupdate/<str:str>/', views.ManufactyrerUpdateView, name='manufupdate'),
     
 ]
