@@ -118,7 +118,7 @@ class Verificators(models.Model):
         return f'{self.companyName}'
 
     def save(self, *args, **kwargs):
-            if not self.pointer
+            if not self.pointer:
                 self.pointer = self.created_by.profile.userid
         super(Verificators, self).save(*args, **kwargs)
 
