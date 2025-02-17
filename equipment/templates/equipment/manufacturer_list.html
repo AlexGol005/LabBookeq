@@ -46,6 +46,10 @@
                       <th> Адрес </th>
                       <th> Телефон </th>
                       <th> Телефон техподдержки </th>
+                      {% if USER_HAVE_RIGHTS  %}
+                          <th>Ред.</th>
+                          <th>удалить</th>
+                      {% endif %}                      
                    </tr>
               {% for obj in objects %}
                   <tr>
@@ -53,6 +57,15 @@
                       <td>{{ obj.companyAdress }}</td>
                       <td>{{ obj.telnumber }}</td>
                       <td>{{ obj.telnumberhelp }}</td>
+                        {% if USER_HAVE_RIGHTS  %}  
+                        {% if POINTER == obj.pointer %}
+                        <td> <a href="{% url 'manufupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
+                        <td> <a href="{% url 'veragrificatordelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
+                        {% else %}
+                         <th> </th>
+                        <th> </th>
+                        {% endif %}
+                        {% endif %}
                   </tr>
               {% endfor %}
           </table>
