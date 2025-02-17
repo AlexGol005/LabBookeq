@@ -525,7 +525,7 @@ class VerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         context['title'] = 'Добавить компанию-поверителя ЛО'
         context['url_title'] = '/equipment/agreementcompanylist'
         context['POINTER'] = self.request.user.profile.userid
-        return context
+        context['url_title'] = 'equipment/verificatorsreg/'
 
 
 class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
