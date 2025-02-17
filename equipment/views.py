@@ -497,6 +497,7 @@ class ManufacturerRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         context = super(ManufacturerRegView, self).get_context_data(**kwargs)
         context['title'] = 'Добавить производителя ЛО'
         context['POINTER'] = self.request.user.profile.userid
+        context['url_title'] = 'equipment/verificatorsreg/'
         return context
 
 
@@ -526,6 +527,7 @@ class VerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         context['url_title'] = '/equipment/agreementcompanylist'
         context['POINTER'] = self.request.user.profile.userid
         context['url_title'] = 'equipment/verificatorsreg/'
+        return context
 
 
 class AgreementVerificatorRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
