@@ -427,7 +427,6 @@ class HelpingEquipment(models.Model):
 # блок 4 - смена комнаты, ответственного, добавление принадлежностей к оборудованию
 class Rooms(models.Model):
     """Комнаты лаборатории/производства"""
-    created_by = CurrentUserField()
     roomnumber = models.CharField('Номер комнаты', max_length=100, default='')
     person = models.ForeignKey(User, verbose_name='Ответственный за комнату', on_delete=models.PROTECT, blank=True, null=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
@@ -447,7 +446,6 @@ class Rooms(models.Model):
             
 
 class Personchange(models.Model):
-    created_by = CurrentUserField()
     person = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
     date = models.DateField('Дата изменения ответственного', auto_now_add=True, db_index=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True)
