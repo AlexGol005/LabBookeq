@@ -2353,3 +2353,24 @@ def VeragreementDeleteView(request, str):
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
         return redirect('agreementcompanylist')
 
+
+@login_required
+def VerificatorDeleteView(request, str):
+    """для кнопки удаления поверителя"""
+    """не выводит страницу, выполняет действие"""
+    """path('veragrificatordelete/<str:str>/', views.VerificatorDeleteView, name='veragrificatordelete'),"""
+    ruser=request.user.profile.userid
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            ruser=request.user.profile.userid
+            note = Verificators.objects.filter(pointer=ruser).get(pk=str)
+            note.delete()
+            messages.success(request, 'Поверитель удален!')
+            return redirect('verificatorsreg')            
+        except:
+            messages.success(request, 'Невозможно удалить, возможно добавлен договр или запись о поверке с этим поверителем')
+            return redirect('verificatorsreg')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect('verificatorsreg')
+
