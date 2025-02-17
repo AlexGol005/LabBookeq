@@ -465,6 +465,7 @@ class VerificatorsCreationView(LoginRequiredMixin,  ListView):
         context['title'] = 'Внести организацию поверителя'
         context['serform'] = Searchtestingform
         context['POINTER'] = self.request.user.profile.userid
+        
         return context
 
     def get_queryset(self):
