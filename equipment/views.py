@@ -579,6 +579,7 @@ def AgreementVerificatorUpdateView(request, str):
 @login_required
 def VerificatorUpdateView(request, str):
     """выводит форму для обновления организации-поверителя"""
+    """path('verupdate/<str:str>/', views.VerificatorUpdateView, name='verupdate'),"""
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = VerificatorsCreationForm(request.POST, instance= Verificators.objects.get(pk=str))                                                       
@@ -593,6 +594,26 @@ def VerificatorUpdateView(request, str):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('/equipment/verificatorsreg')
+
+
+@login_required
+def ManufacturerUpdateView(request, str):
+    """выводит форму для обновления организации-производителя"""
+    """path('manufupdate/<str:str>/', views.ManufacturerUpdateView, name='manufupdate'),"""
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = ManufacturerCreateForm(request.POST, instance= Manufacturer.objects.get(pk=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect('/equipment/manufacturerlist')
+        else:
+            form = ManufacturerCreateForm(instance= Verificators.objects.get(pk=str))
+        data = {'form': form,}                
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
+        return redirect('/equipment/manufacturerlist')
 
 
 class PersonchangeFormView(LoginRequiredMixin, View):
