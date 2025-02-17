@@ -93,7 +93,8 @@ class Manufacturer(models.Model):
         return self.companyName
 
     def save(self, *args, **kwargs):
-        self.pointer = self.created_by.profile.userid
+        if not self.pointer:
+                self.pointer = self.created_by.profile.userid
         super(Manufacturer, self).save(*args, **kwargs)
 
     class Meta:
@@ -117,7 +118,8 @@ class Verificators(models.Model):
         return f'{self.companyName}'
 
     def save(self, *args, **kwargs):
-        self.pointer = self.created_by.profile.userid
+            if not self.pointer
+                self.pointer = self.created_by.profile.userid
         super(Verificators, self).save(*args, **kwargs)
 
     class Meta:
