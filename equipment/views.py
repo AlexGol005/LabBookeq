@@ -2368,7 +2368,7 @@ def VerificatorDeleteView(request, str):
             messages.success(request, 'Поверитель удален!')
             return redirect('verificatorsreg')            
         except:
-            messages.success(request, 'Невозможно удалить, возможно добавлен договр или запись о поверке с этим поверителем')
+            messages.success(request, 'Невозможно удалить, возможно уже добавлен договор или запись о поверке с этим поверителем')
             return redirect('verificatorsreg')
     else:
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
