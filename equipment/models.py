@@ -80,6 +80,7 @@ HAVE = (('собственность', 'собственность'),
 
 class Manufacturer(models.Model):
     """Производители оборудования"""
+    created_by = CurrentUserField()
     companyName = models.CharField('Производитель', max_length=100, unique=True)
     companyAdress = models.CharField('Адрес', max_length=200, default='', blank=True)
     country = models.CharField('Страна', max_length=200, default='Россия', blank=True)
@@ -90,6 +91,10 @@ class Manufacturer(models.Model):
 
     def __str__(self):
         return self.companyName
+
+    def save(self, *args, **kwargs):
+        self.pointer = self.created_by.profile.userid
+        super(Manufacturer, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Производитель'
@@ -124,6 +129,7 @@ class Verificators(models.Model):
 
 class Equipment(models.Model):
     """Лабораторное оборудование - базовая индивидуальная сущность"""
+    created_by = CurrentUserField()
     date = models.DateField('Дата внесения записи', auto_now_add=True, blank=True, null=True)
     exnumber = models.CharField('Внутренний номер', max_length=100, default='', blank=True, null=True)
     lot = models.CharField('Заводской номер', max_length=100, default='')
@@ -176,6 +182,7 @@ class Equipment(models.Model):
 
 class MeasurEquipmentCharakters(models.Model):
     """Характеристики средств измерений (госреестры в связке с модификациями/типами/диапазонами)"""
+    created_by = CurrentUserField()
     name = models.CharField('Название прибора', max_length=100, default='')
     reestr = models.CharField('Номер в Госреестре', max_length=1000, default='', blank=True, null=True)
     calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
@@ -211,6 +218,7 @@ class MeasurEquipmentCharakters(models.Model):
 
 class TestingEquipmentCharakters(models.Model):
     """Характеристики ИО"""
+    created_by = CurrentUserField()
     name = models.CharField('Название прибора', max_length=100, default='')
     calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
     modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
@@ -244,6 +252,7 @@ class TestingEquipmentCharakters(models.Model):
 
 class HelpingEquipmentCharakters(models.Model):
     """Характеристики ВО"""
+    created_by = CurrentUserField()
     name = models.CharField('Название прибора', max_length=100, default='')
     modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
     typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
@@ -275,6 +284,7 @@ class HelpingEquipmentCharakters(models.Model):
 
 class MeasurEquipment(models.Model):
     """СИ: составлено из ЛО и характеристик СИ"""
+    created_by = CurrentUserField()
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
     charakters = models.ForeignKey(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики СИ', blank=True, null=True)
@@ -343,6 +353,7 @@ class MeasurEquipment(models.Model):
 
 class TestingEquipment(models.Model):
     """ИО: составлено из ЛО и характеристик ИО"""
+    created_by = CurrentUserField()
     charakters = models.ForeignKey(TestingEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики ИО', blank=True, null=True)
     equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
@@ -390,6 +401,7 @@ class TestingEquipment(models.Model):
 
 class HelpingEquipment(models.Model):
     """ВО: составлено из ЛО и характеристик ВО"""
+    created_by = CurrentUserField()
     charakters = models.ForeignKey(HelpingEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики ВО', blank=True, null=True)
     equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
@@ -415,6 +427,7 @@ class HelpingEquipment(models.Model):
 # блок 4 - смена комнаты, ответственного, добавление принадлежностей к оборудованию
 class Rooms(models.Model):
     """Комнаты лаборатории/производства"""
+    created_by = CurrentUserField()
     roomnumber = models.CharField('Номер комнаты', max_length=100, default='')
     person = models.ForeignKey(User, verbose_name='Ответственный за комнату', on_delete=models.PROTECT, blank=True, null=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
@@ -434,6 +447,7 @@ class Rooms(models.Model):
             
 
 class Personchange(models.Model):
+    created_by = CurrentUserField()
     person = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
     date = models.DateField('Дата изменения ответственного', auto_now_add=True, db_index=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True)
@@ -463,6 +477,7 @@ class Personchange(models.Model):
 
 
 class Roomschange(models.Model):
+    created_by = CurrentUserField()
     roomnumber = models.ForeignKey(Rooms, on_delete=models.PROTECT)
     date = models.DateField('Дата перемещения', auto_now_add=True, db_index=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
@@ -489,6 +504,7 @@ class Roomschange(models.Model):
 
 
 class DocsCons(models.Model):
+    created_by = CurrentUserField()
     date = models.CharField('Дата появления',  max_length=1000, default='', blank=True, null=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
@@ -510,6 +526,7 @@ class DocsCons(models.Model):
 
 class Verificationequipment(models.Model):
     """Поверка СИ"""
+    created_by = CurrentUserField()
     equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
                                     on_delete=models.PROTECT, related_name='equipmentSM_ver', blank=True, null=True)
     date = models.DateField('Дата поверки', blank=True, null=True)
@@ -594,6 +611,7 @@ class Verificationequipment(models.Model):
 
 class Calibrationequipment(models.Model):
     """Калибровка СИ"""
+    created_by = CurrentUserField()
     equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
                                     on_delete=models.PROTECT, related_name='equipmentSM_cal', blank=True, null=True)
     date = models.DateField('Дата калибровки', blank=True, null=True)
@@ -676,6 +694,7 @@ class Calibrationequipment(models.Model):
 
 class Attestationequipment(models.Model):
     """Аттестация ИО"""
+    created_by = CurrentUserField()
     arshin = models.TextField('Ссылка на скан аттестата', blank=True, null=True)
     equipmentSM = models.ForeignKey(TestingEquipment, verbose_name='ИО',
                                     on_delete=models.PROTECT, related_name='equipmentSM_att', blank=True, null=True)
@@ -799,6 +818,7 @@ class Attestationequipment(models.Model):
 
 class CommentsEquipment(models.Model):
     """стандартнрый класс для комментариев"""
+    created_by = CurrentUserField()
     date = models.DateField('Дата',  db_index=True)
     note = models.TextField('Содержание', max_length=1000, default='')
     forNote = models.ForeignKey(Equipment, verbose_name='К прибору', on_delete=models.CASCADE)
@@ -828,6 +848,7 @@ class CommentsEquipment(models.Model):
 
 class CommentsVerificationequipment(models.Model):
     """комментарии к поверке """
+    created_by = CurrentUserField()
     date = models.DateField('Дата', auto_now_add=True, db_index=True)
     note = models.TextField('Содержание', max_length=1000, default='')
     forNote = models.ForeignKey(Equipment, verbose_name='К прибору', on_delete=models.CASCADE)
@@ -843,6 +864,7 @@ class CommentsVerificationequipment(models.Model):
 
 class CommentsAttestationequipment(models.Model):
     """комментарии к аттестации """
+    created_by = CurrentUserField()
     date = models.DateField('Дата', auto_now_add=True, db_index=True)
     note = models.TextField('Содержание', max_length=1000, default='')
     forNote = models.ForeignKey(Equipment, verbose_name='К прибору', on_delete=models.CASCADE)
@@ -860,6 +882,7 @@ class CommentsAttestationequipment(models.Model):
 
 class MeteorologicalParameters(models.Model):
     """микроклимат в помещении"""
+    created_by = CurrentUserField()
     date = models.DateField('Дата')
     roomnumber = models.ForeignKey(Rooms, on_delete=models.PROTECT)
     pressure = models.CharField('Давление, кПа', max_length=90, blank=True, null=True)
@@ -890,6 +913,7 @@ class MeteorologicalParameters(models.Model):
 
 class ServiceEquipmentME(models.Model):
     """Техобслуживание СИ - постоянная информация из паспортов и инструкций"""
+    created_by = CurrentUserField()
     pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
     charakters = models.OneToOneField(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики СИ')
@@ -914,6 +938,7 @@ class ServiceEquipmentME(models.Model):
 
 class ServiceEquipmentTE(models.Model):
     """Техобслуживание ИО"""
+    created_by = CurrentUserField()
     pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
     charakters = models.OneToOneField(TestingEquipmentCharakters, on_delete=models.PROTECT,
                                    verbose_name='Характеристики ИО')
@@ -939,6 +964,7 @@ class ServiceEquipmentTE(models.Model):
 
 class ServiceEquipmentHE(models.Model):
     """Техобслуживание ВО"""
+    created_by = CurrentUserField()
     pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
     charakters = models.OneToOneField(HelpingEquipmentCharakters, on_delete=models.PROTECT,
                                    verbose_name='Характеристики ВО')
@@ -965,6 +991,7 @@ class ServiceEquipmentHE(models.Model):
 
 class ServiceEquipmentU(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация ПЛАН"""
+    created_by = CurrentUserField()
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
     year =  models.CharField('Год ТО-2 план', max_length=4, blank=True, null=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE, blank=True, null=True,
@@ -1001,6 +1028,7 @@ class ServiceEquipmentU(models.Model):
 
 class ServiceEquipmentUFact(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация факт"""
+    created_by = CurrentUserField()
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
     year =  models.CharField('Год ТО-2 факт', max_length=4, blank=True, null=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE, blank=True, null=True,
@@ -1038,6 +1066,7 @@ class ServiceEquipmentUFact(models.Model):
 # блок 9 - отправка в поверку
 class Agreementverification(models.Model):
     """Договоры организации с поверителями"""
+    created_by = CurrentUserField()
     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT, verbose_name='Поверитель')    
     company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Компания')  
     ver_agreement_number = models.CharField('Номер договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
@@ -1065,6 +1094,7 @@ class Agreementverification(models.Model):
 
 class Activeveraqq(models.Model):
     """Активный договор с поверителем"""
+    created_by = CurrentUserField()
     company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Компания')  
     aqq = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='Договор с поверителем', unique=True, null=True) 
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
