@@ -10,7 +10,12 @@
 
 {% block content %}
 <div class="col-8">
-    <center><h4>Поверители</h4></center><br>
+    <center>
+         <a href= "{% url 'profile' %}" >
+        <h4>Поверители</h4>
+         </a>
+    </center><br>
+    
     <center><h6>Найти поверителя по названию организации</h6></center>
     <form action="/equipment/verificatorssearres/" method="GET">
         {% csrf_token %}
