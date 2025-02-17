@@ -7,11 +7,11 @@ from . import exel_agreements
 urlpatterns = [
     path('veragrificatordelete/<str:str>/', views.VerificatorDeleteView, name='veragrificatordelete'),
     path(r'^verificators-autocomplete/$', views_autocomplete_list.VerificatorsAutocomplete.as_view(create_field='companyName', validate_create=True), name='verificators-autocomplete',),
+    path(r'^manufacturer-autocomplete/$', views_autocomplete_list.ManufacturerAutocomplete.as_view(create_field='companyName', validate_create=True), name='manufacturer-autocomplete',),
     path('veragreementdelete/<str:str>/', views.VeragreementDeleteView, name='veragreementdelete'),
     path(r'^hecharakters-autocomplete/$', views_autocomplete_list.HelpingEquipmentCharaktersAutocomplete.as_view(), name='hecharakters-autocomplete',),
     path(r'^techarakters-autocomplete/$', views_autocomplete_list.TestingEquipmentCharaktersAutocomplete.as_view(), name='techarakters-autocomplete',),
     path(r'^mecharakters-autocomplete/$', views_autocomplete_list.MeasurEquipmentCharaktersAutocomplete.as_view(), name='mecharakters-autocomplete',),
-    path(r'^manufacturer-autocomplete/$', views_autocomplete_list.ManufacturerAutocomplete.as_view(), name='manufacturer-autocomplete',),
     path('serviceplan/<str:str>/', views.ServiceStrView, name='serviceplan'),
     path('addserviceitem/<str:str>/', views.AddserviceitemView, name='addserviceitem'),
     path('delserviceitem/<str:str>/', views.DelserviceitemView, name='delserviceitem'),
