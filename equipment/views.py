@@ -469,7 +469,7 @@ class VerificatorsCreationView(LoginRequiredMixin,  ListView):
         return context
 
     def get_queryset(self):
-        queryset = Verificators.objects.exclude(verificator__companyName='Не указан')
+        queryset = Verificators.objects.exclude(companyName='Не указан')
         return queryset
 
 
