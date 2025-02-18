@@ -2423,3 +2423,24 @@ def ManufacturerDeleteView(request, str):
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
         return redirect('manufacturerlist')
 
+
+@login_required
+def MecharaktersDeleteView(request, str):
+    """для кнопки удаления характеристик СИ (госреестра)"""
+    """не выводит страницу, выполняет действие"""
+    """path('mecharaktersdelete/<str:str>/', views.MecharaktersDeleteView, name='mecharaktersdelete'),"""
+    ruser=request.user.profile.userid
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            ruser=request.user.profile.userid
+            note = MeasurEquipmentCharakters.objects.filter(pointer=ruser).get(pk=str)
+            note.delete()
+            messages.success(request, 'Характеристики СИ (Госреестр) удален!')
+            return redirect('measurequipmentcharacterslist')            
+        except:
+            messages.success(request, 'Невозможно удалить, возможно уже добавлено средство измерения с этими характеристиками')
+            return redirect('measurequipmentcharacterslist')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect('measurequipmentcharacterslist')
+
