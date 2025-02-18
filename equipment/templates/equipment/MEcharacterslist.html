@@ -52,7 +52,10 @@
                 <th> Межпов. <br> интервал, <br>мес. </th>
                 <th> Диапазон измерений </th>
                 <th> По Ми 2314 </th>
-                <th> Ред </th>
+                {% if USER_HAVE_RIGHTS  %}
+                <th>Ред.</th>
+                <th>удалить</th>
+                {% endif %}
                 <th> Описание ТО по технической документации </th>
              </tr>
         </thead>
@@ -66,14 +69,20 @@
             <td> {{ obj.calinterval }}</td>
             <td> {{ obj.measurydiapason }}</td>
             <td> {{ obj.cod|default_if_none:' ' }}</td>
+            {% if USER_HAVE_RIGHTS  %}  
             {% if POINTER == obj.pointer %}
-            <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-info mt-3">редактировать</a></td> 
+            <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
+            <td> <a href="{% url 'manufacturerdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
             {% elif POINTER != obj.pointer %}
-            <td> <a href="{% url 'mecharaktersstr' obj.pk %}"  class="btn btn-outline-info mt-3">смотреть</a></td> 
-            
+            <td> <a href="{% url 'mecharaktersdelete' obj.pk %}"  class="btn btn-outline-info mt-3">см</a></td> 
+            <td> </td>
             {% else %}
-            <td> ред. админ.</td>
+            <td> </td>
+            <td> </td>
             {% endif %}
+            {% endif %}
+
+
             
             {% if obj.serviceequipmentme and POINTER == obj.serviceequipmentme.pointer %}
               <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
