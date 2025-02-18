@@ -5,6 +5,7 @@ from . import exel
 from . import exel_agreements
 
 urlpatterns = [
+    path('mecharaktersdelete/<str:str>/', views.MecharaktersDeleteView, name='mecharaktersdelete'),
     path('manufacturerdelete/<str:str>/', views.ManufacturerDeleteView, name='manufacturerdelete'),
     path('veragrificatordelete/<str:str>/', views.VerificatorDeleteView, name='veragrificatordelete'),
     path(r'^verificators-autocomplete/$', views_autocomplete_list.VerificatorsAutocomplete.as_view(create_field='companyName', validate_create=True), name='verificators-autocomplete',),
