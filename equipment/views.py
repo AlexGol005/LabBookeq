@@ -205,8 +205,12 @@ class ManufacturerView(ListView):
     template_name = URL + '/manufacturer_list.html'
     context_object_name = 'objects'
     ordering = ['companyName']
-    context['POINTER'] = self.request.user.profile.userid
     paginate_by = 12
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ManufacturerView, self).get_context_data(**kwargs)
+        context['POINTER'] = self.request.user.profile.userid
+        return context
 
 
 class RoomsView(LoginRequiredMixin, TemplateView):
