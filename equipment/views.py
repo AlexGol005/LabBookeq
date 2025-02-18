@@ -205,6 +205,7 @@ class ManufacturerView(ListView):
     template_name = URL + '/manufacturer_list.html'
     context_object_name = 'objects'
     ordering = ['companyName']
+    context['POINTER'] = self.request.user.profile.userid
     paginate_by = 12
 
 
