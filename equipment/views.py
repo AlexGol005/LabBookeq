@@ -2402,3 +2402,24 @@ def VerificatorDeleteView(request, str):
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
         return redirect('verificatorsreg')
 
+
+@login_required
+def ManufacturerDeleteView(request, str):
+    """для кнопки удаления производителя"""
+    """не выводит страницу, выполняет действие"""
+    """path('manufacturerdelete/<str:str>/', views.ManufacturerDeleteView, name='manufacturerdelete'),"""
+    ruser=request.user.profile.userid
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            ruser=request.user.profile.userid
+            note = Manufacturer.objects.filter(pointer=ruser).get(pk=str)
+            note.delete()
+            messages.success(request, 'Производитель удален!')
+            return redirect('manufacturerlist')            
+        except:
+            messages.success(request, 'Невозможно удалить, возможно уже добавлен прибор с этим поверителем')
+            return redirect('manufacturerlist')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect('manufacturerlist')
+
