@@ -18,6 +18,18 @@
           </a>
           <br>
       {#конец заголовка #}
+
+
+    <center><h6>Найти производителя по названию организации</h6></center>
+    <form action="/equipment/manufacturersearres/" method="GET">
+        {% csrf_token %}
+        {% crispy serform %}
+    </form>
+    <center>
+    <br>
+
+
+    
       {% if USER_HAVE_RIGHTS %} 
           <br>
           <center>
