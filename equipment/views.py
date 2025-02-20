@@ -848,7 +848,7 @@ class MeasurEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin, 
     template_name = URL + '/Echaractersreg.html'
     form_class = MeasurEquipmentCharaktersCreateForm
     success_url = '/equipment/measurequipmentcharacterslist/'
-    success_message = "Госреестр успешно добавлен. Для внесения изменений обратитесь к администрации сайта"
+    success_message = "Госреестр успешно добавлен!"
     error_message = "Раздел доступен только продвинутому пользователю"
 
     def form_valid(self, form):
@@ -899,7 +899,7 @@ class TestingEquipmentCharaktersRegView(LoginRequiredMixin, SuccessMessageMixin,
     template_name = URL + '/Echaractersreg.html'
     form_class = TestingEquipmentCharaktersCreateForm
     success_url = '/equipment/testingequipmentcharacterslist/'
-    success_message = "Характеристики ИО успешно добавлены. Для внесения изменений обратитесь к администрации сайта"
+    success_message = "Характеристики ИО успешно добавлены"
     error_message = "Раздел доступен только продвинутому пользователю"
 
     def form_valid(self, form):
