@@ -425,7 +425,7 @@ class EquipmentKategoryUpdateForm(forms.ModelForm):
     class Meta:
         model = Equipment
         fields = [
-                  kategory
+                  'kategory'
                   ]
 
 
