@@ -26,8 +26,8 @@
     </div>
     <br>
         <p><i><font color="red"><b>Перед регистрацией проверьте, что отсутствует необходимое описание или госреестр в сочетании с типом и модификацией.
-            Вашу запись вы можете редактировать, 
-            если необходимо внести изменения в чужую запись, пожалуйста обратитесь к администрации сайта: sandra.005@mail.ru или через форму обратной связи.
+           {# Вашу запись вы можете редактировать, #}
+          {#  если необходимо внести изменения в чужую запись, пожалуйста обратитесь к администрации сайта: sandra.005@mail.ru или через форму обратной связи.#}
        </b></font> </i></p>
     
 {#форма для поиска по полям #}
@@ -69,29 +69,44 @@
             <td> {{ obj.calinterval }}</td>
             <td> {{ obj.measurydiapason }}</td>
             <td> {{ obj.cod|default_if_none:' ' }}</td>
+
+{#     редактирование #}           
             {% if USER_HAVE_RIGHTS  %}  
 {#      пока убираем ограничение, будет бардак-добавим       {% if POINTER == obj.pointer %} #}
             <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
-            <td> <a href="{% url 'mecharaktersdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
-            {% elif POINTER != obj.pointer %}
-            <td> <a href="{% url 'mecharaktersstr' obj.pk %}"  class="btn btn-outline-info mt-3">см</a></td> 
-            <td> </td>
+           
+          {#   {% elif POINTER != obj.pointer %}#}
+            {% elif not USER_HAVE_RIGHTS  %}  
+         <td> <a href="{% url 'mecharaktersstr' obj.pk %}"  class="btn btn-outline-info mt-3">см</a></td> 
             {% else %}
             <td> </td>
-            <td> </td>
-{#            {% endif %} #}
+
             {% endif %}
 
+{#     удаление #}            
+ {% if POINTER == obj.pointer and USER_HAVE_RIGHTS %}
+ <td> <a href="{% url 'mecharaktersdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
+{% else %}
+    <td></td>         
+       {% endif %}      
+            
+       {#     техобслуживание #}
+           {#  {% if obj.serviceequipmentme and POINTER == obj.serviceequipmentme.pointer %} #}
+            {% if obj.serviceequipmentme and USER_HAVE_RIGHTS  %}
+              <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
+           {#   {% elif obj.serviceequipmentme and POINTER != obj.serviceequipmentme.pointer %} #}
+             {% elif obj.serviceequipmentme and not USER_HAVE_RIGHTS  %}
+            <td> <a href="{% url 'tome' obj.serviceequipmentmhe.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td> 
+            
+             {% if not obj.serviceequipmentme and USER_HAVE_RIGHTS  %}
+            <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
+            {% else %}
+             <td></td>
+            {% endif %}
 
             
-       {#     пока убираем ограничение, будет бардак-добавим      {% if obj.serviceequipmentme and POINTER == obj.serviceequipmentme.pointer %} #}
-            {% if obj.serviceequipmentme  %}
-              <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
-{#             {% elif obj.serviceequipmentme and POINTER != obj.serviceequipmentme.pointer %} #}
- {#            <td> <a href="{% url 'tome' obj.serviceequipmentme.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td>  #}
-            {% else %}
-            <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
-            {% endif %}
+
+
             
         </tr>
         {% endfor %}
