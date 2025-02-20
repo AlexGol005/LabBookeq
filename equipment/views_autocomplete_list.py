@@ -8,7 +8,8 @@ class VerificatorsAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Verificators.objects.all()
         if self.q:
-            query = Q(companyName__contains=self.q.lower()) | Q(companyName__contains=self.q.upper())
+            # query = Q(companyName__contains=self.q.lower()) | Q(companyName__contains=self.q.upper())
+            query = Q(companyName__iregex=self.q)
             qs = qs.filter(query)
         return qs
 
@@ -19,7 +20,8 @@ class ManufacturerAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Manufacturer.objects.all()
         if self.q:
-            query = Q(companyName__contains=self.q.lower()) | Q(companyName__contains=self.q.upper())
+            # query = Q(companyName__contains=self.q.lower()) | Q(companyName__contains=self.q.upper())
+            query = Q(companyName__iregex=self.q)
             qs = qs.filter(query)
         return qs
 
@@ -42,7 +44,8 @@ class TestingEquipmentCharaktersAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = TestingEquipmentCharakters.objects.all()
         if self.q:
-            query = Q(name__contains=self.q.lower()) | Q(name__contains=self.q.upper())| Q(name__contains=self.q)
+            # query = Q(name__contains=self.q.lower()) | Q(name__contains=self.q.upper())| Q(name__contains=self.q)
+            query = Q(name__iregex=self.q)
             qs = qs.filter(query)
         return qs
 
@@ -53,7 +56,8 @@ class HelpingEquipmentCharaktersAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = HelpingEquipmentCharakters.objects.all()
         if self.q:
-            query = Q(name__contains=self.q.lower()) | Q(name__contains=self.q.upper())| Q(name__contains=self.q)
+            # query = Q(name__contains=self.q.lower()) | Q(name__contains=self.q.upper())| Q(name__contains=self.q)
+            query = Q(name__iregex=self.q)
             qs = qs.filter(query)
         return qs
 
