@@ -2528,7 +2528,7 @@ def EquipmentKategoryUpdate(request, str):
                 return redirect('equipmentlist')
         else:
             form = EquipmentKategoryUpdateForm(request.POST, instance=Equipment.objects.get(pk=str))
-        data = {'form': EquipmentUpdateForm(instance=Equipment.objects.get(pk=str)), 'title': title
+        data = {'form': EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str)), 'title': title
                 }
         return render(request, 'equipment/Eindividuality.html', data)
     else:
