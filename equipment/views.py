@@ -2511,12 +2511,12 @@ def EquipmentKategoryUpdate(request, str):
     """path('equipmentkategoryupdate/<str:str>/', views.EquipmentKategoryUpdate, name='equipmentkategoryupdate'),"""
     
     title = Equipment.objects.get(exnumber=str)
-    if title.kategory == 'Средство измерения':
-        note = MeasurEquipment.objects.get(equipment=title)
-    if title.kategory == 'Испытательное оборудование':
-        note = TestingEquipment.objects.get(equipment=title)
-    if title.kategory == 'Вспомогательное оборудование':
-        note = HelpingEquipment.objects.get(equipment=title)
+    # if title.kategory == 'Средство измерения':
+    #     note = MeasurEquipment.objects.get(equipment=title)
+    # if title.kategory == 'Испытательное оборудование':
+    #     note = TestingEquipment.objects.get(equipment=title)
+    # if title.kategory == 'Вспомогательное оборудование':
+    #     note = HelpingEquipment.objects.get(equipment=title)
 
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
