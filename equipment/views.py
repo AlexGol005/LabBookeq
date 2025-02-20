@@ -2444,3 +2444,45 @@ def MecharaktersDeleteView(request, str):
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
         return redirect('measurequipmentcharacterslist')
 
+
+@login_required
+def HecharaktersDeleteView(request, str):
+    """для кнопки удаления характеристик ВО """
+    """не выводит страницу, выполняет действие"""
+    """path('hecharaktersdelete/<str:str>/', views.HecharaktersDeleteView, name='hecharaktersdelete'),"""
+    ruser=request.user.profile.userid
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            ruser=request.user.profile.userid
+            note = HelpingEquipmentCharakters.objects.filter(pointer=ruser).get(pk=str)
+            note.delete()
+            messages.success(request, 'Характеристики вспомогательного оборудования  удалены!')
+            return redirect('helpingequipmentcharacterslist')            
+        except:
+            messages.success(request, 'Невозможно удалить, возможно уже добавлено вспомогательное оборудование с этими характеристиками')
+            return redirect('helpingequipmentcharacterslist')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect('helpingequipmentcharacterslist')
+
+
+@login_required
+def TecharaktersDeleteView(request, str):
+    """для кнопки удаления характеристик ИО """
+    """не выводит страницу, выполняет действие"""
+    """path('techaraktersdelete/<str:str>/', views.TecharaktersDeleteView, name='techaraktersdelete'),"""
+    ruser=request.user.profile.userid
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            ruser=request.user.profile.userid
+            note = TestingEquipmentCharakters.objects.filter(pointer=ruser).get(pk=str)
+            note.delete()
+            messages.success(request, 'Характеристики испытательного оборудования  удалены!')
+            return redirect('testingequipmentcharacterslist')            
+        except:
+            messages.success(request, 'Невозможно удалить, возможно уже добавлено испытательного оборудование с этими характеристиками')
+            return redirect('testingequipmentcharacterslist')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect('testingequipmentcharacterslist')
+
