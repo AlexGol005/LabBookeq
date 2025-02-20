@@ -2018,9 +2018,11 @@ class VerificationLabelsView(LoginRequiredMixin, TemplateView):
 @login_required
 def ServiceEquipmentregMEView(request, str):
     """выводит форму для добавления постоянного ТОИР к СИ"""
+    """path('toreg/<str:str>/', views.ServiceEquipmentregMEView, name='toreg'),"""
     
     charakters = MeasurEquipmentCharakters.objects.get(pk=str) 
     etype = 1
+    for_title = f'{charakters.reestr}, {charakters.name},'
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             try: 
@@ -2043,7 +2045,10 @@ def ServiceEquipmentregMEView(request, str):
             form = ServiceEquipmentregForm(instance=ServiceEquipmentME.objects.get(charakters=charakters))
         except:
             form = ServiceEquipmentregForm()
-        data = {'form': form, 'etype': etype,}                
+        data = {'form': form,
+                'etype': etype, 
+                'for_title': for_title,
+               }                
         return render(request, 'equipment/toreg.html', data)
 
 
@@ -2051,8 +2056,11 @@ def ServiceEquipmentregMEView(request, str):
 @login_required
 def ServiceEquipmentregTEView(request, str):
     """выводит форму для добавления постоянного ТОИР к ИО"""
+    """path('toregte/<str:str>/', views.ServiceEquipmentregTEView, name='toregte'),"""
+    
     charakters = TestingEquipmentCharakters.objects.get(pk=str) 
     etype = 2
+    for_title = charakters.name
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             try: 
@@ -2075,7 +2083,10 @@ def ServiceEquipmentregTEView(request, str):
             form = ServiceEquipmentregTEForm(instance=ServiceEquipmentTE.objects.get(charakters=charakters))
         except:
             form = ServiceEquipmentregTEForm()
-        data = {'form': form, 'etype': etype,}                
+        data = {'form': form, 
+                'etype': etype,
+                'for_title': for_title,
+               }                
         return render(request, 'equipment/toreg.html', data)
 
 
@@ -2083,8 +2094,11 @@ def ServiceEquipmentregTEView(request, str):
 @login_required
 def ServiceEquipmentregHEView(request, str):
     """выводит форму для добавления постоянного ТОИР к ВО"""
+    """path('toreghe/<str:str>/', views.ServiceEquipmentregHEView, name='toreghe'),"""
+
     charakters = HelpingEquipmentCharakters.objects.get(pk=str) 
     etype = 3
+    for_title = charakters.name
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             try:  
@@ -2107,7 +2121,10 @@ def ServiceEquipmentregHEView(request, str):
             form = ServiceEquipmentregHEForm(instance=ServiceEquipmentHE.objects.get(charakters=charakters))
         except:
             form = ServiceEquipmentregHEForm()
-        data = {'form': form, 'etype': etype,}                
+        data = {'form': form, 
+                'etype': etype,
+                'for_title': for_title,
+               }                
         return render(request, 'equipment/toreg.html', data)
 
 
