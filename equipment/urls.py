@@ -5,6 +5,8 @@ from . import exel
 from . import exel_agreements
 
 urlpatterns = [
+    path('techaraktersdelete/<str:str>/', views.TecharaktersDeleteView, name='techaraktersdelete'),
+    path('hecharaktersdelete/<str:str>/', views.HecharaktersDeleteView, name='hecharaktersdelete'),
     path('mecharaktersdelete/<str:str>/', views.MecharaktersDeleteView, name='mecharaktersdelete'),
     path('manufacturerdelete/<str:str>/', views.ManufacturerDeleteView, name='manufacturerdelete'),
     path('veragrificatordelete/<str:str>/', views.VerificatorDeleteView, name='veragrificatordelete'),
