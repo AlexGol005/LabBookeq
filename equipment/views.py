@@ -2503,3 +2503,36 @@ def TecharaktersDeleteView(request, str):
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
         return redirect('testingequipmentcharacterslist')
 
+
+
+@login_required
+def EquipmentKategoryUpdate(request, str):
+    """выводит форму смены категории оборудования и удаления соответствующего СИ/ИО/ВО """
+    """path('equipmentkategoryupdate/<str:str>/', views.EquipmentKategoryUpdate, name='equipmentkategoryupdate'),"""
+    
+    title = Equipment.objects.get(exnumber=str)
+    if title.kategory == 'Средство измерения':
+        note = MeasurEquipment.objects.get(equipment=title)
+    if title.kategory == 'Испытательное оборудование':
+        note = TestingEquipment.objects.get(equipment=title)
+    if title.kategory == 'Вспомогательное оборудование':
+        note = HelpingEquipment.objects.get(equipment=title)
+
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = EquipmentKategoryUpdateForm(request.POST,  instance=Equipment.objects.get(exnumber=str))
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                note.delete()
+                return redirect('equipmentlist')
+        else:
+            form = EquipmentKategoryUpdateForm(request.POST, instance=Equipment.objects.get(exnumber=str))
+        data = {'form': EquipmentUpdateForm(instance=Equipment.objects.get(exnumber=str)), 'title': title
+                }
+        return render(request, 'equipment/Eindividuality.html', data)
+    else:
+        messages.success(request, f' Раздел доступен только продвинутому пользователю')
+        return redirect('equipmentlist')
+
+
