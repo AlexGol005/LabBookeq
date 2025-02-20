@@ -72,25 +72,24 @@
 
 {#     редактирование #}           
             {% if USER_HAVE_RIGHTS  %}  
-{#      пока убираем ограничение, будет бардак-добавим       {% if POINTER == obj.pointer %} #}
-            <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
+            {#      пока убираем ограничение, будет бардак-добавим       {% if POINTER == obj.pointer %} #}
+                <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
            
-          {#   {% elif POINTER != obj.pointer %}#}
-            {% elif not USER_HAVE_RIGHTS  %}  
-         <td> <a href="{% url 'mecharaktersstr' obj.pk %}"  class="btn btn-outline-info mt-3">см</a></td> 
+              {#   {% elif POINTER != obj.pointer %}#}
+                {% elif not USER_HAVE_RIGHTS  %}  
+             <td> <a href="{% url 'mecharaktersstr' obj.pk %}"  class="btn btn-outline-info mt-3">см</a></td> 
             {% else %}
             <td> </td>
-
             {% endif %}
 
 {#     удаление #}            
- {% if POINTER == obj.pointer and USER_HAVE_RIGHTS %}
- <td> <a href="{% url 'mecharaktersdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
-{% else %}
-    <td></td>         
-       {% endif %}      
+         {% if POINTER == obj.pointer and USER_HAVE_RIGHTS %}
+                 <td> <a href="{% url 'mecharaktersdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
+             {% else %}
+                 <td></td>         
+             {% endif %}      
             
-       {#     техобслуживание #}
+ {#     техобслуживание #}
            {#  {% if obj.serviceequipmentme and POINTER == obj.serviceequipmentme.pointer %} #}
             {% if obj.serviceequipmentme and USER_HAVE_RIGHTS  %}
               <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
@@ -98,7 +97,7 @@
              {% elif obj.serviceequipmentme and not USER_HAVE_RIGHTS  %}
             <td> <a href="{% url 'tome' obj.serviceequipmentmhe.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td> 
             
-             {% if not obj.serviceequipmentme and USER_HAVE_RIGHTS  %}
+             {% elif not obj.serviceequipmentme and USER_HAVE_RIGHTS  %}
             <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
             {% else %}
              <td></td>
