@@ -24,8 +24,10 @@
      
      </h4></center>
      <br>
+    {% if note %}
   <center><h4>    Внимание! Характеристики {{note}} будут удалены  </h4></center>
        <br>
+    {% endif %}
     <center>
     <form method="post" enctype="multipart/form-data" class="form-register">
         {% csrf_token %}
