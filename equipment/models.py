@@ -290,7 +290,7 @@ class MeasurEquipment(models.Model):
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
     charakters = models.ForeignKey(MeasurEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики СИ', blank=True, null=True)
-    equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+    equipment = models.OneToOneField(Equipment, on_delete=models.CASCADE, blank=True, null=True,
                                   verbose_name='Оборудование')
     aim = models.CharField('Наименование определяемых (измеряемых) характеристик (параметров) продукции',
                            max_length=90, blank=True, null=True)
@@ -358,7 +358,7 @@ class TestingEquipment(models.Model):
     created_by = CurrentUserField()
     charakters = models.ForeignKey(TestingEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики ИО', blank=True, null=True)
-    equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+    equipment = models.OneToOneField(Equipment, on_delete=models.CASCADE, blank=True, null=True,
                                   verbose_name='Оборудование')
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
         
@@ -406,7 +406,7 @@ class HelpingEquipment(models.Model):
     created_by = CurrentUserField()
     charakters = models.ForeignKey(HelpingEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики ВО', blank=True, null=True)
-    equipment = models.OneToOneField(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+    equipment = models.OneToOneField(Equipment, on_delete=models.CASCADE, blank=True, null=True,
                                   verbose_name='Оборудование')
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
 
