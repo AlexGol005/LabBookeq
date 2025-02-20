@@ -7,8 +7,8 @@
 
 {% block content %}
 <div class="col-7"> 
-<center><h5>Обновление для ответственного за оборудование: 
-
+<center><h4>Обновление данных ЛО: 
+{{note}}
     {% if title.measurequipment %}
     <a href="/equipment/measureequipment/{{ title.exnumber }}/">
     {{title.measurequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
@@ -22,7 +22,7 @@
        {% endif %} 
 
         
-     </h5></center>
+     </h4></center>
      <br>
     
     <center>
