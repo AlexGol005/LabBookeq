@@ -1118,24 +1118,24 @@ def EquipmentUpdate(request, str):
 
 # блок 7 - все поисковики
 
-class SearchPersonverregView(LoginRequiredMixin, SuccessMessageMixin, ListView):
+class VerificatorSearchResultView(LoginRequiredMixin, SuccessMessageMixin, ListView):
     """ выводит результаты поиска по списку поверителей организаций """
+    """path('verificatorssearres/', views.VerificatorSearchResultView.as_view(), name='verificatorssearres'),"""
 
     template_name = URL + '/verificatorsreglist.html'
     context_object_name = 'objects'
-    success_url = '/equipment/verificatorsreg/'
-    success_message = "Организация поверитель успешно добавлена"
 
     def get_context_data(self, **kwargs):
-        context = super(SearchPersonverregView, self).get_context_data(**kwargs)
+        context = super(VerificatorSearchResultView, self).get_context_data(**kwargs)
         context['serform'] = Searchtestingform
         context['form'] = VerificatorsCreationForm  
         return context
 
     def get_queryset(self):
         name = self.request.GET['name']
-        queryset = Verificators.objects.filter(companyName__icontains=name)
+        queryset = Verificators.objects.filter(companyName__iregex=name)
         return queryset
+
 
 
 class ReestrsearresView(LoginRequiredMixin, TemplateView):
