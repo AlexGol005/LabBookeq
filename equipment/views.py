@@ -2513,12 +2513,10 @@ def EquipmentKategoryUpdate(request, str):
     title = Equipment.objects.filter(pointer=ruser).get(pk=str)
     if title.kategory == 'СИ':
         note = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
-    # if title.kategory == 'Средство измерения':
-    #     note = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
-    # if title.kategory == 'Испытательное оборудование':
-    #     note = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
-    # if title.kategory == 'Вспомогательное оборудование':
-    #     note = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+    if title.kategory == 'ИO':
+        note = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+    if title.kategory == 'ВО':
+        note = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
 
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
@@ -2526,7 +2524,7 @@ def EquipmentKategoryUpdate(request, str):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                # note.delete()
+                note.delete()
                 return redirect('equipmentlist')
         else:
             form = EquipmentKategoryUpdateForm(request.POST, instance=Equipment.objects.get(pk=str))
