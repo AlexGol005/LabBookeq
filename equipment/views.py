@@ -2370,7 +2370,7 @@ def EquipmentDeleteView(request, str):
             messages.success(request, 'Оборудование удалено!')
             return redirect('equipmentlist')            
         except:
-            messages.success(request, 'Оборудование невозможно удалить, так как она зарегистрировано в качестве СИ, ИО или ВО. Вы можете поменять статус оборудования на "Списано"')
+            messages.success(request, 'Оборудование невозможно удалить')
             return redirect('equipmentlist')
     else:
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
