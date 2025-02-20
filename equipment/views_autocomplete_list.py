@@ -30,7 +30,8 @@ class MeasurEquipmentCharaktersAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = MeasurEquipmentCharakters.objects.all()
         if self.q:
-            query = Q(name__contains=self.q.lower()) | Q(name__contains=self.q.upper())| Q(reestr__contains=self.q) | Q(name__contains=self.q)
+            # query = Q(name__contains=self.q.lower()) | Q(name__contains=self.q.upper())| Q(reestr__contains=self.q) | Q(name__contains=self.q)
+            query = Q(name__iregex=self.q)
             qs = qs.filter(query)
         return qs
 
