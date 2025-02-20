@@ -70,7 +70,7 @@
             <td> {{ obj.measurydiapason }}</td>
             <td> {{ obj.cod|default_if_none:' ' }}</td>
             {% if USER_HAVE_RIGHTS  %}  
-            {% if POINTER == obj.pointer %}
+<!--      пока убираем ограничение, будет бардак-добавим       {% if POINTER == obj.pointer %} -->
             <td> <a href="{% url 'measurequipmentcharactersupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
             <td> <a href="{% url 'mecharaktersdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
             {% elif POINTER != obj.pointer %}
@@ -79,14 +79,16 @@
             {% else %}
             <td> </td>
             <td> </td>
-            {% endif %}
+<!--             {% endif %} -->
             {% endif %}
 
 
             
-            {% if obj.serviceequipmentme and POINTER == obj.serviceequipmentme.pointer %}
+       <!--      пока убираем ограничение, будет бардак-добавим      {% if obj.serviceequipmentme and POINTER == obj.serviceequipmentme.pointer %} -->
+            {% if obj.serviceequipmentme  %}
               <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
-            {% elif obj.serviceequipmentme and POINTER != obj.serviceequipmentme.pointer %}
+<!--             {% elif obj.serviceequipmentme and POINTER != obj.serviceequipmentme.pointer %} -->
+            {% elif obj.serviceequipmentme  %} 
              <td> <a href="{% url 'tome' obj.serviceequipmentme.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td>  
             {% else %}
             <td> <a href="{% url 'toreg' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
