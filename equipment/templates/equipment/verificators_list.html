@@ -21,11 +21,12 @@
         {% csrf_token %}
         {% crispy serform %}
     </form>
+    <center>
     <br>
 
+{% if USER_HAVE_RIGHTS  %}
 
-
-          <center>
+          
               <a href="{% url 'companyverreg' %}"  target="blank" class="btn btn-primary mt-1 mr-1 ml-1" style="width: 40%">
                   Добавить поверителя
               </a>
@@ -35,7 +36,7 @@
               </a>
           </center>
           <br>
-
+{% endif %}
     
     <center><h6>Поверители</h6></center>
     <table class="table table-bordered flexy">
