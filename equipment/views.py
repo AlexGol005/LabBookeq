@@ -210,6 +210,7 @@ class ManufacturerView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ManufacturerView, self).get_context_data(**kwargs)
         context['POINTER'] = self.request.user.profile.userid
+        context['serform'] = Searchtestingform
         return context
 
 
