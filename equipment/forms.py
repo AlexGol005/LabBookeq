@@ -414,6 +414,21 @@ class EquipmentUpdateForm(forms.ModelForm):
                   ]
 
 
+
+class EquipmentKategoryUpdateForm(forms.ModelForm):
+    """форма для обновления категории ЛО"""
+    kategory = forms.ChoiceField(label='Выберите категорию прибора (при смене категории потребуется добавить характеристики СИ/ИО/ВО заново. Для смены характеристик в пределах одной категории - поменяйте на другую категорию и потом на нужную категорию: характеристики будут удалены и можно будет добаввить новые характеристики', required=False,
+                               choices=KATEGORY,
+                               widget=forms.Select(attrs={'class': 'form-control'}))
+                                    
+
+    class Meta:
+        model = Equipment
+        fields = [
+                  kategory
+                  ]
+
+
 class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
     """форма для внесения характеристик СИ (госреестра)"""
     reestr = forms.CharField(label='Номер в Госреестре', required=True,
