@@ -195,7 +195,7 @@ class ReportsView(LoginRequiredMixin, TemplateView):
 
 
 
-# блок 2 - списки: комнаты, поверители, персоны поверители, производители
+# блок 2 - списки: комнаты, поверители, производители
 
 class ManufacturerView(ListView):
     """ Выводит список всех производителей """
@@ -211,6 +211,26 @@ class ManufacturerView(ListView):
         context = super(ManufacturerView, self).get_context_data(**kwargs)
         context['POINTER'] = self.request.user.profile.userid
         return context
+
+
+class VerificatorsCreationView(LoginRequiredMixin,  ListView):
+    """ выводит список поверителей """
+    """path('verificatorsreg/', views.VerificatorsCreationView.as_view(), name='verificatorsreg'),"""
+    
+    template_name = URL + '/verificators_list.html'
+    context_object_name = 'objects'
+
+    def get_context_data(self, **kwargs):
+        context = super(VerificatorsCreationView, self).get_context_data(**kwargs)
+        context['title'] = 'Внести организацию поверителя'
+        context['serform'] = Searchtestingform
+        context['POINTER'] = self.request.user.profile.userid
+        
+        return context
+
+    def get_queryset(self):
+        queryset = Verificators.objects.exclude(companyName='Не указан')
+        return queryset
 
 
 class RoomsView(LoginRequiredMixin, TemplateView):
@@ -456,26 +476,6 @@ def RoomsCreateView(request):
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
         return redirect('roomreg')
-
-
-class VerificatorsCreationView(LoginRequiredMixin,  ListView):
-    """ выводит список поверителей """
-    """path('verificatorsreg/', views.VerificatorsCreationView.as_view(), name='verificatorsreg'),"""
-    
-    template_name = URL + '/verificatorsreglist.html'
-    context_object_name = 'objects'
-
-    def get_context_data(self, **kwargs):
-        context = super(VerificatorsCreationView, self).get_context_data(**kwargs)
-        context['title'] = 'Внести организацию поверителя'
-        context['serform'] = Searchtestingform
-        context['POINTER'] = self.request.user.profile.userid
-        
-        return context
-
-    def get_queryset(self):
-        queryset = Verificators.objects.exclude(companyName='Не указан')
-        return queryset
 
 
 class ManufacturerRegView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -1122,18 +1122,36 @@ class VerificatorSearchResultView(LoginRequiredMixin, SuccessMessageMixin, ListV
     """ выводит результаты поиска по списку поверителей организаций """
     """path('verificatorssearres/', views.VerificatorSearchResultView.as_view(), name='verificatorssearres'),"""
 
-    template_name = URL + '/verificatorsreglist.html'
+    template_name = URL + '/verificators_list.html'
     context_object_name = 'objects'
 
     def get_context_data(self, **kwargs):
         context = super(VerificatorSearchResultView, self).get_context_data(**kwargs)
-        context['serform'] = Searchtestingform
-        context['form'] = VerificatorsCreationForm  
+        context['serform'] = Searchtestingform  
         return context
 
     def get_queryset(self):
         name = self.request.GET['name']
         queryset = Verificators.objects.filter(companyName__iregex=name)
+        return queryset
+
+
+class ManufacturerSearchResultView(LoginRequiredMixin, SuccessMessageMixin, ListView):
+    """ выводит результаты поиска по списку производителей """
+    """path('manufacturersearres/', views.ManufacturerSearchResultView.as_view(), name='manufacturersearres'),"""
+
+    template_name = URL + '/manufacturer_list.html'
+    context_object_name = 'objects'
+
+    def get_context_data(self, **kwargs):
+        context = super(ManufacturerSearchResultView, self).get_context_data(**kwargs)
+        context['serform'] = Searchtestingform  
+        context['POINTER'] = self.request.user.profile.userid
+        return context
+
+    def get_queryset(self):
+        name = self.request.GET['name']
+        queryset = Manufacturer.objects.filter(companyName__iregex=name)
         return queryset
 
 
