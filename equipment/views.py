@@ -2545,7 +2545,8 @@ def EquipmentKategoryUpdate(request, str):
             note = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
         except:
             note = None
-
+    else:
+       note = None 
 
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
