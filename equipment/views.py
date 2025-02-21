@@ -2531,8 +2531,14 @@ def EquipmentKategoryUpdate(request, str):
     ruser=request.user.profile.userid
     title = Equipment.objects.filter(pointer=ruser).get(pk=str)
 
+    
+
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
+            try:
+                note
+            except:
+                note = None
             if title.kategory == 'СИ':
                 try:
                     note = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
