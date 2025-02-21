@@ -25,6 +25,8 @@
                 <th>Внут.№</th>
                 <th> Заводской № </th>
                 <th> Категория </th>
+                <th> Название </th>
+                <th> Статус </th>
                 {% if USER_HAVE_RIGHTS %} 
                 <th> Редактировать </th>
                 <th> Удалить </th>
@@ -47,6 +49,16 @@
             {% endif %}
             <td> {{ obj.lot }}</td>
             <td> {{ obj.kategory }}</td>
+            
+            {% if obj.measurequipment %}
+             <td> {{ obj.measurequipmentcharacters.name }}  {{ obj.measurequipmentcharacters.typename }} {{ obj.measurequipmentcharacters.modificname }}</td>
+            {% elif obj.testingequipment  %}
+             <td> {{ obj.testingequipmentcharacters.name }}  {{ obj.testingequipmentcharacters.typename }} {{ obj.testingequipmentcharacters.modificname }}</td>
+            {% elif obj.helpingequipment %}
+             <td> {{ obj.helpingequipmentcharacters.name }}  {{ obj.helpingequipmentcharacters.typename }} {{ obj.helpingequipmentcharacters.modificname }}</td>          
+           
+            <td> {{ obj.status }}</td>
+            
             {% if USER_HAVE_RIGHTS %} 
             <td><a href="/equipment/equipmentind/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>  
             <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-info mt-3">удалить</a></td>
