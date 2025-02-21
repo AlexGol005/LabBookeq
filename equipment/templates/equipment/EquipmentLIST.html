@@ -55,10 +55,12 @@
             {% elif obj.testingequipment  %}
              <td> {{ obj.testingequipmentcharacters.name }}  {{ obj.testingequipmentcharacters.typename }} {{ obj.testingequipmentcharacters.modificname }}</td>
             {% elif obj.helpingequipment %}
-             <td> {{ obj.helpingequipmentcharacters.name }}  {{ obj.helpingequipmentcharacters.typename }} {{ obj.helpingequipmentcharacters.modificname }}</td>          
+             <td> {{ obj.helpingequipmentcharacters.name }}  {{ obj.helpingequipmentcharacters.typename }} {{ obj.helpingequipmentcharacters.modificname }}</td>    
+            {% else %}
+            <td> </td>
            {% endif %}
             
-            <td> {{ obj.status }}</td>
+            <td> {{ obj.status.get_status_display }}</td>
             
             {% if USER_HAVE_RIGHTS %} 
             <td><a href="/equipment/equipmentind/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>  
