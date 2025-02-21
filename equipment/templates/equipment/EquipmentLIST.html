@@ -60,7 +60,7 @@
             <td> </td>
            {% endif %}
             
-            <td> {{ obj.status.get_status_display }}</td>
+            <td> {{ obj.get_status_display }}</td>
             
             {% if USER_HAVE_RIGHTS %} 
             <td><a href="/equipment/equipmentind/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>  
