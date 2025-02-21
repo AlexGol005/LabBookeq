@@ -6,7 +6,7 @@
 
 
 {% block content %}
-<div class="col-7"> 
+<div class="col-8"> 
 <center><h4>Обновление данных ЛО: 
 
     {% if title.measurequipment %}
@@ -18,7 +18,8 @@
         {% elif title.helpingequipment %}
     <a href="/equipment/helpequipment/{{ title.exnumber }}/">
     {{title.helpingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
-        
+        {% else %}
+   {% url "equipmentkategoryupdate" obj.pk %}
        {% endif %} 
 
      
