@@ -2566,6 +2566,6 @@ def EquipmentKategoryUpdate(request, str):
         return render(request, 'equipment/Eindividuality.html', data)
     else:
         messages.success(request, f' Раздел доступен только продвинутому пользователю')
-        return redirect('equipmentlist')
+        return redirect(f'"equipmentkategoryupdate/{str}/"')
 
 
