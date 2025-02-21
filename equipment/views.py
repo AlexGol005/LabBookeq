@@ -2555,6 +2555,7 @@ def EquipmentKategoryUpdate(request, str):
                 order.save()
                 if note:
                     note.delete()
+                note = None
                 return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
         else:
             form = EquipmentKategoryUpdateForm(request.POST, instance=Equipment.objects.get(pk=str))
