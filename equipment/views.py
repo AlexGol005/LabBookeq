@@ -2543,13 +2543,14 @@ def EquipmentKategoryUpdate(request, str):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                note.delete()
+                if note:
+                    note.delete()
                 return redirect('equipmentlist')
         else:
             form = EquipmentKategoryUpdateForm(request.POST, instance=Equipment.objects.get(pk=str))
         data = {'form': EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str)), 
                 'title': title,
-                'note': note,
+                
                 
                 }
         return render(request, 'equipment/Eindividuality.html', data)
