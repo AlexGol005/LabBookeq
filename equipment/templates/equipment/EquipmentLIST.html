@@ -63,9 +63,9 @@
             <td> {{ obj.get_status_display }}</td>
             
             {% if USER_HAVE_RIGHTS %} 
-            <td><a href="/equipment/equipmentind/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-info mt-3">ред</a></td>  
-            <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-info mt-3">удалить</a></td>
-            <td><a href="{% url 'equipmentkategoryupdate' obj.pk %}"  class="btn btn-outline-info mt-3">менять</a></td>
+            <td><a href="/equipment/equipmentind/{{ obj.exnumber }}/individuality/"  class="btn btn-outline-primary mt-3">ред</a></td>  
+            <td><a href="{% url 'equipmentdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удалить</a></td>
+            <td><a href="{% url 'equipmentkategoryupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">менять</a></td>
 
 
             
