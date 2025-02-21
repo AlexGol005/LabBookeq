@@ -51,11 +51,11 @@
             <td> {{ obj.kategory }}</td>
             
             {% if obj.measurequipment %}
-             <td> {{ obj.measurequipment.charakters.name }}  {{ obj.measurequipment.charakters.typename }} {{ obj.measurequipment.charakters.modificname }}</td>
+             <td> {{ obj.measurequipment.charakters.name|default_if_none:'yellow' }}  {{ obj.measurequipment.charakters.typename|default_if_none:'yellow' }} {{ obj.measurequipment.charakters.modificname|default_if_none:'yellow' }}</td>
             {% elif obj.testingequipment  %}
-             <td> {{ obj.testingequipment.charakters.name }}  {{ obj.testingequipment.charakters.typename }} {{ obj.testingequipment.charakters.modificname }}</td>
+             <td> {{ obj.testingequipment.charakters.name|default_if_none:'yellow' }}  {{ obj.testingequipment.charakters.typename|default_if_none:'yellow' }} {{ obj.testingequipment.charakters.modificname|default_if_none:'yellow' }}</td>
             {% elif obj.helpingequipment %}
-             <td> {{ obj.helpingequipment.charakters.name }}  {{ obj.helpingequipment.charakters.typename }} {{ obj.helpingequipment.charakters.modificname }}</td>    
+             <td> {{ obj.helpingequipment.charakters.name|default_if_none:'yellow' }}  {{ obj.helpingequipment.charakters.typename|default_if_none:'yellow' }} {{ obj.helpingequipment.charakters.modificname|default_if_none:'yellow' }}</td>    
             {% else %}
             <td> </td>
            {% endif %}
