@@ -2530,28 +2530,27 @@ def EquipmentKategoryUpdate(request, str):
     """path('equipmentkategoryupdate/<str:str>/', views.EquipmentKategoryUpdate, name='equipmentkategoryupdate'),"""
     ruser=request.user.profile.userid
     title = Equipment.objects.filter(pointer=ruser).get(pk=str)
-    if title.kategory == 'СИ':
-        try:
-            note = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
-        except:
-            note = None
-    if title.kategory == 'ИO':
-        try:
-            note = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
-        except:
-            note = None
-    if title.kategory == 'ВО':
-        try:
-            note = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
-        except:
-            note = None
-    else:
-       note = None 
 
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
+            if title.kategory == 'СИ':
+                try:
+                    note = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
+                except:
+                    note = None
+            if title.kategory == 'ИO':
+                try:
+                    note = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+                except:
+                    note = None
+            if title.kategory == 'ВО':
+                try:
+                    note = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+                except:
+                    note = None
             form = EquipmentKategoryUpdateForm(request.POST,  instance=Equipment.objects.get(pk=str))
             if form.is_valid():
+                
                 order = form.save(commit=False)
                 order.save()
                 if note:
