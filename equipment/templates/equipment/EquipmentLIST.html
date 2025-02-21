@@ -56,7 +56,8 @@
              <td> {{ obj.testingequipmentcharacters.name }}  {{ obj.testingequipmentcharacters.typename }} {{ obj.testingequipmentcharacters.modificname }}</td>
             {% elif obj.helpingequipment %}
              <td> {{ obj.helpingequipmentcharacters.name }}  {{ obj.helpingequipmentcharacters.typename }} {{ obj.helpingequipmentcharacters.modificname }}</td>          
-           
+           {% endif %}
+            
             <td> {{ obj.status }}</td>
             
             {% if USER_HAVE_RIGHTS %} 
