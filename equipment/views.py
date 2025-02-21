@@ -2536,6 +2536,8 @@ def EquipmentKategoryUpdate(request, str):
         note = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
     if title.kategory == 'ВО':
         note = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+    if not note:
+        note = 1
 
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
@@ -2543,7 +2545,7 @@ def EquipmentKategoryUpdate(request, str):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                if note:
+                if note and note != 1:
                     note.delete()
                 return redirect('equipmentlist')
         else:
