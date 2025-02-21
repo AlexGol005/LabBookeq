@@ -2531,13 +2531,21 @@ def EquipmentKategoryUpdate(request, str):
     ruser=request.user.profile.userid
     title = Equipment.objects.filter(pointer=ruser).get(pk=str)
     if title.kategory == 'СИ':
-        note = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
+        try
+            note = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
+        except:
+            pass
     if title.kategory == 'ИO':
-        note = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+        try:
+            note = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+        except:
+            pass
     if title.kategory == 'ВО':
-        note = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
-    if not note:
-        note = 1
+        try:
+            note = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+        except:
+            pass
+
 
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
@@ -2545,7 +2553,7 @@ def EquipmentKategoryUpdate(request, str):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                if note and note != 1:
+                if note:
                     note.delete()
                 return redirect('equipmentlist')
         else:
