@@ -65,7 +65,7 @@
             <td><a href="/equipment/measureequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики СИ</a> </td> 
             {% elif not obj.measurequipment and not obj.testingequipment and not  obj.helpingequipment and obj.kategory == 'ИО' %}
             <td><a href="/equipment/testequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики ИО</a> </td> 
-            {% elif not obj.measurequipment and not obj.testingequipment and not  obj.helpingequipment and obj.kategory == 'ИО' %}
+            {% elif not obj.measurequipment and not obj.testingequipment and not  obj.helpingequipment and obj.kategory == 'ВО' %}
             <td><a href="/equipment/helpequipmentreg/{{obj.exnumber}}/" class="btn btn-outline-primary">Добавить характеристики ВО</a> </td>  
             {% else %}
             <td> --- </td>       
