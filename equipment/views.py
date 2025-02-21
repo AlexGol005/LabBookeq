@@ -2534,17 +2534,17 @@ def EquipmentKategoryUpdate(request, str):
         try:
             note = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
         except:
-            pass
+            note = None
     if title.kategory == 'ИO':
         try:
             note = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
         except:
-            pass
+            note = None
     if title.kategory == 'ВО':
         try:
             note = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
         except:
-            pass
+            note = None
 
 
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
@@ -2559,9 +2559,7 @@ def EquipmentKategoryUpdate(request, str):
         else:
             form = EquipmentKategoryUpdateForm(request.POST, instance=Equipment.objects.get(pk=str))
         data = {'form': EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str)), 
-                'title': title,
-                
-                
+                'title': title,               
                 }
         return render(request, 'equipment/Eindividuality.html', data)
     else:
