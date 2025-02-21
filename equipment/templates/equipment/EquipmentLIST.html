@@ -51,11 +51,11 @@
             <td> {{ obj.kategory }}</td>
             
             {% if obj.measurequipment %}
-             <td> {{ obj.measurequipment.measurequipmentcharakters.name }}  {{ obj.measurequipment.measurequipmentcharakters.typename }} {{ obj.measurequipment.measurequipmentcharakters.modificname }}</td>
+             <td> {{ obj.measurequipment.charakters.name }}  {{ obj.measurequipment.charakters.typename }} {{ obj.measurequipment.charakters.modificname }}</td>
             {% elif obj.testingequipment  %}
-             <td> {{ obj.testingequipment.testingequipmentcharakters.name }}  {{ obj.testingequipment.testingequipmentcharakters.typename }} {{ obj.testingequipment.testingequipmentcharakters.modificname }}</td>
+             <td> {{ obj.testingequipment.charakters.name }}  {{ obj.testingequipment.charakters.typename }} {{ obj.testingequipment.charakters.modificname }}</td>
             {% elif obj.helpingequipment %}
-             <td> {{ obj.helpingequipment.helpingequipmentcharakters.name }}  {{ obj.helpingequipment.helpingequipmentcharakters.typename }} {{ obj.helpingequipment.helpingequipmentcharakters.modificname }}</td>    
+             <td> {{ obj.helpingequipment.charakters.name }}  {{ obj.helpingequipment.charakters.typename }} {{ obj.helpingequipment.charakters.modificname }}</td>    
             {% else %}
             <td> </td>
            {% endif %}
