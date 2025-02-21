@@ -2559,9 +2559,10 @@ def EquipmentKategoryUpdate(request, str):
                 
                 order = form.save(commit=False)
                 order.save()
-                if note:
+                try: 
                     note.delete()
-                note = None
+                except:
+                    note = None
                 return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
         else:
             form = EquipmentKategoryUpdateForm(request.POST, instance=Equipment.objects.get(pk=str))
