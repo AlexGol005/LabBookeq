@@ -16,6 +16,18 @@
     <center><a href='{% url "equipmentreg" %}'><h4> Лабораторное оборудование - все приборы</h4></a></center>
     <br>
     {#конец заголовка #}
+
+{#форма для поиска по полям #}
+    <br><br>
+    <div style="text-align: center; margin-top: 25px">
+        <form action="/equipment/equipmentallsearres/" method="GET">
+            {% csrf_token %}
+            {% crispy form %}
+        </form>
+    </div>
+{#конец формы для поиска#}
+
+
     
     {#основная таблица#}
     <center>
