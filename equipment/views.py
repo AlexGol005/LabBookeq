@@ -287,24 +287,23 @@ def RoomsUpdateView(request, str):
 
 # блок 3 - списки: Все оборудование, СИ, ИО, ВО, госреестры, характеристики ИО, характеристики ВО
 
-class EquipmentView(LoginRequiredMixin, ListView):
-    """ Выводит список Всего ЛО """
-    """path('equipmentlist/', views.EquipmentView.as_view(), name='equipmentlist'),"""
-    
+
+class EquipmentAllView(LoginRequiredMixin, ListView):
+    """ Выводит список Всего ЛО"""
+    """ path('euipmentall/', views.EquipmentAllView.as_view(), name='euipmentall'),"""
     template_name = URL + '/EquipmentLIST.html'
-    context_object_name = 'objects'
-    ordering = ['exnumber']
+    context_object_name = 'objects'  
     paginate_by = 12
 
-    def get_queryset(self):
-        queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid)
-        return queryset
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(EquipmentView, self).get_context_data(**kwargs)
-        context['company'] =  Company.objects.get(userid=self.request.user.profile.userid).name
+    def get_context_data(self, **kwargs):
+        context = super(EquipmentAllView, self).get_context_data(**kwargs)
         context['form'] = SearchEqForm(initial={'lot': lot, 'exnumber': exnumber})
         return context
+
+    def get_queryset(self):
+        queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid).order_by('-pk')
+        return queryset
+
 
 
 class MeasurEquipmentCharaktersView(LoginRequiredMixin, ListView):
@@ -2003,25 +2002,7 @@ class SearchNotAttView(LoginRequiredMixin, ListView):
             set1.append(a)
         queryset = TestingEquipment.objects.filter(equipment__=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
         return queryset
-
-
-class EquipmentAllView(LoginRequiredMixin, ListView):
-    """ выводит список всех добавленных приборов"""
-    """ path('euipmentall/', views.EquipmentAllView.as_view(), name='euipmentall'),"""
-    template_name = URL + '/EquipmentLIST.html'
-    context_object_name = 'objects'  
-    paginate_by = 12
-
-    def get_context_data(self, **kwargs):
-        context = super(EquipmentAllView, self).get_context_data(**kwargs)
-        context['URL'] = URL
-        return context
-
-    def get_queryset(self):
-        queryset = Equipment.objects.filter(pointer=self.request.user.profile.userid).order_by('-pk')
-        return queryset
-
-            
+           
 # .filter()[Total-10:Total]
 
 class SearchMustOrderView(LoginRequiredMixin, ListView):
