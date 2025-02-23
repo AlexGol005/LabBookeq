@@ -2617,12 +2617,17 @@ def VerificationDeleteView(request, str):
     """не выводит страницу, выполняет действие"""
     """path('verificationdelete/<str:str>/', views.VerificationDeleteView, name='verificationdelete'),"""
     for_a = Verificationequipment.objects.get(pk=str)
-    a=for_a.equipmentSM.equipment.pk
+    a=for_a.equipmentSM.equipment.exnumber
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
             ruser=request.user.profile.userid
             note = Verificationequipment.objects.get(pk=str)
             note.delete()
+            find_ver = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).last()
+            find_ver.save()
+
+
+            
             messages.success(request, 'Запись о поверке удалена!')
             return redirect(f'/equipment/measureequipment/verification/{a}/')            
         except:
@@ -2631,3 +2636,10 @@ def VerificationDeleteView(request, str):
     else:
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
         return redirect(f'/equipment/measureequipment/verification/{a}/')
+
+        note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
+        try:
+            strreg = note.latest('pk').equipmentSM.equipment.exnumber
+        except:
+            strreg = Equipment.objects.get(exnumber=str).exnumber
+
