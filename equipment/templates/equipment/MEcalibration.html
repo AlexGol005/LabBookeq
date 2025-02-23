@@ -54,6 +54,10 @@
                 <th> Стоимость, <br> руб </th>
                 <th> Документ </th>
                 <th> Дополнительная информация </th>
+                {% if USER_HAVE_RIGHTS  %}
+                    <th>Ред.</th>
+                    <th>удалить</th>
+                {% endif %}
              </tr>
         </thead>
         <tbody>
@@ -81,6 +85,14 @@
             {{ obj.certnumber|default:" "}}
             </td>
              <td> {{ obj.extra|default:" " }}</td>
+           {% if USER_HAVE_RIGHTS  %}  
+            <td> <a href="{% url 'сalibrationupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
+            <td> <a href="{% url 'calibrationdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
+            {% else %}
+            <th> </th>
+            <th> </th>
+            {% endif %}
+                    
         </tr>
         {% endfor %}
         </tbody>
