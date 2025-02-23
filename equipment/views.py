@@ -2674,8 +2674,11 @@ def VerificationDeleteView(request, str):
     """для кнопки удаления поверки """
     """не выводит страницу, выполняет действие"""
     """path('verificationdelete/<str:str>/', views.VerificationDeleteView, name='verificationdelete'),"""
-    for_a = Verificationequipment.objects.get(pk=str)
-    a=for_a.equipmentSM.equipment.exnumber
+    try:
+        for_a = Verificationequipment.objects.get(pk=str)
+        a=for_a.equipmentSM.equipment.exnumber
+    except:
+        a=None
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
             ruser=request.user.profile.userid
@@ -2699,8 +2702,11 @@ def CalibrationDeleteView(request, str):
     """для кнопки удаления калибровки """
     """не выводит страницу, выполняет действие"""
     """path('calibrationdelete/<str:str>/', views.CalibrationDeleteView, name='calibrationdelete'),"""
-    for_a = Calibrationequipment.objects.get(pk=str)
-    a=for_a.equipmentSM.equipment.exnumber
+    try:
+        for_a = Calibrationequipment.objects.get(pk=str)
+        a=for_a.equipmentSM.equipment.exnumber
+    except:
+        a=None
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
             ruser=request.user.profile.userid
@@ -2724,8 +2730,11 @@ def AttestationDeleteView(request, str):
     """для кнопки удаления аттестации """
     """не выводит страницу, выполняет действие"""
     """path('attestationdelete/<str:str>/', views.AttestationDeleteView, name='attestationdelete'),"""
-    for_a = Attestationequipment.objects.get(pk=str)
-    a=for_a.equipmentSM.equipment.exnumber
+    try:
+        for_a = Attestationequipment.objects.get(pk=str)
+        a=for_a.equipmentSM.equipment.exnumber
+    except:
+        a=None
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
             note = Attestationequipment.objects.get(pk=str)
