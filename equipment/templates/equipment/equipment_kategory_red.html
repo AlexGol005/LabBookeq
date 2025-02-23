@@ -7,16 +7,24 @@
 
 {% block content %}
 <div class="col-8"> 
-<center><h5><a href="{% url 'euipmentall' %}">Поменять категорию оборудования </a> </h5></center>
-<br>
+   <center><h5><a href="{% url 'euipmentall' %}">Поменять категорию оборудования </a> </h5></center>
+   <br>
    
-    <center>
-    <form method="post" enctype="multipart/form-data" class="form-register">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-outline-primary" type="submit">Отправить</button>
-    </form>
-    </center>
+       <center>
+       <form method="post" enctype="multipart/form-data" class="form-register">
+           {% csrf_token %}
+           {{ form.as_p }}
+           <button class="btn btn-outline-primary" type="submit">Отправить</button>
+       </form>
+       </center>
+       <br>
+
+         <center><h5>Госреестры и характеристики ИО и ВО, а также описание мероприятий по ТО из инструкций на приборы: смотреть и добавить</h5></center>
+          <center>
+              <a href="{% url 'measurequipmentcharacterslist' %}" target="blank" class="btn btn-primary mr-2 ml-2 mt-4" style="width: 30%">Госреестры СИ</a>
+              <a href="{% url 'testingequipmentcharacterslist' %}" class="btn btn-primary mr-2 ml-2 mt-4" style="width: 30%">Характеристики ИО</a>
+              <a href="{% url 'helpingequipmentcharacterslist' %}" class="btn btn-primary  mr-2 ml-2 mt-4" style="width: 30%">Характеристики ВО</a>
+          </center>
     <br>
 </div>
 {% endblock %}
