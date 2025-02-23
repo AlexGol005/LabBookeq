@@ -2531,8 +2531,6 @@ def EquipmentKategoryUpdate(request, str):
     ruser=request.user.profile.userid
     title = Equipment.objects.filter(pointer=ruser).get(pk=str)
 
-    
-
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             try:
@@ -2575,3 +2573,38 @@ def EquipmentKategoryUpdate(request, str):
         return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
 
 
+@login_required
+def EquipmentKategoryUpdate(request, str):
+    """выводит форму смены категории оборудования и удаления соответствующего СИ/ИО/ВО """
+    """path('equipmentkategoryupdate/<str:str>/', views.EquipmentKategoryUpdate, name='equipmentkategoryupdate'),"""
+    ruser=request.user.profile.userid
+    ob = Equipment.objects.filter(pointer=ruser).get(pk=str)
+    equip = Equipment.objects.filter(pointer=ruser).get(pk=str)
+    if title.kategory == 'СИ':
+        equip = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
+    if title.kategory == 'ИO':
+        equip = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+    if title.kategory == 'ВО':
+        equip = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+
+    form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
+
+    
+    if (request.user.has_perm('equipment.add_equipment') or request.user.is_superuser) and  equip.pointer == ruser:
+        if request.method == "POST":
+            form = EquipmentKategoryUpdateForm(request.POST,  instance=Equipment.objects.get(pk=str))
+            if form.is_valid():                
+                order = form.save(commit=False)
+                order.save()
+                if equip: 
+                    equip.delete()
+                return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
+        else:
+            form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
+        data = {'form': form, 
+                'ob': ob,               
+                }
+        return render(request, 'equipment/Eindividuality.html', data)
+    else:
+        messages.success(request, f' Раздел доступен только продвинутому пользователю')
+        return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
