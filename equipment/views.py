@@ -2537,8 +2537,16 @@ def EquipmentKategoryUpdate(request, str):
     """выводит форму смены категории оборудования и удаления соответствующего СИ/ИО/ВО """
     """path('equipmentkategoryupdate/<str:str>/', views.EquipmentKategoryUpdate, name='equipmentkategoryupdate'),"""
     ruser=request.user.profile.userid   
-    title = Equipment.objects.filter(pointer=ruser).get(pk=str)
-                   
+    instance_equipment = Equipment.objects.filter(pointer=ruser).get(pk=str)
+    if instance_equipment.measurequipment:
+        note = MeasurEquipment.objects.get(equipment=instance_equipment)
+    if instance_equipment.testingequipment:
+        note = TestingEquipment.objects.get(equipment=instance_equipment)
+    if instance_equipment.helpingequipment:
+        note = HelpingEquipment.objects.get(equipment=instance_equipment)
+    else:
+        note = None
+        
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             form = EquipmentKategoryUpdateForm(request.POST, instance=Equipment.objects.get(pk=str))
@@ -2551,8 +2559,8 @@ def EquipmentKategoryUpdate(request, str):
                 return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
     else:
         form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
-        data = {'form': form, 
-                'title': title,               
+        data = {'form': form,
+                'note': note, 
                 }
         return render(request, 'equipment/equipment_kategory_red.html', data)
 
