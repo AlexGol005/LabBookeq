@@ -47,12 +47,12 @@ now = date.today()
 
 
 class OrderVerificationView(LoginRequiredMixin, View):
-    """ выводит страницу для заказа поверки/аттестации """
+    """ выводит страницу для заказа и/аттестации """
     """'/orderverification.html'"""
     """path('orderverification/<str:str>/', views.OrderVerificationView.as_view(), name='orderverification'),"""
     
-    CHOISE_LIST = [('все приборы', 'все приборы'),('не поверено на сегодняшний день','не поверено на сегодняшний день'), ('требует поверки на сегодняшний день','требует поверки на сегодняшний день'), 
-               ('нужно заказать замену на сегодняшний день','нужно заказать замену на сегодняшний день'), ('поверка заказана', 'поверка заказана')]
+    CHOISE_LIST = [('все приборы', 'все приборы'),('не поверено на сегодняшний день','не поверено на сегодняшний день'), ('требует и на сегодняшний день','требует и на сегодняшний день'), 
+               ('нужно заказать замену на сегодняшний день','нужно заказать замену на сегодняшний день'), ('а заказана', 'а заказана')]
     
     def get(self, request, str):
         ruser=request.user.profile.userid
@@ -100,7 +100,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
 @login_required
 def OrderVerificationchange(request, str):
-    """ на странице для заказа поверки/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на поверку """
+    """ на странице для заказа и/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на у """
     """ никаких страниц эта вьюшка не формирует! """
     """path('orderverificationchange/<str:str>/', views.OrderVerificationchange, name='orderverificationchange'),"""
     
@@ -171,7 +171,7 @@ class MeteorologicalParametersView(LoginRequiredMixin, ListView):
 
 
 class MetrologicalEnsuringView(LoginRequiredMixin, TemplateView):
-    """Выводит заглавную страницу для Этикетки о поверке/аттестации и списки на поверку/аттестацию """
+    """Выводит заглавную страницу для Этикетки о е/аттестации и списки на у/аттестацию """
     template_name = URL + '/metro.html'
     """path('metro/', views.MetrologicalEnsuringView.as_view(), name='metro'),"""
 
@@ -1120,7 +1120,7 @@ def EquipmentUpdate(request, str):
         messages.success(request, f' Для внесения записей о приборе нажмите на кнопку'
                                   f' "Внести запись о приборе и смотреть записи (для всех пользователей)"'
                                   f'. Добавить особенности работы или поменять статус может только ответственный '
-                                  f'за прибор или поверку.')
+                                  f'за прибор или у.')
         return redirect('euipmentall')
                 
 
@@ -1493,13 +1493,16 @@ def VerificationReg(request, str):
 def VerUpdateView(request, str):
     """выводит форму для обновления сведений о поверке """
     """path('verificationupdate/<str:str>/', views.VerUpdateView, name='verificationupdate'),"""
-    
+    for_a = Verificationequipment.objects.get(pk=str)
+    a=for_a.equipmentSM.equipment.exnumber
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = VerificationRegForm(request.POST, instance= Verificationequipment.objects.get(pk=str))                                                       
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
+                find_ver = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()
+                find_ver.save()  
                 return redirect(order)
         else:
             form = VerificationRegForm(instance=Verificationequipment.objects.get(pk=str))
