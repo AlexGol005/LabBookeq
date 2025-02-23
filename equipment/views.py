@@ -1517,6 +1517,8 @@ def VerUpdateView(request, str):
 @login_required
 def CalibrationReg(request, str):
     """выводит форму для внесения сведений о калибровке"""
+    """path('measureequipment/calibrationreg/<str:str>/', views.CalibrationReg, name='measureequipmentcalibrationreg'),"""
+    """equipment/calibrationreg.html"""
     title = Equipment.objects.get(exnumber=str)
     
     if request.method == "POST":
@@ -1567,6 +1569,9 @@ def CalibrationUpdateView(request, str):
 @login_required
 def AttestationReg(request, str):
     """выводит форму для внесения сведений об аттестации"""
+    """path('testingequipment/attestationreg/<str:str>/', views.AttestationReg, name='testingequipmentattestationreg'),"""
+    """equipment/TEattestationreg.html"""
+
     title = Equipment.objects.get(exnumber=str)
     
     if request.method == "POST":
