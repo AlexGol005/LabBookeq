@@ -9,7 +9,7 @@
 {% block content %}
 <div class="col-12">
     <center><h5>История аттестаций:
-    <a href="/equipment/testingequipment/{{ title.exnumber }}/">
+    <a href="/equipment/testequipment/{{ title.exnumber }}/">
         {{title.testingequipment_set.all.last.charakters}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
      </h5></center>
      <br>
