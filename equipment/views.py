@@ -1102,7 +1102,7 @@ def EquipmentUpdate(request, str):
             form = EquipmentUpdateForm(request.POST, instance=Equipment.objects.get(exnumber=str))
         data = {'form': EquipmentUpdateForm(instance=Equipment.objects.get(exnumber=str)), 'title': title
                 }
-        return render(request, 'equipment/Eindividuality.html', data)
+        return render(request, 'equipment/equipment_red.html', data)
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser or not request.user == person:
         messages.success(request, f' Для внесения записей о приборе нажмите на кнопку'
                                   f' "Внести запись о приборе и смотреть записи (для всех пользователей)"'
@@ -2521,57 +2521,6 @@ def TecharaktersDeleteView(request, str):
     else:
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
         return redirect('testingequipmentcharacterslist')
-
-
-@login_required
-def EquipmentKategoryUpdate(request, str):
-    """выводит форму смены категории оборудования и удаления соответствующего СИ/ИО/ВО """
-    """path('equipmentkategoryupdate/<str:str>/', views.EquipmentKategoryUpdate, name='equipmentkategoryupdate'),"""
-    ruser=request.user.profile.userid
-    ob = Equipment.objects.filter(pointer=ruser).get(pk=str)
-  
-
-
-    form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
-
-    
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:            
-            form = EquipmentKategoryUpdateForm(request.POST,  instance=Equipment.objects.get(pk=str))
-            if form.is_valid():  
-                if request.method == "POST":
-                    try:
-                        if ob.kategory == 'СИ':
-                            try:
-                                equip = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=ob)
-                            except:
-                                equip = None
-                        if ob.kategory == 'ИO':
-                            try:
-                                equip = TestingEquipment.objects.filter(pointer=ruser).get(equipment=ob)
-                            except:
-                                equip = None
-                        if ob.kategory == 'ВО':
-                            try:
-                                equip = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=ob)
-                            except:
-                                equip = None
-                    except:
-                        equip = None
-                    order = form.save(commit=False)
-                    order.save()
-                    if equip: 
-                        equip.delete()
-                    return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
-            else:
-                form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
-                data = {'form': form, 
-                    'ob': ob,               
-                    }
-                return render(request, 'equipment/Eindividuality.html', data)
-    else:
-        messages.success(request, f' Раздел доступен только продвинутому пользователю')
-        return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
-
 
 
 @login_required
