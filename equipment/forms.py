@@ -1190,7 +1190,9 @@ class AttestationRegForm(forms.ModelForm):
                               choices=CHOICESPLACE, initial='В ПА',
                               widget=forms.Select(attrs={'class': 'form-control'}))
     cust = forms.BooleanField(label='Аттестация заказана поставщиком', required=False)
-    img = forms.ImageField(label='Аттестат', widget=forms.FileInput, required=False)
+    arshin = forms.CharField(label='Ссылка на скан аттестата', max_length=10000,
+                             required=False,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
                                    help_text='Укажите, если аттестации не выгодна',
                                    widget=forms.DateInput(
@@ -1215,6 +1217,7 @@ class AttestationRegForm(forms.ModelForm):
                   'dateordernew',
                   'cust',
                   'extra',
+                  'arshin'
                   ]
         widgets = {
 
@@ -1242,7 +1245,7 @@ class AttestationRegForm(forms.ModelForm):
                 Column('cust', css_class='form-group col-md-4 mb-0'),
             ),
             Row(
-                Column('img', css_class='form-group col-md-6 mb-1'),
+                Column('arshin', css_class='form-group col-md-6 mb-1'),
                 Column('year', css_class='form-group col-md-6 mb-1'),
                 Column('dateordernew', css_class='form-group col-md-6 mb-1')),
             Row(
