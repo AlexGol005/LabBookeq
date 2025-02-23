@@ -1492,7 +1492,7 @@ def VerificationReg(request, str):
 @login_required
 def VerUpdateView(request, str):
     """выводит форму для обновления сведений о поверке """
-    """path('verupdate/<str:str>/', views.VerUpdateView, name='verupdate'),"""
+    """path('verificationupdate/<str:str>/', views.VerUpdateView, name='verificationupdate'),"""
     
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
