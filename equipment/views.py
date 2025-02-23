@@ -2623,11 +2623,8 @@ def VerificationDeleteView(request, str):
             ruser=request.user.profile.userid
             note = Verificationequipment.objects.get(pk=str)
             note.delete()
-            find_ver = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).last()
-            find_ver.save()
-
-
-            
+            # find_ver = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).last()
+            # find_ver.save()            
             messages.success(request, 'Запись о поверке удалена!')
             return redirect(f'/equipment/measureequipment/verification/{a}/')            
         except:
