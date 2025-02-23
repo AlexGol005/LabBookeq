@@ -1097,7 +1097,7 @@ def EquipmentUpdate(request, str):
                 if title.kategory == 'ИО':
                     return redirect(reverse('testequipment', kwargs={'str': str}))
                 if title.kategory == 'ВО':
-                    return redirect(reverse('supequipment', kwargs={'str': str}))
+                    return redirect(reverse('helpequipment', kwargs={'str': str}))
         else:
             form = EquipmentUpdateForm(request.POST, instance=Equipment.objects.get(exnumber=str))
         data = {'form': EquipmentUpdateForm(instance=Equipment.objects.get(exnumber=str)), 'title': title
