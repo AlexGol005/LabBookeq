@@ -2523,56 +2523,6 @@ def TecharaktersDeleteView(request, str):
         return redirect('testingequipmentcharacterslist')
 
 
-
-@login_required
-def EquipmentKategoryUpdate(request, str):
-    """выводит форму смены категории оборудования и удаления соответствующего СИ/ИО/ВО """
-    """path('equipmentkategoryupdate/<str:str>/', views.EquipmentKategoryUpdate, name='equipmentkategoryupdate'),"""
-    ruser=request.user.profile.userid
-    title = Equipment.objects.filter(pointer=ruser).get(pk=str)
-
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-        if request.method == "POST":
-            try:
-                note
-            except:
-                note = None
-            if title.kategory == 'СИ':
-                try:
-                    note = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
-                except:
-                    note = None
-            if title.kategory == 'ИO':
-                try:
-                    note = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
-                except:
-                    note = None
-            if title.kategory == 'ВО':
-                try:
-                    note = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
-                except:
-                    note = None
-            form = EquipmentKategoryUpdateForm(request.POST,  instance=Equipment.objects.get(pk=str))
-            if form.is_valid():
-                
-                order = form.save(commit=False)
-                order.save()
-                try: 
-                    note.delete()
-                except:
-                    note = None
-                return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
-        else:
-            form = EquipmentKategoryUpdateForm(request.POST, instance=Equipment.objects.get(pk=str))
-        data = {'form': EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str)), 
-                'title': title,               
-                }
-        return render(request, 'equipment/Eindividuality.html', data)
-    else:
-        messages.success(request, f' Раздел доступен только продвинутому пользователю')
-        return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
-
-
 @login_required
 def EquipmentKategoryUpdate(request, str):
     """выводит форму смены категории оборудования и удаления соответствующего СИ/ИО/ВО """
@@ -2581,11 +2531,11 @@ def EquipmentKategoryUpdate(request, str):
     ob = Equipment.objects.filter(pointer=ruser).get(pk=str)
     equip = Equipment.objects.filter(pointer=ruser).get(pk=str)
     if ob.kategory == 'СИ':
-        equip = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
+        equip = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=ob)
     if ob.kategory == 'ИO':
-        equip = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+        equip = TestingEquipment.objects.filter(pointer=ruser).get(equipment=ob)
     if ob.kategory == 'ВО':
-        equip = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
+        equip = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=ob)
 
     form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
 
