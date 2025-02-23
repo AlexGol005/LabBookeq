@@ -1165,6 +1165,33 @@ class ManufacturerSearchResultView(LoginRequiredMixin, SuccessMessageMixin, List
         return queryset
 
 
+class SearchResultEquipmentView(LoginRequiredMixin, TemplateView):
+    """ выводит результаты поиска по списку оборудования """
+    """path('equipmentallsearres/', views.SearchResultEquipmentView.as_view(), name='equipmentallsearres'),"""
+    
+    template_name = URL + '/EquipmentLIST.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchResultEquipmentView, self).get_context_data(**kwargs)
+        lot = self.request.GET['lot']
+        exnumber = self.request.GET['exnumber']
+
+        if lot and not exnumber:
+            objects = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(lot__iregex=lot)
+            context['objects'] = objects
+        if exnumber and not lot:
+            objects = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(exnumber__iregex=exnumber)
+            context['objects'] = objects
+        if exnumber and lot:
+            objects = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(exnumber__iregex=exnumber).filter(lot__iregex=lot)
+            context['objects'] = objects
+            
+        context['form'] = SearchEqForm(initial={'lot': lot, 'exnumber': exnumber})
+        return context
+
+
+
+
 
 class ReestrsearresView(LoginRequiredMixin, TemplateView):
     """ выводит результаты поиска по списку госреестров """
