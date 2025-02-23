@@ -1098,20 +1098,18 @@ def EquipmentUpdate(request, str):
                         return redirect(reverse('measureequipment', kwargs={'str': str}))
                     except:
                         return redirect('euipmentall')
-
-
-                    
-                if title.kategory == 'ИО' and title.testingequipment:
-                    return redirect(reverse('testequipment', kwargs={'str': str}))
-                if title.kategory == 'ИО' and not title.testingequipment:   
-                    return redirect('euipmentall')
-                        
+                if title.kategory == 'ИО':
+                    try:
+                        title.testingequipment
+                        return redirect(reverse('testingequipment', kwargs={'str': str}))
+                    except:
+                        return redirect('euipmentall')
                 if title.kategory == 'ВО':
                     try:
+                        title.helpingequipment
                         return redirect(reverse('helpequipment', kwargs={'str': str}))
                     except:
                         return redirect('euipmentall')
-                        
                 
         else:
             form = EquipmentUpdateForm(request.POST, instance=Equipment.objects.get(exnumber=str))
@@ -1123,22 +1121,7 @@ def EquipmentUpdate(request, str):
                                   f' "Внести запись о приборе и смотреть записи (для всех пользователей)"'
                                   f'. Добавить особенности работы или поменять статус может только ответственный '
                                   f'за прибор или поверку.')
-        if title.kategory == 'СИ':
-            try:
-                return redirect(reverse('measureequipment', kwargs={'str': str}))
-            except:
-                return redirect('euipmentall')
-        if title.kategory == 'ИО':
-            try:
-                return redirect(reverse('testequipment', kwargs={'str': str}))
-            except:
-                return redirect('euipmentall')
-        if title.kategory == 'ВО':
-            try:
-                return redirect(reverse('supequipment', kwargs={'str': str}))
-            except:
-                return redirect('euipmentall')
-                
+        return redirect('euipmentall')
                 
 
 
