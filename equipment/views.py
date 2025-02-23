@@ -2536,9 +2536,8 @@ def TecharaktersDeleteView(request, str):
 def EquipmentKategoryUpdate(request, str):
     """выводит форму смены категории оборудования и удаления соответствующего СИ/ИО/ВО """
     """path('equipmentkategoryupdate/<str:str>/', views.EquipmentKategoryUpdate, name='equipmentkategoryupdate'),"""
-    ruser=request.user.profile.userid
-    
-    ob = Equipment.objects.filter(pointer=ruser).get(pk=str)
+    ruser=request.user.profile.userid   
+    title = Equipment.objects.filter(pointer=ruser).get(pk=str)
      
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:            
         if request.method == "POST":
@@ -2550,9 +2549,9 @@ def EquipmentKategoryUpdate(request, str):
             else:
                 form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
                 data = {'form': form, 
-                    'ob': ob,               
+                    'title': title,               
                     }
-                return render(request, 'equipment/Eindividuality.html', data)
+                return render(request, 'equipment/equipment_kategory_red.html', data)
     else:
         messages.success(request, f' Раздел доступен только продвинутому пользователю')
         return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
