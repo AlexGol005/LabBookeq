@@ -2557,13 +2557,17 @@ def EquipmentKategoryUpdate(request, str):
             form = EquipmentKategoryUpdateForm(request.POST, instance=Equipment.objects.get(pk=str))
             if form.is_valid():  
                 order = form.save(commit=False)
+                if note:
+                    note.delete()
                 order.save()
+                
                 return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
             else:
                 messages.success(request, f' Раздел доступен только продвинутому пользователю')
                 return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
     else:
         form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
+        
         data = {'form': form,
                 'note': note, 
                 }
