@@ -1151,7 +1151,7 @@ class CalibrationRegForm(forms.ModelForm):
 
 class AttestationRegForm(forms.ModelForm):
     """форма для  внесения сведений об аттестации"""
-    date = forms.DateField(label='Дата аттестации', required=False,
+    date = forms.DateField(label='Дата аттестации',
                            widget=forms.DateInput(
                                                   attrs={'class': 'form-control', 'placeholder': ''}),
                            input_formats=(
@@ -1160,7 +1160,7 @@ class AttestationRegForm(forms.ModelForm):
                                           '%m/%d/%y',
                                           '%d.%m.%Y',
                                            ))
-    datedead = forms.DateField(label='Дата окончания аттестации', required=False,
+    datedead = forms.DateField(label='Дата окончания аттестации',
                                widget=forms.DateInput(
                                                       attrs={'class': 'form-control', 'placeholder': ''}),
                                input_formats=(
@@ -1168,7 +1168,7 @@ class AttestationRegForm(forms.ModelForm):
                                               '%m/%d/%Y',  # '10/25/2006'
                                               '%m/%d/%y',
                                               '%d.%m.%Y',
-                                               ))
+                                              ))
     dateorder = forms.DateField(label='Дата заказа аттестации', required=False,
                                 widget=forms.DateInput(
                                                        attrs={'class': 'form-control', 'placeholder': ''}),
@@ -1178,23 +1178,23 @@ class AttestationRegForm(forms.ModelForm):
                                                '%m/%d/%y',
                                                '%d.%m.%Y',
                                                 ))
-    certnumber = forms.CharField(label='№ аттестата', max_length=10000, required=False,
+    arshin = forms.CharField(label='Ссылка на скан аттестата', max_length=10000,
+                             required=False,
+                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+    certnumber = forms.CharField(label='№ аттестата', max_length=10000,
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
-    price = forms.DecimalField(label='Стоимость данной атт.', max_digits=10, decimal_places=2,
+    price = forms.DecimalField(label='Стоимость аттестации', max_digits=10, decimal_places=2,
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': '0000.00'}))
     statusver = forms.ChoiceField(label='Результат аттестации',
                                   choices=CHOICESATT,
                                   widget=forms.Select(attrs={'class': 'form-control'}))
     place = forms.ChoiceField(label='Место аттестации',
-                              choices=CHOICESPLACE, initial='В ПА',
+                              choices=CHOICESPLACE,
                               widget=forms.Select(attrs={'class': 'form-control'}))
-    cust = forms.BooleanField(label='Аттестация заказана поставщиком', required=False)
-    arshin = forms.CharField(label='Ссылка на скан аттестата', max_length=10000,
-                             required=False,
-                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+    cust = forms.BooleanField(label='Не оплачивалась', required=False, help_text='Например, если аттестацию оплачивал производитель')
     dateordernew = forms.DateField(label='Дата заказа замены', required=False,
-                                   help_text='Укажите, если аттестации не выгодна',
+                                   help_text='Укажите, если аттестация не выгодна и вы покупаете замену',
                                    widget=forms.DateInput(
                                                           attrs={'class': 'form-control', 'placeholder': ''}),
                                    input_formats=(
@@ -1202,27 +1202,24 @@ class AttestationRegForm(forms.ModelForm):
                                                   '%m/%d/%Y',
                                                   '%m/%d/%y',
                                                   '%d.%m.%Y',
-                                                  ))
-    year = forms.CharField(label='год аттестации', max_length=10000, required=False,
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
-    extra = forms.CharField(label='Дополнительная информация/выписка из аттестата',
+                                                   ))
+    extra = forms.CharField(label='Дополнительная информация/выписка из текущих сведений об аттестации',
                                   widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
 
     class Meta:
         model = Attestationequipment
-        fields = ['date', 'datedead', 'dateorder', 'certnumber',
+        fields = ['date', 'datedead', 'dateorder', 'arshin', 'certnumber',
                   'price', 'statusver',  'verificator', 
-                  'place',
-                  'year',
+                  'place', 'year',
                   'dateordernew',
                   'cust',
                   'extra',
-                  'arshin'
                   ]
+
         widgets = {
 
                'verificator': autocomplete.ModelSelect2(url='verificators-autocomplete'),
-         }
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -1234,20 +1231,20 @@ class AttestationRegForm(forms.ModelForm):
                 Column('dateorder', css_class='form-group col-md-4 mb-0'),
                 ),
             Row(
-                Column('certnumber', css_class='form-group col-md-4 mb-0'),
-                Column('statusver', css_class='form-group col-md-4 mb-0'),
-                Column('price', css_class='form-group col-md-4 mb-0'),
+                Column('arshin', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('certnumber', css_class='form-group col-md-6 mb-0'),
+                Column('statusver', css_class='form-group col-md-6 mb-0'),
             ),
             Row(
-                Column('verificator', css_class='form-group col-md-4 mb-0'),
-                Column('verificatorperson', css_class='form-group col-md-4 mb-0'),
-                Column('place', css_class='form-group col-md-4 mb-0'),
-                Column('cust', css_class='form-group col-md-4 mb-0'),
+                Column('verificator', css_class='form-group col-md-6 mb-0'),
+                Column('place', css_class='form-group col-md-3 mb-0'),   
+                Column('dateordernew', css_class='form-group col-md-3 mb-1'), 
             ),
             Row(
-                Column('arshin', css_class='form-group col-md-6 mb-1'),
-                Column('year', css_class='form-group col-md-6 mb-1'),
-                Column('dateordernew', css_class='form-group col-md-6 mb-1')),
+                Column('price', css_class='form-group col-md-3 mb-0'),                       
+                Column('cust', css_class='form-group col-md-8 mb-0'), 
+            ),
             Row(
                 Column('extra', css_class='form-group col-md-12 mb-1')),
             Submit('submit', 'Внести'))
