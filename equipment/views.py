@@ -2538,14 +2538,19 @@ def EquipmentKategoryUpdate(request, str):
     """path('equipmentkategoryupdate/<str:str>/', views.EquipmentKategoryUpdate, name='equipmentkategoryupdate'),"""
     ruser=request.user.profile.userid   
     instance_equipment = Equipment.objects.filter(pointer=ruser).get(pk=str)
-    if instance_equipment.measurequipment:
+    try:
+        instance_equipment.measurequipment
         note = MeasurEquipment.objects.get(equipment=instance_equipment)
-    if instance_equipment.testingequipment:
-        note = TestingEquipment.objects.get(equipment=instance_equipment)
-    if instance_equipment.helpingequipment:
-        note = HelpingEquipment.objects.get(equipment=instance_equipment)
-    else:
-        note = None
+    except:
+        try:
+            instance_equipment.testingequipment
+            note = TestingEquipment.objects.get(equipment=instance_equipment)
+        except:
+            try:
+                instance_equipment.helpingequipment
+                note = HelpingEquipment.objects.get(equipment=instance_equipment)
+            except:
+                note = None
         
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
