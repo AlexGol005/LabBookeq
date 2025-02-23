@@ -2616,12 +2616,12 @@ def VerificationDeleteView(request, str):
     """для кнопки удаления поверки """
     """не выводит страницу, выполняет действие"""
     """path('verificationdelete/<str:str>/', views.VerificationDeleteView, name='verificationdelete'),"""
-    for_a = Verification.objects.get(pk=str)
+    for_a = Verificationequipment.objects.get(pk=str)
     a=for_a.equipment.pk
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
             ruser=request.user.profile.userid
-            note = Verification.objects.get(pk=str)
+            note = Verificationequipment.objects.get(pk=str)
             note.delete()
             messages.success(request, 'Запись о поверке удалена!')
             return redirect(f'/equipment/measureequipment/verification/{a}/')            
