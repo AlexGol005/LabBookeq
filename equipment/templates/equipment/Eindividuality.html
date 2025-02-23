@@ -7,26 +7,32 @@
 
 {% block content %}
 <div class="col-8"> 
-<center><h4>Обновление данных ЛО: 
-
+<center><h4>
+{% if title %}
     {% if title.measurequipment %}
     <a href="/equipment/measureequipment/{{ title.exnumber }}/">
-    {{title.measurequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+  Обновление данных ЛО:  {{title.measurequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
     {% elif title.testingequipment %}
     <a href="/equipment/testequipment/{{ title.exnumber }}/">
-    {{title.testingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+Обновление данных ЛО:  {{title.testingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
         {% elif title.helpingequipment %}
     <a href="/equipment/helpequipment/{{ title.exnumber }}/">
-    {{title.helpingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
-        {% else %}
-   {% url "equipmentkategoryupdate" title.pk %}
+ Обновление данных ЛО:  {{title.helpingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
        {% endif %} 
-
-     
-     </h4></center>
+         </h4></center>
      <br>
-    {% if note %}
-  <center><h4>    Внимание! У оборудования {{note}} будут удалены характеристики </h4></center>
+{% endif %} 
+
+{% if ob %}
+    <center><h4>
+<a href="{% url "equipmentkategoryupdate" ob.pk %}"> 
+    Смена категории оборудования вн. номер {{ob.exnumber|slice:":5"}}</a> 
+         </h4></center>
+     {% endif %}   
+     
+
+    {% if ob %}
+  <center><h4>    Внимание! У оборудования {{ob}} будут удалены характеристики </h4></center>
        <br>
     {% endif %}
     <center>
