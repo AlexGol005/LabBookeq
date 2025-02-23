@@ -53,7 +53,6 @@ urlpatterns = [
     path('measureequipment/calibrationreg/<str:str>/', views.CalibrationReg, name='measureequipmentcalibrationreg'),
     path('testingequipment/attestationreg/<str:str>/', views.AttestationReg, name='testingequipmentattestationreg'),
     path('equipmentreg/', views.EquipmentReg, name='equipmentreg'),
-    path('equipmentlist/', views.EquipmentView.as_view(), name='equipmentlist'),
     path('manufacturerlist/', views.ManufacturerView.as_view(), name='manufacturerlist'),
     path('manufacturerreg/', views.ManufacturerRegView.as_view(), name='manufacturerreg'),
     path('measurequipmentcharacterslist/', views.MeasurEquipmentCharaktersView.as_view(), name='measurequipmentcharacterslist'),
