@@ -6,25 +6,10 @@
 
 
 {% block content %}
-<div class="col-7"> 
-<center><h5>Обновление для ответственного за оборудование: 
-
-    {% if title.measurequipment %}
-    <a href="/equipment/measureequipment/{{ title.exnumber }}/">
-    {{title.measurequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
-    {% elif title.testingequipment %}
-    <a href="/equipment/testequipment/{{ title.exnumber }}/">
-    {{title.testingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
-        {% elif title.helpingequipment %}
-    <a href="/equipment/helpequipment/{{ title.exnumber }}/">
-    {{title.helpingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+<div class="col-8"> 
+<center><h5><a href="euipmentall">Поменять категорию оборудования </a> </h5></center>
+<br>
         
-       {% endif %} 
-
-        
-     </h5></center>
-     <br>
-    
     <center>
     <form method="post" enctype="multipart/form-data" class="form-register">
         {% csrf_token %}
