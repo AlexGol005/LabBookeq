@@ -1185,6 +1185,9 @@ class SearchResultEquipmentView(LoginRequiredMixin, TemplateView):
         if exnumber and lot:
             objects = Equipment.objects.filter(pointer=self.request.user.profile.userid).filter(exnumber__iregex=exnumber).filter(lot__iregex=lot)
             context['objects'] = objects
+        if not exnumber and not lot:
+            objects = Equipment.objects.filter(pointer=self.request.user.profile.userid)
+            context['objects'] = objects
             
         context['form'] = SearchEqForm(initial={'lot': lot, 'exnumber': exnumber})
         return context
