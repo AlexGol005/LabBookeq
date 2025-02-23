@@ -76,6 +76,24 @@ class SearchMEForm(forms.Form):
                 Row(Submit('submit', 'Найти', css_class='btn  btn-prima col-md-9 mb-3 mt-4 ml-4'))))
 
 
+class SearchEqForm(forms.Form):
+    """форма для поиска по полям списка оборудования"""
+    exnumber = forms.CharField(label='Внут. №', required=False,
+                               help_text='вн. № полн.',
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+    lot = forms.CharField(label='Заводской №', required=False,
+                          help_text='заводской № полностью',
+                          widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('exnumber', css_class='form-group col-md-2 mb-0'),
+                Column('lot', css_class='form-group col-md-2 mb-0'),
+                Row(Submit('submit', 'Найти', css_class='btn  btn-prima col-md-9 mb-3 mt-4 ml-4'))))
+
 class Searchreestrform(forms.Form):
     """форма для поиска по полям списка госреестров"""
     name = forms.CharField(label='Название', required=False,
