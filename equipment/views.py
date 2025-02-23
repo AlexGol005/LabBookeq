@@ -2625,7 +2625,7 @@ def VerificationDeleteView(request, str):
             note.delete()
             # find_ver = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).last()
             # find_ver.save()            
-            messages.success(request, f'Запись о поверке удалена! {Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str)}  ')
+            messages.success(request, f'Запись о поверке удалена! {Verificationequipment.objects.filter(equipmentSM__equipment__exnumber="Л0001_98c@6pn9vgqyy(+xk1nq53u2c!h4q%5Egquo%5Ey5hrahwsxlai-2+/)"}  ')
             return redirect(f'/equipment/measureequipment/verification/{a}/')            
         except:
             messages.success(request, 'Невозможно удалить')
