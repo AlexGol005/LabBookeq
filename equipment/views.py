@@ -303,6 +303,7 @@ class EquipmentView(LoginRequiredMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(EquipmentView, self).get_context_data(**kwargs)
         context['company'] =  Company.objects.get(userid=self.request.user.profile.userid).name
+        context['form'] = SearchEqForm(initial={'lot': lot, 'exnumber': exnumber})
         return context
 
 
