@@ -89,7 +89,7 @@
              <td> {{ obj.extra|default:" " }}</td>
             {% if USER_HAVE_RIGHTS  %}  
             <td> <a href="{% url 'verificationupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">ред</a></td> 
-            <td> <a href="{% url 'verificationupdate' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
+            <td> <a href="{% url 'verificationdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
             {% else %}
             <th> </th>
             <th> </th>
