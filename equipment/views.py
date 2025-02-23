@@ -1471,7 +1471,7 @@ def VerificationReg(request, str):
     title = Equipment.objects.get(exnumber=str)
     if request.method == "POST":
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
-            form = VerificationRegForm(request.POST, request.FILES)
+            form = VerificationRegForm(request.POST)
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipmentSM = MeasurEquipment.objects.get(equipment__exnumber=str)
@@ -1487,6 +1487,28 @@ def VerificationReg(request, str):
         'title': title
     }
     return render(request, 'equipment/verificationreg.html', data)
+
+
+@login_required
+def VerUpdateView(request, str):
+    """выводит форму для обновления сведений о поверке """
+    """path('verupdate/<str:str>/', views.VerUpdateView, name='verupdate'),"""
+    
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = VerificationRegForm(request.POST, instance= Verificationequipment.objects.filter(pk=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect(order)
+        else:
+            form = VerificationRegForm(instance= Verificationequipment.objects.filter(pk=str))
+        data = {'form': form,}                
+        return render(request, 'equipment/reg.html', data)
+        
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
+        return redirect('verupdate')
 
 
 @login_required
@@ -1571,6 +1593,8 @@ def EquipmentMetrologyUpdate(request, str):
 
 class VerificationequipmentView(LoginRequiredMixin, View):
     """ выводит историю поверок и форму для добавления комментария к истории поверок """
+    """path('measureequipment/verification/<str:str>/', views.VerificationequipmentView.as_view(), name='measureequipmentver'),"""
+    """'equipment/MEverification.html'"""
 
     def get(self, request, str):
         note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
