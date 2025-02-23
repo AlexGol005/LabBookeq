@@ -2617,7 +2617,7 @@ def VerificationDeleteView(request, str):
     """не выводит страницу, выполняет действие"""
     """path('verificationdelete/<str:str>/', views.VerificationDeleteView, name='verificationdelete'),"""
     for_a = Verificationequipment.objects.get(pk=str)
-    a=for_a.equipment.pk
+    a=for_a.equipmentSM.equipment.pk
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
             ruser=request.user.profile.userid
