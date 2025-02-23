@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Особенности ЛО
+{% endblock %}
+
+
+{% block content %}
+<div class="col-7"> 
+<center><h5>Обновление для ответственного за оборудование: 
+
+    {% if title.measurequipment %}
+    <a href="/equipment/measureequipment/{{ title.exnumber }}/">
+    {{title.measurequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+    {% elif title.testingequipment %}
+    <a href="/equipment/testequipment/{{ title.exnumber }}/">
+    {{title.testingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+        {% elif title.helpingequipment %}
+    <a href="/equipment/helpequipment/{{ title.exnumber }}/">
+    {{title.helpingequipment.charakters.name}}, заводской № {{title.lot}}, внутренний № {{ title.exnumber|slice:":5" }} </a> 
+        
+       {% endif %} 
+
+        
+     </h5></center>
+     <br>
+    
+    <center>
+    <form method="post" enctype="multipart/form-data" class="form-register">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-outline-primary" type="submit">Отправить</button>
+    </form>
+    </center>
+    <br>
+</div>
+{% endblock %}
