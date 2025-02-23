@@ -2530,30 +2530,31 @@ def EquipmentKategoryUpdate(request, str):
     ruser=request.user.profile.userid
     ob = Equipment.objects.filter(pointer=ruser).get(pk=str)
   
-    try:
-        if ob.kategory == 'СИ':
-            try:
-                equip = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=ob)
-            except:
-                equip = None
-        if ob.kategory == 'ИO':
-            try:
-                equip = TestingEquipment.objects.filter(pointer=ruser).get(equipment=ob)
-            except:
-                equip = None
-        if ob.kategory == 'ВО':
-            try:
-                equip = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=ob)
-            except:
-                equip = None
-    except:
-        equip = None
+
 
     form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
 
     
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
+            try:
+                if ob.kategory == 'СИ':
+                    try:
+                        equip = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=ob)
+                    except:
+                        equip = None
+                if ob.kategory == 'ИO':
+                    try:
+                        equip = TestingEquipment.objects.filter(pointer=ruser).get(equipment=ob)
+                    except:
+                        equip = None
+                if ob.kategory == 'ВО':
+                    try:
+                        equip = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=ob)
+                    except:
+                        equip = None
+            except:
+                equip = None            
             form = EquipmentKategoryUpdateForm(request.POST,  instance=Equipment.objects.get(pk=str))
             if form.is_valid():                
                 order = form.save(commit=False)
