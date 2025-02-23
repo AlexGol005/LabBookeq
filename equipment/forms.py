@@ -1015,7 +1015,9 @@ class VerificationRegForm(forms.ModelForm):
                'verificator': autocomplete.ModelSelect2(url='verificators-autocomplete'),
         }
        
-       requireds = { "verificator": True}
+        requireds = {
+            "verificator": True,
+        }
            
 
     def __init__(self, *args, **kwargs):
@@ -1120,7 +1122,7 @@ class CalibrationRegForm(forms.ModelForm):
 
                'verificator': autocomplete.ModelSelect2(url='verificators-autocomplete'),
         }
-       requireds = { "verificator": True}
+        requireds = { "verificator": True}
             
 
     def __init__(self, *args, **kwargs):
@@ -1223,7 +1225,7 @@ class AttestationRegForm(forms.ModelForm):
 
                'verificator': autocomplete.ModelSelect2(url='verificators-autocomplete'),
         }
-       requireds = {"verificator": True}
+        requireds = {"verificator": True}
             
 
     def __init__(self, *args, **kwargs):
