@@ -1511,7 +1511,7 @@ def VerUpdateView(request, str):
         
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
-        return redirect('verupdate')
+        return redirect('verificationupdate')
 
 
 @login_required
@@ -1540,6 +1540,31 @@ def CalibrationReg(request, str):
 
 
 @login_required
+def CalibrationUpdateView(request, str):
+    """выводит форму для обновления сведений о калибровке """
+    """path('сalibrationupdate/<str:str>/', views.CalibrationUpdateView, name='сalibrationupdate'),"""
+    for_a = Calibrationequipment.objects.get(pk=str)
+    a=for_a.equipmentSM.equipment.exnumber
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = CalibrationRegForm(request.POST, instance= Calibrationequipment.objects.get(pk=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                find_ver = Calibrationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()
+                find_ver.save()  
+                return redirect(order)
+        else:
+            form = CalibrationRegForm(instance=Calibrationequipment.objects.get(pk=str))
+        data = {'form': form,}                
+        return render(request, 'equipment/reg.html', data)
+        
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
+        return redirect('сalibrationupdate')
+        
+
+@login_required
 def AttestationReg(request, str):
     """выводит форму для внесения сведений об аттестации"""
     title = Equipment.objects.get(exnumber=str)
@@ -1563,6 +1588,31 @@ def AttestationReg(request, str):
     }
     return render(request, 'equipment/TEattestationreg.html', data)
 
+
+@login_required
+def AttestationUpdateView(request, str):
+    """выводит форму для обновления сведений о аттестации """
+    """path('attestationupdate/<str:str>/', views.AttestationUpdateView, name='attestationupdate'),"""
+    for_a = Attestationequipment.objects.get(pk=str)
+    a=for_a.equipmentSM.equipment.exnumber
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = AttestationRegForm(request.POST, instance= Attestationequipment.objects.get(pk=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                find_ver = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()
+                find_ver.save()  
+                return redirect(order)
+        else:
+            form = AttestationRegForm(instance=Attestationequipment.objects.get(pk=str))
+        data = {'form': form,}                
+        return render(request, 'equipment/reg.html', data)
+        
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
+        return redirect('attestationupdate')
+        
 
 @login_required
 def EquipmentMetrologyUpdate(request, str):
@@ -2628,7 +2678,7 @@ def VerificationDeleteView(request, str):
             note.delete()
             find_ver = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()
             find_ver.save()            
-            messages.success(request, f'Запись о поверке удалена! {Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()}')
+            messages.success(request, 'Запись о поверке удалена!')
             return redirect(f'/equipment/measureequipment/verification/{a}/')            
         except:
             messages.success(request, 'Невозможно удалить')
@@ -2637,9 +2687,53 @@ def VerificationDeleteView(request, str):
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
         return redirect(f'/equipment/measureequipment/verification/{a}/')
 
-        note = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
+
+@login_required
+def CalibrationDeleteView(request, str):
+    """для кнопки удаления калибровки """
+    """не выводит страницу, выполняет действие"""
+    """path('calibrationdelete/<str:str>/', views.CalibrationDeleteView, name='calibrationdelete'),"""
+    for_a = Calibrationequipment.objects.get(pk=str)
+    a=for_a.equipmentSM.equipment.exnumber
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
-            strreg = note.latest('pk').equipmentSM.equipment.exnumber
+            ruser=request.user.profile.userid
+            note = Calibrationequipment.objects.get(pk=str)
+            note.delete()
+            find_ver = Calibrationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()
+            find_ver.save()            
+            messages.success(request, 'Запись о калибровке удалена!')
+            return redirect(f'/equipment/measureequipment/calibration/{a}/')            
         except:
-            strreg = Equipment.objects.get(exnumber=str).exnumber
+            messages.success(request, 'Невозможно удалить')
+            return redirect(f'/equipment/measureequipment/calibration/{a}/')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect(f'/equipment/measureequipment/calibration/{a}/')
+
+
+@login_required
+def AttestationDeleteView(request, str):
+    """для кнопки удаления аттестации """
+    """не выводит страницу, выполняет действие"""
+    """path('attestationdelete/<str:str>/', views.AttestationDeleteView, name='attestationdelete'),"""
+    for_a = Attestationequipment.objects.get(pk=str)
+    a=for_a.equipmentSM.equipment.exnumber
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            ruser=request.user.profile.userid
+            note = Attestationequipment.objects.get(pk=str)
+            note.delete()
+            find_ver = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()
+            find_ver.save()            
+            messages.success(request, 'Запись об аттестации удалена!')
+            return redirect(f'/equipment/testingequipment/attestation/{a}/')            
+        except:
+            messages.success(request, 'Невозможно удалить')
+            return redirect(f'/equipment/testingequipment/attestation/{a}/')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect(f'/equipment/testingequipment/attestation/{a}/')
+
+
 
