@@ -1502,7 +1502,7 @@ def VerUpdateView(request, str):
                 order.save()
                 return redirect(order)
         else:
-            form = VerificationRegForm(instance= Verificationequipment.objects.filter(pk=str))
+            form = VerificationRegForm(instance=Verificationequipment.objects.filter(pk=str))
         data = {'form': form,}                
         return render(request, 'equipment/reg.html', data)
         
