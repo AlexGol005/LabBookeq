@@ -2732,13 +2732,13 @@ def AttestationDeleteView(request, str):
             find_ver = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()
             find_ver.save()            
             messages.success(request, 'Запись об аттестации удалена!')
-            return redirect(f'/equipment/testequipment/attestation/{a}/')            
+            return redirect(f'/equipment/testingequipment/attestation/{a}/')            
         except:
             messages.success(request, 'Невозможно удалить')
-            return redirect(f'/equipment/testequipment/attestation/{a}/')
+            return redirect(f'/equipment/testingequipment/attestation/{a}/')
     else:
         messages.success(self.request, "Раздел доступен только продвинутому пользователю")
-        return redirect(f'/equipment/testequipment/attestation/{a}/')
+        return redirect(f'/equipment/testingequipment/attestation/{a}/')
 
 
 
