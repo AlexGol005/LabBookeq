@@ -2529,7 +2529,8 @@ def EquipmentKategoryUpdate(request, str):
     """path('equipmentkategoryupdate/<str:str>/', views.EquipmentKategoryUpdate, name='equipmentkategoryupdate'),"""
     ruser=request.user.profile.userid
     ob = Equipment.objects.filter(pointer=ruser).get(pk=str)
-    equip = Equipment.objects.filter(pointer=ruser).get(pk=str)
+  
+    
     if ob.kategory == 'СИ':
         equip = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=ob)
     if ob.kategory == 'ИO':
