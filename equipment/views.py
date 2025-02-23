@@ -2580,11 +2580,11 @@ def EquipmentKategoryUpdate(request, str):
     ruser=request.user.profile.userid
     ob = Equipment.objects.filter(pointer=ruser).get(pk=str)
     equip = Equipment.objects.filter(pointer=ruser).get(pk=str)
-    if title.kategory == 'СИ':
+    if ob.kategory == 'СИ':
         equip = MeasurEquipment.objects.filter(pointer=ruser).get(equipment=title)
-    if title.kategory == 'ИO':
+    if ob.kategory == 'ИO':
         equip = TestingEquipment.objects.filter(pointer=ruser).get(equipment=title)
-    if title.kategory == 'ВО':
+    if ob.kategory == 'ВО':
         equip = HelpingEquipment.objects.filter(pointer=ruser).get(equipment=title)
 
     form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
