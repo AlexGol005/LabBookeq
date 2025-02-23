@@ -2564,10 +2564,10 @@ def EquipmentKategoryUpdate(request, str):
                     return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
             else:
                 form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
-            data = {'form': form, 
+                data = {'form': form, 
                     'ob': ob,               
                     }
-        return render(request, 'equipment/Eindividuality.html', data)
+                return render(request, 'equipment/Eindividuality.html', data)
     else:
         messages.success(request, f' Раздел доступен только продвинутому пользователю')
         return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
