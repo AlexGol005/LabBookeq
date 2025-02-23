@@ -2550,7 +2550,7 @@ def EquipmentKategoryUpdate(request, str):
     form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
 
     
-    if (request.user.has_perm('equipment.add_equipment') or request.user.is_superuser) and  equip.pointer == ruser:
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = EquipmentKategoryUpdateForm(request.POST,  instance=Equipment.objects.get(pk=str))
             if form.is_valid():                
