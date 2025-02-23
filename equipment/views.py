@@ -1092,11 +1092,15 @@ def EquipmentUpdate(request, str):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
-                if title.kategory == 'СИ' and title.measurequipment:
-                    return redirect(reverse('measureequipment', kwargs={'str': str}))
-                if title.kategory == 'СИ' and not title.measurequipment:
-                    return redirect('euipmentall')
+                if title.kategory == 'СИ':
+                    try:
+                        title.measurequipment
+                        return redirect(reverse('measureequipment', kwargs={'str': str}))
+                    except:
+                        return redirect('euipmentall')
 
+
+                    
                 if title.kategory == 'ИО' and title.testingequipment:
                     return redirect(reverse('testequipment', kwargs={'str': str}))
                 if title.kategory == 'ИО' and not title.testingequipment:   
