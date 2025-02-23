@@ -1496,7 +1496,7 @@ def VerUpdateView(request, str):
     
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            form = VerificationRegForm(request.POST, instance= Verificationequipment.objects.filter(pk=str))                                                       
+            form = VerificationRegForm(request.POST, instance= Verificationequipment.objects.get(pk=str))                                                       
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
