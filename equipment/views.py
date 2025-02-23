@@ -2562,8 +2562,8 @@ def EquipmentKategoryUpdate(request, str):
                     if equip: 
                         equip.delete()
                     return redirect(f'/equipment/equipmentkategoryupdate/{str}/')
-        else:
-            form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
+            else:
+                form = EquipmentKategoryUpdateForm(instance=Equipment.objects.get(pk=str))
         data = {'form': form, 
                 'ob': ob,               
                 }
