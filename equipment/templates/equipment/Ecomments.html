@@ -46,6 +46,7 @@
             <p><b>Тип записи: {{ obj.type }}</b></p>
             <p><b>Автор записи: {{ obj.created_by.profile.name|default_if_none:"" }}</b></p>
             <span class="text-muted"> {{ obj.date|date:"j F Y" }}</span>
+             <br>
             <a href="{% url 'ecommentdelete' obj.pk %}" class="btn btn-outline-primary mt-3"> удалить</a>
         </div>
         <br>
