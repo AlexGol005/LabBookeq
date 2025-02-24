@@ -824,7 +824,7 @@ class CommentsEquipment(models.Model):
     forNote = models.ForeignKey(Equipment, verbose_name='К прибору', on_delete=models.CASCADE)
     author = models.CharField('Автор', max_length=90, blank=True, null=True)
     type = models.CharField('Тип записи', max_length=90, blank=True, null=True, choices=NOTETYPE)
-    img = models.ImageField('Фото', upload_to='user_images', blank=True, null=True, default='user_images/default.png')
+    img = models.ImageField('Фото', upload_to='user_images', blank=True, null=True)
 
     def __str__(self):
         return f' {self.author} , {self.forNote.exnumber},  {self.date}'
