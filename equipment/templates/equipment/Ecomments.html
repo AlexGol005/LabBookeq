@@ -43,7 +43,7 @@
             <hr>
         
             <p><b>Тип записи: {{ obj.type }}</b></p>
-            <p><b>Автор записи: {{ obj.author }}</b></p>
+            <p><b>Автор записи: {{ obj.created_by.name|default_if_none:"" }}</b></p>
             <span class="text-muted"> {{ obj.date|date:"j F Y" }}</span>
         </div>
         <br>
