@@ -1493,6 +1493,7 @@ def VerificationReg(request, str):
 def VerUpdateView(request, str):
     """выводит форму для обновления сведений о поверке """
     """path('verificationupdate/<str:str>/', views.VerUpdateView, name='verificationupdate'),"""
+    title = Equipment.objects.get(exnumber=str)
     for_a = Verificationequipment.objects.get(pk=str)
     a=for_a.equipmentSM.equipment.exnumber
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
@@ -1545,6 +1546,7 @@ def CalibrationReg(request, str):
 def CalibrationUpdateView(request, str):
     """выводит форму для обновления сведений о калибровке """
     """path('сalibrationupdate/<str:str>/', views.CalibrationUpdateView, name='сalibrationupdate'),"""
+    title = Equipment.objects.get(exnumber=str)
     for_a = Calibrationequipment.objects.get(pk=str)
     a=for_a.equipmentSM.equipment.exnumber
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
@@ -1598,6 +1600,7 @@ def AttestationReg(request, str):
 def AttestationUpdateView(request, str):
     """выводит форму для обновления сведений о аттестации """
     """path('attestationupdate/<str:str>/', views.AttestationUpdateView, name='attestationupdate'),"""
+    title = Equipment.objects.get(exnumber=str)
     for_a = Attestationequipment.objects.get(pk=str)
     a=for_a.equipmentSM.equipment.exnumber
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
