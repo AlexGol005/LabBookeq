@@ -2699,9 +2699,11 @@ def VerificationDeleteView(request, str):
             ruser=request.user.profile.userid
             note = Verificationequipment.objects.get(pk=str)
             note.delete()
-            if a:
+            try:
                 find_ver = Verificationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()
-                find_ver.save()            
+                find_ver.save()    
+            except:
+                pass
             messages.success(request, 'Запись о поверке удалена!')
             return redirect(f'/equipment/measureequipment/verification/{a}/')            
         except:
@@ -2725,9 +2727,11 @@ def CalibrationDeleteView(request, str):
             ruser=request.user.profile.userid
             note = Calibrationequipment.objects.get(pk=str)
             note.delete()
-            if a:
+            try:
                 find_ver = Calibrationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()
-                find_ver.save()            
+                find_ver.save() 
+            except:
+                pass
             messages.success(request, 'Запись о калибровке удалена!')
             return redirect(f'/equipment/measureequipment/calibration/{a}/')            
         except:
