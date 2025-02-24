@@ -1466,7 +1466,7 @@ class DocsConsView(View, SuccessMessageMixin):
 @login_required
 def VerificationReg(request, str):
     """выводит форму для внесения сведений о поверке"""
-    """equipment/verificationreg.html"""
+    """equipment/MEverificationreg.html"""
     
     title = Equipment.objects.get(exnumber=str)
     if request.method == "POST":
@@ -1486,7 +1486,7 @@ def VerificationReg(request, str):
         'form': form,
         'title': title
     }
-    return render(request, 'equipment/verificationreg.html', data)
+    return render(request, 'equipment/MEverificationreg.html', data)
 
 
 @login_required
@@ -1511,7 +1511,7 @@ def VerUpdateView(request, str):
         data = {'form': form,
                 'title': title,
                }                
-        return render(request, 'equipment/verificationreg.html', data)
+        return render(request, 'equipment/MEverificationreg.html', data)
         
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
@@ -1522,7 +1522,7 @@ def VerUpdateView(request, str):
 def CalibrationReg(request, str):
     """выводит форму для внесения сведений о калибровке"""
     """path('measureequipment/calibrationreg/<str:str>/', views.CalibrationReg, name='measureequipmentcalibrationreg'),"""
-    """equipment/calibrationreg.html"""
+    """equipment/MEcalibrationreg.html"""
     title = Equipment.objects.get(exnumber=str)
     
     if request.method == "POST":
@@ -1542,7 +1542,7 @@ def CalibrationReg(request, str):
         'form': form,
         'title': title
     }
-    return render(request, 'equipment/calibrationreg.html', data)
+    return render(request, 'equipment/MEcalibrationreg.html', data)
 
 
 @login_required
@@ -1564,8 +1564,10 @@ def CalibrationUpdateView(request, str):
                 return redirect(order)
         else:
             form = CalibrationRegForm(instance=Calibrationequipment.objects.get(pk=str))
-        data = {'form': form,}                
-        return render(request, 'equipment/calibrationreg.html', data)
+        data = {'form': form,
+                'title': title
+               }                
+        return render(request, 'equipment/MEcalibrationreg.html', data)
         
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
@@ -1619,7 +1621,9 @@ def AttestationUpdateView(request, str):
                 return redirect(order)
         else:
             form = AttestationRegForm(instance=Attestationequipment.objects.get(pk=str))
-        data = {'form': form,}                
+        data = {'form': form,
+                'title': title
+               }                
         return render(request, 'equipment/TEattestationreg.html', data)
         
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
