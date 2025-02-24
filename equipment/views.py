@@ -877,14 +877,14 @@ def MeasurEquipmentCharaktersUpdateView(request, str):
 
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            form = MeasurEquipmentCharaktersCreateForm(request.POST,
+            form = MeasurEquipmentCharaktersUpdateForm(request.POST,
                                                        instance=MeasurEquipmentCharakters.objects.get(pk=str))
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
                 return redirect('measurequipmentcharacterslist')
         else:
-            form = MeasurEquipmentCharaktersCreateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
+            form = MeasurEquipmentCharaktersUpdateForm(instance=MeasurEquipmentCharakters.objects.get(pk=str))
         data = {'form': form,
                 }
         return render(request, 'equipment/Echaractersreg.html', data)
@@ -928,14 +928,14 @@ def TestingEquipmentCharaktersUpdateView(request, str):
     
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            form = TestingEquipmentCharaktersCreateForm(request.POST,
+            form = TestingEquipmentCharaktersUpdateForm(request.POST,
                                                        instance=TestingEquipmentCharakters.objects.get(pk=str))
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
                 return redirect('testingequipmentcharacterslist')
         else:
-            form = TestingEquipmentCharaktersCreateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
+            form = TestingEquipmentCharaktersUpdateForm(instance=TestingEquipmentCharakters.objects.get(pk=str))
         data = {'form': form,
                 }
         return render(request, 'equipment/Echaractersreg.html', data)
@@ -979,14 +979,14 @@ def HelpingEquipmentCharaktersUpdateView(request, str):
     
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            form = HelpingEquipmentCharaktersCreateForm(request.POST,
+            form = HelpingEquipmentCharaktersUpdateForm(request.POST,
                                                        instance=HelpingEquipmentCharakters.objects.get(pk=str))
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
                 return redirect('helpingequipmentcharacterslist')
         else:
-            form = HelpingEquipmentCharaktersCreateForm(instance=HelpingEquipmentCharakters.objects.get(pk=str))
+            form = HelpingEquipmentCharaktersUpdateForm(instance=HelpingEquipmentCharakters.objects.get(pk=str))
         data = {'form': form,
                 }
         return render(request, 'equipment/Echaractersreg.html', data)
