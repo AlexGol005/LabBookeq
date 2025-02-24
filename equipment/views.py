@@ -1957,7 +1957,11 @@ class CommentsView(View):
             order.forNote = Equipment.objects.get(exnumber=str)
             order.save()
             messages.success(request, f'Запись добавлена!')
-            return redirect(order)
+            return redirect(reverse('equipmentcomments', kwargs={'str': str}))
+        else:
+            messages.success(request, f'что-то пошло не так')
+            return redirect(reverse('equipmentcomments', kwargs={'str': str}))
+            
 
 
 
