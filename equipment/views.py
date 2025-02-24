@@ -2775,7 +2775,7 @@ def EcommentDeleteView(request, str):
     """path('ecommentdelete/<str:str>/', views.EcommentDeleteView, name='ecommentdelete'),"""
     note = CommentsEquipment.objects.get(pk=str)
     a = note.equipment.exnumber
-    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser or request.user.username = note.created_by:
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser or request.user.username == note.created_by:
         try:
             note.delete()
             messages.success(request, 'Комментарий удален!')
