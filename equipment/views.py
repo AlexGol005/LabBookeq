@@ -2749,9 +2749,12 @@ def AttestationDeleteView(request, str):
         try:
             note = Attestationequipment.objects.get(pk=str)
             note.delete()
-            if a:
+            try:
+                a
                 find_ver = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=a).last()
-                find_ver.save()            
+                find_ver.save()
+            except:
+                pass
             messages.success(request, 'Запись об аттестации удалена!')
             return redirect(f'/equipment/testingequipment/attestation/{a}/')            
         except:
