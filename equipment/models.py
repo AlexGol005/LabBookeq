@@ -835,11 +835,12 @@ class CommentsEquipment(models.Model):
 
     def save(self, *args, **kwargs):
         super().save()
-        image = Image.open(self.img.path)
-        if image.height > 1000 or image.width > 1000:
-            resize = (1000, 1000)
-            image.thumbnail(resize)
-            image.save(self.img.path)
+        if self.img
+                image = Image.open(self.img.path)
+                if image.height > 1000 or image.width > 1000:
+                    resize = (1000, 1000)
+                    image.thumbnail(resize)
+                    image.save(self.img.path)
 
     class Meta:
         verbose_name = 'Оборудование: запись о приборе'
