@@ -1507,7 +1507,7 @@ def VerUpdateView(request, str):
         else:
             form = VerificationRegForm(instance=Verificationequipment.objects.get(pk=str))
         data = {'form': form,}                
-        return render(request, 'equipment/reg.html', data)
+        return render(request, 'equipment/verificationreg.html', data)
         
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
@@ -1559,7 +1559,7 @@ def CalibrationUpdateView(request, str):
         else:
             form = CalibrationRegForm(instance=Calibrationequipment.objects.get(pk=str))
         data = {'form': form,}                
-        return render(request, 'equipment/reg.html', data)
+        return render(request, 'equipment/verificationreg.html', data)
         
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
@@ -1612,7 +1612,7 @@ def AttestationUpdateView(request, str):
         else:
             form = AttestationRegForm(instance=Attestationequipment.objects.get(pk=str))
         data = {'form': form,}                
-        return render(request, 'equipment/reg.html', data)
+        return render(request, 'equipment/verificationreg.html', data)
         
     if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
         messages.success(request, 'Раздел доступен только продвинутому пользователю')
