@@ -96,7 +96,7 @@
     {#записи о приборе#}
     <div style="text-align: center; margin-top: 10px"><h4>Внести запись в карточку прибора* </h4></div>    
     <div style="text-align: center; margin-top: 10px">
-     <a href="/equipment/testequipment/{{ obj.equipment.exnumber }}/comments/"  class="btn btn-primary mt-2">
+     <a href="{% url 'equipmentcomments'  obj.equipment.exnumber %}"  class="btn btn-primary mt-2">
          Внести запись о приборе и смотреть записи (для всех пользователей)</a></div>
     {#конец записи о приборе#}
     
