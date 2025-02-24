@@ -1714,6 +1714,8 @@ class VerificationequipmentView(LoginRequiredMixin, View):
 
 class CalibrationequipmentView(LoginRequiredMixin, View):
     """ выводит историю калибровок и форму для добавления комментария к истории калибровок """
+    """path('measureequipment/calibration/<str:str>/', views.CalibrationequipmentView.as_view(), name='measureequipmentcal'),"""
+    """equipment/MEcalibration.html"""
 
     def get(self, request, str):
         note = Calibrationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
@@ -1763,6 +1765,8 @@ class CalibrationequipmentView(LoginRequiredMixin, View):
 
 class AttestationequipmentView(LoginRequiredMixin, View):
     """ выводит историю аттестаций и форму для добавления комментария к истории аттестаций """
+    """path('testingequipment/attestation/<str:str>/', views.AttestationequipmentView.as_view(), name='testingequipmentatt'),"""
+    """equipment/TEattestation.html"""
 
     def get(self, request, str):
         note = Attestationequipment.objects.filter(equipmentSM__equipment__exnumber=str).order_by('-pk')
