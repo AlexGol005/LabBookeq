@@ -2774,7 +2774,7 @@ def EcommentDeleteView(request, str):
     """не выводит страницу, выполняет действие"""
     """path('ecommentdelete/<str:str>/', views.EcommentDeleteView, name='ecommentdelete'),"""
     note = CommentsEquipment.objects.get(pk=str)
-    a = note.equipment.exnumber
+    a = note.forNote.exnumber
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser or request.user.username == note.created_by:
         try:
             note.delete()
