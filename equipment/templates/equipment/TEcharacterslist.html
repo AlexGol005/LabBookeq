@@ -89,16 +89,16 @@
 
             
 
-           
+      {#     ТО #}      
            {#  {% if obj.serviceequipmentte and POINTER == obj.serviceequipmentte.pointer %} #}
             {% if obj.serviceequipmentte and USER_HAVE_RIGHTS  %}
-              <td> <a href="{% url 'toregte' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">редактировать</a></td>  
+              <td> <a href="{% url 'toregte' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">ред.ТО</a></td>  
            {#   {% elif obj.serviceequipmentte and POINTER != obj.serviceequipmentte.pointer %} #}
              {% elif obj.serviceequipmentte and not USER_HAVE_RIGHTS  %}
-            <td> <a href="{% url 'tote' obj.serviceequipmentte.pk %}" target="blank" class="btn btn-outline-primary mt-3">смотреть</a></td> 
+            <td> <a href="{% url 'tote' obj.serviceequipmentte.pk %}" target="blank" class="btn btn-outline-primary mt-3">см.ТО</a></td> 
             
              {% elif not obj.serviceequipmentte and USER_HAVE_RIGHTS  %}
-            <td> <a href="{% url 'toregte' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">добавить</a></td>
+            <td> <a href="{% url 'toregte' obj.pk %}" target="blank" class="btn btn-outline-primary mt-3">доб.ТО</a></td>
             {% else %}
              <td></td>
             {% endif %}
