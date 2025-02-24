@@ -2768,4 +2768,22 @@ def AttestationDeleteView(request, str):
         return redirect(f'/equipment/testingequipment/attestation/{a}/')
 
 
+@login_required
+def EcommentDeleteView(request, str):
+    """для кнопки удаления комментария к оборудованию (записи в карточке прибора)"""
+    """не выводит страницу, выполняет действие"""
+    """path('ecommentdelete/<str:str>/', views.EcommentDeleteView, name='ecommentdelete'),"""
+    note = CommentsEquipment.objects.get(pk=str)
+    a = note.equipment.exnumber
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser or request.user.username = note.created_by:
+        try:
+            note.delete()
+            messages.success(request, 'Комментарий удален!')
+            return redirect(reverse('equipmentcomments', kwargs={'str': a}))           
+        except:
+            messages.success(request, 'Невозможно удалить!')
+            return redirect(reverse('equipmentcomments', kwargs={'str': a}))
+    else:
+        messages.success(self.request, "Удаление доступно только продвинутому пользователю или автору записи")
+        return redirect(reverse('equipmentcomments', kwargs={'str': a}))
 
