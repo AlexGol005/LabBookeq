@@ -60,11 +60,11 @@
         <tbody>
         {% for obj in objects %}
         <tr>
-            <td>{{ obj.name }}</td>
-            <td>{{ obj.modificname }}</td>
-            <td>{{ obj.typename }}</td>
-            <td> {{ obj.calinterval }}</td>
-            <td> {{ obj.measurydiapason }}</td>
+            <td>{{ obj.name|default_if_none:"" }}</td>
+            <td>{{ obj.modificname|default_if_none:"" }}</td>
+            <td>{{ obj.typename|default_if_none:"" }}</td>
+            <td> {{ obj.calinterval|default_if_none:"" }}</td>
+            <td> {{ obj.measurydiapason|default_if_none:"" }}</td>
 
 {#     редактирование #}           
             {% if USER_HAVE_RIGHTS  %}  
