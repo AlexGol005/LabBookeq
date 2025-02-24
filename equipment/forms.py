@@ -450,7 +450,7 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
     reestr = forms.CharField(label='Номер в Госреестре', required=True,
                              widget=forms.TextInput(attrs={'class': 'form-control',
                                                            'placeholder': ''}))
-    name = forms.CharField(label='Название прибора', max_length=10000000, required=True,
+    name = forms.CharField(label='Название прибора (как в описании типа, но в единственном числе)', max_length=10000000, required=True,
                            widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': ''}))
     typename = forms.CharField(label='Тип', max_length=10000000, required=False, initial='нет типа',
@@ -541,6 +541,111 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
                 Column('typename', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('modificname', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('accuracity', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('complectlist', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('power', css_class='form-group col-md-4 mb-0'),
+                Column('needsetplace', css_class='form-group col-md-4 mb-0'),
+                Column('expresstest', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('voltage', css_class='form-group col-md-6 mb-0'),
+                Column('frequency', css_class='form-group col-md-6 mb-0'),
+            ),
+            Row(
+                Column('temperature', css_class='form-group col-md-4 mb-0'),
+                Column('humidicity', css_class='form-group col-md-4 mb-0'),
+                Column('pressure', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('setplace', css_class='form-group col-md-12 mb-0'),
+            ),
+            Row(
+                Column('traceability', css_class='form-group col-md-12 mb-0'),
+            ),
+            Row(
+                Column('cod', css_class='form-group col-md-12 mb-0'),
+            ),
+            Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
+
+
+class MeasurEquipmentCharaktersUpdateForm(forms.ModelForm):
+    """форма для обновления характеристик СИ (госреестра)"""
+    calinterval = forms.CharField(label='Межповерочный интервал, месяцев', max_length=10000000, required=True,
+                                  initial='12',
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
+    measurydiapason = forms.CharField(label='Диапазон измерений', max_length=10000000, required=True,
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                   'placeholder': ''}))
+    accuracity = forms.CharField(label='Класс точности /(разряд/), погрешность и /(или/) '
+                                 'неопределённость /(класс, разряд/)', max_length=10000000, required=True,
+                                 widget=forms.Textarea(attrs={'class': 'form-control',
+                                                              'placeholder': ''}))
+    power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
+    needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
+    voltage = forms.CharField(label='Напряжение требуемое', required=False,
+                              widget=forms.TextInput(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
+    frequency = forms.CharField(label='Частота требуемая', required=False,
+                                widget=forms.TextInput(attrs={'class': 'form-control',
+                                                              'placeholder': ''}))
+    temperature = forms.CharField(label='Температура требуемая', required=False,
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
+    humidicity = forms.CharField(label='Влажность требуемая', required=False,
+                                 widget=forms.TextInput(attrs={'class': 'form-control',
+                                                               'placeholder': ''}))
+    pressure = forms.CharField(label='Давление требуемое', required=False,
+                               widget=forms.TextInput(attrs={'class': 'form-control',
+                                                             'placeholder': ''}))
+    setplace = forms.CharField(label='Описание мероприятий по установке', required=False,
+                               widget=forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
+    complectlist = forms.CharField(label='Где указана комплектация', required=False,
+                                   initial='Паспорт, страница 2',
+                                   widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                 'placeholder': ''}))
+    expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
+    traceability = forms.CharField(label='Информация о прослеживаемости (к какому '
+                                   'эталону прослеживаются измерения)', required=False,
+                                   widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                 'placeholder': ''}))
+    cod = forms.CharField(label='виды измерений, тип (группа) средств измерений по МИ 2314', required=False,
+                                   widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                 'placeholder': ''}))
+
+
+
+    class Meta:
+        model = MeasurEquipmentCharakters
+        fields = [
+            'calinterval',
+            'measurydiapason', 'accuracity',
+            'aim',
+            'power',
+            'needsetplace',
+            'voltage',
+            'frequency',
+            'temperature',
+            'humidicity',
+            'pressure',
+            'setplace',
+            'complectlist',
+            'expresstest',
+            'traceability',
+                  ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('calinterval', css_class='form-group col-md-6 mb-0')),
             Row(
                 Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
             Row(
@@ -678,6 +783,93 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
 
 
+class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
+    """форма для обновления характеристик ИО"""
+    calinterval = forms.CharField(label='Межаттестационный интервал, месяцев', max_length=10000000, required=True,
+                                  initial='24',
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
+    measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=True,
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                   'placeholder': ''}))
+    power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
+    needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
+    voltage = forms.CharField(label='Напряжение требуемое', required=False,
+                              widget=forms.TextInput(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
+    frequency = forms.CharField(label='Частота требуемая', required=False,
+                                widget=forms.TextInput(attrs={'class': 'form-control',
+                                                              'placeholder': ''}))
+    temperature = forms.CharField(label='Температура требуемая', required=False,
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
+    humidicity = forms.CharField(label='Влажность требуемая', required=False,
+                                 widget=forms.TextInput(attrs={'class': 'form-control',
+                                                               'placeholder': ''}))
+    pressure = forms.CharField(label='Давление требуемое', required=False,
+                               widget=forms.TextInput(attrs={'class': 'form-control',
+                                                             'placeholder': ''}))
+    setplace = forms.CharField(label='Описание мероприятий по установке', required=False,
+                               widget=forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
+    complectlist = forms.CharField(label='Где указана комплектация', required=False,
+                                   initial='Руководство по эксплуатации, страница 2',
+                                   widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                 'placeholder': ''}))
+    expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
+
+    class Meta:
+        model = TestingEquipmentCharakters
+        fields = [
+                  'calinterval',
+                  'measurydiapason',
+                  'aim',
+                  'aim2',
+                  'ndoc',
+                  'power',
+                  'needsetplace',
+                  'voltage',
+                  'frequency',
+                  'temperature',
+                  'humidicity',
+                  'pressure',
+                  'setplace',
+                  'complectlist',
+                  'expresstest',
+                  ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('calinterval', css_class='form-group col-md-6 mb-0')),
+            Row(
+                Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('accuracity', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('complectlist', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('power', css_class='form-group col-md-4 mb-0'),
+                Column('needsetplace', css_class='form-group col-md-4 mb-0'),
+                Column('expresstest', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('voltage', css_class='form-group col-md-6 mb-0'),
+                Column('frequency', css_class='form-group col-md-6 mb-0'),
+            ),
+            Row(
+                Column('temperature', css_class='form-group col-md-4 mb-0'),
+                Column('humidicity', css_class='form-group col-md-4 mb-0'),
+                Column('pressure', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('setplace', css_class='form-group col-md-12 mb-0'),
+            ),
+            Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
+
+
 class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
     """форма для внесения характеристик ВО"""
     name = forms.CharField(label='Название прибора', max_length=10000000, required=True,
@@ -758,6 +950,85 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
             'name',
             'typename',
             'modificname',
+            'measurydiapason',
+            'aim',
+            'ndoc',
+            'power',
+            'needsetplace',
+            'voltage',
+            'frequency',
+            'temperature',
+            'humidicity',
+            'pressure',
+            'setplace',
+            'complectlist',
+            'expresstest',
+            'kvasyattestation',
+                  ]
+
+
+class HelpingEquipmentCharaktersUpdateForm(forms.ModelForm):
+    """форма для обновления характеристик ВО"""
+    measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                    'placeholder': ''}))
+    power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
+    needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
+    voltage = forms.CharField(label='Напряжение требуемое', required=False,
+                              widget=forms.TextInput(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
+    frequency = forms.CharField(label='Частота требуемая', required=False,
+                                widget=forms.TextInput(attrs={'class': 'form-control',
+                                                              'placeholder': ''}))
+    temperature = forms.CharField(label='Температура требуемая', required=False,
+                                  widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                'placeholder': ''}))
+    humidicity = forms.CharField(label='Влажность требуемая', required=False,
+                                 widget=forms.TextInput(attrs={'class': 'form-control',
+                                                               'placeholder': ''}))
+    pressure = forms.CharField(label='Давление требуемое', required=False,
+                               widget=forms.TextInput(attrs={'class': 'form-control',
+                                                             'placeholder': ''}))
+    setplace = forms.CharField(label='Описание мероприятий по установке', required=False,
+                               widget=forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
+    complectlist = forms.CharField(label='Где указана комплектация', required=False,
+                                   initial='Руководство по эксплуатации, страница 2',
+                                   widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                 'placeholder': ''}))
+    expresstest = forms.BooleanField(label='Возможно тестирование', required=False, initial=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('complectlist', css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('power', css_class='form-group col-md-4 mb-0'),
+                Column('needsetplace', css_class='form-group col-md-4 mb-0'),
+                Column('expresstest', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('voltage', css_class='form-group col-md-6 mb-0'),
+                Column('frequency', css_class='form-group col-md-6 mb-0'),
+            ),
+            Row(
+                Column('temperature', css_class='form-group col-md-4 mb-0'),
+                Column('humidicity', css_class='form-group col-md-4 mb-0'),
+                Column('pressure', css_class='form-group col-md-4 mb-0'),
+            ),
+            Row(
+                Column('setplace', css_class='form-group col-md-12 mb-0'),
+            ),
+
+            Row(Submit('submit', 'Записать', css_class='btn  btn-info col-md-11 mb-3 mt-4 ml-4')))
+
+    class Meta:
+        model = HelpingEquipmentCharakters
+        fields = [
             'measurydiapason',
             'aim',
             'ndoc',
