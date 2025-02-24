@@ -25,7 +25,7 @@
     <form method="post" enctype="multipart/form-data" class="form-register">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-outline-warning" type="submit">Отправить</button>
+        <button class="btn btn-outline-primary" type="submit">Отправить</button>
     </form>
     <br>
     </center>
@@ -46,9 +46,11 @@
             <p><b>Тип записи: {{ obj.type }}</b></p>
             <p><b>Автор записи: {{ obj.created_by.profile.name|default_if_none:"" }}</b></p>
             <span class="text-muted"> {{ obj.date|date:"j F Y" }}</span>
+            <button class="btn btn-outline-primary" type="submit">Отправить</button>
         </div>
         <br>
-   
+   <a href="{% url 'ecommentdelete' obj.pk %}"> </a>
+        
     {% endfor %}
  </center>
     </div>
