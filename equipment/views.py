@@ -1937,8 +1937,8 @@ class StrHelpEquipmentView(LoginRequiredMixin, View):
 # блок 11 - все комментарии ко всему
 
 class CommentsView(View):
-    """ выводит комментарии к оборудованию и форму для добавления комментариев """
-    """ path('measureequipment/<str:str>/comments/', views.CommentsView.as_view(), name='measureequipmentcomm'),"""
+    """ выводит комментарии к оборудованию и форму для добавления комментариев (записи в карточке прибора для пользователей всех уровней) """
+    """ path('equipmentcomments/<str:str>', views.CommentsView.as_view(), name='equipmentcomments'),"""
     
     form_class = NoteCreationForm
     initial = {'key': 'value'}
@@ -1948,7 +1948,7 @@ class CommentsView(View):
         note = CommentsEquipment.objects.filter(forNote__exnumber=str).order_by('-pk')
         title = Equipment.objects.get(exnumber=str)
         form = NoteCreationForm()
-        return render(request, 'equipment/comments.html', {'note': note, 'title': title, 'form': form, 'URL': URL})
+        return render(request, 'equipment/Ecomments.html', {'note': note, 'title': title, 'form': form, 'URL': URL})
 
     def post(self, request, str, *args, **kwargs):
         form = NoteCreationForm(request.POST, request.FILES)
