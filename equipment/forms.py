@@ -220,13 +220,11 @@ class NoteCreationForm(forms.ModelForm):
                                                         'placeholder': 'введите текст записи о приборе'}))
     img = forms.ImageField(label='Загрузить фото прибора или документа', required=False,
                            widget=forms.FileInput)
-    author = forms.CharField(label='Автор записи', required=False,  max_length=100,
-                             help_text='впишите автора если вы не авторизованы',
-                             widget=forms.TextInput(attrs={'class': 'form-control'}))
+
 
     class Meta:
         model = CommentsEquipment
-        fields = ['date', 'type', 'note', 'img', 'author']
+        fields = ['date', 'type', 'note', 'img']
 
 
 class CommentsVerificationCreationForm(forms.ModelForm):
