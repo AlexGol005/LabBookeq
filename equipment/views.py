@@ -1954,10 +1954,6 @@ class CommentsView(View):
         form = NoteCreationForm(request.POST, request.FILES)
         if form.is_valid():
             order = form.save(commit=False)
-            if request.user and not order.author:
-                order.author = request.user
-            if not request.user and order.author:
-                order.author = order.author
             order.forNote = Equipment.objects.get(exnumber=str)
             order.save()
             messages.success(request, f'Запись добавлена!')
