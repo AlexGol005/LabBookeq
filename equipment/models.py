@@ -101,6 +101,11 @@ class Manufacturer(models.Model):
         verbose_name = 'Производитель'
         verbose_name_plural = 'Производители'
 
+class Test(models.Model):
+    """тест"""
+    text = models.CharField('Поверитель', max_length=100)
+
+
 
 class Verificators(models.Model):
     """Компании поверители оборудования"""
