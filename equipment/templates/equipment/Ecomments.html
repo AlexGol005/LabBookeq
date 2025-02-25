@@ -10,16 +10,7 @@
 
 <div class="col-12">
 
-    {# распечатка карточки #}
-    {% if title.kategory == 'СИ' %}
-    <center>
-        <a href="{% url 'export_mecard_xls' title.measurequipment.pk %}"  class="btn btn-primary  mt-2 mr-2 ml-2">
-        Распечатать карточку на прибор</a>
-        {% elif title.kategory == 'ИО' %}
-         <a href="{% url 'export_mecard_xls' title.testingequipment.pk %}"  class="btn btn-primary  mt-2 mr-2 ml-2">
-<br>
-    </center>
-     {% endif %}
+
 
     
     {% if title.kategory == 'СИ' %}
@@ -37,7 +28,16 @@
     {% endif %}
 
 
-
+    {# распечатка карточки #}
+    {% if title.kategory == 'СИ' %}
+    <center>
+        <a href="{% url 'export_mecard_xls' title.measurequipment.pk %}"  class="btn btn-primary  mt-2 mr-2 ml-2">
+        Распечатать карточку на прибор</a>
+        {% elif title.kategory == 'ИО' %}
+         <a href="{% url 'export_mecard_xls' title.testingequipment.pk %}"  class="btn btn-primary  mt-2 mr-2 ml-2">
+<br>
+    </center>
+     {% endif %}
 
     
     <center>
