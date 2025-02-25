@@ -9,8 +9,8 @@ def change_status_equipment_get_instance(sender, instance, **kwargs):
   instance._previous_equipment = instance.equipment
 
 
-@receiver(post_save, sender=Equipment, dispatch_uid="update_stock_count")
-def change_status_equipment(sender, instance, created,**kwargs):
+@receiver(post_save, sender=Equipment)
+def change_status_equipment(sender, instance, updated,**kwargs):
   if instance._previous_equipment.status != instance.equipment.status:
     a = CommentsEquipment.objects.get(forNote = instance)
     a.note = 'поменяли статус'
