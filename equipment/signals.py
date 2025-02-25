@@ -4,9 +4,28 @@ from django.dispatch import receiver
 from .models import *
 
 
+
+
+
+
+
+
 @receiver(post_save, sender=CommentsEquipment)
-def my_handler(sender, **kwargs):
-    Test.objects.create()
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Test.objects.create()
+
+
+@receiver(post_save, sender=CommentsEquipment)
+def save_profile(sender, instance, **kwargs):
+    instance.test.save()
+
+
+
+
+# @receiver(post_save, sender=CommentsEquipment)
+# def my_handler(sender, **kwargs):
+#     Test.objects.create()
 
 
 # @receiver(pre_save, sender=Equipment)
