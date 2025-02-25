@@ -24,7 +24,7 @@
     {# распечатка карточки #}
     {% if title.kategory == 'СИ'  or  title.kategory == 'ИО' %}
     <div style="text-align: center; margin-top: 10px; margin-bottom: 50px">
-        <a href="{% url 'export_mecard_xls' obj.equipment.pk %}"  class="btn btn-primary  mt-2 mr-2 ml-2">
+        <a href="{% url 'export_mecard_xls' title.pk %}"  class="btn btn-primary  mt-2 mr-2 ml-2">
         Распечатать карточку на прибор</a>
 <br>
     </div>
