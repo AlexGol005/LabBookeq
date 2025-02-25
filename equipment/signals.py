@@ -1,10 +1,10 @@
-from django.db.models.signals import post_save, post_init
+from django.db.models.signals import post_save, post_init, pre_save
 from django.dispatch import receiver
 
 from .models import *
 
 
-@receiver(post_init, sender=Equipment)
+@receiver(pre_save, sender=Equipment)
 def change_status_equipment_get_instance(sender, instance, **kwargs):
   instance._previous_equipment = instance.equipment
 
