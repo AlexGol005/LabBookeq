@@ -33,11 +33,10 @@ def lead_post_init(sender, instance, **kwargs):
  
 
 @receiver(post_save, sender=Equipment, dispatch_uid="update_stock_count")
-  def criar_slug(sender, instance, created,**kwargs):
-    if instance._previous_status != instance.status:
-      CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
-
-      instance.save()
+def criar_slug(sender, instance, created,**kwargs):
+  if instance._previous_status != instance.status:
+    CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
+    instance.save()
 
 
 
