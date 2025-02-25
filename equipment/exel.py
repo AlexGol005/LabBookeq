@@ -1695,7 +1695,7 @@ def export_mecard_xls(request, pk):
     rows_2 = Personchange.objects.filter(equipment=note.equipment). \
         values_list(
         'date',
-        'person__name',
+        'person__profile__name',
     )
 
     rows_3 = Roomschange.objects.filter(equipment=note.equipment). \
