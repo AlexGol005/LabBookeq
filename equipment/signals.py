@@ -6,7 +6,7 @@ from .models import *
 
 @receiver(post_save, sender=CommentsEquipment)
 def my_handler(sender, **kwargs):
-    Test.objects.create(text = 'поменяли статус')
+    Test.objects.create()
 
 
 # @receiver(pre_save, sender=Equipment)
