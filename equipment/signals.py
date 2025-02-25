@@ -5,47 +5,25 @@ from .models import *
 
 
 
-@receiver(post_save, sender=CommentsEquipment)
-def create_profile(sender, instance, created, **kwargs):
-    if created:
-        Test.objects.create()
-
-
-
-
-
-
-
-
-# @receiver(sender, instance, created, **kwargs)
+# @receiver(post_save, sender=CommentsEquipment)
 # def create_profile(sender, instance, created, **kwargs):
 #     if created:
 #         Test.objects.create()
 
 
-# @receiver(post_save, sender=CommentsEquipment)
-# def save_profile(sender, instance, **kwargs):
-#     instance.test.save()
 
 
+@receiver(pre_save, sender=Equipment)
+def change_status_equipment_get_instance(sender, instance, **kwargs):
+  instance._previous_equipment = instance.equipment
 
 
-# @receiver(post_save, sender=CommentsEquipment)
-# def my_handler(sender, **kwargs):
-#     Test.objects.create()
-
-
-# @receiver(pre_save, sender=Equipment)
-# def change_status_equipment_get_instance(sender, instance, **kwargs):
-#   instance._previous_equipment = instance.equipment
-
-
-# @receiver(post_save, sender=Equipment)
-# def change_status_equipment(sender, instance, created,**kwargs):
-#   if instance._previous_equipment != instance.equipmen:
-#     a = CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
-#     a.save()
-#     instance.save()
+@receiver(post_save, sender=Equipment)
+def change_status_equipment(sender, instance, created,**kwargs):
+  if instance._previous_equipment != instance.equipmen:
+    a = CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
+    a.save()
+    instance.save()
 
 
 
