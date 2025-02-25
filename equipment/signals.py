@@ -15,7 +15,7 @@ from .models import *
 
 @receiver(pre_save, sender=Equipment)
 def change_status_equipment_get_instance(sender, instance, **kwargs):
-  instance._previous_equipment = instance.equipment
+  instance._previous_status = instance.status
 
 
 @receiver(post_save, sender=Equipment)
