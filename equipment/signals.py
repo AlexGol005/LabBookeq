@@ -4,17 +4,22 @@ from django.dispatch import receiver
 from .models import *
 
 
-@receiver(pre_save, sender=Equipment)
-def change_status_equipment_get_instance(sender, instance, **kwargs):
-  instance._previous_equipment = instance.equipment
+@receiver(post_save, sender=CommentsEquipment)
+def my_handler(sender, **kwargs):
+    print("Объект сохранён!")
 
 
-@receiver(post_save, sender=Equipment)
-def change_status_equipment(sender, instance, created,**kwargs):
-  if instance._previous_equipment != instance.equipmen:
-    a = CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
-    a.save()
-    instance.save()
+# @receiver(pre_save, sender=Equipment)
+# def change_status_equipment_get_instance(sender, instance, **kwargs):
+#   instance._previous_equipment = instance.equipment
+
+
+# @receiver(post_save, sender=Equipment)
+# def change_status_equipment(sender, instance, created,**kwargs):
+#   if instance._previous_equipment != instance.equipmen:
+#     a = CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
+#     a.save()
+#     instance.save()
 
 
 
