@@ -25,7 +25,7 @@ class MeasurEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
         
 # фиксация формы в админке реестр 
 admin.site.register(MeasurEquipmentCharakters, MeasurEquipmentCharaktersAdmin)
-
+admin.site.register(Test)
 admin.site.register(Manufacturer)
 admin.site.register(Rooms)
 admin.site.register(Personchange)
