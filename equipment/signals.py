@@ -13,31 +13,31 @@ from .models import *
 
 
 
-@receiver(pre_save, sender=Equipment)
-def change_status_equipment_get_instance(sender, instance, **kwargs):
+# @receiver(pre_save, sender=Equipment)
+# def change_status_equipment_get_instance(sender, instance, **kwargs):
+#   instance._previous_status = instance.status
+
+
+# @receiver(post_save, sender=Equipment)
+# def change_status_equipment(sender, instance, created,**kwargs):
+#   if instance._previous_status != instance.status:
+#     a = CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
+#     a.save()
+#     instance.save()
+
+
+
+@receiver(post_init, sender=Equipment)
+def lead_post_init(sender, instance, **kwargs):
   instance._previous_status = instance.status
+ 
 
+@receiver(post_save, sender=Equipment, dispatch_uid="update_stock_count")
+  def criar_slug(sender, instance, created,**kwargs):
+    if instance._previous_status != instance.status:
+      CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
 
-@receiver(post_save, sender=Equipment)
-def change_status_equipment(sender, instance, created,**kwargs):
-  if instance._previous_status != instance.status:
-    a = CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
-    a.save()
-    instance.save()
-
-
-
-# @receiver(post_init, sender=Post)
-# def lead_post_init(sender, instance, **kwargs):
-#     instance._previous_city = instance.city
-#     instance._previous_title = instance.title
-
-# @receiver(post_save, sender=Post, dispatch_uid="update_stock_count")
-# def criar_slug(sender, instance, created,**kwargs):
-#     if instance._previous_city != instance.city or instance._previous_title != instance.title:
-#         string = (instance.city+" "+instance.title+" "+str(instance.id))
-#         instance.slug = slugify(string)
-#         instance.save()
+      instance.save()
 
 
 
