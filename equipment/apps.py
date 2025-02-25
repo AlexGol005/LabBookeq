@@ -8,5 +8,5 @@ class EquipmentConfig(AppConfig):
     name = 'equipment'
     verbose_name = _('Лабораторное оборудование')
 
-def ready(self):
-    import equipment.signals
+    def ready(self):
+        import equipment.signals
