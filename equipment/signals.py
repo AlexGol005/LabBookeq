@@ -11,9 +11,7 @@ def create_profile(sender, instance, created, **kwargs):
         Test.objects.create()
 
 
-@receiver(post_save, sender=CommentsEquipment)
-def save_profile(sender, instance, **kwargs):
-    instance.save()
+
 
 
 
