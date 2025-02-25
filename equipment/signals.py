@@ -10,21 +10,44 @@ def change_status_equipment_get_instance(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=Equipment)
-def change_status_equipment(sender, instance, updated,**kwargs):
-  if instance._previous_equipment.status != instance.equipment.status:
+def change_status_equipment(sender, instance, created,**kwargs):
+  if instance._previous_equipment != instance.equipmen:
     a = CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
     a.save()
     instance.save()
 
 
-# @receiver(pre_save, sender=Equipment)
-# def create_comm(sender, instance, updated, **kwargs):
-#     if updated:
+
+# @receiver(post_init, sender=Post)
+# def lead_post_init(sender, instance, **kwargs):
+#     instance._previous_city = instance.city
+#     instance._previous_title = instance.title
+
+# @receiver(post_save, sender=Post, dispatch_uid="update_stock_count")
+# def criar_slug(sender, instance, created,**kwargs):
+#     if instance._previous_city != instance.city or instance._previous_title != instance.title:
+#         string = (instance.city+" "+instance.title+" "+str(instance.id))
+#         instance.slug = slugify(string)
+#         instance.save()
+
+
+
+
+# from django.contrib.auth.models import User
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
+
+# from .models import Profile
+
+
+# @receiver(post_save, sender=User)
+# def create_profile(sender, instance, created, **kwargs):
+#     if created:
 #         Profile.objects.create(user=instance)
 
 
 # @receiver(post_save, sender=User)
-# def save_comm(sender, instance, **kwargs):
+# def save_profile(sender, instance, **kwargs):
 #     instance.profile.save()
         
 
