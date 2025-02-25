@@ -1,1 +1,4 @@
 Смена пароля через консоль: python manage.py changepassword [<имя пользователя>]
+
+ date_modified = models.DateTimeField(auto_now=True)
+она будет хранит дату и время последнего сохранения
