@@ -12,9 +12,19 @@ def change_status_equipment_get_instance(sender, instance, **kwargs):
 @receiver(post_save, sender=Equipment)
 def change_status_equipment(sender, instance, updated,**kwargs):
   if instance._previous_equipment.status != instance.equipment.status:
-    a = CommentsEquipment.objects.get(forNote = instance)
-    a.note = 'поменяли статус'
+    a = CommentsEquipment.objects.create(forNote = instance, note = 'поменяли статус')
     a.save()
     instance.save()
+
+
+# @receiver(pre_save, sender=Equipment)
+# def create_comm(sender, instance, updated, **kwargs):
+#     if updated:
+#         Profile.objects.create(user=instance)
+
+
+# @receiver(post_save, sender=User)
+# def save_comm(sender, instance, **kwargs):
+#     instance.profile.save()
         
 
