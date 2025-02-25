@@ -5,9 +5,7 @@ from .models import *
 
 
 
-
-
-@receiver(sender, instance, created, **kwargs)
+@receiver(post_save, sender=CommentsEquipment)
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Test.objects.create()
@@ -16,6 +14,20 @@ def create_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=CommentsEquipment)
 def save_profile(sender, instance, **kwargs):
     instance.test.save()
+
+
+
+
+
+# @receiver(sender, instance, created, **kwargs)
+# def create_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Test.objects.create()
+
+
+# @receiver(post_save, sender=CommentsEquipment)
+# def save_profile(sender, instance, **kwargs):
+#     instance.test.save()
 
 
 
