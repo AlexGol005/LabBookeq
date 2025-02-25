@@ -1875,7 +1875,6 @@ def export_mecard_xls(request, pk):
 def export_tecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (ИО) в ексель'''
     note = TestingEquipment.objects.get(pk=pk)
-    author = f'Разработал: \n{company.manager_position} _____________ /{company.manager_name}/'
     cardname = pytils.translit.translify(note.equipment.exnumber) + ' ' +\
                 pytils.translit.translify(note.charakters.name) +\
                 ' ' + pytils.translit.translify(note.equipment.lot)
