@@ -34,6 +34,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>Категория</th>
                     <th>Внут.№</th>
                     <th> Номер в реестре </th>
                     <th> Название </th>
@@ -45,6 +46,7 @@
             </thead>
             <tbody>
             <tr>
+                <td>{{ obj.equipment.kategory|default_if_none:"нет" }}</td>
                 <td>{{ obj.equipment.exnumber|slice:":5" }}</td>
                 <td> {{ obj.charakters.reestr }}</td>    
                 <td> {{ obj.charakters.name }}</td>
