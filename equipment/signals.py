@@ -7,10 +7,7 @@ from .models import *
 
 
 
-
-
-
-@receiver(post_save, sender=CommentsEquipment)
+@receiver(sender, instance, created, **kwargs)
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Test.objects.create()
