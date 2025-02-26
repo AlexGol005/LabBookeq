@@ -16,7 +16,7 @@
     <center><a href='{% url "eq" %}'><h4> Лабораторное оборудование - все приборы</h4></a></center>
     <br>
     {#конец заголовка #}
-
+ <center>
 {#форма для поиска по полям #}
     <br><br>
     <div style="text-align: center; margin-top: 25px">
@@ -26,8 +26,9 @@
         </form>
     </div>
 {#конец формы для поиска#}
-
-
+    
+<a href="{% url 'equipmentreg' %}" class="btn btn-primary mr-2 ml-2 mt-3" style="width: 40%">Добавить новое ЛО</a>
+</center>
     
     {#основная таблица#}
     <center>
