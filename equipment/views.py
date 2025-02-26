@@ -704,7 +704,7 @@ class PersonchangeView(LoginRequiredMixin, ListView):
     """Выводит страницу с историей изменения ответственных за прибор для конкретного прибора"""
     """path('personchangelist/<str:str>/', views.PersonchangeView.as_view(), name='personchangelist'),"""
     
-    template_name = URL + '/personchangelist.html'
+    template_name = URL + '/Epersonchangelist.html'
     context_object_name = 'objects'
 
     def get_queryset(self):
