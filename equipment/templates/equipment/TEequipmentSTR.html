@@ -27,6 +27,21 @@
         <a href="{% url 'export_exvercard_xls' obj.pk %}"  class="btn btn-primary  mt-2 mr-2 ml-2">
         Выгрузить протокол верификации лабораторного оборудования</a>
     </div>
+
+
+{% if  obj.equipment.get_status_display  == 'Экс.' %}    
+ <center> <h4> Статус: в эксплуатации </h4> </center>
+{% elif  obj.equipment.get_status_display  == 'Рем.' %}    
+ <center> <h4> Статус: в ремонте </h4> </center>
+    {% elif  obj.equipment.get_status_display  == 'Сп.' %}    
+ <center> <h4> Статус: списан </h4> </center>
+    {% elif  obj.equipment.get_status_display  == 'Рез.' %}    
+ <center> <h4> Статус: в резерве </h4> </center>
+    {% elif  obj.equipment.get_status_display  == 'Др.' %}    
+ <center> <h4> Статус: другое </h4> </center>
+    
+{% endif %}
+
     
     
     {#таблица неизменные сведения о приборе#}
