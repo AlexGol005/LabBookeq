@@ -2822,6 +2822,11 @@ def PersonchangeDeleteView(request, str):
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
             note.delete()
+            # try:
+            #     find_ver = Attestationequipment.objects.filter(equipmentSM__equipment__pk=a).last()
+            #     find_ver.save()
+            # except:
+            #     pass
             messages.success(request, 'Запись удалена!')
             return redirect(reverse('personchangelist', kwargs={'str': a}))           
         except:
