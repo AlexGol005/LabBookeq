@@ -709,13 +709,13 @@ class PersonchangeView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         str=self.kwargs['str']
-        queryset = Personchange.objects.filter(equipment__pk=str)
+        queryset = Personchange.objects.filter(equipment__exnumber=str)
         return queryset
 
     def get_context_data(self, **kwargs):
         str=self.kwargs['str']
         context = super(PersonchangeView, self).get_context_data(**kwargs)
-        eq = Personchange.objects.filter(equipment__pk=str).last().equipment
+        eq = Personchange.objects.filter(equipment__exnumber=str).last().equipment
         context['eq'] = eq
         return context
 
