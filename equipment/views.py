@@ -707,7 +707,8 @@ class PersonchangeView(LoginRequiredMixin, ListView):
     template_name = URL + '/personchangelist.html'
     context_object_name = 'objects'
 
-    def get_queryset(self, str):
+    def get_queryset(self):
+        str=self.kwargs['str']
         queryset = Personchange.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__pk=str)
         return queryset
 
