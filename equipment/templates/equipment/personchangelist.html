@@ -29,7 +29,7 @@
               {% for obj in objects %}
             <tr>
                     <td> {{ obj.date|date:"dd.mm.yyyy" }}</td>
-                    <td> {{ obj.person.profile.short_name|default_if_none:"укажите короткое ФИО в карточке сотрудника  {{obj.person.profile.name}}"}}</td>
+                    <td> {{ obj.person.profile.short_name|default_if_none:"укажите короткое ФИО в карточке сотрудника"}}</td>
                    {% if USER_HAVE_RIGHTS %}
                  <th>удалить</th>
                  {% endif %}
