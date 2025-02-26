@@ -2817,7 +2817,7 @@ def PersonchangeDeleteView(request, str):
     
     note = Personchange.objects.get(pk=str)
     
-    a = note.equipment.exnumber
+    a = note.equipment.pk
     
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
