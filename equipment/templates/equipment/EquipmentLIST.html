@@ -26,8 +26,10 @@
         </form>
     </div>
 {#конец формы для поиска#}
-    
-<a href="{% url 'equipmentreg' %}" class="btn btn-primary mr-2 ml-2 mt-3" style="width: 40%">Добавить новое ЛО</a>
+   {% if USER_HAVE_RIGHTS %}  
+<a href="{% url 'equipmentreg' %}" class="btn btn-primary mr-2 ml-2" style="width: 30%">Добавить новое ЛО</a>
+     {% endif %}
+     <br>
 </center>
     
     {#основная таблица#}
