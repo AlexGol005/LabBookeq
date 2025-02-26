@@ -713,8 +713,10 @@ class PersonchangeView(LoginRequiredMixin, ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
+        str=self.kwargs['str']
         context = super(PersonchangeView, self).get_context_data(**kwargs)
-        context['form'] = DateForm()
+        eq = Personchange.objects.filter(equipment__pk=str).last().equipment
+        context['eq'] = eq
         return context
 
 
@@ -2805,4 +2807,29 @@ def EcommentDeleteView(request, str):
     else:
         messages.success(self.request, "Удаление доступно только продвинутому пользователю или автору записи")
         return redirect(reverse('equipmentcomments', kwargs={'str': a}))
+
+
+@login_required
+def PersonchangeDeleteView(request, str):
+    """для кнопки удаления записи о смене ответственного за прибор"""
+    """не выводит страницу, выполняет действие"""
+    """path('personchangedelete/<str:str>/', views.PersonchangeDeleteView, name='personchangedelete'),"""
+    
+    note = Personchange.objects.get(pk=str)
+    
+    a = note.equipment.exnumber
+    
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            note.delete()
+            messages.success(request, 'Запись удалена!')
+            return redirect(reverse('personchangelist', kwargs={'str': a}))           
+        except:
+            messages.success(request, 'Невозможно удалить!')
+            return redirect(reverse('personchangelist', kwargs={'str': a}))
+    else:
+        messages.success(self.request, "Удаление доступно только продвинутому пользователю")
+        return redirect(reverse('personchangelist', kwargs={'str': a}))
+
+
 
