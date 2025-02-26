@@ -19,7 +19,7 @@
  <center>
 {#форма для поиска по полям #}
     <br><br>
-    <div style="text-align: center; margin-top: 25px">
+    <center>
         <form action="/equipment/equipmentallsearres/" method="GET">
             {% csrf_token %}
             {% crispy form %}
@@ -27,10 +27,12 @@
     </div>
 {#конец формы для поиска#}
    {% if USER_HAVE_RIGHTS %}  
-<a href="{% url 'equipmentreg' %}" class="btn btn-primary mr-2 ml-2" style="width: 30%">Добавить новое ЛО</a>
-     {% endif %}
+<a href="{% url 'equipmentreg' %}" class="btn btn-primary mr-2 ml-2" style="width: 30%">Добавить новое ЛО</a></center>
      <br>
-</center>
+     <br>
+     {% endif %}
+     
+
     
     {#основная таблица#}
     <center>
