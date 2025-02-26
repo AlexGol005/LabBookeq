@@ -701,7 +701,7 @@ class RoomschangeFormView(LoginRequiredMixin, View):
 
 
 class PersonchangeView(LoginRequiredMixin, ListView):
-    """Выводит страницу с историей изменения ответственных за прибор для конкретного прибора""
+    """Выводит страницу с историей изменения ответственных за прибор для конкретного прибора"""
     """path('personchangelist/<str:str>/', views.PersonchangeView.as_view(), name='personchangelist'),"""
     
     template_name = URL + '/personchangelist.html'
