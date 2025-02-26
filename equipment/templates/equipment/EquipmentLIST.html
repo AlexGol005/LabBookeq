@@ -24,10 +24,10 @@
             {% csrf_token %}
             {% crispy form %}
         </form>
-
+</center>
 {#конец формы для поиска#}
    {% if USER_HAVE_RIGHTS %}  
-<a href="{% url 'equipmentreg' %}" class="btn btn-primary mr-2 ml-2" style="width: 30%">Добавить новое ЛО</a></center>
+ <center><a href="{% url 'equipmentreg' %}" class="btn btn-primary mr-2 ml-2" style="width: 30%">Добавить новое ЛО</a></center>
      <br>
      <br>
      {% endif %}
