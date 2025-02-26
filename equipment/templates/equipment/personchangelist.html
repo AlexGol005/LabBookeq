@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+смена ответственных за оборудование
+{% endblock %}
+
+
+{% block content %}
+<div class="col-8"> 
+
+
+
+ <center>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Дата </th>
+                    <th>Назначен ответственный ФИО</th>
+                </tr>
+            </thead>
+          
+            <tbody>
+              {% for obj in objects %}
+            <tr>
+                    <td> {{ obj.date }}</td>
+                    <td> {{ obj.person.profile.short_name }}</td>
+            </tr>
+  
+  {% endfor %}
+
+
+  
+</div>
+{% endblock %}
