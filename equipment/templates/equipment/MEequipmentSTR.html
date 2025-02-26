@@ -19,6 +19,9 @@
         Заводской номер: <b>{{ obj.equipment.lot }}</b></h6>
     </center>
     <br>
+
+ <center> <h3> Статус: {{ obj.equipment.get_status_display }} </h3> </center>
+
     
     {# распечатка карточки и протокола верификации #}
     <div style="text-align: center; margin-top: 10px; margin-bottom: 50px">
