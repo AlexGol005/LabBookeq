@@ -7,7 +7,7 @@
 блок 1 - заглавные страницы с кнопками, структурирующие разделы. (Самая верхняя страница - записана в приложении main)
 блок 2 - списки и обновление: комнаты, поверители, производители
 блок 3 - списки: Все оборудование, СИ, ИО, ВО, госреестры, характеристики ИО, характеристики ВО
-блок 4 - формы регистрации и обновления: комнаты, поверители, производители плюс список поверителей и производителей, договоры с поверителями
+блок 4 - формы регистрации и обновления: комнаты, поверители, производители  и поверители, договоры с поверителями
 блок 5 - микроклимат: журналы, формы регистрации
 блок 6 - регистрация госреестры, характеристики, ЛО - внесение, обновление
 блок 7 - все поисковики
@@ -698,6 +698,24 @@ class RoomschangeFormView(LoginRequiredMixin, View):
                 return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
             if order.equipment.kategory == 'ВО':
                 return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+
+
+class PersonchangeView(LoginRequiredMixin, ListView):
+    """Выводит страницу с историей изменения ответственных за прибор для конкретного прибора""
+    """path('personchangelist/<str:str>/', views.PersonchangeView.as_view(), name='personchangelist'),"""
+    
+    template_name = URL + '/personchangelist.html'
+    context_object_name = 'objects'
+
+    def get_queryset(self, str):
+        queryset = Personchange.objects.filter(pointer=self.request.user.profile.userid).filter(equipment__pk=str)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonchangeView, self).get_context_data(**kwargs)
+        context['form'] = DateForm()
+        return context
+
 
 
 
