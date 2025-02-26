@@ -20,9 +20,17 @@
     </center>
     <br>
 
-{% if  obj.equipment.get_status_display  == 'Экс.' %}
-    
+{% if  obj.equipment.get_status_display  == 'Экс.' %}    
  <center> <h4> Статус: в эксплуатации </h4> </center>
+{% elif  obj.equipment.get_status_display  == 'Рем.' %}    
+ <center> <h4> Статус: в ремонте </h4> </center>
+    {% elif  obj.equipment.get_status_display  == 'Сп.' %}    
+ <center> <h4> Статус: списан </h4> </center>
+    {% elif  obj.equipment.get_status_display  == 'Рез.' %}    
+ <center> <h4> Статус: в резерве </h4> </center>
+    {% elif  obj.equipment.get_status_display  == 'Др.' %}    
+ <center> <h4> Статус: другое </h4> </center>
+    
 {% endif %}
     
     {# распечатка карточки и протокола верификации #}
