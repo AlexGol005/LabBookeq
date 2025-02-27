@@ -3234,6 +3234,7 @@ def export_exvercard_xls(request, pk):
 # флаг верификация ио
 def export_exvercardteste_xls(request, pk):
     '''представление для выгрузки протокола верификации ИО в ексель'''
+    company = Company.objects.get(userid=request.user.profile.userid)
     note = TestingEquipment.objects.get(pk=pk)
     try:
         room = Roomschange.objects.filter(equipment__exnumber=note.equipment.exnumber)
