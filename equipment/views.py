@@ -721,6 +721,25 @@ class PersonchangeView(LoginRequiredMixin, ListView):
 
 
 
+class RoomchangeView(LoginRequiredMixin, ListView):
+    """Выводит страницу с историей изменения ответственных за прибор для конкретного прибора"""
+    """path('roomchangelist/<str:str>/', views.RoomchangeView.as_view(), name='roomchangelist'),"""
+    
+    template_name = URL + '/Eroomchangelist.html'
+    context_object_name = 'objects'
+
+    def get_queryset(self):
+        str=self.kwargs['str']
+        queryset = Roomchange.objects.filter(equipment__pk=str)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        str=self.kwargs['str']
+        context = super(RoomchangeView, self).get_context_data(**kwargs)
+        eq = Roomchange.objects.filter(equipment__pk=str).last().equipment
+        context['eq'] = eq
+        return context
+
 
 # блок 5 - микроклимат: журналы, формы регистрации
 
@@ -2822,11 +2841,11 @@ def PersonchangeDeleteView(request, str):
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         try:
             note.delete()
-            # try:
-            #     find_ver = Attestationequipment.objects.filter(equipmentSM__equipment__pk=a).last()
-            #     find_ver.save()
-            # except:
-            #     pass
+            try:
+                find_pc =Personchange.objects.filter(equipment__pk=a).last()
+                find_pc.save()
+            except:
+                pass
             messages.success(request, 'Запись удалена!')
             return redirect(reverse('personchangelist', kwargs={'str': a}))           
         except:
@@ -2836,5 +2855,32 @@ def PersonchangeDeleteView(request, str):
         messages.success(self.request, "Удаление доступно только продвинутому пользователю")
         return redirect(reverse('personchangelist', kwargs={'str': a}))
 
+
+@login_required
+def RoomchangeDeleteView(request, str):
+    """для кнопки удаления записи о смене расположения прибора"""
+    """не выводит страницу, выполняет действие"""
+    """path('roomchangedelete/<str:str>/', views.RoomchangeDeleteView, name='roomchangedelete'),"""
+    
+    note = Roomhange.objects.get(pk=str)
+    
+    a = note.equipment.pk
+    
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            note.delete()
+            try:
+                find_rc =Roomhange.objects.filter(equipment__pk=a).last()
+                find_rc.save()
+            except:
+                pass
+            messages.success(request, 'Запись удалена!')
+            return redirect(reverse('roomchangelist', kwargs={'str': a}))           
+        except:
+            messages.success(request, 'Невозможно удалить!')
+            return redirect(reverse('roomchangelist', kwargs={'str': a}))
+    else:
+        messages.success(self.request, "Удаление доступно только продвинутому пользователю")
+        return redirect(reverse('roomchangelist', kwargs={'str': a}))
 
 
