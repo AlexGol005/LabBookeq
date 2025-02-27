@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'blog',
     'ajax_select',
     'administrator',
+    'qr_code',
 ]
 
 # Application definition
