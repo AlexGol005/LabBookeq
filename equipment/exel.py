@@ -2030,7 +2030,7 @@ def export_tecard_xls(request, pk):
     rows_2 = Personchange.objects.filter(equipment=note.equipment). \
         values_list(
         'date',
-        'person__name',
+        'person__profile__short_name',
     )
 
     rows_3 = Roomschange.objects.filter(equipment=note.equipment). \
