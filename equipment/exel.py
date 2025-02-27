@@ -1872,6 +1872,59 @@ def export_mecard_xls(request, pk):
     return response
 
 
+
+ # стили карточек приборов
+pattern = xlwt.Pattern()
+pattern.pattern = xlwt.Pattern.SOLID_PATTERN
+pattern.pattern_fore_colour = 26
+
+b1 = Borders()
+b1.left = 1
+b1.right = 1
+b1.bottom = 1
+b1.top = 1
+
+style1 = xlwt.XFStyle()
+style1.font.height = 9 * 20
+style1.font.name = 'Calibri'
+style1.alignment = al1
+style1.alignment.wrap = 1
+style1.borders = b1
+
+style2 = xlwt.XFStyle()
+style2.font.height = 9 * 20
+style2.font.name = 'Calibri'
+style2.alignment = al1
+style2.alignment.wrap = 1
+style2.borders = b1
+style2.pattern = pattern
+
+style3 = xlwt.XFStyle()
+style3.font.height = 15 * 20
+style3.font.bold = True
+style3.font.name = 'Calibri'
+style3.alignment = al1
+style3.alignment.wrap = 1
+
+style4 = xlwt.XFStyle()
+style4.font.height = 9 * 20
+style4.font.name = 'Calibri'
+style4.alignment = al1
+style4.alignment.wrap = 1
+style4.borders = b1
+style4.num_format_str = 'DD.MM.YYYY'
+
+style5 = xlwt.XFStyle()
+style5.font.height = 20 * 20
+style5.font.bold = True
+style5.font.name = 'Calibri'
+style5.alignment = al1
+style5.alignment.wrap = 1
+
+
+
+
+
 # флаг карточки на ИО
 def export_tecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (ИО) в ексель'''
