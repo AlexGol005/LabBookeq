@@ -1876,7 +1876,7 @@ def export_mecard_xls(request, pk):
 def export_tecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (ИО) в ексель'''
     note = TestingEquipment.objects.get(pk=pk)
-    cardname = pytils.translit.translify(note.equipment.exnumber) + ' ' +\
+    cardname = pytils.translit.translify(note.equipment.exnumber[:5]) + ' ' +\
                 pytils.translit.translify(note.charakters.name) +\
                 ' ' + pytils.translit.translify(note.equipment.lot)
     response = HttpResponse(content_type='application/ms-excel')
@@ -1953,7 +1953,7 @@ def export_tecard_xls(request, pk):
 
     row_num = 8
     columns = [
-        note.equipment.exnumber,
+        note.equipment.exnumber[:5],
         note.charakters.name,
         note.charakters.name,
         f'{note.charakters.typename}/{note.charakters.modificname}',
