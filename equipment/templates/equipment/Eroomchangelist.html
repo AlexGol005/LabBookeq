@@ -13,13 +13,14 @@
 
 
  {% if eq.measurequipment %}
-<center><h4><a href={% url 'measureequipment'  eq.exnumber %}> История изменения ответственных за прибор {{eq.exnumber|slice:":5"}}</a></h4></center>
+<center><h4><a href={% url 'measureequipment'  eq.exnumber %}> История изменения расположения прибора {{eq.exnumber|slice:":5"}}</a></h4></center>
  {% elif eq.testingequipment %}
- <center><h4><a href={% url 'testequipment'  eq.exnumber %}> История изменения ответственных за прибор {{eq.exnumber|slice:":5"}}</a></h4></center>
+ <center><h4><a href={% url 'testequipment'  eq.exnumber %}> История изменения расположения прибора {{eq.exnumber|slice:":5"}}</a></h4></center>
   {% elif eq.helpingequipment %}
- <center><h4><a href={% url 'helpequipment'  eq.exnumber %}> История изменения ответственных за прибор {{eq.exnumber|slice:":5"}}</a></h4></center>
+ <center><h4><a href={% url 'helpequipment'  eq.exnumber %}> История изменения расположения прибора {{eq.exnumber|slice:":5"}}</a></h4></center>
  {% endif %}
-
+<br>
+ 
  <center>
         <table class="table table-bordered">
             <thead>
