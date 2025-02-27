@@ -242,11 +242,19 @@
         </thead>
         <tbody>
         <tr>
-                        <td> <a href="{% url 'roomchangelist' obj.equipment.pk %}" target="blank" class="btn btn-outline-primary mt-3">
+            {% if obj.equipment.roomschange_set.last.roomnumber.roomnumber %}      
+            <td> <a href="{% url 'roomchangelist' obj.equipment.pk %}" target="blank" class="btn btn-outline-primary mt-3">
            {{ obj.equipment.roomschange_set.last.roomnumber.roomnumber|default:"не указан" }}</a></td>
+            {% else %}
+            <td>не указан</td>
+            {% endif %}
             
+            {% if obj.equipment.personchange_set.last.person.profile %}
             <td> <a href="{% url 'personchangelist' obj.equipment.pk %}" target="blank" class="btn btn-outline-primary mt-3">
-           {{ obj.equipment.personchange_set.last.person.profile.short_name }}</a></td>
+             {{ obj.equipment.personchange_set.last.person.profile.short_name|default:"не указан" }}</a></td>
+            {% else %}
+            <td>не указан</td>
+            {% endif %}
             
             <td><a href="/equipment/docsreg/{{ obj.equipment.exnumber }}/" target="blank" class="btn btn-outline-primary mt-3">
                 см</a></td>
