@@ -30,6 +30,9 @@
         <th>Название</th>
         <th> Происхождение </th>
         <th> Дата появления</th>
+            {% if USER_HAVE_RIGHTS %} 
+            <th> Удалить </th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -38,6 +41,9 @@
         <td> {{ obj.docs }}</td>
         <td > {{ obj.source }}</td>
         <td > {{ obj.date}}</td>
+            {% if USER_HAVE_RIGHTS %} 
+        <td> <a href="{% url 'documentsdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td> 
+             {% endif %}
         </tr>
         {% endfor %}
         </tbody>
