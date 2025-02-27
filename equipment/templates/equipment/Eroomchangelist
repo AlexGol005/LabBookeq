@@ -1,0 +1,52 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+смена ответственных за оборудование
+{% endblock %}
+
+
+{% block content %}
+<div class="col-8"> 
+
+
+ {% if eq.measurequipment %}
+<center><h4><a href={% url 'measureequipment'  eq.exnumber %}> История изменения ответственных за прибор {{eq.exnumber|slice:":5"}}</a></h4></center>
+ {% elif eq.testingequipment %}
+ <center><h4><a href={% url 'testequipment'  eq.exnumber %}> История изменения ответственных за прибор {{eq.exnumber|slice:":5"}}</a></h4></center>
+  {% elif eq.helpingequipment %}
+ <center><h4><a href={% url 'helpequipment'  eq.exnumber %}> История изменения ответственных за прибор {{eq.exnumber|slice:":5"}}</a></h4></center>
+ {% endif %}
+
+ <center>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Дата </th>
+                    <th>Утверждено расположение в помещении</th>
+                 {% if USER_HAVE_RIGHTS %}
+                 <th>удалить</th>
+                 {% endif %}
+                </tr>
+            </thead>
+          
+            <tbody>
+              {% for obj in objects %}
+            <tr>
+                    <td> {{ obj.date|date:'d.m.y' }}</td>
+                    <td> {{ obj.roomnumber}}</td>
+                   {% if USER_HAVE_RIGHTS %}
+                 <td> <a href="{% url 'roomchangedelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td>
+             {% endif %}
+            </tr>
+  
+  {% endfor %}
+            </tbody>
+        </table>
+ </center>
+
+  
+</div>
+{% endblock %}
