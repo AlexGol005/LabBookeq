@@ -722,7 +722,7 @@ class PersonchangeView(LoginRequiredMixin, ListView):
 
 
 class RoomchangeView(LoginRequiredMixin, ListView):
-    """Выводит страницу с историей изменения ответственных за прибор для конкретного прибора"""
+    """Выводит страницу с историей изменения расположения для конкретного прибора"""
     """path('roomchangelist/<str:str>/', views.RoomchangeView.as_view(), name='roomchangelist'),"""
     
     template_name = URL + '/Eroomchangelist.html'
@@ -730,13 +730,13 @@ class RoomchangeView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         str=self.kwargs['str']
-        queryset = Roomchange.objects.filter(equipment__pk=str)
+        queryset = Roomschange.objects.filter(equipment__pk=str)
         return queryset
 
     def get_context_data(self, **kwargs):
         str=self.kwargs['str']
         context = super(RoomchangeView, self).get_context_data(**kwargs)
-        eq = Roomchange.objects.filter(equipment__pk=str).last().equipment
+        eq = Roomschange.objects.filter(equipment__pk=str).last().equipment
         context['eq'] = eq
         return context
 
@@ -2862,7 +2862,7 @@ def RoomchangeDeleteView(request, str):
     """не выводит страницу, выполняет действие"""
     """path('roomchangedelete/<str:str>/', views.RoomchangeDeleteView, name='roomchangedelete'),"""
     
-    note = Roomhange.objects.get(pk=str)
+    note = Roomschange.objects.get(pk=str)
     
     a = note.equipment.pk
     
@@ -2870,7 +2870,7 @@ def RoomchangeDeleteView(request, str):
         try:
             note.delete()
             try:
-                find_rc =Roomhange.objects.filter(equipment__pk=a).last()
+                find_rc =Roomschange.objects.filter(equipment__pk=a).last()
                 find_rc.save()
             except:
                 pass
