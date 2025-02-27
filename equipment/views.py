@@ -851,7 +851,7 @@ def EquipmentReg(request):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.pointer = request.user.profile.userid
-                for_exnamber_tail = Company.objects.get(pointer=request.user.profile.userid).pk
+                for_exnamber_tail = Company.objects.get(userid=request.user.profile.userid).pk
                 try:
                     a = Equipment.objects.filter(exnumber__startswith=order.exnumber).filter(pointer=request.user.profile.userid).last().exnumber
                     b = int(str(a)[1:5]) + 1
