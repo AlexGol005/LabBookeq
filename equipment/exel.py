@@ -3252,7 +3252,7 @@ def export_exvercardteste_xls(request, pk):
         usere = 'не указано'
         position = 'не указано'
     userelat = pytils.translit.translify(usere)
-    cardname = pytils.translit.translify(note.equipment.exnumber) + ' ' + pytils.translit.translify(note.equipment.lot)
+    cardname = pytils.translit.translify(note.equipment.exnumber[:5]) + ' ' + pytils.translit.translify(note.equipment.lot)
     response = HttpResponse(content_type='application/ms-excel')
     filename = f"{userelat}_{cardname}"
     filename = str(filename)
@@ -3367,7 +3367,7 @@ def export_exvercardteste_xls(request, pk):
     dateverific = get_dateformat(now)
     row_num = 4
     columns = [
-        f'Протокол верификации № {note.equipment.exnumber}_01/22 от {dateverific} г. ИО вн.№ {note.equipment.exnumber[:5]}'
+        f'Протокол верификации № {note.equipment.exnumber[:5]}_01/22 от {dateverific} г. ИО вн.№ {note.equipment.exnumber[:5]}'
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style5)
