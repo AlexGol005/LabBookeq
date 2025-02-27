@@ -1527,6 +1527,7 @@ style2.alignment = al1
 style2.alignment.wrap = 1
 style2.borders = b1
 style2.pattern = pattern
+style2.font.bold = True
 
 style3 = xlwt.XFStyle()
 style3.font.height = 15 * 20
