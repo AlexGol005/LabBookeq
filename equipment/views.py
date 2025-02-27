@@ -1142,7 +1142,7 @@ def EquipmentUpdate(request, str):
                 if title.kategory == 'ИО':
                     try:
                         title.testingequipment
-                        return redirect(reverse('testingequipment', kwargs={'str': str}))
+                        return redirect(reverse('testequipment', kwargs={'str': str}))
                     except:
                         return redirect('euipmentall')
                 if title.kategory == 'ВО':
