@@ -36,7 +36,7 @@
               {% for obj in objects %}
             <tr>
                     <td> {{ obj.date|date:'d.m.y' }}</td>
-                    <td> {{ obj.person.profile.short_name|default_if_none:"укажите короткое ФИО в карточке сотрудника obj.person.profile.name"}}</td>
+                    <td> {{ obj.person.profile.short_name|default_if_none:"укажите короткое ФИО в карточке сотрудника"}}</td>
                    {% if USER_HAVE_RIGHTS %}
                  <td> <a href="{% url 'personchangedelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td>
              {% endif %}
