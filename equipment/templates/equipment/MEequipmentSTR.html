@@ -243,7 +243,7 @@
         <tbody>
         <tr>
                         <td> <a href="{% url 'roomchangelist' obj.equipment.pk %}" target="blank" class="btn btn-outline-primary mt-3">
-           {{ obj.equipment.roomschange_set.last.roomnumber.roomnumber }}</a></td>
+           {{ obj.equipment.roomschange_set.last.roomnumber.roomnumberdefault:"не указан" }}</a></td>
             
             <td> <a href="{% url 'personchangelist' obj.equipment.pk %}" target="blank" class="btn btn-outline-primary mt-3">
            {{ obj.equipment.personchange_set.last.person.profile.short_name }}</a></td>
