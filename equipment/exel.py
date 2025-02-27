@@ -3367,7 +3367,7 @@ def export_exvercardteste_xls(request, pk):
     dateverific = get_dateformat(now)
     row_num = 4
     columns = [
-        f'Протокол верификации № {note.equipment.exnumber}_01/22 от {dateverific} г. ИО вн.№ {note.equipment.exnumber}'
+        f'Протокол верификации № {note.equipment.exnumber}_01/22 от {dateverific} г. ИО вн.№ {note.equipment.exnumber[:5]}'
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style5)
@@ -3407,7 +3407,7 @@ def export_exvercardteste_xls(request, pk):
 
     row_num +=1
     columns = [
-        f'СИ {note.equipment.exnumber}',
+        f'ИО {str(note.equipment.exnumber)[:5]}', 
         note.charakters.name,
         note.charakters.name,
         f'{note.charakters.typename}/{note.charakters.modificname}',
