@@ -1477,7 +1477,7 @@ class DocsConsView(View, SuccessMessageMixin):
     """path('docsreg/<str:str>/', views.DocsConsView.as_view(), name='docsreg'),"""
     
     def get(self, request, str):
-        template_name = 'equipment/Edocsconslist.html'
+        template_name = 'equipment/EdocumentsLIST.html'
         form = DocsConsCreateForm()
         title = Equipment.objects.get(exnumber=str)
         objects = DocsCons.objects.filter(equipment__exnumber=str).order_by('pk')
@@ -2885,3 +2885,24 @@ def RoomchangeDeleteView(request, str):
         return redirect(reverse('roomchangelist', kwargs={'str': a}))
 
 
+@login_required
+def DocumentsDeleteView(request, str):
+    """для кнопки удаления записи о документе оборудования"""
+    """не выводит страницу, выполняет действие"""
+    """path('documentsdelete/<str:str>/', views.DocumentsDeleteView, name='documentsdelete'),"""
+    
+    note = DocsCons.objects.get(pk=str)
+    
+    a = note.equipment.exnumber
+    
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            note.delete()
+            messages.success(request, 'Запись удалена!')
+            return redirect(reverse('docsreg', kwargs={'str': a}))           
+        except:
+            messages.success(request, 'Невозможно удалить!')
+            return redirect(reverse('docsreg', kwargs={'str': a}))
+    else:
+        messages.success(self.request, "Удаление доступно только продвинутому пользователю")
+        return redirect(reverse('docsreg', kwargs={'str': a}))
