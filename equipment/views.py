@@ -2971,14 +2971,6 @@ class UploadingProducts(object):
             
 
 
-                    
-        
-
-
-
-
-
-
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
