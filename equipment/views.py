@@ -2911,6 +2911,50 @@ def DocumentsDeleteView(request, str):
 
 
 # блок 15 - массовая загрузка через EXEL
+import os
+import sys
+import xlrd
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'Labjournal.settings'
+sys.path.append(os.path.adpath(os.path.join(os.path.dirname(_file_), "..")))
+django.setup
+
+class UploadingProducts(object):
+    model = MeasurEquipmentCharakters
+
+    def _init_(self, data):
+        data=data
+        self.uploaded_file = data.get("file")
+        self.parsing()
+
+    def getting_headers(self):
+        s = self.s
+        headers = dict()
+        for column in range(s.ncols):
+            value = s.cell(0, column).value
+            headers[column] = value
+        return headers
+            
+
+    def parsing(self):
+        uploaded_file = self.uploaded_file
+        wb = xlrd.open_workbook(file_contents=uploaded_file.read())
+        s = wb.sheet_by_index(0)
+        self.s = s
+        headers = self.getting_headers()
+        print(headers)
+
+        product_bulk_list = list()
+        for row in range(1, s.nrows):
+            row_dict = {}
+            for column in range(s.ncols):
+        
+
+
+
+
+
+
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
