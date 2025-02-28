@@ -2991,9 +2991,9 @@ def BulkDownload(request):
         file = request.FILES['file']
         uploading_file = UploadingProducts({'file':file})
         if uploading_file:
-             messages.success(self.request, "Файл успешно загружен")
+             messages.success(request, "Файл успешно загружен")
         else:
-            messages.success(self.request, "Файл не загружен")
+            messages.success(request, "Файл не загружен")
     return render(request, URL + '/bulk_download.html', locals())
             
             
