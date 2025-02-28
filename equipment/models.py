@@ -185,12 +185,15 @@ class Equipment(models.Model):
         return f'{self.pointer}: {self.exnumber} - зав№ {self.lot}, pk={self.pk}'
 
     def save(self, *args, **kwargs):
+        if not self.pointer:
+                self.pointer = self.created_by.profile.userid
         super(Equipment, self).save(*args, **kwargs)
         try:
             ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
         except:
             ServiceEquipmentU.objects.get_or_create(equipment=self, year=str(self.yearintoservice))
 
+      
     class Meta:
         unique_together = ('exnumber', 'pointer',)
         verbose_name = 'Оборудование'
@@ -230,6 +233,11 @@ class MeasurEquipmentCharakters(models.Model):
     def __str__(self):
         return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
 
+    def save(self, *args, **kwargs):
+        if not self.pointer:
+                self.pointer = self.created_by.profile.userid
+        super(MeasurEquipmentCharakters, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'Средство измерения: описание типа'
         verbose_name_plural = 'Средства измерения: описания типов'
@@ -267,6 +275,11 @@ class TestingEquipmentCharakters(models.Model):
     def __str__(self):
         return f'{self.name}  {self.modificname}'
 
+    def save(self, *args, **kwargs):
+        if not self.pointer:
+                self.pointer = self.created_by.profile.userid
+        super(TestingEquipmentCharakters, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'Испытательное оборудование, характеристики'
         verbose_name_plural = 'Испытательное оборудование, характеристики'
@@ -301,6 +314,11 @@ class HelpingEquipmentCharakters(models.Model):
 
     def __str__(self):
         return f'{self.name}  {self.modificname}'
+
+    def save(self, *args, **kwargs):
+        if not self.pointer:
+                self.pointer = self.created_by.profile.userid
+        super(HelpingEquipmentCharakters, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Вспомогательное оборудование, характеристики'
