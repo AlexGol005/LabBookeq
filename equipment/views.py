@@ -2920,6 +2920,7 @@ sys.path.append(os.path.adpath(os.path.join(os.path.dirname(_file_), "..")))
 django.setup
 
 class UploadingProducts(object):
+    # foreing_key_fields = ["////"]
     model = MeasurEquipmentCharakters
 
     def _init_(self, data):
@@ -2956,12 +2957,12 @@ class UploadingProducts(object):
                 if field_name == "id" and not value:
                     continue
 
-                if field_name in self.foreing_key_fields:
-                    related_model = self.getting_related_model(field_name)
-                    print(related_model)
+                # if field_name in self.foreing_key_fields:
+                #     related_model = self.getting_related_model(field_name)
+                #     print(related_model)
 
-                    instance, created = related_model.objects.get_or_create(name=value)
-                    value = instance
+                #     instance, created = related_model.objects.get_or_create(name=value)
+                #     value = instance
 
             print(row_dict)
             product_bulk_list.create(MeasurEquipmentCharakters(**row_dict)
