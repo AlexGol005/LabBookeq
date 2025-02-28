@@ -83,8 +83,8 @@ class Manufacturer(models.Model):
     """Производители оборудования"""
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
-    created_by = CurrentUserField(related_name='creatorman', editable=True)
-    updated_by = CurrentUserField(related_name='updatorman', editable=True)
+    created_by = CurrentUserField(related_name='creatorman')
+    updated_by = CurrentUserField(related_name='updatorman')
     companyName = models.CharField('Производитель', max_length=100, unique=True)
     companyAdress = models.CharField('Адрес', max_length=200, default='', blank=True)
     country = models.CharField('Страна', max_length=200, default='Россия', blank=True)
