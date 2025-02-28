@@ -2965,8 +2965,8 @@ class UploadingProducts(object):
                 #     instance, created = related_model.objects.get_or_create(name=value)
                 #     value = instance
 
-            print(row_dict)
-            product_bulk_list.create(MeasurEquipmentCharakters(**row_dict)
+        #     print(row_dict)
+        #     product_bulk_list.create(MeasurEquipmentCharakters(**row_dict)
 
         # MeasurEquipmentCharakters.objects.bulk_create(product_bulk_list)
         # return True
