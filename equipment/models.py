@@ -115,7 +115,7 @@ class Verificators(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = CurrentUserField()
-    updated_by = CurrentUserField())
+    updated_by = CurrentUserField()
     companyName = models.CharField('Поверитель', max_length=100, unique=True)
     companyAdress = models.CharField('Адрес', max_length=200, default='-', blank=True)
     telnumber = models.CharField('Телефон', max_length=200, default='-', blank=True)
