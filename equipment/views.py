@@ -2974,7 +2974,7 @@ class UploadingProducts(object):
 
 
         # MeasurEquipmentCharakters.objects.bulk_create(product_bulk_list)
-        # return True
+        return True
             
 
 
