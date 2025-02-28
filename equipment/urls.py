@@ -5,6 +5,7 @@ from . import exel
 from . import exel_agreements
 
 urlpatterns = [
+    path('bulkdownload/', views.BulkDownloadView.as_view(), name='bulkdownload'),
     path('documentsdelete/<str:str>/', views.DocumentsDeleteView, name='documentsdelete'),
     path('roomchangedelete/<str:str>/', views.RoomchangeDeleteView, name='roomchangedelete'),
     path('roomchangelist/<str:str>/', views.RoomchangeView.as_view(), name='roomchangelist'),
