@@ -2910,7 +2910,7 @@ def DocumentsDeleteView(request, str):
 
 
 
-блок 15 - массовая загрузка через EXEL
+# блок 15 - массовая загрузка через EXEL
 class BulkDownloadView(LoginRequiredMixin, TemplateView):
     """выводит страницу загрузки через EXEL"""
 
