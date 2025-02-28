@@ -81,8 +81,8 @@ HAVE = (('собственность', 'собственность'),
 
 class Manufacturer(models.Model):
     """Производители оборудования"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorman', editable=True)
     updated_by = CurrentUserField(related_name='updatorman', editable=True)
     companyName = models.CharField('Производитель', max_length=100, unique=True)
@@ -113,8 +113,8 @@ class Test(models.Model):
 
 class Verificators(models.Model):
     """Компании поверители оборудования"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatororgver', editable=True)
     updated_by = CurrentUserField(related_name='updatororgver', editable=True)
     companyName = models.CharField('Поверитель', max_length=100, unique=True)
@@ -143,8 +143,8 @@ class Verificators(models.Model):
 
 class Equipment(models.Model):
     """Лабораторное оборудование - базовая индивидуальная сущность"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatoreq', editable=True)
     updated_by = CurrentUserField(related_name='updatoreq', editable=True)
     date = models.DateField('Дата внесения записи', auto_now_add=True, blank=True, null=True)
@@ -199,8 +199,8 @@ class Equipment(models.Model):
 
 class MeasurEquipmentCharakters(models.Model):
     """Характеристики средств измерений (госреестры в связке с модификациями/типами/диапазонами)"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatormec', editable=True)
     updated_by = CurrentUserField(related_name='updatormec', editable=True)
     name = models.CharField('Название прибора', max_length=100, default='')
@@ -238,8 +238,8 @@ class MeasurEquipmentCharakters(models.Model):
 
 class TestingEquipmentCharakters(models.Model):
     """Характеристики ИО"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatortec', editable=True)
     updated_by = CurrentUserField(related_name='updatortec', editable=True)
     name = models.CharField('Название прибора', max_length=100, default='')
@@ -275,8 +275,8 @@ class TestingEquipmentCharakters(models.Model):
 
 class HelpingEquipmentCharakters(models.Model):
     """Характеристики ВО"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorhec', editable=True)
     updated_by = CurrentUserField(related_name='updatorhec', editable=True)
     name = models.CharField('Название прибора', max_length=100, default='')
@@ -310,8 +310,8 @@ class HelpingEquipmentCharakters(models.Model):
 
 class MeasurEquipment(models.Model):
     """СИ: составлено из ЛО и характеристик СИ"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorme', editable=True)
     updated_by = CurrentUserField(related_name='updatorme', editable=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
@@ -382,8 +382,8 @@ class MeasurEquipment(models.Model):
 
 class TestingEquipment(models.Model):
     """ИО: составлено из ЛО и характеристик ИО"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorte', editable=True)
     updated_by = CurrentUserField(related_name='updatorte', editable=True)
     charakters = models.ForeignKey(TestingEquipmentCharakters,  on_delete=models.PROTECT,
@@ -433,8 +433,8 @@ class TestingEquipment(models.Model):
 
 class HelpingEquipment(models.Model):
     """ВО: составлено из ЛО и характеристик ВО"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorhe', editable=True)
     updated_by = CurrentUserField(related_name='updatorhe', editable=True)
     charakters = models.ForeignKey(HelpingEquipmentCharakters,  on_delete=models.PROTECT,
@@ -462,8 +462,8 @@ class HelpingEquipment(models.Model):
 # блок 4 - смена комнаты, ответственного, добавление принадлежностей к оборудованию
 class Rooms(models.Model):
     """Комнаты лаборатории/производства"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     roomnumber = models.CharField('Номер комнаты', max_length=100, default='')
     person = models.ForeignKey(User, verbose_name='Ответственный за комнату', on_delete=models.PROTECT, blank=True, null=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
@@ -512,8 +512,8 @@ class Personchange(models.Model):
 
 
 class Roomschange(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True, editable=True)
     created_by = CurrentUserField(related_name='creatorrc', editable=True)
     updated_by = CurrentUserField(related_name='updatorrc', editable=True)
     roomnumber = models.ForeignKey(Rooms, on_delete=models.PROTECT)
@@ -542,8 +542,8 @@ class Roomschange(models.Model):
 
 
 class DocsCons(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatordoc', editable=True)
     updated_by = CurrentUserField(related_name='updatordoc', editable=True)
     date = models.CharField('Дата появления',  max_length=1000, default='', blank=True, null=True)
@@ -567,8 +567,8 @@ class DocsCons(models.Model):
 
 class Verificationequipment(models.Model):
     """Поверка СИ"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorvme', editable=True)
     updated_by = CurrentUserField(related_name='updatorvme', editable=True)
     equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
@@ -655,8 +655,8 @@ class Verificationequipment(models.Model):
 
 class Calibrationequipment(models.Model):
     """Калибровка СИ"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorcme', editable=True)
     updated_by = CurrentUserField(related_name='updatorcme', editable=True)
     equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
@@ -741,8 +741,8 @@ class Calibrationequipment(models.Model):
 
 class Attestationequipment(models.Model):
     """Аттестация ИО"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorate', editable=True)
     updated_by = CurrentUserField(related_name='updatorate', editable=True)
     arshin = models.TextField('Ссылка на скан аттестата', blank=True, null=True)
@@ -868,8 +868,8 @@ class Attestationequipment(models.Model):
 
 class CommentsEquipment(models.Model):
     """стандартнрый класс для комментариев"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorcomm', editable=True)
     updated_by = CurrentUserField(related_name='updatorcomm', editable=True)
     date = models.DateField('Дата',  db_index=True)
@@ -902,8 +902,8 @@ class CommentsEquipment(models.Model):
 
 class CommentsVerificationequipment(models.Model):
     """комментарии к поверке """
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorcommver', editable=True)
     updated_by = CurrentUserField(related_name='updatorcommver', editable=True)
     date = models.DateField('Дата', auto_now_add=True, db_index=True)
@@ -921,8 +921,8 @@ class CommentsVerificationequipment(models.Model):
 
 class CommentsAttestationequipment(models.Model):
     """комментарии к аттестации """
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True, editable=True)
     created_by = CurrentUserField(related_name='creatorcommatt', editable=True)
     updated_by = CurrentUserField(related_name='updatorcommatt', editable=True)
     date = models.DateField('Дата', auto_now_add=True, db_index=True)
@@ -942,8 +942,8 @@ class CommentsAttestationequipment(models.Model):
 
 class MeteorologicalParameters(models.Model):
     """микроклимат в помещении"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatormeteo', editable=True)
     updated_by = CurrentUserField(related_name='updatormeteo', editable=True)
     date = models.DateField('Дата')
@@ -976,8 +976,8 @@ class MeteorologicalParameters(models.Model):
 
 class ServiceEquipmentME(models.Model):
     """Техобслуживание СИ - постоянная информация из паспортов и инструкций"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorserme', editable=True)
     updated_by = CurrentUserField(related_name='updatorserme', editable=True)
     pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
@@ -1004,8 +1004,8 @@ class ServiceEquipmentME(models.Model):
 
 class ServiceEquipmentTE(models.Model):
     """Техобслуживание ИО"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorserte', editable=True)
     updated_by = CurrentUserField(related_name='updatorserte', editable=True)
     pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
@@ -1033,8 +1033,8 @@ class ServiceEquipmentTE(models.Model):
 
 class ServiceEquipmentHE(models.Model):
     """Техобслуживание ВО"""
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True, editable=True)
     created_by = CurrentUserField(related_name='creatorserhe', editable=True)
     updated_by = CurrentUserField(related_name='updatorserhe', editable=True)
     pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
@@ -1063,8 +1063,8 @@ class ServiceEquipmentHE(models.Model):
 
 class ServiceEquipmentU(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация ПЛАН"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorserp', editable=True)
     updated_by = CurrentUserField(related_name='updatorserp', editable=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
@@ -1103,8 +1103,8 @@ class ServiceEquipmentU(models.Model):
 
 class ServiceEquipmentUFact(models.Model):
     """Техобслуживание всего лабораторного оборудования индивидуальная информация факт"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorserf', editable=True)
     updated_by = CurrentUserField(related_name='updatorserf', editable=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
@@ -1142,8 +1142,8 @@ class ServiceEquipmentUFact(models.Model):
 # блок 9 - отправка в поверку
 class Agreementverification(models.Model):
     """Договоры организации с поверителями"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatoragr', editable=True)
     updated_by = CurrentUserField(related_name='updatoragr', editable=True)
     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT, verbose_name='Поверитель')    
@@ -1173,8 +1173,8 @@ class Agreementverification(models.Model):
 
 class Activeveraqq(models.Model):
     """Активный договор с поверителем"""
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Компания')  
     aqq = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='Договор с поверителем', unique=True, null=True) 
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
