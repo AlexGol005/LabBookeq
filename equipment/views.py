@@ -2915,15 +2915,16 @@ import os
 import sys
 import xlrd
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'Labjournal.settings'
-sys.path.append(os.path.adpath(os.path.join(os.path.dirname(_file_), "..")))
-django.setup
+os.environ['DJANGO_SETTINGS_MODULE'] = 'LabJournal.settings'
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+import django
+django.setup()
 
 class UploadingProducts(object):
     # foreing_key_fields = ["////"]
     model = MeasurEquipmentCharakters
 
-    def _init_(self, data):
+    def __init__(self, data):
         data=data
         self.uploaded_file = data.get("file")
         self.parsing()
