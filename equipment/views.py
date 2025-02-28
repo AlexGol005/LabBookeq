@@ -2930,7 +2930,8 @@ class UploadingProducts(object):
         self.parsing()
 
     def getting_related_model(self, field_name):
-        related = self.model._meta.get_field(field_name).rel.to
+        model = self.model
+        related = model._meta.get_field(field_name).rel.to
         return related_model
 
     def getting_headers(self):
@@ -2949,7 +2950,7 @@ class UploadingProducts(object):
         headers = self.getting_headers()
         print(headers)
 
-        product_bulk_list = list()
+        # product_bulk_list = list()
         for row in range(1, s.nrows):
             row_dict = {}
             for column in range(s.ncols):
@@ -2964,9 +2965,13 @@ class UploadingProducts(object):
 
                 #     instance, created = related_model.objects.get_or_create(name=value)
                 #     value = instance
+                row_dict[field_name] = value
+                MeasurEquipmentCharakters.objects.get_or_create(**row_dict)
 
-        #     print(row_dict)
-        #     product_bulk_list.create(MeasurEquipmentCharakters(**row_dict)
+
+            # print(row_dict)
+            # product_bulk_list.create(MeasurEquipmentCharakters(**row_dict)
+
 
         # MeasurEquipmentCharakters.objects.bulk_create(product_bulk_list)
         # return True
