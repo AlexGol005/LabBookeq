@@ -18,6 +18,7 @@
 блок 12 - вывод списков и форм  для метрологического  обеспечения
 блок 13 - ТОиР
 блок 14 - все кнопки удаления объектов
+блок 15 - массовая загрузка через EXEL
 """
 
 import pytils.translit
@@ -2906,3 +2907,13 @@ def DocumentsDeleteView(request, str):
     else:
         messages.success(self.request, "Удаление доступно только продвинутому пользователю")
         return redirect(reverse('docsreg', kwargs={'str': a}))
+
+
+
+блок 15 - массовая загрузка через EXEL
+class BulkDownloadView(LoginRequiredMixin, TemplateView):
+    """выводит страницу загрузки через EXEL"""
+
+    """path('bulkdownload/', views.BulkDownloadView.as_view(), name='bulkdownload'),"""
+    
+    template_name = URL + '/bulk_download.html'
