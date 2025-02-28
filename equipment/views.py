@@ -2966,7 +2966,10 @@ class UploadingProducts(object):
                 #     instance, created = related_model.objects.get_or_create(name=value)
                 #     value = instance
                 row_dict[field_name] = value
-                MeasurEquipmentCharakters.objects.create(**row_dict)
+                try:
+                    MeasurEquipmentCharakters.objects.create(**row_dict)
+                except:
+                    pass
 
 
             # print(row_dict)
