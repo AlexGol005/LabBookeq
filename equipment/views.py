@@ -2928,7 +2928,7 @@ class UploadingProducts(object):
         self.parsing()
 
     def getting_related_model(self, field_name):
-        related = self.model._meta.get_field(field_name)rel.to
+        related = self.model._meta.get_field(field_name).rel.to
         return related_model
 
     def getting_headers(self):
