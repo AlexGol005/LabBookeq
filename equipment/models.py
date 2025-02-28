@@ -923,8 +923,8 @@ class CommentsAttestationequipment(models.Model):
     """комментарии к аттестации """
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = CurrentUserField(related_name=creator)
-    updated_by = CurrentUserField(related_name=updator)
+    created_by = CurrentUserField(related_name='creatorcommatt')
+    updated_by = CurrentUserField(related_name='updatorcommatt')
     date = models.DateField('Дата', auto_now_add=True, db_index=True)
     note = models.TextField('Содержание', max_length=1000, default='')
     forNote = models.ForeignKey(Equipment, verbose_name='К прибору', on_delete=models.CASCADE)
