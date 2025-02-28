@@ -2968,7 +2968,7 @@ class UploadingProducts(object):
             print(row_dict)
             product_bulk_list.create(MeasurEquipmentCharakters(**row_dict)
 
-        MeasurEquipmentCharakters.objects.bulk_create(product_bulk_list)
+        # MeasurEquipmentCharakters.objects.bulk_create(product_bulk_list)
         return True
             
 
