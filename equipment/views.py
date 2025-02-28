@@ -2911,9 +2911,28 @@ def DocumentsDeleteView(request, str):
 
 
 # блок 15 - массовая загрузка через EXEL
-class BulkDownloadView(LoginRequiredMixin, TemplateView):
+BulkDownloadView(request):
     """выводит страницу загрузки через EXEL"""
+    """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
+    """template_name = URL + '/bulk_download.html'"""
+    if request.POST:
+        print(request.POST)
+        print(request.FILES)
+        file = request.FILES['file']
+        uploading_file = UploadingProducts({'file':file})
+        if uploading_file:
+             messages.success(self.request, "Файл успешно загружен")
+        else:
+            messages.success(self.request, "Файл не загружен")
+    return render(request, URL + '/bulk_download.html', locals())
+            
+            
 
-    """path('bulkdownload/', views.BulkDownloadView.as_view(), name='bulkdownload'),"""
-    
-    template_name = URL + '/bulk_download.html'
+
+
+
+
+
+
+
+
