@@ -512,8 +512,8 @@ class Personchange(models.Model):
 
 
 class Roomschange(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     created_by = CurrentUserField(related_name='creatorrc')
     updated_by = CurrentUserField(related_name='updatorrc')
     roomnumber = models.ForeignKey(Rooms, on_delete=models.PROTECT)
@@ -921,8 +921,8 @@ class CommentsVerificationequipment(models.Model):
 
 class CommentsAttestationequipment(models.Model):
     """комментарии к аттестации """
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     created_by = CurrentUserField(related_name='creatorcommatt')
     updated_by = CurrentUserField(related_name='updatorcommatt')
     date = models.DateField('Дата', auto_now_add=True, db_index=True)
@@ -1033,8 +1033,8 @@ class ServiceEquipmentTE(models.Model):
 
 class ServiceEquipmentHE(models.Model):
     """Техобслуживание ВО"""
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     created_by = CurrentUserField(related_name='creatorserhe')
     updated_by = CurrentUserField(related_name='updatorserhe')
     pointer =  models.CharField('ID организации кто вносил запись', max_length=500, blank=True, null=True) 
