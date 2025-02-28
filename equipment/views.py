@@ -2917,8 +2917,8 @@ import xlrd
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'LabJournal.settings'
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-import django
-django.setup()
+# import django
+# django.setup()
 
 class UploadingProducts(object):
     # foreing_key_fields = ["////"]
