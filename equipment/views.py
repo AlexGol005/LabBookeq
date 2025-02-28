@@ -2911,7 +2911,7 @@ def DocumentsDeleteView(request, str):
 
 
 # блок 15 - массовая загрузка через EXEL
-def BulkDownloadView(request):
+def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
     """template_name = URL + '/bulk_download.html'"""
