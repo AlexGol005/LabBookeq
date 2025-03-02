@@ -2913,27 +2913,35 @@ def DocumentsDeleteView(request, str):
 
 # блок 15 - массовая загрузка через EXEL
 
-
 def E(request):
     """  """
-    object = []
+
+    
+    l = []
     for f in MeasurEquipmentCharakters._meta.get_fields():
         try:
-            object.append(f.verbose_name)
+            l.append(f.verbose_name)
         except:
             pass
-    for f in MeasurEquipmentCharakters._meta.get_fields():
-        try:
-            object.append(f.name)
-        except:
-            pass
-        
+    # for f in MeasurEquipmentCharakters._meta.get_fields():
+    #     try:
+    #         object.append(f.name)
+    #     except:
+    #         pass
+            
+    object = dict()
+    for column in range(s.ncols):
+        value = l[column]
+        object[column] = value
+    return object 
+    
     return render(
         request,
         'equipment/e.html',
         {
             'object': object
         })
+
 
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'LabJournal.settings'
@@ -2961,24 +2969,15 @@ class UploadingMeasurEquipmentCharakters(object):
             headers[column] = value
         return headers
 
-    def get_list_verbose_name(self):
-        list_verbose_name = []
-        for f in self.model._meta.get_fields():
-            try:
-                list_verbose_name.append(f.verbose_name)
-            except:
-                pass
-        return list_verbose_name
-        
-    def get_list_name(self):
-        list_name = []
-        for f in self.model._meta.get_fields():
-            try:
-                list_name.append(f.name)
-            except:
-                pass
-            
-
+    def get_field_from_verbose(self, meta, verbose_name):
+        try:
+            return next(
+                f for f in _meta.get_fields()
+                if f.verbose_name in (f.name, f.verbose_name, f.db_column)
+            )
+        except:
+            pass
+            # raise KeyError(verbose_name)
             
     def parsing(self):
         model = self.model
@@ -2987,37 +2986,29 @@ class UploadingMeasurEquipmentCharakters(object):
         s = wb.sheet_by_index(0)
         self.s = s
         headers = self.getting_headers()
-        list_verbose_name = self.get_list_verbose_name()
-        list_name = self.get_list_name()
-        # newheaders = []
-        # for i in headers:
-        #     n = list_verbose_name.index(i)
-        #     j = list_name[n]
-        #     newheaders.append(j)
-        
-        # for row in range(1, s.nrows):
-        #     row_dict = {}
-        #     for column in range(s.ncols):
-        #         value = s.cell(row, column).value            
-        newheaders = ['ID', 'created at', 'updated at', 'created by', 'updated by', 'Название прибора', 'Номер в Госреестре', 'МежМетрологический интервал, месяцев', 'Модификация прибора', 'Тип прибора', 'Диапазон измерений', 'Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)', 'Работает от сети (да - "1", нет - "0")', 'напряжение', 'частота', 'температура', 'влажность', 'давление', 'описание мероприятий по установке', 'Требуется установка (да - "1", нет - "0")', 'где в паспорте комплектация', 'Возможно тестирование (да - "1", нет - "0")', 'Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)', 'примечание', 'виды измерений, тип (группа) средств измерений по МИ 2314', 'ID добавившей организации']
-        field_name = newheaders[column]
-        # if field_name == "id" and not value:
-        #     continue
+        print(headers)
+
+        # product_bulk_list = list()
+        for row in range(1, s.nrows):
+            row_dict = {}
+            for column in range(s.ncols):
+                value = s.cell(row, column).value            
+                field_name = headers[column]
+                if field_name == "id" and not value:
+                    continue
                     
-        
 
-        # if field_name in self.foreing_key_fields:
-        #     related_model = self.getting_related_model(field_name)
-        #     print(related_model)
+                # if field_name in self.foreing_key_fields:
+                #     related_model = self.getting_related_model(field_name)
+                #     print(related_model)
 
-        #     instance, created = related_model.objects.get_or_create(name=value)
-        #     value = instance
-        row_dict[field_name] = value
-        try:
-            MeasurEquipmentCharakters.objects.create(**row_dict)
-        except:
-            pass
-
+                #     instance, created = related_model.objects.get_or_create(name=value)
+                #     value = instance
+                row_dict[field_name] = value
+            try:
+                MeasurEquipmentCharakters.objects.create(**row_dict)
+            except:
+                pass
 
 
             # print(row_dict)
@@ -3043,14 +3034,3 @@ def BulkDownload(request):
         else:
             messages.success(request, "Файл не загружен")
     return render(request, URL + '/bulk_download.html', locals())
-            
-            
-
-
-
-
-
-
-
-
-
