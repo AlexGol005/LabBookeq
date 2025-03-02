@@ -47,6 +47,27 @@ from users.models import Profile, Company
 URL = 'equipment'
 now = date.today()
 
+def E(request):
+    """  """
+    object = MeasurEquipmentCharakters._meta.get_fields()
+    # object=MeasurEquipmentCharakters._meta.get_field('Название прибора').name 
+    # object = []
+    # for f in MeasurEquipmentCharakters._meta.get_fields():
+    #     if MeasurEquipmentCharakters._meta.get_fields() is ManyToOneRel:
+    #         pass
+    #     else:
+    #         object.append(f.verbose_name)
+    
+    # object = [f.verbose_name for f in MeasurEquipmentCharakters._meta.get_fields()
+    return render(
+        request,
+        'equipment/e.html',
+        {
+            'object': object
+        })
+
+
+
 
 class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа и/аттестации """
@@ -2913,24 +2934,7 @@ def DocumentsDeleteView(request, str):
 
 # блок 15 - массовая загрузка через EXEL
 
-def E(request):
-    """  """
-    # object = MeasurEquipmentCharakters._meta.get_fields().name
-    # object=MeasurEquipmentCharakters._meta.get_field('Название прибора').name 
-    object = []
-    for f in MeasurEquipmentCharakters._meta.get_fields():
-        if MeasurEquipmentCharakters._meta.get_fields() is ManyToOneRel:
-            pass
-        else:
-            object.append(f.verbose_name)
-    
-    # object = [f.verbose_name for f in MeasurEquipmentCharakters._meta.get_fields()
-    return render(
-        request,
-        'equipment/e.html',
-        {
-            'object': object
-        })
+
 
 
 
