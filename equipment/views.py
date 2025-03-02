@@ -50,6 +50,7 @@ now = date.today()
 def E(request):
     """  """
     # object = MeasurEquipmentCharakters._meta.get_fields()
+    object = [1,]
     for f in MeasurEquipmentCharakters._meta.get_fields():
         try:
             object.append(f.verbose_name)
