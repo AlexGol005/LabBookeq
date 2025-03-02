@@ -2948,6 +2948,7 @@ class UploadingMeasurEquipmentCharakters(object):
             raise KeyError(verbose_name)
             
     def parsing(self):
+        model = self.model
         uploaded_file = self.uploaded_file
         wb = xlrd.open_workbook(file_contents=uploaded_file.read())
         s = wb.sheet_by_index(0)
@@ -2960,7 +2961,7 @@ class UploadingMeasurEquipmentCharakters(object):
             row_dict = {}
             for column in range(s.ncols):
                 value = s.cell(row, column).value            
-                field_name = self.get_field_from_verbose(self.model._meta, headers[column]) 
+                field_name = self.get_field_from_verbose(model._meta, headers[column]) 
                 # field_name = headers[column]
                 if field_name == "id" and not value:
                     continue
