@@ -2959,12 +2959,7 @@ class UploadingMeasurEquipmentCharakters(object):
             # raise KeyError(verbose_name)
 
             object = MeasurEquipmentCharakters._meta.get_fields()
-            return render(
-        request,
-        'equipment/e.html',
-        {
-            'object': object
-        })
+            return redirect('e')
             
            
             
@@ -2983,6 +2978,7 @@ class UploadingMeasurEquipmentCharakters(object):
             for column in range(s.ncols):
                 value = s.cell(row, column).value            
                 field_name = self.get_field_from_verbose(MeasurEquipmentCharakters._meta, headers[column]) 
+                field_name = self.get_field_from_verbose(MeasurEquipmentCharakters, headers[column])
                 # field_name = headers[column]
                 if field_name == "id" and not value:
                     continue
