@@ -2938,7 +2938,7 @@ class UploadingMeasurEquipmentCharakters(object):
             headers[column] = value
         return headers
 
-    def get_field_from_verbose(meta, verbose_name):
+    def get_field_from_verbose(self, meta, verbose_name):
         try:
             return next(
                 f for f in _meta.get_fields()
