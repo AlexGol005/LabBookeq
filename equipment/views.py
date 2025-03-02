@@ -2952,7 +2952,7 @@ class UploadingMeasurEquipmentCharakters(object):
     def get_field_from_verbose(self, meta, verbose_name):
         try:
             return next(
-                f for f in _meta.get_fields()
+                f for f in self._meta.get_fields()
                 if f.verbose_name in (f.name, f.verbose_name, f.db_column)
             )
         except:
@@ -2977,8 +2977,8 @@ class UploadingMeasurEquipmentCharakters(object):
             row_dict = {}
             for column in range(s.ncols):
                 value = s.cell(row, column).value            
-                # field_name = self.get_field_from_verbose(MeasurEquipmentCharakters._meta, headers[column]) 
-                field_name = self.get_field_from_verbose(MeasurEquipmentCharakters, headers[column])
+                field_name = self.get_field_from_verbose(MeasurEquipmentCharakters._meta, headers[column]) 
+                # field_name = self.get_field_from_verbose(MeasurEquipmentCharakters, headers[column])
                 # field_name = headers[column]
                 if field_name == "id" and not value:
                     continue
