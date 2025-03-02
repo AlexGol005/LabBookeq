@@ -2989,34 +2989,34 @@ class UploadingMeasurEquipmentCharakters(object):
         headers = self.getting_headers()
         list_verbose_name = self.get_list_verbose_name()
         list_name = self.get_list_name()
-        newheaders = []
-        for i in headers:
-            n = list_verbose_name.index(i)
-            j = list_name[n]
-            newheaders.append(j)
+        # newheaders = []
+        # for i in headers:
+        #     n = list_verbose_name.index(i)
+        #     j = list_name[n]
+        #     newheaders.append(j)
         
-        for row in range(1, s.nrows):
-            row_dict = {}
-            for column in range(s.ncols):
-                value = s.cell(row, column).value            
-
-                field_name = newheaders[column]
-                if field_name == "id" and not value:
-                    continue
+        # for row in range(1, s.nrows):
+        #     row_dict = {}
+        #     for column in range(s.ncols):
+        #         value = s.cell(row, column).value            
+        newheaders = ['ID', 'created at', 'updated at', 'created by', 'updated by', 'Название прибора', 'Номер в Госреестре', 'МежМетрологический интервал, месяцев', 'Модификация прибора', 'Тип прибора', 'Диапазон измерений', 'Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)', 'Работает от сети (да - "1", нет - "0")', 'напряжение', 'частота', 'температура', 'влажность', 'давление', 'описание мероприятий по установке', 'Требуется установка (да - "1", нет - "0")', 'где в паспорте комплектация', 'Возможно тестирование (да - "1", нет - "0")', 'Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)', 'примечание', 'виды измерений, тип (группа) средств измерений по МИ 2314', 'ID добавившей организации']
+        field_name = newheaders[column]
+        if field_name == "id" and not value:
+        continue
                     
         
 
-                # if field_name in self.foreing_key_fields:
-                #     related_model = self.getting_related_model(field_name)
-                #     print(related_model)
+        # if field_name in self.foreing_key_fields:
+        #     related_model = self.getting_related_model(field_name)
+        #     print(related_model)
 
-                #     instance, created = related_model.objects.get_or_create(name=value)
-                #     value = instance
-                row_dict[field_name] = value
-            try:
-                MeasurEquipmentCharakters.objects.create(**row_dict)
-            except:
-                pass
+        #     instance, created = related_model.objects.get_or_create(name=value)
+        #     value = instance
+        row_dict[field_name] = value
+        try:
+            MeasurEquipmentCharakters.objects.create(**row_dict)
+        except:
+            pass
 
 
 
