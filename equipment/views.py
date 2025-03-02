@@ -2946,7 +2946,8 @@ class UploadingMeasurEquipmentCharakters(object):
             )
         except:
             # raise KeyError(verbose_name)
-            print('ff')
+            raise MeasurEquipmentCharakters._meta.get_fields()
+           
             
     def parsing(self):
         model = self.model
