@@ -2992,7 +2992,7 @@ class UploadingMeasurEquipmentCharakters(object):
         newheaders = []
         for i in headers:
             n = list_verbose_name.index(i)
-            j = list_name(n)
+            j = list_name[n]
             newheaders.append(j)
         
         for row in range(1, s.nrows):
