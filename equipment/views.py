@@ -2930,7 +2930,7 @@ def E(request):
     #         pass
             
     object = dict()
-    for column in range(s.ncols):
+    for column in range(len(l)):
         value = l[column]
         object[column] = value
     return object 
