@@ -2977,7 +2977,7 @@ class UploadingMeasurEquipmentCharakters(object):
             row_dict = {}
             for column in range(s.ncols):
                 value = s.cell(row, column).value            
-                field_name = self.get_field_from_verbose(MeasurEquipmentCharakters._meta, headers[column]) 
+                # field_name = self.get_field_from_verbose(MeasurEquipmentCharakters._meta, headers[column]) 
                 field_name = self.get_field_from_verbose(MeasurEquipmentCharakters, headers[column])
                 # field_name = headers[column]
                 if field_name == "id" and not value:
