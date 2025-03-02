@@ -2916,7 +2916,8 @@ def DocumentsDeleteView(request, str):
 def E(request):
     """  """
     # object = MeasurEquipmentCharakters._meta.get_fields().name
-    object=MeasurEquipmentCharakters._meta.get_field('Название прибора').name   
+    object=MeasurEquipmentCharakters._meta.get_field('Название прибора').name 
+    object = [f.verbose_name for f in MeasurEquipmentCharakters._meta.get_fields()]
     return render(
         request,
         'equipment/e.html',
