@@ -47,39 +47,6 @@ from users.models import Profile, Company
 URL = 'equipment'
 now = date.today()
 
-def E(request):
-    """  """
-    # object = MeasurEquipmentCharakters._meta.get_fields()
-    object = []
-    for f in MeasurEquipmentCharakters._meta.get_fields():
-        try:
-            object.append(f.verbose_name)
-        except:
-            pass
-    for f in MeasurEquipmentCharakters._meta.get_fields():
-        try:
-            object.append(f.name)
-        except:
-            pass
-        
-    # object=MeasurEquipmentCharakters._meta.get_field('Название прибора').name 
-    # object = []
-    # for f in MeasurEquipmentCharakters._meta.get_fields():
-    #     if MeasurEquipmentCharakters._meta.get_fields() is ManyToOneRel:
-    #         pass
-    #     else:
-    #         object.append(f.verbose_name)
-    
-    # object = [f.verbose_name for f in MeasurEquipmentCharakters._meta.get_fields()
-    return render(
-        request,
-        'equipment/e.html',
-        {
-            'object': object
-        })
-
-
-
 
 class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа и/аттестации """
@@ -2947,7 +2914,26 @@ def DocumentsDeleteView(request, str):
 # блок 15 - массовая загрузка через EXEL
 
 
-
+def E(request):
+    """  """
+    object = []
+    for f in MeasurEquipmentCharakters._meta.get_fields():
+        try:
+            object.append(f.verbose_name)
+        except:
+            pass
+    for f in MeasurEquipmentCharakters._meta.get_fields():
+        try:
+            object.append(f.name)
+        except:
+            pass
+        
+    return render(
+        request,
+        'equipment/e.html',
+        {
+            'object': object
+        })
 
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'LabJournal.settings'
@@ -2975,19 +2961,24 @@ class UploadingMeasurEquipmentCharakters(object):
             headers[column] = value
         return headers
 
-    def get_field_from_verbose(self, meta, verbose_name):
-        try:
-            return next(
-                f for f in self.model._meta.get_fields()
-                if f.verbose_name in (f.verbose_name, f.db_column)
-            )
-        except:
-            # raise KeyError(verbose_name)
-            pass
-
-
+    def get_list_verbose_name(self):
+        list_verbose_name = []
+        for f in self.model._meta.get_fields():
+            try:
+                list_verbose_name.append(f.verbose_name)
+            except:
+                pass
+        return list_verbose_name
+        
+    def get_list_name(self):
+        list_name = []
+        for f in self.model._meta.get_fields():
+            try:
+                list_name.append(f.name)
+            except:
+                pass
             
-           
+
             
     def parsing(self):
         model = self.model
@@ -2996,20 +2987,24 @@ class UploadingMeasurEquipmentCharakters(object):
         s = wb.sheet_by_index(0)
         self.s = s
         headers = self.getting_headers()
-        print(headers)
-
-        # product_bulk_list = list()
+        list_verbose_name = self.get_list_verbose_name()
+        list_name = self.get_list_name()
+        newheaders = []
+        for i in headers:
+            n = list_verbose_name.index("i")
+            j = list_name(n)
+            newheaders.append(j)
+        
         for row in range(1, s.nrows):
             row_dict = {}
             for column in range(s.ncols):
                 value = s.cell(row, column).value            
-                field_name = self.get_field_from_verbose(MeasurEquipmentCharakters._meta, headers[column]) 
-                # field_name = self.get_field_from_verbose(MeasurEquipmentCharakters, headers[column])
-                # field_name = headers[column]
+
+                field_name = newheaders[column]
                 if field_name == "id" and not value:
                     continue
                     
-                # model._meta.get_field(field_name).verbose_name
+        
 
                 # if field_name in self.foreing_key_fields:
                 #     related_model = self.getting_related_model(field_name)
