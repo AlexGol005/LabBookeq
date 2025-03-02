@@ -2991,7 +2991,7 @@ class UploadingMeasurEquipmentCharakters(object):
         list_name = self.get_list_name()
         newheaders = []
         for i in headers:
-            n = list_verbose_name.index("i")
+            n = list_verbose_name.index(i)
             j = list_name(n)
             newheaders.append(j)
         
