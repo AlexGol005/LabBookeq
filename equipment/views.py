@@ -2945,8 +2945,7 @@ class UploadingMeasurEquipmentCharakters(object):
                 if f.verbose_name in (f.name, f.verbose_name, f.db_column)
             )
         except:
-            pass
-            # raise KeyError(verbose_name)
+            raise KeyError(verbose_name)
             
     def parsing(self):
         model = self.model
@@ -2962,7 +2961,7 @@ class UploadingMeasurEquipmentCharakters(object):
             row_dict = {}
             for column in range(s.ncols):
                 value = s.cell(row, column).value            
-                field_name = self.get_field_from_verbose(model._meta, headers[column]) 
+                field_name = self.get_field_from_verbose(MeasurEquipmentCharakters._meta, headers[column]) 
                 # field_name = headers[column]
                 if field_name == "id" and not value:
                     continue
