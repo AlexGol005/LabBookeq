@@ -2952,7 +2952,7 @@ class UploadingMeasurEquipmentCharakters(object):
     def get_field_from_verbose(self, meta, verbose_name):
         try:
             return next(
-                f for f in self._meta.get_fields()
+                f for f in self.model._meta.get_fields()
                 if f.verbose_name in (f.name, f.verbose_name, f.db_column)
             )
         except:
