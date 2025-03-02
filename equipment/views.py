@@ -2929,12 +2929,12 @@ def E(request):
     #     except:
     #         pass
             
-    object = dict()
+    headers = dict()
     for column in range(len(l)):
         value = l[column]
-        object[column] = value
-    return object 
-    
+        headers[column] = value
+ 
+    object = headers
     return render(
         request,
         'equipment/e.html',
