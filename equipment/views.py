@@ -2917,7 +2917,14 @@ def E(request):
     """  """
     # object = MeasurEquipmentCharakters._meta.get_fields().name
     # object=MeasurEquipmentCharakters._meta.get_field('Название прибора').name 
-    object = [f.verbose_name for f in MeasurEquipmentCharakters._meta.get_fields()]
+    object = []
+    for f in MeasurEquipmentCharakters._meta.get_fields():
+        if MeasurEquipmentCharakters._meta.get_fields() is ManyToOneRel:
+            pass
+        else:
+            object.append(f.verbose_name)
+    
+    # object = [f.verbose_name for f in MeasurEquipmentCharakters._meta.get_fields()
     return render(
         request,
         'equipment/e.html',
