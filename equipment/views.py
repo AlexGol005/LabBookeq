@@ -2957,9 +2957,9 @@ class UploadingMeasurEquipmentCharakters(object):
             )
         except:
             # raise KeyError(verbose_name)
+            pass
 
-            object = MeasurEquipmentCharakters._meta.get_fields()
-            return redirect('e')
+
             
            
             
@@ -2995,7 +2995,8 @@ class UploadingMeasurEquipmentCharakters(object):
             try:
                 MeasurEquipmentCharakters.objects.create(**row_dict)
             except:
-                pass
+                object = MeasurEquipmentCharakters._meta.get_fields()
+                return redirect('e')
 
 
             # print(row_dict)
