@@ -2945,7 +2945,8 @@ class UploadingMeasurEquipmentCharakters(object):
                 if f.verbose_name in (f.name, f.verbose_name, f.db_column)
             )
         except:
-            raise KeyError(verbose_name)
+            # raise KeyError(verbose_name)
+            print('ff')
             
     def parsing(self):
         model = self.model
