@@ -20,7 +20,8 @@
 блок 14 - все кнопки удаления объектов
 блок 15 - массовая загрузка через EXEL
 """
-
+import os
+import sys
 import pytils.translit
 from datetime import date
 from django.contrib import messages
@@ -34,7 +35,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from django.views.generic.edit import FormMixin
-
+import xlrd
 
 from equipment.constants import servicedesc0
 from equipment.forms import*
@@ -2911,16 +2912,11 @@ def DocumentsDeleteView(request, str):
 
 
 # блок 15 - массовая загрузка через EXEL
-import os
-import sys
-import xlrd
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'LabJournal.settings'
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-# import django
-# django.setup()
 
-class UploadingProducts(object):
+class UploadingMeasurEquipmentCharakters(object):
     # foreing_key_fields = ["////"]
     model = MeasurEquipmentCharakters
 
@@ -2933,7 +2929,7 @@ class UploadingProducts(object):
         model = self.model
         related = model._meta.get_field(field_name).rel.to
         return related_model
-
+    
     def getting_headers(self):
         s = self.s
         headers = dict()
@@ -2941,6 +2937,15 @@ class UploadingProducts(object):
             value = s.cell(0, column).value
             headers[column] = value
         return headers
+
+    def get_field_from_verbose(meta, verbose_name):
+        try:
+            return next(
+                f for f in _meta.get_fields()
+                if f.verbose_name in (f.name, f.verbose_name, f.db_column)
+            )
+        except:
+            raise KeyError(verbose_name)
             
     def parsing(self):
         uploaded_file = self.uploaded_file
@@ -2954,10 +2959,13 @@ class UploadingProducts(object):
         for row in range(1, s.nrows):
             row_dict = {}
             for column in range(s.ncols):
-                value = s.cell(row, column).value
-                field_name = headers[column]
+                value = s.cell(row, column).value            
+                field_name = self.get_field_from_verbose(self.model._meta, headers[column]) 
+                # field_name = headers[column]
                 if field_name == "id" and not value:
                     continue
+                    
+                # model._meta.get_field(field_name).verbose_name
 
                 # if field_name in self.foreing_key_fields:
                 #     related_model = self.getting_related_model(field_name)
@@ -2989,7 +2997,7 @@ def BulkDownload(request):
         print(request.POST)
         print(request.FILES)
         file = request.FILES['file']
-        uploading_file = UploadingProducts({'file':file})
+        uploading_file = UploadingMeasurEquipmentCharakters({'file':file})
         if uploading_file:
              messages.success(request, "Файл успешно загружен")
         else:
