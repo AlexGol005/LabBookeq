@@ -2994,9 +2994,11 @@ class UploadingMeasurEquipmentCharakters(object):
                 row_dict[field_name] = value
             try:
                 MeasurEquipmentCharakters.objects.create(**row_dict)
-            except:
                 object = MeasurEquipmentCharakters._meta.get_fields()
                 return redirect('e')
+            except:
+                pass
+
 
 
             # print(row_dict)
