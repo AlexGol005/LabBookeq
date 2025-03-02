@@ -2913,6 +2913,17 @@ def DocumentsDeleteView(request, str):
 
 # блок 15 - массовая загрузка через EXEL
 
+def E(request):
+    """  """
+    return render(
+        request,
+        'equipment/e.html',
+        {
+            'object': object
+        })
+
+
+
 os.environ['DJANGO_SETTINGS_MODULE'] = 'LabJournal.settings'
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -2946,7 +2957,15 @@ class UploadingMeasurEquipmentCharakters(object):
             )
         except:
             # raise KeyError(verbose_name)
-            raise MeasurEquipmentCharakters._meta.get_fields()
+
+            object = MeasurEquipmentCharakters._meta.get_fields()
+            return render(
+        request,
+        'equipment/e.html',
+        {
+            'object': object
+        })
+            
            
             
     def parsing(self):
