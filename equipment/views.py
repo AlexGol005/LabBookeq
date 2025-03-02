@@ -2915,6 +2915,7 @@ def DocumentsDeleteView(request, str):
 
 def E(request):
     """  """
+    object = MeasurEquipmentCharakters._meta.get_fields()
     return render(
         request,
         'equipment/e.html',
@@ -2994,8 +2995,6 @@ class UploadingMeasurEquipmentCharakters(object):
                 row_dict[field_name] = value
             try:
                 MeasurEquipmentCharakters.objects.create(**row_dict)
-                object = MeasurEquipmentCharakters._meta.get_fields()
-                return redirect('e')
             except:
                 pass
 
