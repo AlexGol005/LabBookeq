@@ -2956,10 +2956,10 @@ class UploadingMeasurEquipmentCharakters(object):
                 if f.verbose_name in (f.name, f.verbose_name, f.db_column)
             )
         except:
-            # raise KeyError(verbose_name)
+            raise KeyError(verbose_name)
 
-            object = MeasurEquipmentCharakters._meta.get_fields()
-            return redirect('e')
+            # object = MeasurEquipmentCharakters._meta.get_fields()
+            # return redirect('e')
             
            
             
