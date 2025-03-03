@@ -6,8 +6,9 @@
 блок 1 блок получения констант
 блок 2 блок стили  для стилей полей документа exel
 блок 3 - выгрузка данных в формате ексель (вначале блока идет общий класс base_planreport_xls, который наследуется частными классами)
-блок 4 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки) 
-блок 5 - ТОИР 
+блок 4 - шаблоны для массовой загрузки приборов
+блок 5 - нестандартные exel выгрузки (протоколы верификации, карточка, этикетки) 
+блок 6 - ТОИР 
 """
 
 
@@ -1495,12 +1496,6 @@ def export_meteo_xls(request, pk):
     return response
 
 
-
-
-
-
-
-
 def export_mecard_xls(request, pk):
     '''представление для выгрузки карточки на прибор (СИ) в ексель'''
     company = Company.objects.get(userid=request.user.profile.userid)
@@ -2266,6 +2261,64 @@ def export_tecard_xls(request, pk):
     return response
 
 
+блок 4 - шаблоны для массовой загрузки приборов
+def export_MeasurEquipmentCharakters_pattern_xls(request):
+    '''представление для выгрузки шаблона загрузочного файла: Характеристики СИ'''
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="harakteristiki_SI_shablon.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('1', cell_overwrite_ok=True)
+    ws.header_str = b' '
+    ws.footer_str = b' '
+
+    # ширина столбцов
+    ws.col(0).width = 3000
+    ws.col(1).width = 3000
+    ws.col(2).width = 3000
+    ws.col(3).width = 3000
+    ws.col(4).width = 3000
+    ws.col(5).width = 3000
+    ws.col(6).width = 3000
+    ws.col(7).width = 3000
+    ws.col(8).width = 3000
+    ws.col(9).width = 3000
+    ws.col(10).width = 3000
+
+    row_num = 0 
+    columns = [
+            'Название прибора',
+            'Номер в Госреестре',
+            'Модификация прибора',
+            'Тип прибора',
+            'МежМетрологический интервал, месяцев',
+            'Работает от сети (да - "1", нет - "0")',
+            'Требуется установка (да - "1", нет - "0")',
+            'Возможно тестирование  (да - "1", нет - "0")',
+            'Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)',
+            'Диапазон измерений',
+            'напряжение',
+            'частота',
+            'температура',
+            'влажность',
+            'давление',
+            'описание мероприятий по установке',
+            'Где указана комплектация оборудования',
+            'Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)',
+            'примечание',
+            'виды измерений, тип (группа) средств измерений по МИ 2314',
+        ]
+    for col_num in range(9):
+        ws.write(row_num, col_num, columns[col_num], style_bold_borders)
+    for col_num in range(9, len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 1000
+
+    wb.save(response)
+    return response
+
+
+блок 5 - нестандартные exel выгрузки (этикетки, протоколы верификации, карточка) 
 
 # стили для exel (для этикеток)
 brd1 = Borders()
@@ -2502,6 +2555,7 @@ def export_verificlabel_xls(request):
 
     wb.save(response)
     return response
+
 
 # флаг верифик
 def export_exvercard_xls(request, pk):
@@ -4082,7 +4136,7 @@ def export_exvercardteste_xls(request, pk):
     wb.save(response)
     return response
 
-# блок 5 - ТОиР
+# блок 6 - ТОиР
 # Ниже будут быгрузки ексель для переноса в LabBook
 # Поэтому: для удобства стили все далаем заново. В лаббуке стили с такими же названиями вынесены в файл exelbase
 # но! кроме размера шрифта - он 11!
