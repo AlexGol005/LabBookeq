@@ -3021,6 +3021,64 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 #                 pass
 #         return True
             
+class UploadingProducts(object):
+    foreing_key_fields = [""]
+    model = MeasurEquipmentCharakters
+
+    def __init__(self, data):
+        data=data
+        self.uploaded_file = data.get("file")
+        self.parsing()
+
+    def getting_related_model(self, field_name):
+        model = self.model
+        related = model._meta.get_field(field_name).rel.to
+        return related_model
+
+    def getting_headers(self):
+        s = self.s
+        headers = dict()
+        for column in range(s.ncols):
+            value = s.cell(0, column).value
+            headers[column] = value
+        return headers
+            
+    def parsing(self):
+        uploaded_file = self.uploaded_file
+        wb = xlrd.open_workbook(file_contents=uploaded_file.read())
+        s = wb.sheet_by_index(0)
+        self.s = s
+        headers = self.getting_headers()
+        print(headers)
+
+        for row in range(1, s.nrows):
+            row_dict = {}
+            for column in range(s.ncols):
+                value = s.cell(row, column).value
+                field_name = headers[column]
+                if field_name == "id" and not value:
+                    continue
+
+                if field_name in self.foreing_key_fields:
+                    related_model = self.getting_related_model(field_name)
+                    print(related_model)
+
+                    instance, created = related_model.objects.get_or_create(name=value)
+                    value = instance
+                row_dict[field_name] = value
+            try:
+                MeasurEquipmentCharakters.objects.create(**row_dict)
+            except:
+                pass
+
+
+            # print(row_dict)
+            # product_bulk_list.create(MeasurEquipmentCharakters(**row_dict)
+
+
+        # MeasurEquipmentCharakters.objects.bulk_create(product_bulk_list)
+        return True
+
 
 
 def BulkDownload(request):
