@@ -3015,7 +3015,7 @@ class UploadingModel(object):
                     value = instance
                 row_dict[field_name] = value
             try:
-                self.model.objects.create(**row_dict)
+                self.model.objects.update_or_create(**row_dict)
             except:
                 pass
         return True
