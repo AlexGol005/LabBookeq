@@ -6,6 +6,7 @@ from . import exel_agreements
 
 urlpatterns = [
     path('e/', views.E, name='e'),
+    path(r'^export_pat_mec/xls/$/', exel.export_verificlabel_xls, name='export_MeasurEquipmentCharakters_pattern_xls'),
     path('bulkdownload/', views.BulkDownload, name='bulkdownload'),
     path('documentsdelete/<str:str>/', views.DocumentsDeleteView, name='documentsdelete'),
     path('roomchangedelete/<str:str>/', views.RoomchangeDeleteView, name='roomchangedelete'),
