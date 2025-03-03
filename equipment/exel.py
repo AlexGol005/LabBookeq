@@ -1384,7 +1384,7 @@ def export_mustver_xls(request):
                                )
 
 
-# блок 4 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки)
+# блок 5 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки)
 def export_meteo_xls(request, pk):
     '''представление для выгрузки журнала микроклимата'''
     serdate = request.GET['date']
@@ -2261,7 +2261,7 @@ def export_tecard_xls(request, pk):
     return response
 
 
-блок 4 - шаблоны для массовой загрузки приборов
+# блок 4 - шаблоны для массовой загрузки приборов
 def export_MeasurEquipmentCharakters_pattern_xls(request):
     '''представление для выгрузки шаблона загрузочного файла: Характеристики СИ'''
     response = HttpResponse(content_type='application/ms-excel')
