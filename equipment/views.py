@@ -2956,8 +2956,7 @@ def E(request):
 
             
 class UploadingModel(object):
-    # foreing_key_fields = [""]
-    foreing_key_fields = None
+    foreing_key_fields = [""]
     model = None
 
     def __init__(self, data):
