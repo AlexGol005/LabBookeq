@@ -3021,7 +3021,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 #                 pass
 #         return True
             
-class UploadingProducts(object):
+class UploadingMeasurEquipmentCharakters(object):
     foreing_key_fields = [""]
     model = MeasurEquipmentCharakters
 
