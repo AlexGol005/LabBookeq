@@ -2972,14 +2972,14 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 #         return related_model
     
 #     def getting_headers(self):
-#         l_verbose_name = []
-#         m_name = []
-#         for f in MeasurEquipmentCharakters._meta.get_fields():
-#             try:
-#                 l_verbose_name.append(f.verbose_name)
-#                 m_name.append(f.name)
-#             except:
-#                 pass
+        # l_verbose_name = []
+        # m_name = []
+        # for f in MeasurEquipmentCharakters._meta.get_fields():
+        #     try:
+        #         l_verbose_name.append(f.verbose_name)
+        #         m_name.append(f.name)
+        #     except:
+        #         pass
 #         s = self.s
 #         headers = dict()
 #         for column in range(s.ncols):
@@ -3036,10 +3036,24 @@ class UploadingMeasurEquipmentCharakters(object):
         return related_model
 
     def getting_headers(self):
+        l_verbose_name = []
+        m_name = []
+        for f in MeasurEquipmentCharakters._meta.get_fields():
+            try:
+                l_verbose_name.append(f.verbose_name)
+                m_name.append(f.name)
+            except:
+                pass
         s = self.s
         headers = dict()
         for column in range(s.ncols):
             value = s.cell(0, column).value
+            try:
+                value in l_verbose_name
+                a = l_verbose_name.index(value)
+                value = m_name[a] 
+            except:
+                raise KeyError(value)
             headers[column] = value
         return headers
             
