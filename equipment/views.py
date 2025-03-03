@@ -2972,34 +2972,23 @@ class UploadingMeasurEquipmentCharakters(object):
         return related_model
     
     def getting_headers(self):
+        l_verbose_name = []
+        m_name = []
+        for f in MeasurEquipmentCharakters._meta.get_fields():
+            try:
+                l_verbose_name.append(f.verbose_name)
+                m_name.append(f.name)
+            except:
+                pass
         s = self.s
         headers = dict()
         for column in range(s.ncols):
-            value = s.cell(0, column).value            
+            value = s.cell(0, column).value  
+            if value in l_verbose_name:
+                a = l_verbose_name.index(value)
+                value = m_name[a]       
             headers[column] = value
-
-        l = []
-        m = []
-        for f in MeasurEquipmentCharakters._meta.get_fields():
-            try:
-                l.append(f.verbose_name)
-                m.append(f.name)
-            except:
-                pass
-
-
-        
         return headers
-
-    def get_field_from_verbose(self, meta, verbose_name):
-        try:
-            return next(
-                f for f in _meta.get_fields()
-                if f.verbose_name in (f.name, f.verbose_name, f.db_column)
-            )
-        except:
-            pass
-            # raise KeyError(verbose_name)
             
     def parsing(self):
         model = self.model
@@ -3010,7 +2999,6 @@ class UploadingMeasurEquipmentCharakters(object):
         headers = self.getting_headers()
         print(headers)
 
-        # product_bulk_list = list()
         for row in range(1, s.nrows):
             row_dict = {}
             for column in range(s.ncols):
