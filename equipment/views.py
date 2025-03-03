@@ -2935,6 +2935,16 @@ def E(request):
         headers[column] = value
  
     object = headers
+
+    l = []
+    m = []
+    for f in MeasurEquipmentCharakters._meta.get_fields():
+        try:
+            l.append(f.verbose_name)
+            m.append(f.name)
+        except:
+            pass
+    object = f'{len(l)} = {len(m)}'
     return render(
         request,
         'equipment/e.html',
@@ -2965,8 +2975,20 @@ class UploadingMeasurEquipmentCharakters(object):
         s = self.s
         headers = dict()
         for column in range(s.ncols):
-            value = s.cell(0, column).value
+            value = s.cell(0, column).value            
             headers[column] = value
+
+        l = []
+        m = []
+        for f in MeasurEquipmentCharakters._meta.get_fields():
+            try:
+                l.append(f.verbose_name)
+                m.append(f.name)
+            except:
+                pass
+
+
+        
         return headers
 
     def get_field_from_verbose(self, meta, verbose_name):
