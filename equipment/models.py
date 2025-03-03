@@ -222,7 +222,7 @@ class MeasurEquipmentCharakters(models.Model):
     pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
     setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
     needsetplace = models.BooleanField('Требуется установка (да - "1", нет - "0")', default=False, blank=True)
-    complectlist = models.CharField('где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
+    complectlist = models.CharField('Где указана комплектация оборудования', max_length=100, default='', blank=True, null=True)
     expresstest = models.BooleanField('Возможно тестирование  (да - "1", нет - "0")', default=False, blank=True)
     traceability = models.TextField('Информация о прослеживаемости (к какому эталону прослеживаются измерения на СИ)',
                                     default='', blank=True, null=True)
@@ -268,7 +268,7 @@ class TestingEquipmentCharakters(models.Model):
     pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
     setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
     needsetplace = models.BooleanField('Требуется установка (да - "1", нет - "0")', default=False, blank=True)
-    complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
+    complectlist = models.CharField('Где указана комплектация оборудования', max_length=100, default='', blank=True, null=True)
     expresstest = models.BooleanField('Возможно тестирование  (да - "1", нет - "0")', default=False, blank=True)
     pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True) 
 
@@ -307,7 +307,7 @@ class HelpingEquipmentCharakters(models.Model):
     pressure = models.CharField('давление', max_length=100, default='', blank=True, null=True)
     setplace = models.CharField('описание мероприятий по установке', max_length=1000, default='', blank=True, null=True)
     needsetplace = models.BooleanField('Требуется установка (да - "1", нет - "0")', default=False, blank=True)
-    complectlist = models.CharField('Где в паспорте комплектация', max_length=100, default='', blank=True, null=True)
+    complectlist = models.CharField('Где указана комплектация оборудования', max_length=100, default='', blank=True, null=True)
     expresstest = models.BooleanField('Возможно тестирование (да - "1", нет - "0")', default=False, blank=True)
     kvasyattestation = models.CharField('...', max_length=100, default='', blank=True, null=True)
     pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True) 
