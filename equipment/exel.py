@@ -1384,7 +1384,6 @@ def export_mustver_xls(request):
                                )
 
 
-# блок 5 - нестандартные exel выгрузки (карточка, протоколы верификации, этикетки)
 def export_meteo_xls(request, pk):
     '''представление для выгрузки журнала микроклимата'''
     serdate = request.GET['date']
@@ -2318,7 +2317,7 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     return response
 
 
-блок 5 - нестандартные exel выгрузки (этикетки, протоколы верификации, карточка) 
+# блок 5 - нестандартные exel выгрузки (этикетки, протоколы верификации, карточка) 
 
 # стили для exel (для этикеток)
 brd1 = Borders()
