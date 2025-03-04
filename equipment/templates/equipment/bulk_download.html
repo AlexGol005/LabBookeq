@@ -18,9 +18,16 @@
  <hr>
       Первый этап: загружаем характеристики СИ/ИО/ВО
       <br>
+      {#шаблоны загрузка характеристик СИ/ИО/ИО#}
+<div class="container">
+    <div class="row">
+<div class="col-6"> 
+   
       <center>
 <a href="{% url 'export_MeasurEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики СИ"</a>
-
+</div>
+       {# кнопки для загрузки  файлов характеристик СИ/ИО/ИО#}
+    <div class="col-6">    
          
         <form method="post" action "" enctype=multipart/form-data>
            {% csrf_token %}
@@ -30,6 +37,9 @@
             <button type='submit' class btn btn-primary>загрузить файл .xls "Характеристики СИ"</button>
         </form>
       </center>
+       </div>
+       </div>
+   </div>
   <hr> 
 </div>
 {% endblock %}
