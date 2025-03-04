@@ -120,13 +120,21 @@ b2.right = 6
 b2.bottom = 6
 b2.top = 6
 
-# style_headers  жирным шрифтом, с границами ячеек
+# style_bold_borders  жирным шрифтом, с границами ячеек
 style_bold_borders = xlwt.XFStyle()
 style_bold_borders.font.bold = True
 style_bold_borders.font.name = 'Times New Roman'
 style_bold_borders.borders = b1
 style_bold_borders.alignment = alg_hc_vc_w1
 
+# style_bold_borders_blue  жирным шрифтом, с границами ячеек
+style_bold_borders_blue = xlwt.XFStyle()
+style_bold_borders_blue.font.bold = True
+style_bold_borders_blue.font.name = 'Times New Roman'
+style_bold_borders_blue.borders = b1
+style_bold_borders_blue.alignment = alg_hc_vc_w1
+style_bold_borders_blue.font.colour = 'blue'
+style_plain.font.height = 20 * size
 
 # style_plain обычные ячейки, с границами ячеек
 style_plain = xlwt.XFStyle()
@@ -2267,8 +2275,11 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     response['Content-Disposition'] = f'attachment; filename="harakteristiki_SI_shablon.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('1', cell_overwrite_ok=True)
+    ws1 = wb.add_sheet('1', cell_overwrite_ok=True)
     ws.header_str = b' '
     ws.footer_str = b' '
+
+    size = 11
 
     # ширина столбцов
     ws.col(0).width = 3000
@@ -2306,13 +2317,87 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
             'примечание',
             'виды измерений, тип (группа) средств измерений по МИ 2314',
         ]
-    for col_num in range(9):
-        ws.write(row_num, col_num, columns[col_num], style_bold_borders)
-    for col_num in range(9, len(columns)):
+    for col_num in range(8):
+        ws.write(row_num, col_num, columns[col_num], style_bold_borders_blue)
+    for col_num in range(8, len(columns)):
         ws.write(row_num, col_num, columns[col_num], style_plain)
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 1000
 
+    for col_num in range(8):
+        ws1.write(row_num, col_num, columns[col_num], style_bold_borders_blue)
+    for col_num in range(8, len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 1000
+
+    row_num += 1
+    columns = [
+            'Как на странице поверки на сайте "Аршин", но в единственном числе (либо как указано в вашем файле приборов)',
+            'Как на странице поверки на сайте "Аршин"',
+            'Как на странице поверки на сайте "Аршин", либо "без модификации"',
+            'Как на странице поверки на сайте "Аршин", либо "без типа"',
+            'Как на странице поверки на сайте "Аршин"',
+            'Для протокола верификации: если "да" - то в протоколе верификации будет показана таблица с требуемыми параметрами электросети',
+            '"да" - для крупных приборов, например: весы, "нет" - для приборов типа термометров',
+            '"да" - если можно проверить правильность показаний прибора, например измерив на нем ГСО (пример - вискозиметр), и "нет" - если проверка невозможна  (пример - барометр). Результаты проверки отражаются в приложении к протоколу верификации вручную, так как из JL выгружается только общая страница протокола',
+            'Первоисточник - описание типа, которое можно скачать с сайта "Аршин", перейдя по ссылке в разделе "Регистрационный номер типа СИ"',
+            'Первоисточник - описание типа, которое можно скачать с сайта "Аршин", перейдя по ссылке в разделе "Регистрационный номер типа СИ"',
+            'По описанию типа или паспорту, руководству',
+            'По описанию типа или паспорту, руководству',
+            'По описанию типа или паспорту, руководству',
+            'По описанию типа или паспорту, руководству',
+            'По описанию типа или паспорту, руководству',
+            'Будет отображено в протоколе верификации, следует заполнить для приборов, требующих установки, лучше по сведениям из паспорта или руководства по эксплуатации. Пример: "Установлен на лабораторном столе по уровню, вдали от сквозняков"',
+            'Обычно это страница паспорта или упаковочный лист',
+            'Не обязательный столбец, который может пригодиться позднее при выгрузке разных форм на оборудование',
+            '',
+            'Не обязательный столбец, который может пригодиться позднее при выгрузке разных форм на оборудование. Например: форма Росаккредитации. Код по МИ 2314',
+        ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 7000
+
+    row_num += 1
+    columns = [
+            'Пример для характеристик прибора по ссылке https://fgis.gost.ru/fundmetrology/cm/results/1-248359087',
+        ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain)
+        ws1.merge(row_num, row_num, 0, len(columns), style_plain)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 1000
+
+    row_num += 1
+    columns = [
+            'Термометр стеклянный',
+            '63332-16',
+            '127C',
+            'ASTM',
+            '24',
+            '0',
+            '0',
+            '0',
+            '± 0,1 ℃',
+            'от -21,4 до 18,6 ℃',
+            '',
+            '',
+            '-',
+            '-',
+            '-',
+            '',
+            'Паспорт, стр.1',
+            'гэт35-2010, гэт14-2014',
+            '',
+            '3201601',
+        ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 3000
+
+        
     wb.save(response)
     return response
 
