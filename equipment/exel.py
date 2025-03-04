@@ -133,9 +133,8 @@ style_bold_borders_blue.font.bold = True
 style_bold_borders_blue.font.name = 'Times New Roman'
 style_bold_borders_blue.borders = b1
 style_bold_borders_blue.alignment = alg_hc_vc_w1
-style_bold_borders_blue.colour_index = xlwt.Style.colour_map['blue']
 style_bold_borders_blue.font.height = 20 * size
-style_bold_borders_blue.font.colour_index = #1E90FF
+style_bold_borders_blue.font.colour_index = 26
 
 # style_plain обычные ячейки, с границами ячеек
 style_plain = xlwt.XFStyle()
