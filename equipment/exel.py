@@ -133,7 +133,7 @@ style_bold_borders_blue.font.bold = True
 style_bold_borders_blue.font.name = 'Times New Roman'
 style_bold_borders_blue.borders = b1
 style_bold_borders_blue.alignment = alg_hc_vc_w1
-style_bold_borders_blue.font.colour = 'blue'
+style_bold_borders_blue.colour_index = xlwt.Style.colour_map['blue']
 style_bold_borders_blue.font.height = 20 * size
 
 # style_plain обычные ячейки, с границами ячеек
@@ -2275,24 +2275,55 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     response['Content-Disposition'] = f'attachment; filename="harakteristiki_SI_shablon.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('1', cell_overwrite_ok=True)
-    ws1 = wb.add_sheet('2', cell_overwrite_ok=True)
+    ws1 = wb.add_sheet('примеры и пояснения', cell_overwrite_ok=True)
     ws.header_str = b' '
     ws.footer_str = b' '
 
     size = 11
 
     # ширина столбцов
-    ws.col(0).width = 3000
-    ws.col(1).width = 3000
-    ws.col(2).width = 3000
-    ws.col(3).width = 3000
-    ws.col(4).width = 3000
-    ws.col(5).width = 3000
-    ws.col(6).width = 3000
-    ws.col(7).width = 3000
-    ws.col(8).width = 3000
-    ws.col(9).width = 3000
-    ws.col(10).width = 3000
+    ws.col(0).width = 5000
+    ws.col(1).width = 5000
+    ws.col(2).width = 5000
+    ws.col(3).width = 5000
+    ws.col(4).width = 5000
+    ws.col(5).width = 5000
+    ws.col(6).width = 5000
+    ws.col(7).width = 5000
+    ws.col(8).width = 5000
+    ws.col(9).width = 5000
+    ws.col(10).width = 5000
+    ws.col(11).width = 5000
+    ws.col(12).width = 5000
+    ws.col(13).width = 5000
+    ws.col(14).width = 5000
+    ws.col(15).width = 5000
+    ws.col(16).width = 5000
+    ws.col(17).width = 5000
+    ws.col(18).width = 5000
+    ws.col(19).width = 5000
+
+    ws1.col(0).width = 10000
+    ws1.col(1).width = 10000
+    ws1.col(2).width = 10000
+    ws1.col(3).width = 10000
+    ws1.col(4).width = 10000
+    ws1.col(5).width = 10000
+    ws1.col(6).width = 10000
+    ws1.col(7).width = 10000
+    ws1.col(8).width = 10000
+    ws1.col(9).width = 10000
+    ws1.col(10).width = 10000
+    ws1.col(11).width = 10000
+    ws1.col(12).width = 10000
+    ws1.col(13).width = 10000
+    ws1.col(14).width = 10000
+    ws1.col(15).width = 10000
+    ws1.col(16).width = 10000
+    ws1.col(17).width = 10000
+    ws1.col(18).width = 10000
+    ws1.col(19).width = 10000
+
 
     row_num = 0 
     columns = [
@@ -2357,7 +2388,7 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain)
     ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 7000
+    ws1.row(row_num).height = 3000
 
     row_num += 1
     columns = [
@@ -2365,10 +2396,11 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
         ]
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain)
-        ws1.merge(row_num, row_num, 0, len(columns), style_plain)
-    ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 1000
+        ws1.merge(row_num, row_num, 0, 20)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 500
 
+        
     row_num += 1
     columns = [
             'Термометр стеклянный',
@@ -2395,7 +2427,7 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain)
     ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 3000
+    ws1.row(row_num).height = 2000
 
         
     wb.save(response)
