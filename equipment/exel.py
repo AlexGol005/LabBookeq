@@ -134,7 +134,7 @@ style_bold_borders_blue.font.name = 'Times New Roman'
 style_bold_borders_blue.borders = b1
 style_bold_borders_blue.alignment = alg_hc_vc_w1
 style_bold_borders_blue.font.height = 20 * size
-style_bold_borders_blue.font.colour_index = 32
+style_bold_borders_blue.font.colour_index = 41
 
 # style_plain обычные ячейки, с границами ячеек
 style_plain = xlwt.XFStyle()
@@ -184,7 +184,6 @@ style_plain_90.font.height = 20 * size
 style_plain_90.borders = b1
 style_plain_90.alignment = al100
 
-
 xlwt.easyxf('align: rotation 90')
 
 # обычные ячейки, с толстыми границами ячеек
@@ -193,8 +192,6 @@ style_plain_bb.font.name = 'Times New Roman'
 style_plain_bb.font.height = 20 * size
 style_plain_bb.borders = b2
 style_plain_bb.alignment = alg_hc_vc_w1
-
-
 
 # обычные ячейки, с границами ячеек, c форматом чисел '0.00'  == style4
 style_2dp = xlwt.XFStyle()
@@ -264,7 +261,7 @@ style_plain_l = xlwt.XFStyle()
 style_plain_l.font.name = 'Times New Roman'
 style_plain_l.font.height = 20 * size
 style_plain_l.alignment.wrap = 1
-style_plain_l.alignment = al20
+style_plain_l.alignment = al13
 
 pattern_black = xlwt.Pattern()
 pattern_black.pattern = xlwt.Pattern.SOLID_PATTERN
@@ -2406,7 +2403,7 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
         ws1.write(row_num, col_num, columns[col_num], style_plain_l)
         ws1.merge(row_num, row_num, 0, 20, style_plain_l)
     ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 1500
+    ws1.row(row_num).height = 1000
 
         
     row_num += 1
