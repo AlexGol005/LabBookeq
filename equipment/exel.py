@@ -2275,7 +2275,7 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     response['Content-Disposition'] = f'attachment; filename="harakteristiki_SI_shablon.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('1', cell_overwrite_ok=True)
-    ws1 = wb.add_sheet('1', cell_overwrite_ok=True)
+    ws1 = wb.add_sheet('2', cell_overwrite_ok=True)
     ws.header_str = b' '
     ws.footer_str = b' '
 
