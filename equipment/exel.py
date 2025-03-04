@@ -135,6 +135,7 @@ style_bold_borders_blue.borders = b1
 style_bold_borders_blue.alignment = alg_hc_vc_w1
 style_bold_borders_blue.colour_index = xlwt.Style.colour_map['blue']
 style_bold_borders_blue.font.height = 20 * size
+style_bold_borders_blue.font.colour_index = 0x7FFF
 
 # style_plain обычные ячейки, с границами ячеек
 style_plain = xlwt.XFStyle()
@@ -257,6 +258,14 @@ style_plain_r = xlwt.XFStyle()
 style_plain_r.font.name = 'Times New Roman'
 style_plain_r.font.height = 20 * size
 style_plain_r.alignment.wrap = 1
+style_plain_r.alignment = al20
+
+# обычные ячейки, с границами, сдвинуто   влево
+style_plain_l = xlwt.XFStyle()
+style_plain_l.font.name = 'Times New Roman'
+style_plain_l.font.height = 20 * size
+style_plain_l.alignment.wrap = 1
+style_plain_l.alignment = al20
 
 pattern_black = xlwt.Pattern()
 pattern_black.pattern = xlwt.Pattern.SOLID_PATTERN
@@ -2282,47 +2291,47 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     size = 11
 
     # ширина столбцов
-    ws.col(0).width = 5000
-    ws.col(1).width = 5000
-    ws.col(2).width = 5000
-    ws.col(3).width = 5000
-    ws.col(4).width = 5000
-    ws.col(5).width = 5000
-    ws.col(6).width = 5000
-    ws.col(7).width = 5000
-    ws.col(8).width = 5000
-    ws.col(9).width = 5000
-    ws.col(10).width = 5000
-    ws.col(11).width = 5000
-    ws.col(12).width = 5000
-    ws.col(13).width = 5000
-    ws.col(14).width = 5000
-    ws.col(15).width = 5000
-    ws.col(16).width = 5000
-    ws.col(17).width = 5000
-    ws.col(18).width = 5000
-    ws.col(19).width = 5000
+    ws.col(0).width = 4000
+    ws.col(1).width = 4000
+    ws.col(2).width = 4000
+    ws.col(3).width = 4000
+    ws.col(4).width = 4000
+    ws.col(5).width = 4000
+    ws.col(6).width = 4000
+    ws.col(7).width = 4000
+    ws.col(8).width = 4000
+    ws.col(9).width = 4000
+    ws.col(10).width = 4000
+    ws.col(11).width = 4000
+    ws.col(12).width = 4000
+    ws.col(13).width = 4000
+    ws.col(14).width = 4000
+    ws.col(15).width = 4000
+    ws.col(16).width = 4000
+    ws.col(17).width = 4000
+    ws.col(18).width = 4000
+    ws.col(19).width = 4000
 
-    ws1.col(0).width = 10000
-    ws1.col(1).width = 10000
-    ws1.col(2).width = 10000
-    ws1.col(3).width = 10000
-    ws1.col(4).width = 10000
-    ws1.col(5).width = 10000
-    ws1.col(6).width = 10000
-    ws1.col(7).width = 10000
-    ws1.col(8).width = 10000
-    ws1.col(9).width = 10000
-    ws1.col(10).width = 10000
-    ws1.col(11).width = 10000
-    ws1.col(12).width = 10000
-    ws1.col(13).width = 10000
-    ws1.col(14).width = 10000
-    ws1.col(15).width = 10000
-    ws1.col(16).width = 10000
-    ws1.col(17).width = 10000
-    ws1.col(18).width = 10000
-    ws1.col(19).width = 10000
+    ws1.col(0).width = 8000
+    ws1.col(1).width = 8000
+    ws1.col(2).width = 8000
+    ws1.col(3).width = 8000
+    ws1.col(4).width = 8000
+    ws1.col(5).width = 8000
+    ws1.col(6).width = 8000
+    ws1.col(7).width = 8000
+    ws1.col(8).width = 8000
+    ws1.col(9).width = 8000
+    ws1.col(10).width = 8000
+    ws1.col(11).width = 8000
+    ws1.col(12).width = 8000
+    ws1.col(13).width = 8000
+    ws1.col(14).width = 8000
+    ws1.col(15).width = 8000
+    ws1.col(16).width = 8000
+    ws1.col(17).width = 8000
+    ws1.col(18).width = 8000
+    ws1.col(19).width = 8000
 
 
     row_num = 0 
@@ -2353,14 +2362,14 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     for col_num in range(8, len(columns)):
         ws.write(row_num, col_num, columns[col_num], style_plain)
     ws.row(row_num).height_mismatch = True
-    ws.row(row_num).height = 1000
+    ws.row(row_num).height = 3000
 
     for col_num in range(8):
         ws1.write(row_num, col_num, columns[col_num], style_bold_borders_blue)
     for col_num in range(8, len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain)
     ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 1000
+    ws1.row(row_num).height = 3000
 
     row_num += 1
     columns = [
@@ -2388,17 +2397,17 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain)
     ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 3000
+    ws1.row(row_num).height = 4000
 
     row_num += 1
     columns = [
             'Пример для характеристик прибора по ссылке https://fgis.gost.ru/fundmetrology/cm/results/1-248359087',
         ]
     for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_plain)
+        ws1.write(row_num, col_num, columns[col_num], style_plain_l)
         ws1.merge(row_num, row_num, 0, 20)
     ws.row(row_num).height_mismatch = True
-    ws.row(row_num).height = 500
+    ws.row(row_num).height = 1500
 
         
     row_num += 1
@@ -2427,7 +2436,7 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain)
     ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 2000
+    ws1.row(row_num).height = 3000
 
         
     wb.save(response)
