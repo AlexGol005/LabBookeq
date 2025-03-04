@@ -21,7 +21,7 @@
 
    <hr>
 
-  <center><h4>>Шаг первый: загружаем характеристики СИ/ИО/ВО</h4</center>
+  <center><h5>>Шаг первый: загружаем характеристики СИ/ИО/ВО</h5></center>
 
    {# загрузка характеристик СИ/ИО/ИО#}
    <div class="container">
@@ -36,10 +36,35 @@
          <center>                    
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
-            <input type="file" name="file">
-            <button type='submit' class btn btn-primary>загрузить файл .xls "Характеристики СИ"</button>
+            <div class="form-group">
+               <input type="file" name="file">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
          </form>
          </center>
+         <hr>
+         
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="file">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
+         </form>
+         </center>
+         <hr>
+
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="file">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
+         </form>
+         </center>
+         
       </div>
    </div>
    </div>
