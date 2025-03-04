@@ -134,7 +134,7 @@ style_bold_borders_blue.font.name = 'Times New Roman'
 style_bold_borders_blue.borders = b1
 style_bold_borders_blue.alignment = alg_hc_vc_w1
 style_bold_borders_blue.font.height = 20 * size
-style_bold_borders_blue.font.colour_index = 26
+style_bold_borders_blue.font.colour_index = 32
 
 # style_plain обычные ячейки, с границами ячеек
 style_plain = xlwt.XFStyle()
@@ -2311,26 +2311,26 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
     ws.col(18).width = 4000
     ws.col(19).width = 4000
 
-    ws1.col(0).width = 4000
-    ws1.col(1).width = 4000
-    ws1.col(2).width = 4000
-    ws1.col(3).width = 4000
-    ws1.col(4).width = 4000
-    ws1.col(5).width = 4000
-    ws1.col(6).width = 4000
-    ws1.col(7).width = 4000
-    ws1.col(8).width = 4000
-    ws1.col(9).width = 4000
-    ws1.col(10).width = 4000
-    ws1.col(11).width = 4000
-    ws1.col(12).width = 4000
-    ws1.col(13).width = 4000
-    ws1.col(14).width = 4000
-    ws1.col(15).width = 4000
-    ws1.col(16).width = 4000
-    ws1.col(17).width = 4000
-    ws1.col(18).width = 4000
-    ws1.col(19).width = 4000
+    ws1.col(0).width = 5000
+    ws1.col(1).width = 5000
+    ws1.col(2).width = 5000
+    ws1.col(3).width = 5000
+    ws1.col(4).width = 5000
+    ws1.col(5).width = 5000
+    ws1.col(6).width = 5000
+    ws1.col(7).width = 5000
+    ws1.col(8).width = 5000
+    ws1.col(9).width = 5000
+    ws1.col(10).width = 5000
+    ws1.col(11).width = 5000
+    ws1.col(12).width = 5000
+    ws1.col(13).width = 5000
+    ws1.col(14).width = 5000
+    ws1.col(15).width = 5000
+    ws1.col(16).width = 5000
+    ws1.col(17).width = 5000
+    ws1.col(18).width = 5000
+    ws1.col(19).width = 5000
 
 
     row_num = 0 
@@ -2404,9 +2404,9 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
         ]
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain_l)
-        ws1.merge(row_num, row_num, 0, 20)
-    ws.row(row_num).height_mismatch = True
-    ws.row(row_num).height = 1500
+        ws1.merge(row_num, row_num, 0, 20, style_plain_l)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 1500
 
         
     row_num += 1
