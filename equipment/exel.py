@@ -261,7 +261,7 @@ style_plain_l = xlwt.XFStyle()
 style_plain_l.font.name = 'Times New Roman'
 style_plain_l.font.height = 20 * size
 style_plain_l.alignment.wrap = 1
-style_plain_l.alignment = al13
+style_plain_l.alignment = al3
 
 pattern_black = xlwt.Pattern()
 pattern_black.pattern = xlwt.Pattern.SOLID_PATTERN
