@@ -19,7 +19,7 @@ class MeasurEquipmentCharaktersResource(resources.ModelResource):
 # класс подробностей реестр 
 class MeasurEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
     resource_class = MeasurEquipmentCharaktersResource
-    list_display = ('pointer', 'reestr' , 'name', 'modificname', 'typename', 'created_by', 'updated_by', 'created_at', 'updated_at',)
+    list_display = ('pointer', 'reestr' , 'name', 'modificname', 'typename', 'created_at', 'updated_at', 'created_by', 'updated_by', )
     search_fields = ['reestr',]
 
 
@@ -32,7 +32,7 @@ class TestingEquipmentCharaktersResource(resources.ModelResource):
 # класс подробностей характеристики ИО 
 class TestingEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
     resource_class =TestingEquipmentCharaktersResource
-    list_display = ('pointer' , 'name', 'modificname', 'typename', 'created_by', 'updated_by', 'created_at', 'updated_at',)
+    list_display = ('pointer' , 'name', 'modificname', 'typename', 'created_at', 'updated_at', 'created_by', 'updated_by', )
     search_fields = ['name',]
 
 # характеристики ВО  классы для отображения в админке
@@ -44,7 +44,7 @@ class HelpingEquipmentCharaktersResource(resources.ModelResource):
 # класс подробностей характеристики ИО 
 class HelpingEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
     resource_class = HelpingEquipmentCharaktersResource
-    list_display = ('pointer' , 'name', 'modificname', 'typename', 'created_by', 'updated_by', 'created_at', 'updated_at',)
+    list_display = ('pointer' , 'name', 'modificname', 'typename', 'created_at', 'updated_at', 'created_by', 'updated_by', )
     search_fields = ['name',]
         
 # фиксация формы в админке реестр 
