@@ -37,11 +37,11 @@
          <br>
          <br>
          <br>
-         <center><a href="{% url 'export_MeasurEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики СИ"</a></center>
+         <center><a href="{% url 'export_TestingEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики ИО"</a></center>
          <br>
          <br>
          <br>
-        <center> <a href="{% url 'export_MeasurEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики СИ"</a></center>
+        <center> <a href="{% url 'export_HelpingEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики ВО"</a></center>
       </div>
 
       <div class="col-5">
@@ -49,7 +49,7 @@
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
-               <input type="file" name="file">
+               <input type="file" name="MeasurEquipmentCharakters_file">
             </div>
             <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
          </form>
@@ -60,7 +60,7 @@
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
-               <input type="file" name="file">
+               <input type="file" name="TestingEquipmentCharakters_file">
             </div>
             <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
          </form>
@@ -71,7 +71,7 @@
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
-               <input type="file" name="file">
+               <input type="file" name="HelpingEquipmentCharakters_file">
             </div>
             <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
          </form>
