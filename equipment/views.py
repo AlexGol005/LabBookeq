@@ -3023,6 +3023,7 @@ class UploadingModel(object):
 class UploadingMeasurEquipmentCharakters(UploadingModel):
     model = MeasurEquipmentCharakters
 
+
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
@@ -3030,8 +3031,8 @@ def BulkDownload(request):
     if request.POST:
         print(request.POST)
         print(request.FILES)
-        file = request.FILES['file']
-        uploading_file = UploadingMeasurEquipmentCharakters({'file':file})
+        MeasurEquipmentCharakters_file = request.FILES['MeasurEquipmentCharakters_file']
+        uploading_file = UploadingMeasurEquipmentCharakters({'MeasurEquipmentCharakters_file': MeasurEquipmentCharakters_file})
         if uploading_file:
              messages.success(request, "Файл успешно загружен")
         else:
