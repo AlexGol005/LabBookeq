@@ -11,7 +11,6 @@ from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
 # реестр  классы для отображения в админке
-
 # класс для загрузки/выгрузки  типа/модификации
 class MeasurEquipmentCharaktersResource(resources.ModelResource):
     class Meta:
@@ -20,11 +19,39 @@ class MeasurEquipmentCharaktersResource(resources.ModelResource):
 # класс подробностей реестр 
 class MeasurEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
     resource_class = MeasurEquipmentCharaktersResource
-    list_display = ('reestr' , 'name', 'modificname', 'typename')
+    list_display = ('pointer', 'reestr' , 'name', 'modificname', 'typename', 'created_by', 'updated_by', 'created_at', 'updated_at ',)
     search_fields = ['reestr',]
+
+
+# характеристики ИО  классы для отображения в админке
+# класс для загрузки/выгрузки  характеристики ИО
+class TestingEquipmentCharaktersResource(resources.ModelResource):
+    class Meta:
+        model = TestingEquipmentCharakters
+        
+# класс подробностей характеристики ИО 
+class TestingEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
+    resource_class =TestingEquipmentCharaktersResource
+    list_display = ('pointer' , 'name', 'modificname', 'typename', 'created_by', 'updated_by', 'created_at', 'updated_at ',)
+    search_fields = ['name',]
+
+# характеристики ВО  классы для отображения в админке
+# класс для загрузки/выгрузки  характеристики ВО
+class HelpingEquipmentCharaktersResource(resources.ModelResource):
+    class Meta:
+        model = HelpingEquipmentCharakters
+        
+# класс подробностей характеристики ИО 
+class HelpingEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
+    resource_class = HelpingEquipmentCharaktersResource
+    list_display = ('pointer' , 'name', 'modificname', 'typename', 'created_by', 'updated_by', 'created_at', 'updated_at ',)
+    search_fields = ['name',]
         
 # фиксация формы в админке реестр 
 admin.site.register(MeasurEquipmentCharakters, MeasurEquipmentCharaktersAdmin)
+admin.site.register(TestingEquipmentCharakters, TestingEquipmentCharaktersAdmin)
+admin.site.register(HelpingEquipmentCharakters, HelpingEquipmentCharaktersAdmin)
+
 admin.site.register(Test)
 admin.site.register(Manufacturer)
 admin.site.register(Rooms)
@@ -33,10 +60,10 @@ admin.site.register(CommentsEquipment)
 admin.site.register(Roomschange)
 admin.site.register(DocsCons)
 admin.site.register(MeteorologicalParameters)
-admin.site.register(TestingEquipmentCharakters)
+
 admin.site.register(TestingEquipment)
 admin.site.register(Attestationequipment)
-admin.site.register(HelpingEquipmentCharakters)
+
 admin.site.register(HelpingEquipment) 
 admin.site.register(ServiceEquipmentU) 
 admin.site.register(ServiceEquipmentUFact)
