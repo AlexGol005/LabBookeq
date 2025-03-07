@@ -3030,7 +3030,7 @@ def BulkDownload(request):
     """template_name = URL + '/bulk_download.html'"""
     if request.POST:
         MeasurEquipmentCharakters_file = request.FILES['MeasurEquipmentCharakters_file']
-        uploading_file = UploadingMeasurEquipmentCharakters({'MeasurEquipmentCharakters_file': MeasurEquipmentCharakters_file})
+        uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
         if uploading_file:
              messages.success(request, "Файл успешно загружен")
         else:
