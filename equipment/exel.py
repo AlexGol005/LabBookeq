@@ -2274,10 +2274,11 @@ def export_tecard_xls(request, pk):
 
 
 # блок 4 - шаблоны для массовой загрузки приборов
-def export_MeasurEquipmentCharakters_pattern_xls(request):
-    '''представление для выгрузки шаблона загрузочного файла: Характеристики СИ'''
+def export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, columns2, columns4, columns3):
+    '''шаблонное представление для выгрузки шаблонов файлов EXEL'''
+        
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = f'attachment; filename="harakteristiki_SI_shablon.xls"'
+    response['Content-Disposition'] = f'attachment; filename="{exel_file_name}.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('1', cell_overwrite_ok=True)
     ws1 = wb.add_sheet('примеры и пояснения', cell_overwrite_ok=True)
@@ -2331,7 +2332,58 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
 
 
     row_num = 0 
-    columns = [
+    columns = columns1
+    len_mandatory = len_mandatory
+    for col_num in range(len_mandatory):
+        ws.write(row_num, col_num, columns[col_num], style_bold_borders_blue)
+    for col_num in range(len_mandatory, len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_plain)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 3000
+
+    for col_num in range(len_mandatory):
+        ws1.write(row_num, col_num, columns[col_num], style_bold_borders_blue)
+    for col_num in range(len_mandatory, len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 3000
+
+    row_num += 1
+    columns = columns2
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 4000
+
+    if columns4:
+            row_num += 1
+            columns = columns4
+            for col_num in range(len(columns)):
+                ws1.write(row_num, col_num, columns[col_num], style_plain_l)
+                ws1.merge(row_num, row_num, 0, 20, style_plain_l)
+            ws1.row(row_num).height_mismatch = True
+            ws1.row(row_num).height = 1000
+
+        
+    row_num += 1
+    columns = columns3
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 3000
+
+        
+    wb.save(response)
+    return response
+
+
+#индивидуальности блок 4
+
+def export_MeasurEquipmentCharakters_pattern_xls(request):
+'''представление для выгрузки шаблона загрузочного файла: Характеристики СИ, '''
+'''основанное на шаблонном export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, columns2, columns4, columns3)'''
+    exel_file_name="harakteristiki_SI_shablon"
+    columns1 = [
             'Название прибора',
             'Номер в Госреестре',
             'Модификация прибора',
@@ -2353,22 +2405,8 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
             'примечание',
             'виды измерений, тип (группа) средств измерений по МИ 2314',
         ]
-    for col_num in range(8):
-        ws.write(row_num, col_num, columns[col_num], style_bold_borders_blue)
-    for col_num in range(8, len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style_plain)
-    ws.row(row_num).height_mismatch = True
-    ws.row(row_num).height = 3000
-
-    for col_num in range(8):
-        ws1.write(row_num, col_num, columns[col_num], style_bold_borders_blue)
-    for col_num in range(8, len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_plain)
-    ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 3000
-
-    row_num += 1
-    columns = [
+    len_mandatory = 8
+    columns2 =  [
             'Как на странице поверки на сайте "Аршин", но в единственном числе (либо как указано в вашем файле приборов)',
             'Как на странице поверки на сайте "Аршин"',
             'Как на странице поверки на сайте "Аршин", либо "без модификации"',
@@ -2390,24 +2428,10 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
             '',
             'Не обязательный столбец, который может пригодиться позднее при выгрузке разных форм на оборудование. Например: форма Росаккредитации. Код по МИ 2314',
         ]
-    for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_plain)
-    ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 4000
-
-    row_num += 1
-    columns = [
-            'Пример для характеристик прибора по ссылке https://fgis.gost.ru/fundmetrology/cm/results/1-248359087',
-        ]
-    for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_plain_l)
-        ws1.merge(row_num, row_num, 0, 20, style_plain_l)
-    ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 1000
-
-        
-    row_num += 1
-    columns = [
+    columns4 = [
+                    'Пример для характеристик прибора по ссылке https://fgis.gost.ru/fundmetrology/cm/results/1-248359087',
+                ]
+    columns3 = [
             'Термометр стеклянный',
             '63332-16',
             '127C',
@@ -2429,14 +2453,8 @@ def export_MeasurEquipmentCharakters_pattern_xls(request):
             '',
             '3201601',
         ]
-    for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_plain)
-    ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 3000
+    return export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, columns2, columns4, columns3)
 
-        
-    wb.save(response)
-    return response
 
 
 # блок 5 - нестандартные exel выгрузки (этикетки, протоколы верификации, карточка) 
