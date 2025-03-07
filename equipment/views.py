@@ -3029,9 +3029,7 @@ def BulkDownload(request):
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
     """template_name = URL + '/bulk_download.html'"""
     if request.POST:
-        print(request.POST)
-        print(request.FILES)
-        MeasurEquipmentCharakters_file = request.FILES['MeasurEquipmentCharakters_file']
+        MeasurEquipmentCharakters_file = request.FILES['file']
         uploading_file = UploadingMeasurEquipmentCharakters({'MeasurEquipmentCharakters_file': MeasurEquipmentCharakters_file})
         if uploading_file:
              messages.success(request, "Файл успешно загружен")
