@@ -3035,13 +3035,17 @@ def BulkDownload(request):
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
     """template_name = URL + '/bulk_download.html'"""
     if request.POST:
-        if request.FILES['MeasurEquipmentCharakters_file']:
+        try:
             file = request.FILES['MeasurEquipmentCharakters_file']
             uploading_file = UploadingMeasurEquipmentCharakters({'file': file})
+        except:
+            pass
 
-        elif request.FILES['TestingEquipmentCharakters_file']:
+        try: 
             file = request.FILES['TestingEquipmentCharakters_file']
             uploading_file = UploadingTestingEquipmentCharakters({'file': file})
+        except:
+            pass
             
         number_objects = uploading_file.number_objects
         number_rows = uploading_file.number_rows
