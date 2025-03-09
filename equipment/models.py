@@ -254,12 +254,15 @@ class TestingEquipmentCharakters(models.Model):
     calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
     modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
     typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
-    measurydiapason = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
-    aim = models.CharField('Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
+          
+    analises_types = models.CharField('Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
                            max_length=500, blank=True, null=True)
-    aim2 = models.CharField('Наименование испытуемых групп объектов',
+    analited_objects = models.CharField('Наименование испытуемых групп объектов',
                             max_length=500, blank=True, null=True)
+    main_technical_characteristics = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
+        
     ndoc = models.CharField('Методики испытаний', max_length=500, blank=True, null=True)
+        
     power = models.BooleanField('Работает от сети (да - "1", нет - "0")', default=False, blank=True)
     voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
     frequency = models.CharField('частота', max_length=100, default='', blank=True, null=True)
