@@ -3032,6 +3032,10 @@ class UploadingTestingEquipmentCharakters(UploadingModel):
 class UploadingHelpingEquipmentCharakters(UploadingModel):
     model = HelpingEquipmentCharakters
 
+class UploadingEquipment(UploadingModel):
+    model = Equipment
+    foreing_key_fields = ["manufacturer"]
+
 
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
