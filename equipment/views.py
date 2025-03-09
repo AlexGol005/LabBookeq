@@ -3034,9 +3034,10 @@ def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
     """template_name = URL + '/bulk_download.html'"""
-    MeasurEquipmentCharakters_file = request.FILES['MeasurEquipmentCharakters_file']
-    TestingEquipmentCharakters_file = request.FILES['TestingEquipmentCharakters_file']
+
     if request.POST:
+        MeasurEquipmentCharakters_file = request.FILES['MeasurEquipmentCharakters_file']
+        TestingEquipmentCharakters_file = request.FILES['TestingEquipmentCharakters_file']
         if MeasurEquipmentCharakters_file:
             uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
         elif TestingEquipmentCharakters_file:
