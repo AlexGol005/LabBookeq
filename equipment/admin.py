@@ -59,7 +59,7 @@ class EquipmentResource(resources.ModelResource):
         model = Equipment
         
 # класс подробностей Единица ЛО
-class EquipmentAdmin(admin.ModelAdmin):
+class TestingEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
     form = make_ajax_form(Equipment, {
         'manufacturer': 'manufacturer_tag'
     })
