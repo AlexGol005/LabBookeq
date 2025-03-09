@@ -3014,7 +3014,7 @@ class UploadingModel(object):
             try:
                 self.number_objects = 0
                 self.model.objects.get_or_create(**row_dict)
-                if object:
+                if created:
                     self.number_objects+=1
                 else:
                     pass
