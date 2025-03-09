@@ -994,7 +994,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
             'setplace',
             'complectlist',
             'expresstest',
-            'kvasyattestation',
                   ]
 
 
@@ -1073,7 +1072,6 @@ class HelpingEquipmentCharaktersUpdateForm(forms.ModelForm):
             'setplace',
             'complectlist',
             'expresstest',
-            'kvasyattestation',
                   ]
 
 
