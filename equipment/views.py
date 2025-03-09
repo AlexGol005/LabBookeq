@@ -2953,7 +2953,7 @@ def E(request):
 class UploadingModel(object):
     foreing_key_fields = [""]
     model = None
-    number_objects = None
+    number_objects = 0
     number_rows = None
 
     def __init__(self, data):
@@ -3012,9 +3012,8 @@ class UploadingModel(object):
                     value = instance
                 row_dict[field_name] = value
             try:
-                self.number_objects = 0
-                a = self.model.objects.get_or_create(**row_dict)
-                if a.created:
+                a = self.model.objects.create(**row_dict)
+                if a.id:
                     self.number_objects+=1
                 else:
                     pass
