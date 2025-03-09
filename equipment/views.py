@@ -3039,7 +3039,7 @@ def BulkDownload(request):
     if request.POST:
         if MeasurEquipmentCharakters_file:
             uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
-        if TestingEquipmentCharakters_file:
+        elif TestingEquipmentCharakters_file:
             uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
 
             
