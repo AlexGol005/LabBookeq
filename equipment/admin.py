@@ -47,10 +47,28 @@ class HelpingEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
     list_display = ('name', 'modificname', 'typename', 'created_at', 'updated_at', 'created_by', 'updated_by', )
     search_fields = ['name',]
         
-# фиксация формы в админке реестр 
+# фиксация формы в админке характеристики СИ/ИО/ВО 
 admin.site.register(MeasurEquipmentCharakters, MeasurEquipmentCharaktersAdmin)
 admin.site.register(TestingEquipmentCharakters, TestingEquipmentCharaktersAdmin)
 admin.site.register(HelpingEquipmentCharakters, HelpingEquipmentCharaktersAdmin)
+
+# Единица ЛО -  классы для отображения в админке
+# класс для загрузки/выгрузки  характеристики ВО
+class EquipmentResource(resources.ModelResource):
+    class Meta:
+        model = Equipment
+
+@admin.register(Equipment)
+class EquipmentAdmin(admin.ModelAdmin):
+
+    form = make_ajax_form(Equipment, {
+        'manufacturer': 'manufacturer_tag'
+    })
+    resource_class = EquipmentResource
+    list_display = ('exnumber', 'lot', 'created_at', 'updated_at', 'created_by', 'updated_by', )
+    search_fields = ['exnumber', 'lot']
+
+
 
 admin.site.register(Test)
 admin.site.register(Manufacturer)
@@ -86,12 +104,7 @@ class CalibrationequipmentAdmin(admin.ModelAdmin):
         'verificator': 'verificator_tag'
     })
 
-@admin.register(Equipment)
-class EquipmentAdmin(admin.ModelAdmin):
 
-    form = make_ajax_form(Equipment, {
-        'manufacturer': 'manufacturer_tag'
-    })
 
 @admin.register(MeasurEquipment)
 class MeasurEquipmentAdmin(admin.ModelAdmin):
