@@ -693,9 +693,20 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                                   initial='24',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=True,
+    main_technical_characteristics = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=True,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
+    analited_objects = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=True,
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                   'placeholder': ''}))
+    analises_types = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции', max_length=10000000, required=True,
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                   'placeholder': ''}))
+
+    ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=True,
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                   'placeholder': ''}))
+       
     power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
     voltage = forms.CharField(label='Напряжение требуемое', required=False,
@@ -724,26 +735,7 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
 
     class Meta:
         model = TestingEquipmentCharakters
-        fields = [
-                  'name',
-                  'typename',
-                  'modificname',
-                  'calinterval',
-                  'measurydiapason',
-                  'aim',
-                  'aim2',
-                  'ndoc',
-                  'power',
-                  'needsetplace',
-                  'voltage',
-                  'frequency',
-                  'temperature',
-                  'humidicity',
-                  'pressure',
-                  'setplace',
-                  'complectlist',
-                  'expresstest',
-                  ]
+        fields = '__all__' 
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -758,7 +750,11 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(
                 Column('modificname', css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
+                Column('main_technical_characteristics',  css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('analited_objects',  css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('analises_types',  css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('accuracity', css_class='form-group col-md-12 mb-0')),
             Row(
@@ -785,13 +781,25 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
 
 class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
     """форма для обновления характеристик ИО"""
+
     calinterval = forms.CharField(label='Межаттестационный интервал, месяцев', max_length=10000000, required=True,
                                   initial='24',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=True,
+    main_technical_characteristics = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=True,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
+    analited_objects = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=True,
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                   'placeholder': ''}))
+    analises_types = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции', max_length=10000000, required=True,
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                   'placeholder': ''}))
+
+    ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=True,
+                                      widget=forms.Textarea(attrs={'class': 'form-control',
+                                                                   'placeholder': ''}))
+       
     power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
     voltage = forms.CharField(label='Напряжение требуемое', required=False,
@@ -820,23 +828,7 @@ class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
 
     class Meta:
         model = TestingEquipmentCharakters
-        fields = [
-                  'calinterval',
-                  'measurydiapason',
-                  'aim',
-                  'aim2',
-                  'ndoc',
-                  'power',
-                  'needsetplace',
-                  'voltage',
-                  'frequency',
-                  'temperature',
-                  'humidicity',
-                  'pressure',
-                  'setplace',
-                  'complectlist',
-                  'expresstest',
-                  ]
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -845,7 +837,11 @@ class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
             Row(
                 Column('calinterval', css_class='form-group col-md-6 mb-0')),
             Row(
-                Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
+                Column('main_technical_characteristics',  css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('analited_objects',  css_class='form-group col-md-12 mb-0')),
+            Row(
+                Column('analises_types',  css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('accuracity', css_class='form-group col-md-12 mb-0')),
             Row(
