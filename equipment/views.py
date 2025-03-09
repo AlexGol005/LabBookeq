@@ -3022,10 +3022,13 @@ class UploadingModel(object):
                 
             except:
                 pass
-        return True, number_objects, number_rows
+        return [True, number_objects, number_rows]
 
 class UploadingMeasurEquipmentCharakters(UploadingModel):
     model = MeasurEquipmentCharakters
+
+class UploadingTestingEquipmentCharakters(UploadingModel):
+    model = TestingEquipmentCharakters
 
 
 def BulkDownload(request):
@@ -3033,8 +3036,17 @@ def BulkDownload(request):
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
     """template_name = URL + '/bulk_download.html'"""
     if request.POST:
-        MeasurEquipmentCharakters_file = request.FILES['MeasurEquipmentCharakters_file']
-        uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
+        if request.FILES['MeasurEquipmentCharakters_file']:
+            file = request.FILES['MeasurEquipmentCharakters_file']
+            uploading_file = UploadingMeasurEquipmentCharakters({'file': file})
+            number_objects = uploading_file[1]
+            number_rows = uploading_file[2]
+        if request.FILES['TestingEquipmentCharakters_file']:
+            file = request.FILES['TestingEquipmentCharakters_file']
+            uploading_file = UploadingTestingEquipmentCharakters({'file': file})
+            
+        number_objects = uploading_file[1]
+        number_rows = uploading_file[2]
         if uploading_file:
             if number_objects and number_rows:
                 messages.success(request, f"Файл успешно загружен, добавлено {number_objects} записей из {number_rows}")
