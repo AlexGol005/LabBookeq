@@ -2923,11 +2923,6 @@ def E(request):
             l.append(f.verbose_name)
         except:
             pass
-    # for f in MeasurEquipmentCharakters._meta.get_fields():
-    #     try:
-    #         object.append(f.name)
-    #     except:
-    #         pass
             
     headers = dict()
     for column in range(len(l)):
@@ -2958,6 +2953,8 @@ def E(request):
 class UploadingModel(object):
     foreing_key_fields = [""]
     model = None
+    number_objects = None
+    number_rows - None
 
     def __init__(self, data):
         data=data
@@ -3015,14 +3012,14 @@ class UploadingModel(object):
                     value = instance
                 row_dict[field_name] = value
             try:
-                number_objects = 0
+                self.number_objects = 0
                 self.model.objects.get_or_create(**row_dict)
-                number_objects+=1
-                number_rows = s.nrows
+                self.number_objects+=1
+                self.number_rows = s.nrows
                 
             except:
                 pass
-        return [True, number_objects, number_rows]
+        return True
 
 class UploadingMeasurEquipmentCharakters(UploadingModel):
     model = MeasurEquipmentCharakters
@@ -3039,8 +3036,8 @@ def BulkDownload(request):
         if request.FILES['MeasurEquipmentCharakters_file']:
             file = request.FILES['MeasurEquipmentCharakters_file']
             uploading_file = UploadingMeasurEquipmentCharakters({'file': file})
-            number_objects = uploading_file[1]
-            number_rows = uploading_file[2]
+            number_objects = uploading_file.number_objects
+            number_rows = uploading_file.number_rows
         if request.FILES['TestingEquipmentCharakters_file']:
             file = request.FILES['TestingEquipmentCharakters_file']
             uploading_file = UploadingTestingEquipmentCharakters({'file': file})
