@@ -3038,19 +3038,15 @@ def BulkDownload(request):
         try:
             file = request.FILES['MeasurEquipmentCharakters_file']
             uploading_file = UploadingMeasurEquipmentCharakters({'file': file})
-            number_objects = uploading_file.number_objects
-            number_rows = uploading_file.number_rows
         except:
-            pass
-
-        try: 
-            file = request.FILES['TestingEquipmentCharakters_file']
-            uploading_file = UploadingTestingEquipmentCharakters({'file': file})
-            number_objects = uploading_file.number_objects
-            number_rows = uploading_file.number_rows
-        except:
-            pass
+                try:
+                file = request.FILES['TestingEquipmentCharakters_file']
+                uploading_file = UploadingTestingEquipmentCharakters({'file': file})
+                except:
+                    pass
             
+        number_objects = uploading_file.number_objects
+        number_rows = uploading_file.number_rows
 
         if uploading_file:
             if number_objects and number_rows:
