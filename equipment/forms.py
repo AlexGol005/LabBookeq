@@ -693,17 +693,17 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                                   initial='24',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    main_technical_characteristics = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=True,
+    main_technical_characteristics = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
-    analited_objects = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=True,
+    analited_objects = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
-    analises_types = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции', max_length=10000000, required=True,
+    analises_types = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
 
-    ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=True,
+    ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
        
@@ -756,7 +756,7 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(
                 Column('analises_types',  css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('accuracity', css_class='form-group col-md-12 mb-0')),
+                Column('ndoc', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('complectlist', css_class='form-group col-md-12 mb-0')),
             Row(
@@ -786,17 +786,17 @@ class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
                                   initial='24',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
-    main_technical_characteristics = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=True,
+    main_technical_characteristics = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
-    analited_objects = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=True,
+    analited_objects = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
-    analises_types = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции', max_length=10000000, required=True,
+    analises_types = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
 
-    ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=True,
+    ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
        
@@ -843,7 +843,7 @@ class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
             Row(
                 Column('analises_types',  css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('accuracity', css_class='form-group col-md-12 mb-0')),
+                Column('ndoc', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('complectlist', css_class='form-group col-md-12 mb-0')),
             Row(
