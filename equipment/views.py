@@ -3036,8 +3036,8 @@ def BulkDownload(request):
         MeasurEquipmentCharakters_file = request.FILES['MeasurEquipmentCharakters_file']
         uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
         if uploading_file:
-            if number_str and number_rows:
-                messages.success(request, f"Файл успешно загружен, добавлено {number_str} записей из {number_rows}")
+            if number_objects and number_rows:
+                messages.success(request, f"Файл успешно загружен, добавлено {number_objects} записей из {number_rows}")
             else:
                 messages.success(request, f"ничего не добавилось")
         else:
