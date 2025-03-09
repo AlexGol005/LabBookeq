@@ -3013,8 +3013,8 @@ class UploadingModel(object):
                 row_dict[field_name] = value
             try:
                 self.number_objects = 0
-                self.model.objects.get_or_create(**row_dict)
-                if created:
+                a = self.model.objects.get_or_create(**row_dict)
+                if a.created:
                     self.number_objects+=1
                 else:
                     pass
