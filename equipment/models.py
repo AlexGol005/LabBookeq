@@ -273,6 +273,7 @@ class TestingEquipmentCharakters(models.Model):
     needsetplace = models.BooleanField('Требуется установка (да - "1", нет - "0")', default=False, blank=True)
     complectlist = models.CharField('Где указана комплектация оборудования', max_length=100, default='', blank=True, null=True)
     expresstest = models.BooleanField('Возможно тестирование  (да - "1", нет - "0")', default=False, blank=True)
+    aim = models.CharField('примечание', max_length=90, blank=True, null=True)
     pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True) 
 
     def __str__(self):
