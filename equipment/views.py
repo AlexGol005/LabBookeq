@@ -2954,7 +2954,7 @@ class UploadingModel(object):
     foreing_key_fields = [""]
     model = None
     number_objects = None
-    number_rows - None
+    number_rows = None
 
     def __init__(self, data):
         data=data
