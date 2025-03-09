@@ -3029,6 +3029,9 @@ class UploadingMeasurEquipmentCharakters(UploadingModel):
 class UploadingTestingEquipmentCharakters(UploadingModel):
     model = TestingEquipmentCharakters
 
+class UploadingHelpingEquipmentCharakters(UploadingModel):
+    model = HelpingEquipmentCharakters
+
 
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
@@ -3038,10 +3041,13 @@ def BulkDownload(request):
     if request.POST:
         MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
         TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
+        HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
         if MeasurEquipmentCharakters_file:
             uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
         elif TestingEquipmentCharakters_file:
             uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
+        elif HelpingEquipmentCharakters_file:
+            uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
 
             
         number_objects = uploading_file.number_objects
