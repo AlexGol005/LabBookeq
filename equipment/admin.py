@@ -52,6 +52,7 @@ admin.site.register(MeasurEquipmentCharakters, MeasurEquipmentCharaktersAdmin)
 admin.site.register(TestingEquipmentCharakters, TestingEquipmentCharaktersAdmin)
 admin.site.register(HelpingEquipmentCharakters, HelpingEquipmentCharaktersAdmin)
 
+
 # Единица ЛО -  классы для отображения в админке
 # класс для загрузки/выгрузки  Единица ЛО
 class EquipmentResource(resources.ModelResource):
@@ -59,15 +60,16 @@ class EquipmentResource(resources.ModelResource):
         model = Equipment
         
 # класс подробностей Единица ЛО
-class TestingEquipmentCharaktersAdmin(ImportExportActionModelAdmin):
+class EquipmentAdmin(ImportExportActionModelAdmin):
     form = make_ajax_form(Equipment, {
         'manufacturer': 'manufacturer_tag'
     })
     resource_class = EquipmentResource
     list_display = ('exnumber', 'lot', 'created_at', 'updated_at', 'created_by', 'updated_by', )
     search_fields = ['exnumber', 'lot']
-
-admin.site.register(Equipment, EquipmentResource)
+        
+# фиксация формы в админке Единица ЛО
+admin.site.register(Equipment, EquipmentAdmin)
 
 
 
