@@ -526,6 +526,7 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             'complectlist',
             'expresstest',
             'traceability',
+               'cod',
                   ]
 
     def __init__(self, *args, **kwargs):
@@ -638,6 +639,7 @@ class MeasurEquipmentCharaktersUpdateForm(forms.ModelForm):
             'complectlist',
             'expresstest',
             'traceability',
+               'cod',
                   ]
 
     def __init__(self, *args, **kwargs):
@@ -735,7 +737,25 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
 
     class Meta:
         model = TestingEquipmentCharakters
-        fields = '__all__' 
+        fields =          [
+            'name',
+            'typename',
+            'modificname',
+            'calinterval',
+            'main_technical_characteristics', 
+            'analited_objects',
+               'analises_types',
+            'power',
+            'needsetplace',
+            'voltage',
+            'frequency',
+            'temperature',
+            'humidicity',
+            'pressure',
+            'setplace',
+            'complectlist',
+            'expresstest',
+                  ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -828,7 +848,22 @@ class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
 
     class Meta:
         model = TestingEquipmentCharakters
-        fields = '__all__'
+        fields =          [
+            'calinterval',
+            'main_technical_characteristics', 
+            'analited_objects',
+               'analises_types',
+            'power',
+            'needsetplace',
+            'voltage',
+            'frequency',
+            'temperature',
+            'humidicity',
+            'pressure',
+            'setplace',
+            'complectlist',
+            'expresstest',
+                  ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
