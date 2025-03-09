@@ -3015,10 +3015,14 @@ class UploadingModel(object):
                     value = instance
                 row_dict[field_name] = value
             try:
+                number_objects = 0
                 self.model.objects.get_or_create(**row_dict)
+                number_objects+=1
+                number_rows = s.nrows
+                
             except:
                 pass
-        return True
+        return True, number_objects, number_rows
 
 class UploadingMeasurEquipmentCharakters(UploadingModel):
     model = MeasurEquipmentCharakters
@@ -3032,7 +3036,7 @@ def BulkDownload(request):
         MeasurEquipmentCharakters_file = request.FILES['MeasurEquipmentCharakters_file']
         uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
         if uploading_file:
-             messages.success(request, "Файл успешно загружен")
+             messages.success(request, f"Файл успешно загружен, добавлено {number_str} записей из {number_rows}")
         else:
             messages.success(request, "Файл не загружен")
     return render(request, URL + '/bulk_download.html', locals())
