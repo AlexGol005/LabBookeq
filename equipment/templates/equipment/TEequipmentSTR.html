@@ -236,7 +236,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th> Паспорт</th>
+                <th> Паспорт/руководство</th>
                 <th> Инструкция по эксплуатации</th>
                 <th> Основные технические характеристики</th>
                 <th> Наименование видов испытаний и/или определяемых характеристик (параметров) продукции</th>
@@ -248,10 +248,10 @@
                  <td class="ind">
                  {% if obj.pasport %}
                   <a href="{{ obj.pasport}}"  target="blank" >
-                 Ссылка на паспорт
+                 Ссылка на руководство
                       </a>
                  {% else  %}
-                 Ссылка на паспорт отсутствует
+                 Ссылка на руководство отсутствует
                  {% endif %}
              </td>
              <td class="ind">
@@ -263,9 +263,9 @@
              Ссылка на инструкцию отсутствует
              {% endif %}
              </td>
-            <td> {{ obj.charakters.measurydiapason|default_if_none:' ' }}</td>
-            <td> {{ obj.charakters.aim|default_if_none:' ' }}</td>
-            <td>{{ obj.charakters.aim2|default_if_none:' ' }}</td>
+            <td> {{ obj.charakters.main_technical_characteristics|default_if_none:' ' }}</td>
+            <td> {{ obj.charakters. analises_types|default_if_none:' ' }}</td>
+            <td>{{ obj.charakters.analited_objects|default_if_none:' ' }}</td>
         </tr>
         </tbody>
     </table>
