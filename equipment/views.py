@@ -3038,8 +3038,9 @@ def BulkDownload(request):
     TestingEquipmentCharakters_file = request.FILES['TestingEquipmentCharakters_file']
     if request.POST:
         if MeasurEquipmentCharakters_file:
-            uploading_file = UploadingMeasurEquipmentCharakters({'file': file})
-        uploading_file = UploadingTestingEquipmentCharakters({'file': file})
+            uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
+        if TestingEquipmentCharakters_file:
+            uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
 
             
         number_objects = uploading_file.number_objects
