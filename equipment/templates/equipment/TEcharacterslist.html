@@ -64,7 +64,7 @@
             <td>{{ obj.modificname|default_if_none:"" }}</td>
             <td>{{ obj.typename|default_if_none:"" }}</td>
             <td> {{ obj.calinterval|default_if_none:"" }}</td>
-            <td> {{ obj.measurydiapason|default_if_none:"" }}</td>
+            <td> {{ obj.main_technical_characteristics|default_if_none:"" }}</td>
 
 {#     редактирование #}           
             {% if USER_HAVE_RIGHTS  %}  
