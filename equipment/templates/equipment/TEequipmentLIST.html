@@ -62,8 +62,7 @@
         <td><a href="/equipment/testequipment/{{ obj.equipment.exnumber }}/"  class="btn btn-outline-warning mt-3">СМ</a></td>
         <td>{{ obj.equipment.exnumber|slice:":5" }}</td>
          <td> {{ obj.charakters.name }}</td>
-         <td>{{ obj.charakters.typename|default:" " }}/
-             {{ obj.charakters.modificname|default:" " }} </td>
+         <td>{{ obj.charakters.typename|default:" " }}</td>
         <td> {{ obj.equipment.lot }}</td>
         <td> {{ obj.equipment.yearmanuf }}</td>
         <td> {{ obj.equipment.roomschange_set.all.last.roomnumber.roomnumber }}</td>
