@@ -18,8 +18,7 @@
     {#название#}
     <center><a href="/equipment/measureequipmentall/"><h4>{{ obj.charakters.name}}</h4></a></center>
     <center>
-        <h6>тип: {{ obj.charakters.typename|default:" " }}
-        модификация: {{ obj.charakters.modificname|default:" " }}.
+        <h6>тип/модификация: {{ obj.charakters.typename|default:" " }}.
         Заводской номер: <b>{{ obj.equipment.lot }}</b></h6>
     </center>
     <br>
@@ -67,8 +66,7 @@
                 <td>{{ obj.equipment.exnumber|slice:":5" }}</td>
                 <td> {{ obj.charakters.reestr }}</td>    
                 <td> {{ obj.charakters.name }}</td>
-                <td>{{ obj.charakters.typename|default:" " }}/
-                     {{ obj.charakters.modificname|slice:":5"|default:" " }} </td>
+                <td>{{ obj.charakters.typename|default:" " }}</td>
                 <td> {{ obj.equipment.lot }}</td>
                 <td> {{ obj.equipment.yearmanuf }}</td>
                 <td> {{ obj.equipment.manufacturer.country }},
