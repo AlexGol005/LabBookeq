@@ -146,39 +146,46 @@ class Equipment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatoreq', editable=True)
-    updated_by = CurrentUserField(related_name='updatoreq', editable=True)
-    date = models.DateField('Дата внесения записи', auto_now_add=True, blank=True, null=True)
+    updated_by = CurrentUserField(related_name='updatoreq', editable=True)        
+    date = models.DateField('Дата внесения записи', auto_now_add=True, blank=True, null=True) 
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
     exnumber = models.CharField('Внутренний номер', max_length=100, default='', blank=True, null=True)
+
+        
     lot = models.CharField('Заводской номер', max_length=100, default='')
     yearmanuf = models.IntegerField('Год выпуска', default='', blank=True, null=True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, verbose_name='Производитель')
+    new = models.CharField('Новый или б/у (указать: "новый" или "б/у")', max_length=100, default='новый')
+
+    yearintoservice = models.IntegerField('Год ввода в эксплуатацию', default='0', blank=True, null=True)    
     status = models.CharField(max_length=300, choices=CHOICES, default='В эксплуатации', null=True,
                               verbose_name='Статус: указать "Э" - эксплуатация, "РЕ" - ремонт, "Р" - резерв, "Д" - другое')
-
-    standard_number = models.CharField('номер в качестве эталона в ФИФ, разряд по ГПС, ЛПС, и т. п.',  default='', blank=True, null=True, max_length=90)
-    yearintoservice = models.IntegerField('Год ввода в эксплуатацию', default='0', blank=True, null=True)
-    new = models.CharField('Новый или б/у (указать: "новый" или "б/у"', max_length=100, default='новый')
-    invnumber = models.CharField('Инвентарный номер (присваивает бухгалтерия)', max_length=100, default='', blank=True, null=True)
-    kategory = models.CharField(max_length=300, choices=KATEGORY, default='Средство измерения', null=True,
-                                verbose_name='Категория: указать "СИ", "ИО" или "ВО"')
+    serviceneed = models.BooleanField('Включать в график ТО при автоформировании графика на год (да - "1", нет - "0")', default=True, blank=True, )
+    
     individuality = models.TextField('Индивидуальные особенности прибора',  blank=True, null=True)
     notemaster = models.TextField('Примечание (или временное предостережение для сотрудников)',  blank=True, null=True)
     notemetrology = models.TextField('Примечание о метрологическом обеспечении прибора',  blank=True, null=True)
-    price = models.DecimalField('Стоимость', max_digits=100, decimal_places=2, null=True, blank=True)
+        
     pasport = models.CharField('Ссылка на паспорт', max_length=1000,  blank=True, null=True)
     instruction = models.CharField('Инструкция по эксплуатации (ссылка)', max_length=1000,  blank=True, null=True)
     repair = models.CharField('Контакты для ремонта', max_length=1000,  blank=True, null=True)
+        
+    price = models.DecimalField('Стоимость', max_digits=100, decimal_places=2, null=True, blank=True)    
+    invnumber = models.CharField('Инвентарный номер (присваивает бухгалтерия)', max_length=100, default='', blank=True, null=True)
     pravo = models.CharField('Право владения прибором (например, номер и дата накладной)', max_length=1000,  blank=True, null=True)
     pravo_have = models.CharField(max_length=300, choices=HAVE, default='cобственность', null=True,
-                              verbose_name='Право владения прибором: указать "cобственность" или "аренда"')
-    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)   
-
+                              verbose_name='Указать "cобственность" или "аренда"')
+  
     newperson = models.CharField(verbose_name='Ответственный за оборудование (краткое ФИО сотрудника, например: "И.И.Иванов")', max_length=90, blank=True, null=True)
     newpersondate =  models.CharField('Дата изменения ответственного', blank=True, null=True, max_length=90 )
         
     newroomnumber = models.CharField('Номер комнаты', max_length=100, blank=True, null=True,)
     newroomnumberdate = models.CharField('Дата перемещения', blank=True, null=True, max_length=90)
-    serviceneed = models.BooleanField('Включать в график ТО (да - "1", нет - "0")', default=True, blank=True, )
+        
+    standard_number = models.CharField('номер в качестве эталона в ФИФ, разряд по ГПС, ЛПС, и т. п.',  default='', blank=True, null=True, max_length=90)
+
+    kategory = models.CharField(max_length=300, choices=KATEGORY, default='Средство измерения', null=True,
+                                verbose_name='Категория: указать "СИ", "ИО" или "ВО"')
 
     def __str__(self):
         return f'{self.pointer}: {self.exnumber} - зав№ {self.lot}, pk={self.pk}'
