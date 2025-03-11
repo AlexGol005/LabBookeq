@@ -2271,26 +2271,26 @@ def export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, co
     size = 11
 
     # ширина столбцов
-    ws.col(0).width = 4000
-    ws.col(1).width = 4000
-    ws.col(2).width = 4000
-    ws.col(3).width = 4000
-    ws.col(4).width = 4000
-    ws.col(5).width = 4000
-    ws.col(6).width = 4000
-    ws.col(7).width = 4000
-    ws.col(8).width = 4000
-    ws.col(9).width = 4000
-    ws.col(10).width = 4000
-    ws.col(11).width = 4000
-    ws.col(12).width = 4000
-    ws.col(13).width = 4000
-    ws.col(14).width = 4000
-    ws.col(15).width = 4000
-    ws.col(16).width = 4000
-    ws.col(17).width = 4000
-    ws.col(18).width = 4000
-    ws.col(19).width = 4000
+    ws.col(0).width = 1000
+    ws.col(1).width = 1000
+    ws.col(2).width = 1000
+    ws.col(3).width = 1000
+    ws.col(4).width = 1000
+    ws.col(5).width = 1000
+    ws.col(6).width = 1000
+    ws.col(7).width = 1000
+    ws.col(8).width = 1000
+    ws.col(9).width = 1000
+    ws.col(10).width = 1000
+    ws.col(11).width = 1000
+    ws.col(12).width = 1000
+    ws.col(13).width = 1000
+    ws.col(14).width = 1000
+    ws.col(15).width = 1000
+    ws.col(16).width = 1000
+    ws.col(17).width = 1000
+    ws.col(18).width = 1000
+    ws.col(19).width = 1000
 
     ws1.col(0).width = 5000
     ws1.col(1).width = 5000
