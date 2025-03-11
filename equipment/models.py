@@ -154,7 +154,7 @@ class Equipment(models.Model):
         
     lot = models.CharField('Заводской номер', max_length=100, default='')
     yearmanuf = models.IntegerField('Год выпуска', default='', blank=True, null=True)
-    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, verbose_name='Производитель')
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, verbose_name='Название компании-производителя')
     new = models.CharField('Новый или б/у (указать: "новый" или "б/у")', max_length=100, default='новый')
 
     yearintoservice = models.IntegerField('Год ввода в эксплуатацию', default='0', blank=True, null=True)    
