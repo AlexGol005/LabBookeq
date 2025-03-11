@@ -5374,7 +5374,7 @@ def export_me_xls(request):
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
 
-    rows = MeasurEquipment.objects.annotate(exnumber=Substr('equipment__exnumber',1,5)).
+    rows = MeasurEquipment.objects.annotate(exnumber=Substr('equipment__exnumber',1,5),
     manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
         filter(equipment__pointer=request.user.profile.userid).\
         exclude(equipment__status='С').\
