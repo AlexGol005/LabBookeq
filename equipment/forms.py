@@ -453,12 +453,9 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
     name = forms.CharField(label='Название прибора (как в описании типа, но в единственном числе)', max_length=10000000, required=True,
                            widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': ''}))
-    typename = forms.CharField(label='Тип', max_length=10000000, required=False, initial='нет типа',
+    typename = forms.CharField(label='Тип/модификация', max_length=10000000, required=False, initial='нет типа',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': ''}))
-    modificname = forms.CharField(label='Модификация', max_length=10000000, required=False, initial='нет модификации',
-                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': ''}))
     calinterval = forms.CharField(label='Межповерочный интервал, месяцев', max_length=10000000, required=True,
                                   initial='12',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
@@ -511,7 +508,6 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             'reestr',
             'name',
             'typename',
-            'modificname',
             'calinterval',
             'measurydiapason', 'accuracity',
             'aim',
@@ -540,8 +536,6 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
                 Column('name', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('typename', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('modificname', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
             Row(
@@ -685,12 +679,9 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
     name = forms.CharField(label='Название прибора', max_length=10000000, required=True,
                            widget=forms.TextInput(attrs={'class': 'form-control',
                                                          'placeholder': ''}))
-    typename = forms.CharField(label='Тип', max_length=10000000, required=False, initial='нет типа',
+    typename = forms.CharField(label='Тип/модификация', max_length=10000000, required=False, initial='нет типа',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': ''}))
-    modificname = forms.CharField(label='Модификация', max_length=10000000, required=False, initial='нет модификации',
-                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                'placeholder': ''}))
     calinterval = forms.CharField(label='Межаттестационный интервал, месяцев', max_length=10000000, required=True,
                                   initial='24',
                                   widget=forms.TextInput(attrs={'class': 'form-control',
@@ -740,7 +731,6 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
         fields =          [
             'name',
             'typename',
-            'modificname',
             'calinterval',
             'main_technical_characteristics', 
             'analited_objects',
@@ -767,8 +757,6 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                 Column('name', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('typename', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('modificname', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('main_technical_characteristics',  css_class='form-group col-md-12 mb-0')),
             Row(
@@ -909,9 +897,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
     typename = forms.CharField(label='Тип', max_length=10000000, required=False, initial='нет типа',
                                widget=forms.TextInput(attrs={'class': 'form-control',
                                                              'placeholder': ''}))
-    modificname = forms.CharField(label='Модификация', max_length=10000000, required=False, initial='нет модификации',
-                                  widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                'placeholder': ''}))
     measurydiapason = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                     'placeholder': ''}))
@@ -950,8 +935,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(
                 Column('typename', css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('modificname', css_class='form-group col-md-12 mb-0')),
-            Row(
                 Column('measurydiapason',  css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('complectlist', css_class='form-group col-md-12 mb-0')),
@@ -980,7 +963,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
         fields = [
             'name',
             'typename',
-            'modificname',
             'measurydiapason',
             'aim',
             'ndoc',
