@@ -285,6 +285,7 @@ class TestingEquipmentCharakters(models.Model):
     class Meta:
         verbose_name = 'Испытательное оборудование, характеристики'
         verbose_name_plural = 'Испытательное оборудование, характеристики'
+        unique_together = ('reestr', 'typename', 'name', 'pointer')
 
 
 
@@ -324,6 +325,7 @@ class HelpingEquipmentCharakters(models.Model):
     class Meta:
         verbose_name = 'Вспомогательное оборудование, характеристики'
         verbose_name_plural = 'Вспомогательное оборудование, характеристики'
+        unique_together = ('reestr', 'typename', 'name', 'pointer')
 
 
 
