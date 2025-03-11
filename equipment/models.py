@@ -208,8 +208,7 @@ class MeasurEquipmentCharakters(models.Model):
     name = models.CharField('Название прибора', max_length=100, default='')
     reestr = models.CharField('Номер в Госреестре', max_length=1000, default='', blank=True, null=True)
     calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
-    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
-    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
+    typename = models.CharField('Тип/модификация', max_length=100, default='', blank=True, null=True)
     measurydiapason = models.CharField('Диапазон измерений', max_length=1000, default='', blank=True, null=True)
     accuracity = models.CharField('Класс точности /(разряд/), погрешность и /(или/) неопределённость /(класс, разряд/)',
                                   max_length=1000, default='', blank=True, null=True)
@@ -240,7 +239,7 @@ class MeasurEquipmentCharakters(models.Model):
     class Meta:
         verbose_name = 'Средство измерения: описание типа'
         verbose_name_plural = 'Средства измерения: описания типов'
-        unique_together = ('reestr', 'modificname', 'typename', 'name', 'pointer')
+        unique_together = ('reestr', 'typename', 'name', 'pointer')
         
 
 class TestingEquipmentCharakters(models.Model):
@@ -251,8 +250,7 @@ class TestingEquipmentCharakters(models.Model):
     updated_by = CurrentUserField(related_name='updatortec', editable=True)
     name = models.CharField('Название прибора', max_length=100, default='')
     calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
-    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
-    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
+    typename = models.CharField('Тип/модификация', max_length=100, default='', blank=True, null=True)
           
     analises_types = models.CharField('Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
                            max_length=500, blank=True, null=True)
@@ -286,7 +284,7 @@ class TestingEquipmentCharakters(models.Model):
     class Meta:
         verbose_name = 'Испытательное оборудование, характеристики'
         verbose_name_plural = 'Испытательное оборудование, характеристики'
-        unique_together = ('modificname', 'typename', 'name', 'pointer')
+        unique_together = ('typename', 'name', 'pointer')
 
 
 class HelpingEquipmentCharakters(models.Model):
@@ -296,8 +294,7 @@ class HelpingEquipmentCharakters(models.Model):
     created_by = CurrentUserField(related_name='creatorhec', editable=True)
     updated_by = CurrentUserField(related_name='updatorhec', editable=True)
     name = models.CharField('Название прибора', max_length=100, default='')
-    modificname = models.CharField('Модификация прибора', max_length=100, default='', blank=True, null=True)
-    typename = models.CharField('Тип прибора', max_length=100, default='', blank=True, null=True)
+    typename = models.CharField('Тип/модификация', max_length=100, default='', blank=True, null=True)
     measurydiapason = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
     aim = models.CharField('Назначение',
                            max_length=500, blank=True, null=True)
@@ -326,7 +323,7 @@ class HelpingEquipmentCharakters(models.Model):
     class Meta:
         verbose_name = 'Вспомогательное оборудование, характеристики'
         verbose_name_plural = 'Вспомогательное оборудование, характеристики'
-        unique_together = ('modificname', 'typename', 'name', 'pointer')
+        unique_together = ('typename', 'name', 'pointer')
 
 
 class MeasurEquipment(models.Model):
