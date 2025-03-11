@@ -94,14 +94,22 @@
    
    <hr>
 
-  <center><h5>Шаг второй: загружаем единицы ЛО</h5></center>
+  <center><h5>Шаг второй: загружаем единицы ЛО и единицы СИ/ИО/ВО</h5></center>
   <br>
 
-   {# загрузка единиц ЛО #}
+   {# загрузка единиц ЛО и единиц СИ/ИО/ВО #}
    <div class="container">
    <div class="row">
       <div class="col-5"> 
-         <center><a href="{% url 'export_MeasurEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики СИ"</a></center>
+         <center><a href="{% url 'export_MeasurEquipment_Equipment_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "единицы СИ и Единицы ЛО"</a></center>
+         <br>
+         <br>
+         <br>
+         <center><a href="{% url 'export_MeasurEquipment_Equipment_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "единицы ИО и Единицы ЛО"</a></center>
+         <br>
+         <br>
+         <br>
+        <center> <a href="{% url 'export_MeasurEquipment_Equipment_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "единицы ВО и Единицы ЛО"</a></center>
       </div>
 
       <div class="col-5">
@@ -109,44 +117,9 @@
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
-               <input type="file" name="file">
+               <input type="file" name="MeasurEquipment_Equipment_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
-         </form>
-         </center>
-                  
-      </div>
-   </div>
-   </div>
-   
-   <hr>
-
-  <center><h5>Шаг третий: загружаем единицы СИ/ИО/ВО</h5></center>
-  <br>
-
-   {# загрузка единиц СИ/ИО/ИО #}
-   <div class="container">
-   <div class="row">
-      <div class="col-5"> 
-         <center><a href="{% url 'export_MeasurEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики СИ"</a></center>
-         <br>
-         <br>
-         <br>
-         <center><a href="{% url 'export_MeasurEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики СИ"</a></center>
-         <br>
-         <br>
-         <br>
-        <center> <a href="{% url 'export_MeasurEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики СИ"</a></center>
-      </div>
-
-      <div class="col-5">
-         <center>                    
-         <form method="post" action "" enctype=multipart/form-data>
-            {% csrf_token %}
-            <div class="form-group">
-               <input type="file" name="file">
-            </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "единицы СИ и Единицы ЛО"</button>
          </form>
          </center>
          <hr>
@@ -155,9 +128,9 @@
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
-               <input type="file" name="file">
+               <input type="file" name="MeasurEquipment_Equipment_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "единицы ИО и Единицы ЛО"</button>
          </form>
          </center>
          <hr>
@@ -166,9 +139,9 @@
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
-               <input type="file" name="file">
+               <input type="file" name="MeasurEquipment_Equipment_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "единицы ВО и Единицы ЛО"</button>
          </form>
          </center>
          
@@ -177,6 +150,7 @@
    </div>
    
    <hr>
+
 
 
   <center><h5>Шаг четвертый: загружаем поверку и аттестацию</h5></center>
