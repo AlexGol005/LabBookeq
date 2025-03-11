@@ -46,8 +46,7 @@
         <thead>
             <tr>
                 <th>Название</th>
-                <th> Модификация </th>
-                <th> Тип </th>
+                <th> Тип/модификация </th>
                 {% if USER_HAVE_RIGHTS  %}
                 <th>Ред.</th>
                 <th>удалить</th>
@@ -59,7 +58,6 @@
         {% for obj in objects %}
         <tr>
             <td>{{ obj.name }}</td>
-            <td>{{ obj.modificname }}</td>
             <td>{{ obj.typename }}</td>
 
 
