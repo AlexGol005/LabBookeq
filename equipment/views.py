@@ -3054,8 +3054,8 @@ def BulkDownload(request):
         elif HelpingEquipmentCharakters_file:
             uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
         try:           
-                number_objects = uploading_file.number_objects
-                number_rows = uploading_file.number_rows
+            number_objects = uploading_file.number_objects
+            number_rows = uploading_file.number_rows
         
             if uploading_file:
                 if number_objects and number_rows:
