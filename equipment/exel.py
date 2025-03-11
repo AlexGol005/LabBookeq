@@ -3835,7 +3835,7 @@ def export_exvercardteste_xls(request, pk):
 
     row_num += 1
     columns = [
-        note.charakters.measurydiapason,
+        note.charakters. main_technical_characteristics,
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style1)
@@ -5503,8 +5503,8 @@ def export_me_xls(request):
         'equipmentSM_att__dateorder',
         'charakters__calinterval',
         'equipment__invnumber',
-        'charakters__measurydiapason',
-        'charakters__aim',
+        'charakters__ main_technical_characteristics',
+        'charakters__analises_types',
         'equipmentSM_att__extra'
     )
     for row in rows:
