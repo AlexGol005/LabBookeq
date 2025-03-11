@@ -239,6 +239,7 @@ class MeasurEquipmentCharakters(models.Model):
     class Meta:
         verbose_name = 'Средство измерения: описание типа'
         verbose_name_plural = 'Средства измерения: описания типов'
+        unique_together = ('reestr', 'typename', 'name', 'pointer')
         
         
 
@@ -284,7 +285,7 @@ class TestingEquipmentCharakters(models.Model):
     class Meta:
         verbose_name = 'Испытательное оборудование, характеристики'
         verbose_name_plural = 'Испытательное оборудование, характеристики'
-        unique_together = ('typename', 'name', 'pointer')
+
 
 
 class HelpingEquipmentCharakters(models.Model):
@@ -323,7 +324,7 @@ class HelpingEquipmentCharakters(models.Model):
     class Meta:
         verbose_name = 'Вспомогательное оборудование, характеристики'
         verbose_name_plural = 'Вспомогательное оборудование, характеристики'
-        unique_together = ('typename', 'name', 'pointer')
+
 
 
 class MeasurEquipment(models.Model):
