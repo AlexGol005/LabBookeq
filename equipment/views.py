@@ -3044,28 +3044,24 @@ def BulkDownload(request):
 
     if request.POST:
         try:
-            MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
-            TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
-            HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
-            if MeasurEquipmentCharakters_file:
-                uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
-            elif TestingEquipmentCharakters_file:
-                uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
-            elif HelpingEquipmentCharakters_file:
-                uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
+        MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
+        TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
+        HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
+        if MeasurEquipmentCharakters_file:
+            uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
+        elif TestingEquipmentCharakters_file:
+            uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
+        elif HelpingEquipmentCharakters_file:
+            uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
+                   
+            number_objects = uploading_file.number_objects
+            number_rows = uploading_file.number_rows
     
-                
-                number_objects = uploading_file.number_objects
-                number_rows = uploading_file.number_rows
-    
-            if uploading_file:
-                if number_objects and number_rows:
-                    messages.success(request, f"Файл успешно загружен, добавлено {number_objects} записей из {number_rows}")
-                else:
-                    messages.success(request, f"ничего не добавилось")
+        if uploading_file:
+            if number_objects and number_rows:
+                messages.success(request, f"Файл успешно загружен, добавлено {number_objects} записей из {number_rows}")
             else:
-                messages.success(request, "Файл не загружен")
-        except:
-            messages.success(request, "Сначала загрузите файл EXEL.xls")
-            return render(request, URL + '/bulk_download.html', locals())
+                messages.success(request, f"ничего не добавилось")
+        else:
+            messages.success(request, "Файл не загружен")
     return render(request, URL + '/bulk_download.html', locals())
