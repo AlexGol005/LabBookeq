@@ -3046,14 +3046,14 @@ def BulkDownload(request):
         MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
         TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
         HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
-        try:
-            if MeasurEquipmentCharakters_file:
-                uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
-            elif TestingEquipmentCharakters_file:
-                uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
-            elif HelpingEquipmentCharakters_file:
-                uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
-                       
+        
+        if MeasurEquipmentCharakters_file:
+            uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
+        elif TestingEquipmentCharakters_file:
+            uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
+        elif HelpingEquipmentCharakters_file:
+            uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
+        try:           
                 number_objects = uploading_file.number_objects
                 number_rows = uploading_file.number_rows
         
