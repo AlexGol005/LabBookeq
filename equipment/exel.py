@@ -5503,7 +5503,7 @@ def export_me_xls(request):
         'equipmentSM_att__dateorder',
         'charakters__calinterval',
         'equipment__invnumber',
-        'charakters__ main_technical_characteristics',
+        'charakters__main_technical_characteristics',
         'charakters__analises_types',
         'equipmentSM_att__extra'
     )
