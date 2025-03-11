@@ -3043,19 +3043,23 @@ def BulkDownload(request):
     """template_name = URL + '/bulk_download.html'"""
 
     if request.POST:
-        MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
-        TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
-        HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
-        if MeasurEquipmentCharakters_file:
-            uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
-        elif TestingEquipmentCharakters_file:
-            uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
-        elif HelpingEquipmentCharakters_file:
-            uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
-
+        try:
+            MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
+            TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
+            HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
+            if MeasurEquipmentCharakters_file:
+                uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
+            elif TestingEquipmentCharakters_file:
+                uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
+            elif HelpingEquipmentCharakters_file:
+                uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
+    
+                
+            number_objects = uploading_file.number_objects
+            number_rows = uploading_file.number_rows
             
-        number_objects = uploading_file.number_objects
-        number_rows = uploading_file.number_rows
+        except:
+            messages.success(request, "Сначала загрузите файл EXEL.xls")
 
         if uploading_file:
             if number_objects and number_rows:
