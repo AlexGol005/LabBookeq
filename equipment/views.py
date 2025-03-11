@@ -3055,17 +3055,20 @@ def BulkDownload(request):
                 uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
     
                 
-            number_objects = uploading_file.number_objects
-            number_rows = uploading_file.number_rows
-            
+                number_objects = uploading_file.number_objects
+                number_rows = uploading_file.number_rows
+                
+            except:
+                messages.success(request, "Сначала загрузите файл EXEL.xls")
+    
+            if uploading_file:
+                if number_objects and number_rows:
+                    messages.success(request, f"Файл успешно загружен, добавлено {number_objects} записей из {number_rows}")
+                else:
+                    messages.success(request, f"ничего не добавилось")
+            else:
+                messages.success(request, "Файл не загружен")
         except:
             messages.success(request, "Сначала загрузите файл EXEL.xls")
-
-        if uploading_file:
-            if number_objects and number_rows:
-                messages.success(request, f"Файл успешно загружен, добавлено {number_objects} записей из {number_rows}")
-            else:
-                messages.success(request, f"ничего не добавилось")
-        else:
-            messages.success(request, "Файл не загружен")
+            return render(request, URL + '/bulk_download.html', locals())
     return render(request, URL + '/bulk_download.html', locals())
