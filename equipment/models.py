@@ -229,7 +229,7 @@ class MeasurEquipmentCharakters(models.Model):
     pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True) 
                            
     def __str__(self):
-        return f'госреестр: {self.reestr},  {self.name} {self.typename} {self.modificname}'
+        return f'госреестр: {self.reestr},  {self.name} {self.typename}'
 
     def save(self, *args, **kwargs):
         if not self.pointer:
@@ -274,7 +274,7 @@ class TestingEquipmentCharakters(models.Model):
     pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True) 
 
     def __str__(self):
-        return f'{self.name}  {self.modificname}'
+        return f'{self.name}  {self.typename}'
 
     def save(self, *args, **kwargs):
         if not self.pointer:
@@ -313,7 +313,7 @@ class HelpingEquipmentCharakters(models.Model):
     pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True) 
 
     def __str__(self):
-        return f'{self.name}  {self.modificname}'
+        return f'{self.name}  {self.typename}'
 
     def save(self, *args, **kwargs):
         if not self.pointer:
