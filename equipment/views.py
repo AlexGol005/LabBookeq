@@ -3048,11 +3048,23 @@ def BulkDownload(request):
         HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
         
         if MeasurEquipmentCharakters_file:
-            uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
+            try:
+                uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
+            except:
+                messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
+                
         elif TestingEquipmentCharakters_file:
-            uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
+            try:
+                uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
+            except:
+                messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
         elif HelpingEquipmentCharakters_file:
-            uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
+            try:
+                uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
+            except:
+                messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
+
+            
         try:           
             number_objects = uploading_file.number_objects
             number_rows = uploading_file.number_rows
