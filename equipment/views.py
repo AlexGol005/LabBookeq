@@ -3175,7 +3175,7 @@ def BulkDownload(request):
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
 
-        elif HelpingEquipmentCharakters_file:
+        elif UploadingEquipment_MeasurEquipment:
             try:
                 uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
             except:
