@@ -3032,8 +3032,118 @@ class UploadingTestingEquipmentCharakters(UploadingModel):
 class UploadingHelpingEquipmentCharakters(UploadingModel):
     model = HelpingEquipmentCharakters
 
-class UploadingEquipment(UploadingModel):
+
+
+class UploadingTwoModels(object):
+    foreing_key_fields = [""]
+    model = None
+    model2 = None
+    number_objects = 0
+    number_rows = None
+
+    def __init__(self, data):
+        data=data
+        self.uploaded_file = data.get("file")
+        self.parsing()
+
+    def getting_related_model(self, field_name):
+        model = self.model
+        related = model._meta.get_field(field_name).rel.to
+        return related_model
+
+    def getting_headers(self):
+        l_verbose_name = []
+        m_name = []
+        for f in self.model._meta.get_fields():
+            try:
+                l_verbose_name.append(f.verbose_name)
+                m_name.append(f.name)
+            except:
+                pass
+        s = self.s
+        headers = dict()
+        for column in range(3, s.ncols):
+            value = s.cell(0, column).value
+            try:
+                value in l_verbose_name
+                a = l_verbose_name.index(value)
+                value = m_name[a] 
+            except:
+                raise KeyError(value)
+            headers[column] = value
+        return headers
+
+    def  getting_headers_characters(self):
+        l_verbose_name = []
+        m_name = []
+        for f in self.model2._meta.get_fields():
+            try:
+                l_verbose_name.append(f.verbose_name)
+                m_name.append(f.name)
+            except:
+                pass
+        s = self.s
+        headers = dict()
+        for column in range(4):
+            value = s.cell(0, column).value
+            try:
+                value in l_verbose_name
+                a = l_verbose_name.index(value)
+                value = m_name[a] 
+            except:
+                raise KeyError(value)
+            headers[column] = value       
+        return headers_characters
+            
+    def parsing(self):
+        uploaded_file = self.uploaded_file
+        wb = xlrd.open_workbook(file_contents=uploaded_file.read())
+        s = wb.sheet_by_index(0)
+        self.s = s
+        headers = self.getting_headers()
+        headers_characters = self.getting_headers_characters()
+        print(headers)
+
+        for row in range(1, s.nrows):
+            row_dict = {}
+            for column in range(3, s.ncols):
+                value = s.cell(row, column).value
+                field_name = headers[column]
+
+                if field_name in self.foreing_key_fields:
+                    related_model = self.getting_related_model(field_name)
+                    
+                    instance, created = related_model.objects.get_or_create(name=value)
+                    value = instance
+                    
+                row_dict[field_name] = value
+                row_dict['kategory'] = "СИ"
+
+        for row in range(1, s.nrows):
+            row_dict_characters = {}
+            for column in range(4):
+                value = s.cell(row, column).value
+                field_name_characters = headers_characters[column]
+                
+                
+            try:
+                a = self.model.objects.create(**row_dict)
+                b = self.model.objects.get(**row_dict_characters)
+                if a.id and b.id:
+                    self.number_objects+=1
+                    self.number_objects = f'{self.number_objects} и характеристики найдены!'
+                else:
+                    pass
+                self.number_rows = s.nrows - 1
+                
+            except:
+                pass
+        return True
+
+
+class UploadingEquipment_MeasurEquipment(UploadingModel):
     model = Equipment
+    model2 = MeasurEquipmentCharakters
     foreing_key_fields = ["manufacturer"]
 
 
@@ -3064,6 +3174,12 @@ def BulkDownload(request):
                 uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
+
+        elif HelpingEquipmentCharakters_file:
+            try:
+                uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
+            except:
+                messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов или в порядке столбцов)")
 
             
         try:           
