@@ -3049,7 +3049,7 @@ class UploadingTwoModels(object):
     def getting_related_model(self, field_name):
         try:
             model = self.model
-            related_model = model._meta.get_field(field_name).rel.model
+            related_model = model._meta.get_field(field_name).related_model
             return related_model
         except:
             raise Exception(f'проблема с производителем {field_name}')
