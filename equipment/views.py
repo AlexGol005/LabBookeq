@@ -3167,12 +3167,7 @@ def BulkDownload(request):
                 messages.success(request, "Неверно заполнен файл 'Характеристики СИ' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
                 
-        elif TestingEquipmentCharakters_file:
-            try:
-                uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
-            except:
-                messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
-                return redirect('bulkdownload')
+
         elif HelpingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
@@ -3191,6 +3186,12 @@ def BulkDownload(request):
                messages.success(request, "Сначала выберите файл EXEL.xls")
             except:                
                 messages.success(request, "Сначала выберите файл EXEL.xls")
+                return redirect('bulkdownload')
+        elif TestingEquipmentCharakters_file:
+            try:
+                uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
+            except:
+                messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
 
             
