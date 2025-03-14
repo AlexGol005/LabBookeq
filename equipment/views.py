@@ -3188,7 +3188,7 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
             except:
-                messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
                 
