@@ -42,7 +42,7 @@ from equipment.forms import*
 from equipment.models import*
 from formstandart import *
 from functstandart import get_dateformat
-from .function_for_equipmentapp import get_exnumber
+from .function_for_equipmentapp import 
 from users.models import Profile, Company
 
 URL = 'equipment'
@@ -864,7 +864,9 @@ def EquipmentReg(request):
                 # except:
                 #     order.exnumber =  str(order.exnumber) + '0001' + '_' + str(for_exnamber_tail)
                 have_exnumber = order.exnumber
-                order.exnumber = get_exnumber(request, have_exnumber)
+                
+                pointer = order.pointer
+                order.exnumber = get_exnumber(request, have_exnumber, pointer)
                 order.save()
                 if order.kategory == 'СИ':
                     return redirect(f'/equipment/measureequipmentreg/{order.exnumber}/')
@@ -3101,7 +3103,7 @@ class UploadingTwoModels(object):
             headers[column] = value       
         return headers_characters
             
-    def parsing(self):
+    def parsing(self, request):
         uploaded_file = self.uploaded_file
         wb = xlrd.open_workbook(file_contents=uploaded_file.read())
         s = wb.sheet_by_index(0)
@@ -3124,7 +3126,8 @@ class UploadingTwoModels(object):
                 row_dict[field_name] = value
                 row_dict['kategory'] = "СИ"
                 have_exnumber = "А"
-                row_dict['exnumber'] = get_exnumber(request, have_exnumber)
+                pointer = request.user.profile.userid
+                row_dict['exnumber'] = get_exnumber(request, have_exnumber, pointer)
         # for row in range(1, s.nrows):
         #     row_dict_characters = {}
         #     for column in range(4):
