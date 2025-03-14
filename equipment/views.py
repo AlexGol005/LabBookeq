@@ -3212,6 +3212,7 @@ def BulkDownload(request):
             else:
                 messages.success(request, "Файл не загружен")
         except:
-             messages.success(request, "Сначала выберите файл EXEL.xls")
+            pass
+             # messages.success(request, "Сначала выберите файл EXEL.xls")
             
     return render(request, URL + '/bulk_download.html', locals())
