@@ -3,6 +3,7 @@
 Данный модуль funcstandart.py содержит функции и константы для всего проекта.
 """
 from users.models import Company
+from equipment.models import Equipment
 
 from decimal import *
 
