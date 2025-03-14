@@ -3157,6 +3157,7 @@ def BulkDownload(request):
             MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
         except:
             messages.success(request, "Сначала выберите файл EXEL.xls")
+            break
         try:
             TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
         except:
