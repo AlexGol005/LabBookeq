@@ -13,7 +13,7 @@ admin.site.register(Profile)
 @admin.register(Company)  
 class NoteAdmin(admin.ModelAdmin):
     list_display = ('userid', 'name', 'pay')
-    search_fields = ['userid', 'name',]
+    search_fields = ['userid', 'name', 'pk']
 
 # сотрудники  классы для отображения в админке
 
