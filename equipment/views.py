@@ -3153,10 +3153,26 @@ def BulkDownload(request):
     """template_name = URL + '/bulk_download.html'"""
 
     if request.POST:
-        MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
-        TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
-        HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
-        MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
+        try:
+            MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
+        except:
+            messages.success(request, "Сначала выберите файл EXEL.xls")
+            return redirect('bulkdownload')
+        try:   
+            TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
+        except:
+            messages.success(request, "Сначала выберите файл EXEL.xls")
+            return redirect('bulkdownload')
+        try:
+            HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
+        except:
+            messages.success(request, "Сначала выберите файл EXEL.xls")
+            return redirect('bulkdownload')
+        try:
+            MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
+        except:
+            messages.success(request, "Сначала выберите файл EXEL.xls")
+            return redirect('bulkdownload')
         
         if MeasurEquipmentCharakters_file:
             try:
@@ -3170,17 +3186,20 @@ def BulkDownload(request):
                 uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
             except:
                 messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
+                return redirect('bulkdownload')
         elif HelpingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
             except:
                 messages.success(request, "Неверно заполнен файл 'Характеристики ВО' (вероятно проблема в названиях столбцов)")
+                return redirect('bulkdownload')
 
         elif UploadingEquipment_MeasurEquipment:
             try:
                 uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
             except:
                 messages.success(request, "Неверно заполнен файл 'Единица ЛО и Единица СИ' (вероятно проблема в названиях столбцов или в порядке столбцов)")
+                return redirect('bulkdownload')
 
             
         try:           
