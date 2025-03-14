@@ -3157,6 +3157,7 @@ def BulkDownload(request):
         TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
         HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
         MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
+        uploading_file_fake = 1
 
         
         if MeasurEquipmentCharakters_file:
@@ -3185,9 +3186,9 @@ def BulkDownload(request):
             except:
                 messages.success(request, "Неверно заполнен файл 'Единица ЛО и Единица СИ' (вероятно проблема в названиях столбцов или в порядке столбцов)")
                 return redirect('bulkdownload')
-        elif uploading_file:
+        elif uploading_file_fake:
             try:
-                uploading_file
+                uploading_file_fake = 2
             except:                
                 messages.success(request, "Сначала выберите файл EXEL.xls")
                 return redirect('bulkdownload')
