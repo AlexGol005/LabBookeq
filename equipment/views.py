@@ -41,7 +41,8 @@ from equipment.constants import servicedesc0
 from equipment.forms import*
 from equipment.models import*
 from formstandart import *
-from functstandart import get_dateformat, get_exnumber
+from functstandart import get_dateformat
+from .function_for_equipmentapp import get_exnumber
 from users.models import Profile, Company
 
 URL = 'equipment'
