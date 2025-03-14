@@ -166,7 +166,7 @@ def get_exnumber(request, have_exnumber):
         b = int(str(a)[1:5]) + 1
         c = str(b).rjust(4, '0')
         d = str(have_exnumber) + c + '_' + str(for_exnamber_tail)
-            exnumber = d
+        exnumber = d
     except:
         exnumber =  str(have_exnumber) + '0001' + '_' + str(for_exnamber_tail)
     return exnumber
