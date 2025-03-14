@@ -3128,7 +3128,7 @@ class UploadingTwoModels(object):
                 
             try:
                 a = self.model.objects.create(**row_dict)
-                b = self.model.objects.get(**row_dict_characters)
+                b = self.model2.objects.get(**row_dict_characters)
                 if a.id and b.id:
                     self.number_objects+=1
                     self.number_objects = f'{self.number_objects} и характеристики найдены!'
