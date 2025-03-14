@@ -3115,7 +3115,7 @@ class UploadingTwoModels(object):
                 if field_name in self.foreing_key_fields:
                     related_model = self.getting_related_model(field_name)
                     
-                    instance, created = related_model.objects.get_or_create(name=value)
+                    instance, created = related_model.objects.get_or_create(companyName=value)
                     value = instance
                     
                 row_dict[field_name] = value
