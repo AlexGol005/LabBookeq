@@ -3184,12 +3184,13 @@ def BulkDownload(request):
                 messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
 
-        # elif UploadingEquipment_MeasurEquipment:
-        #     try:
-        #         uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
-        #     except:
-        #         messages.success(request, "Неверно заполнен файл 'Единица ЛО и Единица СИ' (вероятно проблема в названиях столбцов или в порядке столбцов)")
-        #         return redirect('bulkdownload')
+        elif MeasurEquipment_Equipment_file:
+            try:
+                uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
+            except:
+                messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
                 
         elif uploading_file_fake:
             try:
