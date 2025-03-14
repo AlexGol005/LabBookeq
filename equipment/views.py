@@ -3049,7 +3049,7 @@ class UploadingTwoModels(object):
     def __init__(self, data):
         data=data
         self.uploaded_file = data.get("file")
-        self.parsing()
+        self.parsing(request)
 
     def getting_related_model(self, field_name):
         try:
