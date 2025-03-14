@@ -3153,24 +3153,10 @@ def BulkDownload(request):
     """template_name = URL + '/bulk_download.html'"""
 
     if request.POST:
-        try:
-            MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
-        except:
-            messages.success(request, "Сначала выберите файл EXEL.xls")
-            return render(request, URL + '/bulk_download.html', locals())
-        try:
-            TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
-        except:
-            messages.success(request, "Сначала выберите файл EXEL.xls")
-        try:
-            HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
-        except:
-            messages.success(request, "Сначала выберите файл EXEL.xls")
-        try:
-            MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
-        except:
-            messages.success(request, "Сначала выберите файл EXEL.xls")
-            
+        MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
+        TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
+        HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
+        MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
         
         if MeasurEquipmentCharakters_file:
             try:
@@ -3195,16 +3181,10 @@ def BulkDownload(request):
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов или в порядке столбцов)")
 
-
             
         try:           
             number_objects = uploading_file.number_objects
             number_rows = uploading_file.number_rows
-        except:
-            number_objects = "X("
-            number_rows = "X("
-            uploading_file = None
-            
         
             if uploading_file:
                 if number_objects and number_rows:
@@ -3213,6 +3193,7 @@ def BulkDownload(request):
                     messages.success(request, f"ничего не добавилось")
             else:
                 messages.success(request, "Файл не загружен")
-
+        except:
+             messages.success(request, "Сначала выберите файл EXEL.xls")
             
     return render(request, URL + '/bulk_download.html', locals())
