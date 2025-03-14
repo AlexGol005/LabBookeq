@@ -3176,25 +3176,28 @@ def BulkDownload(request):
             except:
                 messages.success(request, "Неверно заполнен файл 'Характеристики ВО' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
-
-        elif UploadingEquipment_MeasurEquipment:
-            try:
-                uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
-            except:
-                messages.success(request, "Неверно заполнен файл 'Единица ЛО и Единица СИ' (вероятно проблема в названиях столбцов или в порядке столбцов)")
-                return redirect('bulkdownload')
-        elif uploading_file_fake:
-            try:
-               messages.success(request, "Сначала выберите файл EXEL.xls")
-            except:                
-                messages.success(request, "Сначала выберите файл EXEL.xls")
-                return redirect('bulkdownload')
+                
         elif TestingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
             except:
                 messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
+
+        # elif UploadingEquipment_MeasurEquipment:
+        #     try:
+        #         uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
+        #     except:
+        #         messages.success(request, "Неверно заполнен файл 'Единица ЛО и Единица СИ' (вероятно проблема в названиях столбцов или в порядке столбцов)")
+        #         return redirect('bulkdownload')
+                
+        elif uploading_file_fake:
+            try:
+               messages.success(request, "Сначала выберите файл EXEL.xls")
+            except:                
+                messages.success(request, "Сначала выберите файл EXEL.xls")
+                return redirect('bulkdownload')
+
 
             
         try:           
