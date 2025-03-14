@@ -3204,4 +3204,7 @@ def BulkDownload(request):
         except:
              messages.success(request, "Сначала выберите файл EXEL.xls")
             
+
+    return render(request, URL + '/bulk_download.html', locals())
+            
     
