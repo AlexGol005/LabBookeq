@@ -3049,10 +3049,10 @@ class UploadingTwoModels(object):
     def getting_related_model(self, field_name):
         try:
             model = self.model
-            related = model._meta.get_field(field_name).rel.model
+            related_model = model._meta.get_field(field_name).rel.model
             return related_model
         except:
-            raise Exception("проблема с производителем")
+            raise Exception(f'проблема с производителем {field_name}')
 
     def getting_headers(self):
         l_verbose_name = []
