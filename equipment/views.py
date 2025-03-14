@@ -3156,6 +3156,7 @@ class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
     model = Equipment
     model2 = MeasurEquipmentCharakters
     foreing_key_fields = ["manufacturer"]
+    request = request
 
 
 def BulkDownload(request):
