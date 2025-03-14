@@ -3126,7 +3126,7 @@ class UploadingTwoModels(object):
                 row_dict[field_name] = value
                 row_dict['kategory'] = "СИ"
                 have_exnumber = "А"
-                pointer = request.user.profile.userid
+                pointer = self.request.user.profile.userid
                 row_dict['exnumber'] = get_exnumber(request, have_exnumber, pointer)
         # for row in range(1, s.nrows):
         #     row_dict_characters = {}
