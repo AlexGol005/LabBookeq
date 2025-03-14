@@ -153,11 +153,11 @@ class Equipment(models.Model):
 
         
     lot = models.CharField('Заводской номер', max_length=100, default='')
-    yearmanuf = models.CharField('Год выпуска', default='', blank=True, null=True)
+    yearmanuf = models.CharField('Год выпуска', default='', blank=True, null=True, max_length=4)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, verbose_name='Название компании-производителя')
     new = models.CharField('Новый или б/у (указать: "новый" или "б/у")', max_length=100, default='новый')
 
-    yearintoservice = models.CharField('Год ввода в эксплуатацию', default='0', blank=True, null=True)    
+    yearintoservice = models.CharField('Год ввода в эксплуатацию', default='0', blank=True, null=True, max_length=4)    
     status = models.CharField(max_length=300, choices=CHOICES, default='В эксплуатации', null=True,
                               verbose_name='Статус: указать "Э" - эксплуатация, "РЕ" - ремонт, "Р" - резерв, "Д" - другое')
     serviceneed = models.BooleanField('Включать в график ТО при автоформировании графика на год (да - "1", нет - "0")', default=True, blank=True, )
