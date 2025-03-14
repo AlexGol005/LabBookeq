@@ -3153,10 +3153,10 @@ def BulkDownload(request):
     """template_name = URL + '/bulk_download.html'"""
 
     if request.POST:
-            MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
-            TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
-            HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
-            MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
+        MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
+        TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
+        HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
+        MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
         
         if MeasurEquipmentCharakters_file:
             try:
