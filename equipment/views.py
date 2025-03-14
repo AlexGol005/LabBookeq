@@ -3184,9 +3184,12 @@ def BulkDownload(request):
             except:
                 messages.success(request, "Неверно заполнен файл 'Единица ЛО и Единица СИ' (вероятно проблема в названиях столбцов или в порядке столбцов)")
                 return redirect('bulkdownload')
-        else:
-            messages.success(request, "Сначала выберите файл EXEL.xls")
-            return redirect('bulkdownload')
+        elif:
+            try:
+                uploading_file
+            except:                
+                messages.success(request, "Сначала выберите файл EXEL.xls")
+                return redirect('bulkdownload')
 
             
         try:           
