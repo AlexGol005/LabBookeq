@@ -3164,18 +3164,18 @@ def BulkDownload(request):
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
                 
-        elif TestingEquipmentCharakters_file:
+        if TestingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
-        elif HelpingEquipmentCharakters_file:
+        if HelpingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
 
-        elif UploadingEquipment_MeasurEquipment:
+        if UploadingEquipment_MeasurEquipment:
             try:
                 uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
             except:
