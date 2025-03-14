@@ -3188,7 +3188,7 @@ def BulkDownload(request):
                 return redirect('bulkdownload')
         elif uploading_file_fake:
             try:
-                uploading_file_fake = 2
+               messages.success(request, "Сначала выберите файл EXEL.xls")
             except:                
                 messages.success(request, "Сначала выберите файл EXEL.xls")
                 return redirect('bulkdownload')
