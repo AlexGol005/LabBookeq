@@ -3153,10 +3153,19 @@ def BulkDownload(request):
     """template_name = URL + '/bulk_download.html'"""
 
     if request.POST:
-        MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
-        TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
-        HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
-        MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
+        try:
+            MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
+            except:
+                try:
+                    TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
+                except:
+                    try:
+                        HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
+                    except:
+                        try:
+                            MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
+                        except:
+                            messages.success(request, "Сначала выберите файл EXEL.xls")
         
         if MeasurEquipmentCharakters_file:
             try:
@@ -3164,24 +3173,23 @@ def BulkDownload(request):
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
                 
-        if TestingEquipmentCharakters_file:
+        elif TestingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
-        if HelpingEquipmentCharakters_file:
+        elif HelpingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
 
-        if UploadingEquipment_MeasurEquipment:
+        elif UploadingEquipment_MeasurEquipment:
             try:
                 uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов или в порядке столбцов)")
-        else:
-            messages.success(request, "Сначала выберите файл EXEL.xls")
+
 
             
         try:           
