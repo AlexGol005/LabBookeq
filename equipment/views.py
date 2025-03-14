@@ -3141,7 +3141,7 @@ class UploadingTwoModels(object):
                 self.number_objects = 1000
                 
             except:
-                raise Exception("проблема в создании модели")
+                raise Exception(f"проблема в создании модели {row_dict}")
         return True
 
 
