@@ -3162,24 +3162,24 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
             except:
-                messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
+                messages.success(request, "Неверно заполнен файл 'Характеристики СИ' (вероятно проблема в названиях столбцов)")
                 
         elif TestingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
             except:
-                messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
+                messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
         elif HelpingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
             except:
-                messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов)")
+                messages.success(request, "Неверно заполнен файл 'Характеристики ВО' (вероятно проблема в названиях столбцов)")
 
         elif UploadingEquipment_MeasurEquipment:
             try:
                 uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
             except:
-                messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов или в порядке столбцов)")
+                messages.success(request, "Неверно заполнен файл 'Единица ЛО и Единица СИ' (вероятно проблема в названиях столбцов или в порядке столбцов)")
 
             
         try:           
@@ -3190,7 +3190,7 @@ def BulkDownload(request):
                 if number_objects and number_rows:
                     messages.success(request, f"Файл успешно загружен, добавлено {number_objects} записей из {number_rows}")
                 else:
-                    messages.success(request, f"ничего не добавилось (файл пустой или такие объекты уже есть в базе данных)")
+                    messages.success(request, f"ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
             else:
                 messages.success(request, "Файл не загружен")
         except:
