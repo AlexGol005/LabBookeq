@@ -3190,6 +3190,7 @@ def BulkDownload(request):
         except:
             number_objects = "X("
             number_rows = "X("
+            uploading_file = None
             
         
             if uploading_file:
