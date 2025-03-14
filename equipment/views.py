@@ -3162,8 +3162,8 @@ def BulkDownload(request):
             MeasurEquipmentCharakters_file
             uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
         except:
-                messages.success(request, "Неверно заполнен файл 'Характеристики СИ' (вероятно проблема в названиях столбцов)")
-                return render(request, URL + '/bulk_download.html', locals())
+            messages.success(request, "Неверно заполнен файл 'Характеристики СИ' (вероятно проблема в названиях столбцов)")
+            return render(request, URL + '/bulk_download.html', locals())
                 
         elif TestingEquipmentCharakters_file:
             try:
