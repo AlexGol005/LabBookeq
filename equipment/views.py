@@ -3165,7 +3165,7 @@ def BulkDownload(request):
             messages.success(request, "Неверно заполнен файл 'Характеристики СИ' (вероятно проблема в названиях столбцов)")
             return render(request, URL + '/bulk_download.html', locals())
                 
-        elif TestingEquipmentCharakters_file:
+        lif TestingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
             except:
