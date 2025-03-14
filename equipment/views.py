@@ -3123,7 +3123,8 @@ class UploadingTwoModels(object):
                     
                 row_dict[field_name] = value
                 row_dict['kategory'] = "СИ"
-
+                have_exnumber = "А"
+                row_dict['exnumber'] = get_exnumber(request, have_exnumber)
         # for row in range(1, s.nrows):
         #     row_dict_characters = {}
         #     for column in range(4):
