@@ -3180,6 +3180,9 @@ def BulkDownload(request):
                 uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
             except:
                 messages.success(request, "Неверно заполнен файл (вероятно проблема в названиях столбцов или в порядке столбцов)")
+        else:
+            messages.success(request, "Сначала выберите файл EXEL.xls")
+            
 
             
         try:           
