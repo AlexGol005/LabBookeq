@@ -3165,20 +3165,20 @@ def BulkDownload(request):
                 messages.success(request, "Неверно заполнен файл 'Характеристики СИ' (вероятно проблема в названиях столбцов)")
                 return render(request, URL + '/bulk_download.html', locals())
                 
-        if TestingEquipmentCharakters_file:
+        elif TestingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
             except:
                 messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
                 return render(request, URL + '/bulk_download.html', locals())
-        if HelpingEquipmentCharakters_file:
+        elif HelpingEquipmentCharakters_file:
             try:
                 uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file})
             except:
                 messages.success(request, "Неверно заполнен файл 'Характеристики ВО' (вероятно проблема в названиях столбцов)")
                 return render(request, URL + '/bulk_download.html', locals())
 
-        if UploadingEquipment_MeasurEquipment:
+        elif UploadingEquipment_MeasurEquipment:
             try:
                 uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
             except:
