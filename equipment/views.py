@@ -3197,4 +3197,4 @@ def BulkDownload(request):
                 messages.success(request, "Файл не загружен")
 
             
-        return render(request, URL + '/bulk_download.html', locals())
+    return render(request, URL + '/bulk_download.html', locals())
