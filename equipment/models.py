@@ -102,8 +102,8 @@ class Manufacturer(models.Model):
         super(Manufacturer, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Производитель'
-        verbose_name_plural = 'Производители'
+        verbose_name = 'Контрагенты: Производитель'
+        verbose_name_plural = 'Контрагенты: Производители'
 
 class Test(models.Model):
     """тест"""
@@ -135,8 +135,8 @@ class Verificators(models.Model):
             super(Verificators, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Поверитель организация'
-        verbose_name_plural = 'Поверители организации'
+        verbose_name = 'Контрагенты: Поверитель'
+        verbose_name_plural = 'Контрагенты: Поверители'
 
 
 # блок 3 - оборудование в целом, характеристики СИ ИО ВО, сами СИ ИО ВО
@@ -202,8 +202,8 @@ class Equipment(models.Model):
       
     class Meta:
         unique_together = ('exnumber', 'pointer',)
-        verbose_name = 'Оборудование'
-        verbose_name_plural = 'Оборудование: список всего оборудования'
+        verbose_name = 'ЛО список'
+        verbose_name_plural = 'ЛО список'
 
 
 class MeasurEquipmentCharakters(models.Model):
@@ -244,8 +244,8 @@ class MeasurEquipmentCharakters(models.Model):
         super(MeasurEquipmentCharakters, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Средство измерения: описание типа'
-        verbose_name_plural = 'Средства измерения: описания типов'
+        verbose_name = 'СИ характеристики'
+        verbose_name_plural = 'СИ характеристики'
         unique_together = ('reestr', 'typename', 'name', 'pointer')
         
         
@@ -290,8 +290,8 @@ class TestingEquipmentCharakters(models.Model):
         super(TestingEquipmentCharakters, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Испытательное оборудование, характеристики'
-        verbose_name_plural = 'Испытательное оборудование, характеристики'
+        verbose_name = 'ИО характеристики'
+        verbose_name_plural = 'ИО характеристики'
         unique_together = ('typename', 'name', 'pointer')
 
 
@@ -330,8 +330,8 @@ class HelpingEquipmentCharakters(models.Model):
         super(HelpingEquipmentCharakters, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Вспомогательное оборудование, характеристики'
-        verbose_name_plural = 'Вспомогательное оборудование, характеристики'
+        verbose_name = 'ВО характеристики'
+        verbose_name_plural = 'ВО характеристики'
         unique_together = ('typename', 'name', 'pointer')
 
 
@@ -402,8 +402,8 @@ class MeasurEquipment(models.Model):
         return super(MeasurEquipment, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Средство измерения'
-        verbose_name_plural = 'Средства измерения: список'
+        verbose_name = 'СИ список'
+        verbose_name_plural = 'СИ список'
         unique_together = ('charakters', 'equipment')
         ordering = ['charakters__name']
 
@@ -453,8 +453,8 @@ class TestingEquipment(models.Model):
         return super(TestingEquipment, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Испытательное оборудование'
-        verbose_name_plural = 'Испытательное оборудование: список'
+        verbose_name = 'ИО список'
+        verbose_name_plural = 'ИО список'
         unique_together = ('charakters', 'equipment')
         ordering = ['charakters__name']
 
@@ -481,8 +481,8 @@ class HelpingEquipment(models.Model):
         return super(HelpingEquipment, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Вспомогательное оборудование'
-        verbose_name_plural = 'Вспомогательное оборудование: список'
+        verbose_name = 'ВО список'
+        verbose_name_plural = 'ВО список'
         unique_together = ('charakters', 'equipment')
         ordering = ['charakters__name']
 
@@ -506,8 +506,8 @@ class Rooms(models.Model):
 
     class Meta:
         unique_together = ('roomnumber', 'pointer',)
-        verbose_name = 'Комната'
-        verbose_name_plural = 'Комнаты: список'
+        verbose_name = 'Принадлежность: список комнат'
+        verbose_name_plural = 'Принадлежность: список комнат'
             
 
 class Personchange(models.Model):
@@ -535,8 +535,8 @@ class Personchange(models.Model):
             note.save()
 
     class Meta:
-        verbose_name = 'Оборудование: дата изменения ответственного'
-        verbose_name_plural = 'Оборудование: даты изменения ответственных'
+        verbose_name = 'Принадлежность: изменение ответственного'
+        verbose_name_plural = 'Принадлежность: изменение ответственного'
 
 
 class Roomschange(models.Model):
@@ -565,8 +565,8 @@ class Roomschange(models.Model):
             pass
 
     class Meta:
-        verbose_name = 'Оборудование: Дата перемещения прибора'
-        verbose_name_plural = 'Оборудование: Даты перемещения приборов'
+        verbose_name = 'Принадлежность: изменение комнаты'
+        verbose_name_plural = 'Принадлежность: изменение комнаты'
 
 
 class DocsCons(models.Model):
@@ -586,8 +586,8 @@ class DocsCons(models.Model):
         return f'{self.equipment.exnumber} '
 
     class Meta:
-        verbose_name = 'Оборудование: комплект к прибору'
-        verbose_name_plural = 'Оборудование: комплекты к приборам'
+        verbose_name = 'ЛО комплект к прибору'
+        verbose_name_plural = 'ЛО комплекты к приборам'
 
 
 # блок 5 - проверка СИ, аттестация ИО, проверка характеристик ВО
@@ -677,8 +677,8 @@ class Verificationequipment(models.Model):
             note.save()
 
     class Meta:
-        verbose_name = 'Средство измерения: поверка'
-        verbose_name_plural = 'Средства измерения: поверки'
+        verbose_name = 'СИ метрология поверка'
+        verbose_name_plural = 'СИ метрология поверка'
 
 
 class Calibrationequipment(models.Model):
@@ -763,8 +763,8 @@ class Calibrationequipment(models.Model):
             note.save()
 
     class Meta:
-        verbose_name = 'Средство измерения: калибровка'
-        verbose_name_plural = 'Средства измерения: калибровка'
+        verbose_name = 'СИ метрология калибровка'
+        verbose_name_plural = 'СИ метрология калибровка'
 
 
 class Attestationequipment(models.Model):
@@ -887,8 +887,8 @@ class Attestationequipment(models.Model):
                 note.newdateordernew = '-' 
             note.save()    
     class Meta:
-        verbose_name = 'Испытательное оборудование: аттестация'
-        verbose_name_plural = 'Испытательное оборудование: аттестации'
+        verbose_name = 'ИО метрология аттестация'
+        verbose_name_plural = 'ИО метрология аттестация'
 
 
 
@@ -924,8 +924,8 @@ class CommentsEquipment(models.Model):
                     image.save(self.img.path)
 
     class Meta:
-        verbose_name = 'Оборудование: запись о приборе'
-        verbose_name_plural = 'Оборудование: записи о приборах'
+        verbose_name = 'ЛО записи в карточках'
+        verbose_name_plural = 'ЛО записи в карточках'
 
 
 class CommentsVerificationequipment(models.Model):
@@ -943,8 +943,8 @@ class CommentsVerificationequipment(models.Model):
         return reverse('measureequipmentver', kwargs={'str': self.forNote.exnumber})
 
     class Meta:
-        verbose_name = 'Средства измерения: Поверка: Комментарий к поверке'
-        verbose_name_plural = 'Средства измерения: Поверка: Комментарии к поверкам'
+        verbose_name = 'СИ Комментарий к поверке'
+        verbose_name_plural = 'СИ Комментарий к поверке'
 
 
 class CommentsAttestationequipment(models.Model):
@@ -962,8 +962,8 @@ class CommentsAttestationequipment(models.Model):
         return reverse('testingequipmentatt', kwargs={'str': self.forNote.exnumber})
 
     class Meta:
-        verbose_name = 'Испытательное оборудование: Аттестация: Комментарий к аттестации'
-        verbose_name_plural = 'Испытательное оборудование: Аттестация: Комментарии к аттестациям'
+        verbose_name = 'ИО Комментарий к аттестации'
+        verbose_name_plural = 'ИО Комментарий к аттестации'
 
 
 # блок 7 - микроклимат в помещении
@@ -995,8 +995,8 @@ class MeteorologicalParameters(models.Model):
         return super(MeteorologicalParameters, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Комнаты: Микроклимат в помещении'
-        verbose_name_plural = 'Комнаты: Микроклимат в помещениях'
+        verbose_name = 'Микроклимат: записи'
+        verbose_name_plural = 'Микроклимат: записи'
         unique_together = ('date', 'roomnumber',)
 
 
@@ -1026,8 +1026,8 @@ class ServiceEquipmentME(models.Model):
         return f'{self.charakters.name}, pk = {self.pk}'
 
     class Meta:
-        verbose_name = 'Средство измерения: Техобслуживание постоянная информация'
-        verbose_name_plural = 'Средства измерения: Техобслуживание постоянная информация'
+        verbose_name = 'ТО СИ постоянная информация'
+        verbose_name_plural = 'ТО СИ постоянная информация'
 
 
 class ServiceEquipmentTE(models.Model):
@@ -1055,8 +1055,8 @@ class ServiceEquipmentTE(models.Model):
         return self.charakters.name
 
     class Meta:
-        verbose_name = 'Испытательное оборудование: Техобслуживание постоянная информация'
-        verbose_name_plural = 'Испытательное оборудование: Техобслуживание постоянная информация'
+        verbose_name = 'ТО ИО постоянная информация'
+        verbose_name_plural = 'ТО ИО постоянная информация'
 
 
 class ServiceEquipmentHE(models.Model):
@@ -1085,8 +1085,8 @@ class ServiceEquipmentHE(models.Model):
         return self.charakters.name
 
     class Meta:
-        verbose_name = 'Вспомогательное оборудование: Техобслуживание постоянная информация'
-        verbose_name_plural = 'Вспомогательное оборудование: Техобслуживание постоянная информация'
+        verbose_name = 'ТО ВО постоянная информация'
+        verbose_name_plural = 'ТО ВО постоянная информация'
 
 
 class ServiceEquipmentU(models.Model):
@@ -1123,8 +1123,8 @@ class ServiceEquipmentU(models.Model):
         ServiceEquipmentUFact.objects.get_or_create(equipment=self.equipment, pk_pointer=self.pk, year=self.year)
                     
     class Meta:
-        verbose_name = 'Оборудование: ТО-2 план'
-        verbose_name_plural = 'Оборудование: ТО-2 план'
+        verbose_name = 'ТО ЛО: ТО-2 план'
+        verbose_name_plural = 'ТО ЛО: ТО-2 план'
 
 
 
@@ -1162,8 +1162,8 @@ class ServiceEquipmentUFact(models.Model):
         return super(ServiceEquipmentUFact, self).save(*args, **kwargs)
     
     class Meta:
-        verbose_name = 'Оборудование: ТО-2 факт'
-        verbose_name_plural = 'Оборудование: ТО-2 факт'
+        verbose_name = 'ТО ЛО: ТО-2 факт'
+        verbose_name_plural = 'ТО ЛО: ТО-2 факт'
 
 
 
@@ -1195,8 +1195,8 @@ class Agreementverification(models.Model):
     def __str__(self):
         return self.verificator.companyName
     class Meta:
-        verbose_name = 'Договоры организаций с поверителями'
-        verbose_name_plural = 'Договоры организаций с поверителями'
+        verbose_name = 'Контрагенты: Договоры с поверителями'
+        verbose_name_plural = 'Контрагенты: Договоры с поверителями'
 
 
 class Activeveraqq(models.Model):
@@ -1220,6 +1220,6 @@ class Activeveraqq(models.Model):
 
             
     class Meta:
-        verbose_name = 'Активный договор с поверителем'
-        verbose_name_plural = 'Активный договор с поверителем'
+        verbose_name = 'Контрагенты: Договор с поверителем активный'
+        verbose_name_plural = 'Контрагенты: Договор с поверителем активный'
 
