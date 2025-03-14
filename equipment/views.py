@@ -3047,9 +3047,12 @@ class UploadingTwoModels(object):
         self.parsing()
 
     def getting_related_model(self, field_name):
-        model = self.model
-        related = model._meta.get_field(field_name).rel.to
-        return related_model
+        try:
+            model = self.model
+            related = model._meta.get_field(field_name).rel.to
+            return related_model
+        except:
+            raise Exception("проблема с производителем")
 
     def getting_headers(self):
         l_verbose_name = []
@@ -3101,8 +3104,7 @@ class UploadingTwoModels(object):
         s = wb.sheet_by_index(0)
         self.s = s
         headers = self.getting_headers()
-        headers_characters = self.getting_headers_characters()
-        print(headers)
+        # headers_characters = self.getting_headers_characters()
 
         for row in range(1, s.nrows):
             row_dict = {}
@@ -3119,25 +3121,27 @@ class UploadingTwoModels(object):
                 row_dict[field_name] = value
                 row_dict['kategory'] = "СИ"
 
-        for row in range(1, s.nrows):
-            row_dict_characters = {}
-            for column in range(4):
-                value = s.cell(row, column).value
-                field_name_characters = headers_characters[column]
+        # for row in range(1, s.nrows):
+        #     row_dict_characters = {}
+        #     for column in range(4):
+        #         value = s.cell(row, column).value
+        #         field_name_characters = headers_characters[column]
                 
                 
             try:
                 a = self.model.objects.create(**row_dict)
-                b = self.model2.objects.get(**row_dict_characters)
+                
+                # b = self.model2.objects.get(**row_dict_characters)
                 if a.id and b.id:
                     self.number_objects+=1
                     self.number_objects = f'{self.number_objects} и характеристики найдены!'
                 else:
                     pass
                 self.number_rows = s.nrows - 1
+                self.number_objects = 1000
                 
             except:
-                pass
+                raise Exception("проблема в создании модели")
         return True
 
 
@@ -3185,11 +3189,11 @@ def BulkDownload(request):
                 return redirect('bulkdownload')
 
         elif MeasurEquipment_Equipment_file:
-            try:
-                uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
-            except:
-                messages.success(request, "Неверно заполнен файл 'единица ЛО и СИ' (вероятно проблема в названиях или в порядке столбцов)")
-                return redirect('bulkdownload')
+
+            uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
+            # except:
+            #     messages.success(request, "Неверно заполнен файл 'единица ЛО и СИ' (вероятно проблема в названиях или в порядке столбцов)")
+            #     return redirect('bulkdownload')
 
                 
         elif uploading_file_fake:
