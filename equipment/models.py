@@ -170,7 +170,7 @@ class Equipment(models.Model):
     instruction = models.CharField('Инструкция по эксплуатации (ссылка)', max_length=1000,  blank=True, null=True)
     repair = models.CharField('Контакты для ремонта', max_length=1000,  blank=True, null=True)
         
-    price = models.DecimalField('Стоимость', max_digits=100, decimal_places=2, null=True, blank=True, default='0')    
+    price = models.DecimalField('Стоимость (укажите "0" если стоимость неизвестна)', max_digits=100, decimal_places=2, null=True, blank=True, default='0')    
     invnumber = models.CharField('Инвентарный номер (присваивает бухгалтерия)', max_length=100, default='', blank=True, null=True)
     pravo = models.CharField('Право владения прибором (например, номер и дата накладной)', max_length=1000,  blank=True, null=True)
     pravo_have = models.CharField(max_length=300, choices=HAVE, default='cобственность', null=True,
