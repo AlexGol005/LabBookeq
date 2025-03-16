@@ -3039,7 +3039,7 @@ class UploadingHelpingEquipmentCharakters(UploadingModel):
 
 
 
-class UploadingTwoModels(View, object):
+class UploadingTwoModels(object):
     foreing_key_fields = [""]
     model = None
     model2 = None
@@ -3152,7 +3152,7 @@ class UploadingTwoModels(View, object):
         return True
 
 
-class UploadingEquipment_MeasurEquipment(View, UploadingTwoModels):
+class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
     model = Equipment
     model2 = MeasurEquipmentCharakters
     foreing_key_fields = ["manufacturer"]
