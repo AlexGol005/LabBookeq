@@ -198,7 +198,7 @@ class Equipment(models.Model):
         a = str(self.lot)
         b = a.find('.')
         if b:
-            self.lot = a[0:a+1]
+            self.lot = a[0:b+1]
         super(Equipment, self).save(*args, **kwargs)
         try:
             ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
