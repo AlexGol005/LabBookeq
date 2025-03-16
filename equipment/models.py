@@ -199,6 +199,11 @@ class Equipment(models.Model):
         except:
             ServiceEquipmentU.objects.get_or_create(equipment=self, year=str(self.yearintoservice))
 
+        # убираем точку
+        a = str(self.lot).find('.')
+        if a:
+            self.lot = str(self.lot)[0:a+1]
+
       
     class Meta:
         unique_together = ('exnumber', 'pointer',)
