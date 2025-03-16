@@ -3137,16 +3137,17 @@ class UploadingTwoModels(object):
                 pointer = get_current_user().profile.userid
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)
                 
-        for row in range(1, s.nrows):
+        # for row in range(1, s.nrows):
             row_dict_characters = {}
             for column in range(3):
                 value = s.cell(row, column).value
                 field_name_characters = headers_characters[column]
                 row_dict_characters[field_name_characters] = value
 
-            
+            row_dict_item_metehe = {}
             try:   
                 b, created = self.model2.objects.get_or_create(**row_dict_characters)
+                row_dict_item_metehe['charakters'] = b
                 if b.id:
                     self.number_objects_char+=1
             except:
@@ -3155,25 +3156,19 @@ class UploadingTwoModels(object):
             
             try:
                 a = self.model.objects.create(**row_dict)
+                row_dict_item_metehe['equipment'] = a
                 if a.id:
                     self.number_objects+=1
             except:
                 raise Exception(f"проблема в создании ЛО: {row_dict}")
-
-            row_dict_item_metehe = {}
-
-            row_dict_item_metehe['equipment'] = a
-            row_dict_item_metehe['charakters'] = b
-
-            
-        try:
-            c = self.model3.objects.create(**row_dict_item_metehe)
-            if с.id:
-                self.number_objects_metehe+=1
-            else:
-                pass
-        except:
-            raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
+            try:
+                c = self.model3.objects.create(**row_dict_item_metehe)
+                if с.id:
+                    self.number_objects_metehe+=1
+                else:
+                    pass
+            except:
+                raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
                              
             self.number_objects = f'добавлено {self.number_objects} единиц ЛО, добавлено {self.number_objects_metehe} единиц {self.kategory_e}'
             self.number_rows = s.nrows - 1
