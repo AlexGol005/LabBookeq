@@ -35,6 +35,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from django.views.generic.edit import FormMixin
+from django_currentuser.middleware import (
+get_current_user, get_current_authenticated_user)
 import xlrd
 
 from equipment.constants import servicedesc0
@@ -3049,9 +3051,8 @@ class UploadingTwoModels(object):
     
     def __init__(self, data, request):
         data=data
-        request=request
         self.uploaded_file = data.get("file")
-        self.parsing(request)
+        self.parsing()
 
     def getting_related_model(self, field_name):
         try:
@@ -3105,7 +3106,7 @@ class UploadingTwoModels(object):
             headers[column] = value       
         return headers_characters
             
-    def parsing(self, request):
+    def parsing(self):
         uploaded_file = self.uploaded_file
         wb = xlrd.open_workbook(file_contents=uploaded_file.read())
         s = wb.sheet_by_index(0)
@@ -3128,7 +3129,7 @@ class UploadingTwoModels(object):
                 row_dict[field_name] = value
                 row_dict['kategory'] = "СИ"
                 have_exnumber = "А"
-                pointer = self.request.user.profile.userid
+                pointer = get_current_user().profile.userid
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)
         # for row in range(1, s.nrows):
         #     row_dict_characters = {}
