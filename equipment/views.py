@@ -3103,7 +3103,7 @@ class UploadingTwoModels(View, object):
             headers[column] = value       
         return headers_characters
             
-    def parsing(self):
+    def parsing(self, request):
         uploaded_file = self.uploaded_file
         wb = xlrd.open_workbook(file_contents=uploaded_file.read())
         s = wb.sheet_by_index(0)
