@@ -3107,7 +3107,7 @@ class UploadingTwoModels(object):
                 a = l_verbose_name.index(value)
                 value = m_name[a] 
             except:
-                raise KeyError(value)
+                raise KeyError(value, dict())
             headers_characters[column] = value
         return headers_characters
             
