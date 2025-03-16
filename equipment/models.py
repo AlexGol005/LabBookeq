@@ -249,6 +249,11 @@ class MeasurEquipmentCharakters(models.Model):
     def save(self, *args, **kwargs):
         if not self.pointer:
                 self.pointer = self.created_by.profile.userid
+        # убираем точку
+        a = str(self.reestr)
+        b = a.find('.')
+        if b != -1:
+            self.reestr = a[0:b]
         super(MeasurEquipmentCharakters, self).save(*args, **kwargs)
 
     class Meta:
