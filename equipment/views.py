@@ -3139,7 +3139,7 @@ class UploadingTwoModels(object):
                 
         for row in range(1, s.nrows):
             row_dict_characters = {}
-            for column in range(4):
+            for column in range(3):
                 value = s.cell(row, column).value
                 field_name_characters = headers_characters[column]
 
