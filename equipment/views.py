@@ -3049,7 +3049,7 @@ class UploadingTwoModels(object):
     def __init__(self, data):
         data=data
         self.uploaded_file = data.get("file")
-        self.parsing()
+        self.parsing(request)
 
     def getting_related_model(self, field_name):
         try:
@@ -3103,7 +3103,7 @@ class UploadingTwoModels(object):
             headers[column] = value       
         return headers_characters
             
-    def parsing(self):
+    def parsing(self, request):
         uploaded_file = self.uploaded_file
         wb = xlrd.open_workbook(file_contents=uploaded_file.read())
         s = wb.sheet_by_index(0)
