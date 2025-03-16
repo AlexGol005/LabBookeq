@@ -3099,7 +3099,7 @@ class UploadingTwoModels(object):
             except:
                 pass
         s = self.s
-        headers = dict()
+        headers_characters = dict()
         for column in range(3):
             value = s.cell(0, column).value
             try:
