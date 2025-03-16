@@ -3047,7 +3047,7 @@ class UploadingTwoModels(object):
     number_rows = None
     # request=request
     
-    def __init__(self, data):
+    def __init__(self, data, request):
         data=data
         self.uploaded_file = data.get("file")
         self.request = request
