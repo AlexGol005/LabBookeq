@@ -3146,9 +3146,9 @@ class UploadingTwoModels(object):
 
             
             try:   
-                b = self.model2.objects.get_or_create(**row_dict_characters)
-                # if b.id:
-                #     self.number_objects_char+=1
+                b, created = self.model2.objects.get_or_create(**row_dict_characters)
+                if b.id:
+                    self.number_objects_char+=1
             except:
                 raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
