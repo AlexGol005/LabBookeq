@@ -410,8 +410,10 @@ class MeasurEquipment(models.Model):
                f' № реестр {self.charakters.reestr} - pk {self.pk}'
 
     def save(self, *args, **kwargs):
+        if not self.pointer:
+            self.pointer = self.created_by.profile.userid
         super().save()
-        self.pointer = self.equipment.pointer
+
         return super(MeasurEquipment, self).save(*args, **kwargs)
 
     class Meta:
