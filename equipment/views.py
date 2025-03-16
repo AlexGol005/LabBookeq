@@ -3045,6 +3045,7 @@ class UploadingTwoModels(object):
     model2 = None
     number_objects = 0
     number_rows = None
+    request=request 
 
     def __init__(self, data):
         data=data
@@ -3103,7 +3104,7 @@ class UploadingTwoModels(object):
             headers[column] = value       
         return headers_characters
             
-    def parsing(self, request):
+    def parsing(self):
         uploaded_file = self.uploaded_file
         wb = xlrd.open_workbook(file_contents=uploaded_file.read())
         s = wb.sheet_by_index(0)
@@ -3156,7 +3157,7 @@ class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
     model = Equipment
     model2 = MeasurEquipmentCharakters
     foreing_key_fields = ["manufacturer"]
-    request = request
+
 
 
 def BulkDownload(request):
