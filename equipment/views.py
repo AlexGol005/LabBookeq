@@ -3141,7 +3141,8 @@ class UploadingTwoModels(object):
             row_dict_characters = {}
             for column in range(3):
                 value = s.cell(row, column).value
-                field_name_characters = headers_characters[column]
+                field_name_characters = headers[column]
+                row_dict_characters[field_name_characters] = value
 
             
             try:   
@@ -3151,7 +3152,7 @@ class UploadingTwoModels(object):
                 else:
                     pass
             except:
-                raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+                raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}{field_name_characters}")
 
             
             try:
