@@ -3039,7 +3039,7 @@ class UploadingHelpingEquipmentCharakters(UploadingModel):
 
 
 
-class UploadingTwoModels(object):
+class UploadingTwoModels(View, object):
     foreing_key_fields = [""]
     model = None
     model2 = None
