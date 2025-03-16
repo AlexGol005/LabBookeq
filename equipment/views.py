@@ -3163,10 +3163,10 @@ class UploadingTwoModels(object):
                 raise Exception(f"проблема в создании ЛО: {row_dict}")
             try:
                 c = self.model3.objects.create(**row_dict_item_metehe)
-                if с.id:
-                    self.number_objects_metehe+=1
-                else:
-                    pass
+                # if с.id:
+                #     self.number_objects_metehe+=1
+                # else:
+                #     pass
             except:
                 raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
                              
