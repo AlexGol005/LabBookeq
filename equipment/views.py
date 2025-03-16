@@ -3116,7 +3116,7 @@ class UploadingTwoModels(object):
         s = wb.sheet_by_index(0)
         self.s = s
         headers = self.getting_headers()
-        # headers_characters = self.getting_headers_characters()
+        headers_characters = self.getting_headers_characters()
 
         for row in range(1, s.nrows):
             row_dict = {}
