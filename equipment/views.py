@@ -3099,7 +3099,7 @@ class UploadingTwoModels(object):
                 pass
         s = self.s
         headers = dict()
-        for column in range(4):
+        for column in range(3):
             value = s.cell(0, column).value
             try:
                 value in l_verbose_name
