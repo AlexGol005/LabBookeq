@@ -193,16 +193,19 @@ class Equipment(models.Model):
     def save(self, *args, **kwargs):
         if not self.pointer:
                 self.pointer = self.created_by.profile.userid
+
+        # убираем точку
+        a = str(self.lot)
+        b = a.find('.')
+        if b:
+            self.lot = a[0:a+1]
         super(Equipment, self).save(*args, **kwargs)
         try:
             ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
         except:
             ServiceEquipmentU.objects.get_or_create(equipment=self, year=str(self.yearintoservice))
 
-        # убираем точку
-        a = str(self.lot).find('.')
-        if a:
-            self.lot = str(self.lot)[0:a+1]
+
 
       
     class Meta:
