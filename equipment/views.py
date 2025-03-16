@@ -3049,7 +3049,7 @@ class UploadingTwoModels(object):
     number_rows = None
 
     
-    def __init__(self, data, request):
+    def __init__(self, data):
         data=data
         self.uploaded_file = data.get("file")
         self.parsing()
