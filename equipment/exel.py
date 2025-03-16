@@ -143,6 +143,14 @@ style_plain.borders = b1
 style_plain.alignment = alg_hc_vc_w1
 style_plain.font.height = 20 * size
 
+# style_plain_textf обычные ячейки, с границами ячеек формат текстовый
+style_plain_textf = xlwt.XFStyle()
+style_plain_textf.font.name = 'Times New Roman'
+style_plain_textf.borders = b1
+style_plain_textf.alignment = alg_hc_vc_w1
+style_plain_textf.font.height = 20 * size
+style_plain_textf.num_format_str = '@'
+
 
 # style_date обычные ячейки с датами, с границами ячеек
 style_date = xlwt.XFStyle()
@@ -2320,21 +2328,21 @@ def export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, co
     for col_num in range(len_mandatory):
         ws.write(row_num, col_num, columns[col_num], style_bold_borders_blue)
     for col_num in range(len_mandatory, len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style_plain)
+        ws.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 3000
 
     for col_num in range(len_mandatory):
         ws1.write(row_num, col_num, columns[col_num], style_bold_borders_blue)
     for col_num in range(len_mandatory, len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_plain)
+        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws1.row(row_num).height_mismatch = True
     ws1.row(row_num).height = 3000
 
     row_num += 1
     columns = columns2
     for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_plain)
+        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws1.row(row_num).height_mismatch = True
     ws1.row(row_num).height = 4000
 
@@ -2351,7 +2359,7 @@ def export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, co
     row_num += 1
     columns = columns3
     for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_plain)
+        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws1.row(row_num).height_mismatch = True
     ws1.row(row_num).height = 3000
 
