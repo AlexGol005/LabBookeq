@@ -866,7 +866,7 @@ def EquipmentReg(request):
                 have_exnumber = order.exnumber
                 
                 pointer = order.pointer
-                order.exnumber = get_exnumber(request, have_exnumber, pointer)
+                order.exnumber = get_exnumber(have_exnumber, pointer)
                 order.save()
                 if order.kategory == 'СИ':
                     return redirect(f'/equipment/measureequipmentreg/{order.exnumber}/')
@@ -3128,7 +3128,7 @@ class UploadingTwoModels(object):
                 row_dict['kategory'] = "СИ"
                 have_exnumber = "А"
                 pointer = self.request.user.profile.userid
-                row_dict['exnumber'] = get_exnumber(request, have_exnumber, pointer)
+                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)
         # for row in range(1, s.nrows):
         #     row_dict_characters = {}
         #     for column in range(4):
