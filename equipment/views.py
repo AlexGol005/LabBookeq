@@ -3151,7 +3151,7 @@ class UploadingTwoModels(object):
                 else:
                     pass
             except:
-                raise Exception(f"проблема в создании/нахождении характеристик {kategory_e}: {row_dict_characters}")
+                raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             
             try:
