@@ -3037,9 +3037,9 @@ class UploadingTestingEquipmentCharakters(UploadingModel):
 class UploadingHelpingEquipmentCharakters(UploadingModel):
     model = HelpingEquipmentCharakters
 
+from django.http import HttpResponse, request
 
-
-class UploadingTwoModels(object):
+class UploadingTwoModels(View, object):
     foreing_key_fields = [""]
     model = None
     model2 = None
@@ -3049,7 +3049,7 @@ class UploadingTwoModels(object):
     def __init__(self, data):
         data=data
         self.uploaded_file = data.get("file")
-        self.parsing(self.request)
+        self.parsing(request)
 
     def getting_related_model(self, field_name):
         try:
