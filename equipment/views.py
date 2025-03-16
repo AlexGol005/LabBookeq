@@ -3089,7 +3089,7 @@ class UploadingTwoModels(object):
             headers[column] = value
         return headers
 
-    def  getting_headers_characters(self):
+    def getting_headers_characters(self):
         l_verbose_name = []
         m_name = []
         for f in self.model2._meta.get_fields():
@@ -3108,7 +3108,7 @@ class UploadingTwoModels(object):
                 value = m_name[a] 
             except:
                 raise KeyError(value)
-            headers_characters[column] = value       
+            headers_characters[column] = value
         return headers_characters
             
     def parsing(self):
