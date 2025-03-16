@@ -3131,7 +3131,7 @@ class UploadingTwoModels(object):
                     value = instance
                     
                 row_dict[field_name] = value
-                row_dict['kategory'] = kategory_e
+                row_dict['kategory'] = self.kategory_e
                 have_exnumber = "А"
                 pointer = get_current_user().profile.userid
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)
@@ -3173,9 +3173,9 @@ class UploadingTwoModels(object):
                 else:
                     pass
             except:
-                raise Exception(f"проблема в создании единицы {kategory_e}: {row_dict_item_metehe}")
+                raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
                              
-                self.number_objects = f'добавлено {self.number_objects} единиц ЛО, добавлено {self.number_objects_metehe} единиц {kategory_e}'
+                self.number_objects = f'добавлено {self.number_objects} единиц ЛО, добавлено {self.number_objects_metehe} единиц {self.kategory_e}'
                 self.number_rows = s.nrows - 1
 
         return True
