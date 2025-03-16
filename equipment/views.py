@@ -3047,7 +3047,7 @@ class UploadingTwoModels(object):
     model2 = None
     model3 = None
     number_objects = 0
-    number_objects_meteh = 0
+    number_objects_metehe = 0
     number_objects_char = 0
     number_rows = None
     kategory_e = None
