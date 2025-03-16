@@ -3159,6 +3159,8 @@ class UploadingTwoModels(object):
                 row_dict_item_metehe['equipment'] = a
                 if a.id:
                     self.number_objects+=1
+                else:
+                    pass
             except:
                 raise Exception(f"проблема в создании ЛО: {row_dict}")
             try:
