@@ -3051,6 +3051,7 @@ class UploadingTwoModels(object):
     number_objects_char = 0
     number_rows = None
     kategory_e = None
+    num_hc = None
 
     
     def __init__(self, data):
@@ -3099,7 +3100,7 @@ class UploadingTwoModels(object):
                 pass
         s = self.s
         headers = dict()
-        for column in range(3):
+        for column in range(self.num_hc):
             value = s.cell(0, column).value
             try:
                 value in l_verbose_name
@@ -3187,6 +3188,7 @@ class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
     model3 = MeasurEquipment
     foreing_key_fields = ["manufacturer"]
     kategory_e = "СИ"
+    num_hc = 3
 
 
 
