@@ -3160,10 +3160,10 @@ class UploadingTwoModels(object):
             except:
                 raise Exception(f"проблема в создании ЛО: {row_dict}")
 
-                row_dict_item_metehe = {}
+            row_dict_item_metehe = {}
 
-                row_dict_item_metehe['equipment'] = a
-                row_dict_item_metehe['charakters'] = b
+            row_dict_item_metehe['equipment'] = a
+            row_dict_item_metehe['charakters'] = b
 
             
             try:
