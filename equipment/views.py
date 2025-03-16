@@ -3045,8 +3045,12 @@ class UploadingTwoModels(object):
     foreing_key_fields = [""]
     model = None
     model2 = None
+    model3 = None
     number_objects = 0
+    number_objects_meteh = 0
+    number_objects_char = 0
     number_rows = None
+    kategory_e = None
 
     
     def __init__(self, data):
@@ -3127,39 +3131,62 @@ class UploadingTwoModels(object):
                     value = instance
                     
                 row_dict[field_name] = value
-                row_dict['kategory'] = "СИ"
+                row_dict['kategory'] = kategory_e
                 have_exnumber = "А"
                 pointer = get_current_user().profile.userid
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)
-        # for row in range(1, s.nrows):
-        #     row_dict_characters = {}
-        #     for column in range(4):
-        #         value = s.cell(row, column).value
-        #         field_name_characters = headers_characters[column]
                 
-                
-            try:
-                a = self.model.objects.create(**row_dict)
-                
-                # b = self.model2.objects.get(**row_dict_characters)
-                # if a.id and b.id:
-                if a.id:
-                    self.number_objects+=1
-                    self.number_objects = f'{self.number_objects} и характеристики найдены!'
+        for row in range(1, s.nrows):
+            row_dict_characters = {}
+            for column in range(4):
+                value = s.cell(row, column).value
+                field_name_characters = headers_characters[column]
+
+            
+            try:   
+                b = self.model2.objects.get_or_create(**row_dict_characters)
+                if b.id:
+                    self.number_objects_char+=1
                 else:
                     pass
-                self.number_rows = s.nrows - 1
-                self.number_objects = 1000
-                
             except:
-                raise Exception(f"проблема в создании модели {row_dict}")
+                raise Exception(f"проблема в создании/нахождении характеристик {kategory_e}: {row_dict_characters}")
+
+            
+            try:
+                a = self.model.objects.create(**row_dict)
+                if a.id:
+                    self.number_objects+=1
+            except:
+                raise Exception(f"проблема в создании ЛО: {row_dict}")
+
+                row_dict_item_metehe = {}
+
+                row_dict_item_metehe['equipment'] = a
+                row_dict_item_metehe['charakters'] = b
+
+            
+            try:
+                c = self.model3.objects.create(**row_dict_item_metehe)
+                if с.id:
+                    self.number_objects_metehe+=1
+                else:
+                    pass
+            except:
+                raise Exception(f"проблема в создании единицы {kategory_e}: {row_dict_item_metehe}")
+                             
+                self.number_objects = f'добавлено {self.number_objects} единиц ЛО, добавлено {self.number_objects_metehe} единиц {kategory_e}'
+                self.number_rows = s.nrows - 1
+
         return True
 
 
 class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
     model = Equipment
     model2 = MeasurEquipmentCharakters
+    model3 = MeasurEquipment
     foreing_key_fields = ["manufacturer"]
+    kategory_e = "СИ"
 
 
 
