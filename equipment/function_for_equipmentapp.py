@@ -6,8 +6,8 @@ from users.models import Company
 from equipment.models import Equipment
 
 
-def get_exnumber(request, have_exnumber, pointer):
-    for_exnamber_tail = Company.objects.get(userid=request.user.profile.userid).pk
+def get_exnumber(have_exnumber, pointer):
+    for_exnamber_tail = Company.objects.get(userid=pointer).pk
     try:
         a = Equipment.objects.filter(exnumber__startswith=have_exnumber).filter(pointer=pointer).last().exnumber
         b = int(str(a)[1:5]) + 1
