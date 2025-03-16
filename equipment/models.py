@@ -299,7 +299,7 @@ class TestingEquipmentCharakters(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pointer:
-                self.pointer = self.created_by.profile.userid
+            self.pointer = self.created_by.profile.userid
         super(TestingEquipmentCharakters, self).save(*args, **kwargs)
 
     class Meta:
@@ -339,7 +339,7 @@ class HelpingEquipmentCharakters(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pointer:
-                self.pointer = self.created_by.profile.userid
+            self.pointer = self.created_by.profile.userid
         super(HelpingEquipmentCharakters, self).save(*args, **kwargs)
 
     class Meta:
@@ -412,9 +412,7 @@ class MeasurEquipment(models.Model):
     def save(self, *args, **kwargs):
         if not self.pointer:
             self.pointer = self.created_by.profile.userid
-        super().save()
-
-        return super(MeasurEquipment, self).save(*args, **kwargs)
+        super(MeasurEquipment, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'СИ список'
@@ -463,9 +461,9 @@ class TestingEquipment(models.Model):
                f' - pk {self.pk}'
 
     def save(self, *args, **kwargs):
-        super().save()
-        self.pointer = self.equipment.pointer
-        return super(TestingEquipment, self).save(*args, **kwargs)
+        if not self.pointer:
+            self.pointer = self.created_by.profile.userid
+        super(TestingEquipment, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'ИО список'
@@ -491,9 +489,9 @@ class HelpingEquipment(models.Model):
                
 
     def save(self, *args, **kwargs):
-        super().save()
-        self.pointer = self.equipment.pointer
-        return super(HelpingEquipment, self).save(*args, **kwargs)
+        if not self.pointer:
+            self.pointer = self.created_by.profile.userid
+        super(HelpingEquipment, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'ВО список'
