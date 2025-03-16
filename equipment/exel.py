@@ -149,7 +149,7 @@ style_plain_textf.font.name = 'Times New Roman'
 style_plain_textf.borders = b1
 style_plain_textf.alignment = alg_hc_vc_w1
 style_plain_textf.font.height = 20 * size
-style_plain_textf.num_format_str = '@'
+style_plain_textf.num_format_str = '0'
 
 
 # style_date обычные ячейки с датами, с границами ячеек
