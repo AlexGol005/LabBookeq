@@ -3163,14 +3163,14 @@ class UploadingTwoModels(object):
                 raise Exception(f"проблема в создании ЛО: {row_dict}")
             try:
                 c = self.model3.objects.create(**row_dict_item_metehe)
-                # if с.id:
-                #     self.number_objects_metehe+=1
-                # else:
-                #     pass
+                if с.id:
+                    self.number_objects_metehe+=1
+                else:
+                    pass
             except:
                 raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
                              
-            self.number_objects = f'добавлено {self.number_objects} единиц ЛО, добавлено {self.number_objects_metehe} единиц {self.kategory_e}'
+            self.number_objects = f'{self.number_objects} единиц ЛО и добавлено {self.number_objects_metehe} единиц {self.kategory_e}'
             self.number_rows = s.nrows - 1
 
         return True
@@ -3244,7 +3244,7 @@ def BulkDownload(request):
         
             if uploading_file:
                 if number_objects and number_rows:
-                    messages.success(request, f"Файл успешно загружен, добавлено {number_objects} записей из {number_rows}")
+                    messages.success(request, f"Файл успешно загружен, добавлено {number_objects} -  из {number_rows} строк файла EXEL")
                 else:
                     messages.success(request, f"ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
             else:
