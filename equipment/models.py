@@ -197,8 +197,8 @@ class Equipment(models.Model):
         # убираем точку
         a = str(self.lot)
         b = a.find('.')
-        if b:
-            self.lot = a[0:b+1]
+        if b != -1:
+            self.lot = a[0:b]
         super(Equipment, self).save(*args, **kwargs)
         try:
             ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
