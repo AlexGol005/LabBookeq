@@ -3045,11 +3045,12 @@ class UploadingTwoModels(object):
     model2 = None
     number_objects = 0
     number_rows = None
-    request=request
+    # request=request
     
     def __init__(self, data):
         data=data
         self.uploaded_file = data.get("file")
+        self.request = request
         self.parsing(request)
 
     def getting_related_model(self, field_name):
