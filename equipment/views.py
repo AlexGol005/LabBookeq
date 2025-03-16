@@ -3141,7 +3141,7 @@ class UploadingTwoModels(object):
             row_dict_characters = {}
             for column in range(3):
                 value = s.cell(row, column).value
-                field_name_characters = headers[column]
+                field_name_characters = headers_characters[column]
                 row_dict_characters[field_name_characters] = value
 
             
@@ -3190,8 +3190,6 @@ class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
     foreing_key_fields = ["manufacturer"]
     kategory_e = "СИ"
     num_hc = 3
-
-
 
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
