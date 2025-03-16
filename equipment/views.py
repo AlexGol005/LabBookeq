@@ -3108,7 +3108,7 @@ class UploadingTwoModels(object):
                 value = m_name[a] 
             except:
                 raise KeyError(value)
-            headers[column] = value       
+            headers_characters[column] = value       
         return headers_characters
             
     def parsing(self):
