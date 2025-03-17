@@ -519,7 +519,7 @@ class Rooms(models.Model):
     def save(self, *args, **kwargs):
             if not self.pointer:
                     self.pointer = self.created_by.profile.userid
-            super(Verificators, self).save(*args, **kwargs)
+            super(Rooms, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = ('roomnumber', 'pointer',)
