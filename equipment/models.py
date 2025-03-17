@@ -204,12 +204,9 @@ class Equipment(models.Model):
             ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
         except:
             ServiceEquipmentU.objects.get_or_create(equipment=self, year=str(self.yearintoservice))
-
-
-
-      
+    
     class Meta:
-        unique_together = ('exnumber', 'pointer',)
+        unique_together = ('exnumber', 'pointer', 'lot')
         verbose_name = 'ЛО список'
         verbose_name_plural = 'ЛО список'
 
