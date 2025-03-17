@@ -3131,7 +3131,7 @@ class UploadingTwoModels(object):
             try:   
                 b, created = self.model2.objects.get_or_create(**row_dict_characters)
                 row_dict_item_metehe['charakters'] = b
-                if b.id:
+                if created:
                     self.number_objects_char+=1
             except:
                 raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
@@ -3167,9 +3167,6 @@ class UploadingTwoModels(object):
             except:
                 raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
                              
-            # self.number_objects = f'{self.number_objects} единиц ЛО и добавлено {self.number_objects_metehe} единиц {self.kategory_e}'
-            # self.number_rows = s.nrows - 1
-
         self.number_objects = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
         return True
