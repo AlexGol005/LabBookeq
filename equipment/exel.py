@@ -2634,7 +2634,7 @@ def export_MeasurEquipment_Equipment_pattern_xls(request):
             '',
             'Эта информация требуется для некоторых форм для аккредитации', 
                         
-            ''
+            '',
 
             'Если такой комнаты в списке нет, то она добавится автоматически в список комнат',
 
@@ -2660,7 +2660,7 @@ def export_MeasurEquipment_Equipment_pattern_xls(request):
             '',
             'Накладная №123 от 10.01.2025', 
                         
-            ''
+            '',
 
             '474',
 
