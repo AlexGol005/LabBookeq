@@ -3052,6 +3052,7 @@ class UploadingTwoModels(object):
     number_rows = None
     kategory_e = None
     num_hc = 0
+    num_e = 0
 
     
     def __init__(self, data):
@@ -3123,6 +3124,7 @@ class UploadingTwoModels(object):
             row_dict_characters = {}
             row_dict = {}
             row_dict_item_metehe = {}
+            row_dict_room = {}
             
             for column in range(self.num_hc):
                 value = s.cell(row, column).value
@@ -3136,7 +3138,7 @@ class UploadingTwoModels(object):
             except:
                 raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
-            for column in range(self.num_hc, s.ncols):                  
+            for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
                 field_name = headers[column]
                 if field_name in self.foreing_key_fields:
@@ -3154,6 +3156,7 @@ class UploadingTwoModels(object):
             try:
                 a = self.model.objects.create(**row_dict)
                 row_dict_item_metehe['equipment'] = a
+                row_dict_room['equipment'] = a
                 if a.id:
                     self.number_objects+=1
                 else:
@@ -3169,6 +3172,18 @@ class UploadingTwoModels(object):
                     pass
             except:
                 raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
+
+            for column in range(self.num_e, self.num_e + 1):
+                value = s.cell(row, column).value
+                field_name = 'roomnumber'
+                related_model = Rooms         
+                instance_room, created = related_model.objects.get_or_create(roomnumber=value)
+                value = instance_room                          
+                row_dict_room['roomnumber'] = value
+                try:
+                    Roomschange.model.objects.create(**row_dict_room)
+                except:
+                    raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
                              
         self.number_objects = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
@@ -3182,6 +3197,7 @@ class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
     foreing_key_fields = ["manufacturer"]
     kategory_e = "СИ"
     num_hc = 3
+    num_e = 15
 
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
