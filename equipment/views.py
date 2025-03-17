@@ -3151,8 +3151,8 @@ class UploadingTwoModels(object):
             try:
                 a = self.model.objects.create(**row_dict)
                 row_dict_item_metehe['equipment'] = a
-                if a.id:
-                    self.number_objects+=1
+                # if a.id:
+                #     self.number_objects+=1
                 else:
                     pass
             except:
@@ -3232,9 +3232,7 @@ def BulkDownload(request):
             except:                
                 messages.success(request, "Сначала выберите файл EXEL.xls")
                 return redirect('bulkdownload')
-
-
-            
+         
         try:           
             number_objects = uploading_file.number_objects
             number_rows = uploading_file.number_rows
