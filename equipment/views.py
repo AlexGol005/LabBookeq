@@ -3145,7 +3145,10 @@ class UploadingTwoModels(object):
                     value = instance                          
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e
-                have_exnumber = "А"
+                ahe = row_dict_characters['name'] 
+                aheone = str(ahe)[0].upper()
+                # have_exnumber = "А"
+                have_exnumber = aheone
                 pointer = get_current_user().profile.userid
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)           
             try:
