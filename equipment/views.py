@@ -3181,7 +3181,7 @@ class UploadingTwoModels(object):
                 value = instance_room                          
                 row_dict_room['roomnumber'] = value
                 try:
-                    Roomschange.model.objects.create(**row_dict_room)
+                    Roomschange.objects.get_or_create(**row_dict_room)
                 except:
                     raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
                              
