@@ -502,6 +502,8 @@ class Rooms(models.Model):
     """Комнаты лаборатории/производства"""
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
+    created_by = CurrentUserField(related_name='creatorrr1', editable=True)
+    updated_by = CurrentUserField(related_name='updatorrr2', editable=True)
     roomnumber = models.CharField('Номер комнаты', max_length=100, default='')
     person = models.ForeignKey(User, verbose_name='Ответственный за комнату', on_delete=models.PROTECT, blank=True, null=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True) 
@@ -513,6 +515,11 @@ class Rooms(models.Model):
 
     def __str__(self):
         return self.roomnumber
+
+    def save(self, *args, **kwargs):
+            if not self.pointer:
+                    self.pointer = self.created_by.profile.userid
+            super(Verificators, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = ('roomnumber', 'pointer',)
