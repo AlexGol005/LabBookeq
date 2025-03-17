@@ -3120,40 +3120,34 @@ class UploadingTwoModels(object):
         headers_characters = self.getting_headers_characters()
 
         for row in range(1, s.nrows):
+            row_dict_characters = {}
             row_dict = {}
-            for column in range(3, s.ncols):
+            row_dict_item_metehe = {}
+            
+            for column in range(self.num_hc):
+                value = s.cell(row, column).value
+                field_name_characters = headers_characters[column]
+                row_dict_characters[field_name_characters] = value
+                try:   
+                    b, created = self.model2.objects.get_or_create(**row_dict_characters)
+                    row_dict_item_metehe['charakters'] = b
+                if b.id:
+                    self.number_objects_char+=1
+                except:
+                    raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+
+            for column in range(self.num_hc, s.ncols):                  
                 value = s.cell(row, column).value
                 field_name = headers[column]
-
                 if field_name in self.foreing_key_fields:
-                    related_model = self.getting_related_model(field_name)
-                    
+                    related_model = self.getting_related_model(field_name)                 
                     instance, created = related_model.objects.get_or_create(companyName=value)
-                    value = instance
-                    
+                    value = instance                          
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e
                 have_exnumber = "А"
                 pointer = get_current_user().profile.userid
-                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)
-                
-        # for row in range(1, s.nrows):
-            row_dict_characters = {}
-            for column in range(3):
-                value = s.cell(row, column).value
-                field_name_characters = headers_characters[column]
-                row_dict_characters[field_name_characters] = value
-
-            row_dict_item_metehe = {}
-            try:   
-                b, created = self.model2.objects.get_or_create(**row_dict_characters)
-                row_dict_item_metehe['charakters'] = b
-                if b.id:
-                    self.number_objects_char+=1
-            except:
-                raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
-
-            
+                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)           
             try:
                 a = self.model.objects.create(**row_dict)
                 row_dict_item_metehe['equipment'] = a
@@ -3163,6 +3157,7 @@ class UploadingTwoModels(object):
                     pass
             except:
                 raise Exception(f"проблема в создании ЛО: {row_dict}")
+                
             try:
                 с = self.model3.objects.create(**row_dict_item_metehe)
                 if с.id:
