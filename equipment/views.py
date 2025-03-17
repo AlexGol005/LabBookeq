@@ -3051,7 +3051,7 @@ class UploadingTwoModels(object):
     number_objects_char = 0
     number_rows = None
     kategory_e = None
-    num_hc = None
+    num_hc = 0
 
     
     def __init__(self, data):
@@ -3124,19 +3124,19 @@ class UploadingTwoModels(object):
             row_dict = {}
             row_dict_item_metehe = {}
             
-            for column in range(3):
+            for column in range(self.num_hc):
                 value = s.cell(row, column).value
                 field_name_characters = headers_characters[column]
                 row_dict_characters[field_name_characters] = value
-                try:   
-                    b, created = self.model2.objects.get_or_create(**row_dict_characters)
-                    row_dict_item_metehe['charakters'] = b
-                    if b.id:
-                        self.number_objects_char+=1
-                except:
-                    raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+            try:   
+                b, created = self.model2.objects.get_or_create(**row_dict_characters)
+                row_dict_item_metehe['charakters'] = b
+                if b.id:
+                    self.number_objects_char+=1
+            except:
+                raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
-            for column in range(3, s.ncols):                  
+            for column in range(self.num_hc, s.ncols):                  
                 value = s.cell(row, column).value
                 field_name = headers[column]
                 if field_name in self.foreing_key_fields:
