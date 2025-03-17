@@ -554,7 +554,7 @@ class Roomschange(models.Model):
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True, editable=True)
     created_by = CurrentUserField(related_name='creatorrc', editable=True)
     updated_by = CurrentUserField(related_name='updatorrc', editable=True)
-    roomnumber = models.ForeignKey(Rooms, on_delete=models.PROTECT)
+    roomnumber = models.ForeignKey(Rooms, on_delete=models.PROTECT, verbose_name='Номер комнаты в которой расположено ЛО')
     date = models.DateField('Дата перемещения', auto_now_add=True, db_index=True)
     equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
                                   verbose_name='Оборудование')
