@@ -3124,7 +3124,7 @@ class UploadingTwoModels(object):
             row_dict = {}
             row_dict_item_metehe = {}
             
-            for column in range(self.num_hc):
+            for column in range(3):
                 value = s.cell(row, column).value
                 field_name_characters = headers_characters[column]
                 row_dict_characters[field_name_characters] = value
@@ -3136,7 +3136,7 @@ class UploadingTwoModels(object):
                 except:
                     raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
-            for column in range(self.num_hc, s.ncols):                  
+            for column in range(3, s.ncols):                  
                 value = s.cell(row, column).value
                 field_name = headers[column]
                 if field_name in self.foreing_key_fields:
