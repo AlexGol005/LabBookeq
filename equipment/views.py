@@ -3149,10 +3149,12 @@ class UploadingTwoModels(object):
                 row_dict['kategory'] = self.kategory_e
                 ahe = row_dict_characters['name'] 
                 aheone = str(ahe)[0].upper()
-                # have_exnumber = "А"
                 have_exnumber = aheone
                 pointer = get_current_user().profile.userid
-                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)           
+                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer) 
+                if model.objects.filter(created_by.profile.userid=pointer).get(lot=row_dict['lot']):
+                    row_dict['lot'] = "_" + str(row_dict['lot'])
+                    
             try:
                 a = self.model.objects.create(**row_dict)
                 row_dict_item_metehe['equipment'] = a
