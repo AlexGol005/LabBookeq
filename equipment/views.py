@@ -3187,8 +3187,12 @@ class UploadingTwoModels(object):
                     field_name = 'roomnumber'
                     related_model = Rooms         
                     instance_room, created = related_model.objects.filter(pointer=pointer).get_or_create(roomnumber=value)
-                    value = instance_room                          
+                    value = instance_room                                            
+                    a = str(value).find('.')
+                    if a != -1:
+                        value = value[0:a]
                     row_dict_room['roomnumber'] = value
+                    
                     try:
                         Roomschange.objects.get_or_create(**row_dict_room)
                     except:
