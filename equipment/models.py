@@ -530,7 +530,7 @@ class Rooms(models.Model):
 class Personchange(models.Model):
     person = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Ответственный за оборудование')
     date = models.DateField('Дата изменения ответственного', auto_now_add=True, db_index=True)
-    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True)
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         try:
@@ -563,7 +563,7 @@ class Roomschange(models.Model):
     updated_by = CurrentUserField(related_name='updatorrc', editable=True)
     roomnumber = models.ForeignKey(Rooms, on_delete=models.PROTECT, verbose_name='Номер комнаты в которой расположено ЛО')
     date = models.DateField('Дата перемещения', auto_now_add=True, db_index=True)
-    equipment = models.ForeignKey(Equipment, on_delete=models.PROTECT, blank=True, null=True,
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE, blank=True, null=True,
                                   verbose_name='Оборудование')
 
     def __str__(self):
