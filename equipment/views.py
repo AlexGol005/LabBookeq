@@ -3167,7 +3167,7 @@ class UploadingTwoModels(object):
             if e_created:
                 row_dict_item_metehe['equipment'] = a
                 row_dict_room['equipment'] = a
-                row_dict_room['equipment'] = a
+                row_dict_person['equipment'] = a
                 self.number_objects+=1
             else:
                 pass
@@ -3206,7 +3206,7 @@ class UploadingTwoModels(object):
                     related_model = User
                     try:
                         instance_user = User.objects.filter(profile__userid=pointer).get(profile__short_name=value)                       
-                        row_dict_person[field_name] = value
+                        row_dict_person[field_name] = instance_user
                         Personchange.objects.get_or_create(**row_dict_person)
                     except:
                         raise Exception(f"проблема в создании ответственного пользователя: {row_dict_person}, {instance_user}, {value}")
