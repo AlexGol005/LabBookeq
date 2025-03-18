@@ -3167,6 +3167,7 @@ class UploadingTwoModels(object):
             if e_created:
                 row_dict_item_metehe['equipment'] = a
                 row_dict_room['equipment'] = a
+                row_dict_room['equipment'] = a
                 self.number_objects+=1
             else:
                 pass
@@ -3188,9 +3189,10 @@ class UploadingTwoModels(object):
                     related_model = Rooms         
                     instance_room, created = related_model.objects.filter(pointer=pointer).get_or_create(roomnumber=value)
                     value = instance_room                                            
-                    # a = str(value).find('.')
-                    # if a != -1:
-                    #     value = value[0:a]
+                    a = str(value)
+                    b = a.find('.')
+                    if b != -1:
+                        value = value[0:b]
                     row_dict_room['roomnumber'] = value
                     
                     try:
@@ -3203,15 +3205,12 @@ class UploadingTwoModels(object):
                     field_name = 'person'
                     related_model = User
                     try:
-                        instance_user = related_model.objects.filter(profile__userid=pointer).get(profile__short_name=value)
-                        value = instance_user                          
+                        instance_user = User.objects.filter(profile__userid=pointer).get(profile__short_name=value)                       
                         row_dict_person[field_name] = value
-                        try:
-                            Personchange.objects.get_or_create(**row_dict_person)
-                        except:
-                            raise Exception(f"проблема в создании ответственного пользователя: {row_dict_person}")
+                        Personchange.objects.get_or_create(**row_dict_person)
                     except:
-                        pass
+                        raise Exception(f"проблема в создании ответственного пользователя: {row_dict_person}, {instance_user}, {value}")
+
                              
         self.number_objects = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
