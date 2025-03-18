@@ -195,10 +195,10 @@ class Equipment(models.Model):
                 self.pointer = self.created_by.profile.userid
 
         # убираем точку
-        a = str(self.lot)
-        b = a.find('.')
-        if b != -1:
-            self.lot = a[0:b]
+        # a = str(self.lot)
+        # b = a.find('.')
+        # if b != -1:
+        #     self.lot = a[0:b]
         super(Equipment, self).save(*args, **kwargs)
         try:
             ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
@@ -206,7 +206,7 @@ class Equipment(models.Model):
             ServiceEquipmentU.objects.get_or_create(equipment=self, year=str(self.yearintoservice))
     
     class Meta:
-        unique_together = ('exnumber', 'pointer', 'lot')
+        unique_together = ('pointer', 'lot')
         verbose_name = 'ЛО список'
         verbose_name_plural = 'ЛО список'
 
@@ -247,10 +247,10 @@ class MeasurEquipmentCharakters(models.Model):
         if not self.pointer:
                 self.pointer = self.created_by.profile.userid
         # убираем точку
-        a = str(self.reestr)
-        b = a.find('.')
-        if b != -1:
-            self.reestr = a[0:b]
+        # a = str(self.reestr)
+        # b = a.find('.')
+        # if b != -1:
+        #     self.reestr = a[0:b]
         super(MeasurEquipmentCharakters, self).save(*args, **kwargs)
 
     class Meta:
