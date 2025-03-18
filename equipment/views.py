@@ -3157,25 +3157,27 @@ class UploadingTwoModels(object):
             except:
                 try:
                     del row_dict['exnumber']
-                    a = self.model.objects.get(**row_dict)                 
-                row_dict_item_metehe['equipment'] = a
-                row_dict_room['equipment'] = a
-                if e_created:
-                    self.number_objects+=1
-                else:
-                    pass
+                    a = self.model.objects.get(**row_dict) 
                 except:
                     raise Exception(f"проблема в создании ЛО: {row_dict}")
-                
-            try:
-                с = self.model3.objects.create(**row_dict_item_metehe)
-                if с.id:
-                    self.number_objects_metehe+=1
-                else:
-                    pass
-            except:
-                raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
+                    
 
+            if e_created:
+                row_dict_item_metehe['equipment'] = a
+                row_dict_room['equipment'] = a
+                self.number_objects+=1
+            else:
+                pass
+
+            if e_created:    
+                try:
+                    с = self.model3.objects.create(**row_dict_item_metehe)
+                    if с.id:
+                        self.number_objects_metehe+=1
+                    else:
+                        pass
+                except:
+                    raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
 
             if e_created:
                 for column in range(self.num_e, self.num_e + 1):
