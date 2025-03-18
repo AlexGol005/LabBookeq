@@ -407,8 +407,11 @@ class MeasurEquipment(models.Model):
     calnewextra = models.TextField('Дополнительная информация', blank=True, null=True)
 
     def __str__(self):
-        return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
-               f' № реестр {self.charakters.reestr} - pk {self.pk}'
+        try:
+            return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot} ' \
+            f' № реестр {self.charakters.reestr} - pk {self.pk}'
+        except:
+            return ''
 
     def save(self, *args, **kwargs):
         if not self.pointer:
