@@ -3125,6 +3125,7 @@ class UploadingTwoModels(object):
             row_dict = {}
             row_dict_item_metehe = {}
             row_dict_room = {}
+            row_dict_person = {}
             
             for column in range(self.num_hc):
                 value = s.cell(row, column).value
@@ -3192,6 +3193,21 @@ class UploadingTwoModels(object):
                         Roomschange.objects.get_or_create(**row_dict_room)
                     except:
                         raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
+
+                for column in range(self.num_e + 1, self.num_e + 2):
+                    value = s.cell(row, column).value
+                    field_name = 'person'
+                    related_model = User
+                    try:
+                        instance_user = related_model.objects.get(person__ profile__short_name=value)
+                        value = instance_user                          
+                        row_dict_person[field_name] = value
+                        try:
+                            Personchange.objects.get_or_create(**row_dict_person)
+                        except:
+                            raise Exception(f"проблема в создании ответственного пользователя: {row_dict_person}")
+                    except:
+                        pass
                              
         self.number_objects = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
