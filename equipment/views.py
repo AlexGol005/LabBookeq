@@ -3205,12 +3205,12 @@ class UploadingTwoModels(object):
                     field_name = 'person'
                     related_model = User
                     try:
+                        instance_user = ''
                         instance_user = User.objects.filter(profile__userid=pointer).get(profile__short_name=value)                       
                         row_dict_person[field_name] = instance_user
                         Personchange.objects.get_or_create(**row_dict_person)
                     except:
-                        raise Exception(f"проблема в создании ответственного пользователя: {row_dict_person}, {instance_user}, {value}")
-
+                        pass
                              
         self.number_objects = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
