@@ -188,7 +188,11 @@ class Equipment(models.Model):
                                 verbose_name='Категория: указать "СИ", "ИО" или "ВО"')
 
     def __str__(self):
-        return f'{self.pointer}: {self.exnumber} - зав№ {self.lot}, pk={self.pk}'
+        try:
+            return f'{self.pointer}: {self.exnumber} - зав№ {self.lot}, pk={self.pk}'
+        except:
+            return f''
+                
 
     def save(self, *args, **kwargs):
         if not self.pointer:
