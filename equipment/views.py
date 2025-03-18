@@ -3151,13 +3151,7 @@ class UploadingTwoModels(object):
                 aheone = str(ahe)[0].upper()
                 have_exnumber = aheone
                 pointer = get_current_user().profile.userid
-                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer) 
-                try:
-                    model.objects.filter(created_by__profile__userid=pointer).get(lot=row_dict['lot'])
-                    row_dict['lot'] = "_" + str(row_dict['lot'])
-                except:
-                    pass
-                    
+                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)                     
             try:
                 a = self.model.objects.create(**row_dict)
                 row_dict_item_metehe['equipment'] = a
