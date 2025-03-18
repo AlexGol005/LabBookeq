@@ -3185,14 +3185,14 @@ class UploadingTwoModels(object):
             if e_created:
                 for column in range(self.num_e, self.num_e + 1):
                     value = s.cell(row, column).value
-                    field_name = 'roomnumber'
-                    related_model = Rooms         
-                    instance_room, created = related_model.objects.filter(pointer=pointer).get_or_create(roomnumber=value)
-                    value = instance_room                                            
                     a = str(value)
                     b = a.find('.')
                     if b != -1:
                         value = value[0:b]
+                    field_name = 'roomnumber'
+                    related_model = Rooms         
+                    instance_room, created = related_model.objects.filter(pointer=pointer).get_or_create(roomnumber=value)
+                    value = instance_room                                            
                     row_dict_room['roomnumber'] = value
                     
                     try:
