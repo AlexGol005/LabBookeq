@@ -3153,17 +3153,17 @@ class UploadingTwoModels(object):
                 pointer = get_current_user().profile.userid
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)                     
             try:
-                a, created = self.model.objects.get_or_create(**row_dict)
-                row_dict_item_metehe['equipment'] = a
-                row_dict_room['equipment'] = a
-                if created:
-                    self.number_objects+=1
-                else:
-                    pass
+                a, e_created = self.model.objects.get_or_create(**row_dict)
             except:
                 try:
                     del row_dict['exnumber']
-                    self.model.objects.get(**row_dict)
+                    a = self.model.objects.get(**row_dict)                 
+                row_dict_item_metehe['equipment'] = a
+                row_dict_room['equipment'] = a
+                if e_created:
+                    self.number_objects+=1
+                else:
+                    pass
                 except:
                     raise Exception(f"проблема в создании ЛО: {row_dict}")
                 
@@ -3176,17 +3176,19 @@ class UploadingTwoModels(object):
             except:
                 raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
 
-            for column in range(self.num_e, self.num_e + 1):
-                value = s.cell(row, column).value
-                field_name = 'roomnumber'
-                related_model = Rooms         
-                instance_room, created = related_model.objects.get_or_create(roomnumber=value)
-                value = instance_room                          
-                row_dict_room['roomnumber'] = value
-                try:
-                    Roomschange.objects.get_or_create(**row_dict_room)
-                except:
-                    raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
+
+            if e_created:
+                for column in range(self.num_e, self.num_e + 1):
+                    value = s.cell(row, column).value
+                    field_name = 'roomnumber'
+                    related_model = Rooms         
+                    instance_room, created = related_model.objects.get_or_create(roomnumber=value)
+                    value = instance_room                          
+                    row_dict_room['roomnumber'] = value
+                    try:
+                        Roomschange.objects.get_or_create(**row_dict_room)
+                    except:
+                        raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
                              
         self.number_objects = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
