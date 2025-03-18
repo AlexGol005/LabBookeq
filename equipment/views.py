@@ -3153,10 +3153,10 @@ class UploadingTwoModels(object):
                 pointer = get_current_user().profile.userid
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)                     
             try:
-                a = self.model.objects.create(**row_dict)
+                a, created = self.model.objects.get_or_create(**row_dict)
                 row_dict_item_metehe['equipment'] = a
                 row_dict_room['equipment'] = a
-                if a.id:
+                if created:
                     self.number_objects+=1
                 else:
                     pass
