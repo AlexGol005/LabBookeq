@@ -3188,7 +3188,7 @@ class UploadingTwoModels(object):
                     a = str(value)
                     b = a.find('.')
                     if b != -1:
-                        value = value[0:b]
+                        value = str(value)[0:b]
                     field_name = 'roomnumber'
                     related_model = Rooms         
                     instance_room, created = related_model.objects.filter(pointer=pointer).get_or_create(roomnumber=value)
