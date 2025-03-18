@@ -3161,7 +3161,11 @@ class UploadingTwoModels(object):
                 else:
                     pass
             except:
-                raise Exception(f"проблема в создании ЛО: {row_dict}")
+                try:
+                    del row_dict['exnumber']
+                    self.model.objects.get(**row_dict)
+                except:
+                    raise Exception(f"проблема в создании ЛО: {row_dict}")
                 
             try:
                 с = self.model3.objects.create(**row_dict_item_metehe)
