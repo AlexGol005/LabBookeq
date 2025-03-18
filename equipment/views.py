@@ -3188,9 +3188,9 @@ class UploadingTwoModels(object):
                     related_model = Rooms         
                     instance_room, created = related_model.objects.filter(pointer=pointer).get_or_create(roomnumber=value)
                     value = instance_room                                            
-                    a = str(value).find('.')
-                    if a != -1:
-                        value = value[0:a]
+                    # a = str(value).find('.')
+                    # if a != -1:
+                    #     value = value[0:a]
                     row_dict_room['roomnumber'] = value
                     
                     try:
