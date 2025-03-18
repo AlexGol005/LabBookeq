@@ -3186,7 +3186,7 @@ class UploadingTwoModels(object):
                     value = s.cell(row, column).value
                     field_name = 'roomnumber'
                     related_model = Rooms         
-                    instance_room, created = related_model.objects.get_or_create(roomnumber=value)
+                    instance_room, created = related_model.filter(pointer=pointer).objects.get_or_create(roomnumber=value)
                     value = instance_room                          
                     row_dict_room['roomnumber'] = value
                     try:
@@ -3199,7 +3199,7 @@ class UploadingTwoModels(object):
                     field_name = 'person'
                     related_model = User
                     try:
-                        instance_user = related_model.objects.get(person__ profile__short_name=value)
+                        instance_user = related_model.objects.filter(profile__userid=pointer).get(profile__short_name=value)
                         value = instance_user                          
                         row_dict_person[field_name] = value
                         try:
