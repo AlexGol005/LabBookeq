@@ -3157,7 +3157,8 @@ class UploadingTwoModels(object):
             except:
                 try:
                     del row_dict['exnumber']
-                    a = self.model.objects.get(**row_dict) 
+                    a = self.model.objects.get(**row_dict)
+                    e_created = 0
                 except:
                     raise Exception(f"проблема в создании ЛО: {row_dict}")
                     
