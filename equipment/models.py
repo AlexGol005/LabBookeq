@@ -206,7 +206,7 @@ class Equipment(models.Model):
             ServiceEquipmentU.objects.get_or_create(equipment=self, year=str(self.yearintoservice))
     
     class Meta:
-        unique_together = ('pointer', 'lot')
+        unique_together = ('pointer', 'lot', 'manufacturer', 'yearmanuf')
         verbose_name = 'ЛО список'
         verbose_name_plural = 'ЛО список'
 
