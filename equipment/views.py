@@ -3130,6 +3130,10 @@ class UploadingTwoModels(object):
             
             for column in range(self.num_hc):
                 value = s.cell(row, column).value
+                a = str(value)
+                b = a.find('.')
+                if b != -1:
+                    value = str(value)[0:b]
                 field_name_characters = headers_characters[column]
                 row_dict_characters[field_name_characters] = value
             try:   
@@ -3142,6 +3146,10 @@ class UploadingTwoModels(object):
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
+                a = str(value)
+                b = a.find('.')
+                if b != -1:
+                    value = str(value)[0:b]
                 field_name = headers[column]
                 if field_name in self.foreing_key_fields:
                     related_model = self.getting_related_model(field_name)                 
