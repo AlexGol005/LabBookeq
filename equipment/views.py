@@ -3113,6 +3113,7 @@ class UploadingTwoModels(object):
         return headers_characters
             
     def parsing(self):
+        pointer = get_current_user().profile.userid
         uploaded_file = self.uploaded_file
         wb = xlrd.open_workbook(file_contents=uploaded_file.read())
         s = wb.sheet_by_index(0)
@@ -3132,7 +3133,7 @@ class UploadingTwoModels(object):
                 field_name_characters = headers_characters[column]
                 row_dict_characters[field_name_characters] = value
             try:   
-                b, created = self.model2.objects.get_or_create(**row_dict_characters)
+                b, created = self.model2.objects.filter(pointer=pointer).get_or_create(**row_dict_characters)
                 row_dict_item_metehe['charakters'] = b
                 if created:
                     self.number_objects_char+=1
@@ -3151,10 +3152,9 @@ class UploadingTwoModels(object):
                 ahe = row_dict_characters['name'] 
                 aheone = str(ahe)[0].upper()
                 have_exnumber = aheone
-                pointer = get_current_user().profile.userid
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)                     
             try:
-                a, e_created = self.model.objects.get_or_create(**row_dict)
+                a, e_created = self.model.objects.filter(pointer=pointer).get_or_create(**row_dict)
             except:
                 try:
                     del row_dict['exnumber']
