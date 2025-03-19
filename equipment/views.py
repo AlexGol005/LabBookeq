@@ -3234,18 +3234,38 @@ class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
     num_hc = 3
     num_e = 15
 
+class UploadingEquipment_TestingEquipment(UploadingTwoModels):
+    model = Equipment
+    model2 = TestingEquipmentCharakters
+    model3 = TestingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ИО"
+    num_hc = 2
+    num_e = 13
+
+class UploadingEquipment_HelpingEquipment(UploadingTwoModels):
+    model = Equipment
+    model2 = HelpingEquipmentCharakters
+    model3 = HelpingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ВО"
+    num_hc = 2
+    num_e = 13
+
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
     """template_name = URL + '/bulk_download.html'"""
 
-    if request.POST:
-        MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
-        
+    if request.POST:        
         MeasurEquipmentCharakters_file = request.FILES.get('MeasurEquipmentCharakters_file')
         TestingEquipmentCharakters_file = request.FILES.get('TestingEquipmentCharakters_file')
         HelpingEquipmentCharakters_file = request.FILES.get('HelpingEquipmentCharakters_file')
-        
+
+        MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
+        TestingEquipment_Equipment_file = request.FILES.get('TestingEquipment_Equipment_file')
+        HelpingEquipment_Equipment_file = request.FILES.get('HelpingEquipment_Equipment_file')
+                
         uploading_file_fake = 1
 
         
@@ -3272,11 +3292,26 @@ def BulkDownload(request):
                 return redirect('bulkdownload')
 
         elif MeasurEquipment_Equipment_file:
+            try:
+                uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
+            except:
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и СИ' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
 
-            uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
-            # except:
-            #     messages.success(request, "Неверно заполнен файл 'единица ЛО и СИ' (вероятно проблема в названиях или в порядке столбцов)")
-            #     return redirect('bulkdownload')
+        elif TestingEquipment_Equipment_file:
+            try:
+                uploading_file = UploadingEquipment_TestingEquipment({'file': TestingEquipment_Equipment_file})
+            except:
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif HelpingEquipment_Equipment_file:
+            try:
+                uploading_file = UploadingEquipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file})
+            except:
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
 
                 
         elif uploading_file_fake:
