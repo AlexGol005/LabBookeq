@@ -5,6 +5,8 @@ from . import exel
 from . import exel_agreements
 
 urlpatterns = [
+    path(r'^export_pat_hee/xls/$/', exel.export_HelpingEquipment_Equipment_pattern_xls, name='export_HelpingEquipment_Equipment_pattern_xls'),
+    path(r'^export_pat_tee/xls/$/', exel.export_TestingEquipment_Equipment_pattern_xls, name='export_TestingEquipment_Equipment_pattern_xls'),
     path(r'^export_pat_mee/xls/$/', exel.export_MeasurEquipment_Equipment_pattern_xls, name='export_MeasurEquipment_Equipment_pattern_xls'),
     path(r'^export_pat_tec/xls/$/', exel.export_TestingEquipmentCharakters_pattern_xls, name='export_TestingEquipmentCharakters_pattern_xls'),
     path(r'^export_pat_hec/xls/$/', exel.export_HelpingEquipmentCharakters_pattern_xls, name='export_HelpingEquipmentCharakters_pattern_xls'),
