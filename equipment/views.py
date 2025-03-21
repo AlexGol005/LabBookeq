@@ -3225,6 +3225,191 @@ class UploadingTwoModels(object):
         return True
 
 
+
+class UploadingMetrologyForEquipment(object):
+    foreing_key_fields = [""]
+    model = None
+    model2 = None
+    model3 = None
+    number_objects = 0
+    number_objects_metehe = 0
+    number_objects_char = 0
+    number_rows = None
+    kategory_e = None
+    num_hc = 0
+    num_e = 0
+
+    
+    def __init__(self, data):
+        data=data
+        self.uploaded_file = data.get("file")
+        self.parsing()
+
+    def getting_related_model(self, field_name):
+        try:
+            model = self.model
+            related_model = model._meta.get_field(field_name).related_model
+            return related_model
+        except:
+            raise Exception(f'проблема с производителем {field_name}')
+
+    def getting_headers(self):
+        l_verbose_name = []
+        m_name = []
+        for f in self.model._meta.get_fields():
+            try:
+                l_verbose_name.append(f.verbose_name)
+                m_name.append(f.name)
+            except:
+                pass
+        s = self.s
+        headers = dict()
+        for column in range(self.num_hc, self.num_e):
+            value = s.cell(0, column).value
+            try:
+                value in l_verbose_name
+                a = l_verbose_name.index(value)
+                value = m_name[a] 
+            except:
+                raise KeyError(value)
+            headers[column] = value
+        return headers
+
+    def getting_headers_characters(self):
+        l_verbose_name = []
+        m_name = []
+        for f in self.model2._meta.get_fields():
+            try:
+                l_verbose_name.append(f.verbose_name)
+                m_name.append(f.name)
+            except:
+                pass
+        s = self.s
+        headers_characters = dict()
+        for column in range(self.num_hc):
+            value = s.cell(0, column).value
+            try:
+                value in l_verbose_name
+                a = l_verbose_name.index(value)
+                value = m_name[a] 
+            except:
+                raise KeyError(value, dict())
+            headers_characters[column] = value
+        return headers_characters
+            
+    def parsing(self):
+        pointer = get_current_user().profile.userid
+        uploaded_file = self.uploaded_file
+        wb = xlrd.open_workbook(file_contents=uploaded_file.read())
+        s = wb.sheet_by_index(0)
+        self.s = s
+        headers = self.getting_headers()
+        headers_characters = self.getting_headers_characters()
+
+        for row in range(1, s.nrows):
+            row_dict_characters = {}
+            row_dict = {}
+            row_dict_item_metehe = {}
+            row_dict_room = {}
+            row_dict_person = {}
+            
+            for column in range(self.num_hc):
+                value = s.cell(row, column).value
+                a = str(value)
+                b = a.find('.')
+                if b != -1:
+                    value = str(value)[0:b]
+                field_name_characters = headers_characters[column]
+                row_dict_characters[field_name_characters] = value
+            try:   
+                b, created = self.model2.objects.filter(pointer=pointer).get_or_create(**row_dict_characters)
+                row_dict_item_metehe['charakters'] = b
+                if created:
+                    self.number_objects_char+=1
+            except:
+                raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+
+            for column in range(self.num_hc, self.num_e):                  
+                value = s.cell(row, column).value
+                a = str(value)
+                b = a.find('.')
+                if b != -1:
+                    value = str(value)[0:b]
+                field_name = headers[column]
+                if field_name in self.foreing_key_fields:
+                    related_model = self.getting_related_model(field_name)                 
+                    instance, created = related_model.objects.get_or_create(companyName=value)
+                    value = instance                          
+                row_dict[field_name] = value
+                row_dict['kategory'] = self.kategory_e
+                ahe = row_dict_characters['name'] 
+                aheone = str(ahe)[0].upper()
+                have_exnumber = aheone
+                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)                     
+            try:
+                a, e_created = self.model.objects.filter(pointer=pointer).get_or_create(**row_dict)
+            except:
+                try:
+                    del row_dict['exnumber']
+                    a = self.model.objects.get(**row_dict)
+                    e_created = 0
+                except:
+                    raise Exception(f"проблема в создании ЛО: {row_dict}")
+                    
+
+            if e_created:
+                row_dict_item_metehe['equipment'] = a
+                row_dict_room['equipment'] = a
+                row_dict_person['equipment'] = a
+                self.number_objects+=1
+            else:
+                pass
+
+            if e_created:    
+                try:
+                    с = self.model3.objects.create(**row_dict_item_metehe)
+                    if с.id:
+                        self.number_objects_metehe+=1
+                    else:
+                        pass
+                except:
+                    raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
+
+            if e_created:
+                for column in range(self.num_e, self.num_e + 1):
+                    value = s.cell(row, column).value
+                    a = str(value)
+                    b = a.find('.')
+                    if b != -1:
+                        value = str(value)[0:b]
+                    field_name = 'roomnumber'
+                    related_model = Rooms         
+                    instance_room, created = related_model.objects.filter(pointer=pointer).get_or_create(roomnumber=value)
+                    value = instance_room                                            
+                    row_dict_room['roomnumber'] = value
+                    
+                    try:
+                        Roomschange.objects.get_or_create(**row_dict_room)
+                    except:
+                        raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
+
+                for column in range(self.num_e + 1, self.num_e + 2):
+                    value = s.cell(row, column).value
+                    field_name = 'person'
+                    related_model = User
+                    try:
+                        instance_user = ''
+                        instance_user = User.objects.filter(profile__userid=pointer).get(profile__short_name=value)                       
+                        row_dict_person[field_name] = instance_user
+                        Personchange.objects.get_or_create(**row_dict_person)
+                    except:
+                        pass
+                             
+        self.number_objects = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
+        self.number_rows = s.nrows - 1
+        return True
+
+
 class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
     model = Equipment
     model2 = MeasurEquipmentCharakters
@@ -3252,6 +3437,35 @@ class UploadingEquipment_HelpingEquipment(UploadingTwoModels):
     num_hc = 2
     num_e = 13
 
+
+class Uploading_Verificationequipment(UploadingMetrologyForEquipment):
+    model = Equipment
+    model2 = HelpingEquipmentCharakters
+    model3 = HelpingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ВО"
+    num_hc = 2
+    num_e = 13
+
+class Uploading_Calibrationequipment(UploadingMetrologyForEquipment):
+    model = Equipment
+    model2 = HelpingEquipmentCharakters
+    model3 = HelpingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ВО"
+    num_hc = 2
+    num_e = 13
+
+class Uploading_Attestationequipment(UploadingMetrologyForEquipment):
+    model = Equipment
+    model2 = HelpingEquipmentCharakters
+    model3 = HelpingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ВО"
+    num_hc = 2
+    num_e = 13
+    
+
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
@@ -3265,6 +3479,10 @@ def BulkDownload(request):
         MeasurEquipment_Equipment_file = request.FILES.get('MeasurEquipment_Equipment_file')
         TestingEquipment_Equipment_file = request.FILES.get('TestingEquipment_Equipment_file')
         HelpingEquipment_Equipment_file = request.FILES.get('HelpingEquipment_Equipment_file')
+
+        Verificationequipment_file = request.FILES.get('Verificationequipment_file')
+        Calibrationequipment_file = request.FILES.get('Calibrationequipment_file')
+        Attestationequipment_file = request.FILES.get('Attestationequipment_file')
                 
         uploading_file_fake = 1
 
@@ -3310,6 +3528,27 @@ def BulkDownload(request):
                 uploading_file = UploadingEquipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file})
             except:
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif Verificationequipment_file:
+            try:
+                uploading_file = Uploading_Verificationequipment({'file': Verificationequipment_file})
+            except:
+                messages.success(request, "Неверно заполнен файл 'Поверка СИ' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif Calibrationequipment_file:
+            try:
+                uploading_file = Uploading_Calibrationequipment({'file': Calibrationequipment_file})
+            except:
+                messages.success(request, "Неверно заполнен файл 'Калибровка СИ' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif Attestationequipment_file:
+            try:
+                uploading_file = Uploading_Attestationequipment({'file': Attestationequipment_file})
+            except:
+                messages.success(request, "Неверно заполнен файл 'Аттестация ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
 
