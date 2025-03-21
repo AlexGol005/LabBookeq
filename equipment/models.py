@@ -198,11 +198,6 @@ class Equipment(models.Model):
         if not self.pointer:
                 self.pointer = self.created_by.profile.userid
 
-        # убираем точку
-        # a = str(self.lot)
-        # b = a.find('.')
-        # if b != -1:
-        #     self.lot = a[0:b]
         super(Equipment, self).save(*args, **kwargs)
         try:
             ServiceEquipmentU.objects.filter(equipment=self).filter(year=str(self.yearintoservice))
@@ -250,11 +245,6 @@ class MeasurEquipmentCharakters(models.Model):
     def save(self, *args, **kwargs):
         if not self.pointer:
                 self.pointer = self.created_by.profile.userid
-        # убираем точку
-        # a = str(self.reestr)
-        # b = a.find('.')
-        # if b != -1:
-        #     self.reestr = a[0:b]
         super(MeasurEquipmentCharakters, self).save(*args, **kwargs)
 
     class Meta:
@@ -630,24 +620,23 @@ class Verificationequipment(models.Model):
     dateorder = models.DateField('Дата заказа следующей поверки', blank=True, null=True)
     arshin = models.TextField('Ссылка на сведения о поверке в Аршин', blank=True, null=True)
     certnumber = models.CharField('Номер свидетельства о поверке', max_length=90, blank=True, null=True)
-    certnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
     price = models.DecimalField('Стоимость данной поверки', max_digits=100, decimal_places=2, null=True, blank=True)
     img = models.ImageField('Сертификат', upload_to='user_images', blank=True, null=True)
     statusver = models.CharField(max_length=300, choices=CHOICESVERIFIC, default='Поверен', null=True,
-                                 verbose_name='Статус')
+                                 verbose_name='Статус поверки: выберите "Поверен", "Признан непригодным", "Спорный"')
     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
                                     verbose_name='Поверитель', blank=True, null=True)
     place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
-                             verbose_name='Место поверки')
+                             verbose_name='Место поверки: выберите "У поверителя", "На месте эксплуатации"')
     note = models.CharField('Примечание', max_length=900, blank=True, null=True)
     year = models.CharField('Год поверки (если нет точных дат)', max_length=900, blank=True, null=True)
     dateordernew = models.DateField('Дата заказа нового оборудования (если поверять не выгодно)',
                                     blank=True, null=True)
-    haveorder = models.BooleanField(verbose_name='Заказана следующая поверка (или новое СИ)', default=False,
+    haveorder = models.BooleanField(verbose_name='Заказана следующая поверка (или новое СИ): "1" - заказана, "0" - не заказана', default=False,
                                     blank=True)
-    cust = models.BooleanField(verbose_name='Поверку организует Поставщик', default=False,
+    cust = models.BooleanField(verbose_name='Поверку организует Поставщик: "1" - да, "0" - нет', default=False,
                                blank=True)
-    extra = models.TextField('Дополнительная информация', blank=True, null=True)
+    extra = models.TextField('Выписка из сведений о поверке', blank=True, null=True)
 
     def __str__(self):
         try:
