@@ -3227,7 +3227,7 @@ class UploadingTwoModels(object):
 
 
 class UploadingMetrologyForEquipment(object):
-    foreing_key_fields = [""]
+    foreing_key_fields = ["verificator", "manufacturer"] 
     model = None
     model2 = None
     model3 = None
