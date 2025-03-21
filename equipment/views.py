@@ -3309,7 +3309,6 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingEquipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file})
             except:
-                raise 
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
