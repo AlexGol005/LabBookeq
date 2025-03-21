@@ -1,4 +1,4 @@
-{% extends 'main/superbase.html' %}
+{% extends 'main/base.html' %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 
@@ -8,7 +8,7 @@
 
 
 {% block content %}
-<div class="col-12">
+<div class="col-8">
       
    <center><h3>Загрузка списков приборов из файлов EXEL</h3> </center>
    
@@ -55,14 +55,14 @@
         <center> <a href="{% url 'export_HelpingEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики ВО"</a></center>
       </div>
 
-      <div class="col-3">
+      <div class="col-4">
          <center>                    
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
                <input type="file" name="MeasurEquipmentCharakters_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики СИ"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls и добавить Характеристики СИ</button>
          </form>
          </center>
          <hr>
@@ -73,7 +73,7 @@
             <div class="form-group">
                <input type="file" name="TestingEquipmentCharakters_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики ИО"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls  и добавить Характеристики ИО</button>
          </form>
          </center>
          <hr>
@@ -84,7 +84,7 @@
             <div class="form-group">
                <input type="file" name="HelpingEquipmentCharakters_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики ВО"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls и добавить Характеристики ВО</button>
          </form>
          </center>
          
@@ -93,7 +93,7 @@
    <hr>
 
 
-         <div class="col-3">
+         <div class="col-4">
          <center>                    
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
