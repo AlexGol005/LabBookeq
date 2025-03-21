@@ -3483,10 +3483,22 @@ def BulkDownload(request):
         Verificationequipment_file = request.FILES.get('Verificationequipment_file')
         Calibrationequipment_file = request.FILES.get('Calibrationequipment_file')
         Attestationequipment_file = request.FILES.get('Attestationequipment_file')
+
+        MeasurEquipmentCharakters_file_del = request.FILES.get('MeasurEquipmentCharakters_file_del')
+        TestingEquipmentCharakters_file_del = request.FILES.get('TestingEquipmentCharakters_file_del')
+        HelpingEquipmentCharakters_file_del = request.FILES.get('HelpingEquipmentCharakters_file_del')
+
+        MeasurEquipment_Equipment_file_del = request.FILES.get('MeasurEquipment_Equipment_file_del')
+        TestingEquipment_Equipment_file_del = request.FILES.get('TestingEquipment_Equipment_file_del')
+        HelpingEquipment_Equipment_file_del = request.FILES.get('HelpingEquipment_Equipment_file_del')
+
+        Verificationequipment_file_del = request.FILES.get('Verificationequipment_file_del')
+        Calibrationequipment_file_del = request.FILES.get('Calibrationequipment_file_del')
+        Attestationequipment_file_del = request.FILES.get('Attestationequipment_file_del')
                 
         uploading_file_fake = 1
 
-        
+        # для загрузки
         if MeasurEquipmentCharakters_file:
             try:
                 uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
@@ -3534,6 +3546,7 @@ def BulkDownload(request):
             try:
                 uploading_file = Uploading_Verificationequipment({'file': Verificationequipment_file})
             except:
+                raise
                 messages.success(request, "Неверно заполнен файл 'Поверка СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -3541,12 +3554,79 @@ def BulkDownload(request):
             try:
                 uploading_file = Uploading_Calibrationequipment({'file': Calibrationequipment_file})
             except:
+                raise
                 messages.success(request, "Неверно заполнен файл 'Калибровка СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
         elif Attestationequipment_file:
             try:
                 uploading_file = Uploading_Attestationequipment({'file': Attestationequipment_file})
+            except:
+                raise
+                messages.success(request, "Неверно заполнен файл 'Аттестация ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        # для удаления
+        if MeasurEquipmentCharakters_file_del:
+            try:
+                uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file_del})
+            except:
+                messages.success(request, "Неверно заполнен файл 'Характеристики СИ' (вероятно проблема в названиях столбцов)")
+                return redirect('bulkdownload')
+                
+
+        elif HelpingEquipmentCharakters_file_del:
+            try:
+                uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file_del})
+            except:
+                messages.success(request, "Неверно заполнен файл 'Характеристики ВО' (вероятно проблема в названиях столбцов)")
+                return redirect('bulkdownload')
+                
+        elif TestingEquipmentCharakters_file_del:
+            try:
+                uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file_del})
+            except:
+                messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
+                return redirect('bulkdownload')
+
+        elif MeasurEquipment_Equipment_file_del:
+            try:
+                uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file_del})
+            except:
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и СИ' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif TestingEquipment_Equipment_file_del:
+            try:
+                uploading_file = UploadingEquipment_TestingEquipment({'file': TestingEquipment_Equipment_file_del})
+            except:
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif HelpingEquipment_Equipment_file_del:
+            try:
+                uploading_file = UploadingEquipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file_del})
+            except:
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif Verificationequipment_fil_dele:
+            try:
+                uploading_file = Uploading_Verificationequipment({'file': Verificationequipment_file_del})
+            except:
+                messages.success(request, "Неверно заполнен файл 'Поверка СИ' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif Calibrationequipment_file_del:
+            try:
+                uploading_file = Uploading_Calibrationequipment({'file': Calibrationequipment_file_del})
+            except:
+                messages.success(request, "Неверно заполнен файл 'Калибровка СИ' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif Attestationequipment_file_del:
+            try:
+                uploading_file = Uploading_Attestationequipment({'file': Attestationequipment_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'Аттестация ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
