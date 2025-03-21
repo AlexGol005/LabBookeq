@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'main/superbase.html' %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 
@@ -8,7 +8,7 @@
 
 
 {% block content %}
-<div class="col-8">
+<div class="col-12">
       
    <center><h3>Загрузка списков приборов из файлов EXEL</h3> </center>
    
@@ -43,7 +43,7 @@
    {# загрузка характеристик СИ/ИО/ИО#}
    <div class="container">
    <div class="row">
-      <div class="col-5"> 
+      <div class="col-3"> 
          <center><a href="{% url 'export_MeasurEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики СИ"</a></center>
          <br>
          <br>
@@ -55,14 +55,14 @@
         <center> <a href="{% url 'export_HelpingEquipmentCharakters_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "Характеристики ВО"</a></center>
       </div>
 
-      <div class="col-5">
+      <div class="col-3">
          <center>                    
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
                <input type="file" name="MeasurEquipmentCharakters_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики СИ"</button>
          </form>
          </center>
          <hr>
@@ -73,7 +73,7 @@
             <div class="form-group">
                <input type="file" name="TestingEquipmentCharakters_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики ИО"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики ИО"</button>
          </form>
          </center>
          <hr>
@@ -84,7 +84,47 @@
             <div class="form-group">
                <input type="file" name="HelpingEquipmentCharakters_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики ВО"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики ВО"</button>
+         </form>
+         </center>
+         
+      </div>
+   </div>
+   </div>
+   
+   <hr>
+
+
+         <div class="col-3">
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="MeasurEquipmentCharakters_file">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики СИ"</button>
+         </form>
+         </center>
+         <hr>
+         
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="TestingEquipmentCharakters_file">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики ИО"</button>
+         </form>
+         </center>
+         <hr>
+
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="HelpingEquipmentCharakters_file">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики ВО"</button>
          </form>
          </center>
          
@@ -119,7 +159,7 @@
             <div class="form-group">
                <input type="file" name="MeasurEquipment_Equipment_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "единицы СИ и Единицы ЛО"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить единицы СИ и Единицы ЛО"</button>
          </form>
          </center>
          <hr>
@@ -130,7 +170,7 @@
             <div class="form-group">
                <input type="file" name="TestingEquipment_Equipment_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "единицы ИО и Единицы ЛО"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить единицы ИО и Единицы ЛО"</button>
          </form>
          </center>
          <hr>
@@ -141,7 +181,7 @@
             <div class="form-group">
                <input type="file" name="HelpingEquipment_Equipment_file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "единицы ВО и Единицы ЛО"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить единицы ВО и Единицы ЛО"</button>
          </form>
          </center>
          
@@ -174,7 +214,7 @@
             <div class="form-group">
                <input type="file" name="file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики СИ"</button>
          </form>
          </center>
          <hr>
@@ -185,7 +225,7 @@
             <div class="form-group">
                <input type="file" name="file">
             </div>
-            <button type='submit' class="btn  btn-primary">загрузить файл .xls "Характеристики СИ"</button>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls "добавить Характеристики СИ"</button>
          </form>
          </center>
          
