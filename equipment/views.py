@@ -3610,7 +3610,7 @@ def BulkDownload(request):
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
-        elif Verificationequipment_fil_del:
+        elif Verificationequipment_file_del:
             try:
                 uploading_file = Uploading_Verificationequipment({'file': Verificationequipment_file_del})
             except:
