@@ -2660,8 +2660,6 @@ def export_MeasurEquipment_Equipment_pattern_xls(request):
             '',
             'Накладная №123 от 10.01.2025', 
                         
-            '',
-
             '474',
 
             'И.И.Иванов'
@@ -2738,8 +2736,6 @@ def export_TestingEquipment_Equipment_pattern_xls(request):
             '',
             'Накладная №123 от 10.01.2025', 
                         
-            '',
-
             '474',
 
             'И.И.Иванов'
