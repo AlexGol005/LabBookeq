@@ -21,6 +21,7 @@
            <th>Логин</th>
            <th> Уровень доступа </th>
            <th>ФИО</th>
+           <th>ФИО кратко (для документов)</th>
            <th>Должность</th>
            <th> email </th>
            <th> Телефон </th>
@@ -33,7 +34,8 @@
         <tr>
               <td>{{ e.username }}</td>
             <td>{{ e.groups.last|default_if_none:'' }}</td>
-              <td>{{ e.profile.name|default_if_none:'' }}</td>  
+            <td>{{ e.profile.name|default_if_none:'' }}</td>  
+            <td>{{ e.profile.short_name|default_if_none:'' }}</td>
             <td>{{ e.profile.userposition|default_if_none:'' }}</td> 
             <td>{{ e.profile.user_email|default_if_none:'' }}</td> 
             <td>{{ e.profile.user_phone|default_if_none:'' }}</td> 
