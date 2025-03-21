@@ -2876,7 +2876,7 @@ def export_Verificationequipment_pattern_xls(request):
                       
             'Выписка из сведений о поверке', 
         ]
-        columns4 = [
+    columns4 = [
                     'Пример для поверки прибора по ссылке https://fgis.gost.ru/fundmetrology/cm/results/1-248359087',
                 ]
     columns3 = [
