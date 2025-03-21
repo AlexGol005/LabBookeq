@@ -625,7 +625,7 @@ class Verificationequipment(models.Model):
     statusver = models.CharField(max_length=300, choices=CHOICESVERIFIC, default='Поверен', null=True,
                                  verbose_name='Статус поверки: выберите "Поверен", "Признан непригодным", "Спорный"')
     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
-                                    verbose_name='Поверитель', blank=True, null=True)
+                                    verbose_name='Название компании поверителя', blank=True, null=True)
     place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
                              verbose_name='Место поверки: выберите "У поверителя", "На месте эксплуатации"')
     note = models.CharField('Примечание', max_length=900, blank=True, null=True)
