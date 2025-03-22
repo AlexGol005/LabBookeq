@@ -3271,7 +3271,7 @@ class UploadingMetrologyForEquipment(object):
     def getting_headers_characters(self):
         l_verbose_name = []
         m_name = []
-        for f in self.model_CH._meta.get_fields():
+        for f in MeasurEquipmentCharakters._meta.get_fields():
             try:
                 l_verbose_name.append(f.verbose_name)
                 m_name.append(f.name)
