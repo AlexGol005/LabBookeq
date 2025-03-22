@@ -613,6 +613,7 @@ class Verificationequipment(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorvme', editable=True)
     updated_by = CurrentUserField(related_name='updatorvme', editable=True)
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
     equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
                                     on_delete=models.PROTECT, related_name='equipmentSM_ver', blank=True, null=True)
     date = models.DateField('Дата поверки', blank=True, null=True)
@@ -649,10 +650,10 @@ class Verificationequipment(models.Model):
     def get_absolute_url(self):
         """ Создание юрл объекта для перенаправления из вьюшки создания объекта на страничку с созданным объектом """
         return reverse('measureequipmentver', kwargs={'str': self.equipmentSM.equipment.exnumber})
-
-
-
+            
     def save(self, *args, **kwargs):
+        if not self.pointer:
+            self.pointer = self.created_by.profile.userid
         super().save()
         # добавляем последнюю поверку к оборудованию
         try:
@@ -700,6 +701,7 @@ class Calibrationequipment(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorcme', editable=True)
     updated_by = CurrentUserField(related_name='updatorcme', editable=True)
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
     equipmentSM = models.ForeignKey(MeasurEquipment, verbose_name='СИ',
                                     on_delete=models.PROTECT, related_name='equipmentSM_cal', blank=True, null=True)
     date = models.DateField('Дата калибровки', blank=True, null=True)
@@ -739,6 +741,8 @@ class Calibrationequipment(models.Model):
 
 
     def save(self, *args, **kwargs):
+        if not self.pointer:
+            self.pointer = self.created_by.profile.userid
         super().save()
         # добавляем последнюю калибровку к оборудованию
         try:
@@ -786,6 +790,7 @@ class Attestationequipment(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorate', editable=True)
     updated_by = CurrentUserField(related_name='updatorate', editable=True)
+    pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
     arshin = models.TextField('Ссылка на скан аттестата', blank=True, null=True)
     equipmentSM = models.ForeignKey(TestingEquipment, verbose_name='ИО',
                                     on_delete=models.PROTECT, related_name='equipmentSM_att', blank=True, null=True)
@@ -825,6 +830,8 @@ class Attestationequipment(models.Model):
         return reverse('testingequipmentatt', kwargs={'str': self.equipmentSM.equipment.exnumber})
 
     def save(self, *args, **kwargs):
+        if not self.pointer:
+                self.pointer = self.created_by.profile.userid
         super().save()
         # добавляем последнюю аттестацию к оборудованию
         try:
