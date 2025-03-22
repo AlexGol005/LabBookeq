@@ -3146,7 +3146,7 @@ class UploadingTwoModels(object):
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
-                get_rid_point(value)
+                value = get_rid_point(value)
                 field_name = headers[column]
                 if field_name in self.foreing_key_fields:
                     related_model = self.getting_related_model(field_name)                 
@@ -3190,7 +3190,7 @@ class UploadingTwoModels(object):
             if e_created:
                 for column in range(self.num_e, self.num_e + 1):
                     value = s.cell(row, column).value
-                    get_rid_point(value)
+                    value = get_rid_point(value)
                     field_name = 'roomnumber'
                     related_model = Rooms         
                     instance_room, created = related_model.objects.filter(pointer=pointer).get_or_create(roomnumber=value)
@@ -3330,7 +3330,7 @@ class UploadingMetrologyForEquipment(object):
             
             for column in range(self.num_hc):
                 value = s.cell(row, column).value
-                get_rid_point(value)
+                value = get_rid_point(value)
                 field_name_characters = headers_characters[column]
                 row_dict_characters[field_name_characters] = value
             try:   
@@ -3341,7 +3341,7 @@ class UploadingMetrologyForEquipment(object):
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
-                get_rid_point(value)
+                value = get_rid_point(value)
                 field_name = headers_equipment[column]
                 if field_name in self.foreing_key_fields:
                     model = Equipment
