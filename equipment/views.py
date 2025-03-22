@@ -3370,7 +3370,7 @@ class UploadingMetrologyForEquipment(object):
                     related_model = self.getting_related_model(field_name, model)
                     instance_verificator, created = related_model.objects.get_or_create(companyName=value)
                     value = instance_verificator
-                if field_name in ["date", "datedead", "dateorder", "dateordernew"]:
+                if field_name in ["date", "datedead", "dateorder", "dateordernew"] and value:
                     value = get_dateformat_django(value)
                     
                 row_dict_metrology[field_name] = value
