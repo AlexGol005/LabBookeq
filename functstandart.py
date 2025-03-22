@@ -158,5 +158,12 @@ def get_round_signif_digit(x_avg: Decimal, numdig: int) -> Decimal:
         x_res = x_avg.quantize(Decimal(k), ROUND_HALF_UP)
     return x_res
 
+def get_rid_point(value):
+    a = str(value)
+    b = a.find('.')
+    if b != -1:
+        value = str(value)[0:b]  
+    return value
+
 
 
