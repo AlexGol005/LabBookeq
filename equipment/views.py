@@ -3237,7 +3237,7 @@ class UploadingMetrologyForEquipment(object):
         self.uploaded_file = data.get("file")
         self.parsing()
 
-    def getting_related_model(self, field_name):
+    def getting_related_model(self, field_name, model):
         try:
             related_model = model._meta.get_field(field_name).related_model
             return related_model
@@ -3345,7 +3345,7 @@ class UploadingMetrologyForEquipment(object):
                 field_name = headers_equipment[column]
                 if field_name in self.foreing_key_fields:
                     model = Equipment
-                    related_model = self.getting_related_model(field_name)                 
+                    related_model = self.getting_related_model(field_name, model)                 
                     related_model.objects.get(companyName=value)
                     value = instance                          
                 row_dict_equipment[field_name] = value
@@ -3365,6 +3365,7 @@ class UploadingMetrologyForEquipment(object):
                 field_name = headers_model_metrology[column]
                 if field_name in self.foreing_key_fields:
                     model = self.model_metrology
+                    related_model = self.getting_related_model(field_name, model)
                     instance_verificator, created = related_model.objects.get_or_create(companyName=value)
                     value = instance_verificator 
                 row_dict_metrology[field_name] = value
