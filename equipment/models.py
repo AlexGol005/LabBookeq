@@ -361,7 +361,6 @@ class MeasurEquipment(models.Model):
     newdateorder_date = models.DateField('Дата заказа следующей поверки в формате даты', blank=True, null=True)
     newarshin = models.TextField('Ссылка на сведения о поверке в Аршин', blank=True, null=True)
     newcertnumber = models.CharField('Номер последнего свидетельства о поверке', max_length=90, blank=True, null=True)
-    newcertnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
     newprice = models.DecimalField('Стоимость данной поверки', max_digits=100, decimal_places=2, null=True, blank=True)
     newstatusver = models.CharField(max_length=300, default='Поверен', null=True,
                                  verbose_name='Статус')
@@ -381,7 +380,6 @@ class MeasurEquipment(models.Model):
     calnewdateorder = models.CharField('Дата заказа следующей калибровки', blank=True, null=True, max_length=90, default='-')
     calnewarshin = models.TextField('Ссылка на скан сертификата', blank=True, null=True)
     calnewcertnumber = models.CharField('Номер сертификата калибровки', max_length=90, blank=True, null=True)
-    calnewcertnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
     calnewprice = models.DecimalField('Стоимость данной калибровки', max_digits=100, decimal_places=2, null=True, blank=True)
     calnewstatusver = models.CharField(max_length=300,  default='Калиброван', null=True,
                                  verbose_name='Статус')
@@ -434,7 +432,6 @@ class TestingEquipment(models.Model):
     newdateorder_date = models.DateField('Дата заказа следующей аттестации в формате даты', blank=True, null=True)
     newarshin = models.TextField('Ссылка на скан аттестата', blank=True, null=True)
     newcertnumber = models.CharField('Номер последнего аттестата', max_length=90, blank=True, null=True)
-    newcertnumbershort = models.CharField('Краткий номер последнего аттестата', max_length=90, blank=True, null=True)
     newprice = models.DecimalField('Стоимость данной аттестации', max_digits=100, decimal_places=2, null=True, blank=True)
     newstatusver = models.CharField(max_length=300, default='Поверен', null=True,
                                  verbose_name='Статус')
@@ -663,7 +660,6 @@ class Verificationequipment(models.Model):
         if note:       
             note.newcertnumber = self.certnumber
             note.newarshin = self.arshin
-            note.newcertnumbershort = self.certnumbershort
             note.newprice = self.price
             note.newstatusver = self.statusver
             note.newverificator = self.verificator.companyName
@@ -709,7 +705,6 @@ class Calibrationequipment(models.Model):
     dateorder = models.DateField('Дата заказа следующей калибровки', blank=True, null=True)
     arshin = models.TextField('Ссылка на скан сертификата', blank=True, null=True)
     certnumber = models.CharField('Номер сертификата калибровки', max_length=90, blank=True, null=True)
-    certnumbershort = models.CharField('Краткий номер свидетельства о поверке', max_length=90, blank=True, null=True)
     price = models.DecimalField('Стоимость данной калибровки', max_digits=100, decimal_places=2, null=True, blank=True)
     statusver = models.CharField(max_length=300, choices=CHOICESCAL, default='Калиброван', null=True,
                                  verbose_name='Статус')
@@ -753,7 +748,6 @@ class Calibrationequipment(models.Model):
             note = MeasurEquipment.objects.get(pk=self.equipmentSM.pk)
             note.calnewcertnumber = self.certnumber
             note.calnewarshin = self.arshin
-            note.calnewcertnumbershort = self.certnumbershort
             note.calnewprice = self.price
             note.calnewstatusver = self.statusver
             note.calnewverificator = self.verificator.companyName
@@ -798,7 +792,6 @@ class Attestationequipment(models.Model):
     datedead = models.DateField('Дата окончания аттестации', blank=True, null=True)
     dateorder = models.DateField('Дата заказа следующей аттестации', blank=True, null=True)
     certnumber = models.CharField('Номер аттестата', max_length=90, blank=True, null=True)
-    certnumbershort = models.CharField('Краткий номер свидетельства о аттестата', max_length=90, blank=True, null=True)
     price = models.DecimalField('Стоимость данной аттестации', max_digits=100, decimal_places=2, null=True, blank=True)
     img = models.ImageField('Аттестат', upload_to='user_images', blank=True, null=True)
     statusver = models.CharField(max_length=300, choices=CHOICESATT, default='Аттестован', null=True,
@@ -841,7 +834,6 @@ class Attestationequipment(models.Model):
         if note:       
             note.newcertnumber = self.certnumber
             note.newarshin = self.arshin
-            note.newcertnumbershort = self.certnumbershort
             note.newprice = self.price
             note.newstatusver = self.statusver
             note.newverificator = self.verificator.companyName
@@ -880,7 +872,6 @@ class Attestationequipment(models.Model):
         if note:       
             note.newcertnumber = self.certnumber
             note.newarshin = self.arshin
-            note.newcertnumbershort = self.certnumbershort
             note.newprice = self.price
             note.newstatusver = self.statusver
             note.newverificator = self.verificator.companyName
