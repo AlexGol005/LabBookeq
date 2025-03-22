@@ -43,7 +43,7 @@ from equipment.constants import servicedesc0
 from equipment.forms import*
 from equipment.models import*
 from formstandart import *
-from functstandart import get_dateformat, get_rid_point
+from functstandart import get_dateformat, get_rid_point, get_dateformat_django
 from .function_for_equipmentapp import get_exnumber
 from users.models import Profile, Company
 
@@ -3362,12 +3362,17 @@ class UploadingMetrologyForEquipment(object):
             
             for column in range(self.num_e, s.ncols):                  
                 value = s.cell(row, column).value
+                value = get_rid_point(value)
+                
                 field_name = headers_model_metrology[column]
                 if field_name in self.foreing_key_fields:
                     model = self.model_metrology
                     related_model = self.getting_related_model(field_name, model)
                     instance_verificator, created = related_model.objects.get_or_create(companyName=value)
-                    value = instance_verificator 
+                    value = instance_verificator
+                if field_name in ["date", "datedead", "dateorder", "dateordernew"]:
+                    value = get_dateformat_django(value)
+                    
                 row_dict_metrology[field_name] = value
             row_dict_metrology['equipmentSM'] = equipmentSM
             try:
