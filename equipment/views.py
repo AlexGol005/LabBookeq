@@ -3240,7 +3240,6 @@ class UploadingMetrologyForEquipment(object):
 
     def getting_related_model(self, field_name):
         try:
-            model = self.model
             related_model = model._meta.get_field(field_name).related_model
             return related_model
         except:
@@ -3346,6 +3345,7 @@ class UploadingMetrologyForEquipment(object):
                 get_rid_point(value)
                 field_name = headers_equipment[column]
                 if field_name in self.foreing_key_fields:
+                    model = model_objE
                     related_model = self.getting_related_model(field_name)                 
                     related_model.objects.get(companyName=value)
                     value = instance                          
@@ -3365,6 +3365,7 @@ class UploadingMetrologyForEquipment(object):
                 value = s.cell(row, column).value
                 field_name = headers_model_metrology[column]
                 if field_name in self.foreing_key_fields:
+                    model = model_metrology
                     instance_verificator, created = related_model.objects.get_or_create(companyName=value)
                     value = instance_verificator 
                 row_dict_metrology[field_name] = value
