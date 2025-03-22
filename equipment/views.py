@@ -3223,7 +3223,7 @@ class UploadingTwoModels(object):
 class UploadingMetrologyForEquipment(object):
     foreing_key_fields = ["verificator", "manufacturer"] 
     model_metrology = None
-    model_CH = None
+    model_CH = MeasurEquipmentCharakters
     model_objE = None
     model_objMETEHE = None
     number_rows = None
@@ -3380,31 +3380,31 @@ class UploadingMetrologyForEquipment(object):
 
 
 class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
-    model_metrology = Verificationequipment
-    model_CH = MeasurEquipmentCharakters
-    model_objE = Equipment
-    model_objMETEHE = MeasurEquipment
+    model = Equipment
+    model2 = MeasurEquipmentCharakters
+    model3 = MeasurEquipment
+    foreing_key_fields = ["manufacturer"]
     kategory_e = "СИ"
     num_hc = 3
-    num_e = 6
+    num_e = 15
 
 class UploadingEquipment_TestingEquipment(UploadingTwoModels):
-    model_metrology = Verificationequipment
-    model_CH = MeasurEquipmentCharakters
-    model_objE = Equipment
-    model_objMETEHE = MeasurEquipment
-    kategory_e = "СИ"
-    num_hc = 3
-    num_e = 6
+    model = Equipment
+    model2 = TestingEquipmentCharakters
+    model3 = TestingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ИО"
+    num_hc = 2
+    num_e = 13
 
 class UploadingEquipment_HelpingEquipment(UploadingTwoModels):
-    model_metrology = Verificationequipment
-    model_CH = MeasurEquipmentCharakters
-    model_objE = Equipment
-    model_objMETEHE = MeasurEquipment
-    kategory_e = "СИ"
-    num_hc = 3
-    num_e = 6
+    model = Equipment
+    model2 = HelpingEquipmentCharakters
+    model3 = HelpingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ВО"
+    num_hc = 2
+    num_e = 13
 
 
 class Uploading_Verificationequipment(UploadingMetrologyForEquipment):
