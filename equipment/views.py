@@ -43,7 +43,7 @@ from equipment.constants import servicedesc0
 from equipment.forms import*
 from equipment.models import*
 from formstandart import *
-from functstandart import get_dateformat
+from functstandart import get_dateformat, get_rid_point
 from .function_for_equipmentapp import get_exnumber
 from users.models import Profile, Company
 
@@ -3146,10 +3146,7 @@ class UploadingTwoModels(object):
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
-                a = str(value)
-                b = a.find('.')
-                if b != -1:
-                    value = str(value)[0:b]
+                get_rid_point(value)
                 field_name = headers[column]
                 if field_name in self.foreing_key_fields:
                     related_model = self.getting_related_model(field_name)                 
@@ -3193,10 +3190,7 @@ class UploadingTwoModels(object):
             if e_created:
                 for column in range(self.num_e, self.num_e + 1):
                     value = s.cell(row, column).value
-                    a = str(value)
-                    b = a.find('.')
-                    if b != -1:
-                        value = str(value)[0:b]
+                    get_rid_point(value)
                     field_name = 'roomnumber'
                     related_model = Rooms         
                     instance_room, created = related_model.objects.filter(pointer=pointer).get_or_create(roomnumber=value)
@@ -3228,13 +3222,12 @@ class UploadingTwoModels(object):
 
 class UploadingMetrologyForEquipment(object):
     foreing_key_fields = ["verificator", "manufacturer"] 
-    model = None
-    model2 = None
-    model3 = None
-    number_objects = 0
-    number_objects_metehe = 0
-    number_objects_char = 0
+    model_metrology = None
+    model_CH = None
+    model_objE = None
+    model_objMETEHE = None
     number_rows = None
+    number_objects = None
     kategory_e = None
     num_hc = 0
     num_e = 0
@@ -3253,18 +3246,18 @@ class UploadingMetrologyForEquipment(object):
         except:
             raise Exception(f'проблема с производителем {field_name}')
 
-    def getting_headers(self):
+    def getting_headers_model_metrology(self):
         l_verbose_name = []
         m_name = []
-        for f in self.model._meta.get_fields():
+        for f in self.model_metrology._meta.get_fields():
             try:
                 l_verbose_name.append(f.verbose_name)
                 m_name.append(f.name)
             except:
                 pass
         s = self.s
-        headers = dict()
-        for column in range(self.num_hc, self.num_e):
+        headers_model_metrology = dict()
+        for column in range(self.num_e, s.ncols):
             value = s.cell(0, column).value
             try:
                 value in l_verbose_name
@@ -3272,13 +3265,13 @@ class UploadingMetrologyForEquipment(object):
                 value = m_name[a] 
             except:
                 raise KeyError(value)
-            headers[column] = value
-        return headers
+            headers_model_metrology[column] = value
+        return headers_model_metrology
 
     def getting_headers_characters(self):
         l_verbose_name = []
         m_name = []
-        for f in self.model2._meta.get_fields():
+        for f in self.model_CH._meta.get_fields():
             try:
                 l_verbose_name.append(f.verbose_name)
                 m_name.append(f.name)
@@ -3296,6 +3289,28 @@ class UploadingMetrologyForEquipment(object):
                 raise KeyError(value, dict())
             headers_characters[column] = value
         return headers_characters
+
+    def getting_headers_equipment(self):
+        l_verbose_name = []
+        m_name = []
+        for f in self.model_objE._meta.get_fields():
+            try:
+                l_verbose_name.append(f.verbose_name)
+                m_name.append(f.name)
+            except:
+                pass
+        s = self.s
+        headers_equipment = dict()
+        for column in range(self.num_hc):
+            value = s.cell(0, column).value
+            try:
+                value in l_verbose_name
+                a = l_verbose_name.index(value)
+                value = m_name[a] 
+            except:
+                raise KeyError(value, dict())
+            headers_equipment[column] = value
+        return headers_equipment
             
     def parsing(self):
         pointer = get_current_user().profile.userid
@@ -3303,109 +3318,63 @@ class UploadingMetrologyForEquipment(object):
         wb = xlrd.open_workbook(file_contents=uploaded_file.read())
         s = wb.sheet_by_index(0)
         self.s = s
-        headers = self.getting_headers()
+        
         headers_characters = self.getting_headers_characters()
+        headers_model_metrology = self.getting_headers_model_metrology()
+        headers_equipment = self.getting_headers_equipment()
 
         for row in range(1, s.nrows):
             row_dict_characters = {}
-            row_dict = {}
-            row_dict_item_metehe = {}
-            row_dict_room = {}
-            row_dict_person = {}
+            row_dict_equipment = {}
+            row_dict_METEHE = {}
+            row_dict_metrology = {}
+
             
             for column in range(self.num_hc):
                 value = s.cell(row, column).value
-                a = str(value)
-                b = a.find('.')
-                if b != -1:
-                    value = str(value)[0:b]
+                get_rid_point(value)
                 field_name_characters = headers_characters[column]
                 row_dict_characters[field_name_characters] = value
             try:   
-                b, created = self.model2.objects.filter(pointer=pointer).get_or_create(**row_dict_characters)
-                row_dict_item_metehe['charakters'] = b
-                if created:
-                    self.number_objects_char+=1
+                a = self.model_CH.objects.filter(pointer=pointer).get(**row_dict_characters)
+                row_dict_METEHE['charakters'] = a
             except:
-                raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+                raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
-                a = str(value)
-                b = a.find('.')
-                if b != -1:
-                    value = str(value)[0:b]
-                field_name = headers[column]
+                get_rid_point(value)
+                field_name = headers_equipment[column]
                 if field_name in self.foreing_key_fields:
                     related_model = self.getting_related_model(field_name)                 
-                    instance, created = related_model.objects.get_or_create(companyName=value)
+                    related_model.objects.get(companyName=value)
                     value = instance                          
-                row_dict[field_name] = value
-                row_dict['kategory'] = self.kategory_e
-                ahe = row_dict_characters['name'] 
-                aheone = str(ahe)[0].upper()
-                have_exnumber = aheone
-                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)                     
-            try:
-                a, e_created = self.model.objects.filter(pointer=pointer).get_or_create(**row_dict)
+                row_dict_equipment[field_name] = value
+            try:   
+                a = self.model_objE.objects.filter(pointer=pointer).get(**row_dict_equipment)
+                row_dict_METEHE['equipment'] = a
             except:
-                try:
-                    del row_dict['exnumber']
-                    a = self.model.objects.get(**row_dict)
-                    e_created = 0
-                except:
-                    raise Exception(f"проблема в создании ЛО: {row_dict}")
-                    
+                raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
 
-            if e_created:
-                row_dict_item_metehe['equipment'] = a
-                row_dict_room['equipment'] = a
-                row_dict_person['equipment'] = a
-                self.number_objects+=1
-            else:
-                pass
-
-            if e_created:    
-                try:
-                    с = self.model3.objects.create(**row_dict_item_metehe)
-                    if с.id:
-                        self.number_objects_metehe+=1
-                    else:
-                        pass
-                except:
-                    raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
-
-            if e_created:
-                for column in range(self.num_e, self.num_e + 1):
-                    value = s.cell(row, column).value
-                    a = str(value)
-                    b = a.find('.')
-                    if b != -1:
-                        value = str(value)[0:b]
-                    field_name = 'roomnumber'
-                    related_model = Rooms         
-                    instance_room, created = related_model.objects.filter(pointer=pointer).get_or_create(roomnumber=value)
-                    value = instance_room                                            
-                    row_dict_room['roomnumber'] = value
-                    
-                    try:
-                        Roomschange.objects.get_or_create(**row_dict_room)
-                    except:
-                        raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
-
-                for column in range(self.num_e + 1, self.num_e + 2):
-                    value = s.cell(row, column).value
-                    field_name = 'person'
-                    related_model = User
-                    try:
-                        instance_user = ''
-                        instance_user = User.objects.filter(profile__userid=pointer).get(profile__short_name=value)                       
-                        row_dict_person[field_name] = instance_user
-                        Personchange.objects.get_or_create(**row_dict_person)
-                    except:
-                        pass
-                             
-        self.number_objects = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
+            try:
+                equipmentSM  = self.model_objMETEHE.objects.filter(pointer=pointer).get(**row_dict_METEHE)
+            except:
+                raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
+            
+            for column in range(self.num_e, s.ncols):                  
+                value = s.cell(row, column).value
+                field_name = headers_model_metrology[column]
+                if field_name in self.foreing_key_fields:
+                    instance_verificator, created = related_model.objects.get_or_create(companyName=value)
+                    value = instance_verificator 
+                row_dict_metrology[field_name] = value
+            row_dict_metrology['equipmentSM'] = equipmentSM
+            try:
+                a, m_created = self.model_metrology.objects.filter(pointer=pointer).get_or_create(**row_dict_metrology)
+            except:
+                raise Exception(f"проблема в добавлении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
+                                        
+        self.number_objects = f''
         self.number_rows = s.nrows - 1
         return True
 
