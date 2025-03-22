@@ -3346,7 +3346,7 @@ class UploadingMetrologyForEquipment(object):
                 if field_name in self.foreing_key_fields:
                     model = Equipment
                     related_model = self.getting_related_model(field_name, model)                 
-                    related_model.objects.get(companyName=value)
+                    instance = related_model.objects.get(companyName=value)
                     value = instance                          
                 row_dict_equipment[field_name] = value
             try:   
