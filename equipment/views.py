@@ -3224,7 +3224,6 @@ class UploadingMetrologyForEquipment(object):
     foreing_key_fields = ["verificator", "manufacturer"] 
     model_metrology = None
     model_CH = MeasurEquipmentCharakters
-    model_objE = None
     model_objMETEHE = None
     number_rows = None
     number_objects = None
@@ -3270,7 +3269,7 @@ class UploadingMetrologyForEquipment(object):
     def getting_headers_characters(self):
         l_verbose_name = []
         m_name = []
-        for f in MeasurEquipmentCharakters._meta.get_fields():
+        for f in self.model_CH._meta.get_fields():
             try:
                 l_verbose_name.append(f.verbose_name)
                 m_name.append(f.name)
@@ -3292,7 +3291,7 @@ class UploadingMetrologyForEquipment(object):
     def getting_headers_equipment(self):
         l_verbose_name = []
         m_name = []
-        for f in self.model_objE._meta.get_fields():
+        for f in Equipment._meta.get_fields():
             try:
                 l_verbose_name.append(f.verbose_name)
                 m_name.append(f.name)
@@ -3345,13 +3344,13 @@ class UploadingMetrologyForEquipment(object):
                 get_rid_point(value)
                 field_name = headers_equipment[column]
                 if field_name in self.foreing_key_fields:
-                    model = model_objE
+                    model = Equipment
                     related_model = self.getting_related_model(field_name)                 
                     related_model.objects.get(companyName=value)
                     value = instance                          
                 row_dict_equipment[field_name] = value
             try:   
-                a = self.model_objE.objects.filter(pointer=pointer).get(**row_dict_equipment)
+                a = Equipment.objects.filter(pointer=pointer).get(**row_dict_equipment)
                 row_dict_METEHE['equipment'] = a
             except:
                 raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
@@ -3365,7 +3364,7 @@ class UploadingMetrologyForEquipment(object):
                 value = s.cell(row, column).value
                 field_name = headers_model_metrology[column]
                 if field_name in self.foreing_key_fields:
-                    model = model_metrology
+                    model = self.model_metrology
                     instance_verificator, created = related_model.objects.get_or_create(companyName=value)
                     value = instance_verificator 
                 row_dict_metrology[field_name] = value
@@ -3411,7 +3410,6 @@ class UploadingEquipment_HelpingEquipment(UploadingTwoModels):
 class Uploading_Verificationequipment(UploadingMetrologyForEquipment):
     model_metrology = Verificationequipment
     model_CH = MeasurEquipmentCharakters
-    model_objE = Equipment
     model_objMETEHE = MeasurEquipment
     kategory_e = "СИ"
     num_hc = 3
@@ -3420,7 +3418,6 @@ class Uploading_Verificationequipment(UploadingMetrologyForEquipment):
 class Uploading_Calibrationequipment(UploadingMetrologyForEquipment):
     model_metrology = Verificationequipment
     model_CH = MeasurEquipmentCharakters
-    model_objE = Equipment
     model_objMETEHE = MeasurEquipment
     kategory_e = "СИ"
     num_hc = 3
@@ -3429,7 +3426,6 @@ class Uploading_Calibrationequipment(UploadingMetrologyForEquipment):
 class Uploading_Attestationequipment(UploadingMetrologyForEquipment):
     model_metrology = Verificationequipment
     model_CH = MeasurEquipmentCharakters
-    model_objE = Equipment
     model_objMETEHE = MeasurEquipment
     kategory_e = "СИ"
     num_hc = 3
