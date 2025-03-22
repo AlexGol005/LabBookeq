@@ -3380,59 +3380,59 @@ class UploadingMetrologyForEquipment(object):
 
 
 class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
-    model = Equipment
-    model2 = MeasurEquipmentCharakters
-    model3 = MeasurEquipment
-    foreing_key_fields = ["manufacturer"]
+    model_metrology = Verificationequipment
+    model_CH = MeasurEquipmentCharakters
+    model_objE = Equipment
+    model_objMETEHE = MeasurEquipment
     kategory_e = "СИ"
     num_hc = 3
-    num_e = 15
+    num_e = 6
 
 class UploadingEquipment_TestingEquipment(UploadingTwoModels):
-    model = Equipment
-    model2 = TestingEquipmentCharakters
-    model3 = TestingEquipment
-    foreing_key_fields = ["manufacturer"]
-    kategory_e = "ИО"
-    num_hc = 2
-    num_e = 13
+    model_metrology = Verificationequipment
+    model_CH = MeasurEquipmentCharakters
+    model_objE = Equipment
+    model_objMETEHE = MeasurEquipment
+    kategory_e = "СИ"
+    num_hc = 3
+    num_e = 6
 
 class UploadingEquipment_HelpingEquipment(UploadingTwoModels):
-    model = Equipment
-    model2 = HelpingEquipmentCharakters
-    model3 = HelpingEquipment
-    foreing_key_fields = ["manufacturer"]
-    kategory_e = "ВО"
-    num_hc = 2
-    num_e = 13
+    model_metrology = Verificationequipment
+    model_CH = MeasurEquipmentCharakters
+    model_objE = Equipment
+    model_objMETEHE = MeasurEquipment
+    kategory_e = "СИ"
+    num_hc = 3
+    num_e = 6
 
 
 class Uploading_Verificationequipment(UploadingMetrologyForEquipment):
-    model = Equipment
-    model2 = HelpingEquipmentCharakters
-    model3 = HelpingEquipment
-    foreing_key_fields = ["manufacturer"]
-    kategory_e = "ВО"
-    num_hc = 2
-    num_e = 13
+    model_metrology = Verificationequipment
+    model_CH = MeasurEquipmentCharakters
+    model_objE = Equipment
+    model_objMETEHE = MeasurEquipment
+    kategory_e = "СИ"
+    num_hc = 3
+    num_e = 6
 
 class Uploading_Calibrationequipment(UploadingMetrologyForEquipment):
-    model = Equipment
-    model2 = HelpingEquipmentCharakters
-    model3 = HelpingEquipment
-    foreing_key_fields = ["manufacturer"]
-    kategory_e = "ВО"
-    num_hc = 2
-    num_e = 13
+    model_metrology = Verificationequipment
+    model_CH = MeasurEquipmentCharakters
+    model_objE = Equipment
+    model_objMETEHE = MeasurEquipment
+    kategory_e = "СИ"
+    num_hc = 3
+    num_e = 6
 
 class Uploading_Attestationequipment(UploadingMetrologyForEquipment):
-    model = Equipment
-    model2 = HelpingEquipmentCharakters
-    model3 = HelpingEquipment
-    foreing_key_fields = ["manufacturer"]
-    kategory_e = "ВО"
-    num_hc = 2
-    num_e = 13
+    model_metrology = Verificationequipment
+    model_CH = MeasurEquipmentCharakters
+    model_objE = Equipment
+    model_objMETEHE = MeasurEquipment
+    kategory_e = "СИ"
+    num_hc = 3
+    num_e = 6
     
 
 def BulkDownload(request):
