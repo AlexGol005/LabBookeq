@@ -3373,7 +3373,8 @@ class UploadingMetrologyForEquipment(object):
                 if field_name in ["date", "datedead", "dateorder", "dateordernew"] and value:
                     value = get_dateformat_django(value)
                     
-                row_dict_metrology[field_name] = value
+                if value or value == 0:
+                    row_dict_metrology[field_name] = value
             row_dict_metrology['equipmentSM'] = equipmentSM
             try:
                 a, m_created = self.model_metrology.objects.filter(pointer=pointer).get_or_create(**row_dict_metrology)
