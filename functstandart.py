@@ -114,6 +114,15 @@ def get_dateformat(date):
     rdate = f'{day}.{month}.{year}'
     return rdate
 
+def get_dateformat_django(date):
+    """переводит дату из формата дд.мм.гггг в гггг-мм-дд"""
+    dateformat = str(date)
+    day = dateformat[:2]
+    month = dateformat[3:5]
+    year = dateformat[6:]
+    rdate = f'{year}-{month}-{day}'
+    return rdate
+
 
 def get_dateformat_to_number(date):
     """переводит дату из формата гггг-мм-дд в ггммдд01"""
