@@ -2371,22 +2371,19 @@ def export_listE_xls(request):
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 2000
+    ws1.row(row_num).height = 1500
 
     rows = MeasurEquipment.objects.filter(pointer=request.user.profile.userid).values_list('charakters__name',               
         'charakters__reestr',
-        'charakters__typename',
-                
+        'charakters__typename',                
         'equipment__lot',
         'equipment__yearmanuf',
-        'equipment__manufacturer__companyName',
-                
+        'equipment__manufacturer__companyName',                
         'newdate',
         'newdatedead',
         'newarshin',
         'newcertnumber',
         'newverificator',
-
         'calnewdate',
         'calnewdatedead',
         'calnewarshin',
@@ -2399,18 +2396,16 @@ def export_listE_xls(request):
         for col_num in range(len(row)):
             ws1.write(row_num, col_num, row[col_num], style_plain_textf)
         ws1.row(row_num).height_mismatch = True
-        ws1.row(row_num).height = 2000
+        ws1.row(row_num).height = 1500
 
 
     row_num = 1 
     columns = [
             'Название прибора',
-            'Тип/модификация',
-            
+            'Тип/модификация',          
             'Заводской номер',
             'Год выпуска',
-            'Название компании-производителя',
-            
+            'Название компании-производителя',          
             'Дата аттестации',
             'Дата окончания аттестации',
             'Номер аттестата',
@@ -2420,15 +2415,13 @@ def export_listE_xls(request):
     for col_num in range(len(columns)):
         ws2.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws2.row(row_num).height_mismatch = True
-    ws2.row(row_num).height = 2000
+    ws2.row(row_num).height = 1500
 
     rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid).values_list('charakters__name',        
-        'charakters__typename',
-                
+        'charakters__typename',               
         'equipment__lot',
         'equipment__yearmanuf',
-        'equipment__manufacturer__companyName',
-                
+        'equipment__manufacturer__companyName',               
         'newdate',
         'newdatedead',
         'newarshin',
@@ -2441,7 +2434,7 @@ def export_listE_xls(request):
         for col_num in range(len(row)):
             ws2.write(row_num, col_num, row[col_num], style_plain_textf)
         ws2.row(row_num).height_mismatch = True
-        ws2.row(row_num).height = 2000        
+        ws2.row(row_num).height = 1500        
 
     row_num = 1 
     columns = [
@@ -2456,7 +2449,7 @@ def export_listE_xls(request):
     for col_num in range(len(columns)):
         ws3.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws3.row(row_num).height_mismatch = True
-    ws3.row(row_num).height = 2000
+    ws3.row(row_num).height = 1500
 
     rows = HelpingEquipment.objects.filter(pointer=request.user.profile.userid).values_list('charakters__name',          
         'charakters__typename',
@@ -2471,7 +2464,7 @@ def export_listE_xls(request):
         for col_num in range(len(row)):
             ws3.write(row_num, col_num, row[col_num], style_plain_textf)
         ws3.row(row_num).height_mismatch = True
-        ws3.row(row_num).height = 2000         
+        ws3.row(row_num).height = 1500         
 
     wb.save(response)
     return response
