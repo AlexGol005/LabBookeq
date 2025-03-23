@@ -3334,10 +3334,12 @@ class UploadingMetrologyForEquipment(object):
                 field_name_characters = headers_characters[column]
                 row_dict_characters[field_name_characters] = value
             try:   
-                a = self.model_CH.objects.filter(pointer=pointer).get(**row_dict_characters)
-                row_dict_METEHE['charakters'] = a
+                find_charakters = self.model_CH.objects.filter(pointer=pointer).get(**row_dict_characters)
+                row_dict_METEHE['charakters'] = find_charakters
+                find_charakters = True
             except:
-                raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+                pass
+                # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
@@ -3350,38 +3352,44 @@ class UploadingMetrologyForEquipment(object):
                     value = instance                          
                 row_dict_equipment[field_name] = value
             try:   
-                a = Equipment.objects.filter(pointer=pointer).get(**row_dict_equipment)
+                find_equipment = Equipment.objects.filter(pointer=pointer).get(**row_dict_equipment)
                 row_dict_METEHE['equipment'] = a
+                find_equipment = True
             except:
-                raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
+                pass
+                # raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
 
-            try:
-                equipmentSM  = self.model_objMETEHE.objects.filter(pointer=pointer).get(**row_dict_METEHE)
-            except:
-                raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
+            if find_equipment and find_charakters:
+                try:
+                    equipmentSM  = self.model_objMETEHE.objects.filter(pointer=pointer).get(**row_dict_METEHE)
+                    equipmentSM = True
+                except:
+                    pass
+                    # raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
             
-            for column in range(self.num_e, s.ncols):                  
-                value = s.cell(row, column).value
-                value = get_rid_point(value)
+            if find_equipment and find_charakters and equipmentSM:
+                for column in range(self.num_e, s.ncols):                  
+                    value = s.cell(row, column).value
+                    value = get_rid_point(value)
                 
-                field_name = headers_model_metrology[column]
-                if field_name in self.foreing_key_fields:
-                    model = self.model_metrology
-                    related_model = self.getting_related_model(field_name, model)
-                    instance_verificator, created = related_model.objects.get_or_create(companyName=value)
-                    value = instance_verificator
-                if field_name in ["date", "datedead", "dateorder", "dateordernew"] and value:
-                    value = get_dateformat_django(value)
+                    field_name = headers_model_metrology[column]
+                    if field_name in self.foreing_key_fields:
+                        model = self.model_metrology
+                        related_model = self.getting_related_model(field_name, model)
+                        instance_verificator, created = related_model.objects.get_or_create(companyName=value)
+                        value = instance_verificator
+                    if field_name in ["date", "datedead", "dateorder", "dateordernew"] and value:
+                        value = get_dateformat_django(value)
                     
-                if value or value == 0:
-                    row_dict_metrology[field_name] = value
-            row_dict_metrology['equipmentSM'] = equipmentSM
-            try:
-                a, m_created = self.model_metrology.objects.filter(pointer=pointer).get_or_create(**row_dict_metrology)
-                if m_created:
-                    self.number_objects+=1
-            except:
-                raise Exception(f"проблема в добавлении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
+                    if value or value == 0:
+                        row_dict_metrology[field_name] = value
+                row_dict_metrology['equipmentSM'] = equipmentSM
+                try:
+                    a, m_created = self.model_metrology.objects.filter(pointer=pointer).get_or_create(**row_dict_metrology)
+                    if m_created:
+                        self.number_objects+=1
+                except:
+                    raise Exception(f"проблема в добавлении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
                                         
         self.number_rows = s.nrows - 1
         return True
