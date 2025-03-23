@@ -2350,18 +2350,15 @@ def export_listE_xls(request):
     columns = [
             'Название прибора',
             'Номер в Госреестре',
-            'Тип/модификация',
-            
+            'Тип/модификация',          
             'Заводской номер',
             'Год выпуска',
-            'Название компании-производителя',
-            
+            'Название компании-производителя',           
             'Дата поверки',
             'Дата окончания поверки',
             'Ссылка на сведения о поверке в Аршин',
             'Номер свидетельства о поверке',
-            'Название компании поверителя',
-            
+            'Название компании поверителя',            
             'Дата калибровки',
             'Дата окончания калибровки',
             'Номер сертификата калибровки',
@@ -2386,7 +2383,6 @@ def export_listE_xls(request):
         'newverificator',
         'calnewdate',
         'calnewdatedead',
-        'calnewarshin',
         'calnewcertnumber',
         'calnewverificator',
     )
@@ -2424,7 +2420,6 @@ def export_listE_xls(request):
         'equipment__manufacturer__companyName',               
         'newdate',
         'newdatedead',
-        'newarshin',
         'newcertnumber',
         'newverificator',
     )
