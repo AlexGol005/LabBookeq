@@ -3445,7 +3445,7 @@ class Uploading_Verificationequipment(UploadingMetrologyForEquipment):
     num_e = 6
 
 class Uploading_Calibrationequipment(UploadingMetrologyForEquipment):
-    model_metrology = Verificationequipment
+    model_metrology = Calibrationequipment
     model_CH = MeasurEquipmentCharakters
     model_objMETEHE = MeasurEquipment
     kategory_e = "СИ"
@@ -3453,12 +3453,12 @@ class Uploading_Calibrationequipment(UploadingMetrologyForEquipment):
     num_e = 6
 
 class Uploading_Attestationequipment(UploadingMetrologyForEquipment):
-    model_metrology = Verificationequipment
-    model_CH = MeasurEquipmentCharakters
-    model_objMETEHE = MeasurEquipment
-    kategory_e = "СИ"
-    num_hc = 3
-    num_e = 6
+    model_metrology = Attestationequipment
+    model_CH = TestingEquipmentCharakters
+    model_objMETEHE = TestingEquipment
+    kategory_e = "ИО"
+    num_hc = 2
+    num_e = 5
     
 
 def BulkDownload(request):
