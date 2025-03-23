@@ -10,6 +10,21 @@ now = date.today()
 
 K = 2  #(двойка из правила округления двойки)
 
+def get_dateformat_django(date):
+    """переводит дату из формата дд.мм.гггг в гггг-мм-дд"""
+    pattern = re.compile(r'\d\d\d\d-\d\d-\d\d')
+    if not pattern.match(date):
+        dateformat = str(date)
+        day = dateformat[:2]
+        month = dateformat[3:5]
+        year = dateformat[6:]
+        if len(year) <= 4 and int(year) <= (int(str(now.year)[:4]) + 10):
+            year = f'20{year}'
+        elif len(year) <= 4 and int(year) >= (int(str(now.year)[:4]) + 10):
+            year = f'19{year}'            
+        date = f'{year}-{month}-{day}'
+    return date
+
 def rounder(value: Decimal, m: str) -> Decimal:
     '''каскадно округляет числа с неизвестным количесвом знаков после точки(запятой)(value)
     до указанного количества знаков (m)'''
@@ -115,22 +130,6 @@ def get_dateformat(date):
     year = dateformat[:4]
     rdate = f'{day}.{month}.{year}'
     return rdate
-
-def get_dateformat_django(date):
-    """переводит дату из формата дд.мм.гггг в гггг-мм-дд"""
-    pattern = re.compile(r'dddd-dd-dd')
-    if not pattern.match(date):
-        dateformat = str(date)
-        day = dateformat[:2]
-        month = dateformat[3:5]
-        year = dateformat[6:]
-        if len(year) <= 4 and int(year) <= (int(str(now.year)[:4]) + 10):
-            year = f'20{year}'
-        elif len(year) <= 4 and int(year) >= (int(str(now.year)[:4]) + 10):
-            year = f'19{year}'            
-        date = f'{year}-{month}-{day}'
-    return date
-
 
 def get_dateformat_to_number(date):
     """переводит дату из формата гггг-мм-дд в ггммдд01"""
