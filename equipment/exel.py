@@ -2371,7 +2371,7 @@ def export_listE_xls(request):
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 2800
+    ws1.row(row_num).height = 2000
 
     rows = MeasurEquipment.objects.filter(pointer=request.user.profile.userid).values_list('charakters__name',               
         'charakters__reestr',
@@ -2399,7 +2399,7 @@ def export_listE_xls(request):
         for col_num in range(len(row)):
             ws1.write(row_num, col_num, row[col_num], style_plain_textf)
         ws1.row(row_num).height_mismatch = True
-        ws1.row(row_num).height = 2800
+        ws1.row(row_num).height = 2000
 
 
     row_num = 1 
@@ -2420,10 +2420,9 @@ def export_listE_xls(request):
     for col_num in range(len(columns)):
         ws2.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws2.row(row_num).height_mismatch = True
-    ws2.row(row_num).height = 2800
+    ws2.row(row_num).height = 2000
 
     rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid).values_list('charakters__name',        
-        'charakters__name',
         'charakters__typename',
                 
         'equipment__lot',
@@ -2442,7 +2441,7 @@ def export_listE_xls(request):
         for col_num in range(len(row)):
             ws2.write(row_num, col_num, row[col_num], style_plain_textf)
         ws2.row(row_num).height_mismatch = True
-        ws2.row(row_num).height = 2800        
+        ws2.row(row_num).height = 2000        
 
     row_num = 1 
     columns = [
@@ -2457,10 +2456,9 @@ def export_listE_xls(request):
     for col_num in range(len(columns)):
         ws3.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws3.row(row_num).height_mismatch = True
-    ws3.row(row_num).height = 2800
+    ws3.row(row_num).height = 2000
 
-    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid).values_list('charakters__name',          
-        'charakters__name',
+    rows = HelpingEquipment.objects.filter(pointer=request.user.profile.userid).values_list('charakters__name',          
         'charakters__typename',
                 
         'equipment__lot',
@@ -2473,7 +2471,7 @@ def export_listE_xls(request):
         for col_num in range(len(row)):
             ws3.write(row_num, col_num, row[col_num], style_plain_textf)
         ws3.row(row_num).height_mismatch = True
-        ws3.row(row_num).height = 2800         
+        ws3.row(row_num).height = 2000         
 
     wb.save(response)
     return response
