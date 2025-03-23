@@ -719,7 +719,7 @@ class Calibrationequipment(models.Model):
     year = models.CharField('Год калибровки (если нет точных дат)', max_length=900, blank=True, null=True)
     dateordernew = models.DateField('Дата заказа нового оборудования (если калибровать не выгодно)',
                                     blank=True, null=True)
-    haveorder = models.BooleanField(verbose_name='Заказана следующая калибровка (или новое СИ): "1" - заказана, "0" - не заказана', default=False,
+    haveorder = models.BooleanField(verbose_name='Заказана следующая калибровки (или новое СИ): "1" - заказана, "0" - не заказана', default=False,
                                     blank=True)
     cust = models.BooleanField(verbose_name='Калибровку организует Поставщик: "1" - да, "0" - нет', default=False,
                                blank=True)
