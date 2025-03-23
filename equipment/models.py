@@ -714,7 +714,7 @@ class Calibrationequipment(models.Model):
     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
                                     verbose_name='Название компании поверителя', blank=True, null=True)
     place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
-                             verbose_name='Место калибровки')
+                             verbose_name='Место калибровки: выберите "У поверителя", "На месте эксплуатации"')
     note = models.CharField('Примечание', max_length=900, blank=True, null=True)
     year = models.CharField('Год калибровки (если нет точных дат)', max_length=900, blank=True, null=True)
     dateordernew = models.DateField('Дата заказа нового оборудования (если калибровать не выгодно)',
