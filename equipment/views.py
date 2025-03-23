@@ -3406,8 +3406,7 @@ class UploadingMetrologyForEquipment(object):
             if find_equipment_bool and find_charakters_bool and equipmentSM_bool:
                 for column in range(self.num_e, s.ncols):                  
                     value = s.cell(row, column).value
-                    value = get_rid_point(value)
-                
+                                    
                     field_name = headers_model_metrology[column]
                     if field_name in self.foreing_key_fields:
                         model = self.model_metrology
