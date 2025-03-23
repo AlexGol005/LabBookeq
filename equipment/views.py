@@ -3219,6 +3219,35 @@ class UploadingTwoModels(object):
         return True
 
 
+class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
+    model = Equipment
+    model2 = MeasurEquipmentCharakters
+    model3 = MeasurEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "СИ"
+    num_hc = 3
+    num_e = 15
+
+class UploadingEquipment_TestingEquipment(UploadingTwoModels):
+    model = Equipment
+    model2 = TestingEquipmentCharakters
+    model3 = TestingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ИО"
+    num_hc = 2
+    num_e = 13
+
+class UploadingEquipment_HelpingEquipment(UploadingTwoModels):
+    model = Equipment
+    model2 = HelpingEquipmentCharakters
+    model3 = HelpingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ВО"
+    num_hc = 2
+    num_e = 13
+
+
+
 
 class UploadingMetrologyForEquipment(object):
     foreing_key_fields = ["verificator", "manufacturer"] 
@@ -3339,8 +3368,8 @@ class UploadingMetrologyForEquipment(object):
                 find_charakters = True
             except:
                 find_charakters = False
-                pass
-                # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+                # pass
+                raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
@@ -3358,16 +3387,17 @@ class UploadingMetrologyForEquipment(object):
                 find_equipment = True
             except:
                 find_equipment = False
-                pass
-                # raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
+                # pass
+                raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
 
             if find_equipment and find_charakters:
                 try:
                     equipmentSM  = self.model_objMETEHE.objects.filter(pointer=pointer).get(**row_dict_METEHE)
                     equipmentSM = True
                 except:
-                    pass
-                    # raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
+                    equipmentSM = False
+                    # pass
+                    raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
             
             if find_equipment and find_charakters and equipmentSM:
                 for column in range(self.num_e, s.ncols):                  
@@ -3391,38 +3421,11 @@ class UploadingMetrologyForEquipment(object):
                     if m_created:
                         self.number_objects+=1
                 except:
+                    # pass
                     raise Exception(f"проблема в добавлении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
                                         
         self.number_rows = s.nrows - 1
         return True
-
-
-class UploadingEquipment_MeasurEquipment(UploadingTwoModels):
-    model = Equipment
-    model2 = MeasurEquipmentCharakters
-    model3 = MeasurEquipment
-    foreing_key_fields = ["manufacturer"]
-    kategory_e = "СИ"
-    num_hc = 3
-    num_e = 15
-
-class UploadingEquipment_TestingEquipment(UploadingTwoModels):
-    model = Equipment
-    model2 = TestingEquipmentCharakters
-    model3 = TestingEquipment
-    foreing_key_fields = ["manufacturer"]
-    kategory_e = "ИО"
-    num_hc = 2
-    num_e = 13
-
-class UploadingEquipment_HelpingEquipment(UploadingTwoModels):
-    model = Equipment
-    model2 = HelpingEquipmentCharakters
-    model3 = HelpingEquipment
-    foreing_key_fields = ["manufacturer"]
-    kategory_e = "ВО"
-    num_hc = 2
-    num_e = 13
 
 
 class Uploading_Verificationequipment(UploadingMetrologyForEquipment):
