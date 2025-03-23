@@ -2418,7 +2418,7 @@ def export_listE_xls(request):
         ]    
         
     for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
+        ws2.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws2.row(row_num).height_mismatch = True
     ws2.row(row_num).height = 2800
 
@@ -2455,7 +2455,7 @@ def export_listE_xls(request):
         ]    
         
     for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
+        ws3.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws3.row(row_num).height_mismatch = True
     ws3.row(row_num).height = 2800
 
