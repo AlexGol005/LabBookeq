@@ -3413,7 +3413,10 @@ class UploadingMetrologyForEquipment(object):
                     if field_name in ["date", "datedead", "dateorder", "dateordernew"] and value:
                         value = get_dateformat_django(value)
                     if field_name in ["price"] and value:
-                        value = float(value)
+                        ind = value.find(",")
+                        if ind != -1:
+                            value = value.replace(",", ".")
+                        value = Decimal(value)
                     
                     if value or value == 0:
                         row_dict_metrology[field_name] = value
