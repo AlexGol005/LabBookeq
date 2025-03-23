@@ -18,9 +18,10 @@ def get_dateformat_django(date):
         day = dateformat[:2]
         month = dateformat[3:5]
         year = dateformat[6:]
-        if len(year) <= 2 and int(year) <= (int(str(now.year)[:4]) + 10):
+        int(str(now.year)[:2]) + 10
+        if len(year) == 2 and int(year) <= a:
             year = f'20{year}'
-        elif len(year) <= 2 and int(year) >= (int(str(now.year)[:4]) + 10):
+        elif len(year) == 2 and int(year) >= a:
             year = f'19{year}'            
         date = f'{year}-{month}-{day}'
     return date
