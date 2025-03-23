@@ -3368,8 +3368,8 @@ class UploadingMetrologyForEquipment(object):
                 find_charakters = True
             except:
                 find_charakters = False
-                # pass
-                raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+                pass
+                # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
@@ -3387,8 +3387,8 @@ class UploadingMetrologyForEquipment(object):
                 find_equipment = True
             except:
                 find_equipment = False
-                # pass
-                raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
+                pass
+                # raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
 
             if find_equipment and find_charakters:
                 try:
@@ -3396,8 +3396,8 @@ class UploadingMetrologyForEquipment(object):
                     equipmentSM = True
                 except:
                     equipmentSM = False
-                    # pass
-                    raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
+                    pass
+                    # raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
             
             if find_equipment and find_charakters and equipmentSM:
                 for column in range(self.num_e, s.ncols):                  
@@ -3412,6 +3412,8 @@ class UploadingMetrologyForEquipment(object):
                         value = instance_verificator
                     if field_name in ["date", "datedead", "dateorder", "dateordernew"] and value:
                         value = get_dateformat_django(value)
+                    if field_name in ["price"] and value:
+                        value = int(value)
                     
                     if value or value == 0:
                         row_dict_metrology[field_name] = value
