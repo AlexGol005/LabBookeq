@@ -616,7 +616,7 @@ class Verificationequipment(models.Model):
     date = models.DateField('Дата поверки', blank=True, null=True)
     datedead = models.DateField('Дата окончания поверки', blank=True, null=True)
     dateorder = models.DateField('Дата заказа следующей поверки', blank=True, null=True)
-    arshin = models.TextField('Ссылка на сведения о поверке в Аршин', blank=True, null=True)
+    arshin = models.CharField('Ссылка на сведения о поверке в Аршин', blank=True, null=True, max_length=1000)
     certnumber = models.CharField('Номер свидетельства о поверке', max_length=90, blank=True, null=True)
     price = models.DecimalField('Стоимость данной поверки', max_digits=100, decimal_places=2, null=True, blank=True)
     img = models.ImageField('Сертификат', upload_to='user_images', blank=True, null=True)
@@ -703,7 +703,7 @@ class Calibrationequipment(models.Model):
     date = models.DateField('Дата калибровки', blank=True, null=True)
     datedead = models.DateField('Дата окончания калибровки', blank=True, null=True)
     dateorder = models.DateField('Дата заказа следующей калибровки', blank=True, null=True)
-    arshin = models.TextField('Ссылка на скан сертификата', blank=True, null=True)
+    arshin = models.TextField('Ссылка на скан сертификата', blank=True, null=True, max_length=1000)
     certnumber = models.CharField('Номер сертификата калибровки', max_length=90, blank=True, null=True)
     price = models.DecimalField('Стоимость данной калибровки', max_digits=100, decimal_places=2, null=True, blank=True)
     statusver = models.CharField(max_length=300, choices=CHOICESCAL, default='Калиброван', null=True,
@@ -785,7 +785,7 @@ class Attestationequipment(models.Model):
     created_by = CurrentUserField(related_name='creatorate', editable=True)
     updated_by = CurrentUserField(related_name='updatorate', editable=True)
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
-    arshin = models.TextField('Ссылка на скан аттестата', blank=True, null=True)
+    arshin = models.TextField('Ссылка на скан аттестата', blank=True, null=True, max_length=1000)
     equipmentSM = models.ForeignKey(TestingEquipment, verbose_name='ИО',
                                     on_delete=models.PROTECT, related_name='equipmentSM_att', blank=True, null=True)
     date = models.DateField('Дата аттестации', blank=True, null=True)
