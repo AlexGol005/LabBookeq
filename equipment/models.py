@@ -707,20 +707,20 @@ class Calibrationequipment(models.Model):
     certnumber = models.CharField('Номер сертификата калибровки', max_length=90, blank=True, null=True)
     price = models.DecimalField('Стоимость данной калибровки', max_digits=100, decimal_places=2, null=True, blank=True)
     statusver = models.CharField(max_length=300, choices=CHOICESCAL, default='Калиброван', null=True,
-                                 verbose_name='Статус')
+                                 verbose_name='Статус калибровки: выберите "Калиброван", "Признан непригодным", "Спорный"')
     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
-                                    verbose_name='Поверитель', blank=True, null=True)
+                                    verbose_name='Название компании поверителя', blank=True, null=True)
     place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
                              verbose_name='Место калибровки')
     note = models.CharField('Примечание', max_length=900, blank=True, null=True)
     year = models.CharField('Год калибровки (если нет точных дат)', max_length=900, blank=True, null=True)
     dateordernew = models.DateField('Дата заказа нового оборудования (если калибровать не выгодно)',
                                     blank=True, null=True)
-    haveorder = models.BooleanField(verbose_name='Заказана следующая калибровка (или новое СИ)', default=False,
+    haveorder = models.BooleanField(verbose_name='Заказана следующая калибровка (или новое СИ): "1" - заказана, "0" - не заказана', default=False,
                                     blank=True)
-    cust = models.BooleanField(verbose_name='Калибровку организует Поставщик', default=False,
+    cust = models.BooleanField(verbose_name='Калибровку организует Поставщик: "1" - да, "0" - нет', default=False,
                                blank=True)
-    extra = models.TextField('Дополнительная информация', blank=True, null=True)
+    extra = models.TextField('Выписка из сертификата калибровки', blank=True, null=True)
 
     def __str__(self):
         try:
@@ -795,20 +795,20 @@ class Attestationequipment(models.Model):
     price = models.DecimalField('Стоимость данной аттестации', max_digits=100, decimal_places=2, null=True, blank=True)
     img = models.ImageField('Аттестат', upload_to='user_images', blank=True, null=True)
     statusver = models.CharField(max_length=300, choices=CHOICESATT, default='Аттестован', null=True,
-                                 verbose_name='Статус')
+                                 verbose_name='Статус аттестации: выберите "Аттестован", "Признан непригодным", "Спорный"')
     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT,
-                                    verbose_name='Поверитель', blank=True, null=True)
+                                    verbose_name='Название компании поверителя', blank=True, null=True)
     place = models.CharField(max_length=300, choices=CHOICESPLACE, default='У поверителя', null=True,
-                             verbose_name='Место аттестации')
+                             verbose_name='Место аттестации: выберите "У поверителя", "На месте эксплуатации"')
     note = models.CharField('Примечание', max_length=900, blank=True, null=True)
     year = models.CharField('Год аттестации (если нет точных дат)', max_length=900, blank=True, null=True)
     dateordernew = models.DateField('Дата заказа нового оборудования (если аттестовывать не выгодно)',
                                     blank=True, null=True)
-    haveorder = models.BooleanField(verbose_name='Заказана следующая аттестация (или новое СИ)', default=False,
+    haveorder = models.BooleanField(verbose_name='Заказана следующая аттестация (или новое ИО): "1" - заказана, "0" - не заказана', default=False,
                                     blank=True)
-    cust = models.BooleanField(verbose_name='Аттестацию организует Поставщик', default=False,
+    cust = models.BooleanField(verbose_name='Аттестацию организует Поставщик: "1" - да, "0" - нет', default=False,
                                blank=True)
-    extra = models.TextField('Дополнительная информация', blank=True, null=True)
+    extra = models.TextField('Выписка из аттестата', blank=True, null=True)
 
     def __str__(self):
         try:
