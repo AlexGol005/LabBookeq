@@ -2368,7 +2368,7 @@ def export_listE_xls(request):
             'Название компании поверителя',
         ]    
         
-    for col_num in range(len(columns):
+    for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws1.row(row_num).height_mismatch = True
     ws1.row(row_num).height = 2800
@@ -2419,7 +2419,7 @@ def export_listE_xls(request):
             'Название компании поверителя',
         ]    
         
-    for col_num in range(len(columns):
+    for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws2.row(row_num).height_mismatch = True
     ws2.row(row_num).height = 2800
@@ -2457,7 +2457,7 @@ def export_listE_xls(request):
             'Название компании-производителя',
         ]    
         
-    for col_num in range(len(columns):
+    for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
     ws3.row(row_num).height_mismatch = True
     ws3.row(row_num).height = 2800
