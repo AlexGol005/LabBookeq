@@ -1,10 +1,12 @@
 """
 Модуль проекта LabJournal, корневые модули.
 Данный модуль funcstandart.py содержит функции и константы для всего проекта.
+После 2050 года обратить внимание на функцию  get_dateformat_django :)
 """
-
-
+from datetime import date
+import re
 from decimal import *
+now = date.today()
 
 K = 2  #(двойка из правила округления двойки)
 
@@ -116,12 +118,18 @@ def get_dateformat(date):
 
 def get_dateformat_django(date):
     """переводит дату из формата дд.мм.гггг в гггг-мм-дд"""
-    dateformat = str(date)
-    day = dateformat[:2]
-    month = dateformat[3:5]
-    year = dateformat[6:]
-    rdate = f'{year}-{month}-{day}'
-    return rdate
+    pattern = re.compile('dddd-dd-dd')
+    if not pattern.match(date):
+        dateformat = str(date)
+        day = dateformat[:2]
+        month = dateformat[3:5]
+        year = dateformat[6:]
+        if len(year) <= 4 and int(year) <= str(now.year)[:4]:
+            year = f'20{year}'
+        elif len(year) <= 4 and int(year) >= str(now.year)[:4]:
+            year = f'19{year}'            
+        date = f'{year}-{month}-{day}'
+    return date
 
 
 def get_dateformat_to_number(date):
