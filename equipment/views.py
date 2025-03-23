@@ -3338,6 +3338,7 @@ class UploadingMetrologyForEquipment(object):
                 row_dict_METEHE['charakters'] = find_charakters
                 find_charakters = True
             except:
+                find_charakters = False
                 pass
                 # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
@@ -3356,6 +3357,7 @@ class UploadingMetrologyForEquipment(object):
                 row_dict_METEHE['equipment'] = a
                 find_equipment = True
             except:
+                find_equipment = False
                 pass
                 # raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
 
