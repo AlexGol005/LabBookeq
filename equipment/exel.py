@@ -2373,9 +2373,7 @@ def export_listE_xls(request):
     ws1.row(row_num).height_mismatch = True
     ws1.row(row_num).height = 2800
 
-    rows = MeasurEquipment.objects.filter(pointer=request.user.profile.userid). \        
-        values_list(
-        'charakters__name',
+    rows = MeasurEquipment.objects.filter(pointer=request.user.profile.userid).values_list('charakters__name',               
         'charakters__reestr',
         'charakters__typename',
                 
@@ -2424,8 +2422,7 @@ def export_listE_xls(request):
     ws2.row(row_num).height_mismatch = True
     ws2.row(row_num).height = 2800
 
-    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid). \        
-        values_list(
+    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid).values_list('charakters__name',        
         'charakters__name',
         'charakters__typename',
                 
@@ -2462,8 +2459,7 @@ def export_listE_xls(request):
     ws3.row(row_num).height_mismatch = True
     ws3.row(row_num).height = 2800
 
-    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid). \        
-        values_list(
+    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid).values_list('charakters__name',          
         'charakters__name',
         'charakters__typename',
                 
