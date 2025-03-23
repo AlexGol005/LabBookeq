@@ -2265,6 +2265,224 @@ def export_tecard_xls(request, pk):
 
 
 # блок 4 - шаблоны для массовой загрузки приборов
+def export_listE_xls(request):
+    '''представление для выгрузки списка загруженных приборов с поверками, калибровками и аттестациями'''
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="vsyoLO.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws1 = wb.add_sheet('СИ', cell_overwrite_ok=True)
+    ws2 = wb.add_sheet('ИО', cell_overwrite_ok=True)
+    ws3 = wb.add_sheet('ВО', cell_overwrite_ok=True)
+    ws1.header_str = b' '
+    ws1.footer_str = b' '
+    ws2.header_str = b' '
+    ws2.footer_str = b' '
+    ws3.header_str = b' '
+    ws3.footer_str = b' '
+
+    size = 11
+
+    # ширина столбцов
+    ws1.col(0).width = 3000
+    ws1.col(1).width = 3000
+    ws1.col(2).width = 3000
+    ws1.col(3).width = 3000
+    ws1.col(4).width = 3000
+    ws1.col(5).width = 3000
+    ws1.col(6).width = 3000
+    ws1.col(7).width = 3000
+    ws1.col(8).width = 3000
+    ws1.col(9).width = 3000
+    ws1.col(10).width = 3000
+    ws1.col(11).width = 3000
+    ws1.col(12).width = 3000
+    ws1.col(13).width = 3000
+    ws1.col(14).width = 3000
+    ws1.col(15).width = 3000
+    ws1.col(16).width = 3000
+    ws1.col(17).width = 3000
+    ws1.col(18).width = 3000
+    ws1.col(19).width = 3000
+
+    ws2.col(0).width = 3000
+    ws2.col(1).width = 3000
+    ws2.col(2).width = 3000
+    ws2.col(3).width = 3000
+    ws2.col(4).width = 3000
+    ws2.col(5).width = 3000
+    ws2.col(6).width = 3000
+    ws2.col(7).width = 3000
+    ws2.col(8).width = 3000
+    ws2.col(9).width = 3000
+    ws2.col(10).width = 3000
+    ws2.col(11).width = 3000
+    ws2.col(12).width = 3000
+    ws2.col(13).width = 3000
+    ws2.col(14).width = 3000
+    ws2.col(15).width = 3000
+    ws2.col(16).width = 3000
+    ws2.col(17).width = 3000
+    ws2.col(18).width = 3000
+    ws2.col(19).width = 3000
+
+    ws3.col(0).width = 3000
+    ws3.col(1).width = 3000
+    ws3.col(2).width = 3000
+    ws3.col(3).width = 3000
+    ws3.col(4).width = 3000
+    ws3.col(5).width = 3000
+    ws3.col(6).width = 3000
+    ws3.col(7).width = 3000
+    ws3.col(8).width = 3000
+    ws3.col(9).width = 3000
+    ws3.col(10).width = 3000
+    ws3.col(11).width = 3000
+    ws3.col(12).width = 3000
+    ws3.col(13).width = 3000
+    ws3.col(14).width = 3000
+    ws3.col(15).width = 3000
+    ws3.col(16).width = 3000
+    ws3.col(17).width = 3000
+    ws3.col(18).width = 3000
+    ws3.col(19).width = 3000
+
+    row_num = 1 
+    columns = [
+            'Название прибора',
+            'Номер в Госреестре',
+            'Тип/модификация',
+            
+            'Заводской номер',
+            'Год выпуска',
+            'Название компании-производителя',
+            
+            'Дата поверки',
+            'Дата окончания поверки',
+            'Ссылка на сведения о поверке в Аршин',
+            'Номер свидетельства о поверке',
+            'Название компании поверителя',
+            
+            'Дата калибровки',
+            'Дата окончания калибровки',
+            'Номер сертификата калибровки',
+            'Название компании поверителя',
+        ]    
+        
+    for col_num in range(len(columns):
+        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 2800
+
+    rows = MeasurEquipment.objects.filter(pointer=request.user.profile.userid). \        
+        values_list(
+        'charakters__name',
+        'charakters__reestr',
+        'charakters__typename',
+                
+        'equipment__lot',
+        'equipment__yearmanuf',
+        'equipment__manufacturer__companyName',
+                
+        'newdate',
+        'newdatedead',
+        'newarshin',
+        'newcertnumber',
+        'newverificator',
+
+        'calnewdate',
+        'calnewdatedead',
+        'calnewarshin',
+        'calnewcertnumber',
+        'calnewverificator',
+    )
+        
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws1.write(row_num, col_num, row[col_num], style_plain_textf)
+        ws1.row(row_num).height_mismatch = True
+        ws1.row(row_num).height = 2800
+
+
+    row_num = 1 
+    columns = [
+            'Название прибора',
+            'Тип/модификация',
+            
+            'Заводской номер',
+            'Год выпуска',
+            'Название компании-производителя',
+            
+            'Дата аттестации',
+            'Дата окончания аттестации',
+            'Номер аттестата',
+            'Название компании поверителя',
+        ]    
+        
+    for col_num in range(len(columns):
+        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
+    ws2.row(row_num).height_mismatch = True
+    ws2.row(row_num).height = 2800
+
+    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid). \        
+        values_list(
+        'charakters__name',
+        'charakters__typename',
+                
+        'equipment__lot',
+        'equipment__yearmanuf',
+        'equipment__manufacturer__companyName',
+                
+        'newdate',
+        'newdatedead',
+        'newarshin',
+        'newcertnumber',
+        'newverificator',
+    )
+        
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws2.write(row_num, col_num, row[col_num], style_plain_textf)
+        ws2.row(row_num).height_mismatch = True
+        ws2.row(row_num).height = 2800        
+
+    row_num = 1 
+    columns = [
+            'Название прибора',
+            'Тип/модификация',
+            
+            'Заводской номер',
+            'Год выпуска',
+            'Название компании-производителя',
+        ]    
+        
+    for col_num in range(len(columns):
+        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
+    ws3.row(row_num).height_mismatch = True
+    ws3.row(row_num).height = 2800
+
+    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid). \        
+        values_list(
+        'charakters__name',
+        'charakters__typename',
+                
+        'equipment__lot',
+        'equipment__yearmanuf',
+        'equipment__manufacturer__companyName',
+    )
+        
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws3.write(row_num, col_num, row[col_num], style_plain_textf)
+        ws3.row(row_num).height_mismatch = True
+        ws3.row(row_num).height = 2800         
+
+    wb.save(response)
+    return response
+
+
 def export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, columns2, columns4, columns3):
     '''шаблонное представление для выгрузки шаблонов файлов EXEL'''
         
