@@ -12,6 +12,11 @@
       
    <center><h3>Загрузка списков приборов из файлов EXEL</h3> </center>
    
+      {% if USER_HAVE_RIGHTS %} 
+   <br>
+ <center><a href="{% url 'export_listE_xls' %}" class="btn btn-primary mr-2 ml-2" style="width: 40%">Список оборудования</a></center>
+     <br> 
+    
    <ul>
       <li>Пожалуйста, сначала прочтите инструкцию  полностью:</li>
       <li>Для успешной загрузки приборов используйте только файлы EXEL.xls  (xlsx не поддерживается)</li>
@@ -321,7 +326,7 @@
    <hr> 
 <br>
 
-   
+   {% endif %} 
 </div>
 {% endblock %}
 
