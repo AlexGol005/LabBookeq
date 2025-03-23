@@ -3225,8 +3225,8 @@ class UploadingMetrologyForEquipment(object):
     model_metrology = None
     model_CH = MeasurEquipmentCharakters
     model_objMETEHE = None
-    number_rows = None
-    number_objects = None
+    number_rows = 0
+    number_objects = 0
     kategory_e = None
     num_hc = 0
     num_e = 0
