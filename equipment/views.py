@@ -3397,9 +3397,9 @@ class UploadingMetrologyForEquipment(object):
             if find_equipment_bool and find_charakters_bool:
                 try:
                     equipmentSM  = self.model_objMETEHE.objects.filter(pointer=pointer).get(**row_dict_METEHE)
-                    equipmentSM = True
+                    equipmentSM_bool = True
                 except:
-                    equipmentSM = False
+                    equipmentSM_bool = False
                     pass
                     # raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
             
