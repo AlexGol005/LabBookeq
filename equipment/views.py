@@ -3379,7 +3379,7 @@ class UploadingMetrologyForEquipment(object):
             try:
                 a, m_created = self.model_metrology.objects.filter(pointer=pointer).get_or_create(**row_dict_metrology)
                 if m_created:
-                    self.number_objects = self.number_objects +=1
+                    self.number_objects+=1
             except:
                 raise Exception(f"проблема в добавлении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
                                         
