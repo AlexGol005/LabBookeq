@@ -3151,7 +3151,12 @@ class UploadingTwoModels(object):
                 if field_name in self.foreing_key_fields:
                     related_model = self.getting_related_model(field_name)                 
                     instance, created = related_model.objects.get_or_create(companyName=value)
-                    value = instance                          
+                    value = instance
+                if field_name in ["price"] and value:
+                    ind = value.find(",")
+                    if ind != -1:
+                        value = value.replace(",", ".")
+                    value = Decimal(value)
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e
                 ahe = row_dict_characters['name'] 
@@ -3259,8 +3264,7 @@ class UploadingMetrologyForEquipment(object):
     kategory_e = None
     num_hc = 0
     num_e = 0
-
-    
+   
     def __init__(self, data):
         data=data
         self.uploaded_file = data.get("file")
@@ -3365,9 +3369,9 @@ class UploadingMetrologyForEquipment(object):
             try:   
                 find_charakters = self.model_CH.objects.filter(pointer=pointer).get(**row_dict_characters)
                 row_dict_METEHE['charakters'] = find_charakters
-                find_charakters = True
+                find_charakters_bool = True
             except:
-                find_charakters = False
+                find_charakters_bool = False
                 pass
                 # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
@@ -3384,13 +3388,13 @@ class UploadingMetrologyForEquipment(object):
             try:   
                 find_equipment = Equipment.objects.filter(pointer=pointer).get(**row_dict_equipment)
                 row_dict_METEHE['equipment'] = find_equipment
-                find_equipment = True
+                find_equipment_bool = True
             except:
-                find_equipment = False
+                find_equipment_bool = False
                 pass
                 # raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
 
-            if find_equipment and find_charakters:
+            if find_equipment_bool and find_charakters_bool:
                 try:
                     equipmentSM  = self.model_objMETEHE.objects.filter(pointer=pointer).get(**row_dict_METEHE)
                     equipmentSM = True
@@ -3399,7 +3403,7 @@ class UploadingMetrologyForEquipment(object):
                     pass
                     # raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
             
-            if find_equipment and find_charakters and equipmentSM:
+            if find_equipment_bool and find_charakters_bool and equipmentSM_bool:
                 for column in range(self.num_e, s.ncols):                  
                     value = s.cell(row, column).value
                     value = get_rid_point(value)
