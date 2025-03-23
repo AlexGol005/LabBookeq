@@ -118,7 +118,7 @@ def get_dateformat(date):
 
 def get_dateformat_django(date):
     """переводит дату из формата дд.мм.гггг в гггг-мм-дд"""
-    pattern = re.compile('dddd-dd-dd')
+    pattern = re.compile(r'dddd-dd-dd')
     if not pattern.match(date):
         dateformat = str(date)
         day = dateformat[:2]
