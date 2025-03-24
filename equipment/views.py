@@ -3737,6 +3737,7 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_Verificationequipment({'file': Verificationequipment_file_del})
             except:
+                raise
                 messages.success(request, "Неверно заполнен файл 'Поверка СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
