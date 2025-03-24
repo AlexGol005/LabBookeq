@@ -3660,8 +3660,8 @@ class DeleteTwoModels(UploadingTwoModels):
                 с = self.model3.objects.get(**row_dict_item_metehe)
                 c.delete()
                 self.number_objects_metehe+=1
-                except:
-                    raise Exception(f"проблема в удалении единицы {self.kategory_e}: {row_dict_item_metehe}")
+            except:
+                raise Exception(f"проблема в удалении единицы {self.kategory_e}: {row_dict_item_metehe}")
                     
         self.number_objects_del = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
