@@ -3657,7 +3657,7 @@ class DeleteTwoModels(UploadingTwoModels):
             except:
                 raise Exception(f"проблема в нахождении ЛО: {row_dict}")
             try:
-                с = self.model3.objects.get(**row_dict_item_metehe)
+                c = self.model3.objects.get(**row_dict_item_metehe)
                 c.delete()
                 self.number_objects_metehe+=1
             except:
