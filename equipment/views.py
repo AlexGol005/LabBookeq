@@ -3556,9 +3556,7 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                         find_ver.save()
                     except:
                         equipmentSM.newdatedead = ''
-                        equipmentSM.newdatedead_date = ''
                         equipmentSM.newdateorder = ''
-                        equipmentSM.newdateorder_date = ''
                         equipmentSM.newarshin = ''
                         equipmentSM.newcertnumber = ''
                         equipmentSM.newprice = ''
@@ -3568,7 +3566,6 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                         equipmentSM.newnote = ''
                         equipmentSM.newyear = ''
                         equipmentSM.newdateordernew = ''
-                        equipmentSM.newdateordernew_date = ''
                         equipmentSM.newhaveorder = ''     
                         equipmentSM.save()
                 except:
