@@ -3559,14 +3559,14 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                         equipmentSM.newdateorder = ''
                         equipmentSM.newarshin = ''
                         equipmentSM.newcertnumber = ''
-                        equipmentSM.newprice = ''
+                        equipmentSM.newprice = '0'
                         equipmentSM.newstatusver = ''
                         equipmentSM.newverificator = ''
                         equipmentSM.newplace = ''
                         equipmentSM.newnote = ''
                         equipmentSM.newyear = ''
                         equipmentSM.newdateordernew = ''
-                        equipmentSM.newhaveorder = ''     
+                        equipmentSM.newhaveorder = False    
                         equipmentSM.save()
                 except:
                     raise
