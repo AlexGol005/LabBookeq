@@ -3549,13 +3549,11 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                 try:
                     note = self.model_metrology.objects.filter(pointer=pointer).get(**row_dict_metrology)
                     a = note.delete()
-                    if a:
+                    if note.pk:
                         self.number_objects_del+=1
-                except:
-                    pass
-                    # raise Exception(f"проблема в удалении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
-                try:
-                    find_ver = model_metrology.objects.filter(equipmentSM__equipment__exnumber=a).last()
+                    for_b = model_metrology.objects.get(pk=note.pk)
+                    b = for_b.equipmentSM.equipment.exnumber
+                    find_ver = model_metrology.objects.filter(equipmentSM__equipment__exnumber=b).last()
                     find_ver.save()    
                 except:
                     pass
