@@ -3771,8 +3771,8 @@ def BulkDownload(request):
                 uploading_file = UploadingEquipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file})
             except:
                 raise
-                messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
-                return redirect('bulkdownload')
+                # messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
+                # return redirect('bulkdownload')
 
         elif Verificationequipment_file:
             try:
