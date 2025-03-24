@@ -3547,14 +3547,16 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                 row_dict_metrology['equipmentSM'] = equipmentSM
                 try:
                     note = self.model_metrology.objects.filter(pointer=pointer).get(**row_dict_metrology)
-                    for_b = model_metrology.objects.get(pk=note.pk)
+                    for_b = self.model_metrology.objects.get(pk=note.pk)
                     b = for_b.equipmentSM.equipment.exnumber
                     find_ver = self.model_metrology.objects.filter(equipmentSM__equipment__exnumber=b).last()
                     find_ver.save()                 
                     self.number_objects_del+=1
                     note.delete()                                     
                 except:
-                    pass    
+                    # raise
+                    pass
+        
         self.number_rows = s.nrows - 1
         return True
 
@@ -3764,12 +3766,13 @@ def BulkDownload(request):
             number_rows = uploading_file.number_rows
         
             if uploading_file:
-                if number_objects and number_rows and number_objects_del == 0:
+                if number_objects and number_rows:
                     messages.success(request, f"Файл успешно загружен, добавлено {number_objects} -  из {number_rows} строк файла EXEL")
-                elif number_objects_del and number_rows and number_objects == 0:
-                    messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
                 else:
-                    messages.success(request, f"ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
+                    if number_objects_del and number_rows:
+                        messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
+                    else:
+                        messages.success(request, f"ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
             else:
                 messages.success(request, "Файл не загружен")
         except:
