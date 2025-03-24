@@ -3770,9 +3770,8 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingEquipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file})
             except:
-                raise
-                # messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
-                # return redirect('bulkdownload')
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
 
         elif Verificationequipment_file:
             try:
@@ -3839,8 +3838,9 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_Equipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file_del})
             except:
-                messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
-                return redirect('bulkdownload')
+                raise
+                # messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
+                # return redirect('bulkdownload')
 
         elif Verificationequipment_file_del:
             try:
