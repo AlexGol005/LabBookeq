@@ -3783,11 +3783,11 @@ def BulkDownload(request):
             if uploading_file:
                 if number_objects and number_rows:
                     messages.success(request, f"Файл успешно загружен, добавлено {number_objects} -  из {number_rows} строк файла EXEL")
-                # else:
-                #     if number_objects_del and number_rows:
-                #         messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
                 else:
-                    messages.success(request, f"ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
+                    if number_objects_del and number_rows:
+                        messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
+                    else:
+                        messages.success(request, f"ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
             else:
                 messages.success(request, "Файл не загружен")
         except:
