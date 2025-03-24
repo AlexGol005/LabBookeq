@@ -3047,6 +3047,7 @@ class UploadingTwoModels(object):
     model2 = None
     model3 = None
     number_objects = 0
+    number_objects_del = 0
     number_objects_metehe = 0
     number_objects_char = 0
     number_rows = None
@@ -3250,7 +3251,6 @@ class UploadingEquipment_HelpingEquipment(UploadingTwoModels):
     kategory_e = "ВО"
     num_hc = 2
     num_e = 13
-
 
 
 
@@ -3602,6 +3602,101 @@ class Delete_Attestationequipment(DeleteMetrologyForEquipment):
     num_e = 5
 
 
+class DeleteTwoModels(UploadingTwoModels):       
+    def parsing(self):
+        pointer = get_current_user().profile.userid
+        uploaded_file = self.uploaded_file
+        wb = xlrd.open_workbook(file_contents=uploaded_file.read())
+        s = wb.sheet_by_index(0)
+        self.s = s
+        headers = self.getting_headers()
+        headers_characters = self.getting_headers_characters()
+
+        for row in range(1, s.nrows):
+            row_dict_characters = {}
+            row_dict = {}
+            row_dict_item_metehe = {}
+            row_dict_room = {}
+            row_dict_person = {}
+            
+            for column in range(self.num_hc):
+                value = s.cell(row, column).value
+                a = str(value)
+                b = a.find('.')
+                if b != -1:
+                    value = str(value)[0:b]
+                field_name_characters = headers_characters[column]
+                row_dict_characters[field_name_characters] = value
+            try:   
+                b = self.model2.objects.filter(pointer=pointer).get(**row_dict_characters)
+                row_dict_item_metehe['charakters'] = b
+                if b.pk:
+                    self.number_objects_char+=1
+            except:
+                raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+
+            for column in range(self.num_hc, self.num_e):                  
+                value = s.cell(row, column).value
+                value = get_rid_point(value)
+                field_name = headers[column]
+                if field_name in self.foreing_key_fields:
+                    related_model = self.getting_related_model(field_name)                 
+                    instance = related_model.objects.get(companyName=value)
+                    value = instance
+                if field_name in ["price"] and value:
+                    ind = value.find(",")
+                    if ind != -1:
+                        value = value.replace(",", ".")
+                    value = Decimal(value)
+                row_dict[field_name] = value
+                row_dict['kategory'] = self.kategory_e                     
+            try:
+                a = self.model.objects.filter(pointer=pointer).get(**row_dict)
+                row_dict_item_metehe['equipment'] = a
+                self.number_objects_del+=1
+            except:
+                raise Exception(f"проблема в нахождении ЛО: {row_dict}")
+            try:
+                с = self.model3.objects.get(**row_dict_item_metehe)
+                c.delete()
+                self.number_objects_metehe+=1
+                except:
+                    raise Exception(f"проблема в удалении единицы {self.kategory_e}: {row_dict_item_metehe}")
+                    
+        self.number_objects_del = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
+        self.number_rows = s.nrows - 1
+        return True
+
+
+class Delete_Equipment_MeasurEquipment(DeleteTwoModels):
+    model = Equipment
+    model2 = MeasurEquipmentCharakters
+    model3 = MeasurEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "СИ"
+    num_hc = 3
+    num_e = 15
+
+class Delete_Equipment_TestingEquipment(DeleteTwoModels):
+    model = Equipment
+    model2 = TestingEquipmentCharakters
+    model3 = TestingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ИО"
+    num_hc = 2
+    num_e = 13
+
+class Delete_Equipment_HelpingEquipment(DeleteTwoModels):
+    model = Equipment
+    model2 = HelpingEquipmentCharakters
+    model3 = HelpingEquipment
+    foreing_key_fields = ["manufacturer"]
+    kategory_e = "ВО"
+    num_hc = 2
+    num_e = 13
+
+
+
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
@@ -3728,21 +3823,21 @@ def BulkDownload(request):
 
         elif MeasurEquipment_Equipment_file_del:
             try:
-                uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file_del})
+                uploading_file = Delete_Equipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
         elif TestingEquipment_Equipment_file_del:
             try:
-                uploading_file = UploadingEquipment_TestingEquipment({'file': TestingEquipment_Equipment_file_del})
+                uploading_file = Delete_Equipment_TestingEquipment({'file': TestingEquipment_Equipment_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
         elif HelpingEquipment_Equipment_file_del:
             try:
-                uploading_file = UploadingEquipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file_del})
+                uploading_file = Delete_Equipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
@@ -3768,8 +3863,6 @@ def BulkDownload(request):
             except:
                 messages.success(request, "Неверно заполнен файл 'Аттестация ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
-
-
                 
         elif uploading_file_fake:
             try:
