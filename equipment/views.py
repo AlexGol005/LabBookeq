@@ -3550,9 +3550,26 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                     for_b = self.model_metrology.objects.get(pk=note.pk)
                     b = for_b.equipmentSM.equipment.exnumber               
                     note.delete() 
-                    find_ver = self.model_metrology.objects.filter(equipmentSM__equipment__exnumber=b).last()
-                    find_ver.save()
                     self.number_objects_del+=1
+                    try:
+                        find_ver = self.model_metrology.objects.filter(equipmentSM__equipment__exnumber=b).last()
+                        find_ver.save()
+                    except:
+                        equipmentSM.newdatedead = ''
+                        equipmentSM.newdatedead_date = ''
+                        equipmentSM.newdateorder = ''
+                        equipmentSM.newdateorder_date = ''
+                        equipmentSM.newarshin = ''
+                        equipmentSM.newcertnumber = ''
+                        equipmentSM.newprice = ''
+                        equipmentSM.newstatusver = ''
+                        equipmentSM.newverificator = ''
+                        equipmentSM.newplace = ''
+                        equipmentSM.newnote = ''
+                        equipmentSM.newyear = ''
+                        equipmentSM.newdateordernew = ''
+                        equipmentSM.newdateordernew_date = ''
+                        equipmentSM.newhaveorder = ''                 
                 except:
                     raise
                     # pass
