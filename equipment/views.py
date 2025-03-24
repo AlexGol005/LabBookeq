@@ -3549,7 +3549,7 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                     note = self.model_metrology.objects.filter(pointer=pointer).get(**row_dict_metrology)
                     for_b = model_metrology.objects.get(pk=note.pk)
                     b = for_b.equipmentSM.equipment.exnumber
-                    find_ver = model_metrology.objects.filter(equipmentSM__equipment__exnumber=b).last()
+                    find_ver = self.model_metrology.objects.filter(equipmentSM__equipment__exnumber=b).last()
                     find_ver.save()                 
                     self.number_objects_del+=1
                     note.delete()                                     
@@ -3766,7 +3766,7 @@ def BulkDownload(request):
             if uploading_file:
                 if number_objects and number_rows and number_objects_del == 0:
                     messages.success(request, f"Файл успешно загружен, добавлено {number_objects} -  из {number_rows} строк файла EXEL")
-                if number_objects_del and number_rows and number_objects == 0:
+                elif number_objects_del and number_rows and number_objects == 0:
                     messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
                 else:
                     messages.success(request, f"ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
