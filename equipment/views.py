@@ -3461,6 +3461,133 @@ class Uploading_Attestationequipment(UploadingMetrologyForEquipment):
     num_e = 5
     
 
+class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
+    # для удаления поверки калибровки и аттестации по загрузке ексель файла, родительский класс
+    number_objects_del = 0
+    
+    def parsing(self):
+        pointer = get_current_user().profile.userid
+        uploaded_file = self.uploaded_file
+        wb = xlrd.open_workbook(file_contents=uploaded_file.read())
+        s = wb.sheet_by_index(0)
+        self.s = s
+        
+        headers_characters = self.getting_headers_characters()
+        headers_model_metrology = self.getting_headers_model_metrology()
+        headers_equipment = self.getting_headers_equipment()
+
+        for row in range(1, s.nrows):
+            row_dict_characters = {}
+            row_dict_equipment = {}
+            row_dict_METEHE = {}
+            row_dict_metrology = {}
+
+            
+            for column in range(self.num_hc):
+                value = s.cell(row, column).value
+                value = get_rid_point(value)
+                field_name_characters = headers_characters[column]
+                row_dict_characters[field_name_characters] = value
+            try:   
+                find_charakters = self.model_CH.objects.filter(pointer=pointer).get(**row_dict_characters)
+                row_dict_METEHE['charakters'] = find_charakters
+                find_charakters_bool = True
+            except:
+                find_charakters_bool = False
+                pass
+                # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+
+            for column in range(self.num_hc, self.num_e):                  
+                value = s.cell(row, column).value
+                value = get_rid_point(value)
+                field_name = headers_equipment[column]
+                if field_name in self.foreing_key_fields:
+                    model = Equipment
+                    related_model = self.getting_related_model(field_name, model)                 
+                    instance = related_model.objects.get(companyName=value)
+                    value = instance                          
+                row_dict_equipment[field_name] = value
+            try:   
+                find_equipment = Equipment.objects.filter(pointer=pointer).get(**row_dict_equipment)
+                row_dict_METEHE['equipment'] = find_equipment
+                find_equipment_bool = True
+            except:
+                find_equipment_bool = False
+                pass
+                # raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
+
+            if find_equipment_bool and find_charakters_bool:
+                try:
+                    equipmentSM  = self.model_objMETEHE.objects.filter(pointer=pointer).get(**row_dict_METEHE)
+                    equipmentSM_bool = True
+                except:
+                    equipmentSM_bool = False
+                    pass
+                    # raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
+            
+            if find_equipment_bool and find_charakters_bool and equipmentSM_bool:
+                for column in range(self.num_e, s.ncols):                  
+                    value = s.cell(row, column).value
+                                    
+                    field_name = headers_model_metrology[column]
+                    if field_name in self.foreing_key_fields:
+                        model = self.model_metrology
+                        related_model = self.getting_related_model(field_name, model)
+                        instance_verificator, created = related_model.objects.get_or_create(companyName=value)
+                        value = instance_verificator
+                    if field_name in ["date", "datedead", "dateorder", "dateordernew"] and value:
+                        value = get_dateformat_django(value)
+                    if field_name in ["price"] and value:
+                        ind = value.find(",")
+                        if ind != -1:
+                            value = value.replace(",", ".")
+                        value = Decimal(value)
+                    
+                    if value or value == 0:
+                        row_dict_metrology[field_name] = value
+                row_dict_metrology['equipmentSM'] = equipmentSM
+                try:
+                    note = self.model_metrology.objects.filter(pointer=pointer).get(**row_dict_metrology)
+                    a = note.delete()
+                    if a:
+                        self.number_objects_del+=1
+                    try:
+                        find_ver = model_metrology.objects.filter(equipmentSM__equipment__exnumber=a).last()
+                        find_ver.save()    
+                    except:
+                        pass
+                except:
+                    pass
+                    # raise Exception(f"проблема в удалении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
+       
+        self.number_rows = s.nrows - 1
+        return True
+
+class Delete_Verificationequipment(DeleteMetrologyForEquipment):
+    model_metrology = Verificationequipment
+    model_CH = MeasurEquipmentCharakters
+    model_objMETEHE = MeasurEquipment
+    kategory_e = "СИ"
+    num_hc = 3
+    num_e = 6
+
+class Delete_Calibrationequipment(DeleteMetrologyForEquipment):
+    model_metrology = Calibrationequipment
+    model_CH = MeasurEquipmentCharakters
+    model_objMETEHE = MeasurEquipment
+    kategory_e = "СИ"
+    num_hc = 3
+    num_e = 6
+
+class Delete_Attestationequipment(DeleteMetrologyForEquipment):
+    model_metrology = Attestationequipment
+    model_CH = TestingEquipmentCharakters
+    model_objMETEHE = TestingEquipment
+    kategory_e = "ИО"
+    num_hc = 2
+    num_e = 5
+
+
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
@@ -3608,21 +3735,21 @@ def BulkDownload(request):
 
         elif Verificationequipment_file_del:
             try:
-                uploading_file = Uploading_Verificationequipment({'file': Verificationequipment_file_del})
+                uploading_file = Delete_Verificationequipment({'file': Verificationequipment_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'Поверка СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
         elif Calibrationequipment_file_del:
             try:
-                uploading_file = Uploading_Calibrationequipment({'file': Calibrationequipment_file_del})
+                uploading_file = Delete_Calibrationequipment({'file': Calibrationequipment_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'Калибровка СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
         elif Attestationequipment_file_del:
             try:
-                uploading_file = Uploading_Attestationequipment({'file': Attestationequipment_file_del})
+                uploading_file = Delete_Attestationequipment({'file': Attestationequipment_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'Аттестация ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
@@ -3643,6 +3770,8 @@ def BulkDownload(request):
             if uploading_file:
                 if number_objects and number_rows:
                     messages.success(request, f"Файл успешно загружен, добавлено {number_objects} -  из {number_rows} строк файла EXEL")
+                elif number_objects_del and number_rows:
+                    messages.success(request, f"Файл успешно загружен, удалено {number_objects} записей из бд -  из {number_rows} строк файла EXEL")
                 else:
                     messages.success(request, f"ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
             else:
