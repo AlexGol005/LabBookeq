@@ -3780,6 +3780,7 @@ def BulkDownload(request):
             number_rows = uploading_file.number_rows
         
             if uploading_file:
+                number_objects_del = 11
                 if number_objects and number_rows:
                     messages.success(request, f"{number_objects_del} Файл успешно загружен, добавлено {number_objects} -  из {number_rows} строк файла EXEL")
                 else:
