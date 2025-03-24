@@ -291,7 +291,7 @@
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
-               <input type="file" name="MeasurEquipment_Equipment_file_del">
+               <input type="file" name="Verificationequipment_file_del">
             </div>
             <button type='submit' class="btn  btn-primary">загрузить файл .xls и УДАЛИТЬ поверку СИ</button>
          </form>
@@ -302,7 +302,7 @@
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
-               <input type="file" name="TestingEquipment_Equipment_file_del">
+               <input type="file" name="Calibrationequipment_file_del">
             </div>
             <button type='submit' class="btn  btn-primary">загрузить файл .xls и УДАЛИТЬ калибровку СИ</button>
          </form>
@@ -313,7 +313,7 @@
          <form method="post" action "" enctype=multipart/form-data>
             {% csrf_token %}
             <div class="form-group">
-               <input type="file" name="HelpingEquipment_Equipment_file_del">
+               <input type="file" name="Attestationequipment_file_del">
             </div>
             <button type='submit' class="btn  btn-primary">загрузить файл .xls и УДАЛИТЬ аттестацию ИО</button>
          </form>
