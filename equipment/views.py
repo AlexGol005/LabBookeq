@@ -3770,9 +3770,9 @@ def BulkDownload(request):
             number_rows = uploading_file.number_rows
         
             if uploading_file:
-                if number_objects and number_rows:
+                if number_objects and number_rows and not number_objects_del:
                     messages.success(request, f"Файл успешно загружен, добавлено {number_objects} -  из {number_rows} строк файла EXEL")
-                if number_objects_del and number_rows:
+                if number_objects_del and number_rows and not number_objects:
                     messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
                 else:
                     messages.success(request, f"ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
