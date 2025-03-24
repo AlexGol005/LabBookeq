@@ -3276,7 +3276,8 @@ class UploadingMetrologyForEquipment(object):
             related_model = model._meta.get_field(field_name).related_model
             return related_model
         except:
-            raise Exception(f'проблема с производителем {field_name}')
+            pass
+            # raise Exception(f'проблема с производителем {field_name}')
 
     def getting_headers_model_metrology(self):
         l_verbose_name = []
@@ -3296,7 +3297,8 @@ class UploadingMetrologyForEquipment(object):
                 a = l_verbose_name.index(value)
                 value = m_name[a] 
             except:
-                raise KeyError(value)
+                pass
+                # raise KeyError(value)
             headers_model_metrology[column] = value
         return headers_model_metrology
 
