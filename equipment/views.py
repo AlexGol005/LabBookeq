@@ -3557,8 +3557,8 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                     except:
                         pass
                 except:
-                    pass
-                    # raise Exception(f"проблема в удалении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
+                    # pass
+                    raise Exception(f"проблема в удалении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
        
         self.number_rows = s.nrows - 1
         return True
