@@ -3569,7 +3569,8 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                         equipmentSM.newyear = ''
                         equipmentSM.newdateordernew = ''
                         equipmentSM.newdateordernew_date = ''
-                        equipmentSM.newhaveorder = ''                 
+                        equipmentSM.newhaveorder = ''     
+                        equipmentSM.save()
                 except:
                     raise
                     # pass
