@@ -3261,6 +3261,7 @@ class UploadingMetrologyForEquipment(object):
     model_objMETEHE = None
     number_rows = 0
     number_objects = 0
+    number_objects_del = 0
     kategory_e = None
     num_hc = 0
     num_e = 0
@@ -3462,9 +3463,7 @@ class Uploading_Attestationequipment(UploadingMetrologyForEquipment):
     
 
 class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
-    # для удаления поверки калибровки и аттестации по загрузке ексель файла, родительский класс
-    number_objects_del = 0
-    
+    # для удаления поверки калибровки и аттестации по загрузке ексель файла, родительский класс    
     def parsing(self):
         pointer = get_current_user().profile.userid
         uploaded_file = self.uploaded_file
@@ -3548,17 +3547,14 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                 row_dict_metrology['equipmentSM'] = equipmentSM
                 try:
                     note = self.model_metrology.objects.filter(pointer=pointer).get(**row_dict_metrology)
-                    a = note.delete()
-                    if note.pk:
-                        self.number_objects_del+=1
                     for_b = model_metrology.objects.get(pk=note.pk)
                     b = for_b.equipmentSM.equipment.exnumber
                     find_ver = model_metrology.objects.filter(equipmentSM__equipment__exnumber=b).last()
-                    find_ver.save()    
+                    find_ver.save()                 
+                    self.number_objects_del+=1
+                    note.delete()                                     
                 except:
-                    pass
-
-       
+                    pass    
         self.number_rows = s.nrows - 1
         return True
 
@@ -3768,9 +3764,9 @@ def BulkDownload(request):
             number_rows = uploading_file.number_rows
         
             if uploading_file:
-                if number_objects and number_rows and not number_objects_del:
+                if number_objects and number_rows and number_objects_del == 0:
                     messages.success(request, f"Файл успешно загружен, добавлено {number_objects} -  из {number_rows} строк файла EXEL")
-                if number_objects_del and number_rows and not number_objects:
+                if number_objects_del and number_rows and number_objects == 0:
                     messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
                 else:
                     messages.success(request, f"ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
