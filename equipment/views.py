@@ -3549,7 +3549,8 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                     note = self.model_metrology.objects.filter(pointer=pointer).get(**row_dict_metrology)
                     for_b = self.model_metrology.objects.get(pk=note.pk)
                     b = for_b.equipmentSM.equipment.exnumber               
-                    note.delete() 
+                    note.delete()
+                    self.number_objects_del += 1
                     try:
                         find_ver = self.model_metrology.objects.filter(equipmentSM__equipment__exnumber=b).last()
                         find_ver.save()
@@ -3568,8 +3569,8 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                         equipmentSM.newhaveorder = False    
                         equipmentSM.save()
                 except:
-                    raise
-                    # pass
+                    # raise
+                    pass
 
         self.number_rows = s.nrows - 1
         return True
@@ -3778,16 +3779,15 @@ def BulkDownload(request):
         try:           
             number_objects = uploading_file.number_objects
             number_rows = uploading_file.number_rows
+            number_objects_del = uploading_file.number_objects_del
         
             if uploading_file:
-                number_objects_del = 11
                 if number_objects and number_rows:
-                    messages.success(request, f"{number_objects_del} Файл успешно загружен, добавлено {number_objects} -  из {number_rows} строк файла EXEL")
+                    messages.success(request, f"Файл успешно загружен, добавлено {number_objects} -  из {number_rows} строк файла EXEL")
+                elif number_objects_del and number_rows:
+                    messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
                 else:
-                    messages.success(request, f"{number_objects_del} ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")
-                # else:
-                #     if number_objects_del and number_rows:
-                #         messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
+                    messages.success(request, f"Yичего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")      
 
             else:
                 messages.success(request, "Файл не загружен")
