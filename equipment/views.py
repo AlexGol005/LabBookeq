@@ -3571,7 +3571,7 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                 except:
                     raise
                     # pass
-        
+        self.number_objects_del = 10
         self.number_rows = s.nrows - 1
         return True
 
