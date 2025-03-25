@@ -3717,9 +3717,6 @@ class Delete_Model(UploadingModel):
             except:
                 pass
         self.number_rows = s.nrows - 1
-                
-            except:
-                pass
         return True
 
 class Delete_MeasurEquipmentCharakters(Delete_Model):
