@@ -35,6 +35,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView
 from django.views.generic.edit import FormMixin
+from django.http import HttpResponse, request
 from django_currentuser.middleware import (
 get_current_user, get_current_authenticated_user)
 import xlrd
@@ -3693,6 +3694,42 @@ class Delete_Equipment_HelpingEquipment(DeleteTwoModels):
     num_hc = 2
     num_e = 13
 
+class Delete_Model(UploadingModel):
+    def parsing(self):
+        uploaded_file = self.uploaded_file
+        wb = xlrd.open_workbook(file_contents=uploaded_file.read())
+        s = wb.sheet_by_index(0)
+        self.s = s
+        headers = self.getting_headers()
+
+        for row in range(1, s.nrows):
+            row_dict = {}
+            for column in range(s.ncols):
+                value = s.cell(row, column).value
+                field_name = headers[column]
+                row_dict[field_name] = value
+            try:
+                a = self.model.objects.get(**row_dict)
+                if a.id:
+                    self.number_objects+=1
+                a.delete()
+                else:
+                    pass
+                self.number_rows = s.nrows - 1
+                
+            except:
+                pass
+        return True
+
+class Delete_MeasurEquipmentCharakters(Delete_Model):
+    model = MeasurEquipmentCharakters
+
+class Delete_TestingEquipmentCharakters(Delete_Model):
+    model = TestingEquipmentCharakters
+
+class Delete_HelpingEquipmentCharakters(Delete_Model):
+    model = HelpingEquipmentCharakters
+
 
 
 def BulkDownload(request):
@@ -3798,7 +3835,7 @@ def BulkDownload(request):
         # для удаления
         elif MeasurEquipmentCharakters_file_del:
             try:
-                uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file_del})
+                uploading_file = Delete_MeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'Характеристики СИ' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
@@ -3806,14 +3843,14 @@ def BulkDownload(request):
 
         elif HelpingEquipmentCharakters_file_del:
             try:
-                uploading_file = UploadingHelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file_del})
+                uploading_file = Delete_HelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'Характеристики ВО' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
                 
         elif TestingEquipmentCharakters_file_del:
             try:
-                uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file_del})
+                uploading_file = Delete_TestingEquipmentCharakters({'file': TestingEquipmentCharakters_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
