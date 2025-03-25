@@ -59,3 +59,29 @@ class AboutAdmin(ImportExportActionModelAdmin):
         
 # фиксация формы в админке Страница о сайте
 admin.site.register(About, AboutAdmin)
+
+
+
+# Страница Мануал классы для отображения в админке
+
+# класс для загрузки/выгрузки Мануал
+class ManualResource(resources.ModelResource):
+    class Meta:
+        model = Manual
+
+# класс добавления стилей к окну Мануал
+class ManualAdminForm(forms.ModelForm):
+    text = forms.CharField(label="Текст", widget=CKEditorUploadingWidget())
+    class Meta:
+        model = Manual
+        fields = '__all__'
+        
+# класс подробностей Мануал
+class ManualAdmin(ImportExportActionModelAdmin):
+    resource_class = ManualResource
+    list_display = ('date', 'text',)
+    search_fields = ['text']
+    form = ManualAdminForm
+        
+# фиксация формы в админке Мануал
+admin.site.register(Manual, ManualAdmin)
