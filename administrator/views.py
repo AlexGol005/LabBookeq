@@ -20,3 +20,12 @@ class AboutView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['obj'] = About.objects.latest('date')
         return context
+
+class ManualView(TemplateView):
+    """ выводит страницу инструкция по работе на сайте """
+    template_name = 'administrator/tabletext.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['obj'] = Manual.objects.latest('date')
+        return context
