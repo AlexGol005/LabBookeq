@@ -3714,7 +3714,7 @@ class Delete_Model(UploadingModel):
                 if a.id:
                     self.number_objects_del+=1
                 a.delete()
-            else:
+            except:
                 pass
         self.number_rows = s.nrows - 1
                 
