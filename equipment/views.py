@@ -2962,6 +2962,7 @@ class UploadingModel(object):
     foreing_key_fields = [""]
     model = None
     number_objects = 0
+    number_objects_del = 0
     number_rows = None
 
     def __init__(self, data):
@@ -3711,7 +3712,7 @@ class Delete_Model(UploadingModel):
             try:
                 a = self.model.objects.get(**row_dict)
                 if a.id:
-                    self.number_objects+=1
+                    self.number_objects_del+=1
                 a.delete()
                 else:
                     pass
