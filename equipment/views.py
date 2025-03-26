@@ -3850,6 +3850,25 @@ class Uploading_ServiceEquipment_HelpingEquipment(Uploading_ServiceEquipment):
     num_hc = 2
 
 
+class Delete_ServiceEquipment_MeasurEquipment(Uploading_ServiceEquipment):
+    model_CH = MeasurEquipmentCharakters
+    model_service = ServiceEquipmentME
+    kategory_e = "СИ"
+    num_hc = 3
+
+class Delete_ServiceEquipment_TestingEquipment(Uploading_ServiceEquipment):
+    model_CH = TestingEquipmentCharakters
+    model_service = ServiceEquipmentTE
+    kategory_e = "ИО"
+    num_hc = 2
+
+class Delete_ServiceEquipment_HelpingEquipment(Uploading_ServiceEquipment):
+    model_CH = HelpingEquipmentCharakters
+    model_service = ServiceEquipmentHE
+    kategory_e = "ВО"
+    num_hc = 2
+
+
 def BulkDownload(request):
     """выводит страницу загрузки через EXEL"""
     """path('bulkdownload/', views.BulkDownloadView, name='bulkdownload'),"""  
@@ -3883,6 +3902,10 @@ def BulkDownload(request):
         ServiceEquipment_MeasurEquipment_file = request.FILES.get('ServiceEquipment_MeasurEquipment_file')
         ServiceEquipment_TestingEquipment_file = request.FILES.get('ServiceEquipment_TestingEquipment_file')
         ServiceEquipment_HelpingEquipment_file = request.FILES.get('ServiceEquipment_HelpingEquipment_file')
+
+        ServiceEquipment_MeasurEquipment_file_del = request.FILES.get('ServiceEquipment_MeasurEquipment_file_del')
+        ServiceEquipment_TestingEquipment_file_del = request.FILES.get('ServiceEquipment_TestingEquipment_file_del')
+        ServiceEquipment_HelpingEquipment_file_del = request.FILES.get('ServiceEquipment_HelpingEquipment_file_del')
                 
         uploading_file_fake = 1
 
@@ -4043,6 +4066,31 @@ def BulkDownload(request):
                 uploading_file = Delete_Attestationequipment({'file': Attestationequipment_file_del})
             except:
                 messages.success(request, "Неверно заполнен файл 'Аттестация ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+
+        elif ServiceEquipment_MeasurEquipment_file_del:
+            try:
+                uploading_file = Delete_ServiceEquipment_MeasurEquipment({'file': ServiceEquipment_MeasurEquipment_file_del})
+            except:
+                raise
+                messages.success(request, "Неверно заполнен файл 'ТО СИ' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif ServiceEquipment_TestingEquipment_file_del:
+            try:
+                uploading_file = Delete_ServiceEquipment_TestingEquipment({'file': ServiceEquipment_TestingEquipment_file_del})
+            except:
+                raise
+                messages.success(request, "Неверно заполнен файл 'ТО ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif ServiceEquipment_HelpingEquipment_file_del:
+            try:
+                uploading_file = Delete_ServiceEquipment_HelpingEquipment({'file': ServiceEquipment_HelpingEquipment_file_del})
+            except:
+                raise
+                messages.success(request, "Неверно заполнен файл 'ТО ВО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
                 
         elif uploading_file_fake:
