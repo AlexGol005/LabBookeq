@@ -1076,6 +1076,11 @@ class ServiceEquipmentTE(models.Model):
     def __str__(self):
         return self.charakters.name
 
+    def save(self, *args, **kwargs):
+        if not self.pointer:
+                self.pointer = self.created_by.profile.userid
+        super().save()
+
     class Meta:
         verbose_name = 'ТО ИО постоянная информация'
         verbose_name_plural = 'ТО ИО постоянная информация'
@@ -1105,6 +1110,11 @@ class ServiceEquipmentHE(models.Model):
 
     def __str__(self):
         return self.charakters.name
+
+    def save(self, *args, **kwargs):
+        if not self.pointer:
+                self.pointer = self.created_by.profile.userid
+        super().save()
 
     class Meta:
         verbose_name = 'ТО ВО постоянная информация'
