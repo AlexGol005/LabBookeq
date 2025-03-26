@@ -3728,6 +3728,126 @@ class Delete_TestingEquipmentCharakters(Delete_Model):
 class Delete_HelpingEquipmentCharakters(Delete_Model):
     model = HelpingEquipmentCharakters
 
+# дополнительные загрузки и удаления
+class Uploading_ServiceEquipment(object):
+    model_CH = MeasurEquipmentCharakters
+    model_service = ServiceEquipmentME
+    number_rows = 0
+    number_objects = 0
+    number_objects_del = 0
+    kategory_e = "СИ"
+    num_hc = 3
+   
+    def __init__(self, data):
+        data=data
+        self.uploaded_file = data.get("file")
+        self.parsing()
+
+
+    def getting_headers_service(self):
+        l_verbose_name = []
+        m_name = []
+        for f in self.model_service._meta.get_fields():
+            try:
+                l_verbose_name.append(f.verbose_name)
+                m_name.append(f.name)
+            except:
+                pass
+        s = self.s
+        headers_service = dict()
+        for column in range(self.num_hc, s.ncols):
+            value = s.cell(0, column).value
+            try:
+                value in l_verbose_name
+                a = l_verbose_name.index(value)
+                value = m_name[a] 
+            except:
+                pass
+                # raise KeyError(value)
+            headers_service[column] = value
+        return headers_service
+
+    def getting_headers_characters(self):
+        l_verbose_name = []
+        m_name = []
+        for f in self.model_CH._meta.get_fields():
+            try:
+                l_verbose_name.append(f.verbose_name)
+                m_name.append(f.name)
+            except:
+                pass
+        s = self.s
+        headers_characters = dict()
+        for column in range(self.num_hc):
+            value = s.cell(0, column).value
+            try:
+                value in l_verbose_name
+                a = l_verbose_name.index(value)
+                value = m_name[a] 
+            except:
+                raise KeyError(value, dict())
+            headers_characters[column] = value
+        return headers_characters
+            
+    def parsing(self):
+        pointer = get_current_user().profile.userid
+        uploaded_file = self.uploaded_file
+        wb = xlrd.open_workbook(file_contents=uploaded_file.read())
+        s = wb.sheet_by_index(0)
+        self.s = s
+        
+        headers_service = self.getting_headers_service()
+        headers_characters = self.getting_headers_characters()
+
+        for row in range(1, s.nrows):
+            row_dict_characters = {}
+            row_dict_service = {}
+           
+            for column in range(self.num_hc):
+                value = s.cell(row, column).value
+                value = get_rid_point(value)
+                field_name_characters = headers_characters[column]
+                row_dict_characters[field_name_characters] = value
+            try:   
+                find_charakters = self.model_CH.objects.filter(pointer=pointer).get(**row_dict_characters)
+                row_dict_service['charakters'] = find_charakters
+            except:
+                pass
+                # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+
+            for column in range(self.num_hc, s.ncols):                  
+                value = s.cell(row, column).value
+                value = get_rid_point(value)
+                field_name = headers_service[column]                        
+                row_dict_service[field_name] = value
+            try:   
+                se = self.model_service.objects.filter(pointer=pointer).create(**row_dict_service)
+                if se.pk:
+                    self.number_objects += 1
+            except:
+                pass
+                # raise Exception(f"проблема в создании ТО: {row_dict_equipment}")
+                                        
+        self.number_rows = s.nrows - 1
+        return True
+
+class Uploading_ServiceEquipment_MeasurEquipment(Uploading_ServiceEquipment):
+    model_CH = MeasurEquipmentCharakters
+    model_service = ServiceEquipmentME
+    kategory_e = "СИ"
+    num_hc = 3
+
+class Uploading_ServiceEquipment_TestingEquipment(Uploading_ServiceEquipment):
+    model_CH = TestingEquipmentCharakters
+    model_service = ServiceEquipmentTE
+    kategory_e = "ИО"
+    num_hc = 2
+
+class Uploading_ServiceEquipment_HelpingEquipment(Uploading_ServiceEquipment):
+    model_CH = HelpingEquipmentCharakters
+    model_service = ServiceEquipmentHE
+    kategory_e = "ВО"
+    num_hc = 2
 
 
 def BulkDownload(request):
@@ -3759,6 +3879,10 @@ def BulkDownload(request):
         Verificationequipment_file_del = request.FILES.get('Verificationequipment_file_del')
         Calibrationequipment_file_del = request.FILES.get('Calibrationequipment_file_del')
         Attestationequipment_file_del = request.FILES.get('Attestationequipment_file_del')
+
+        ServiceEquipment_MeasurEquipment_file = request.FILES.get('ServiceEquipment_MeasurEquipment_file')
+        ServiceEquipment_TestingEquipment_file = request.FILES.get('ServiceEquipment_TestingEquipment_file')
+        ServiceEquipment_HelpingEquipment_file = request.FILES.get('ServiceEquipment_HelpingEquipment_file')
                 
         uploading_file_fake = 1
 
@@ -3828,6 +3952,30 @@ def BulkDownload(request):
             except:
                 raise
                 messages.success(request, "Неверно заполнен файл 'Аттестация ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif ServiceEquipment_MeasurEquipment_file:
+            try:
+                uploading_file = Uploading_ServiceEquipment_MeasurEquipment({'file': ServiceEquipment_MeasurEquipment_file})
+            except:
+                raise
+                messages.success(request, "Неверно заполнен файл 'ТО СИ' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif ServiceEquipment_TestingEquipment_file:
+            try:
+                uploading_file = Uploading_ServiceEquipment_TestingEquipment({'file': ServiceEquipment_TestingEquipment_file})
+            except:
+                raise
+                messages.success(request, "Неверно заполнен файл 'ТО ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
+
+        elif ServiceEquipment_HelpingEquipment_file:
+            try:
+                uploading_file = ServiceEquipment_HelpingEquipment({'file': ServiceEquipment_HelpingEquipment_file})
+            except:
+                raise
+                messages.success(request, "Неверно заполнен файл 'ТО ВО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
         # для удаления
