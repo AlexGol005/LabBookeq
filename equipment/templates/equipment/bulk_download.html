@@ -322,6 +322,100 @@
          </center>
          
       </div>
+
+  <center><h4>Дополнительно</h4></center>
+<center><h5>Загрузка описание мероприятий по ТО  (для графика ТОиР)</h5></center>
+  <br>
+
+   {# загрузка ТОиР #}
+
+     <div class="container">
+   <div class="row">
+      <div class="col-3"> 
+         <center><a href="{% url 'export_ServiceME_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "ТО СИ"</a></center>
+         <br>
+         <br>
+         <br>
+         <center><a href="{% url 'export_ServiceTE_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "ТО ИО"</a></center>
+         <br>
+         <br>
+         <br>
+        <center> <a href="{% url 'export_ServiceME_pattern_xls'  %}"  class="btn btn-primary  mt-2 mr-2 ml-2">выгрузить шаблон файла .xls "ТО ВО"</a></center>
+      </div>
+
+      <div class="col-4">
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="ServiceEquipment_MeasurEquipment_file">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls и ДОБАВИТЬ ТО СИ</button>
+         </form>
+         </center>
+         <hr>
+         
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="ServiceEquipment_TestingEquipment_file">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls и ДОБАВИТЬ ТО ИО</button>
+         </form>
+         </center>
+         <hr>
+
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="ServiceEquipment_HelpingEquipment_file">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls и ДОБАВИТЬ ТО ВО</button>
+         </form>
+         </center>
+         
+      </div>  
+   <hr>
+
+      <div class="col-4">
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="ServiceEquipment_MeasurEquipment_file_del">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls и УДАЛИТЬ ТО СИ</button>
+         </form>
+         </center>
+         <hr>
+         
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="ServiceEquipment_TestingEquipment_file_del">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls и УДАЛИТЬ ТО ИО</button>
+         </form>
+         </center>
+         <hr>
+
+         <center>                    
+         <form method="post" action "" enctype=multipart/form-data>
+            {% csrf_token %}
+            <div class="form-group">
+               <input type="file" name="ServiceEquipment_HelpingEquipment_file_del">
+            </div>
+            <button type='submit' class="btn  btn-primary">загрузить файл .xls и УДАЛИТЬ ТО ВО</button>
+         </form>
+         </center>
+         
+      </div>
+
+
+      
    </div>
    </div>
    
