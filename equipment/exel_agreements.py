@@ -318,7 +318,7 @@ def export_orderverification_FBU__TEST_S__PETERBURG__xls(request, object_ids):
     values_list(
         'cod1',
         'charakters__name',
-        'typename',
+        'charakters__typename',
         'equipment__lot',
         'equipment__yearmanuf',
         'num',
