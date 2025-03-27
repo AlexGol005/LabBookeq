@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+    Документы после поверки и аттестации
+{% endblock %}
+
+
+{% block content %}
+<div class="col-8">  
+        <br>
+        <center>
+            <a href="{% url 'export_me_xls' str=0 %}" class="btn btn-primary mt-2 ml-1 mr-1"  style="width: 50%">Скачать график поверки, калибровки  и аттестации</a>
+        </center>
+        <br>
+        <hr>
+
+          <center>
+            <a href="{% url 'export_me_xls' str=0 %}" class="btn btn-primary mt-2 ml-1 mr-1"  style="width: 50%">Приложение к папорту лаборатории (АЦЦ Аналитика)</a>
+        </center>
+        <br>
+        <hr>
+
+          <center>
+            <a href="{% url 'export_me_xls' str=0 %}" class="btn btn-primary mt-2 ml-1 mr-1"  style="width: 50%">Приложение к папорту лаборатории (Росаккредитация)</a>
+        </center>
+        <br>
+        <hr>
+
+        <center>
+            <a href="{% url 'servicehead' %}" class="btn btn-primary mt-2 ml-1 mr-1"  style="width: 50%">Выгрузить график ТОиР</a>
+        </center>
+        <br>
+        <hr>
+
+          <center>
+            <a href="{% url 'verificationlabels' %}" class="btn btn-primary mt-2 ml-1 mr-1"  style="width: 50%">Распечать этикетки на СИ и ИО</a>
+        </center>
+        <br>
+        <hr>
+        
+
+
+
+</div>
+{% endblock %}
