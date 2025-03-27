@@ -52,8 +52,8 @@ URL = 'equipment'
 now = date.today()
 
 def E(request):
-    """  """
-
+    """ для тестов """
+# path('e/', views.E, name='e'),
     
     l = []
     for f in MeasurEquipmentCharakters._meta.get_fields():
@@ -67,7 +67,7 @@ def E(request):
         value = l[column]
         headers[column] = value
  
-    object = headers
+    # object = headers
 
     l = []
     m = []
@@ -78,7 +78,10 @@ def E(request):
         except:
             pass
     # object = f'{len(l)} = {len(m)}'
-    object = 
+    note = Activeveraqq.objects.get(pointer=ruser)
+    exelnumber = note.aqq.verificator.CompanyName
+    exelnumber = pytils.translit.translify(note.aqq.verificator.CompanyName)
+    object = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('/'', '_')
     return render(
         request,
         'equipment/e.html',
