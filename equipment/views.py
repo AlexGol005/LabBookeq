@@ -4033,7 +4033,7 @@ def BulkDownload(request):
 
         elif ServiceEquipment_HelpingEquipment_file:
             try:
-                uploading_file = ServiceEquipment_HelpingEquipment({'file': ServiceEquipment_HelpingEquipment_file})
+                uploading_file = Uploading_ServiceEquipment_HelpingEquipment({'file': ServiceEquipment_HelpingEquipment_file})
             except:
                 raise
                 messages.success(request, "Неверно заполнен файл 'ТО ВО' (вероятно проблема в названиях или в порядке столбцов)")
