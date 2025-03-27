@@ -3898,19 +3898,19 @@ class Delete_ServiceEquipment(Uploading_ServiceEquipment):
 
 
 
-class Delete_ServiceEquipment_MeasurEquipment(Uploading_ServiceEquipment):
+class Delete_ServiceEquipment_MeasurEquipment(Delete_ServiceEquipment):
     model_CH = MeasurEquipmentCharakters
     model_service = ServiceEquipmentME
     kategory_e = "СИ"
     num_hc = 3
 
-class Delete_ServiceEquipment_TestingEquipment(Uploading_ServiceEquipment):
+class Delete_ServiceEquipment_TestingEquipment(Delete_ServiceEquipment):
     model_CH = TestingEquipmentCharakters
     model_service = ServiceEquipmentTE
     kategory_e = "ИО"
     num_hc = 2
 
-class Delete_ServiceEquipment_HelpingEquipment(Uploading_ServiceEquipment):
+class Delete_ServiceEquipment_HelpingEquipment(Delete_ServiceEquipment):
     model_CH = HelpingEquipmentCharakters
     model_service = ServiceEquipmentHE
     kategory_e = "ВО"
