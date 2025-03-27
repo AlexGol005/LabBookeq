@@ -106,7 +106,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
 @login_required
 def OrderVerificationchange(request, str):
-    """ на странице для заказа и/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на у """
+    """ на странице для заказа и/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на поверку """
     """ никаких страниц эта вьюшка не формирует! """
     """path('orderverificationchange/<str:str>/', views.OrderVerificationchange, name='orderverificationchange'),"""
     
