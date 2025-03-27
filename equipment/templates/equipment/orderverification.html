@@ -27,35 +27,35 @@
    
    
    <br>
-{% if str == '0' %}    
+{% if slug == '0' %}    
  <center><div class="btn-group">
   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     Все приборы
   </button>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=0 %}">Все приборы</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=1 %}">Приборы, не поверенные/не аттестованные на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=2 %}">Приборы, требующие поверки/аттестации на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=3 %}">Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=4 %}">Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=0 %}">Все приборы</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=1 %}">Приборы, не поверенные/не аттестованные на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=2 %}">Приборы, требующие поверки/аттестации на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=3 %}">Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=4 %}">Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе</a></li>
   </ul>
 </div> </center>
 
-{% elif str == '1' %}    
+{% elif slug == '1' %}    
  <center><div class="btn-group">
   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     Приборы, не поверенные/не аттестованные на дату:
   </button>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=0 %}">все приборы</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=1 %}">Приборы, не поверенные/не аттестованные на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=2 %}">Приборы, требующие поверки/аттестации на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=3 %}">Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=4 %}">Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=0 %}">все приборы</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=1 %}">Приборы, не поверенные/не аттестованные на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=2 %}">Приборы, требующие поверки/аттестации на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=3 %}">Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=4 %}">Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе</a></li>
   </ul>
 </div> 
     <br>
-             <form action="{% url 'orderverification' str=1 %}" target="blank" method="GET">
+             <form action="{% url 'orderverification' slug=1 %}" target="blank" method="GET">
                 {% csrf_token %}
                 {% crispy dateform %}
             </form>
@@ -63,42 +63,42 @@
  </center>
    
 
-{% elif str == '2' %}    
+{% elif slug == '2' %}    
  <center><div class="btn-group">
   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     Приборы, требующие поверки/аттестации на дату:
   </button>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=0 %}">все приборы</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=1 %}">Приборы, не поверенные/не аттестованные на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=2 %}">Приборы, требующие поверки/аттестации на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=3 %}">Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=4 %}">Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=0 %}">все приборы</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=1 %}">Приборы, не поверенные/не аттестованные на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=2 %}">Приборы, требующие поверки/аттестации на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=3 %}">Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=4 %}">Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе</a></li>
   </ul>
 </div> 
      <br>
-             <form action="{% url 'orderverification' str=2 %}" target="blank" method="GET">
+             <form action="{% url 'orderverification' slug=2 %}" target="blank" method="GET">
                 {% csrf_token %}
                 {% crispy dateform %}
             </form>
  </center>
 
 
-{% elif str == '3' %}    
+{% elif slug == '3' %}    
  <center><div class="btn-group">
   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:
   </button>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=0 %}">все приборы</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=1 %}">Приборы, не поверенные/не аттестованные на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=2 %}">Приборы, требующие поверки/аттестации на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=3 %}">Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=4 %}">Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=0 %}">все приборы</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=1 %}">Приборы, не поверенные/не аттестованные на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=2 %}">Приборы, требующие поверки/аттестации на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=3 %}">Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=4 %}">Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе</a></li>
   </ul>
 </div> 
      <br>
-             <form action="{% url 'orderverification' str=3 %}" target="blank" method="GET">
+             <form action="{% url 'orderverification' slug=3 %}" target="blank" method="GET">
                 {% csrf_token %}
                 {% crispy dateform %}
             </form>
@@ -106,17 +106,17 @@
  </center>
 
 
-{% elif str == '4' %}    
+{% elif slug == '4' %}    
  <center><div class="btn-group">
   <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе
   </button>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=0 %}">все приборы</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=1 %}">Приборы, не поверенные/не аттестованные на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=2 %}">Приборы, требующие поверки/аттестации на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=3 %}">Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:</a></li>
-    <li><a class="dropdown-item" href="{% url 'orderverification' st=4 %}">Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=0 %}">все приборы</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=1 %}">Приборы, не поверенные/не аттестованные на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=2 %}">Приборы, требующие поверки/аттестации на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=3 %}">Приборы, требующие заказа замены (вместо поверки/аттестации) на дату:</a></li>
+    <li><a class="dropdown-item" href="{% url 'orderverification' slug=4 %}">Приборы, для которых заказана поверка/аттестация, но результаты еще не указаны в системе</a></li>
   </ul>
 </div> </center>
 
