@@ -5,6 +5,10 @@ from . import exel
 from . import exel_agreements
 
 urlpatterns = [
+    path(r'^export_orderverification/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_xls, name='export_orderverification_xls'),
+    path(r'^export_orderverification_14/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_14_xls, name='export_orderverification_14_xls'),
+    path(r'^export_orderverification_1/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_1_xls, name='export_orderverification_1_xls'),
+    path(r'^export_orderverification_9/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_9_xls, name='export_orderverification_9_xls'),
     path(r'^export_ServiceME_pattern/xls/$/', exel.export_ServiceME_pattern_xls, name='export_ServiceME_pattern_xls'),
     path(r'^export_ServiceTE_pattern/xls/$/', exel.export_ServiceTE_pattern_xls, name='export_ServiceTE_pattern_xls'),
     path(r'^export_ServiceHE_pattern/xls/$/', exel.export_ServiceHE_pattern_xls, name='export_ServiceHE_pattern_xls'),
@@ -140,10 +144,6 @@ urlpatterns = [
     path('equipmentdelete/<str:str>/', views.EquipmentDeleteView, name='equipmentdelete'),
     path('orderverification/<str:str>/', views.OrderVerificationView.as_view(), name='orderverification'),
     path('orderverificationchange/<str:str>/', views.OrderVerificationchange, name='orderverificationchange'),
-    path(r'^export_orderverification/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_xls, name='export_orderverification_xls'),
-    path(r'^export_orderverification_14/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_14_xls, name='export_orderverification_14_xls'),
-    path(r'^export_orderverification_1/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_1_xls, name='export_orderverification_1_xls'),
-    path(r'^export_orderverification_9/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_9_xls, name='export_orderverification_9_xls'),
     path('companyverreg/', views.VerificatorRegView.as_view(), name='companyverreg'),
     path('agreementcompanyverreg/', views.AgreementVerificatorRegView.as_view(), name='agreementcompanyverreg'),  
     path('agreementcompanyverupdate/<str:str>/', views.AgreementVerificatorUpdateView, name='agreementcompanyverupdate'),
