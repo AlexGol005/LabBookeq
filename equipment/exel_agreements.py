@@ -244,7 +244,7 @@ def export_orderverification_xls(request, object_ids):
         for col_num in range(len(row)):
             ws1.write(row_num, col_num, row[col_num], style_plain_border)
 
-    for row in rowsHE:
+    for row in rowsTE:
         row_num += 1
         for col_num in range(len(row)):
             ws2.write(row_num, col_num, row[col_num], style_plain_border)
