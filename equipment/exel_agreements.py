@@ -239,7 +239,7 @@ def export_orderverification_xls(request, object_ids):
     ws2.row(row_num).height_mismatch = True
     ws2.row(row_num).height = 3000
      
-    row_num = 0
+    row_num = 1
     for row in rowsME:
         row_num += 1
         for col_num in range(len(row)):
