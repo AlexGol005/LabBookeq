@@ -198,6 +198,12 @@ def OrderVerificationchange(request, str):
 
 # блок 1 - заглавные страницы с кнопками, структурирующие разделы. Самая верхняя страница - в приложении main
 
+class VerificationDocs(LoginRequiredMixin, TemplateView):
+    """выводит страницу для выгрузки документов после поверки"""
+    """path('verificationdocs/', views.VerificationDocs.as_view(), name='verificationdocs'),"""
+    
+    template_name = URL + '/verificationdocs.html'
+
 class ManagerEquipmentView(LoginRequiredMixin, TemplateView):
     """выводит страницу для управляющего оборудованием"""
     """кнопка не показывается базовому пользователю"""
