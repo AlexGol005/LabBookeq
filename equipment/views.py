@@ -171,7 +171,7 @@ def OrderVerificationchange(request, str):
                     note = Activeveraqq.objects.get(pointer=ruser)
                     exelnumber = note.aqq.verificator.сompanyName
                     exelnumber = pytils.translit.translify(exelnumber)
-                    exelnumber = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_')
+                    exelnumber = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_').replace('.', '_').replace('-', '_')
                     exelname = f'export_orderverification_{exelnumber}_xls'
                     return redirect(exelname, {'object_ids': object_ids})
                 except:
