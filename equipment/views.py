@@ -3886,7 +3886,8 @@ class Delete_ServiceEquipment(Uploading_ServiceEquipment):
                 field_name = headers_service[column]                        
                 row_dict_service[field_name] = value
             try:   
-                se = self.model_service.objects.filter(pointer=pointer).delete(**row_dict_service)
+                se = self.model_service.objects.filter(pointer=pointer).get(**row_dict_service)
+                se.delete()
                 self.number_objects_del += 1
             except:
                 pass
