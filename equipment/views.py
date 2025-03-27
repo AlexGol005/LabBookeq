@@ -55,29 +55,28 @@ def E(request):
     """ для тестов """
 # path('e/', views.E, name='e'),
     
-    l = []
-    for f in MeasurEquipmentCharakters._meta.get_fields():
-        try:
-            l.append(f.verbose_name)
-        except:
-            pass
+    # l = []
+    # for f in MeasurEquipmentCharakters._meta.get_fields():
+    #     try:
+    #         l.append(f.verbose_name)
+    #     except:
+    #         pass
             
-    headers = dict()
-    for column in range(len(l)):
-        value = l[column]
-        headers[column] = value
- 
+    # headers = dict()
+    # for column in range(len(l)):
+    #     value = l[column]
+    #     headers[column] = value
     # object = headers
-
-    l = []
-    m = []
-    for f in MeasurEquipmentCharakters._meta.get_fields():
-        try:
-            l.append(f.verbose_name)
-            m.append(f.name)
-        except:
-            pass
     # object = f'{len(l)} = {len(m)}'
+    # l = []
+    # m = []
+    # for f in MeasurEquipmentCharakters._meta.get_fields():
+    #     try:
+    #         l.append(f.verbose_name)
+    #         m.append(f.name)
+    #     except:
+    #         pass
+    
     note = Activeveraqq.objects.get(pointer=ruser)
     exelnumber = note.aqq.verificator.CompanyName
     exelnumber = pytils.translit.translify(note.aqq.verificator.CompanyName)
