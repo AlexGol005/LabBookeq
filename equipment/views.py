@@ -855,21 +855,21 @@ def EquipmentReg(request):
         if request.method == "POST":
             form = EquipmentCreateForm(request.POST, request.FILES)
             try:
-                form.is_valid():
-                order = form.save(commit=False)
-                order.pointer = request.user.profile.userid
-                have_exnumber = order.exnumber                
-                pointer = order.pointer
-                order.exnumber = get_exnumber(have_exnumber, pointer)
-                order.save()
-                if order.kategory == 'СИ':
-                    return redirect(f'/equipment/measureequipmentreg/{order.exnumber}/')
-                if order.kategory == 'ИО':
-                    return redirect(f'/equipment/testequipmentreg/{order.exnumber}/')
-                if order.kategory == 'ВО':
-                    return redirect(f'/equipment/helpequipmentreg/{order.exnumber}/')
-                else:
-                    return redirect('equipmentlist') 
+                if form.is_valid():
+                    order = form.save(commit=False)
+                    order.pointer = request.user.profile.userid
+                    have_exnumber = order.exnumber                
+                    pointer = order.pointer
+                    order.exnumber = get_exnumber(have_exnumber, pointer)
+                    order.save()
+                    if order.kategory == 'СИ':
+                        return redirect(f'/equipment/measureequipmentreg/{order.exnumber}/')
+                    if order.kategory == 'ИО':
+                        return redirect(f'/equipment/testequipmentreg/{order.exnumber}/')
+                    if order.kategory == 'ВО':
+                        return redirect(f'/equipment/helpequipmentreg/{order.exnumber}/')
+                    else:
+                        return redirect('equipmentlist') 
             except:
                 messages.success(request, 'Заполните поле "Производитель прибора"')
                 messages.success(request, 'Прибор с таким заводским номером и от этого производителя уже существует! Добавьте "0" к заводскому номеру"')
