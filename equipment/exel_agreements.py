@@ -402,7 +402,7 @@ def export_orderverification_1_xls(request, object_ids):
     ws.col(11).width = 300
 
         # данные
-    rows1 = MeasurEquipment.objects.filter(equipment__pk__in=q).\   
+    rows1 = MeasurEquipment.objects.filter(equipment__pk__in=q).  
     annotate(num=Value('1'),\
              note=Value('поверка'),\
              cod1=Value(''),).\
