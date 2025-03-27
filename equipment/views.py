@@ -144,7 +144,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
 
 @login_required
-def OrderVerificationchange(request, slug):
+def OrderVerificationchange(request, str):
     """ на странице для заказа и/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на поверку """
     """ никаких страниц эта вьюшка не формирует! """
     """path('orderverificationchange/<str:str>/', views.OrderVerificationchange, name='orderverificationchange'),"""
@@ -169,11 +169,22 @@ def OrderVerificationchange(request, slug):
                     # exelname = f'export_orderverification_{exelnumber}_xls'            
                     # return redirect(exelname, {'object_ids': object_ids})
                     note = Activeveraqq.objects.get(pointer=ruser)
-                    exelnumber = note.aqq.verificator.companyName
-                    exelnumber = pytils.translit.translify(exelnumber)
-                    exelnumber = str(exelnumber)
-                    exelnumber = exelnumber.replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_').replace('.', '_').replace('-', '_')
-                    return redirect(exelname, {'object_ids': object_ids})
+                    try:
+                        exelnumber = note.aqq.verificator.companyName
+                    except:
+                        raise
+                    try:
+                        exelnumber = pytils.translit.translify(exelnumber)
+                    except:
+                        raise
+                    try:
+                        exelnumber = exelnumber.replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_').replace('.', '_').replace('-', '_')
+                    except:
+                        raise
+                    try:
+                        return redirect(exelname, {'object_ids': object_ids})
+                    except:
+                        raise
                 except:
                     raise
                     # return redirect('export_orderverification_xls', {'object_ids': object_ids})
@@ -188,7 +199,7 @@ def OrderVerificationchange(request, slug):
                     elif i.kategory == 'ИО':               
                         i.testingequipment.newhaveorder=False
                         i.testingequipment.save()
-                return redirect(f'/equipment/orderverification/{slug}/')
+                return redirect(f'/equipment/orderverification/{str}/')
     else:
         messages.success(request, "Раздел доступен только продвинутому пользователю")
         return redirect('/equipment/orderverification/0/')
