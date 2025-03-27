@@ -144,7 +144,7 @@ class OrderVerificationView(LoginRequiredMixin, View):
 
 
 @login_required
-def OrderVerificationchange(request, str):
+def OrderVerificationchange(request, st):
     """ на странице для заказа и/аттестации выполняет действие изменения отмеченных объектов и выгрузки заявки на поверку """
     """ никаких страниц эта вьюшка не формирует! """
     """path('orderverificationchange/<str:str>/', views.OrderVerificationchange, name='orderverificationchange'),"""
@@ -187,7 +187,7 @@ def OrderVerificationchange(request, str):
                     elif i.kategory == 'ИО':               
                         i.testingequipment.newhaveorder=False
                         i.testingequipment.save()
-                return redirect(f'/equipment/orderverification/{str}/')
+                return redirect(f'/equipment/orderverification/{st}/')
     else:
         messages.success(request, "Раздел доступен только продвинутому пользователю")
         return redirect('/equipment/orderverification/0/')
