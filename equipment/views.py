@@ -51,9 +51,9 @@ from users.models import Profile, Company
 URL = 'equipment'
 now = date.today()
 
-def E(request):
+def TEST(request):
     """ для тестов """
-# path('e/', views.E, name='e'),
+# path('test/', views.TEST, name='test'),
     
     # l = []
     # for f in MeasurEquipmentCharakters._meta.get_fields():
