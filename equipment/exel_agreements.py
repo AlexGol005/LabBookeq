@@ -176,8 +176,8 @@ def export_orderverification_xls(request, object_ids):
         noteME = Equipment.objects.filter(id__in=q).filter(kategory="СИ")
         noteTE = Equipment.objects.filter(id__in=q).filter(kategory="ИО")
     except:
-        noteME = Equipment.objects.filter(id=1)
-        noteTE = Equipment.objects.filter(id=1)
+        noteME = Equipment.objects.all()
+        noteTE = Equipment.objects.all()
     
     rowsME = noteME.values_list(
         'measurequipment__charakters__name', 
