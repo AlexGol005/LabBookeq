@@ -51,6 +51,43 @@ from users.models import Profile, Company
 URL = 'equipment'
 now = date.today()
 
+def E(request):
+    """  """
+
+    
+    l = []
+    for f in MeasurEquipmentCharakters._meta.get_fields():
+        try:
+            l.append(f.verbose_name)
+        except:
+            pass
+            
+    headers = dict()
+    for column in range(len(l)):
+        value = l[column]
+        headers[column] = value
+ 
+    object = headers
+
+    l = []
+    m = []
+    for f in MeasurEquipmentCharakters._meta.get_fields():
+        try:
+            l.append(f.verbose_name)
+            m.append(f.name)
+        except:
+            pass
+    # object = f'{len(l)} = {len(m)}'
+    object = 
+    return render(
+        request,
+        'equipment/e.html',
+        {
+            'object': object
+        })
+
+
+
 
 class OrderVerificationView(LoginRequiredMixin, View):
     """ выводит страницу для заказа и/аттестации """
@@ -125,9 +162,15 @@ def OrderVerificationchange(request, str):
                         i.testingequipment.save()  
                 
                 try:
+                    # note = Activeveraqq.objects.get(pointer=ruser)
+                    # exelnumber = note.aqq.verificator.pk
+                    # exelname = f'export_orderverification_{exelnumber}_xls'            
+                    # return redirect(exelname, {'object_ids': object_ids})
                     note = Activeveraqq.objects.get(pointer=ruser)
-                    exelnumber = note.aqq.verificator.pk
-                    exelname = f'export_orderverification_{exelnumber}_xls'            
+                    exelnumber = note.aqq.verificator.CompanyName
+                    exelnumber = pytils.translit.translify(note.aqq.verificator.CompanyName)
+                    exelnumber = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('/'', '_')
+                    exelname = f'export_orderverification_{exelnumber}_xls'
                     return redirect(exelname, {'object_ids': object_ids})
                 except:
                     return redirect('export_orderverification_xls', {'object_ids': object_ids})
@@ -2923,39 +2966,7 @@ def DocumentsDeleteView(request, str):
 
 # блок 15 - массовая загрузка через EXEL
 
-def E(request):
-    """  """
 
-    
-    l = []
-    for f in MeasurEquipmentCharakters._meta.get_fields():
-        try:
-            l.append(f.verbose_name)
-        except:
-            pass
-            
-    headers = dict()
-    for column in range(len(l)):
-        value = l[column]
-        headers[column] = value
- 
-    object = headers
-
-    l = []
-    m = []
-    for f in MeasurEquipmentCharakters._meta.get_fields():
-        try:
-            l.append(f.verbose_name)
-            m.append(f.name)
-        except:
-            pass
-    object = f'{len(l)} = {len(m)}'
-    return render(
-        request,
-        'equipment/e.html',
-        {
-            'object': object
-        })
 
 
 
