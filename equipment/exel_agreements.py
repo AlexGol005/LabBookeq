@@ -172,12 +172,10 @@ def export_orderverification_xls(request, object_ids):
     q = object_ids[17:-3].split("', '")
     if not q:
         q = ['1']
-    try:
-        noteME = Equipment.objects.filter(id__in=q).filter(kategory="СИ")
-        noteTE = Equipment.objects.filter(id__in=q).filter(kategory="ИО")
-    except:
-        noteME = Equipment.objects.all()
-        noteTE = Equipment.objects.all()
+
+    noteME = Equipment.objects.filter(id__in=q).filter(kategory="СИ")
+    noteTE = Equipment.objects.filter(id__in=q).filter(kategory="ИО")
+
     
     rowsME = noteME.values_list(
         'measurequipment__charakters__name', 
