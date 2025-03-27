@@ -185,14 +185,14 @@ def export_orderverification_xls(request, object_ids):
         'measurequipment__charakters__typename',
         'lot',
         'yearmanuf',
-        'manufacturer__CompanyName',
+        'manufacturer__сompanyName',
     )
     rowsTE = noteTE.values_list(
         'testingequipment__charakters__name', 
         'testingequipment__charakters__typename',
         'lot',
         'yearmanuf',
-        'manufacturer__CompanyName', 
+        'manufacturer__сompanyName', 
     )
     columnsME = [
             'Название прибора',
