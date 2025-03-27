@@ -172,7 +172,6 @@ def OrderVerificationchange(request, str):
                     exelnumber = note.aqq.verificator.companyName
                     exelnumber = pytils.translit.translify(exelnumber)
                     exelnumber = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_').replace('.', '_').replace('-', '_')
-                    exelname = f'export_orderverification_{exelnumber}_xls'
                     return redirect(exelname, {'object_ids': object_ids})
                 except:
                     raise
