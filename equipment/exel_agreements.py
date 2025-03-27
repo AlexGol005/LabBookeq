@@ -299,6 +299,7 @@ def export_orderverification_14_xls(request, object_ids):
         'yearmanuf',
         'manufacturer__CompanyName', 
     )
+    
     columnsME = [
             'Название прибора',
             'Номер в Госреестре',
