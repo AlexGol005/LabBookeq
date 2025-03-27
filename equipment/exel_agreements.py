@@ -418,7 +418,7 @@ def export_orderverification_1_xls(request, object_ids):
         'cod1',
     )
                          
-    rows2 = TestingEquipment.objects.filter(equipment__pk__in=q).\
+    rows2 = TestingEquipment.objects.filter(equipment__pk__in=q).
     annotate(mod_type=Concat('charakters__typename'),\
              num=Value('1'),\
              note=Value('аттестация'),\
