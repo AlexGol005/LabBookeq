@@ -881,6 +881,7 @@ def EquipmentReg(request):
                     return redirect('equipmentlist') 
             else:
                 messages.success(request, 'Заполните поле "Производитель прибора"')
+                messages.success(request, 'Прибор с таким заводским номером и от этого производителя уже существует! Добавьте "0" к заводскому номеру"')
                 return redirect('/equipment/equipmentreg/')
         else:
             form = EquipmentCreateForm()
