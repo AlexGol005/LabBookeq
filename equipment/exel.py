@@ -3301,16 +3301,11 @@ def export_ServiceME_pattern_xls(request):
     ws1.col(0).width = 3000
     ws1.col(1).width = 3000
     ws1.col(2).width = 3000
-    ws1.col(3).width = 3000
-    ws1.col(4).width = 3000
-    ws1.col(5).width = 3000
-    ws1.col(6).width = 3000
-    ws1.col(7).width = 3000
-    ws1.col(8).width = 3000
-    ws1.col(9).width = 3000
-    ws1.col(10).width = 3000
-    ws1.col(11).width = 3000
-    ws1.col(12).width = 3000
+    ws1.col(3).width = 6000
+    ws1.col(4).width = 6000
+    ws1.col(5).width = 6000
+    ws1.col(6).width = 6000
+
 
 
     row_num = 1 
@@ -3358,17 +3353,11 @@ def export_ServiceTE_pattern_xls(request):
     # ширина столбцов
     ws1.col(0).width = 3000
     ws1.col(1).width = 3000
-    ws1.col(2).width = 3000
-    ws1.col(3).width = 3000
-    ws1.col(4).width = 3000
-    ws1.col(5).width = 3000
-    ws1.col(6).width = 3000
-    ws1.col(7).width = 3000
-    ws1.col(8).width = 3000
-    ws1.col(9).width = 3000
-    ws1.col(10).width = 3000
-    ws1.col(11).width = 3000
-    ws1.col(12).width = 3000
+    ws1.col(2).width = 6000
+    ws1.col(3).width = 6000
+    ws1.col(4).width = 6000
+    ws1.col(5).width = 6000
+    ws1.col(6).width = 6000
 
 
     row_num = 1 
@@ -3415,18 +3404,11 @@ def export_ServiceHE_pattern_xls(request):
     # ширина столбцов
     ws1.col(0).width = 3000
     ws1.col(1).width = 3000
-    ws1.col(2).width = 3000
-    ws1.col(3).width = 3000
-    ws1.col(4).width = 3000
-    ws1.col(5).width = 3000
-    ws1.col(6).width = 3000
-    ws1.col(7).width = 3000
-    ws1.col(8).width = 3000
-    ws1.col(9).width = 3000
-    ws1.col(10).width = 3000
-    ws1.col(11).width = 3000
-    ws1.col(12).width = 3000
-
+    ws1.col(2).width = 6000
+    ws1.col(3).width = 6000
+    ws1.col(4).width = 6000
+    ws1.col(5).width = 6000
+    ws1.col(6).width = 6000
 
     row_num = 1 
     columns = [
