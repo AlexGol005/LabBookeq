@@ -169,25 +169,15 @@ def OrderVerificationchange(request, str):
                     # exelname = f'export_orderverification_{exelnumber}_xls'            
                     # return redirect(exelname, {'object_ids': object_ids})
                     note = Activeveraqq.objects.get(pointer=ruser)
-                    try:
-                        exelnumber = note.aqq.verificator.companyName
-                    except:
-                        raise
-                    try:
-                        exelnumber = pytils.translit.translify(exelnumber)
-                    except:
-                        raise
-                    try:
-                        exelnumber = exelnumber.replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_').replace('.', '_').replace('-', '_')
-                    except:
-                        raise
-                    try:
-                        return redirect(exelname, {'object_ids': object_ids})
-                    except:
-                        raise
+
+                    exelnumber = note.aqq.verificator.companyName
+                    exelnumber = pytils.translit.translify(exelnumber)
+                    exelnumber = exelnumber.replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_').replace('.', '_').replace('-', '_')
+                    exelname = f'export_orderverification_{exelnumber}_xls'
+
+                    return redirect(exelname, {'object_ids': object_ids})
                 except:
-                    raise
-                    # return redirect('export_orderverification_xls', {'object_ids': object_ids})
+                    return redirect('export_orderverification_xls', {'object_ids': object_ids})
                         
             if 'false' in request.POST:
                 object_ids = request.POST.getlist('my_object')
