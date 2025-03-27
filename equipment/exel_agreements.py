@@ -361,7 +361,7 @@ def export_orderverification_14_xls(request, object_ids):
     return response
 
 
-def export_orderverification_1_xls(request, object_ids):
+def export_orderverification_FBU__TEST_S__PETERBURG__xls(request, object_ids):
     '''Поверитель: ФБУ "ТЕСТ-С.-ПЕТЕРБУРГ"'''
     ruser = request.user.profile.userid
     company = Company.objects.get(userid=ruser)
@@ -625,7 +625,7 @@ def export_orderverification_1_xls(request, object_ids):
     return response
 
 
-def export_orderverification_9_xls(request, object_ids):
+def export_orderverification_FGUP__VNIIM_IM__D_I_MENDELEEVA__xls(request, object_ids):
     '''Поверитель: ФГУП "ВНИИМ ИМ. Д.И.МЕНДЕЛЕЕВА"'''
     ruser = request.user.profile.userid
     company = Company.objects.get(userid=ruser)
