@@ -81,7 +81,7 @@ def E(request):
     note = Activeveraqq.objects.get(pointer=ruser)
     exelnumber = note.aqq.verificator.CompanyName
     exelnumber = pytils.translit.translify(note.aqq.verificator.CompanyName)
-    object = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('/'', '_')
+    object = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_')
     return render(
         request,
         'equipment/e.html',
