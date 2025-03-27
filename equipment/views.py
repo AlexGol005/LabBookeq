@@ -869,11 +869,12 @@ def EquipmentReg(request):
                     if order.kategory == 'ВО':
                         return redirect(f'/equipment/helpequipmentreg/{order.exnumber}/')
                     else:
-                        return redirect('equipmentlist') 
-            except:
-                messages.success(request, 'Заполните поле "Производитель прибора"')
+                        return redirect('equipmentlist')
+                else:
+                    messages.success(request, 'Заполните поле "Производитель прибора"')                    
+            except:                
                 messages.success(request, 'Прибор с таким заводским номером и от этого производителя уже существует! Добавьте "0" к заводскому номеру"')
-                return redirect('/equipment/equipmentreg/')
+                # return redirect('/equipment/equipmentreg/')
         else:
             form = EquipmentCreateForm()
             content = {
