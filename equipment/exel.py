@@ -48,9 +48,6 @@ def get_author(Company, request):
         company = Company.objects.get(userid=request.user.profile.userid)
         author = f'Разработал: \n{get_company(Company, request).manager_position} _____________ /{get_company(Company, request).manager_name}/'
         return author
-        
-
-
 
 # блок 1
 # блок получения констант для блока 1 и блока 2
@@ -3411,7 +3408,11 @@ def export_ServiceHE_pattern_xls(request):
     row_num = 0 
     columns = [
             'Название прибора',
-            'Тип/модификация',                   
+            'Тип/модификация',  
+            'Объем технического обслуживания ТО 0',
+            'Объем технического обслуживания ТО 1',
+            'Объем технического обслуживания ТО 2',
+            'Комментарий к постоянным особенностям ТО',
         ]    
         
     for col_num in range(len(columns)):
