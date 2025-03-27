@@ -854,20 +854,11 @@ def EquipmentReg(request):
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = EquipmentCreateForm(request.POST, request.FILES)
-            if form.is_valid():
+            try:
+                form.is_valid():
                 order = form.save(commit=False)
                 order.pointer = request.user.profile.userid
-                # for_exnamber_tail = Company.objects.get(userid=request.user.profile.userid).pk
-                # try:
-                #     a = Equipment.objects.filter(exnumber__startswith=order.exnumber).filter(pointer=request.user.profile.userid).last().exnumber
-                #     b = int(str(a)[1:5]) + 1
-                #     c = str(b).rjust(4, '0')
-                #     d = str(order.exnumber) + c + '_' + str(for_exnamber_tail)
-                #     order.exnumber = d
-                # except:
-                #     order.exnumber =  str(order.exnumber) + '0001' + '_' + str(for_exnamber_tail)
-                have_exnumber = order.exnumber
-                
+                have_exnumber = order.exnumber                
                 pointer = order.pointer
                 order.exnumber = get_exnumber(have_exnumber, pointer)
                 order.save()
@@ -879,7 +870,7 @@ def EquipmentReg(request):
                     return redirect(f'/equipment/helpequipmentreg/{order.exnumber}/')
                 else:
                     return redirect('equipmentlist') 
-            else:
+            except:
                 messages.success(request, 'Заполните поле "Производитель прибора"')
                 messages.success(request, 'Прибор с таким заводским номером и от этого производителя уже существует! Добавьте "0" к заводскому номеру"')
                 return redirect('/equipment/equipmentreg/')
