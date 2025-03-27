@@ -3285,6 +3285,175 @@ def export_Attestationequipment_pattern_xls(request):
     return export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, columns2, columns4, columns3)
 
 
+
+def export_ServiceME_pattern_xls(request):
+    '''представление для выгрузки списка характеристик СИ и загрузки к ним описания ТО'''
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="TO_SI.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws1 = wb.add_sheet('СИ', cell_overwrite_ok=True)
+    ws1.header_str = b' '
+    ws1.footer_str = b' '
+
+    size = 11
+
+    # ширина столбцов
+    ws1.col(0).width = 3000
+    ws1.col(1).width = 3000
+    ws1.col(2).width = 3000
+    ws1.col(3).width = 3000
+    ws1.col(4).width = 3000
+    ws1.col(5).width = 3000
+    ws1.col(6).width = 3000
+    ws1.col(7).width = 3000
+    ws1.col(8).width = 3000
+    ws1.col(9).width = 3000
+    ws1.col(10).width = 3000
+    ws1.col(11).width = 3000
+    ws1.col(12).width = 3000
+
+
+    row_num = 1 
+    columns = [
+            'Название прибора',
+            'Номер в Госреестре',
+            'Тип/модификация',                   
+            'Объем технического обслуживания ТО 0',
+            'Объем технического обслуживания ТО 1',
+            'Объем технического обслуживания ТО 2',
+            'Комментарий к постоянным особенностям ТО',
+        ]    
+        
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 1500
+
+    rows = MeasurEquipmentCharakters.objects.filter(pointer=request.user.profile.userid).values_list('name',               
+        'reestr',
+        'typename',                
+    )
+        
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws1.write(row_num, col_num, row[col_num], style_plain_textf)
+        ws1.row(row_num).height_mismatch = True
+        ws1.row(row_num).height = 1500
+
+    wb.save(response)
+    return response
+
+def export_ServiceTE_pattern_xls(request):
+    '''представление для выгрузки списка характеристик ИО и загрузки к ним описания ТО'''
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="TO_IO.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws1 = wb.add_sheet('ИО', cell_overwrite_ok=True)
+    ws1.header_str = b' '
+    ws1.footer_str = b' '
+
+    size = 11
+
+    # ширина столбцов
+    ws1.col(0).width = 3000
+    ws1.col(1).width = 3000
+    ws1.col(2).width = 3000
+    ws1.col(3).width = 3000
+    ws1.col(4).width = 3000
+    ws1.col(5).width = 3000
+    ws1.col(6).width = 3000
+    ws1.col(7).width = 3000
+    ws1.col(8).width = 3000
+    ws1.col(9).width = 3000
+    ws1.col(10).width = 3000
+    ws1.col(11).width = 3000
+    ws1.col(12).width = 3000
+
+
+    row_num = 1 
+    columns = [
+            'Название прибора',
+            'Тип/модификация',                   
+            'Объем технического обслуживания ТО 0',
+            'Объем технического обслуживания ТО 1',
+            'Объем технического обслуживания ТО 2',
+            'Комментарий к постоянным особенностям ТО',
+        ]    
+        
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 1500
+
+    rows = TestingEquipmentCharakters.objects.filter(pointer=request.user.profile.userid).values_list('name',        
+        'typename',               
+    )
+        
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws1.write(row_num, col_num, row[col_num], style_plain_textf)
+        ws1.row(row_num).height_mismatch = True
+        ws1.row(row_num).height = 1500        
+
+    wb.save(response)
+    return response
+
+
+def export_ServiceHE_pattern_xls(request):
+    '''представление для выгрузки списка характеристик ВО и загрузки к ним описания ТО'''
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="TO_VO.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws1 = wb.add_sheet('ВО', cell_overwrite_ok=True)
+    ws1.header_str = b' '
+    ws1.footer_str = b' '
+
+    size = 11
+
+    # ширина столбцов
+    ws1.col(0).width = 3000
+    ws1.col(1).width = 3000
+    ws1.col(2).width = 3000
+    ws1.col(3).width = 3000
+    ws1.col(4).width = 3000
+    ws1.col(5).width = 3000
+    ws1.col(6).width = 3000
+    ws1.col(7).width = 3000
+    ws1.col(8).width = 3000
+    ws1.col(9).width = 3000
+    ws1.col(10).width = 3000
+    ws1.col(11).width = 3000
+    ws1.col(12).width = 3000
+
+
+    row_num = 1 
+    columns = [
+            'Название прибора',
+            'Тип/модификация',                   
+        ]    
+        
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_plain_textf)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 1500
+
+    rows = HelpingEquipmentCharakters.objects.filter(pointer=request.user.profile.userid).values_list('name',          
+        'typename',                
+    )    
+        
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws1.write(row_num, col_num, row[col_num], style_plain_textf)
+        ws1.row(row_num).height_mismatch = True
+        ws1.row(row_num).height = 1500
+            
+    wb.save(response)
+    return response
+
+
 # блок 5 - нестандартные exel выгрузки (этикетки, протоколы верификации, карточка) 
 
 # стили для exel (для этикеток)
