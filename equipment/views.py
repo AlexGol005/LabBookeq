@@ -174,11 +174,10 @@ def OrderVerificationchange(request, str):
                     exelnumber = pytils.translit.translify(exelnumber)
                     exelnumber = exelnumber.replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_').replace('.', '_').replace('-', '_')
                     exelname = f'export_orderverification_{exelnumber}_xls'
-
                     return redirect(exelname, {'object_ids': object_ids})
                 except:
-                    raise
-                    # return redirect('export_orderverification_xls', {'object_ids': object_ids})
+                    # raise
+                    return redirect('export_orderverification_xls', {'object_ids': object_ids})
                         
             if 'false' in request.POST:
                 object_ids = request.POST.getlist('my_object')
