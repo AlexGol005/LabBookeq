@@ -3850,6 +3850,51 @@ class Uploading_ServiceEquipment_HelpingEquipment(Uploading_ServiceEquipment):
     num_hc = 2
 
 
+class Delete_ServiceEquipment(Uploading_ServiceEquipment):
+
+    def parsing(self):
+        pointer = get_current_user().profile.userid
+        uploaded_file = self.uploaded_file
+        wb = xlrd.open_workbook(file_contents=uploaded_file.read())
+        s = wb.sheet_by_index(0)
+        self.s = s
+        
+        headers_service = self.getting_headers_service()
+        headers_characters = self.getting_headers_characters()
+
+        for row in range(1, s.nrows):
+            row_dict_characters = {}
+            row_dict_service = {}
+           
+            for column in range(self.num_hc):
+                value = s.cell(row, column).value
+                value = get_rid_point(value)
+                field_name_characters = headers_characters[column]
+                row_dict_characters[field_name_characters] = value
+            try:   
+                find_charakters = self.model_CH.objects.filter(pointer=pointer).get(**row_dict_characters)
+                row_dict_service['charakters'] = find_charakters
+            except:
+                pass
+                # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+
+            for column in range(self.num_hc, s.ncols):                  
+                value = s.cell(row, column).value
+                value = get_rid_point(value)
+                field_name = headers_service[column]                        
+                row_dict_service[field_name] = value
+            try:   
+                se = self.model_service.objects.filter(pointer=pointer).delete(**row_dict_service)
+                self.number_objects_del += 1
+            except:
+                pass
+                # raise Exception(f"проблема в удалении ТО: {row_dict_equipment}")
+                                        
+        self.number_rows = s.nrows - 1
+        return True
+
+
+
 class Delete_ServiceEquipment_MeasurEquipment(Uploading_ServiceEquipment):
     model_CH = MeasurEquipmentCharakters
     model_service = ServiceEquipmentME
