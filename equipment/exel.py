@@ -3306,9 +3306,7 @@ def export_ServiceME_pattern_xls(request):
     ws1.col(5).width = 6000
     ws1.col(6).width = 6000
 
-
-
-    row_num = 1 
+    row_num = 0 
     columns = [
             'Название прибора',
             'Номер в Госреестре',
@@ -3360,7 +3358,7 @@ def export_ServiceTE_pattern_xls(request):
     ws1.col(6).width = 6000
 
 
-    row_num = 1 
+    row_num = 0 
     columns = [
             'Название прибора',
             'Тип/модификация',                   
@@ -3410,7 +3408,7 @@ def export_ServiceHE_pattern_xls(request):
     ws1.col(5).width = 6000
     ws1.col(6).width = 6000
 
-    row_num = 1 
+    row_num = 0 
     columns = [
             'Название прибора',
             'Тип/модификация',                   
