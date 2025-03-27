@@ -76,7 +76,7 @@ def TEST(request):
     #         m.append(f.name)
     #     except:
     #         pass
-    
+    ruser=request.user.profile.userid
     note = Activeveraqq.objects.get(pointer=ruser)
     exelnumber = note.aqq.verificator.CompanyName
     exelnumber = pytils.translit.translify(note.aqq.verificator.CompanyName)
