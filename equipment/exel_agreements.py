@@ -231,13 +231,13 @@ def export_orderverification_xls(request, object_ids):
 
     row_num = 1
     for col_num in range(len(columnsME)):
-        ws.write(row_num, col_num, columns[col_num], style_plain_border)
+        ws1.write(row_num, col_num, columns[col_num], style_plain_border)
     ws1.row(row_num).height_mismatch = True
     ws1.row(row_num).height = 3000
 
     row_num = 1
     for col_num in range(len(columnsHE)):
-        ws.write(row_num, col_num, columns[col_num], style_plain_border)
+        ws2.write(row_num, col_num, columns[col_num], style_plain_border)
     ws2.row(row_num).height_mismatch = True
     ws2.row(row_num).height = 3000
      
