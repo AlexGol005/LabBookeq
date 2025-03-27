@@ -162,39 +162,95 @@ def export_orderverification_xls(request, object_ids):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="{exelnumber}.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
-    ws.header_str = b' '
-    ws.footer_str = b' '
+    ws1 = wb.add_sheet(f'"СИ"', cell_overwrite_ok=True)
+    ws1.header_str = b' '
+    ws1.footer_str = b' '
+    ws2 = wb.add_sheet(f'"ИО"', cell_overwrite_ok=True)
+    ws2.header_str = b' '
+    ws2.footer_str = b' '
     
     q = object_ids[17:-3].split("', '")
+    if not q:
+        q = ['1']
     try:
-        note = Equipment.objects.filter(id__in=q)
+        noteME = Equipment.objects.filter(id__in=q).filter(kategory="СИ")
+        noteTE = Equipment.objects.filter(id__in=q).filter(kategory="ИО")
     except:
-        note = Equipment.objects.filter(id=1)
-    rows = note.values_list(
-        'pk', )
-    # конец стандартной шапки
+        noteME = Equipment.objects.filter(id=1)
+        noteTE = Equipment.objects.filter(id=1)
+    
+    rowsME = noteME.values_list(
+        'measurequipment__charakters__name', 
+        'measurequipment__charakters__reestr',
+        'measurequipment__charakters__typename',
+        'lot',
+        'yearmanuf',
+        'manufacturer__CompanyName',
+    )
+    rowsTE = noteTE.values_list(
+        'testingequipment__charakters__name', 
+        'testingequipment__charakters__typename',
+        'lot',
+        'yearmanuf',
+        'manufacturer__CompanyName', 
+    )
+    columnsME = [
+            'Название прибора',
+            'Номер в Госреестре',
+            'Тип/модификация',
+            'Заводской номер',
+            'Год выпуска',
+            'Название компании-производителя',
+    ]
+
+    columnsHE = [
+            'Название прибора',
+            'Тип/модификация',
+            'Заводской номер',
+            'Год выпуска',
+            'Название компании-производителя',
+    ]
     
     # ширина колонок и их количество
     len_sheet = 11
-    ws.col(0).width = 500
-    ws.col(1).width = 500
-    ws.col(2).width = 500
-    ws.col(3).width = 4000
-    ws.col(4).width = 4000
-    ws.col(5).width = 500
-    ws.col(6).width = 500
-    ws.col(7).width = 500
-    ws.col(8).width = 8000
-    ws.col(9).width = 1500
-    ws.col(10).width = 1500
-    ws.col(11).width = 500
-    
+    ws1.col(0).width = 3000
+    ws1.col(1).width = 3000
+    ws1.col(2).width = 3000
+    ws1.col(3).width = 3000
+    ws1.col(4).width = 3000
+    ws1.col(5).width = 3000
+    ws1.col(6).width = 3000
+
+    ws2.col(0).width = 3000
+    ws2.col(1).width = 3000
+    ws2.col(2).width = 3000
+    ws2.col(3).width = 3000
+    ws2.col(4).width = 3000
+    ws2.col(5).width = 3000
+    ws2.col(6).width = 3000
+
     row_num = 1
-    for row in rows:
+    for col_num in range(len(columnsME)):
+        ws.write(row_num, col_num, columns[col_num], style_plain_border)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 3000
+
+    row_num = 1
+    for col_num in range(len(columnsHE)):
+        ws.write(row_num, col_num, columns[col_num], style_plain_border)
+    ws2.row(row_num).height_mismatch = True
+    ws2.row(row_num).height = 3000
+     
+    for row in rowsME:
         row_num += 1
         for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], style_plain_border)
+            ws1.write(row_num, col_num, row[col_num], style_plain_border)
+
+    for row in rowsHE:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws2.write(row_num, col_num, row[col_num], style_plain_border)
+            
     wb.save(response)
     return response
 
@@ -243,28 +299,63 @@ def export_orderverification_14_xls(request, object_ids):
         'yearmanuf',
         'manufacturer__CompanyName', 
     )
+    columnsME = [
+            'Название прибора',
+            'Номер в Госреестре',
+            'Тип/модификация',
+            'Заводской номер',
+            'Год выпуска',
+            'Название компании-производителя',
+    ]
 
+    columnsHE = [
+            'Название прибора',
+            'Тип/модификация',
+            'Заводской номер',
+            'Год выпуска',
+            'Название компании-производителя',
+    ]
     
     # ширина колонок и их количество
     len_sheet = 11
-    ws.col(0).width = 500
-    ws.col(1).width = 500
-    ws.col(2).width = 500
-    ws.col(3).width = 3000
-    ws.col(4).width = 2000
-    ws.col(5).width = 500
-    ws.col(6).width = 500
-    ws.col(7).width = 500
-    ws.col(8).width = 2000
-    ws.col(9).width = 1500
-    ws.col(10).width = 1500
-    ws.col(11).width = 500
-    
+    ws1.col(0).width = 3000
+    ws1.col(1).width = 3000
+    ws1.col(2).width = 3000
+    ws1.col(3).width = 3000
+    ws1.col(4).width = 3000
+    ws1.col(5).width = 3000
+    ws1.col(6).width = 3000
+
+    ws2.col(0).width = 3000
+    ws2.col(1).width = 3000
+    ws2.col(2).width = 3000
+    ws2.col(3).width = 3000
+    ws2.col(4).width = 3000
+    ws2.col(5).width = 3000
+    ws2.col(6).width = 3000
+
     row_num = 1
-    for row in rows:
+    for col_num in range(len(columnsME)):
+        ws.write(row_num, col_num, columns[col_num], style_plain_border)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 3000
+
+    row_num = 1
+    for col_num in range(len(columnsHE)):
+        ws.write(row_num, col_num, columns[col_num], style_plain_border)
+    ws2.row(row_num).height_mismatch = True
+    ws2.row(row_num).height = 3000
+     
+    for row in rowsME:
         row_num += 1
         for col_num in range(len(row)):
-            ws.write(row_num, col_num, row[col_num], style_plain_border)
+            ws1.write(row_num, col_num, row[col_num], style_plain_border)
+
+    for row in rowsHE:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws2.write(row_num, col_num, row[col_num], style_plain_border)
+            
     wb.save(response)
     return response
 
