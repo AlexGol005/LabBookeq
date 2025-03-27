@@ -316,11 +316,14 @@ class MeasurEquipmentCharaktersView(LoginRequiredMixin, ListView):
     """ Выводит список госреестров """
     """path('measurequipmentcharacterslist/', views.MeasurEquipmentCharaktersView.as_view(), name='measurequipmentcharacterslist'),"""
     
-    model = MeasurEquipmentCharakters
     template_name = URL + '/MEcharacterslist.html'
     context_object_name = 'objects'
     ordering = ['reestr']
     paginate_by = 12
+
+    def get_queryset(self):
+        queryset = MeasurEquipmentCharakters.objects.filter(pointer=self.request.user.profile.userid)
+        return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(MeasurEquipmentCharaktersView, self).get_context_data(**kwargs)
@@ -333,11 +336,14 @@ class MeasurEquipmentCharaktersView(LoginRequiredMixin, ListView):
 
 class TestingEquipmentCharaktersView(LoginRequiredMixin, ListView):
     """ Выводит список характеристик ИО """
-    model = TestingEquipmentCharakters
     template_name = URL + '/TEcharacterslist.html'
     context_object_name = 'objects'
     ordering = ['name']
     paginate_by = 12
+
+    def get_queryset(self):
+        queryset = TestingEquipmentCharakters.objects.filter(pointer=self.request.user.profile.userid)
+        return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TestingEquipmentCharaktersView, self).get_context_data(**kwargs)
@@ -350,11 +356,14 @@ class TestingEquipmentCharaktersView(LoginRequiredMixin, ListView):
 
 class HelpingEquipmentCharaktersView(LoginRequiredMixin, ListView):
     """ Выводит список характеристик ВО """
-    model = HelpingEquipmentCharakters
     template_name = URL + '/HEcharacterslist.html'
     context_object_name = 'objects'
     ordering = ['name']
     paginate_by = 12
+
+    def get_queryset(self):
+        queryset = HelpingEquipmentCharakters.objects.filter(pointer=self.request.user.profile.userid)
+        return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(HelpingEquipmentCharaktersView, self).get_context_data(**kwargs)
