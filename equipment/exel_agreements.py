@@ -211,20 +211,39 @@ def export_orderverification_14_xls(request, object_ids):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="{exelnumber}.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet(f'{exelnumber}', cell_overwrite_ok=True)
-    ws.header_str = b' '
-    ws.footer_str = b' '
+    ws1 = wb.add_sheet(f'"СИ"', cell_overwrite_ok=True)
+    ws1.header_str = b' '
+    ws1.footer_str = b' '
+    ws2 = wb.add_sheet(f'"ИО"', cell_overwrite_ok=True)
+    ws2.header_str = b' '
+    ws2.footer_str = b' '
     
     q = object_ids[17:-3].split("', '")
     if not q:
         q = ['1']
     try:
-        note = Equipment.objects.filter(id__in=q)
+        noteME = Equipment.objects.filter(id__in=q).filter(kategory="СИ")
+        noteTE = Equipment.objects.filter(id__in=q).filter(kategory="ИО")
     except:
-        note = Equipment.objects.filter(id=1)
-    rows = note.values_list(
-        'pk', )
-    # конец стандартной шапки
+        noteME = Equipment.objects.filter(id=1)
+        noteTE = Equipment.objects.filter(id=1)
+    
+    rowsME = noteME.values_list(
+        'measurequipment__charakters__name', 
+        'measurequipment__charakters__reestr',
+        'measurequipment__charakters__typename',
+        'lot',
+        'yearmanuf',
+        'manufacturer__CompanyName',
+    )
+    rowsTE = noteTE.values_list(
+        'testingequipment__charakters__name', 
+        'testingequipment__charakters__typename',
+        'lot',
+        'yearmanuf',
+        'manufacturer__CompanyName', 
+    )
+
     
     # ширина колонок и их количество
     len_sheet = 11
