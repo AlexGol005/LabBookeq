@@ -2557,7 +2557,7 @@ def EquipmentDeleteView(request, str):
             note = Equipment.objects.filter(pointer=ruser).get(pk=str)
             note.delete()
             messages.success(request, 'Оборудование удалено!')
-            return redirect('equipmentlist')            
+            return redirect('euipmentall')            
         except:
             messages.success(request, 'Оборудование невозможно удалить')
             return redirect('equipmentlist')
