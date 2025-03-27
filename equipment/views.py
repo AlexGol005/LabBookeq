@@ -79,7 +79,7 @@ def TEST(request):
     ruser=request.user.profile.userid
     note = Activeveraqq.objects.get(pointer=ruser)
     exelnumber = note.aqq.verificator.companyName
-    exelnumber = pytils.translit.translify(note.aqq.verificator.CompanyName)
+    exelnumber = pytils.translit.translify(exelnumber)
     object = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_')
     return render(
         request,
@@ -170,7 +170,7 @@ def OrderVerificationchange(request, str):
                     # return redirect(exelname, {'object_ids': object_ids})
                     note = Activeveraqq.objects.get(pointer=ruser)
                     exelnumber = note.aqq.verificator.сompanyName
-                    exelnumber = pytils.translit.translify(note.aqq.verificator.CompanyName)
+                    exelnumber = pytils.translit.translify(exelnumber)
                     exelnumber = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_')
                     exelname = f'export_orderverification_{exelnumber}_xls'
                     return redirect(exelname, {'object_ids': object_ids})
