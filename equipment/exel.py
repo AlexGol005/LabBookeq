@@ -6142,6 +6142,10 @@ def export_me_xls(request):
     ws.col(20).width = 6500
     ws.col(21).width = 6500
     ws.col(22).width = 9000
+    ws.col(23).width = 3000
+    ws.col(24).width = 3000
+    ws.col(25).width = 3000
+    ws.col(26).width = 3000
 
     # ширина столбцов графика аттестации
     ws1.col(0).width = 3000
