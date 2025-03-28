@@ -6729,69 +6729,69 @@ def export_accanalytica_xls(request):
         ws.row(row_num).height = 600
 
 
-    # # заголовки форма по СИ 
-    # row_num += 2
-    # columnsup = [
-    #         'Поверка',
-    #         'калибровка'
-    # ]
+    # заголовки форма по СИ 
+    row_num += 2
+    columnsup = [
+            'Поверка',
+            'калибровка'
+    ]
 
-    # for col_num in range(4,7):
-    #     ws.write(row_num, col_num, columnsup[0], style_border_bold)
-    #     ws.merge(row_num, row_num, 4, 7, style_bold)
-    # for col_num in range(7, 10):
-    #     ws.write(row_num, col_num, columnsup[1], style_border_bold)
-    #     ws.merge(row_num, row_num, 7,10, style_bold)
+    for col_num in range(4,7):
+        ws.write(row_num, col_num, columnsup[0], style_border_bold)
+        ws.merge(row_num, row_num, 4, 7, style_bold)
+    for col_num in range(7, 10):
+        ws.write(row_num, col_num, columnsup[1], style_border_bold)
+        ws.merge(row_num, row_num, 7,10, style_bold)
               
-    # row_num += 1
-    # columnslow = [
-    #             '№',
-    #             'Наименование',
-    #             'Тип (модель)',
-    #             'Идентификационные сведения',
-    #             'Дата',
-    #             'Период',
-    #             'Постоянный адрес  записи сведений о результатах поверки СИ из ФГИС АРШИН',
-    #             'Дата',
-    #             'Период',
-    #             'Калибровочная  лаборатория',
-    #             'Ответственное лицо',
-    #             'Место нахождения',
-    #             'Примечания',
-    #            ]
+    row_num += 1
+    columnslow = [
+                '№',
+                'Наименование',
+                'Тип (модель)',
+                'Идентификационные сведения',
+                'Дата',
+                'Период',
+                'Постоянный адрес  записи сведений о результатах поверки СИ из ФГИС АРШИН',
+                'Дата',
+                'Период',
+                'Калибровочная  лаборатория',
+                'Ответственное лицо',
+                'Место нахождения',
+                'Примечания',
+               ]
         
-    # for col_num in range(4):
-    #     ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
-    #     ws.merge(row_num, row_num-1, 7,10, style_bold)
-    # for col_num in range(4,10):
-    #     ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
-    # for col_num in range(10, len(columnslow)):
-    #     ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
-    #     ws.merge(row_num, row_num-1, 7,10, style_bold)
-    # ws.row(row_num).height_mismatch = True
-    # ws.row(row_num).height = 1000
+    for col_num in range(4):
+        ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
+        ws.merge(row_num, row_num-1, 7,10, style_bold)
+    for col_num in range(4,10):
+        ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
+    for col_num in range(10, len(columnslow)):
+        ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
+        ws.merge(row_num, row_num-1, 7,10, style_bold)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 1000
 
 
-    # row_num += 1
-    # columnslow = [
-    #             '1',
-    #             '2',
-    #             '3',
-    #             '4',
-    #             '5',
-    #             '6',
-    #             '7',
-    #             '8',
-    #             '9',
-    #             '10',
-    #             '11',
-    #             '12',
-    #             '13',
-    #            ]
+    row_num += 1
+    columnslow = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+               ]
 
-    # for col_num in range(len(columns)):
-    #     ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
-    #     ws.merge(row_num, row_num-1, 7,10, style_bold)
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
+
 
     # rows = MeasurEquipment.objects.annotate(manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
     #     filter(equipment__pointer=request.user.profile.userid).\
