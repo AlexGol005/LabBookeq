@@ -6277,7 +6277,7 @@ def export_me_xls(request):
             ws.write(row_num, col_num, row[col_num], style20)
         for col_num in range(14, 18):
             ws.write(row_num, col_num, row[col_num], style30)
-        for col_num in range(18, 23):len(row)
+        for col_num in range(18, 23):
             ws.write(row_num, col_num, row[col_num], style20)
         for col_num in range(23, len(row)):
             ws.write(row_num, col_num, row[col_num], style30)
