@@ -6771,7 +6771,7 @@ def export_accanalytica_xls(request):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
         ws.merge(3, 4, col_num, col_num, style_border)
     ws.row(row_num).height_mismatch = True
-    ws.row(row_num).height = 1000
+    ws.row(row_num).height = 2200
 
 
     row_num += 1
