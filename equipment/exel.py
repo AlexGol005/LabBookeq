@@ -6627,33 +6627,7 @@ def export_me_xls(request):
     wb.save(response)
     return response
 
-b1 = Borders()
-b1.left = 1
-b1.right = 1
-b1.top = 1
-b1.bottom = 1
 
-style_border_bold = xlwt.XFStyle()
-style_border_bold.font.bold = True
-style_border_bold.font.name = 'Times New Roman'
-style_border_bold.borders = b1
-style_border_bold.alignment = alg_hc_vc_w1
-
-style_bold = xlwt.XFStyle()
-style_bold.font.bold = True
-style_bold.font.name = 'Times New Roman'
-style_bold.alignment = alg_hc_vc_w1
-
-style_border = xlwt.XFStyle()
-style_border.font.name = 'Times New Roman'
-style_border.borders = b1
-style_border.alignment = alg_hc_vc_w1
-
-style_date = xlwt.XFStyle()
-style_date.font.name = 'Times New Roman'
-style_date.borders = b1
-style_date.alignment = alg_hc_vc_w1
-style_date.num_format_str = 'DD.MM.YYYY'
 
 def export_accanalytica_xls(request):
     '''представление для выгрузки форм приложение к паспорту лаборатории по форме АЦЦ Аналитика'''
@@ -6665,6 +6639,39 @@ def export_accanalytica_xls(request):
     ws = wb.add_sheet('Форма_4_СИ' , cell_overwrite_ok=True)
     ws1 = wb.add_sheet('Форма_5_ИО', cell_overwrite_ok=True)
     ws2 = wb.add_sheet('Форма_6_ВО', cell_overwrite_ok=True)
+
+    alg_hc_vc_w1 = Alignment()
+    alg_hc_vc_w1.horz = Alignment.HORZ_CENTER
+    alg_hc_vc_w1.vert = Alignment.VERT_CENTER
+    alg_hc_vc_w1.wrap = 1
+
+    b1 = Borders()
+    b1.left = 1
+    b1.right = 1
+    b1.top = 1
+    b1.bottom = 1
+
+    style_border_bold = xlwt.XFStyle()
+    style_border_bold.font.bold = True
+    style_border_bold.font.name = 'Times New Roman'
+    style_border_bold.borders = b1
+    style_border_bold.alignment = alg_hc_vc_w1
+
+    style_bold = xlwt.XFStyle()
+    style_bold.font.bold = True
+    style_bold.font.name = 'Times New Roman'
+    style_bold.alignment = alg_hc_vc_w1
+
+    style_border = xlwt.XFStyle()
+    style_border.font.name = 'Times New Roman'
+    style_border.borders = b1
+    style_border.alignment = alg_hc_vc_w1
+
+    style_date = xlwt.XFStyle()
+    style_date.font.name = 'Times New Roman'
+    style_date.borders = b1
+    style_date.alignment = alg_hc_vc_w1
+    style_date.num_format_str = 'DD.MM.YYYY'
 
     # ширина столбцов форма по СИ
     ws.col(0).width = 3000
