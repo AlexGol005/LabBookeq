@@ -6738,8 +6738,8 @@ def export_accanalytica_xls(request):
 
     for col_num in range(3, 6):
         ws.write(row_num, col_num, columnsup[0], style_border_bold)
-        ws.merge(row_num, row_num, 3, 6, style_bold)
-    for col_num in range(6,9):
+        ws.merge(row_num, row_num, 3, 5, style_bold)
+    for col_num in range(6,8):
         ws.write(row_num, col_num, columnsup[1], style_border_bold)
         ws.merge(row_num, row_num, 6,9, style_bold)
               
