@@ -6674,14 +6674,16 @@ def export_accanalytica_xls(request):
     style_date.num_format_str = 'DD.MM.YYYY'
 
     # ширина столбцов форма по СИ
-    ws.col(0).width = 3000
-    ws.col(1).width = 3000
-    ws.col(2).width = 4500
+    ws.col(0).width = 1000
+    ws.col(1).width = 3100
+    ws.col(2).width = 3000
     ws.col(3).width = 3000
-    ws.col(4).width = 4200
+    ws.col(4).width = 2800
+    ws.col(6).width = 4500
+    ws.col(7).width = 2800
     ws.col(8).width = 4200
     ws.col(9).width = 3000
-    ws.col(10).width = 4200
+    ws.col(10).width = 3800
     ws.col(12).width = 4200
     ws.col(13).width = 4200
     ws.col(14).width = 3000
@@ -6762,12 +6764,12 @@ def export_accanalytica_xls(request):
         
     for col_num in range(4):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
-        ws.merge(row_num, row_num, col_num,col_num, style_border)
+        ws.merge(3, 4, col_num,col_num, style_border)
     for col_num in range(4,10):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
     for col_num in range(10, len(columnslow)):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
-        ws.merge(row_num, row_num, col_num, col_num, style_border)
+        ws.merge(3, 4, col_num, col_num, style_border)
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 1000
 
