@@ -9,6 +9,7 @@
 блок 4 - шаблоны для массовой загрузки приборов
 блок 5 - нестандартные exel выгрузки (протоколы верификации, карточка, этикетки) 
 блок 6 - ТОИР 
+блок 7 - график поверки и формы для паспорта лаборатории
 """
 
 
@@ -6114,6 +6115,41 @@ def export_maintenance_schedule_xls(request):
     wb.save(response)
     return response
 
+
+
+
+блок 7 - график поверки и формы для паспорта лаборатории
+
+# стили
+
+b1 = Borders()
+b1.left = 1
+b1.right = 1
+b1.top = 1
+b1.bottom = 1
+
+style_border_bold = xlwt.XFStyle()
+style_border_bold.font.bold = True
+style_border_bold.font.name = 'Times New Roman'
+style_border_bold.borders = b1
+style_border_bold.alignment = alg_hc_vc_w1
+
+style_bold = xlwt.XFStyle()
+style_bold.font.bold = True
+style_bold.font.name = 'Times New Roman'
+style_bold.alignment = alg_hc_vc_w1
+
+style_border = xlwt.XFStyle()
+style_border.font.name = 'Times New Roman'
+style_border.borders = b1
+style_border.alignment = alg_hc_vc_w1
+
+style_date = xlwt.XFStyle()
+style_date.font.name = 'Times New Roman'
+style_date.borders = b1
+style_date.alignment = alg_hc_vc_w1
+style_date.num_format_str = 'DD.MM.YYYY'
+
 # график поверки и калибровки и аттестации
 def export_me_xls(request):
     '''представление для выгрузки графика поверки и калибровки и аттестации'''
@@ -6165,35 +6201,7 @@ def export_me_xls(request):
     ws1.col(20).width = 9000
 
 
-    # стили
 
-    b1 = Borders()
-    b1.left = 1
-    b1.right = 1
-    b1.top = 1
-    b1.bottom = 1
-
-    style10 = xlwt.XFStyle()
-    style10.font.bold = True
-    style10.font.name = 'Times New Roman'
-    style10.borders = b1
-    style10.alignment = alg_hc_vc_w1
-
-    style100 = xlwt.XFStyle()
-    style100.font.bold = True
-    style100.font.name = 'Times New Roman'
-    style100.alignment = alg_hc_vc_w1
-
-    style20 = xlwt.XFStyle()
-    style20.font.name = 'Times New Roman'
-    style20.borders = b1
-    style20.alignment = alg_hc_vc_w1
-
-    style30 = xlwt.XFStyle()
-    style30.font.name = 'Times New Roman'
-    style30.borders = b1
-    style30.alignment = alg_hc_vc_w1
-    style30.num_format_str = 'DD.MM.YYYY'
 
     # название графика поверки, первый ряд
     row_num = 1
@@ -6201,8 +6209,8 @@ def export_me_xls(request):
         f'График поверки и калибровки средств измерений на {now.year} год'
     ]
     for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style100)
-        ws.merge(row_num, row_num, 0, 15, style100)
+        ws.write(row_num, col_num, columns[col_num], style_bold)
+        ws.merge(row_num, row_num, 0, 15, style_bold)
         ws.row(row_num).height_mismatch = True
         ws.row(row_num).height = 600
 
@@ -6239,7 +6247,7 @@ def export_me_xls(request):
                 'Дата заказа калибровки',
                ]
     for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], style10)
+        ws.write(row_num, col_num, columns[col_num], style_border_bold)
 
     rows = MeasurEquipment.objects.annotate(exnumber=Substr('equipment__exnumber',1,5),
     manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
@@ -6278,13 +6286,13 @@ def export_me_xls(request):
     for row in rows:
         row_num += 1
         for col_num in range(0, 14):
-            ws.write(row_num, col_num, row[col_num], style20)
+            ws.write(row_num, col_num, row[col_num], style_border)
         for col_num in range(14, 18):
-            ws.write(row_num, col_num, row[col_num], style30)
+            ws.write(row_num, col_num, row[col_num], style_date)
         for col_num in range(18, 23):
-            ws.write(row_num, col_num, row[col_num], style20)
+            ws.write(row_num, col_num, row[col_num], style_border)
         for col_num in range(23, len(row)):
-            ws.write(row_num, col_num, row[col_num], style30)
+            ws.write(row_num, col_num, row[col_num], style_date)
 
         # название графика аттестации, первый ряд
     row_num = 1
@@ -6292,8 +6300,8 @@ def export_me_xls(request):
         f'График аттестации испытательного оборудования на {now.year} год'
     ]
     for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style100)
-        ws1.merge(row_num, row_num, 0, 15, style100)
+        ws1.write(row_num, col_num, columns[col_num], style_bold)
+        ws1.merge(row_num, row_num, 0, 15, style_bold)
         ws1.row(row_num).height_mismatch = True
         ws1.row(row_num).height = 600
 
@@ -6322,7 +6330,7 @@ def export_me_xls(request):
         'Дополнительная информация/\nвыписка из текущего аттестата',
     ]
     for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style10)
+        ws1.write(row_num, col_num, columns[col_num], style_border_bold)
 
     rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid)
     rows = rows.annotate(exnumber=Substr('equipment__exnumber',1,5),
@@ -6357,11 +6365,481 @@ def export_me_xls(request):
     for row in rows:
         row_num += 1
         for col_num in range(0, 12):
-            ws1.write(row_num, col_num, row[col_num], style20)
+            ws1.write(row_num, col_num, row[col_num], style_border)
         for col_num in range(12, 15):
-            ws1.write(row_num, col_num, row[col_num], style30)
+            ws1.write(row_num, col_num, row[col_num], style_date)
         for col_num in range(15, len(row)):
-            ws1.write(row_num, col_num, row[col_num], style20)
+            ws1.write(row_num, col_num, row[col_num], style_border)
+
+    wb.save(response)
+    return response
+
+def export_me_xls(request):
+    '''представление для выгрузки графика поверки и калибровки и аттестации'''
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="pov_att_shedule_{now.year}.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('График поверки и калибровки СИ', cell_overwrite_ok=True)
+    ws1 = wb.add_sheet('График аттестации ИО', cell_overwrite_ok=True)
+
+    # ширина столбцов графика поверки
+    ws.col(0).width = 3000
+    ws.col(1).width = 3000
+    ws.col(2).width = 4500
+    ws.col(3).width = 3000
+    ws.col(4).width = 4200
+    ws.col(8).width = 4200
+    ws.col(9).width = 3000
+    ws.col(10).width = 4200
+    ws.col(12).width = 4200
+    ws.col(13).width = 4200
+    ws.col(14).width = 3000
+    ws.col(15).width = 3000
+    ws.col(16).width = 3000
+    ws.col(17).width = 3000
+    ws.col(20).width = 6500
+    ws.col(21).width = 6500
+    ws.col(22).width = 9000
+    ws.col(23).width = 3000
+    ws.col(24).width = 3000
+    ws.col(25).width = 3000
+    ws.col(26).width = 3000
+
+    # ширина столбцов графика аттестации
+    ws1.col(0).width = 3000
+    ws1.col(1).width = 4500
+    ws1.col(2).width = 3500
+    ws1.col(3).width = 4200
+    ws1.col(7).width = 4200
+    ws1.col(8).width = 4200
+    ws1.col(9).width = 4200
+    ws1.col(11).width = 4200
+    ws1.col(12).width = 3000
+    ws1.col(13).width = 3000
+    ws1.col(14).width = 3000
+    ws1.col(17).width = 8500
+    ws1.col(18).width = 6500
+    ws1.col(19).width = 6500
+    ws1.col(20).width = 9000
+
+
+
+
+    # название графика поверки, первый ряд
+    row_num = 1
+    columns = [
+        f'График поверки и калибровки средств измерений на {now.year} год'
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_bold)
+        ws.merge(row_num, row_num, 0, 15, style_bold)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 600
+
+
+    # заголовки графика поверки, первый ряд
+    row_num += 2
+    columns = [
+                'Внутренний  номер',
+                'Номер в госреестре',
+                'Наименование',
+                'Тип/Модификация',
+                'Заводской номер',
+                'Год выпуска',
+                'Новый или б/у',
+                'Год ввода в эксплуатацию',
+                'Страна, наименование производителя',
+                'Место установки или хранения',
+                'Ответственный за СИ',
+                'Статус',
+                'Ссылка на сведения о поверке',
+                'Номер свидетельства',
+                'Дата поверки',
+                'Дата окончания свидетельства',
+                'Дата заказа поверки',
+                'Дата заказа замены',
+                'Периодичность поверки(месяцы)',
+                'Инвентарный номер',
+                'Диапазон измерений',
+                'Метрологические характеристики',
+                'Дополнительная информация/\nвыписка из текущих сведений о поверке',
+                'Номер сертификата калибровки',
+                'Дата калибровки',
+                'Дата окончания калибровки',
+                'Дата заказа калибровки',
+               ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_border_bold)
+
+    rows = MeasurEquipment.objects.annotate(exnumber=Substr('equipment__exnumber',1,5),
+    manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
+        filter(equipment__pointer=request.user.profile.userid).\
+        exclude(equipment__status='С').\
+        values_list(
+            'exnumber',
+            'charakters__reestr',
+            'charakters__name',
+            'charakters__typename',
+            'equipment__lot',
+            'equipment__yearmanuf',
+            'equipment__new',
+            'equipment__yearintoservice',
+            'manuf_country',
+            'equipment__newroomnumber',
+            'equipment__newperson',
+            'equipment__status',
+            'newarshin',
+            'newcertnumber',
+            'newdate',
+            'newdatedead',
+            'newdateorder',
+            'newdateordernew',
+            'charakters__calinterval',
+            'equipment__invnumber',
+            'charakters__measurydiapason',
+            'charakters__accuracity',
+            'newextra',
+            'calnewcertnumber',
+            'calnewdate',
+            'calnewdatedead',
+            'calnewdateorder',
+        )
+
+    for row in rows:
+        row_num += 1
+        for col_num in range(0, 14):
+            ws.write(row_num, col_num, row[col_num], style_border)
+        for col_num in range(14, 18):
+            ws.write(row_num, col_num, row[col_num], style_date)
+        for col_num in range(18, 23):
+            ws.write(row_num, col_num, row[col_num], style_border)
+        for col_num in range(23, len(row)):
+            ws.write(row_num, col_num, row[col_num], style_date)
+
+        # название графика аттестации, первый ряд
+    row_num = 1
+    columns = [
+        f'График аттестации испытательного оборудования на {now.year} год'
+    ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_bold)
+        ws1.merge(row_num, row_num, 0, 15, style_bold)
+        ws1.row(row_num).height_mismatch = True
+        ws1.row(row_num).height = 600
+
+        # заголовки графика аттестации, первый ряд
+    row_num += 2
+    columns = [
+        'Внутренний  номер',
+        'Наименование',
+        'Тип/Модификация',
+        'Заводской номер',
+        'Год выпуска',
+        'Новый или б/у',
+        'Год ввода в эксплуатацию',
+        'Страна, наименование производителя',
+        'Место установки или хранения',
+        'Ответственный за ИО',
+        'Статус',
+        'Номер аттестата',
+        'Дата аттестации',
+        'Дата окончания аттестации',
+        'Дата заказа аттестации',
+        'Периодичность аттестации',
+        'Инвентарный номер',
+        'Основные технические характеристики',
+        'Наименование видов испытаний',
+        'Дополнительная информация/\nвыписка из текущего аттестата',
+    ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_border_bold)
+
+    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid)
+    rows = rows.annotate(exnumber=Substr('equipment__exnumber',1,5),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipmentSM_att__in=setatt). \
+        exclude(equipment__status='С'). \
+        values_list(
+        'exnumber',
+        'charakters__name',
+        'charakters__typename',
+        'equipment__lot',
+        'equipment__yearmanuf',
+        'equipment__new',
+        'equipment__yearintoservice',
+        'manuf_country',
+        'equipment__roomschange__roomnumber__roomnumber',
+        'equipment__newperson',
+        'equipment__status',
+        'equipmentSM_att__certnumber',
+        'equipmentSM_att__date',
+        'equipmentSM_att__datedead',
+        'equipmentSM_att__dateorder',
+        'charakters__calinterval',
+        'equipment__invnumber',
+        'charakters__main_technical_characteristics',
+        'charakters__analises_types',
+        'equipmentSM_att__extra'
+    )
+    for row in rows:
+        row_num += 1
+        for col_num in range(0, 12):
+            ws1.write(row_num, col_num, row[col_num], style_border)
+        for col_num in range(12, 15):
+            ws1.write(row_num, col_num, row[col_num], style_date)
+        for col_num in range(15, len(row)):
+            ws1.write(row_num, col_num, row[col_num], style_border)
+
+    wb.save(response)
+    return response
+
+
+def export_accanalytica_xls(request):
+    '''представление для выгрузки форм приложение к паспорту лаборатории по форме АЦЦ Аналитика'''
+    company = Company.objects.get(userid=request.user.profile.userid)
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = f'attachment; filename="ACC_Analytica.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Форма 4 Сведения о средствах измерения' , cell_overwrite_ok=True)
+    ws1 = wb.add_sheet('Форма 5 Сведения об ИО', cell_overwrite_ok=True)
+    ws2 = wb.add_sheet('Форма 6 Сведения о вспомогательном оборудовании ', cell_overwrite_ok=True)
+
+    # ширина столбцов форма по СИ
+    ws.col(0).width = 3000
+    ws.col(1).width = 3000
+    ws.col(2).width = 4500
+    ws.col(3).width = 3000
+    ws.col(4).width = 4200
+    ws.col(8).width = 4200
+    ws.col(9).width = 3000
+    ws.col(10).width = 4200
+    ws.col(12).width = 4200
+    ws.col(13).width = 4200
+    ws.col(14).width = 3000
+    ws.col(15).width = 3000
+    ws.col(16).width = 3000
+    ws.col(17).width = 3000
+    ws.col(20).width = 6500
+    ws.col(21).width = 6500
+    ws.col(22).width = 9000
+    ws.col(23).width = 3000
+    ws.col(24).width = 3000
+    ws.col(25).width = 3000
+    ws.col(26).width = 3000
+
+    # ширина столбцов форма по ИО
+    ws1.col(0).width = 3000
+    ws1.col(1).width = 4500
+    ws1.col(2).width = 3500
+    ws1.col(3).width = 4200
+    ws1.col(7).width = 4200
+    ws1.col(8).width = 4200
+    ws1.col(9).width = 4200
+    ws1.col(11).width = 4200
+    ws1.col(12).width = 3000
+    ws1.col(13).width = 3000
+    ws1.col(14).width = 3000
+    ws1.col(17).width = 8500
+    ws1.col(18).width = 6500
+    ws1.col(19).width = 6500
+    ws1.col(20).width = 9000
+
+
+
+        
+    # название форма по СИ
+    len_table_ws = 13
+    row_num = 1
+    columns = [
+        f'Сведения о средствах измерений {company.name}'
+    ]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], style_bold)
+        ws.merge(row_num, row_num, 0, len_table_ws, style_bold)
+        ws.row(row_num).height_mismatch = True
+        ws.row(row_num).height = 600
+
+
+    # заголовки форма по СИ 
+    row_num += 2
+    columnsup = [
+            'Поверка',
+            'калибровка'
+    ]
+
+    for col_num in range(4,7):
+        ws.write(row_num, col_num, columnsup[0], style_border_bold)
+        ws.merge(row_num, row_num, 4, 7, style_bold)
+    for col_num in range(7, 10):
+        ws.write(row_num, col_num, columnsup[1], style_border_bold)
+        ws.merge(row_num, row_num, 7,10, style_bold)
+              
+    row_num += 1
+    columnslow = [
+                '№',
+                'Наименование',
+                'Тип (модель)',
+                'Идентификационные сведения',
+                'Дата',
+                'Период',
+                'Постоянный адрес  записи сведений о результатах поверки СИ из ФГИС АРШИН',
+                'Дата',
+                'Период',
+                'Калибровочная  лаборатория',
+                'Ответственное лицо',
+                'Место нахождения',
+                'Примечания',
+               ]
+        
+    for col_num in range(4):
+        ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
+        ws.merge(row_num, row_num-1, 7,10, style_bold)
+    for col_num in range(4,10):
+        ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
+    for col_num in range(10, len(columnslow)):
+        ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
+        ws.merge(row_num, row_num-1, 7,10, style_bold)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 1000
+
+
+    row_num += 1
+    columnslow = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+               ]
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
+        ws.merge(row_num, row_num-1, 7,10, style_bold)
+
+    rows = MeasurEquipment.objects.annotate(manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
+        filter(equipment__pointer=request.user.profile.userid).\
+        filter(equipment__status='Э').\
+        values_list(
+            'charakters__name',
+            'charakters__typename',
+            'equipment__lot',
+            'newdate',
+            'charakters__calinterval',
+            'newarshin',
+            'calnewdate',
+            'charakters__calinterval',
+            'calnewverificator',
+            'equipment__newroomnumber',
+            'equipment__newperson',
+        )
+
+    for row in rows:
+        row_num += 1
+        for col_num in range(4):
+            ws.write(row_num, col_num + 1, row[col_num], style_border)
+        for col_num in range(4, 5):
+            ws.write(row_num, col_num + 1, row[col_num], style_date)
+        for col_num in range(5, 9):
+            ws.write(row_num, col_num, row[col_num], style_border)
+        for col_num in range(9, 10):
+            ws.write(row_num, col_num, row[col_num], style_date)
+        for col_num in range(10, len(row)):
+            ws.write(row_num, col_num, row[col_num], style_date)
+                
+    a = row_num
+    for col_num in range(1):
+        for row_num in range(5, a + 1):
+            ws1.write(row_num, col_num, f'{row_num - 4}', style_border)
+
+        # название графика аттестации, первый ряд
+    row_num = 1
+    columns = [
+        f'График аттестации испытательного оборудования на {now.year} год'
+    ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_bold)
+        ws1.merge(row_num, row_num, 0, 15, style_bold)
+        ws1.row(row_num).height_mismatch = True
+        ws1.row(row_num).height = 600
+
+        # заголовки графика аттестации, первый ряд
+    row_num += 2
+    columns = [
+        'Внутренний  номер',
+        'Наименование',
+        'Тип/Модификация',
+        'Заводской номер',
+        'Год выпуска',
+        'Новый или б/у',
+        'Год ввода в эксплуатацию',
+        'Страна, наименование производителя',
+        'Место установки или хранения',
+        'Ответственный за ИО',
+        'Статус',
+        'Номер аттестата',
+        'Дата аттестации',
+        'Дата окончания аттестации',
+        'Дата заказа аттестации',
+        'Периодичность аттестации',
+        'Инвентарный номер',
+        'Основные технические характеристики',
+        'Наименование видов испытаний',
+        'Дополнительная информация/\nвыписка из текущего аттестата',
+    ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_border_bold)
+
+    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid)
+    rows = rows.annotate(exnumber=Substr('equipment__exnumber',1,5),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipmentSM_att__in=setatt). \
+        exclude(equipment__status='С'). \
+        values_list(
+        'exnumber',
+        'charakters__name',
+        'charakters__typename',
+        'equipment__lot',
+        'equipment__yearmanuf',
+        'equipment__new',
+        'equipment__yearintoservice',
+        'manuf_country',
+        'equipment__roomschange__roomnumber__roomnumber',
+        'equipment__newperson',
+        'equipment__status',
+        'equipmentSM_att__certnumber',
+        'equipmentSM_att__date',
+        'equipmentSM_att__datedead',
+        'equipmentSM_att__dateorder',
+        'charakters__calinterval',
+        'equipment__invnumber',
+        'charakters__main_technical_characteristics',
+        'charakters__analises_types',
+        'equipmentSM_att__extra'
+    )
+    for row in rows:
+        row_num += 1
+        for col_num in range(0, 12):
+            ws1.write(row_num, col_num, row[col_num], style_border)
+        for col_num in range(12, 15):
+            ws1.write(row_num, col_num, row[col_num], style_date)
+        for col_num in range(15, len(row)):
+            ws1.write(row_num, col_num, row[col_num], style_border)
 
     wb.save(response)
     return response
