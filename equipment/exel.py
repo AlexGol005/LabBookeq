@@ -6741,35 +6741,35 @@ def export_accanalytica_xls(request):
         ws.merge(row_num, row_num, 3, 5, style_border)
     for col_num in range(6,8):
         ws.write(row_num, col_num, columnsup[1], style_border)
-        ws.merge(row_num, row_num, 6,9, style_border)
+        ws.merge(row_num, row_num, 6,8, style_border)
               
-    # row_num += 1
-    # columnslow = [
-    #             '№',
-    #             'Наименование',
-    #             'Тип (модель)',
-    #             'Идентификационные сведения',
-    #             'Дата',
-    #             'Период',
-    #             'Постоянный адрес  записи сведений о результатах поверки СИ из ФГИС АРШИН',
-    #             'Дата',
-    #             'Период',
-    #             'Калибровочная  лаборатория',
-    #             'Ответственное лицо',
-    #             'Место нахождения',
-    #             'Примечания',
-    #            ]
+    row_num += 1
+    columnslow = [
+                '№',
+                'Наименование',
+                'Тип (модель)',
+                'Идентификационные сведения',
+                'Дата',
+                'Период',
+                'Постоянный адрес  записи сведений о результатах поверки СИ из ФГИС АРШИН',
+                'Дата',
+                'Период',
+                'Калибровочная  лаборатория',
+                'Ответственное лицо',
+                'Место нахождения',
+                'Примечания',
+               ]
         
-    # for col_num in range(4):
-    #     ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
-    #     ws.merge(row_num, row_num-1, 7,10, style_bold)
-    # for col_num in range(4,10):
-    #     ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
-    # for col_num in range(10, len(columnslow)):
-    #     ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
-    #     ws.merge(row_num, row_num-1, 7,10, style_bold)
-    # ws.row(row_num).height_mismatch = True
-    # ws.row(row_num).height = 1000
+    for col_num in range(4):
+        ws.write(row_num, col_num, columnslow[col_num], style_border)
+        ws.merge(row_num, row_num-1, col_num,col_num, style_border)
+    for col_num in range(4,10):
+        ws.write(row_num, col_num, columnslow[col_num], style_border)
+    for col_num in range(10, len(columnslow)):
+        ws.write(row_num, col_num, columnslow[col_num], style_border)
+        ws.merge(row_num, row_num-1, col_num, col_num, style_border)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 1000
 
 
     # row_num += 1
