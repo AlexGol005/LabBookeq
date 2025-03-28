@@ -6114,14 +6114,14 @@ def export_maintenance_schedule_xls(request):
     wb.save(response)
     return response
 
-# график поверки и и аттестации
+# график поверки и калибровки и аттестации
 def export_me_xls(request):
-    '''представление для выгрузки графика поверки и аттестации'''
+    '''представление для выгрузки графика поверки и калибровки и аттестации'''
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="pov_att_shedule_{now.year}.xls"'
 
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('График поверки СИ', cell_overwrite_ok=True)
+    ws = wb.add_sheet('График поверки/калибровки СИ', cell_overwrite_ok=True)
     ws1 = wb.add_sheet('График аттестации ИО', cell_overwrite_ok=True)
 
     # ширина столбцов графика поверки
@@ -6194,7 +6194,7 @@ def export_me_xls(request):
     # название графика поверки, первый ряд
     row_num = 1
     columns = [
-        f'График поверки средств измерений на {now.year} год'
+        f'График поверки и калибровки средств измерений на {now.year} год'
     ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style100)
@@ -6229,6 +6229,10 @@ def export_me_xls(request):
                 'Диапазон измерений',
                 'Метрологические характеристики',
                 'Дополнительная информация/\nвыписка из текущих сведений о поверке',
+                'Номер сертификата калибровки',
+                'Дата калибровки',
+                'Дата окончания калибровки',
+                'Дата заказа калибровки',
                ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], style10)
@@ -6260,7 +6264,11 @@ def export_me_xls(request):
             'equipment__invnumber',
             'charakters__measurydiapason',
             'charakters__accuracity',
-            'newextra'
+            'newextra',
+            'calnewcertnumber',
+            'calnewdate',
+            'calnewdatedead',
+            'calnewdateorder',
         )
 
     for row in rows:
@@ -6269,8 +6277,10 @@ def export_me_xls(request):
             ws.write(row_num, col_num, row[col_num], style20)
         for col_num in range(14, 18):
             ws.write(row_num, col_num, row[col_num], style30)
-        for col_num in range(18, len(row)):
+        for col_num in range(18, 23):len(row)
             ws.write(row_num, col_num, row[col_num], style20)
+        for col_num in range(23, len(row)):
+            ws.write(row_num, col_num, row[col_num], style30)
 
         # название графика аттестации, первый ряд
     row_num = 1
