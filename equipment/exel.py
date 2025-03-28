@@ -6764,12 +6764,12 @@ def export_accanalytica_xls(request):
         
     for col_num in range(3):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
-        ws.merge(3, 4, col_num,col_num, style_border)
+        ws.merge(4, 3, col_num,col_num, style_border)
     for col_num in range(3,8):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
-    for col_num in range(8, len(columnslow)):
+    for col_num in range(9, len(columnslow)):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
-        ws.merge(3, 4, col_num, col_num, style_border)
+        ws.merge(4, 3, col_num, col_num, style_border)
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 1000
 
