@@ -6605,9 +6605,9 @@ def export_accanalytica_xls(request):
     response['Content-Disposition'] = f'attachment; filename="ACC_Analytica.xls"'
 
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('Форма 4 Сведения о средствах измерения' , cell_overwrite_ok=True)
-    ws1 = wb.add_sheet('Форма 5 Сведения об ИО', cell_overwrite_ok=True)
-    ws2 = wb.add_sheet('Форма 6 Сведения о вспомогательном оборудовании ', cell_overwrite_ok=True)
+    ws = wb.add_sheet('Форма_4_СИ' , cell_overwrite_ok=True)
+    ws1 = wb.add_sheet('Форма_5_ИО', cell_overwrite_ok=True)
+    ws2 = wb.add_sheet('Форма_6_ВО', cell_overwrite_ok=True)
 
     # ширина столбцов форма по СИ
     ws.col(0).width = 3000
