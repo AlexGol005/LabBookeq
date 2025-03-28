@@ -6121,7 +6121,7 @@ def export_me_xls(request):
     response['Content-Disposition'] = f'attachment; filename="pov_att_shedule_{now.year}.xls"'
 
     wb = xlwt.Workbook(encoding='utf-8')
-    ws = wb.add_sheet('График поверки/калибровки СИ', cell_overwrite_ok=True)
+    ws = wb.add_sheet('График поверки и калибровки СИ', cell_overwrite_ok=True)
     ws1 = wb.add_sheet('График аттестации ИО', cell_overwrite_ok=True)
 
     # ширина столбцов графика поверки
