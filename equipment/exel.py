@@ -6764,148 +6764,148 @@ def export_accanalytica_xls(request):
         
     for col_num in range(3):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
-        ws.merge(4, 3, col_num,col_num, style_border)
+        ws.merge(3, 4, col_num,col_num, style_border)
     for col_num in range(3,8):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
     for col_num in range(9, len(columnslow)):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
-        ws.merge(4, 3, col_num, col_num, style_border)
+        ws.merge(3, 4, col_num, col_num, style_border)
     ws.row(row_num).height_mismatch = True
     ws.row(row_num).height = 1000
 
 
-    # row_num += 1
-    # columnslow = [
-    #             '1',
-    #             '2',
-    #             '3',
-    #             '4',
-    #             '5',
-    #             '6',
-    #             '7',
-    #             '8',
-    #             '9',
-    #             '10',
-    #             '11',
-    #             '12',
-    #             '13',
-    #            ]
+    row_num += 1
+    columnslow = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+               ]
 
-    # for col_num in range(len(columns)):
-    #     ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
 
 
-    # rows = MeasurEquipment.objects.annotate(manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
-    #     filter(equipment__pointer=request.user.profile.userid).\
-    #     filter(equipment__status='Э').\
-    #     values_list(
-    #         'charakters__name',
-    #         'charakters__typename',
-    #         'equipment__lot',
-    #         'newdate',
-    #         'charakters__calinterval',
-    #         'newarshin',
-    #         'calnewdate',
-    #         'charakters__calinterval',
-    #         'calnewverificator',
-    #         'equipment__newroomnumber',
-    #         'equipment__newperson',
-    #     )
+    rows = MeasurEquipment.objects.annotate(manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
+        filter(equipment__pointer=request.user.profile.userid).\
+        filter(equipment__status='Э').\
+        values_list(
+            'charakters__name',
+            'charakters__typename',
+            'equipment__lot',
+            'newdate',
+            'charakters__calinterval',
+            'newarshin',
+            'calnewdate',
+            'charakters__calinterval',
+            'calnewverificator',
+            'equipment__newroomnumber',
+            'equipment__newperson',
+        )
 
-    # for row in rows:
-    #     row_num += 1
-    #     for col_num in range(4):
-    #         ws.write(row_num, col_num + 1, row[col_num], style_border)
-    #     for col_num in range(4, 5):
-    #         ws.write(row_num, col_num + 1, row[col_num], style_date)
-    #     for col_num in range(5, 9):
-    #         ws.write(row_num, col_num, row[col_num], style_border)
-    #     for col_num in range(9, 10):
-    #         ws.write(row_num, col_num, row[col_num], style_date)
-    #     for col_num in range(10, len(row)):
-    #         ws.write(row_num, col_num, row[col_num], style_date)
+    for row in rows:
+        row_num += 1
+        for col_num in range(4):
+            ws.write(row_num, col_num + 1, row[col_num], style_border)
+        for col_num in range(4, 5):
+            ws.write(row_num, col_num + 1, row[col_num], style_date)
+        for col_num in range(5, 9):
+            ws.write(row_num, col_num, row[col_num], style_border)
+        for col_num in range(9, 10):
+            ws.write(row_num, col_num, row[col_num], style_date)
+        for col_num in range(10, len(row)):
+            ws.write(row_num, col_num, row[col_num], style_date)
                 
-    # a = row_num
-    # for col_num in range(1):
-    #     for row_num in range(5, a + 1):
-    #         ws1.write(row_num, col_num, f'{row_num - 4}', style_border)
+    a = row_num
+    for col_num in range(1):
+        for row_num in range(5, a + 1):
+            ws1.write(row_num, col_num, f'{row_num - 4}', style_border)
 
-    #     # название графика аттестации, первый ряд
-    # row_num = 1
-    # columns = [
-    #     f'График аттестации испытательного оборудования на {now.year} год'
-    # ]
-    # for col_num in range(len(columns)):
-    #     ws1.write(row_num, col_num, columns[col_num], style_bold)
-    #     ws1.merge(row_num, row_num, 0, 15, style_bold)
-    #     ws1.row(row_num).height_mismatch = True
-    #     ws1.row(row_num).height = 600
+        # название графика аттестации, первый ряд
+    row_num = 1
+    columns = [
+        f'График аттестации испытательного оборудования на {now.year} год'
+    ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_bold)
+        ws1.merge(row_num, row_num, 0, 15, style_bold)
+        ws1.row(row_num).height_mismatch = True
+        ws1.row(row_num).height = 600
 
-    #     # заголовки графика аттестации, первый ряд
-    # row_num += 2
-    # columns = [
-    #     'Внутренний  номер',
-    #     'Наименование',
-    #     'Тип/Модификация',
-    #     'Заводской номер',
-    #     'Год выпуска',
-    #     'Новый или б/у',
-    #     'Год ввода в эксплуатацию',
-    #     'Страна, наименование производителя',
-    #     'Место установки или хранения',
-    #     'Ответственный за ИО',
-    #     'Статус',
-    #     'Номер аттестата',
-    #     'Дата аттестации',
-    #     'Дата окончания аттестации',
-    #     'Дата заказа аттестации',
-    #     'Периодичность аттестации',
-    #     'Инвентарный номер',
-    #     'Основные технические характеристики',
-    #     'Наименование видов испытаний',
-    #     'Дополнительная информация/\nвыписка из текущего аттестата',
-    # ]
-    # for col_num in range(len(columns)):
-    #     ws1.write(row_num, col_num, columns[col_num], style_border_bold)
+        # заголовки графика аттестации, первый ряд
+    row_num += 2
+    columns = [
+        'Внутренний  номер',
+        'Наименование',
+        'Тип/Модификация',
+        'Заводской номер',
+        'Год выпуска',
+        'Новый или б/у',
+        'Год ввода в эксплуатацию',
+        'Страна, наименование производителя',
+        'Место установки или хранения',
+        'Ответственный за ИО',
+        'Статус',
+        'Номер аттестата',
+        'Дата аттестации',
+        'Дата окончания аттестации',
+        'Дата заказа аттестации',
+        'Периодичность аттестации',
+        'Инвентарный номер',
+        'Основные технические характеристики',
+        'Наименование видов испытаний',
+        'Дополнительная информация/\nвыписка из текущего аттестата',
+    ]
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_border_bold)
 
-    # rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid)
-    # rows = rows.annotate(exnumber=Substr('equipment__exnumber',1,5),
-    #              manuf_country=Concat('equipment__manufacturer__country', Value(', '),
-    #                                   'equipment__manufacturer__companyName')). \
-    #     filter(equipment__roomschange__in=setroom). \
-    #     filter(equipment__personchange__in=setperson). \
-    #     filter(equipmentSM_att__in=setatt). \
-    #     exclude(equipment__status='С'). \
-    #     values_list(
-    #     'exnumber',
-    #     'charakters__name',
-    #     'charakters__typename',
-    #     'equipment__lot',
-    #     'equipment__yearmanuf',
-    #     'equipment__new',
-    #     'equipment__yearintoservice',
-    #     'manuf_country',
-    #     'equipment__roomschange__roomnumber__roomnumber',
-    #     'equipment__newperson',
-    #     'equipment__status',
-    #     'equipmentSM_att__certnumber',
-    #     'equipmentSM_att__date',
-    #     'equipmentSM_att__datedead',
-    #     'equipmentSM_att__dateorder',
-    #     'charakters__calinterval',
-    #     'equipment__invnumber',
-    #     'charakters__main_technical_characteristics',
-    #     'charakters__analises_types',
-    #     'equipmentSM_att__extra'
-    # )
-    # for row in rows:
-    #     row_num += 1
-    #     for col_num in range(0, 12):
-    #         ws1.write(row_num, col_num, row[col_num], style_border)
-    #     for col_num in range(12, 15):
-    #         ws1.write(row_num, col_num, row[col_num], style_date)
-    #     for col_num in range(15, len(row)):
-    #         ws1.write(row_num, col_num, row[col_num], style_border)
+    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid)
+    rows = rows.annotate(exnumber=Substr('equipment__exnumber',1,5),
+                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
+                                      'equipment__manufacturer__companyName')). \
+        filter(equipment__roomschange__in=setroom). \
+        filter(equipment__personchange__in=setperson). \
+        filter(equipmentSM_att__in=setatt). \
+        exclude(equipment__status='С'). \
+        values_list(
+        'exnumber',
+        'charakters__name',
+        'charakters__typename',
+        'equipment__lot',
+        'equipment__yearmanuf',
+        'equipment__new',
+        'equipment__yearintoservice',
+        'manuf_country',
+        'equipment__roomschange__roomnumber__roomnumber',
+        'equipment__newperson',
+        'equipment__status',
+        'equipmentSM_att__certnumber',
+        'equipmentSM_att__date',
+        'equipmentSM_att__datedead',
+        'equipmentSM_att__dateorder',
+        'charakters__calinterval',
+        'equipment__invnumber',
+        'charakters__main_technical_characteristics',
+        'charakters__analises_types',
+        'equipmentSM_att__extra'
+    )
+    for row in rows:
+        row_num += 1
+        for col_num in range(0, 12):
+            ws1.write(row_num, col_num, row[col_num], style_border)
+        for col_num in range(12, 15):
+            ws1.write(row_num, col_num, row[col_num], style_date)
+        for col_num in range(15, len(row)):
+            ws1.write(row_num, col_num, row[col_num], style_border)
 
     wb.save(response)
     return response
