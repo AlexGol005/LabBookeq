@@ -6733,15 +6733,19 @@ def export_accanalytica_xls(request):
     row_num += 2
     columnsup = [
             'Поверка',
-            'калибровка'
+            'Поверка',
+            'Поверка',
+            'Калибровка'
+            'Калибровка'
+            'Калибровка'
     ]
 
     for col_num in range(4,7):
         ws.write(row_num, col_num, columnsup[0], style_border_bold)
-        ws.merge(row_num, row_num, 4, 7, style_bold)
+        ws.merge(row_num, row_num, 3, 6, style_bold)
     for col_num in range(7, 10):
         ws.write(row_num, col_num, columnsup[1], style_border_bold)
-        ws.merge(row_num, row_num, 7,10, style_bold)
+        ws.merge(row_num, row_num, 6,9, style_bold)
               
     # row_num += 1
     # columnslow = [
