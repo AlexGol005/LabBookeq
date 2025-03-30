@@ -3500,15 +3500,14 @@ def export_verificlabel_xls(request):
               request.GET['n9'], request.GET['n10'],
               request.GET['n11'], request.GET['n12'],
               request.GET['n13'], request.GET['n14']):
-        
+                      
+        n = n + '_' + str(company.pk)
         try:
-            n = n + '_' + str(company.pk)
             MeasurEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n)
             note.append(MeasurEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n))
         except:
             pass
         try:
-            n = n + '_' + str(company.pk)
             TestingEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n)
             note.append(TestingEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n))
         except:    
