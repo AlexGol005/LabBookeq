@@ -3503,16 +3503,17 @@ def export_verificlabel_xls(request):
         
         try:
             n = n + '_' + str(company.pk)
-            # n = 'Т0001_1'
+            MeasurEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n)
+            note.append(MeasurEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n))
+        except:
+            pass
+        try:
+            n = n + '_' + str(company.pk)
             TestingEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n)
             note.append(TestingEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n))
-        except:            
-            try:
-                n = n + '_' + str(company.pk)
-                MeasurEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n)
-                note.append(MeasurEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n))
-            except:
-                pass
+        except:    
+            pass
+
 
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="verification_labels.xls"'
