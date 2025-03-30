@@ -6734,16 +6734,31 @@ def export_accanalytica_xls(request):
     # заголовки форма по СИ 
     row_num += 2
     columnsup = [
-            'Поверка',
-            'Калибровка'
-    ]
+                            '№',
+                'Наименование',
+                'Тип (модель)',
+                'Идентификационные сведения',
+                'Поверка',
+                'Поверка',
+                'Поверка',
+                'Калибровка',
+                'Калибровка',
+                'Калибровка',
+                'Ответственное лицо',
+                'Место нахождения',
+                'Примечания',
 
+    ]
+    for col_num in range(4):
+        ws.write(row_num, col_num, columnsup[col_num], style_border)
     for col_num in range(3, 6):
-        ws.write(row_num, col_num, columnsup[0], style_border)
+        ws.write(row_num, col_num, columnsup[col_num], style_border)
         ws.merge(row_num, row_num, 3, 5, style_border)
     for col_num in range(6,8):
-        ws.write(row_num, col_num, columnsup[1], style_border)
+        ws.write(row_num, col_num, columnsup[col_num], style_border)
         ws.merge(row_num, row_num, 6,8, style_border)
+    for col_num in range(8, len(columns)):
+        ws.write(row_num, col_num, columnsup[col_num], style_border)
               
     row_num += 1
     columnslow = [
@@ -6775,7 +6790,7 @@ def export_accanalytica_xls(request):
 
 
     row_num += 1
-    columnslow = [
+    columns = [
                 '1',
                 '2',
                 '3',
@@ -6792,7 +6807,7 @@ def export_accanalytica_xls(request):
                ]
 
     for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columnslow[col_num], style_border_bold)
+        ws.write(row_num, col_num, columns[col_num], style_border)
 
 
     rows = MeasurEquipment.objects.annotate(manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
