@@ -5,6 +5,7 @@ from . import exel
 from . import exel_agreements
 
 urlpatterns = [
+    path(r'^export_rossaccreditacia/xls/$/', exel.export_rossaccreditacia_xls, name='export_rossaccreditacia_xls'),
     path(r'^export_acc/xls/$/', exel.export_accanalytica_xls, name='export_accanalytica_xls'),
     path('verificationdocs/', views.VerificationDocs.as_view(), name='verificationdocs'),
     path(r'^export_orderverification/xls/$/<path:object_ids>/', exel_agreements.export_orderverification_xls, name='export_orderverification_xls'),
