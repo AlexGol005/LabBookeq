@@ -7173,6 +7173,8 @@ def export_rossaccreditacia_xls(request):
         ws.merge(row_num, row_num, 5, 6, style_border)
     for col_num in range(7, len(columnsup)):
         ws.write(row_num, col_num, columnsup[col_num], style_border)
+    ws.row(row_num).height_mismatch = True
+    ws.row(row_num).height = 1200
               
     row_num += 1
     columnslow = [
@@ -7198,7 +7200,7 @@ def export_rossaccreditacia_xls(request):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
         ws.merge(3, 4, col_num, col_num, style_border)
     ws.row(row_num).height_mismatch = True
-    ws.row(row_num).height = 2200
+    ws.row(row_num).height = 4500
 
 
     row_num += 1
@@ -7213,6 +7215,7 @@ def export_rossaccreditacia_xls(request):
                 '8',
                 '9',
                 '10',
+                '11',
                ]
 
     for col_num in range(len(columns)):
@@ -7223,8 +7226,8 @@ def export_rossaccreditacia_xls(request):
           name=Concat('charakters__name', Value(', '), 'charakters__typename', Value(', '), 'charakters__reestr', output_field=CharField()),\
           manuf = Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName', Value(', '), 'equipment__yearmanuf', output_field=CharField()),\
           exp = Concat('equipment__yearintoservice', Value(', зав. № '), 'equipment__lot', output_field=CharField()),\
-          # metro = Concat('newcertnumber', Value(', от'), 'newdate', Value(' до '), 'newdatedead', output_field=CharField())).\   
-          metro = Concat('newcertnumber', Value(', от'), Value(' до '), output_field=CharField())).\
+          metro = Concat('newcertnumber', Value(' от '), 'newdate', Value(' до '), 'newdatedead')).\   
+          # metro = Concat('newcertnumber', Value(', от'), Value(' до '), output_field=CharField())).\
           filter(equipment__pointer=request.user.profile.userid).\
           filter(equipment__status='Э').\
           values_list(
@@ -7236,7 +7239,8 @@ def export_rossaccreditacia_xls(request):
             'charakters__accuracity',
             'metro',
             'equipment__pravo',
-            'equipment__newroomnumber',            
+            'equipment__newroomnumber',   
+            'blanc',
         )
 
     for row in rows:
