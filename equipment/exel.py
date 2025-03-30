@@ -6810,7 +6810,7 @@ def export_accanalytica_xls(request):
             'calnewverificator',
             'equipment__newperson',
             'equipment__newroomnumber',
-                'blanc'
+                'equipment__pravo_have'
             
         )
 
@@ -6825,98 +6825,203 @@ def export_accanalytica_xls(request):
         for col_num in range(9, 10):
             ws.write(row_num, col_num + 1, row[col_num], style_date)
         for col_num in range(10, len(row)):
-            ws.write(row_num, col_num + 1, row[col_num], style_date)
+            ws.write(row_num, col_num + 1, row[col_num], style_border)
                 
     a = row_num
     for col_num in range(1):
-        for row_num in range(5, a + 1):
+        for row_num in range(6, a + 1):
             ws.write(row_num, col_num, f'{row_num - 5}', style_border)
 
-        # название графика аттестации, первый ряд
+        
+
+    # название форма по ИО
+    len_table_ws = 10
     row_num = 1
     columns = [
-        f'График аттестации испытательного оборудования на {now.year} год'
+        f'Сведения об испытательном оборудовании {company.name}'
     ]
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_bold)
-        ws1.merge(row_num, row_num, 0, 15, style_bold)
+        ws1.merge(row_num, row_num, 0, len_table_ws, style_bold)
         ws1.row(row_num).height_mismatch = True
         ws1.row(row_num).height = 600
 
 
-
-
-
-
-
-
-        
-        # заголовки графика аттестации, первый ряд
+    # заголовки форма по ИО 
     row_num += 2
-    columns = [
-        'Внутренний  номер',
-        'Наименование',
-        'Тип/Модификация',
-        'Заводской номер',
-        'Год выпуска',
-        'Новый или б/у',
-        'Год ввода в эксплуатацию',
-        'Страна, наименование производителя',
-        'Место установки или хранения',
-        'Ответственный за ИО',
-        'Статус',
-        'Номер аттестата',
-        'Дата аттестации',
-        'Дата окончания аттестации',
-        'Дата заказа аттестации',
-        'Периодичность аттестации',
-        'Инвентарный номер',
-        'Основные технические характеристики',
-        'Наименование видов испытаний',
-        'Дополнительная информация/\nвыписка из текущего аттестата',
-    ]
-    for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_border_bold)
+    columnsup = [
+                            '№',
+                'Наименование',
+                'Тип (модель)',
+                'Идентификационные сведения',
+                'Аттестация',
+                'Аттестация',
+                'Аттестация',
+                'Ответственное лицо',
+                'Место нахождения',
+                'Примечания',
 
-    rows = TestingEquipment.objects.filter(pointer=request.user.profile.userid)
-    rows = rows.annotate(exnumber=Substr('equipment__exnumber',1,5),
-                 manuf_country=Concat('equipment__manufacturer__country', Value(', '),
-                                      'equipment__manufacturer__companyName')). \
-        filter(equipment__roomschange__in=setroom). \
-        filter(equipment__personchange__in=setperson). \
-        filter(equipmentSM_att__in=setatt). \
-        exclude(equipment__status='С'). \
+    ]
+    for col_num in range(4):
+        ws1.write(row_num, col_num, columnsup[col_num], style_border)
+    for col_num in range(4, 7):
+        ws1.write(row_num, col_num, columnsup[col_num], style_border)
+        ws1.merge(row_num, row_num, 4, 6, style_border)
+    for col_num in range(7, дут(columnsup)):
+        ws.write(row_num, col_num, columnsup[col_num], style_border)
+              
+    row_num += 1
+    columnslow = [
+                '№',
+                'Наименование',
+                'Тип (модель)',
+                'Идентификационные сведения',
+                'Дата',
+                'Период',
+                'Аттестующая организация',
+                'Ответственное лицо',
+                'Место нахождения',
+                'Примечания',
+               ]
+        
+    for col_num in range(4):
+        ws1.write(row_num, col_num, columnslow[col_num], style_border)
+        ws1.merge(3, 4, col_num, col_num, style_border)
+    for col_num in range(4,7):
+        ws1.write(row_num, col_num, columnslow[col_num], style_border)
+    for col_num in range(7, len(columnslow)):
+        ws1.write(row_num, col_num, columnslow[col_num], style_border)
+        ws1.merge(3, 4, col_num, col_num, style_border)
+    ws1.row(row_num).height_mismatch = True
+    ws1.row(row_num).height = 2200
+
+
+    row_num += 1
+    columns = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+               ]
+
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_border)
+
+
+    rows = TestingEquipment.objects.annotate(blanc= Value(' ')).\
+        filter(equipment__pointer=request.user.profile.userid).\
+        filter(equipment__status='Э').\
         values_list(
-        'exnumber',
-        'charakters__name',
-        'charakters__typename',
-        'equipment__lot',
-        'equipment__yearmanuf',
-        'equipment__new',
-        'equipment__yearintoservice',
-        'manuf_country',
-        'equipment__roomschange__roomnumber__roomnumber',
-        'equipment__newperson',
-        'equipment__status',
-        'equipmentSM_att__certnumber',
-        'equipmentSM_att__date',
-        'equipmentSM_att__datedead',
-        'equipmentSM_att__dateorder',
-        'charakters__calinterval',
-        'equipment__invnumber',
-        'charakters__main_technical_characteristics',
-        'charakters__analises_types',
-        'equipmentSM_att__extra'
-    )
+            'charakters__name',
+            'charakters__typename',
+            'equipment__lot',
+            'newdate',
+            'charakters__calinterval',
+            'newarshin',
+            'equipment__newperson',
+            'equipment__newroomnumber',
+                'equipment__pravo_have'
+            
+        )
+
     for row in rows:
         row_num += 1
-        for col_num in range(0, 12):
-            ws1.write(row_num, col_num, row[col_num], style_border)
-        for col_num in range(12, 15):
-            ws1.write(row_num, col_num, row[col_num], style_date)
-        for col_num in range(15, len(row)):
-            ws1.write(row_num, col_num, row[col_num], style_border)
+        for col_num in range(3):
+            ws1.write(row_num, col_num + 1, row[col_num], style_border)
+        for col_num in range(3, 4):
+            ws1.write(row_num, col_num + 1, row[col_num], style_date)
+        for col_num in range(4, len(row)):
+            ws1.write(row_num, col_num + 1, row[col_num], style_border)
 
+                
+    a = row_num
+    for col_num in range(1):
+        for row_num in range(6, a + 1):
+            ws1.write(row_num, col_num, f'{row_num - 5}', style_border)
+
+
+    # название форма по ВО
+    len_table_ws = 8
+    row_num = 1
+    columns = [
+        f'Сведения о вспомогательном оборудовании {company.name}'
+    ]
+    for col_num in range(len(columns)):
+        ws2.write(row_num, col_num, columns[col_num], style_bold)
+        ws2.merge(row_num, row_num, 0, len_table_ws, style_bold)
+        ws2.row(row_num).height_mismatch = True
+        ws2.row(row_num).height = 600
+
+        
+    # заголовки форма по ВО 
+              
+    row_num += 2
+    columnslow = [
+                '№',
+                'Наименование',
+                'Тип (модель)',
+                'Идентификационные сведения',
+                'Техническое обслуживание',
+                'Ответственное лицо',
+                'Место нахождения',
+                'Примечания',
+               ]
+        
+
+    for col_num in range(len(columnslow)):
+        ws2.write(row_num, col_num, columnslow[col_num], style_border)
+    ws2.row(row_num).height_mismatch = True
+    ws2.row(row_num).height = 2200
+
+
+    row_num += 1
+    columns = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+               ]
+
+    for col_num in range(len(columns)):
+        ws2.write(row_num, col_num, columns[col_num], style_border)
+
+
+    rows = HelpingEquipment.objects.annotate(blanc= Value(' ')).\
+        filter(equipment__pointer=request.user.profile.userid).\
+        filter(equipment__status='Э').\
+        values_list(
+            'charakters__name',
+            'charakters__typename',
+            'equipment__lot',
+                'blanc',
+            'equipment__newperson',
+            'equipment__newroomnumber',
+                'equipment__pravo_have'
+            
+        )
+
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws2.write(row_num, col_num + 1, row[col_num], style_border)
+
+                
+    a = row_num
+    for col_num in range(1):
+        for row_num in range(5, a + 1):
+            ws2.write(row_num, col_num, f'{row_num - 4}', style_border)
+
+        
     wb.save(response)
     return response
 
