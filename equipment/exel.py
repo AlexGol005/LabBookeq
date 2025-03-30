@@ -6867,7 +6867,7 @@ def export_accanalytica_xls(request):
     for col_num in range(4, 7):
         ws1.write(row_num, col_num, columnsup[col_num], style_border)
         ws1.merge(row_num, row_num, 4, 6, style_border)
-    for col_num in range(7, len(columnsup)):
+    for col_num in range(7, 10):
         ws.write(row_num, col_num, columnsup[col_num], style_border)
               
     row_num += 1
@@ -6923,7 +6923,7 @@ def export_accanalytica_xls(request):
             'equipment__lot',
             'newdate',
             'charakters__calinterval',
-            'newarshin',
+            'newverificator',
             'equipment__newperson',
             'equipment__newroomnumber',
                 'equipment__pravo_have'
@@ -6947,7 +6947,7 @@ def export_accanalytica_xls(request):
 
 
     # название форма по ВО
-    len_table_ws = 8
+    len_table_ws = 7
     row_num = 1
     columns = [
         f'Сведения о вспомогательном оборудовании {company.name}'
