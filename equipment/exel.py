@@ -6751,13 +6751,13 @@ def export_accanalytica_xls(request):
     ]
     for col_num in range(4):
         ws.write(row_num, col_num, columnsup[col_num], style_border)
-    for col_num in range(3, 6):
+    for col_num in range(4, 7):
         ws.write(row_num, col_num, columnsup[col_num], style_border)
         ws.merge(row_num, row_num, 3, 5, style_border)
-    for col_num in range(6,8):
+    for col_num in range(7,10):
         ws.write(row_num, col_num, columnsup[col_num], style_border)
         ws.merge(row_num, row_num, 6,8, style_border)
-    for col_num in range(8, len(columns)):
+    for col_num in range(10, len(columns)):
         ws.write(row_num, col_num, columnsup[col_num], style_border)
               
     row_num += 1
@@ -6834,11 +6834,11 @@ def export_accanalytica_xls(request):
         for col_num in range(4, 5):
             ws.write(row_num, col_num + 1, row[col_num], style_date)
         for col_num in range(5, 9):
-            ws.write(row_num, col_num, row[col_num], style_border)
+            ws.write(row_num, col_num + 1, row[col_num], style_border)
         for col_num in range(9, 10):
-            ws.write(row_num, col_num, row[col_num], style_date)
+            ws.write(row_num, col_num + 1, row[col_num], style_date)
         for col_num in range(10, len(row)):
-            ws.write(row_num, col_num, row[col_num], style_date)
+            ws.write(row_num, col_num + 1, row[col_num], style_date)
                 
     a = row_num
     for col_num in range(1):
