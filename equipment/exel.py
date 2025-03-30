@@ -3510,7 +3510,8 @@ def export_verificlabel_xls(request):
             TestingEquipment.objects.get(equipment__exnumber=n)
             note.append(TestingEquipment.objects.get(equipment__exnumber=n))
         except:
-            pass
+            raise
+            # pass
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="verification_labels.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
