@@ -7210,7 +7210,7 @@ def export_rossaccreditacia_xls(request):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
         ws.merge(3, 4, col_num, col_num, style_border)
     ws.row(row_num).height_mismatch = True
-    ws.row(row_num).height = 4500
+    ws.row(row_num).height = 4000
 
 
     row_num += 1
@@ -7265,7 +7265,7 @@ def export_rossaccreditacia_xls(request):
         
 
     # название форма по ИО
-    len_table_ws = 10
+    len_table_ws = 9
     row_num = 1
     columns = [
         f'Оснащенность испытательным оборудованием {company.name}'
@@ -7282,6 +7282,7 @@ def export_rossaccreditacia_xls(request):
     columnsup = [
                             '№',
                 'Наименование определяемых (измеряемых) характеристик (параметров) продукции',
+                'Наименование испытуемых групп объектов',  
                 'Наименование испытательного оборудования (ИО), тип (марка)',
                 'Изготовитель (страна, наименование организации, год выпуска)',
                 'Основные технические характеристики',
@@ -7294,7 +7295,7 @@ def export_rossaccreditacia_xls(request):
     for col_num in range(len(columnsup)):
         ws1.write(row_num, col_num, columnsup[col_num], style_border)
     ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 4000
+    ws1.row(row_num).height = 3600
               
 
     row_num += 1
@@ -7348,7 +7349,7 @@ def export_rossaccreditacia_xls(request):
 
 
     # название форма по ВО
-    len_table_ws = 10
+    len_table_ws = 7
     row_num = 1
     columns = [
         f'Оснащенность вспомогательным оборудованием {company.name}'
@@ -7375,7 +7376,7 @@ def export_rossaccreditacia_xls(request):
     for col_num in range(len(columnsup)):
         ws2.write(row_num, col_num, columnsup[col_num], style_border)
     ws2.row(row_num).height_mismatch = True
-    ws2.row(row_num).height = 4000
+    ws2.row(row_num).height = 3600
               
 
     row_num += 1
@@ -7388,7 +7389,6 @@ def export_rossaccreditacia_xls(request):
                 '6',
                 '7',
                 '8',
-                '9',
                ]
 
     for col_num in range(len(columns)):
