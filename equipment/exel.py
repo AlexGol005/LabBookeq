@@ -6829,8 +6829,8 @@ def export_accanalytica_xls(request):
                 
     a = row_num
     for col_num in range(1):
-        for row_num in range(6, a + 1):
-            ws1.write(row_num, col_num, f'{row_num - 1}', style_border)
+        for row_num in range(5, a + 1):
+            ws.write(row_num, col_num, f'{row_num - 5}', style_border)
 
         # название графика аттестации, первый ряд
     row_num = 1
