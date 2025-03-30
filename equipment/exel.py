@@ -3507,8 +3507,8 @@ def export_verificlabel_xls(request):
         except:
             pass
         try:
-            # n = n + '_' + str(company.pk)
-            n = 'Т0001_1'
+            n = n + '_' + str(company.pk)
+            # n = 'Т0001_1'
             TestingEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n)
             note.append(TestingEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n))
         except:
