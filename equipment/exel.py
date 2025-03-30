@@ -6698,7 +6698,7 @@ def export_accanalytica_xls(request):
     ws1.col(3).width = 3000
     ws1.col(4).width = 2500
     ws1.col(6).width = 3500
-    ws1.col(7).width = 2500
+    ws1.col(7).width = 3800
     ws1.col(9).width = 3000
     ws1.col(10).width = 3800
 
@@ -6709,6 +6709,7 @@ def export_accanalytica_xls(request):
     ws2.col(2).width = 3000
     ws2.col(3).width = 3000
     ws2.col(4).width = 2500
+    ws2.col(5).width = 3500
     ws2.col(6).width = 3500
     ws2.col(7).width = 2500
     ws2.col(9).width = 3000
@@ -6716,7 +6717,7 @@ def export_accanalytica_xls(request):
 
         
     # название форма по СИ
-    len_table_ws = 13
+    len_table_ws = 12
     row_num = 1
     columns = [
         f'Сведения о средствах измерений {company.name}'
@@ -6847,7 +6848,7 @@ def export_accanalytica_xls(request):
         
 
     # название форма по ИО
-    len_table_ws = 10
+    len_table_ws = 9
     row_num = 1
     columns = [
         f'Сведения об испытательном оборудовании {company.name}'
@@ -6880,7 +6881,7 @@ def export_accanalytica_xls(request):
         ws1.write(row_num, col_num, columnsup[col_num], style_border)
         ws1.merge(row_num, row_num, 4, 6, style_border)
     for col_num in range(7, 10):
-        ws.write(row_num, col_num, columnsup[col_num], style_border)
+        ws1.write(row_num, col_num, columnsup[col_num], style_border)
               
     row_num += 1
     columnslow = [
