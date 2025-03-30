@@ -7389,7 +7389,6 @@ def export_rossaccreditacia_xls(request):
                 '7',
                 '8',
                 '9',
-                '10',
                ]
 
     for col_num in range(len(columns)):
@@ -7407,7 +7406,6 @@ def export_rossaccreditacia_xls(request):
             'manuf',
             'exp',
             'equipment__aim',
-            'metro',
             'equipment__pravo',
             'equipment__newroomnumber',   
             'blanc',
