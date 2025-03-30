@@ -2952,7 +2952,7 @@ def export_TestingEquipment_Equipment_pattern_xls(request):
     return export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, columns2, columns4, columns3)
 
 def export_HelpingEquipment_Equipment_pattern_xls(request):
-    '''представление для выгрузки шаблона загрузочного файла: Единица ЛО плюс единица ИО плюс комната плюс ответственный '''
+    '''представление для выгрузки шаблона загрузочного файла: Единица ЛО плюс единица ВО плюс комната плюс ответственный '''
     '''основанное на шаблонном export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, columns2, columns4, columns3)'''
     exel_file_name="HelpingEquipment_Equipment_shablon"
     columns1 = [
@@ -2975,7 +2975,9 @@ def export_HelpingEquipment_Equipment_pattern_xls(request):
 
             'Номер комнаты в которой расположено ЛО',
 
-            'Ответственный за оборудование (ФИО кратко (для документов):)'
+            'Ответственный за оборудование (краткое ФИО сотрудника, например: "И.И.Иванов")'
+
+            'Виды испытаний и характеристики продукции'
             
         ]
     len_mandatory = 11
@@ -2998,7 +3000,9 @@ def export_HelpingEquipment_Equipment_pattern_xls(request):
 
             'Если такой комнаты в списке нет, то она добавится автоматически в список комнат',
 
-            'Должно повторять краткое ФИО сотрудника (как в графе ФИО кратко (для документов)) в списке сотрудников. Если сотрудника с таким кратким ФИО нет, то информация не будет добавлена'
+            'Должно повторять краткое ФИО сотрудника (как в графе ФИО кратко (для документов)) в списке сотрудников. Если сотрудника с таким кратким ФИО нет, то информация не будет добавлена',
+
+            'Назначение'
         ]
     columns4 = None
     columns3 = [
@@ -3022,7 +3026,8 @@ def export_HelpingEquipment_Equipment_pattern_xls(request):
 
             '474',
 
-            'И.И.Иванов'
+            'И.И.Иванов',
+            'Приготовление растворов солей при нагревании'
         ]
     return export_base_pattern_xls(request, exel_file_name, columns1, len_mandatory, columns2, columns4, columns3)
 
@@ -7107,8 +7112,10 @@ def export_rossaccreditacia_xls(request):
     ws.col(2).width = 4500
     ws.col(3).width = 4500
     ws.col(4).width = 4500
+    ws.col(5).width = 4500
     ws.col(6).width = 4500
     ws.col(7).width = 4500
+    ws.col(8).width = 4500
     ws.col(9).width = 4500
     ws.col(10).width = 4500
 
@@ -7119,8 +7126,10 @@ def export_rossaccreditacia_xls(request):
     ws1.col(2).width = 4500
     ws1.col(3).width = 4500
     ws1.col(4).width = 4500
+    ws1.col(5).width = 4500
     ws1.col(6).width = 4500
     ws1.col(7).width = 4500
+    ws1.col(8).width = 4500
     ws1.col(9).width = 4500
     ws1.col(10).width = 4500
 
@@ -7134,6 +7143,7 @@ def export_rossaccreditacia_xls(request):
     ws2.col(5).width = 4500
     ws2.col(6).width = 4500
     ws2.col(7).width = 4500
+    ws2.col(8).width = 4500
     ws2.col(9).width = 4500
     ws2.col(10).width = 4500
 
@@ -7226,7 +7236,7 @@ def export_rossaccreditacia_xls(request):
           name=Concat('charakters__name', Value(', '), 'charakters__typename', Value(', '), 'charakters__reestr', output_field=CharField()),\
           manuf = Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName', Value(', '), 'equipment__yearmanuf', output_field=CharField()),\
           exp = Concat('equipment__yearintoservice', Value(', зав. № '), 'equipment__lot', output_field=CharField()),\
-          metro = Concat('newcertnumber', Value(', от'), 'newdate', Value(' до '), 'newdatedead', output_field=CharField())).\
+          metro = Concat('newcertnumber', Value(', от '), 'newdate', Value(' до '), 'newdatedead', output_field=CharField())).\
           filter(equipment__pointer=request.user.profile.userid).\
           filter(equipment__status='Э').\
           values_list(
@@ -7255,10 +7265,10 @@ def export_rossaccreditacia_xls(request):
         
 
     # название форма по ИО
-    len_table_ws = 9
+    len_table_ws = 10
     row_num = 1
     columns = [
-        f'Сведения об испытательном оборудовании {company.name}'
+        f'Оснащенность испытательным оборудованием {company.name}'
     ]
     for col_num in range(len(columns)):
         ws1.write(row_num, col_num, columns[col_num], style_bold)
@@ -7271,50 +7281,102 @@ def export_rossaccreditacia_xls(request):
     row_num += 2
     columnsup = [
                             '№',
-                'Наименование',
-                'Тип (модель)',
-                'Идентификационные сведения',
-                'Аттестация',
-                'Аттестация',
-                'Аттестация',
-                'Ответственное лицо',
-                'Место нахождения',
+                'Наименование определяемых (измеряемых) характеристик (параметров) продукции',
+                'Наименование испытательного оборудования (ИО), тип (марка)',
+                'Изготовитель (страна, наименование организации, год выпуска)',
+                'Основные технические характеристики',
+                'Год ввода в эксплуатацию, заводской номер',
+                'Дата и номер документа об аттестации ИО, срок его действия',
+                'Право собственности или иное законное основание, предусматривающее право владения и пользования (реквизиты подтверждающих документов)',
+                'Место установки или хранения',
                 'Примечания',
-
     ]
-    for col_num in range(4):
+    for col_num in range(len(columnsup)):
         ws1.write(row_num, col_num, columnsup[col_num], style_border)
-    for col_num in range(4, 7):
-        ws1.write(row_num, col_num, columnsup[col_num], style_border)
-        ws1.merge(row_num, row_num, 4, 6, style_border)
-    for col_num in range(7, 10):
-        ws1.write(row_num, col_num, columnsup[col_num], style_border)
-              
-    row_num += 1
-    columnslow = [
-                '№',
-                'Наименование',
-                'Тип (модель)',
-                'Идентификационные сведения',
-                'Дата',
-                'Период',
-                'Аттестующая организация',
-                'Ответственное лицо',
-                'Место нахождения',
-                'Примечания',
-               ]
-        
-    for col_num in range(4):
-        ws1.write(row_num, col_num, columnslow[col_num], style_border)
-        ws1.merge(3, 4, col_num, col_num, style_border)
-    for col_num in range(4,7):
-        ws1.write(row_num, col_num, columnslow[col_num], style_border)
-    for col_num in range(7, len(columnslow)):
-        ws1.write(row_num, col_num, columnslow[col_num], style_border)
-        ws1.merge(3, 4, col_num, col_num, style_border)
     ws1.row(row_num).height_mismatch = True
-    ws1.row(row_num).height = 2200
+    ws1.row(row_num).height = 4000
+              
 
+    row_num += 1
+    columns = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+               ]
+
+    for col_num in range(len(columns)):
+        ws1.write(row_num, col_num, columns[col_num], style_border)
+
+
+    rows = TestingEquipment.objects.annotate(blanc= Value(' '),\
+          name=Concat('charakters__name', Value(', '), 'charakters__typename', Value(', '), output_field=CharField()),\
+          manuf = Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName', Value(', '), 'equipment__yearmanuf', output_field=CharField()),\
+          exp = Concat('equipment__yearintoservice', Value(', зав. № '), 'equipment__lot', output_field=CharField()),\
+          metro = Concat('newcertnumber', Value(', от '), 'newdate', Value(' до '), 'newdatedead', output_field=CharField())).\
+          filter(equipment__pointer=request.user.profile.userid).\
+          filter(equipment__status='Э').\
+          values_list(
+            'charakters__analises_types',
+            'charakters__analited_objects',
+            'name',
+            'manuf',
+            'charakters__main_technical_characteristics',
+            'exp',
+            'metro',
+            'equipment__pravo',
+            'equipment__newroomnumber',   
+            'blanc',
+        )
+
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws1.write(row_num, col_num + 1, row[col_num], style_border)
+                
+    a = row_num
+    for col_num in range(1):
+        for row_num in range(5, a + 1):
+            ws1.write(row_num, col_num, f'{row_num - 4}', style_border)
+
+
+    # название форма по ВО
+    len_table_ws = 10
+    row_num = 1
+    columns = [
+        f'Оснащенность вспомогательным оборудованием {company.name}'
+    ]
+    for col_num in range(len(columns)):
+        ws2.write(row_num, col_num, columns[col_num], style_bold)
+        ws2.merge(row_num, row_num, 0, len_table_ws, style_bold)
+        ws2.row(row_num).height_mismatch = True
+        ws2.row(row_num).height = 600
+
+
+    # заголовки форма по ВО 
+    row_num += 2
+    columnsup = [
+                            '№',
+                'Наименование',
+                'Изготовитель (страна, наименование организации, год выпуска)',
+                'Год ввода в эксплуатацию, заводской номер',
+                'Назначение',
+                'Право собственности или иное законное основание, предусматривающее право владения и пользования (реквизиты подтверждающих документов)',
+                'Место установки или хранения',
+                'Примечания',
+    ]
+    for col_num in range(len(columnsup)):
+        ws2.write(row_num, col_num, columnsup[col_num], style_border)
+    ws2.row(row_num).height_mismatch = True
+    ws2.row(row_num).height = 4000
+              
 
     row_num += 1
     columns = [
@@ -7331,110 +7393,30 @@ def export_rossaccreditacia_xls(request):
                ]
 
     for col_num in range(len(columns)):
-        ws1.write(row_num, col_num, columns[col_num], style_border)
-
-
-    rows = TestingEquipment.objects.annotate(blanc= Value(' ')).\
-        filter(equipment__pointer=request.user.profile.userid).\
-        filter(equipment__status='Э').\
-        values_list(
-            'charakters__name',
-            'charakters__typename',
-            'equipment__lot',
-            'newdate',
-            'charakters__calinterval',
-            'newverificator',
-            'equipment__newperson',
-            'equipment__newroomnumber',
-                'equipment__pravo_have'
-            
-        )
-
-    for row in rows:
-        row_num += 1
-        for col_num in range(3):
-            ws1.write(row_num, col_num + 1, row[col_num], style_border)
-        for col_num in range(3, 4):
-            ws1.write(row_num, col_num + 1, row[col_num], style_date)
-        for col_num in range(4, len(row)):
-            ws1.write(row_num, col_num + 1, row[col_num], style_border)
-
-                
-    a = row_num
-    for col_num in range(1):
-        for row_num in range(6, a + 1):
-            ws1.write(row_num, col_num, f'{row_num - 5}', style_border)
-
-
-    # название форма по ВО
-    len_table_ws = 7
-    row_num = 1
-    columns = [
-        f'Сведения о вспомогательном оборудовании {company.name}'
-    ]
-    for col_num in range(len(columns)):
-        ws2.write(row_num, col_num, columns[col_num], style_bold)
-        ws2.merge(row_num, row_num, 0, len_table_ws, style_bold)
-        ws2.row(row_num).height_mismatch = True
-        ws2.row(row_num).height = 600
-
-        
-    # заголовки форма по ВО 
-              
-    row_num += 2
-    columnslow = [
-                '№',
-                'Наименование',
-                'Тип (модель)',
-                'Идентификационные сведения',
-                'Техническое обслуживание',
-                'Ответственное лицо',
-                'Место нахождения',
-                'Примечания',
-               ]
-        
-
-    for col_num in range(len(columnslow)):
-        ws2.write(row_num, col_num, columnslow[col_num], style_border)
-    ws2.row(row_num).height_mismatch = True
-    ws2.row(row_num).height = 2200
-
-
-    row_num += 1
-    columns = [
-                '1',
-                '2',
-                '3',
-                '4',
-                '5',
-                '6',
-                '7',
-                '8',
-               ]
-
-    for col_num in range(len(columns)):
         ws2.write(row_num, col_num, columns[col_num], style_border)
 
 
-    rows = HelpingEquipment.objects.annotate(blanc= Value(' ')).\
-        filter(equipment__pointer=request.user.profile.userid).\
-        filter(equipment__status='Э').\
-        values_list(
-            'charakters__name',
-            'charakters__typename',
-            'equipment__lot',
-                'blanc',
-            'equipment__newperson',
-            'equipment__newroomnumber',
-                'equipment__pravo_have'
-            
+    rows = HelpingEquipment.objects.annotate(blanc= Value(' '),\
+          name=Concat('charakters__name', Value(', '), 'charakters__typename', Value(', '), output_field=CharField()),\
+          manuf = Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName', Value(', '), 'equipment__yearmanuf', output_field=CharField()),\
+          exp = Concat('equipment__yearintoservice', Value(', зав. № '), 'equipment__lot', output_field=CharField())).\
+          filter(equipment__pointer=request.user.profile.userid).\
+          filter(equipment__status='Э').\
+          values_list(
+            'name',
+            'manuf',
+            'exp',
+            'equipment__aim',
+            'metro',
+            'equipment__pravo',
+            'equipment__newroomnumber',   
+            'blanc',
         )
 
     for row in rows:
         row_num += 1
         for col_num in range(len(row)):
             ws2.write(row_num, col_num + 1, row[col_num], style_border)
-
                 
     a = row_num
     for col_num in range(1):
