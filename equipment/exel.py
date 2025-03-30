@@ -6777,12 +6777,12 @@ def export_accanalytica_xls(request):
                 'Примечания',
                ]
         
-    for col_num in range(3):
+    for col_num in range(4):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
         ws.merge(3, 4, col_num,col_num, style_border)
-    for col_num in range(3,8):
+    for col_num in range(4,10):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
-    for col_num in range(9, len(columnslow)):
+    for col_num in range(10, len(columnslow)):
         ws.write(row_num, col_num, columnslow[col_num], style_border)
         ws.merge(3, 4, col_num, col_num, style_border)
     ws.row(row_num).height_mismatch = True
