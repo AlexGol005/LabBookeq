@@ -6820,7 +6820,7 @@ def export_accanalytica_xls(request):
             ws.write(row_num, col_num + 1, row[col_num], style_border)
         for col_num in range(3, 4):
             ws.write(row_num, col_num + 1, row[col_num], style_date)
-        for col_num in range(5, 9):
+        for col_num in range(4, 9):
             ws.write(row_num, col_num + 1, row[col_num], style_border)
         for col_num in range(9, 10):
             ws.write(row_num, col_num + 1, row[col_num], style_date)
@@ -6829,8 +6829,8 @@ def export_accanalytica_xls(request):
                 
     a = row_num
     for col_num in range(1):
-        for row_num in range(5, a + 1):
-            ws1.write(row_num, col_num, f'{row_num - 4}', style_border)
+        for row_num in range(6, a + 1):
+            ws1.write(row_num, col_num, f'{row_num - 1}', style_border)
 
         # название графика аттестации, первый ряд
     row_num = 1
@@ -6843,6 +6843,14 @@ def export_accanalytica_xls(request):
         ws1.row(row_num).height_mismatch = True
         ws1.row(row_num).height = 600
 
+
+
+
+
+
+
+
+        
         # заголовки графика аттестации, первый ряд
     row_num += 2
     columns = [
