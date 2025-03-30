@@ -6684,42 +6684,23 @@ def export_accanalytica_xls(request):
     ws.col(1).width = 3100
     ws.col(2).width = 3000
     ws.col(3).width = 3000
-    ws.col(4).width = 2800
+    ws.col(4).width = 2500
     ws.col(6).width = 3500
-    ws.col(7).width = 2800
+    ws.col(7).width = 2500
     ws.col(9).width = 3000
     ws.col(10).width = 3800
-    ws.col(12).width = 4200
-    ws.col(13).width = 4200
-    ws.col(14).width = 3000
-    ws.col(15).width = 3000
-    ws.col(16).width = 3000
-    ws.col(17).width = 3000
-    ws.col(20).width = 6500
-    ws.col(21).width = 6500
-    ws.col(22).width = 9000
-    ws.col(23).width = 3000
-    ws.col(24).width = 3000
-    ws.col(25).width = 3000
-    ws.col(26).width = 3000
+
 
     # ширина столбцов форма по ИО
-    ws1.col(0).width = 3000
-    ws1.col(1).width = 4500
-    ws1.col(2).width = 3500
-    ws1.col(3).width = 4200
-    ws1.col(7).width = 4200
-    ws1.col(9).width = 4200
-    ws1.col(11).width = 4200
-    ws1.col(12).width = 3000
-    ws1.col(13).width = 3000
-    ws1.col(14).width = 3000
-    ws1.col(17).width = 8500
-    ws1.col(18).width = 6500
-    ws1.col(19).width = 6500
-    ws1.col(20).width = 9000
-
-
+    ws.col(0).width = 1000
+    ws.col(1).width = 3100
+    ws.col(2).width = 3000
+    ws.col(3).width = 3000
+    ws.col(4).width = 2500
+    ws.col(6).width = 3500
+    ws.col(7).width = 2500
+    ws.col(9).width = 3000
+    ws.col(10).width = 3800
 
         
     # название форма по СИ
@@ -6835,9 +6816,9 @@ def export_accanalytica_xls(request):
 
     for row in rows:
         row_num += 1
-        for col_num in range(4):
+        for col_num in range(3):
             ws.write(row_num, col_num + 1, row[col_num], style_border)
-        for col_num in range(4, 5):
+        for col_num in range(3, 4):
             ws.write(row_num, col_num + 1, row[col_num], style_date)
         for col_num in range(5, 9):
             ws.write(row_num, col_num + 1, row[col_num], style_border)
