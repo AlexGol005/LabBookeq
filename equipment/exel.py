@@ -3492,6 +3492,7 @@ def export_verificlabel_xls(request):
     '''представление для выгрузки этикеток для указания поверки и аттестации'''
     note = []
     company = Company.objects.get(userid=request.user.profile.userid)
+    ruser=request.user.profile.userid
     for n in (request.GET['n1'], request.GET['n2'],
               request.GET['n3'], request.GET['n4'],
               request.GET['n5'], request.GET['n6'],
@@ -3501,17 +3502,16 @@ def export_verificlabel_xls(request):
               request.GET['n13'], request.GET['n14']):
         try:
             n = n + '_' + str(company.pk)
-            MeasurEquipment.objects.get(equipment__exnumber=n)
-            note.append(MeasurEquipment.objects.filter(pointer=request.user.profile.userid).get(equipment__exnumber=n))
+            MeasurEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n)
+            note.append(MeasurEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n))
         except:
             pass
         try:
             n = n + '_' + str(company.pk)
-            TestingEquipment.objects.filter(pointer=request.user.profile.userid).get(equipment__exnumber=n)
-            note.append(TestingEquipment.objects.get(equipment__exnumber=n))
+            TestingEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n)
+            note.append(TestingEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n))
         except:
-            raise
-            # pass
+            pass
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = f'attachment; filename="verification_labels.xls"'
     wb = xlwt.Workbook(encoding='utf-8')
