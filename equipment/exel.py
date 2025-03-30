@@ -6753,10 +6753,10 @@ def export_accanalytica_xls(request):
         ws.write(row_num, col_num, columnsup[col_num], style_border)
     for col_num in range(4, 7):
         ws.write(row_num, col_num, columnsup[col_num], style_border)
-        ws.merge(row_num, row_num, 3, 5, style_border)
+        ws.merge(row_num, row_num, 4, 6, style_border)
     for col_num in range(7,10):
         ws.write(row_num, col_num, columnsup[col_num], style_border)
-        ws.merge(row_num, row_num, 6,8, style_border)
+        ws.merge(row_num, row_num, 7,9, style_border)
     for col_num in range(10, len(columns)):
         ws.write(row_num, col_num, columnsup[col_num], style_border)
               
