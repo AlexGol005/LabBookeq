@@ -7220,7 +7220,7 @@ def export_rossaccreditacia_xls(request):
 
 
     rows = MeasurEquipment.objects.annotate(blanc= Value(' '),\
-          # name=Concat('charakters__name', Value(', '), 'charakters__typename', Value(', '), 'charakters__reestr'),\
+          name=Concat('charakters__name', Value(', '), 'charakters__typename', Value(', '), 'charakters__reestr'),\
           # manuf = Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName', Value(', '), 'equipment__yearmanuf'),\
           # exp = Concat('equipment__yearintoservice', Value(', зав. № '), 'equipment__lot')),\
           # metro = Concat('newcertnumber', Value(', от'), 'newdate', Value(' до '), 'newdatedead', output_field=CharField()).\
