@@ -77,10 +77,15 @@ def TEST(request):
     #     except:
     #         pass
     ruser=request.user.profile.userid
-    note = Activeveraqq.objects.get(pointer=ruser)
-    exelnumber = note.aqq.verificator.companyName
-    exelnumber = pytils.translit.translify(exelnumber)
-    object = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_').replace('.', '_').replace('-', '_')
+    company = Company.objects.get(userid=request.user.profile.userid)
+    # note = Activeveraqq.objects.get(pointer=ruser)
+    # exelnumber = note.aqq.verificator.companyName
+    # exelnumber = pytils.translit.translify(exelnumber)
+    # object = str(exelnumber).replace('"', '_').replace(' ', '_').replace('«', '_').replace('»', '_').replace('\'', '_').replace('.', '_').replace('-', '_')
+    n = 'К0001'
+    n = n + '_' + str(company.pk)
+    a=TestingEquipment.objects.filter(pointer=ruser).get(equipment__exnumber=n)
+    object = f'{n} and {a}'
     return render(
         request,
         'equipment/e.html',
