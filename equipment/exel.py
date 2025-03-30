@@ -7226,8 +7226,7 @@ def export_rossaccreditacia_xls(request):
           name=Concat('charakters__name', Value(', '), 'charakters__typename', Value(', '), 'charakters__reestr', output_field=CharField()),\
           manuf = Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName', Value(', '), 'equipment__yearmanuf', output_field=CharField()),\
           exp = Concat('equipment__yearintoservice', Value(', зав. № '), 'equipment__lot', output_field=CharField()),\
-          metro = Concat('newcertnumber', Value(' от '), 'newcertnumber', Value(' до '), 'newcertnumber')).\   
-          # metro = Concat('newcertnumber', Value(', от'), Value(' до '), output_field=CharField())).\
+          metro = Concat('newcertnumber', Value(', от'), 'newdate', Value(' до '), 'newdatedead', output_field=CharField())).\
           filter(equipment__pointer=request.user.profile.userid).\
           filter(equipment__status='Э').\
           values_list(
