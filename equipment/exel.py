@@ -6692,15 +6692,27 @@ def export_accanalytica_xls(request):
 
 
     # ширина столбцов форма по ИО
-    ws.col(0).width = 1000
-    ws.col(1).width = 3100
-    ws.col(2).width = 3000
-    ws.col(3).width = 3000
-    ws.col(4).width = 2500
-    ws.col(6).width = 3500
-    ws.col(7).width = 2500
-    ws.col(9).width = 3000
-    ws.col(10).width = 3800
+    ws1.col(0).width = 1000
+    ws1.col(1).width = 3100
+    ws1.col(2).width = 3000
+    ws1.col(3).width = 3000
+    ws1.col(4).width = 2500
+    ws1.col(6).width = 3500
+    ws1.col(7).width = 2500
+    ws1.col(9).width = 3000
+    ws1.col(10).width = 3800
+
+
+    # ширина столбцов форма по ВО
+    ws2.col(0).width = 1000
+    ws2.col(1).width = 3100
+    ws2.col(2).width = 3000
+    ws2.col(3).width = 3000
+    ws2.col(4).width = 2500
+    ws2.col(6).width = 3500
+    ws2.col(7).width = 2500
+    ws2.col(9).width = 3000
+    ws2.col(10).width = 3800
 
         
     # название форма по СИ
