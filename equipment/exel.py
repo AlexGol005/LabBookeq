@@ -6639,7 +6639,13 @@ def export_accanalytica_xls(request):
     ws = wb.add_sheet('Форма_4_СИ' , cell_overwrite_ok=True)
     ws1 = wb.add_sheet('Форма_5_ИО', cell_overwrite_ok=True)
     ws2 = wb.add_sheet('Форма_6_ВО', cell_overwrite_ok=True)
-
+    ws.header_str = b''
+    ws.footer_str = b''
+    ws1.header_str = b''
+    ws1.footer_str = b''    
+    ws2.header_str = b''
+    ws2.footer_str = b''
+        
     alg_hc_vc_w1 = Alignment()
     alg_hc_vc_w1.horz = Alignment.HORZ_CENTER
     alg_hc_vc_w1.vert = Alignment.VERT_CENTER
@@ -6679,9 +6685,9 @@ def export_accanalytica_xls(request):
     ws.col(2).width = 3000
     ws.col(3).width = 3000
     ws.col(4).width = 2800
-    ws.col(6).width = 4500
+    ws.col(6).width = 4000
     ws.col(7).width = 2800
-    ws.col(8).width = 4200
+    ws.col(8).width = 3500
     ws.col(9).width = 3000
     ws.col(10).width = 3800
     ws.col(12).width = 4200
