@@ -6810,7 +6810,7 @@ def export_accanalytica_xls(request):
         ws.write(row_num, col_num, columns[col_num], style_border)
 
 
-    rows = MeasurEquipment.objects.annotate(manuf_country=Concat('equipment__manufacturer__country', Value(', '), 'equipment__manufacturer__companyName')).\
+    rows = MeasurEquipment.objects.annotate(blanc= Value(' ')).\
         filter(equipment__pointer=request.user.profile.userid).\
         filter(equipment__status='Э').\
         values_list(
@@ -6825,7 +6825,7 @@ def export_accanalytica_xls(request):
             'calnewverificator',
             'equipment__newperson',
             'equipment__newroomnumber',
-                ''
+                'blanc'
             
         )
 
