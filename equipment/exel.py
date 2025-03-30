@@ -6685,9 +6685,8 @@ def export_accanalytica_xls(request):
     ws.col(2).width = 3000
     ws.col(3).width = 3000
     ws.col(4).width = 2800
-    ws.col(6).width = 4000
+    ws.col(6).width = 3500
     ws.col(7).width = 2800
-    ws.col(8).width = 3500
     ws.col(9).width = 3000
     ws.col(10).width = 3800
     ws.col(12).width = 4200
@@ -6710,7 +6709,6 @@ def export_accanalytica_xls(request):
     ws1.col(2).width = 3500
     ws1.col(3).width = 4200
     ws1.col(7).width = 4200
-    ws1.col(8).width = 4200
     ws1.col(9).width = 4200
     ws1.col(11).width = 4200
     ws1.col(12).width = 3000
