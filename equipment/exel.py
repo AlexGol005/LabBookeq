@@ -3502,12 +3502,12 @@ def export_verificlabel_xls(request):
         try:
             n = n + '_' + str(company.pk)
             MeasurEquipment.objects.get(equipment__exnumber=n)
-            note.append(MeasurEquipment.objects.get(equipment__exnumber=n))
+            note.append(MeasurEquipment.objects.filter(pointer=request.user.profile.userid).get(equipment__exnumber=n))
         except:
             pass
         try:
             n = n + '_' + str(company.pk)
-            TestingEquipment.objects.get(equipment__exnumber=n)
+            TestingEquipment.objects.filter(pointer=request.user.profile.userid).get(equipment__exnumber=n)
             note.append(TestingEquipment.objects.get(equipment__exnumber=n))
         except:
             raise
