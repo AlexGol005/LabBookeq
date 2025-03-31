@@ -1011,7 +1011,7 @@ class MeteorologicalParameters(models.Model):
         f'свидетельство о поверке № {self.roomnumber.equipment1.newcertnumber}, действительно до {self.roomnumber.equipment1.newdatedead}; '\
         f'{self.roomnumber.equipment2.charakters.name} тип {self.roomnumber.equipment2.charakters.typename}, заводской номер {self.roomnumber.equipment2.equipment.lot}, '\
         f'свидетельство о поверке № {self.roomnumber.equipment2.newcertnumber}, действительно до {self.roomnumber.equipment2.newdatedead};'
-        self.person = self.roomnumber.person.profile.shortname
+        self.person = self.roomnumber.person.profile.short_name
         return super(MeteorologicalParameters, self).save(*args, **kwargs)
 
     class Meta:
