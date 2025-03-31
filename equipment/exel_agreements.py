@@ -177,20 +177,22 @@ def export_orderverification_xls(request, object_ids):
     noteTE = Equipment.objects.filter(id__in=q).filter(kategory="ИО")
 
     
-    rowsME = noteME.values_list(
+    rowsME = noteME.annotate(exnumber=Substr('equipment__exnumber',1,5)).values_list(
         'measurequipment__charakters__name', 
         'measurequipment__charakters__reestr',
         'measurequipment__charakters__typename',
         'lot',
         'yearmanuf',
         'manufacturer__companyName',
+        'exnumber',
     )
-    rowsTE = noteTE.values_list(
+    rowsTE = noteTE.annotate(exnumber=Substr('equipment__exnumber',1,5)).values_list(
         'testingequipment__charakters__name', 
         'testingequipment__charakters__typename',
         'lot',
         'yearmanuf',
         'manufacturer__companyName', 
+                'exnumber',
     )
     columnsME = [
             'Название прибора',
@@ -199,6 +201,7 @@ def export_orderverification_xls(request, object_ids):
             'Заводской номер',
             'Год выпуска',
             'Название компании-производителя',
+        'Внутренний номер',
     ]
 
     columnsHE = [
@@ -207,6 +210,7 @@ def export_orderverification_xls(request, object_ids):
             'Заводской номер',
             'Год выпуска',
             'Название компании-производителя',
+                'Внутренний номер',
     ]
     
     # ширина колонок и их количество
