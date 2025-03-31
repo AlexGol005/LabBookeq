@@ -177,22 +177,22 @@ def export_orderverification_xls(request, object_ids):
     noteTE = Equipment.objects.filter(id__in=q).filter(kategory="ИО")
 
     
-    rowsME = noteME.annotate(exnumber=Substr('equipment__exnumber',1,5)).values_list(
+    rowsME = noteME.annotate(exnumbersh=Substr('equipment__exnumber',1,5)).values_list(
         'measurequipment__charakters__name', 
         'measurequipment__charakters__reestr',
         'measurequipment__charakters__typename',
         'lot',
         'yearmanuf',
         'manufacturer__companyName',
-        'exnumber',
+        'exnumbersh',
     )
-    rowsTE = noteTE.annotate(exnumber=Substr('equipment__exnumber',1,5)).values_list(
+    rowsTE = noteTE.annotate(exnumbersh=Substr('equipment__exnumber',1,5)).values_list(
         'testingequipment__charakters__name', 
         'testingequipment__charakters__typename',
         'lot',
         'yearmanuf',
         'manufacturer__companyName', 
-                'exnumber',
+                'exnumbersh',
     )
     columnsME = [
             'Название прибора',
