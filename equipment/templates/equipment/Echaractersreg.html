@@ -22,28 +22,28 @@
         {% if title == 'Добавить госреестр' %}
             <br>
             <div style="text-align: center;">
-                <a href="{% url 'measurequipmentcharacterslist' %}"  target="blank" class="btn btn-warning ml-2" style="width: 350px">
+                <a href="{% url 'measurequipmentcharacterslist' %}"  target="blank" class="btn btn-primary ml-2" style="width: 70%">
                     Смотреть добавленные госреестры
                 </a>
             </div>
         {% elif title == 'Добавить характеристики ИО' %}
             <br>
             <center>
-                <a href="{% url 'testingequipmentcharacterslist' %}"  target="blank" class="btn btn-warning ml-2" style="width: 350px">
+                <a href="{% url 'testingequipmentcharacterslist' %}"  target="blank" class="btn btn-primary ml-2" style="width: 70%">
                     Смотреть добавленные характеристики ИО
                 </a>
             </center>
         {% elif title == 'Добавить характеристики ВО' %}
             <br>
             <center>
-                <a href="{% url 'helpingequipmentcharacterslist' %}"  target="blank" class="btn btn-warning ml-2" style="width: 350px">
+                <a href="{% url 'helpingequipmentcharacterslist' %}"  target="blank" class="btn btn-primary ml-2" style="width: 70%">
                     Смотреть добавленные характеристики ВО
                 </a>
             </center>
         {% endif %}
         <br>
-        <p><i><font color="red"><b>Перед регистрацией проверьте, что отсутствует необходимое описание или госреестр в сочетании с типом и модификацией.
-       </b></font> </i></p>
+        <p><i>*Перед регистрацией проверьте, что отсутствуют добавляемые характеристики СИ/ИО/ВО.</i></p>
+        
 
     <center><h4>{{ dop }}</h4></center>
     <br><br>
