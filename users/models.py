@@ -5,6 +5,8 @@ from django_currentuser.db.models import CurrentUserField
 
 from PIL import  Image
 
+monthly_payment = Decimal(3000)
+
 REASON_CHOICES = (
         ('Пополнение счёта автоматическое', 'Пополнение счёта автоматическое'),
         ('Пополнение счёта оператором', 'Пополнение счёта оператором'),
@@ -41,6 +43,10 @@ class Profile(models.Model):
 
 
 class Company(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
+    created_by = CurrentUserField(related_name='creatorcompany', editable=True)
+    updated_by = CurrentUserField(related_name='updatorcompany', editable=True)
     userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, default=None, null=True, blank=True, unique=True)
     name = models.CharField('Название организации краткое', max_length=100, default=None, null=True, blank=True, unique=True)
     name_big = models.CharField('Название организации полное', max_length=100, default=None, null=True, blank=True, unique=True)
@@ -62,7 +68,7 @@ class Company(models.Model):
     caretaker_name = models.CharField('ФИО завхоза', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
     pay = models.BooleanField ('Оплачено', default=True)
-    ballance = models.DecimalField('Балланс счёта', default=0, max_digits=18, decimal_places=6)
+    ballance = models.DecimalField('Балланс счёта', default=0, max_digits=18, decimal_places=6, default=monthly_payment)
    
 
     def __str__(self):
