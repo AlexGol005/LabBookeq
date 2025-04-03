@@ -117,6 +117,6 @@ class CompanyBalanceChange(models.Model):
         return f'{self.company.name};{self.amount};({self.created_at}) '
 
     class Meta:
-        verbose_name = 'Название компании'
-        verbose_name_plural = 'Название компании'
+        verbose_name = 'Изменения балланса компании'
+        verbose_name_plural = 'Изменения балланса компании'
  
