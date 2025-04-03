@@ -94,8 +94,8 @@ class Employees(models.Model):
 class CompanyBalanceChange(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
-    created_by = CurrentUserField(related_name='creatorhec', editable=True)
-    updated_by = CurrentUserField(related_name='updatorhec', editable=True)
+    created_by = CurrentUserField(related_name='creatorbalancechange', editable=True)
+    updated_by = CurrentUserField(related_name='updatorbalancechange', editable=True)
     company = models.ForeignKey('Company', verbose_name ='Компания', on_delete=models.PROTECT)
     reason = models.IntegerField(choices=REASON_CHOICES, verbose_name ='Пополнение счёта автоматическое')
     amount = models.DecimalField('Сумма', default=0, max_digits=18, decimal_places=6)
