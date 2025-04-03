@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 
 from PIL import  Image
 
+REASON_CHOICES = (
+        ('Пополнение счёта автоматическое', 'Пополнение счёта автоматическое'),
+        ('Пополнение счёта оператором', 'Пополнение счёта оператором'),
+        ('Автоматическое списание ежемесячного платежа', 'Автоматическое списание ежемесячного платежа'),
+        ('Другое', 'Другое'),
+    )
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)    
@@ -55,7 +61,8 @@ class Company(models.Model):
     caretaker_name = models.CharField('ФИО завхоза', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
     pay = models.BooleanField ('Оплачено', default=True)
-    # activ_verificator = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='Активный в данный момент оформления договор с компанией-поверителем') 
+    ballance = models.DecimalField(related_name='Балланс счёта', default=0, max_digits=18, decimal_places=6)
+   
 
     def __str__(self):
         return f'Организация: {self.userid}; {self.name}'
@@ -81,4 +88,21 @@ class Employees(models.Model):
     class Meta:
         verbose_name = 'Сотрудники'
         verbose_name_plural = 'Сотрудники'
+
+
+class CompanyBalanceChange(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True, related_name='Дата события')
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True, related_name='Дата редакции события')
+    created_by = CurrentUserField(related_name='creatorhec', editable=True)
+    updated_by = CurrentUserField(related_name='updatorhec', editable=True)
+    company = models.ForeignKey('Company', related_name='Компания')
+    reason = models.IntegerField(choices=REASON_CHOICES, default='Пополнение счёта автоматическое')
+    amount = models.DecimalField(related_name='Сумма', default=0, max_digits=18, decimal_places=6)
     
+    def save(self, *args, **kwargs): 
+        super().save()
+        # меняем балланс компании
+        note = self.company
+        note.balance = note.balance + self.amount
+        note.save() 
+ 
