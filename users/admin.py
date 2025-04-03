@@ -36,7 +36,7 @@ class EmployeesAdmin(ImportExportActionModelAdmin):
 admin.site.register(Employees, EmployeesAdmin)
 
 
-@admin.register(Company)  
+@admin.register(CompanyBalanceChange)  
 class CompanyBalanceChange(admin.ModelAdmin):
     list_display = ('company', 'created_at',  'amount', 'reason')
     search_fields = ['company', 'amount',]
