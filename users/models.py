@@ -61,7 +61,7 @@ class Company(models.Model):
     caretaker_name = models.CharField('ФИО завхоза', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
     pay = models.BooleanField ('Оплачено', default=True)
-    ballance = models.DecimalField(related_name='Балланс счёта', default=0, max_digits=18, decimal_places=6)
+    ballance = models.DecimalField('Балланс счёта', default=0, max_digits=18, decimal_places=6)
    
 
     def __str__(self):
@@ -91,13 +91,13 @@ class Employees(models.Model):
 
 
 class CompanyBalanceChange(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True, related_name='Дата события')
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True, related_name='Дата редакции события')
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorhec', editable=True)
     updated_by = CurrentUserField(related_name='updatorhec', editable=True)
-    company = models.ForeignKey('Company', related_name='Компания')
-    reason = models.IntegerField(choices=REASON_CHOICES, default='Пополнение счёта автоматическое')
-    amount = models.DecimalField(related_name='Сумма', default=0, max_digits=18, decimal_places=6)
+    company = models.ForeignKey('Company', verbose_name ='Компания')
+    reason = models.IntegerField(choices=REASON_CHOICES, verbose_name ='Пополнение счёта автоматическое')
+    amount = models.DecimalField('Сумма', default=0, max_digits=18, decimal_places=6)
     
     def save(self, *args, **kwargs): 
         super().save()
