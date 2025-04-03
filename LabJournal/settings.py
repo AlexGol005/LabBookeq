@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'ajax_select',
     'administrator',
     'qr_code',
+    'pay',
 ]
 
 # Application definition
