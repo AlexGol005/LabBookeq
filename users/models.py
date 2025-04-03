@@ -112,4 +112,11 @@ class CompanyBalanceChange(models.Model):
         note = self.company
         note.balance = note.balance + self.amount
         note.save() 
+
+    def __str__(self):
+        return f'{self.company.name};{self.amount};({self.created_at}) '
+
+    class Meta:
+        verbose_name = 'Название компании'
+        verbose_name_plural = 'Название компании'
  
