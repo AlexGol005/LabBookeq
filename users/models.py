@@ -1,7 +1,7 @@
 from django.db import models  
 from django.contrib.auth.models import User
 from django_currentuser.db.models import CurrentUserField
-
+from decimal import *
 
 from PIL import  Image
 
