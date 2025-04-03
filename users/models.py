@@ -103,7 +103,7 @@ class CompanyBalanceChange(models.Model):
     created_by = CurrentUserField(related_name='creatorbalancechange', editable=True)
     updated_by = CurrentUserField(related_name='updatorbalancechange', editable=True)
     company = models.ForeignKey('Company', verbose_name ='Компания', on_delete=models.PROTECT)
-    reason = models.IntegerField(choices=REASON_CHOICES, verbose_name ='Пополнение счёта автоматическое')
+    reason = models.CharField(choices=REASON_CHOICES, verbose_name ='Источник изменения', max_length=100, default=None, null=True, blank=True)
     amount = models.DecimalField('Сумма', default=0, max_digits=18, decimal_places=6)
     
     def save(self, *args, **kwargs): 
