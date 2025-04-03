@@ -11,3 +11,12 @@ class EquipmentConfig(AppConfig):
 
     def ready(self):
         import equipment.signals
+
+коммит из pythonanywhere
+git commit -m "Title"
+git push
+если откроется редактор - то выход это esc, затем набрать команду :wq   (сохранить и выйти)
+редактор кажется вим, мануал тут https://www.linux.org.ru/articles/desktop/17008359
+попросит токен с гитхаба - он делается в настройках профиля не проекта developer settings и токену дать права: Repository permissions
+ Read access to metadata
+ Read and Write access to code and commit statuses
