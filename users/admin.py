@@ -38,5 +38,5 @@ admin.site.register(Employees, EmployeesAdmin)
 
 @admin.register(CompanyBalanceChange)  
 class CompanyBalanceChange(admin.ModelAdmin):
-    list_display = ('company', 'created_at',  'amount', 'reason')
+    list_display = ('company', 'created_at',  'updated_at', 'amount', 'reason')
     search_fields = ['company', 'amount',]
