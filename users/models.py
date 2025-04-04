@@ -82,7 +82,7 @@ class Company(models.Model):
     def save(self, *args, **kwargs):
         if self.created_at and not self.payement_date:
             self.payement_date = self.created_at + timedelta(days=30)
-        super(Verificators, self).save(*args, **kwargs)   
+        super(Company, self).save(*args, **kwargs)   
 
                     
     class Meta:
