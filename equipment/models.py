@@ -1239,7 +1239,7 @@ class Activeveraqq(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Компания')  
-    aqq = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='Договор с поверителем', unique=True, null=True) 
+    aqq = models.ForeignKey(Agreementverification, on_delete=models.CASCADE, verbose_name='Договор с поверителем', unique=True, null=True) 
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
          
     def save(self, *args, **kwargs):
