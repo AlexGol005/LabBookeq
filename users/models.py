@@ -86,7 +86,7 @@ class Company(models.Model):
         super().save()   
         if not self.payement_date:
             self.payement_date = self.created_at + timedelta(days=30)
-        super(Company, self).save(*args, **kwargs)  
+
         
 
                     
