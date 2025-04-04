@@ -80,11 +80,11 @@ class Company(models.Model):
             return f'Организация: {self.userid}; {self.name}'
 
     def save(self, *args, **kwargs):
-        super().save()
         if self.created_at and not self.payement_date:
             self.payement_date = self.created_at + timedelta(days=30)
+        super(Verificators, self).save(*args, **kwargs)   
 
-                
+                    
     class Meta:
         verbose_name = 'Организация'
         verbose_name_plural = 'Организации'
