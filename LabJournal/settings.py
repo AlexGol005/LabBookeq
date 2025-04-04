@@ -210,5 +210,9 @@ if DEBUG:
 
     mimetypes.add_type("application/javascript", ".js", True)
 
+
+CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
+
+
 DEBUG = True
 
