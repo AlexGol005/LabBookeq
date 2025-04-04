@@ -115,9 +115,10 @@ class CompanyBalanceChange(models.Model):
     def save(self, *args, **kwargs): 
         super().save()
         # меняем балланс компании
-        note = self.company
-        note.balance = note.balance + self.amount
-        note.save() 
+        if self created_at == self.updated_at:
+            note = self.company
+            note.balance = note.balance + self.amount
+            note.save() 
 
     def __str__(self):
         return f'{self.company.name};{self.amount};({self.created_at}) '
