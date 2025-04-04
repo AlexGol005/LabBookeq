@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django_currentuser.db.models import CurrentUserField
 from decimal import *
-
+from datetime import timedelta, date
 from PIL import  Image
 
 monthly_payment = Decimal(3000)
@@ -69,15 +69,22 @@ class Company(models.Model):
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
     pay = models.BooleanField ('Оплачено', default=True)
     balance = models.DecimalField('Балланс счёта', max_digits=18, decimal_places=6, default=monthly_payment)
+    payement_date = models.DateTimeField('Дата платежа', default=None, null=True, blank=True)
+        
    
 
     def __str__(self):
-        return f'Организация: {self.userid}; {self.name}'
+        if self.created_at
+            return f'Организация: {self.userid}; {self.name} - от {self.created_at}'
+        else:
+            return f'Организация: {self.userid}; {self.name}'
 
-    # def save(self, *args, **kwargs):
-    #     Agreementverification.objects.get_or_create(active=True, company=self.company, verificator=Verificators.objects.get(pk=14), pointer=self.userid)
-    #     return super(Company, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        super().save()
+        if self.created_at and not self.updated_at:
+            self.payement_date = self.created_at + timedelta(days=30)
 
+                
     class Meta:
         verbose_name = 'Организация'
         verbose_name_plural = 'Организации'
