@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'administrator',
     'qr_code',
     'pay',
+    'django_celery_beat',
 ]
 
 # Application definition
