@@ -74,7 +74,7 @@ def HeadEmployeereg(request):
                                  
                                
 
-            messages.success(request, f'Пользовать {username} и {name_prima} были успешно созданы!')
+            messages.success(request, f'Пользовать {username} и {name_prima} были успешно созданы! Пароль для входа выслан на ваш емаил.')
                   
             return redirect('profile')
         else:
