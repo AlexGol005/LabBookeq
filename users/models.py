@@ -69,9 +69,7 @@ class Company(models.Model):
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
     pay = models.BooleanField ('Оплачено', default=True)
     balance = models.DecimalField('Балланс счёта', max_digits=18, decimal_places=6, default=monthly_payment)
-    payement_date = models.DateTimeField('Дата платежа', default=None, null=True, blank=True)
-        
-   
+    payement_date = models.DateTimeField('Дата платежа', default=None, null=True, blank=True)   
 
     def __str__(self):
         if self.created_at:
@@ -80,7 +78,7 @@ class Company(models.Model):
             return f'Организация: {self.userid}; {self.name}'
 
     def save(self, *args, **kwargs):
-        if self.created_at and not self.payement_date:
+        if not self.payement_date:
             self.payement_date = self.created_at + timedelta(days=30)
         super(Company, self).save(*args, **kwargs)   
 
