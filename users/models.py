@@ -113,12 +113,12 @@ class CompanyBalanceChange(models.Model):
     amount = models.DecimalField('Сумма', default=0, max_digits=18, decimal_places=6)
     
     def save(self, *args, **kwargs): 
-        super().save()
         # меняем балланс компании
         if not self.pk:
             note = self.company
             note.balance = note.balance + self.amount
             note.save() 
+        super(CompanyBalanceChange, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.company.name};{self.amount};({self.created_at}) '
