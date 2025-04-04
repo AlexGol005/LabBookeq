@@ -5,6 +5,7 @@ from decimal import *
 from datetime import timedelta, date
 from PIL import  Image
 
+now = date.today()
 monthly_payment = Decimal(3000)
 
 REASON_CHOICES = (
@@ -77,18 +78,11 @@ class Company(models.Model):
         else:
             return f'Организация: {self.userid}; {self.name}'
 
-    # def save(self, *args, **kwargs):
-    #     if not self.payement_date:
-    #         self.payement_date = self.created_at + timedelta(days=30)
-    #     super(Company, self).save(*args, **kwargs)  
-            
     def save(self, *args, **kwargs):
-        super().save()   
         if not self.payement_date:
-            self.payement_date = self.created_at + timedelta(days=30)
-
-        
-
+            self.payement_date = now + timedelta(days=30)
+        super(Company, self).save(*args, **kwargs)  
+            
                     
     class Meta:
         verbose_name = 'Организация'
