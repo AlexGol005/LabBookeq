@@ -81,7 +81,7 @@ class Company(models.Model):
 
     def save(self, *args, **kwargs):
         super().save()
-        if self.created_at:
+        if self.created_at and not self.payement_date:
             self.payement_date = self.created_at + timedelta(days=30)
 
                 
