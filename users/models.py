@@ -115,7 +115,7 @@ class CompanyBalanceChange(models.Model):
     def save(self, *args, **kwargs): 
         super().save()
         # меняем балланс компании
-        if self created_at == self.updated_at:
+        if self.created_at == self.updated_at:
             note = self.company
             note.balance = note.balance + self.amount
             note.save() 
