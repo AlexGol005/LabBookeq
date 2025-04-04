@@ -1210,7 +1210,7 @@ class Agreementverification(models.Model):
     created_by = CurrentUserField(related_name='creatoragr', editable=True)
     updated_by = CurrentUserField(related_name='updatoragr', editable=True)
     verificator = models.ForeignKey(Verificators, on_delete=models.PROTECT, verbose_name='Поверитель')    
-    company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Компания')  
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Компания')  
     ver_agreement_number = models.CharField('Номер договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
     ver_agreement_date = models.CharField('Дата договора с организацией-поверителем', max_length=100, default=None, null=True, blank=True)
     ver_agreement_card = models.CharField('Номер учетной карточки у организации-поверителя', max_length=100, default=None, null=True, blank=True)
@@ -1238,7 +1238,7 @@ class Activeveraqq(models.Model):
     """Активный договор с поверителем"""
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
-    company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Компания')  
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Компания')  
     aqq = models.ForeignKey(Agreementverification, on_delete=models.PROTECT, verbose_name='Договор с поверителем', unique=True, null=True) 
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)
          
