@@ -74,7 +74,7 @@ class Company(models.Model):
    
 
     def __str__(self):
-        if self.created_at
+        if self.created_at:
             return f'Организация: {self.userid}; {self.name} - от {self.created_at}'
         else:
             return f'Организация: {self.userid}; {self.name}'
