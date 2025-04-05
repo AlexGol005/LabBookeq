@@ -11,6 +11,6 @@ def take_rent(request):
   note_all_list = Company.objects.values_list('payement_date')
   for i in note_list:
     CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
-  a = ???
+  a = '???'
   b = list(note_all_list)
   return HttpResponse(f'123-{a}-{b}')
