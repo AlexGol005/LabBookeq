@@ -5,8 +5,8 @@ from .tasks import take_rent
 nowtime = datetime.today().isoformat()
 def schedule_take_rent(request):
   a=0
-  interval, _ = IntervalSchedule.objects.get_or_create(every=600, period=IntervalSchedule.SECONDS)
-  PeriodicTask.objects.get(interval=interval, name="Ежемесячная автооплата", task="users.tasks.take_rent")
+  interval, _ = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.SECONDS)
+  PeriodicTask.objects.get.get_or_create(interval=interval, name="Ежемесячная автооплата", task="users.tasks.take_rent")
   a+=1
   b = nowtime
   return HttpResponse(f'123-{a}--{b}')
