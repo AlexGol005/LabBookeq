@@ -4,6 +4,6 @@ from .tasks import take_rent
 
 def schedule_take_rent(request):
   interval, _ = IntervalSchedule.objects.get_or_create(every=600, period=IntervalSchedule.SECONDS)
-  PeriodicTask.objects.create(interval=interval, name="Ежемесячная автооплата", task="users.tasks.take_rent")
+  PeriodicTask.objects.get(interval=interval, name="Ежемесячная автооплата", task="users.tasks.take_rent")
   return HttpResponse(f'123-{a}-{b}-{c}')
   
