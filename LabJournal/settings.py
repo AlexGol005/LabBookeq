@@ -49,6 +49,7 @@ DEBUG = os.getenv('DEBUG') == "true"
 ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS').split(',')]
 
 INSTALLED_APPS = [
+    'django_celery_beat',
     'dal',
     'dal_select2',
     'django.contrib.admin',
@@ -71,7 +72,7 @@ INSTALLED_APPS = [
     'administrator',
     'qr_code',
     'pay',
-    'django_celery_beat',
+    
 ]
 
 # Application definition
