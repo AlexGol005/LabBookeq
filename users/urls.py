@@ -4,6 +4,7 @@ from django.urls import path
 from users import views as UserView
 from django.contrib.auth import views as authViews
 from . import views
+from . import tasks
 
 urlpatterns = [
     path('celerytest', tasks.take_rent, name='celerytest'),
