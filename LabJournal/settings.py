@@ -212,7 +212,7 @@ if DEBUG:
     mimetypes.add_type("application/javascript", ".js", True)
 
 
-CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_BROKER_URL="redis://localhost:6379"
 
 
 DEBUG = True
