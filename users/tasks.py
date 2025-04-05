@@ -1,9 +1,11 @@
 from celery import shared_task
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 from django.http import HttpResponse
 from .models import monthly_payment, Company, CompanyBalanceChange
 # request
 now = date.today()
+
+nowtime = datetime.today().isoformat()
 
 @shared_task
 def take_rent():
@@ -17,6 +19,6 @@ def take_rent():
     else:
       i.pay = False
       i.save()
-  # a = '???'
-  # b = list(b)
-  # return HttpResponse(f'123-{a}-{b}')
+  c = nowtime
+  return a, b, c
+
