@@ -7,7 +7,7 @@ from . import views
 from . import tasks
 
 urlpatterns = [
-    path('celerytest', tasks.take_rent, name='celerytest'),
+    path('celerytest/', tasks.take_rent, name='celerytest'),
     path('useractivity/<str:str>/', views.Useractivityreg, name='useractivity'),
     path('groupchange/<str:str>/', views.RightsEmployeereg, name='groupchange'),
     path('employeereg/', views.Employeereg, name='employeereg'),
