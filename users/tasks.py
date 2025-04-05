@@ -10,7 +10,6 @@ nowtime = datetime.today().isoformat()
 @shared_task
 def take_rent():
   note_list = Company.objects.filter(payement_date=now)
-  b = note_list.values_list('name')
   for i in note_list:
     if i.balance >=monthly_payment:
       CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
@@ -19,6 +18,4 @@ def take_rent():
     else:
       i.pay = False
       i.save()
-  c = nowtime
-  return a, b, c
 
