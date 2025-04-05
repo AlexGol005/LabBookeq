@@ -8,9 +8,13 @@ now = date.today()
 @shared_task
 def take_rent(request):
   note_list = Company.objects.filter(payement_date=now)
-  note_all_list = Company.objects.values_list('payement_date')
+  b = note_list.values_list('name')
   for i in note_list:
-    CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
+    if i.balance >=monthly_payment:
+      CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
+    else:
+      i.pay = False
+      i.save()
   a = '???'
-  b = list(note_all_list)
+  b = list(b)
   return HttpResponse(f'123-{a}-{b}')
