@@ -1,6 +1,6 @@
 from celery import shared_task
 from datetime import timedelta, date
-
+from django.http import HttpResponse
 from .models import monthly_payment, Company, CompanyBalanceChange
 
 now = date.today()
