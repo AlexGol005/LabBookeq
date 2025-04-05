@@ -213,7 +213,7 @@ if DEBUG:
 
 
 CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', "project.settings.server")
+
 
 DEBUG = True
 
