@@ -12,5 +12,5 @@ def take_rent(request):
   i_list = []
   for i in note_list:
     CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=monthly_payment)
-    n = i_list.append(i)
-  return HttpResponse(f'123-{n}')
+    i_list = i_list.append(i)
+  return HttpResponse(f'123-{i_list}')
