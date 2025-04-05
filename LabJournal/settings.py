@@ -211,9 +211,9 @@ if DEBUG:
 
     mimetypes.add_type("application/javascript", ".js", True)
 
-
-CELERY_BROKER_URL="redis://localhost:6379"
-
+REDIS_HOST = 'redis-18792.c14.us-east-1-2.ec2.cloud.redislabs.com' REDIS_PORT = 18792 REDIS_PASSWORD = '**'
+r = redis.Redis( host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD )
+CELERY_BROKER_URL=f'redis://{REDIS_HOST}:{REDIS_PORT}/0' 
 
 DEBUG = True
 
