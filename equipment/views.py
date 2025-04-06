@@ -2100,7 +2100,7 @@ class SearchMustVerView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         serdate = self.request.GET['date']
         queryset_get = Verificationequipment.objects.filter(haveorder=False).\
-            filter(equipment__pointer=self.request.user.profile.userid).\
+            filter(pointer=self.request.user.profile.userid).\
             select_related('equipmentSM').values('equipmentSM'). \
             annotate(id_actual=Max('id')).values('id_actual')
         b = list(queryset_get)
@@ -2115,7 +2115,7 @@ class SearchMustVerView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = MeasurEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
+        queryset = MeasurEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
         return queryset
 
 
@@ -2149,7 +2149,7 @@ class SearchMustAttView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = TestingEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
+        queryset = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
         return queryset
 
 
@@ -2183,7 +2183,7 @@ class SearchNotVerView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = MeasurEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
+        queryset = MeasurEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
         return queryset
 
 
@@ -2217,7 +2217,7 @@ class SearchNotAttView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = TestingEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
+        queryset = TestingEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(id__in=set1).exclude(equipment__status='C')
         return queryset
            
 # .filter()[Total-10:Total]
@@ -2252,7 +2252,7 @@ class SearchMustOrderView(LoginRequiredMixin, ListView):
         for i in b:
             a = i.get('equipmentSM__id')
             set1.append(a)
-        queryset = MeasurEquipment.objects.filter(equipment__pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
+        queryset = MeasurEquipment.objects.filter(pointer=self.request.user.profile.userid).filter(id__in=set1).filter(equipment__status='Э')
         return queryset
 
 
