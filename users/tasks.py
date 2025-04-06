@@ -19,3 +19,4 @@ def take_rent():
       i.pay = False
       i.save()
 
+take_rent()
