@@ -13,9 +13,11 @@ def take_rent():
   for i in note_list:
     if i.balance >=monthly_payment:
       CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
+      i.payement_date = i.payement_date + timedelta(days=30)
       i.pay = True
       i.save()
     else:
+      i.payement_date = i.payement_date + timedelta(days=1)
       i.pay = False
       i.save()
 
