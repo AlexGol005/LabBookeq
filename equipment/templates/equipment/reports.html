@@ -13,11 +13,24 @@
 </div>
 <hr>
     
-<div style="text-align: center; margin-top: 20px">
-<h5>Выгрузить в EXEL Графики поверки и аттестации СИ и ИО</h5>
-<a href="{% url 'export_me_xls' %}" class="btn btn-warning mt-3" style="width: 310px; height: 45px" >сформировать</a>
-</div>
-<hr>
+        <br>
+        <center>
+            <a href="{% url 'export_me_xls' %}" class="btn btn-primary mt-2 ml-1 mr-1"  style="width: 70%">Скачать график поверки, калибровки  и аттестации</a>
+        </center>
+        <br>
+        <hr>
+
+          <center>
+            <a href="{% url 'export_accanalytica_xls' %}" class="btn btn-primary mt-2 ml-1 mr-1"  style="width: 70%">Приложение к паcпорту лаборатории (АЦЦ Аналитика)</a>
+        </center>
+        <br>
+        <hr>
+
+          <center>
+            <a href="{% url 'export_rossaccreditacia_xls'  %}" class="btn btn-primary mt-2 ml-1 mr-1"  style="width: 70%">Приложение к паcпорту лаборатории (Росаккредитация)</a>
+        </center>
+        <br>
+        <hr>
 
     
 <div style="text-align: center; margin-top: 20px">
