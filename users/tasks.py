@@ -7,7 +7,7 @@ now = date.today()
 
 nowtime = datetime.today().isoformat()
 
-@shared_task
+# @shared_task
 def take_rent():
   note_list = Company.objects.filter(payement_date=now)
   for i in note_list:
