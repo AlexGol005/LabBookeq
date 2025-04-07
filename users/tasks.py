@@ -1,4 +1,4 @@
-from celery import shared_task
+# from celery import shared_task
 from datetime import timedelta, date, datetime
 from django.http import HttpResponse
 from users.models import monthly_payment, Company, CompanyBalanceChange
