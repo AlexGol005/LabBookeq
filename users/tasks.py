@@ -3,7 +3,7 @@ from datetime import timedelta, date, datetime
 from django.http import HttpResponse
 
 import sys
-sys.path.append('/home/LabJournal/LabBookeq/users/tasks.py')
+sys.path.append('/home/LabJournal/LabBookeq/users')
 
 from users.models import monthly_payment, Company, CompanyBalanceChange
 # request
