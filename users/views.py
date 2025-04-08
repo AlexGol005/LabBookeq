@@ -40,6 +40,7 @@ def HeadEmployeereg(request):
             
             p_f.userid = get_random_secret_key()
             newuserid =  p_f.userid
+            p_f.main = True
             p_f.save()  
             u_f.email = p_f.user_email
             u_f.save()
