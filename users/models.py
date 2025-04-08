@@ -23,6 +23,7 @@ class Profile(models.Model):
     user_phone = models.CharField('телефон', max_length=40, null=True, blank=True)
     userposition = models.CharField('Должность', max_length=50, null=True, blank=True)
     userid = models.CharField('Идентификатор организации (20 случайных цифр и латинских букв)', max_length=50, default = 1, null=True, blank=True)
+    main_user = models.BooleanField ('Главный пользователь - галочка если да', default=False)
     img = models.ImageField('Фото сотрудника', default='user_images/default.png', upload_to='user_images')
 
 
