@@ -1,7 +1,11 @@
 # from celery import shared_task
 from datetime import timedelta, date, datetime
 from django.http import HttpResponse
-from LabBookeq.users.models import monthly_payment, Company, CompanyBalanceChange
+
+import sys
+sys.path.append('/home/LabJournal/LabBookeq/users/tasks.py')
+
+from users.models import monthly_payment, Company, CompanyBalanceChange
 # request
 now = date.today()
 
