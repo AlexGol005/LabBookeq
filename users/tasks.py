@@ -29,6 +29,8 @@ def take_rent():
 def access_restriction():
   note_list = Company.objects.filter(pay=False)
   for i in note_list:
+    instance=User.objects.get(pk=str)
+    instance.is_active = False
     pass
 
 
