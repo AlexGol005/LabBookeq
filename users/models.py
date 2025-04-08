@@ -69,7 +69,7 @@ class Company(models.Model):
     caretaker_name = models.CharField('ФИО завхоза', max_length=100, default=None, null=True, blank=True)
     email = models.CharField('email организации', max_length=40, default=None, null=True, blank=True)
     pay = models.BooleanField ('Оплачено', default=True)
-    balance = models.DecimalField('Балланс счёта', max_digits=18, decimal_places=6, default=monthly_payment)
+    balance = models.DecimalField('Балланс счёта', max_digits=18, decimal_places=2, default=monthly_payment)
     payement_date = models.DateField('Дата платежа', default=None, null=True, blank=True)   
 
     def __str__(self):
