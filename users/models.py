@@ -111,7 +111,7 @@ class CompanyBalanceChange(models.Model):
     company = models.ForeignKey('Company', verbose_name ='Компания', on_delete=models.PROTECT)
     reason = models.CharField(choices=REASON_CHOICES, verbose_name ='Источник изменения', max_length=100, default=None, null=True, blank=True)
     document = models.CharField(verbose_name ='Номер документа', max_length=100, default=None, null=True, blank=True)
-    amount = models.DecimalField('Сумма', default=0, max_digits=18, decimal_places=6)
+    amount = models.DecimalField('Сумма', default=0, max_digits=18, decimal_places=2)
     
     def save(self, *args, **kwargs): 
         # меняем балланс компании
