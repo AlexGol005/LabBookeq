@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Баланс компании
+{% endblock %}
+
+{% block content %}
+  <div class="col-12">
+      <a href= "{% url 'profile' %}" >
+     <center><h5>Баланс компании {{ company.name }}</h5></center> 
+     <br></a>
+      
+Текущий баланс: {{company.balance}} рублей
+Следующая дата списания ежемесячного платежа: {{company.payement_date}} 
+      
+     <table class="table table-bordered">
+       <tr>
+           <th> Дата </th>
+           <th>Сумма</th>
+           <th> Основание </th>
+           <th>Документ</th>
+       </tr>
+
+         
+       {% for obj in balancechange %}
+        <tr>  
+            <td>{{ obj.created_at|default_if_none:'' }}</td>
+            <td>{{ obj.amount|default_if_none:'' }}</td> 
+            <td>{{ obj.reason|default_if_none:'' }}</td> 
+            <td>{{ obj.document|default_if_none:'' }}</td> 
+        </tr>
+       {% endfor %}
+     </table>
+<br>
+</div>
+{% endblock %}
