@@ -189,6 +189,23 @@ class EmployeesView(LoginRequiredMixin, TemplateView):
         return context
 
 
+class BalanceChangeView(LoginRequiredMixin, TemplateView):
+    """выводит страницу данных о платежах и списаниях баланса компании """
+    """path('balancechange/', UserView.BalanceChangeView.as_view(), name='balancechange'),"""
+    
+    template_name = 'users/balancechange.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(BalanceChangeView, self).get_context_data(**kwargs)
+        company = Company.objects.get(userid=self.request.user.profile.userid)
+        balancechange = CompanyBalanceChange.objects.filter(company=company)
+        
+        context['balancechange'] = balancechange
+        context['company'] = company             
+        return context
+
+
+
 @login_required
 def Employeereg(request):
     """выводит форму для добавления пользователя (сотрудника) и его профиля уже зарегистрированным начальником лаборатории"""
