@@ -1,7 +1,7 @@
 # from celery import shared_task
 from datetime import timedelta, date, datetime
 from django.http import HttpResponse
-
+from LabJournal.wsgi import *
 import sys
 sys.path.append('/home/LabJournal/LabBookeq')
 
