@@ -25,4 +25,11 @@ def take_rent():
       i.pay = False
       i.save()
 
+
+def access_restriction():
+  note_list = Company.objects.filter(pay=False)
+  for i in note_list:
+    pass
+
+
 take_rent()
