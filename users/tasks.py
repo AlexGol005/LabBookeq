@@ -2,17 +2,8 @@
 from datetime import timedelta, date, datetime
 from django.http import HttpResponse
 
-
-
-import sys
-sys.path.append('/home/LabJournal/LabBookeq')
-import os
-
-
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LabJournal.settings' )
 from users.models import monthly_payment, Company, CompanyBalanceChange
-# request
+
 now = date.today()
 
 nowtime = datetime.today().isoformat()
