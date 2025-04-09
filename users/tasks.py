@@ -3,7 +3,7 @@ from datetime import timedelta, date, datetime
 from django.http import HttpResponse
 
 
-application = get_wsgi_application()
+
 import sys
 sys.path.append('/home/LabJournal/LabBookeq')
 import os
