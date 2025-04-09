@@ -4,13 +4,8 @@ from django.urls import path
 from users import views as UserView
 from django.contrib.auth import views as authViews
 from . import views
-from . import tasks
-from . import celery_manager
 
 urlpatterns = [
-    # path('balancechange/', UserView.BalanceChangeView.as_view(), name='balancechange'),
-    # path('celerytest2/', celery_manager.schedule_take_rent, name='celerytest2'),
-    # path('celerytest/', tasks.take_rent, name='celerytest'),
     path('useractivity/<str:str>/', views.Useractivityreg, name='useractivity'),
     path('groupchange/<str:str>/', views.RightsEmployeereg, name='groupchange'),
     path('employeereg/', views.Employeereg, name='employeereg'),
