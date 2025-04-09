@@ -128,4 +128,28 @@ class CompanyBalanceChange(models.Model):
     class Meta:
         verbose_name = 'Изменения балланса компании'
         verbose_name_plural = 'Изменения балланса компании'
- 
+
+
+class CompanyActiveEmployesLists(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
+    created_by = CurrentUserField(related_name='creatorael', editable=True)
+    updated_by = CurrentUserField(related_name='updatorael', editable=True)
+    company = models.ForeignKey('Company', verbose_name ='Компания', on_delete=models.PROTECT)
+    list_employees = models.CharField(verbose_name ='Список pk активных сотрудников', max_length=100, default=None, null=True, blank=True)
+
+    
+    def save(self, *args, **kwargs): 
+        # меняем балланс компании
+        if not self.pk:
+            note = self.company
+            note.balance = note.balance + self.amount
+            note.save() 
+        super(CompanyBalanceChange, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.company.name};{self.list_employees}) '
+
+    class Meta:
+        verbose_name = 'Список активных сотрудников компании'
+        verbose_name_plural = 'Список активных сотрудников компании'
