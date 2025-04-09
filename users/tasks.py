@@ -10,7 +10,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', LabJournal.settings' )
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LabJournal.settings' )
 from users.models import monthly_payment, Company, CompanyBalanceChange
 # request
 now = date.today()
