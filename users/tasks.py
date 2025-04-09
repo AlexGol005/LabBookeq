@@ -39,4 +39,4 @@ class Command(BaseCommand):
     help = 'The Zen of Python'
 
     def handle(self, *args, **options):
-        pass
+        print('fff')
