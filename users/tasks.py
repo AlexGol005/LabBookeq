@@ -8,7 +8,7 @@ import sys
 sys.path.append('/home/LabJournal/LabBookeq')
 import os
 
-from django.core.wsgi import get_wsgi_application
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LabJournal.settings' )
 from users.models import monthly_payment, Company, CompanyBalanceChange
