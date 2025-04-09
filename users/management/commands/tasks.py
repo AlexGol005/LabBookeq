@@ -23,7 +23,7 @@ class Command(BaseCommand):
           i.payement_date = i.payement_date + timedelta(days=1)
           i.pay = False
           i.save()
-        print('оплата проверена, списана')
+      print('оплата проверена, списана')
 
 
     # def access_restriction(self):
