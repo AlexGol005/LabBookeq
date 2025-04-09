@@ -1,16 +1,16 @@
 # from celery import shared_task
 from datetime import timedelta, date, datetime
 from django.http import HttpResponse
-import os
 
-from django.core.wsgi import get_wsgi_application
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE')
 
 application = get_wsgi_application()
 import sys
 sys.path.append('/home/LabJournal/LabBookeq')
+import os
 
+from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', LabJournal.settings' )
 from users.models import monthly_payment, Company, CompanyBalanceChange
 # request
 now = date.today()
