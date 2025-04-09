@@ -2,33 +2,41 @@
 from datetime import timedelta, date, datetime
 from django.http import HttpResponse
 
-from users.models import monthly_payment, Company, CompanyBalanceChange
+# from users.models import monthly_payment, Company, CompanyBalanceChange
 
-now = date.today()
+# now = date.today()
 
-nowtime = datetime.today().isoformat()
+# nowtime = datetime.today().isoformat()
 
-# @shared_task
-def take_rent():
-  note_list = Company.objects.filter(payement_date=now)
-  for i in note_list:
-    if i.balance >=monthly_payment:
-      CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
-      i.payement_date = i.payement_date + timedelta(days=30)
-      i.pay = True
-      i.save()
-    else:
-      i.payement_date = i.payement_date + timedelta(days=1)
-      i.pay = False
-      i.save()
-
-
-def access_restriction():
-  note_list = Company.objects.filter(pay=False)
-  for i in note_list:
-    instance=User.objects.get(pk=str)
-    instance.is_active = False
-    pass
+# # @shared_task
+# def take_rent():
+#   note_list = Company.objects.filter(payement_date=now)
+#   for i in note_list:
+#     if i.balance >=monthly_payment:
+#       CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
+#       i.payement_date = i.payement_date + timedelta(days=30)
+#       i.pay = True
+#       i.save()
+#     else:
+#       i.payement_date = i.payement_date + timedelta(days=1)
+#       i.pay = False
+#       i.save()
 
 
-take_rent()
+# def access_restriction():
+#   note_list = Company.objects.filter(pay=False)
+#   for i in note_list:
+#     instance=User.objects.get(pk=str)
+#     instance.is_active = False
+#     pass
+
+
+# take_rent()
+
+from django.core.management.base import BaseCommand
+
+class Command(BaseCommand):
+    help = 'The Zen of Python'
+
+    def handle(self, *args, **options):
+        pass
