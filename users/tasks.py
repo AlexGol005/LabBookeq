@@ -1,9 +1,15 @@
 # from celery import shared_task
 from datetime import timedelta, date, datetime
 from django.http import HttpResponse
-# from LabJournal.wsgi import *
-# import sys
-# sys.path.append('/home/LabJournal/LabBookeq')
+import os
+
+from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LabJournal.settings')
+
+application = get_wsgi_application()
+import sys
+sys.path.append('/home/LabJournal/LabBookeq')
 
 from users.models import monthly_payment, Company, CompanyBalanceChange
 # request
