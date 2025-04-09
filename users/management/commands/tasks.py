@@ -11,7 +11,7 @@ nowtime = datetime.today().isoformat()
 class Command(BaseCommand):
 
 
-    def take_rent(self):
+    def handle(self, *args, **options):
       note_list = Company.objects.filter(payement_date=now)
       for i in note_list:
         if i.balance >=monthly_payment:
@@ -26,11 +26,11 @@ class Command(BaseCommand):
         print('оплата проверена, списана')
 
 
-    def access_restriction(self):
-      note_list = Company.objects.filter(pay=False)
-      for i in note_list:
-        instance=User.objects.get(pk=str)
-        instance.is_active = False
-        pass
+    # def access_restriction(self):
+    #   note_list = Company.objects.filter(pay=False)
+    #   for i in note_list:
+    #     instance=User.objects.get(pk=str)
+    #     instance.is_active = False
+    #     pass
 
 
