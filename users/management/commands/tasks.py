@@ -30,7 +30,7 @@ class Command(BaseCommand):
         for j in not_pay_companies:
             j.list_employees
             j_list = str(j.list_employees)
-            j_list = j_list.split(", ")
+            j_list = j_list.split(" ")
             u = User.objects.filter(pk__in=j_list)
             for f in u:
                 f.is_active = False
@@ -38,7 +38,7 @@ class Command(BaseCommand):
         for j in pay_companies:
             j.list_employees
             j_list = str(j.list_employees)
-            j_list = j_list.split(", ")
+            j_list = j_list.split(" ")
             u = User.objects.filter(pk__in=j_list)
             for f in u:
                 f.is_active = True
