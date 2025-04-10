@@ -10,7 +10,7 @@ nowtime = datetime.today().isoformat()
 
 class Command(BaseCommand):
     def take_rent(self):
-          note_list = Company.objects.filter(payement_date=now)
+      note_list = Company.objects.filter(payement_date=now)
       for i in note_list:
         if i.balance >=monthly_payment:
           CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
