@@ -40,3 +40,10 @@ admin.site.register(Employees, EmployeesAdmin)
 class CompanyBalanceChange(admin.ModelAdmin):
     list_display = ('company', 'created_at',  'updated_at', 'amount', 'reason')
     search_fields = ['company', 'amount',]
+
+
+@admin.register(CompanyActiveEmployesLists)  
+class CompanyActiveEmployesLists(admin.ModelAdmin):
+    list_display = ('company', 'list_employees', ')
+    search_fields = ['company']
+
