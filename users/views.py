@@ -226,7 +226,7 @@ def Employeereg(request):
                 p_f.save() 
                 company = Company.objects.get(userid=request.user.profile.userid)
                 au, create = CompanyActiveEmployesLists.objects.get_or_create(company=company)
-                au.list_employees = str(au.list_employees) + ', ', + str(p_f.pk)
+                au.list_employees = au.list_employees + ', ', + p_f.pk
                 g = Group.objects.get(name=group_name)
                 g.user_set.add(u_f)
                 username = form.cleaned_data.get('username')
