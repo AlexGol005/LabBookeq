@@ -228,10 +228,10 @@ def Employeereg(request):
                 au, create = CompanyActiveEmployesLists.objects.get_or_create(company=company)
                 if au.list_employees:
                    a = au.list_employees
-                   au.list_employees = f'{a} {u_f.pk} , '
+                   au.list_employees = f'{a} {u_f.pk}'
                    au.save()
                 else:
-                   au.list_employees = f'{u_f.pk} , '
+                   au.list_employees = f'{u_f.pk}'
                    au.save()
                    
                 g = Group.objects.get(name=group_name)
