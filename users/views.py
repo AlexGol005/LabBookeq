@@ -383,7 +383,7 @@ def Useractivityreg(request, slug):
       else:
          messages.success(request, 'Раздел доступен только продвинутому пользователю')
          return redirect('employees')
-   return redirect(reverse('employeeupdate', kwargs={'slug': slug}))
+   return redirect(reverse('employeeupdate', kwargs={'str': slug}))
     
 
 
