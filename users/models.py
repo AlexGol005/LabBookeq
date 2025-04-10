@@ -138,14 +138,6 @@ class CompanyActiveEmployesLists(models.Model):
     company = models.ForeignKey('Company', verbose_name ='Компания', on_delete=models.PROTECT)
     list_employees = models.CharField(verbose_name ='Список pk активных сотрудников', max_length=100, default=None, null=True, blank=True)
 
-    
-    def save(self, *args, **kwargs): 
-        # меняем балланс компании
-        if not self.pk:
-            note = self.company
-            note.balance = note.balance + self.amount
-            note.save() 
-        super(CompanyBalanceChange, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.company.name};{self.list_employees}) '
