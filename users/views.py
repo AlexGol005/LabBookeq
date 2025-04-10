@@ -372,9 +372,9 @@ def Useractivityreg(request, slug):
             au_list = str(au.list_employees)
             au_list = au_list.split(", ")
             # au_list = au_list.remove(instance.pk)
-            au_list1 = au_list.append(len(au_list))
+            au_list = au_list.append('12')
             # a=', '.join(au_list)
-            au.list_employees = au_list1
+            au.list_employees = au_list
             au.save()
                    
             # except:
