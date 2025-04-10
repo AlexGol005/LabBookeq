@@ -377,9 +377,9 @@ def Useractivityreg(request, str):
                    
             # except:
             #    pass
-            if 'активировать учетную запись' in request.POST:
-                instance.is_active = True
-                instance.save()
+         if 'активировать учетную запись' in request.POST:
+            instance.is_active = True
+            instance.save()
       else:
          messages.success(request, 'Раздел доступен только продвинутому пользователю')
          return redirect('employees')
