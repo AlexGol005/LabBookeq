@@ -11,6 +11,7 @@ nowtime = datetime.today().isoformat()
 class Command(BaseCommand):
     def take_rent(self):
       note_list = Company.objects.filter(payement_date=now)
+      not_pay_i = []
       for i in note_list:
         if i.balance >=monthly_payment:
           CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
@@ -20,8 +21,10 @@ class Command(BaseCommand):
         else:
           i.payement_date = i.payement_date + timedelta(days=1)
           i.pay = False
+          not_pay_i.append(i)
           i.save()
-      print('оплата проверена, списана')
+        not_pay_companies = CompanyActiveEmployesLists.objects.filter(company_in=not_pay_i)     
+        print('Автоматическое списание. Не оплачено {not_pay_companies}')
 
 
     def handle(self, *args, **options):
