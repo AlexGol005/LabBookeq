@@ -227,8 +227,8 @@ def Employeereg(request):
                 company = Company.objects.get(userid=request.user.profile.userid)
                 au, create = CompanyActiveEmployesLists.objects.get_or_create(company=company)
                 if au.list_employees:
-                   a = str(au.list_employees)
-                   au.list_employees = a + u_f.pk
+                   a = au.list_employees
+                   au.list_employees = f'{a} {u_f.pk},'
                    au.save()
                 else:
                    au.list_employees = u_f.pk
