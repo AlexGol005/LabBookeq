@@ -356,12 +356,12 @@ def RightsEmployeereg(request, str):
 
 
 @login_required
-def Useractivityreg(request, str):
+def Useractivityreg(request, slug):
    """выполняет действие изменения активности пользователя из фронта сайта со страницы редактирования профиля пользователя"""
-   """path('useractivity/<str:str>/', views.Useractivityreg, name='useractivity'),"""
+   """path('useractivity/<slug:slug>/', views.Useractivityreg, name='useractivity'),"""
     
    company = Company.objects.get(userid=request.user.profile.userid) 
-   instance=User.objects.get(pk=str)
+   instance=User.objects.get(pk=slug)
    if request.method == 'POST':
       if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
          if 'деактивировать учетную запись' in request.POST:
@@ -370,9 +370,9 @@ def Useractivityreg(request, str):
             # try:
             au = CompanyActiveEmployesLists.objects.get(company=company)
             au_list = au.list_employees.split(", ")
-            # au_list = au_list.remove(instance.pk)
+            # au_list = au_list.remove(str(instance.pk))
             a=', '.join(au_list)
-            au.list_employees = a + instance.pk
+            au.list_employees = a 
             au.save()
                    
             # except:
@@ -383,7 +383,7 @@ def Useractivityreg(request, str):
       else:
          messages.success(request, 'Раздел доступен только продвинутому пользователю')
          return redirect('employees')
-   return redirect(reverse('employeeupdate', kwargs={'str': str}))
+   return redirect(reverse('employeeupdate', kwargs={'slug': slug}))
     
 
 
