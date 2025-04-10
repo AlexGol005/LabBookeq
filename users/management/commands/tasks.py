@@ -1,5 +1,5 @@
 from datetime import timedelta, date, datetime
-
+from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
 from users.models import *
@@ -31,7 +31,7 @@ class Command(BaseCommand):
             j.list_employees
             j_list = str(j.list_employees)
             j_list = j_list.split(", ")
-            u = Users.objects.filter(pk__in=j_list)
+            u = User.objects.filter(pk__in=j_list)
             for f in u:
                 f.is_active = False
                 f.save()
@@ -39,7 +39,7 @@ class Command(BaseCommand):
             j.list_employees
             j_list = str(j.list_employees)
             j_list = j_list.split(", ")
-            u = Users.objects.filter(pk__in=j_list)
+            u = User.objects.filter(pk__in=j_list)
             for f in u:
                 f.is_active = True
                 f.save()
