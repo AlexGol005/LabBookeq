@@ -15,16 +15,16 @@ class Command(BaseCommand):
         pay_i = []
         for i in note_list:
             if i.balance >=monthly_payment:
-            CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
-            i.payement_date = i.payement_date + timedelta(days=30)
-            i.pay = True
-            pay_i.append(i)
-            i.save()
-        else:
-            i.payement_date = i.payement_date + timedelta(days=1)
-            i.pay = False
-            not_pay_i.append(i)
-            i.save()
+                CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
+                i.payement_date = i.payement_date + timedelta(days=30)
+                i.pay = True
+                pay_i.append(i)
+                i.save()
+            else:
+                i.payement_date = i.payement_date + timedelta(days=1)
+                i.pay = False
+                not_pay_i.append(i)
+                i.save()
         pay_companies = CompanyActiveEmployesLists.objects.filter(company__in=pay_i)
         not_pay_companies = CompanyActiveEmployesLists.objects.filter(company__in=not_pay_i)     
         print(f'Автоматическое списание. Не оплачено: {not_pay_companies}. Оплачено: {pay_companies}')
