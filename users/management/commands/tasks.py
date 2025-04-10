@@ -24,10 +24,8 @@ class Command(BaseCommand):
                 i.payement_date = i.payement_date + timedelta(days=1)
                 i.pay = False
                 not_pay_i.append(i)
-                i.save()
-        pay_companies = Company.objects.filter(company__in=pay_i)
-        not_pay_companies = Company.objects.filter(company__in=not_pay_i)     
-        print(f'Автоматическое списание. Не оплачено: {list(not_pay_companies)}. Оплачено: {list(pay_companies)}')
+                i.save()   
+        print(f'Автоматическое списание. Не оплачено: {not_pay_i}. Оплачено: {pay_i}')
 
 
     def handle(self, *args, **options):
