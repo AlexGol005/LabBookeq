@@ -360,8 +360,8 @@ def Useractivityreg(request, str):
     """выполняет действие изменения активности пользователя из фронта сайта со страницы редактирования профиля пользователя"""
     """path('useractivity/<str:str>/', views.Useractivityreg, name='useractivity'),"""
     
-   company = Company.objects.get(userid=request.user.profile.userid) 
-   instance=User.objects.get(pk=str)
+    company = Company.objects.get(userid=request.user.profile.userid) 
+    instance=User.objects.get(pk=str)
     
     if request.method == 'POST':
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
