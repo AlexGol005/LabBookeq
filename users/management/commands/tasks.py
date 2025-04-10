@@ -29,7 +29,7 @@ class Command(BaseCommand):
         pay_companies = CompanyActiveEmployesLists.objects.filter(company__in=pay_i)
         for j in not_pay_companies:
             j.list_employees
-            j_list = str(j.list_employees[-1:])
+            j_list = str(j.list_employees)
             j_list = j_list.split(", ")
             u = User.objects.filter(pk__in=j_list)
             for f in u:
@@ -37,7 +37,7 @@ class Command(BaseCommand):
                 f.save()
         for j in pay_companies:
             j.list_employees
-            j_list = str(j.list_employees[-1:])
+            j_list = str(j.list_employees)
             j_list = j_list.split(", ")
             u = User.objects.filter(pk__in=j_list)
             for f in u:
