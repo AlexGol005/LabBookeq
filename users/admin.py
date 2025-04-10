@@ -44,6 +44,6 @@ class CompanyBalanceChange(admin.ModelAdmin):
 
 @admin.register(CompanyActiveEmployesLists)  
 class CompanyActiveEmployesLists(admin.ModelAdmin):
-    list_display = ('company', 'list_employees', ')
+    list_display = ('company', 'list_employees')
     search_fields = ['company']
 
