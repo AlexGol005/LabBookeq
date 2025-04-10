@@ -227,7 +227,7 @@ def Employeereg(request):
                 company = Company.objects.get(userid=request.user.profile.userid)
                 au, create = CompanyActiveEmployesLists.objects.get_or_create(company=company)
                 if au.list_employees:
-                   au.list_employees = au.list_employees + ', ' + str(u_f.pk) + ', '
+                   au.list_employees = au.list_employees + ', ' + str(u_f.pk)
                    au.save()
                 else:
                    au.list_employees = u_f.pk
@@ -371,8 +371,6 @@ def Useractivityreg(request, slug):
             au = CompanyActiveEmployesLists.objects.get(company=company)
             au_list = str(au.list_employees)
             au_list = au_list.split(", ")
-            # au_list = au_list.remove(instance.pk)
-            # au_list = au_list.append('12')
             pk_inst = str(instance.pk)
             au_list.remove(pk_inst)
             a = ', '.join(au_list)
