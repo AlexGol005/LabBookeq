@@ -199,7 +199,7 @@ class BalanceChangeView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BalanceChangeView, self).get_context_data(**kwargs)
         company = Company.objects.get(userid=self.request.user.profile.userid)
-        balancechange = CompanyBalanceChange.objects.filter(company=company).order_by(-pk)
+        balancechange = CompanyBalanceChange.objects.filter(company=company).order_by('-pk')
         
         context['balancechange'] = balancechange
         context['company'] = company             
