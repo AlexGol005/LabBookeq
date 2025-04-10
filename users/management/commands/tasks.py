@@ -9,10 +9,8 @@ nowtime = datetime.today().isoformat()
 
 
 class Command(BaseCommand):
-
-
-    def handle(self, *args, **options):
-      note_list = Company.objects.filter(payement_date=now)
+    def take_rent:
+          note_list = Company.objects.filter(payement_date=now)
       for i in note_list:
         if i.balance >=monthly_payment:
           CompanyBalanceChange.objects.create(company=i, reason='Автоматическое списание ежемесячного платежа', amount=-monthly_payment)
@@ -24,6 +22,11 @@ class Command(BaseCommand):
           i.pay = False
           i.save()
       print('оплата проверена, списана')
+
+
+    def handle(self, *args, **options):
+        self.take_rent()
+
 
 
     # def access_restriction(self):
