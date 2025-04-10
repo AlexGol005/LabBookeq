@@ -2,7 +2,7 @@ from datetime import timedelta, date, datetime
 
 from django.core.management.base import BaseCommand
 
-from users.models import monthly_payment, Company, CompanyBalanceChange
+from users.models import *
 
 now = date.today()
 nowtime = datetime.today().isoformat()
