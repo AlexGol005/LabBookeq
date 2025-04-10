@@ -380,10 +380,10 @@ def Useractivityreg(request, str):
             if 'активировать учетную запись' in request.POST:
                 instance.is_active = True
                 instance.save()
-            return redirect(reverse('employeeupdate', kwargs={'str': str}))
       else:
          messages.success(request, 'Раздел доступен только продвинутому пользователю')
          return redirect('employees')
+   return redirect(reverse('employeeupdate', kwargs={'str': str}))
     
 
 
