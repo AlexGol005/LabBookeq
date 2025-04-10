@@ -384,6 +384,14 @@ def Useractivityreg(request, slug):
          if 'активировать учетную запись' in request.POST:
             instance.is_active = True
             instance.save()
+            au = CompanyActiveEmployesLists.objects.get(company=company)
+            au_list = str(au.list_employees)
+            au_list = au_list.split(", ")
+            pk_inst = str(instance.pk)
+            au_list.append(pk_inst)
+            a = ', '.join(au_list)
+            au.list_employees = a
+            au.save()
       else:
          messages.success(request, 'Раздел доступен только продвинутому пользователю')
          return redirect('employees')
