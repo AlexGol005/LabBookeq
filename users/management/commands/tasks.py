@@ -35,7 +35,7 @@ class Command(BaseCommand):
             for f in u:
                 f.is_active = False
                 f.save()
-         for j in pay_companies:
+        for j in pay_companies:
             j.list_employees
             j_list = str(j.list_employees)
             j_list = au_list.split(", ")
