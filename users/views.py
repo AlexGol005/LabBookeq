@@ -381,17 +381,17 @@ def Useractivityreg(request, str):
                 instance.is_active = True
                 instance.save()
             return redirect(reverse('employeeupdate', kwargs={'str': str}))
-        else:
-            messages.success(request, 'Раздел доступен только продвинутому пользователю')
-            return redirect('employees')
+      else:
+         messages.success(request, 'Раздел доступен только продвинутому пользователю')
+         return redirect('employees')
     
 
 
-                company = Company.objects.get(userid=request.user.profile.userid)
-                au, create = CompanyActiveEmployesLists.objects.get_or_create(company=company)
-                if au.list_employees:
-                   au.list_employees = au.list_employees + ', ' + str(p_f.pk)
-                   au.save()
-                else:
-                   au.list_employees = p_f.pk
-                   au.save()
+                # company = Company.objects.get(userid=request.user.profile.userid)
+                # au, create = CompanyActiveEmployesLists.objects.get_or_create(company=company)
+                # if au.list_employees:
+                #    au.list_employees = au.list_employees + ', ' + str(p_f.pk)
+                #    au.save()
+                # else:
+                #    au.list_employees = p_f.pk
+                #    au.save()
