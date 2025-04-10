@@ -25,9 +25,9 @@ class Command(BaseCommand):
                 i.pay = False
                 not_pay_i.append(i)
                 i.save()
-        pay_companies = CompanyActiveEmployesLists.objects.filter(company__in=pay_i)
-        not_pay_companies = CompanyActiveEmployesLists.objects.filter(company__in=not_pay_i)     
-        print(f'Автоматическое списание. Не оплачено: {not_pay_companies}. Оплачено: {pay_companies}')
+        pay_companies = Company.objects.filter(company__in=pay_i)
+        not_pay_companies = Company.objects.filter(company__in=not_pay_i)     
+        print(f'Автоматическое списание. Не оплачено: {list(not_pay_companies)}. Оплачено: {list(pay_companies)}')
 
 
     def handle(self, *args, **options):
