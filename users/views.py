@@ -227,10 +227,10 @@ def Employeereg(request):
                 company = Company.objects.get(userid=request.user.profile.userid)
                 au, create = CompanyActiveEmployesLists.objects.get_or_create(company=company)
                 if au.list_employees:
-                   au.list_employees = au.list_employees + ', ' + str(p_f.pk)
+                   au.list_employees = au.list_employees + ', ' + str(u_f.pk)
                    au.save()
                 else:
-                   au.list_employees = p_f.pk
+                   au.list_employees = u_f.pk
                    au.save()
                    
                 g = Group.objects.get(name=group_name)
@@ -357,16 +357,27 @@ def RightsEmployeereg(request, str):
 
 @login_required
 def Useractivityreg(request, str):
-    """выполняет действие изменения группы прав пользователя из фронта сайта со страницы редактирования профиля пользователя"""
+    """выполняет действие изменения активности пользователя из фронта сайта со страницы редактирования профиля пользователя"""
     """path('useractivity/<str:str>/', views.Useractivityreg, name='useractivity'),"""
     
-    instance=User.objects.get(pk=str)
+   company = Company.objects.get(userid=request.user.profile.userid) 
+   instance=User.objects.get(pk=str)
     
     if request.method == 'POST':
         if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
             if 'деактивировать учетную запись' in request.POST:
                 instance.is_active = False
                 instance.save()
+                try:
+                   au = CompanyActiveEmployesLists.objects.get(company=company)
+                   au_list = au.list_employees.split(", ")
+                   au_list = au_list.remove(instance.pk)
+                   a=', '.join(au_list)
+                   au.list_employees = a
+                   au.save()
+                   
+                except:
+                   pass
             if 'активировать учетную запись' in request.POST:
                 instance.is_active = True
                 instance.save()
@@ -376,3 +387,12 @@ def Useractivityreg(request, str):
             return redirect('employees')
     
 
+
+                company = Company.objects.get(userid=request.user.profile.userid)
+                au, create = CompanyActiveEmployesLists.objects.get_or_create(company=company)
+                if au.list_employees:
+                   au.list_employees = au.list_employees + ', ' + str(p_f.pk)
+                   au.save()
+                else:
+                   au.list_employees = p_f.pk
+                   au.save()
