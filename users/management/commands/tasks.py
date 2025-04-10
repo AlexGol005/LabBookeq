@@ -20,11 +20,23 @@ class Command(BaseCommand):
                 i.pay = True
                 pay_i.append(i)
                 i.save()
+                main_user = Profile.objects.filter(userid=i.userid).get(main_user=True)
+                g_add = Group.objects.get(name='Продвинутый пользователь')
+                g_rem = Group.objects.get(name='Базовый пользователь')
+                c_main_user = main_user.user
+                g_add.user_set.add(c_main_user) 
+                g_rem.user_set.remove(c_main_user)
             else:
                 i.payement_date = i.payement_date + timedelta(days=1)
                 i.pay = False
                 not_pay_i.append(i)
                 i.save() 
+                main_user = Profile.objects.filter(userid=i.userid).get(main_user=True)
+                g_add = Group.objects.get(name='Базовый пользователь')
+                g_rem = Group.objects.get(name='Продвинутый пользователь')
+                c_main_user = main_user.user
+                g_add.user_set.add(c_main_user) 
+                g_rem.user_set.remove(c_main_user)
         not_pay_companies = CompanyActiveEmployesLists.objects.filter(company__in=not_pay_i)
         pay_companies = CompanyActiveEmployesLists.objects.filter(company__in=pay_i)
         for j in not_pay_companies:
