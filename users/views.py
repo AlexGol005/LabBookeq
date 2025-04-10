@@ -371,8 +371,8 @@ def Useractivityreg(request, slug):
             au = CompanyActiveEmployesLists.objects.get(company=company)
             au_list = au.list_employees.split(", ")
             au_list = au_list.remove(str(instance.pk))
-            a=', '.join(au_list)
-            au.list_employees = a 
+            # a=', '.join(au_list)
+            au.list_employees = au_list
             au.save()
                    
             # except:
