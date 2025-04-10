@@ -367,16 +367,16 @@ def Useractivityreg(request, str):
          if 'деактивировать учетную запись' in request.POST:
             instance.is_active = False
             instance.save()
-            try:
-               au = CompanyActiveEmployesLists.objects.get(company=company)
-               au_list = au.list_employees.split(", ")
-               au_list = au_list.remove(instance.pk)
-               a=', '.join(au_list)
-               au.list_employees = a
-               au.save()
+            # try:
+            au = CompanyActiveEmployesLists.objects.get(company=company)
+            au_list = au.list_employees.split(", ")
+            au_list = au_list.remove(instance.pk)
+            a=', '.join(au_list)
+            au.list_employees = a
+            au.save()
                    
-            except:
-               pass
+            # except:
+            #    pass
             if 'активировать учетную запись' in request.POST:
                 instance.is_active = True
                 instance.save()
