@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     path('balancechange/', UserView.BalanceChangeView.as_view(), name='balancechange'),
-    path('useractivity/<str:str>/', views.Useractivityreg, name='useractivity'),
+    path('useractivity/<slug:slug>/', views.Useractivityreg, name='useractivity'),
     path('groupchange/<str:str>/', views.RightsEmployeereg, name='groupchange'),
     path('employeereg/', views.Employeereg, name='employeereg'),
     path('heademployeereg/', views.HeadEmployeereg, name='heademployeereg'),
