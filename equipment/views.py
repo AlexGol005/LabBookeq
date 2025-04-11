@@ -1141,6 +1141,28 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
             return redirect('/equipment/measureequipment/{self.kwargs["str"]}')
 
 
+@login_required
+def MEUpdateView(request, str):
+    """выводит форму для обновления данных о СИ"""
+    """path('meupdate/<str:str>/', views.MEUpdateView, name='meupdate'),"""
+
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = MEUpdateForm(request.POST, instance=MeasurEquipment.objects.get(exnumber=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect(reverse('measureequipment', kwargs={'str': str}))
+        else:
+            form = MEUpdateForm(instance=MeasurEquipment.objects.get(pk=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
+        return redirect(reverse('measureequipment', kwargs={'str': str}))
+
+
 class TestingequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации ИО на основе ЛО и характеристик ИО """
     form_class = TestingEquipmentCreateForm
