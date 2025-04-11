@@ -3266,6 +3266,15 @@ class UploadingTwoModels(object):
                     if value:
                         с.aim = value
                         с.save()
+
+                try:
+                    for column in range(self.num_e + 4, self.num_e + 5):
+                        value = s.cell(row, column).value
+                        if value:
+                            с.analited_objects = value
+                            с.save()
+                except:
+                    pass
                     
 
                              
