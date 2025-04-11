@@ -3254,6 +3254,14 @@ class UploadingTwoModels(object):
                         Personchange.objects.get_or_create(**row_dict_person)
                     except:
                         pass
+
+                for column in range(self.num_e + 2, self.num_e + 3):
+                    value = s.cell(row, column).value
+                    if value:
+                        instance.country = value
+                        instance.save()
+                    
+
                              
         self.number_objects = f'{self.number_objects} единиц ЛО, {self.number_objects_char} характеристик {self.kategory_e}, {self.number_objects_metehe} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
