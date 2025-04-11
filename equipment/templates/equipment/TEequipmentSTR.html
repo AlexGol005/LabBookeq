@@ -323,6 +323,40 @@
     </table>
     </div>
 
+
+       {# для Росаккредитации  #}
+    <div style="text-align: center; margin-top: 40px"><h4>
+    Детали</h4></div>
+    
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Наименование видов испытаний и/или определяемых характеристик (параметров) продукции</th>
+                <th> Наименование испытуемых групп объектов</th>
+                {% if USER_HAVE_RIGHTS %}
+                <th> Редактировать </th>
+                {% endif %}
+             </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>  {{ obj.aim|default:" "  }} </td>
+            <td>  {{ obj.analited_objects |default:" "  }} </td>
+
+
+
+
+{% if USER_HAVE_RIGHTS %}
+            
+            <td> <a href="{% url 'teupdate' obj.pk %}"  class="btn btn-outline-primary"> ред </a></td>  
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+    </div>
+
+    
     
     {# бухгалтерия  #}
     <div style="text-align: center; margin-top: 40px"><h4>
