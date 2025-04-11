@@ -186,9 +186,7 @@ class Equipment(models.Model):
 
     kategory = models.CharField(max_length=300, choices=KATEGORY, default='Средство измерения', null=True,
                                 verbose_name='Категория: указать "СИ", "ИО" или "ВО"')
-        
-    aim = models.CharField(max_length=300,  null=True, blank=True,
-                                verbose_name='Виды испытаний и характеристики продукции')
+
 
     def __str__(self):
         try:
