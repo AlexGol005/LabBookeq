@@ -1039,7 +1039,8 @@ class MeasurEquipmentCreateForm(forms.ModelForm):
                   ]
         widgets = {
 
-               'charakters': autocomplete.ModelSelect2(url='mecharakters-autocomplete'), 'aim': forms.Textarea()
+               'charakters': autocomplete.ModelSelect2(url='mecharakters-autocomplete'), 'aim': forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''})
         }
         
 
@@ -1056,7 +1057,9 @@ class TestingEquipmentCreateForm(forms.ModelForm):
                   ]
         widgets = {
 
-               'charakters': autocomplete.ModelSelect2(url='techarakters-autocomplete'), 'analises_types': forms.Textarea(), 'analited_objects': forms.Textarea()
+               'charakters': autocomplete.ModelSelect2(url='techarakters-autocomplete'), 'analises_types': forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''}), 'analited_objects': forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''})
          }
 
 
