@@ -249,6 +249,38 @@
     </table>
     </div>
 
+
+       {# для Росаккредитации  #}
+    <div style="text-align: center; margin-top: 40px"><h4>
+    Детали</h4></div>
+    
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Назначение</th>
+                {% if USER_HAVE_RIGHTS %}
+                <th> Редактировать </th>
+                {% endif %}
+             </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>  {{ obj.aim|default:" "  }} </td>
+
+
+
+
+{% if USER_HAVE_RIGHTS %}
+            
+            <td> <a href="{% url 'heupdate' obj.pk %}"  class="btn btn-outline-primary"> ред </a></td>  
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+    </div>
+
+
     
     {# бухгалтерия  #}
     <div style="text-align: center; margin-top: 40px"><h4>
