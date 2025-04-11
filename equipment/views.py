@@ -1242,13 +1242,13 @@ def HEUpdateView(request, str):
     instance=Helpingequipment.objects.get(pk=str)
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            form = TEUpdateForm(request.POST, instance=Helpingequipment.objects.get(pk=str))                                                       
+            form = HEUpdateForm(request.POST, instance=Helpingequipment.objects.get(pk=str))                                                       
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
                 return redirect(reverse('helpequipment', kwargs={'str': instance.equipment.exnumber}))
         else:
-            form = TEUpdateForm(instance=Helpingequipment.objects.get(pk=str))
+            form = HEUpdateForm(instance=Helpingequipment.objects.get(pk=str))
         data = {'form': form,
                 }
         return render(request, 'equipment/reg.html', data)
