@@ -510,7 +510,6 @@ class MeasurEquipmentCharaktersCreateForm(forms.ModelForm):
             'typename',
             'calinterval',
             'measurydiapason', 'accuracity',
-            'aim',
             'power',
             'needsetplace',
             'voltage',
@@ -621,7 +620,6 @@ class MeasurEquipmentCharaktersUpdateForm(forms.ModelForm):
         fields = [
             'calinterval',
             'measurydiapason', 'accuracity',
-            'aim',
             'power',
             'needsetplace',
             'voltage',
@@ -689,12 +687,6 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
     main_technical_characteristics = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
-    analited_objects = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=False,
-                                      widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                   'placeholder': ''}))
-    analises_types = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции', max_length=10000000, required=False,
-                                      widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                   'placeholder': ''}))
 
     ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
@@ -733,8 +725,6 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
             'typename',
             'calinterval',
             'main_technical_characteristics', 
-            'analited_objects',
-               'analises_types',
             'power',
             'needsetplace',
             'voltage',
@@ -757,10 +747,6 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
                 Column('name', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('typename', css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('main_technical_characteristics',  css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('analited_objects',  css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('analises_types',  css_class='form-group col-md-12 mb-0')),
             Row(
@@ -795,12 +781,6 @@ class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
                                   widget=forms.TextInput(attrs={'class': 'form-control',
                                                                 'placeholder': ''}))
     main_technical_characteristics = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
-                                      widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                   'placeholder': ''}))
-    analited_objects = forms.CharField(label='Наименование испытуемых групп объектов', max_length=10000000, required=False,
-                                      widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                   'placeholder': ''}))
-    analises_types = forms.CharField(label='Наименование видов испытаний и/или определяемых характеристик (параметров) продукции', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
 
@@ -839,8 +819,6 @@ class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
         fields =          [
             'calinterval',
             'main_technical_characteristics', 
-            'analited_objects',
-               'analises_types',
             'power',
             'needsetplace',
             'voltage',
@@ -861,10 +839,6 @@ class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
                 Column('calinterval', css_class='form-group col-md-6 mb-0')),
             Row(
                 Column('main_technical_characteristics',  css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('analited_objects',  css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('analises_types',  css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('ndoc', css_class='form-group col-md-12 mb-0')),
             Row(
@@ -1064,10 +1038,11 @@ class MeasurEquipmentCreateForm(forms.ModelForm):
         model = MeasurEquipment
         fields = [
             'charakters',
+               'aim',
                   ]
         widgets = {
 
-               'charakters': autocomplete.ModelSelect2(url='mecharakters-autocomplete'),
+               'charakters': autocomplete.ModelSelect2(url='mecharakters-autocomplete'), 'aim': forms.TextInput()
         }
         
 
