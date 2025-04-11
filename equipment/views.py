@@ -1192,7 +1192,7 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
 def TEUpdateView(request, str):
     """выводит форму для обновления данных о ИО"""
     """path('teupdate/<str:str>/', views.TEUpdateView, name='teupdate'),"""
-    instance=Testingequipment.objects.get(pk=str)
+    instance = TestingEquipment.objects.get(pk=str)
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = TEUpdateForm(request.POST, instance=Testingequipment.objects.get(pk=str))                                                       
