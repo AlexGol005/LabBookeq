@@ -1028,7 +1028,19 @@ class MeasurEquipmentCreateForm(forms.ModelForm):
                                                             'placeholder': ''})
         }
         
+class MEUpdateForm(forms.ModelForm):
+    """форма для обновления СИ"""
 
+    class Meta:
+        model = MeasurEquipment
+        fields = [
+               'aim',
+                  ]
+        widgets = {
+
+             'aim': forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''})
+        }
 
 class TestingEquipmentCreateForm(forms.ModelForm):
     """форма для внесения ИО"""
@@ -1047,6 +1059,21 @@ class TestingEquipmentCreateForm(forms.ModelForm):
                                                             'placeholder': ''})
          }
 
+class TEUpdateForm(forms.ModelForm):
+    """форма для обновления ИО"""
+
+    class Meta:
+        model = TestingEquipment
+        fields = [
+               'aim',
+               'analited_objects', 
+                  ]
+        widgets = {
+
+                  'aim': forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''}), 'analited_objects': forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''})
+         }
 
 
 class HelpingEquipmentCreateForm(forms.ModelForm):
@@ -1066,6 +1093,21 @@ class HelpingEquipmentCreateForm(forms.ModelForm):
                                                             'placeholder': ''})
         }
 
+
+class HEUpdateForm(forms.ModelForm):
+    """форма для обновления ВО"""
+    
+
+    class Meta:
+        model = HelpingEquipment
+        fields = [
+               'aim'
+                  ]
+       
+        widgets = {
+          'aim': forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''})
+        }
 
 
 
