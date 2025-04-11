@@ -1074,7 +1074,8 @@ class HelpingEquipmentCreateForm(forms.ModelForm):
        
         widgets = {
 
-               'charakters': autocomplete.ModelSelect2(url='hecharakters-autocomplete'), 'aim': forms.Textarea()
+               'charakters': autocomplete.ModelSelect2(url='hecharakters-autocomplete'), 'aim': forms.Textarea(attrs={'class': 'form-control',
+                                                            'placeholder': ''}))
         }
 
 
