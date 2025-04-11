@@ -1056,7 +1056,7 @@ class TestingEquipmentCreateForm(forms.ModelForm):
                   ]
         widgets = {
 
-               'charakters': autocomplete.ModelSelect2(url='techarakters-autocomplete'), 'analises_types': forms.Textarea(), 'analises_types': forms.Textarea()
+               'charakters': autocomplete.ModelSelect2(url='techarakters-autocomplete'), 'analises_types': forms.Textarea(), 'analited_objects': forms.Textarea()
          }
 
 
