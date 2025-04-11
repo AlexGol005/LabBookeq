@@ -1039,7 +1039,7 @@ class MeasurEquipmentCreateForm(forms.ModelForm):
                   ]
         widgets = {
 
-               'charakters': autocomplete.ModelSelect2(url='mecharakters-autocomplete'), 'aim': forms.TextInput()
+               'charakters': autocomplete.ModelSelect2(url='mecharakters-autocomplete'), 'aim': forms.Textarea()
         }
         
 
