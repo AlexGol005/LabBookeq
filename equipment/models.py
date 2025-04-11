@@ -412,7 +412,7 @@ class MeasurEquipment(models.Model):
 
 class TestingEquipment(models.Model):
     """ИО: составлено из ЛО и характеристик ИО"""
-    analises_types = models.CharField('Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
+    aim = models.CharField('Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
                            max_length=500, blank=True, null=True)
     analited_objects = models.CharField('Наименование испытуемых групп объектов',
                             max_length=500, blank=True, null=True)
