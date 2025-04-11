@@ -266,11 +266,7 @@ class TestingEquipmentCharakters(models.Model):
     name = models.CharField('Название прибора', max_length=100, default='')
     calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
     typename = models.CharField('Тип/модификация', max_length=100, default='', blank=True, null=True)
-          
-    analises_types = models.CharField('Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
-                           max_length=500, blank=True, null=True)
-    analited_objects = models.CharField('Наименование испытуемых групп объектов',
-                            max_length=500, blank=True, null=True)
+        
     main_technical_characteristics = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
         
     ndoc = models.CharField('Методики испытаний', max_length=500, blank=True, null=True)
@@ -312,8 +308,6 @@ class HelpingEquipmentCharakters(models.Model):
     name = models.CharField('Название прибора', max_length=100, default='')
     typename = models.CharField('Тип/модификация', max_length=100, default='', blank=True, null=True)
     measurydiapason = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
-    aim = models.CharField('Назначение',
-                           max_length=500, blank=True, null=True)
     ndoc = models.CharField('Методики испытаний', max_length=500, blank=True, null=True)
     power = models.BooleanField('Работает от сети (да - "1", нет - "0")', default=False, blank=True)
     voltage = models.CharField('напряжение', max_length=100, default='', blank=True, null=True)
@@ -325,7 +319,7 @@ class HelpingEquipmentCharakters(models.Model):
     needsetplace = models.BooleanField('Требуется установка (да - "1", нет - "0")', default=False, blank=True)
     complectlist = models.CharField('Где указана комплектация оборудования', max_length=100, default='', blank=True, null=True)
     expresstest = models.BooleanField('Возможно тестирование  (да - "1", нет - "0")', default=False, blank=True)
-    aim = models.CharField('примечание', max_length=90, blank=True, null=True)
+    note = models.CharField('примечание', max_length=90, blank=True, null=True)
     pointer =  models.CharField('ID добавившей организации', max_length=500, blank=True, null=True) 
 
     def __str__(self):
@@ -418,6 +412,10 @@ class MeasurEquipment(models.Model):
 
 class TestingEquipment(models.Model):
     """ИО: составлено из ЛО и характеристик ИО"""
+    analises_types = models.CharField('Наименование видов испытаний и/или определяемых характеристик (параметров) продукции',
+                           max_length=500, blank=True, null=True)
+    analited_objects = models.CharField('Наименование испытуемых групп объектов',
+                            max_length=500, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorte', editable=True)
@@ -477,6 +475,8 @@ class HelpingEquipment(models.Model):
     equipment = models.OneToOneField(Equipment, on_delete=models.CASCADE, blank=True, null=True,
                                   verbose_name='Оборудование')
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
+    aim = models.CharField('Назначение',  max_length=500, blank=True, null=True)
+                          
 
     def __str__(self):
         return f'Вн № {self.equipment.exnumber[:5]}  {self.charakters.name}  Зав № {self.equipment.lot}   - pk {self.pk}'
