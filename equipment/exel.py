@@ -3009,6 +3009,7 @@ def export_HelpingEquipment_Equipment_pattern_xls(request):
 
             '', 
             '',
+            '',
 
             'Если такой комнаты в списке нет, то она добавится автоматически в список комнат',
 
