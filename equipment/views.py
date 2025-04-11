@@ -1188,6 +1188,28 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
                 return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
 
 
+@login_required
+def TEUpdateView(request, str):
+    """выводит форму для обновления данных о ИО"""
+    """path('teupdate/<str:str>/', views.TEUpdateView, name='teupdate'),"""
+    instance=Testingequipment.objects.get(pk=str)
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = TEUpdateForm(request.POST, instance=Testingequipment.objects.get(pk=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect(reverse('testequipment', kwargs={'str': instance.equipment.exnumber}))
+        else:
+            form = TEUpdateForm(instance=Testingequipment.objects.get(pk=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
+        return redirect(reverse('testequipment', kwargs={'str': instance.equipment.exnumber}))
+
+
 class HelpingequipmentregView(LoginRequiredMixin, CreateView):
     """ выводит форму регистрации ВО на основе ЛО и характеристик ВО """
     form_class = HelpingEquipmentCreateForm
@@ -1211,6 +1233,29 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
                 order.save()
                 return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+
+
+@login_required
+def HEUpdateView(request, str):
+    """выводит форму для обновления данных о ВО"""
+    """path('heupdate/<str:str>/', views.HEUpdateView, name='heupdate'),"""
+    instance=Helpingequipment.objects.get(pk=str)
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        if request.method == "POST":
+            form = TEUpdateForm(request.POST, instance=Helpingequipment.objects.get(pk=str))                                                       
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.save()
+                return redirect(reverse('helpequipment', kwargs={'str': instance.equipment.exnumber}))
+        else:
+            form = TEUpdateForm(instance=Helpingequipment.objects.get(pk=str))
+        data = {'form': form,
+                }
+        return render(request, 'equipment/reg.html', data)
+    if not request.user.has_perm('equipment.add_equipment') or not request.user.is_superuser:
+        messages.success(request, 'Раздел доступен только продвинутому пользователю')
+        return redirect(reverse('helpequipment', kwargs={'str': instance.equipment.exnumber}))
+
 
 
 @login_required
