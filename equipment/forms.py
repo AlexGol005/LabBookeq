@@ -1014,7 +1014,6 @@ class HelpingEquipmentCharaktersUpdateForm(forms.ModelForm):
         model = HelpingEquipmentCharakters
         fields = [
             'measurydiapason',
-            'aim',
             'ndoc',
             'power',
             'needsetplace',
