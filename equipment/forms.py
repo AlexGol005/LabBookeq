@@ -937,8 +937,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
         fields = [
             'name',
             'typename',
-            'measurydiapason',
-            'aim',
             'ndoc',
             'power',
             'needsetplace',
