@@ -1051,10 +1051,12 @@ class TestingEquipmentCreateForm(forms.ModelForm):
         model = TestingEquipment
         fields = [
                    'charakters',
+               'analises_types',
+               'analited_objects', 
                   ]
         widgets = {
 
-               'charakters': autocomplete.ModelSelect2(url='techarakters-autocomplete'),
+               'charakters': autocomplete.ModelSelect2(url='techarakters-autocomplete'), 'analises_types': forms.Textarea(), 'analises_types': forms.Textarea()
          }
 
 
@@ -1067,11 +1069,12 @@ class HelpingEquipmentCreateForm(forms.ModelForm):
         model = HelpingEquipment
         fields = [
             'charakters',
+               'aim'
                   ]
        
         widgets = {
 
-               'charakters': autocomplete.ModelSelect2(url='hecharakters-autocomplete'),
+               'charakters': autocomplete.ModelSelect2(url='hecharakters-autocomplete'), 'aim': forms.Textarea()
         }
 
 
