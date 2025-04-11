@@ -379,6 +379,40 @@
     </div>
 
     
+лллллллллллллл
+    
+       {# для Росаккредитации  #}
+    <div style="text-align: center; margin-top: 40px"><h4>
+    Детали</h4></div>
+    
+    <div style="text-align: center;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Наименование определяемых (измеряемых) характеристик (параметров) продукции</th>
+                {% if USER_HAVE_RIGHTS %}
+                <th> Редактировать </th>
+                {% endif %}
+             </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>  {{ obj.aim }} </td>
+
+
+
+
+{% if USER_HAVE_RIGHTS %}
+            
+            <td> <a href="{% url 'itemserviceupdate' obj.equipment.pk %}"  class="btn btn-outline-primary"> ред </a></td>  
+        </tr>
+        </tbody>
+    </table>
+    </div>
+
+
+    лллллллллллллл
+    
     {# бухгалтерия  #}
     <div style="text-align: center; margin-top: 40px"><h4>
     Бухгалтерские сведения</h4></div>
