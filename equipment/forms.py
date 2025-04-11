@@ -687,10 +687,6 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
     main_technical_characteristics = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
                                                                    'placeholder': ''}))
-
-    ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=False,
-                                      widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                   'placeholder': ''}))
        
     power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
@@ -748,9 +744,7 @@ class TestingEquipmentCharaktersCreateForm(forms.ModelForm):
             Row(
                 Column('typename', css_class='form-group col-md-12 mb-0')),
             Row(
-                Column('analises_types',  css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('ndoc', css_class='form-group col-md-12 mb-0')),
+                Column('main_technical_characteristics',  css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('complectlist', css_class='form-group col-md-12 mb-0')),
             Row(
@@ -782,12 +776,7 @@ class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
                                                                 'placeholder': ''}))
     main_technical_characteristics = forms.CharField(label='Основные технические характеристики', max_length=10000000, required=False,
                                       widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                   'placeholder': ''}))
-
-    ndoc = forms.CharField(label='Методики испытаний', max_length=10000000, required=False,
-                                      widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                   'placeholder': ''}))
-       
+                                                                   'placeholder': ''}))     
     power = forms.BooleanField(label='Работает от сети', required=False, initial=False)
     needsetplace = forms.BooleanField(label='Требуется установка', required=False, initial=False)
     voltage = forms.CharField(label='Напряжение требуемое', required=False,
@@ -839,8 +828,6 @@ class TestingEquipmentCharaktersUpdateForm(forms.ModelForm):
                 Column('calinterval', css_class='form-group col-md-6 mb-0')),
             Row(
                 Column('main_technical_characteristics',  css_class='form-group col-md-12 mb-0')),
-            Row(
-                Column('ndoc', css_class='form-group col-md-12 mb-0')),
             Row(
                 Column('complectlist', css_class='form-group col-md-12 mb-0')),
             Row(
@@ -937,7 +924,6 @@ class HelpingEquipmentCharaktersCreateForm(forms.ModelForm):
         fields = [
             'name',
             'typename',
-            'ndoc',
             'power',
             'needsetplace',
             'voltage',
@@ -1014,7 +1000,6 @@ class HelpingEquipmentCharaktersUpdateForm(forms.ModelForm):
         model = HelpingEquipmentCharakters
         fields = [
             'measurydiapason',
-            'ndoc',
             'power',
             'needsetplace',
             'voltage',
@@ -1052,12 +1037,12 @@ class TestingEquipmentCreateForm(forms.ModelForm):
         model = TestingEquipment
         fields = [
                    'charakters',
-               'analises_types',
+               'aim',
                'analited_objects', 
                   ]
         widgets = {
 
-               'charakters': autocomplete.ModelSelect2(url='techarakters-autocomplete'), 'analises_types': forms.Textarea(attrs={'class': 'form-control',
+               'charakters': autocomplete.ModelSelect2(url='techarakters-autocomplete'), 'aim': forms.Textarea(attrs={'class': 'form-control',
                                                             'placeholder': ''}), 'analited_objects': forms.Textarea(attrs={'class': 'form-control',
                                                             'placeholder': ''})
          }
