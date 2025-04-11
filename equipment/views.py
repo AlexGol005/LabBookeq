@@ -1145,7 +1145,7 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
 def MEUpdateView(request, str):
     """выводит форму для обновления данных о СИ"""
     """path('meupdate/<str:str>/', views.MEUpdateView, name='meupdate'),"""
-
+    instance=MeasurEquipment.objects.get(pk=str)
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
             form = MEUpdateForm(request.POST, instance=MeasurEquipment.objects.get(pk=str))                                                       
