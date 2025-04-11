@@ -3260,6 +3260,12 @@ class UploadingTwoModels(object):
                     if value:
                         instance.country = value
                         instance.save()
+
+                for column in range(self.num_e + 3, self.num_e + 4):
+                    value = s.cell(row, column).value
+                    if value:
+                        с.aim = value
+                        с.save()
                     
 
                              
