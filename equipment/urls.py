@@ -5,6 +5,8 @@ from . import exel
 from . import exel_agreements
 
 urlpatterns = [
+    path('heupdate/<str:str>/', views.HEUpdateView, name='heupdate'),
+    path('teupdate/<str:str>/', views.TEUpdateView, name='teupdate'),
     path('meupdate/<str:str>/', views.MEUpdateView, name='meupdate'),
     path(r'^export_rossaccreditacia/xls/$/', exel.export_rossaccreditacia_xls, name='export_rossaccreditacia_xls'),
     path(r'^export_acc/xls/$/', exel.export_accanalytica_xls, name='export_accanalytica_xls'),
