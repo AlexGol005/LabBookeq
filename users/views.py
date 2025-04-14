@@ -242,6 +242,8 @@ def Employeereg(request):
                 password = User.objects.make_random_password()
                 user.set_password(password)
                 user.save(update_fields=['password'])
+
+               
                 u_f.email = p_f.user_email
                 u_f.save()
                 messages.success(request, f'Пользовать {username} был успешно создан!')
@@ -260,8 +262,10 @@ def Employeereg(request):
                    
    
                    email(subject, email_body, user_email)
-
-                
+                   
+                user = User.objects.get(username=username)
+                user.set_password(password)
+                user.save(update_fields=['password'])
                 return redirect('employees')
             else:
                 messages.add_message(request, messages.ERROR, form.errors)
