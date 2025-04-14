@@ -20,6 +20,9 @@
             <strong class="d-block text-gray-dark"><b>ФИО:  </b> {{ user.profile.name }}</strong>
             <strong class="d-block text-gray-dark"><b>Должность:  </b> {{ user.profile.userposition }}</strong>
             <strong class="d-block text-gray-dark"><b>Права пользователя:  </b> {{ user_group }}</strong>
+            {% if user.profile.main_user %}
+            <strong class="d-block text-gray-dark"><b>ГЛАВНЫЙ ПОЛЬЗОВАТЕЛЬ</strong>
+            {% endif %}
     </div>
 
 
