@@ -1136,6 +1136,10 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
                 order.save()
                 return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
+            else:
+                messages.success(self.request, "Ошибка")
+                return redirect('equipment/equipmentreg/')
+                
         else:
             messages.success(self.request, "Раздел доступен только продвинутому пользователю")
             return redirect('/equipment/measureequipment/{self.kwargs["str"]}')
@@ -1186,6 +1190,9 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
                 order.save()
                 return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+            else:
+                messages.success(self.request, "Ошибка")
+                return redirect('equipment/equipmentreg/')
 
 
 @login_required
@@ -1233,6 +1240,9 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
                 order.save()
                 return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+            else:
+                messages.success(self.request, "Ошибка")
+                return redirect('equipment/equipmentreg/')
 
 
 @login_required
