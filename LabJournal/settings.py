@@ -139,7 +139,7 @@ WSGI_APPLICATION = 'LabJournal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'JL',
+        'NAME': 'jl',
         'USER': 'myappuser',
         'PASSWORD': 'U+J*0KB4TZNU',
         'HOST': 'LabJournal-4495.postgres.pythonanywhere-services.com',
