@@ -43,11 +43,13 @@
                     <a href="{% url 'rooms' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:25%"> Помещения </a>
                     <a href="{% url 'agreementcompanylist' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:25%"> Договоры с поверителями </a>
                 </center>
-      <br>
+
+     {% endif %}
+
+           <br>
                      <center>
                     <a href="{% url 'balancechange' %}" class="btn btn-primary mr-2 ml-2 mt-2 style="width:25%"> Оплата </a>
                 </center>
-     {% endif %}
  <br>
               <form method="post" enctype="multipart/form-data" class="form-register mt-4">
         {% csrf_token %}
