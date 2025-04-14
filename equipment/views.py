@@ -1134,8 +1134,9 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                order.save()
+                
                 try:
+                    order.save()
                     return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
                 except:
                     messages.success(self.request, "Ошибка")
@@ -1193,8 +1194,9 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                order.save()
+                
                 try:
+                    order.save()
                     return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
                 except:
                     messages.success(self.request, "Ошибка")
@@ -1247,8 +1249,9 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                order.save()
+                
                 try:
+                    order.save()
                     return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
                 except:
                     messages.success(self.request, "Ошибка")
