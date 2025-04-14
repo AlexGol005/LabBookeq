@@ -85,3 +85,53 @@ class ManualAdmin(ImportExportActionModelAdmin):
         
 # фиксация формы в админке Мануал
 admin.site.register(Manual, ManualAdmin)
+
+
+# Страница Политика конфиденциальности классы для отображения в админке
+
+# класс для загрузки/выгрузки Политика конфиденциальности
+class PolitycaConfidentResource(resources.ModelResource):
+    class Meta:
+        model = PolitycaConfident
+
+# класс добавления стилей к окну Политика конфиденциальности
+class PolitycaConfidentAdminForm(forms.ModelForm):
+    text = forms.CharField(label="Текст", widget=CKEditorUploadingWidget())
+    class Meta:
+        model = PolitycaConfident
+        fields = '__all__'
+        
+# класс подробностей Политика конфиденциальности
+class PolitycaConfidentAdmin(ImportExportActionModelAdmin):
+    resource_class = PolitycaConfidentResource
+    list_display = ('date', 'text',)
+    search_fields = ['text']
+    form = PolitycaConfidentAdminForm
+        
+# фиксация формы в админке Политика конфиденциальности
+admin.site.register(PolitycaConfident, PolitycaConfidentAdmin)
+
+
+# Страница Договор-оферта классы для отображения в админке
+
+# класс для загрузки/выгрузки Договор-оферта
+class OfertaResource(resources.ModelResource):
+    class Meta:
+        model = Oferta
+
+# класс добавления стилей к окну Договор-оферта
+class OfertaAdminForm(forms.ModelForm):
+    text = forms.CharField(label="Текст", widget=CKEditorUploadingWidget())
+    class Meta:
+        model = Oferta
+        fields = '__all__'
+        
+# класс подробностей Договор-оферта
+class OfertaAdmin(ImportExportActionModelAdmin):
+    resource_class = OfertaResource
+    list_display = ('date', 'text',)
+    search_fields = ['text']
+    form = OfertaAdminForm
+        
+# фиксация формы в админке Договор-оферта
+admin.site.register(Oferta,OfertaAdmin)
