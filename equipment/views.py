@@ -1140,7 +1140,7 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
                     return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
                 except:
                     messages.success(self.request, "Ошибка")
-                    return redirect('equipment/equipmentreg/')
+                    return redirect('equipmentreg')
                     
             else:
                 messages.success(self.request, "Ошибка")
@@ -1200,10 +1200,10 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
                     return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
                 except:
                     messages.success(self.request, "Ошибка")
-                    return redirect('equipment/equipmentreg/')
+                    return redirect('equipmentreg')
             else:
                 messages.success(self.request, "Ошибка")
-                return redirect('equipment/equipmentreg/')
+                return redirect('equipmentreg')
 
 
 @login_required
