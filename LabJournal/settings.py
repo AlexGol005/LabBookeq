@@ -141,7 +141,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'JL',
         'USER': 'userjl',
-        'PASSWORD': 'RnES8TPDi',
+        'PASSWORD': "'RnES8TPDi'",
         'HOST': 'LabJournal-4495.postgres.pythonanywhere-services.com',
         'PORT': 14495,
     }
