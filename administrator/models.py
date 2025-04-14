@@ -49,7 +49,16 @@ class PolitycaConfident(models.Model):
     def __str__(self):
         return f' {self.date}'
 
+
+class Oferta(models.Model):
+    date = models.DateField('Дата', auto_now_add=True)
+    text = models.TextField('Текст записи')
+
+
+    def __str__(self):
+        return f' {self.date}'
+
     class Meta:
-        verbose_name = 'Политика конфиденциальности'
-        verbose_name_plural = 'Политика конфиденциальности'
+        verbose_name = 'Договор-оферта'
+        verbose_name_plural = 'Договор-оферта'
       
