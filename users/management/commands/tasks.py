@@ -1,12 +1,19 @@
 from datetime import timedelta, date, datetime
 from django.contrib.auth.models import User, Group
 from django.core.management.base import BaseCommand
-
+from django.core.mail import send_mail
 from users.models import *
 
 now = date.today()
 nowtime = datetime.today().isoformat()
 
+# Функция отправки сообщения
+def email(subject, content, user_email):
+   send_mail(subject,
+      content,
+      'sandra.005@mail.ru',
+     [user_email, 'sandra.005@mail.ru']
+   )
 
 class Command(BaseCommand):
     def take_rent(self):
@@ -57,17 +64,19 @@ class Command(BaseCommand):
                 f.save()
         print(f'Автоматическое списание. Не оплачено: {not_pay_i}. Оплачено: {pay_i}')
 
-
+    def notice_letter(self):
+        note_list = Company.objects.filter(payement_date=now)
+        for i in note_list:
+            user_email = i.manager_email
+            subject = f'Скоро наступит дата отправки ЛО в поверку/аттестацию для компании {i.name}'
+            email_body = f"Список приборов"
+            email(subject, email_body, user_email)
+        
     def handle(self, *args, **options):
         self.take_rent()
 
 
 
-    # def access_restriction(self):
-    #   note_list = Company.objects.filter(pay=False)
-    #   for i in note_list:
-    #     instance=User.objects.get(pk=str)
-    #     instance.is_active = False
-    #     pass
+
 
 
