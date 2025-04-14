@@ -29,3 +29,22 @@ class ManualView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['obj'] = Manual.objects.latest('date')
         return context
+
+
+class PolitycaConfidentView(TemplateView):
+    """ выводит страницу политика конфиденциальности """
+    template_name = 'administrator/tabletext.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['obj'] = PolitycaConfident.objects.latest('date')
+        return context
+
+class OfertaView(TemplateView):
+    """ выводит страницу договор-оферта """
+    template_name = 'administrator/tabletext.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['obj'] = Oferta.objects.latest('date')
+        return context
