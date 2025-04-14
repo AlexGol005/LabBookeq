@@ -1135,7 +1135,12 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
                 order = form.save(commit=False)
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
                 order.save()
-                return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
+                try:
+                    return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
+                except:
+                    messages.success(self.request, "Ошибка")
+                    return redirect('equipment/equipmentreg/')
+                    
             else:
                 messages.success(self.request, "Ошибка")
                 return redirect('equipment/equipmentreg/')
@@ -1189,7 +1194,11 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
                 order = form.save(commit=False)
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
                 order.save()
-                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+                try:
+                    return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
+                except:
+                    messages.success(self.request, "Ошибка")
+                    return redirect('equipment/equipmentreg/')
             else:
                 messages.success(self.request, "Ошибка")
                 return redirect('equipment/equipmentreg/')
@@ -1239,7 +1248,11 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
                 order = form.save(commit=False)
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
                 order.save()
-                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+                try:
+                    return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
+                except:
+                    messages.success(self.request, "Ошибка")
+                    return redirect('equipment/equipmentreg/')
             else:
                 messages.success(self.request, "Ошибка")
                 return redirect('equipment/equipmentreg/')
