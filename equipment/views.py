@@ -1195,13 +1195,13 @@ def TEUpdateView(request, str):
     instance = TestingEquipment.objects.get(pk=str)
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            form = TEUpdateForm(request.POST, instance=Testingequipment.objects.get(pk=str))                                                       
+            form = TEUpdateForm(request.POST, instance=TestingEquipment.objects.get(pk=str))                                                       
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
                 return redirect(reverse('testequipment', kwargs={'str': instance.equipment.exnumber}))
         else:
-            form = TEUpdateForm(instance=Testingequipment.objects.get(pk=str))
+            form = TEUpdateForm(instance=TestingEquipment.objects.get(pk=str))
         data = {'form': form,
                 }
         return render(request, 'equipment/reg.html', data)
@@ -1239,16 +1239,16 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
 def HEUpdateView(request, str):
     """выводит форму для обновления данных о ВО"""
     """path('heupdate/<str:str>/', views.HEUpdateView, name='heupdate'),"""
-    instance=Helpingequipment.objects.get(pk=str)
+    instance=HelpingEquipment.objects.get(pk=str)
     if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
         if request.method == "POST":
-            form = HEUpdateForm(request.POST, instance=Helpingequipment.objects.get(pk=str))                                                       
+            form = HEUpdateForm(request.POST, instance=HelpingEquipment.objects.get(pk=str))                                                       
             if form.is_valid():
                 order = form.save(commit=False)
                 order.save()
                 return redirect(reverse('helpequipment', kwargs={'str': instance.equipment.exnumber}))
         else:
-            form = HEUpdateForm(instance=Helpingequipment.objects.get(pk=str))
+            form = HEUpdateForm(instance=HelpingEquipment.objects.get(pk=str))
         data = {'form': form,
                 }
         return render(request, 'equipment/reg.html', data)
