@@ -1399,6 +1399,7 @@ class SearchResultEquipmentView(LoginRequiredMixin, TemplateView):
             context['objects'] = objects
             
         context['form'] = SearchEqForm(initial={'lot': lot, 'exnumber': exnumber})
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1432,6 +1433,7 @@ class ReestrsearresView(LoginRequiredMixin, TemplateView):
         context['form'] = Searchreestrform(initial={'name': name, 'reestr': reestr})
         context['URL'] = URL
         context['title'] = 'Госреестры, типы, модификации средств измерений'
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1453,6 +1455,7 @@ class TEcharacterssearresView(LoginRequiredMixin, TemplateView):
         context['form'] = Searchtestingform(initial={'name': name})
         context['URL'] = URL
         context['title'] = 'Характеристики, типы, испытательного оборудования'
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1474,6 +1477,7 @@ class HEcharacterssearresView(LoginRequiredMixin, TemplateView):
         context['form'] = Searchtestingform(initial={'name': name})
         context['URL'] = URL
         context['title'] = 'Характеристики, типы, вспомогательного оборудования'
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1530,6 +1534,7 @@ class SearchResultMeasurEquipmentView(LoginRequiredMixin, TemplateView):
             context['objects'] = objects
         context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber})
         context['URL'] = URL
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1585,6 +1590,7 @@ class SearchResultTestingEquipmentView(LoginRequiredMixin, TemplateView):
             context['objects'] = objects
         context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber})
         context['URL'] = URL
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1634,6 +1640,7 @@ class SearchResultHelpingEquipmentView(LoginRequiredMixin, TemplateView):
             context['objects'] = objects
         context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber})
         context['URL'] = URL
+        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
