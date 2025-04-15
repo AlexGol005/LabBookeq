@@ -161,7 +161,7 @@ def CompanyUpdateView(request):
             form = CompanyCreateForm(request.POST, instance=Company.objects.get(userid=ruser))
             if form.is_valid():
 
-                n = Agreementverification.objects.get_or_create(active=True, company=Company.objects.get(userid=ruser), verificator=Verificators.objects.get(pk=14), pointer=ruser)
+                n = Agreementverification.objects.get_or_create(active=True, company=Company.objects.get(userid=ruser), verificator=Verificators.objects.get(pk=1), pointer=ruser)
                 order = form.save(commit=False)
                 order.save() 
                                
