@@ -17,18 +17,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-#
-# SECRET_KEY = "vs3umg+heg!)ljfeg2o^eu@3fk1ma!=ett2^9o2x8cwjl@0ixy"
-# DEBUG = True
-# ALLOWED_HOSTS = []
-
-
 
 
 EMAIL_HOST = 'smtp.mail.ru'
@@ -90,15 +80,7 @@ MIDDLEWARE = [
     'django_currentuser.middleware.ThreadLocalUserMiddleware',
 ]
 
-
-
-
-
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-
-
 
 ROOT_URLCONF = 'LabJournal.urls'
 
@@ -128,24 +110,24 @@ WSGI_APPLICATION = 'LabJournal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'jl',
-        'USER': 'myappuser',
-        'PASSWORD': 'U+J*0KB4TZNU',
-        'HOST': 'LabJournal-4495.postgres.pythonanywhere-services.com',
-        'PORT': 14495,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'jl',
+#         'USER': 'myappuser',
+#         'PASSWORD': 'U+J*0KB4TZNU',
+#         'HOST': 'LabJournal-4495.postgres.pythonanywhere-services.com',
+#         'PORT': 14495,
+#     }
+# }
 
 
 
