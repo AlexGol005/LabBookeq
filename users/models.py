@@ -6,7 +6,7 @@ from datetime import timedelta, date
 from PIL import  Image
 
 now = date.today()
-monthly_payment = Decimal(3000)
+monthly_payment = Decimal(4000)
 
 REASON_CHOICES = (
         ('Пополнение счёта автоматическое', 'Пополнение счёта автоматическое'),
