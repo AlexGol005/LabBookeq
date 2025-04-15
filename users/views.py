@@ -202,7 +202,8 @@ class BalanceChangeView(LoginRequiredMixin, TemplateView):
         balancechange = CompanyBalanceChange.objects.filter(company=company).order_by('-pk')
         
         context['balancechange'] = balancechange
-        context['company'] = company             
+        context['company'] = company 
+        context['pay'] = monthly_payment
         return context
 
 
