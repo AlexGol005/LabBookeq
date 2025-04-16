@@ -3315,6 +3315,17 @@ class UploadingTwoModels(object):
             except:
                 try:
                     del row_dict['exnumber']
+                    del row_dict['yearmanuf']
+                    del row_dict['new']
+                    del row_dict['pravo_have']
+                    del row_dict['yearintoservice']
+                    del row_dict['status']
+                    del row_dict['serviceneed']
+                    del row_dict['price']
+                    del row_dict['invnumber']
+                    del row_dict['pravo']
+                    
+                    
                     a = self.model.objects.get(**row_dict)
                     e_created = 0
                 except:
