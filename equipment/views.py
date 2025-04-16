@@ -3309,6 +3309,8 @@ class UploadingTwoModels(object):
                     row_dict['yearmanuf'] = 0
                 if not row_dict['price'] or not row_dict['price'].isdigit():
                     row_dict['price'] = 0
+                if row_dict['serviceneed'] != 0  or row_dict['serviceneed'] != 1 or row_dict['serviceneed'] != "0"  or row_dict['serviceneed'] != "1":
+                    row_dict['serviceneed'] = 0
                 a, e_created = self.model.objects.filter(pointer=pointer).get_or_create(**row_dict)
             except:
                 try:
