@@ -3155,7 +3155,7 @@ class UploadingModel(object):
                 row_dict[field_name] = value
             try:
                 try:
-                    row_dict['calinterval']:
+                    row_dict['calinterval']
                     if not row_dict['calinterval']:
                         row_dict['calinterval'] = 00                        
                     row_dict['calinterval'] = row_dict['calinterval'][:3]
