@@ -3170,7 +3170,8 @@ class UploadingModel(object):
                 self.number_rows = s.nrows - 1
                 
             except:
-                pass
+                raise
+                # pass
         return True
 
 class UploadingMeasurEquipmentCharakters(UploadingModel):
