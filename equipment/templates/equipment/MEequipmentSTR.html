@@ -366,12 +366,7 @@
             <input type="hidden" name="equipment_pk" value="{{obj.equipment.pk}}">
             {% csrf_token %}
             {% crispy lookyearform %}
-              <td> {% if obj.equipment.serviceneed %}
-                  да
-                  {% else %}
-                  нет
-                  {% endif %}
-              </td>  
+ 
             </form>
              
              </td> 
@@ -380,6 +375,12 @@
 {% if USER_HAVE_RIGHTS %}
             
             <td> <a href="{% url 'itemserviceupdate' obj.equipment.pk %}"  class="btn btn-outline-primary">добавить/удалить</a></td>  
+                          <td> {% if obj.equipment.serviceneed %}
+                  да
+                  {% else %}
+                  нет
+                  {% endif %}
+              </td> 
             {% endif %}
         </tr>
         </tbody>
