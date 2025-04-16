@@ -292,6 +292,7 @@
                 <th> План по ТО-2 (планировать и отмечать) </th>
                 {% if USER_HAVE_RIGHTS %}
                 <th> Добавить/удалить прибор в график ТОиР </th>
+                <th> Включать в график ТОиР при автоформировании графика </th>
                 {% endif %}
              </tr>
         </thead>
@@ -316,7 +317,13 @@
              
              </td> 
             {% if USER_HAVE_RIGHTS %}
-            <td> <a href="{% url 'itemserviceupdate' obj.equipment.pk %}"  class="btn btn-outline-primary">добавить/удалить</a></td>       
+            <td> <a href="{% url 'itemserviceupdate' obj.equipment.pk %}"  class="btn btn-outline-primary">добавить/удалить</a></td>   
+                                      <td> {% if obj.equipment.serviceneed %}
+                  да
+                  {% else %}
+                  нет
+                  {% endif %}
+              </td> 
             {% endif %}
         </tr>
         </tbody>
