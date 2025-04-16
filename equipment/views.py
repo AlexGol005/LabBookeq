@@ -3288,11 +3288,14 @@ class UploadingTwoModels(object):
                     related_model = self.getting_related_model(field_name)                 
                     instance, created = related_model.objects.get_or_create(companyName=value)
                     value = instance
-                if field_name in ["price"] and value:
-                    ind = value.find(",")
-                    if ind != -1:
-                        value = value.replace(",", ".")
-                    value = Decimal(value)
+                try:
+                    if field_name in ["price"] and value:
+                        ind = value.find(",")
+                        if ind != -1:
+                            value = value.replace(",", ".")
+                        value = Decimal(value)
+                except:
+                    pass
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e
                 ahe = row_dict_characters['name'] 
