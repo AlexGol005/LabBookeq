@@ -3156,8 +3156,8 @@ class UploadingModel(object):
             try:
                 if row_dict['calinterval']:
                     row_dict['calinterval'] = row_dict['calinterval'][:3]
-                if row_dict['needsetplace '] != 0  or row_dict['needsetplace '] != 1 or row_dict['needsetplace '] != "0"  or row_dict['needsetplace '] != "1":
-                    row_dict['needsetplace '] = 0
+                if row_dict['needsetplace'] != 0  or row_dict['needsetplace'] != 1 or row_dict['needsetplace'] != "0"  or row_dict['needsetplace'] != "1":
+                    row_dict['needsetplace'] = 0
                 if row_dict['power'] != 0  or row_dict['power'] != 1 or row_dict['power'] != "0"  or row_dict['power'] != "1":
                     row_dict['power'] = 0
                 if row_dict['expresstest'] != 0  or row_dict['expresstest'] != 1 or row_dict['expresstest'] != "0"  or row_dict['expresstest'] != "1":
