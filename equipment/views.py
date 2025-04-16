@@ -3300,9 +3300,9 @@ class UploadingTwoModels(object):
                 have_exnumber = aheone
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)                     
             try:
-                if row_dict['yearintoservice'] == "" or row_dict['yearintoservice'] == " ":
+                if row_dict['yearintoservice'] == "" or row_dict['yearintoservice'] == " " or len(row_dict['yearintoservice']) > 4:
                     row_dict['yearintoservice'] = 0
-                if not row_dict['yearmanuf'] or row_dict['yearmanuf'] == " ":
+                if not row_dict['yearmanuf'] or row_dict['yearmanuf'] == " " or len(row_dict['yearmanuf']) > 4:
                     row_dict['yearmanuf'] = 0
                 a, e_created = self.model.objects.filter(pointer=pointer).get_or_create(**row_dict)
             except:
