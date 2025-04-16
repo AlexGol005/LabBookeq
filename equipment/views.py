@@ -3304,9 +3304,9 @@ class UploadingTwoModels(object):
             except:
                 try:
                     del row_dict['exnumber']
-                    if not row_dict['yearintoservice']:
+                    if row_dict['yearintoservice'] == "" or row_dict['yearintoservice'] == " ":
                         row_dict['yearintoservice'] = 0
-                    if not row_dict['yearmanuf']:
+                    if not row_dict['yearmanuf'] or row_dict['yearmanuf'] == " ":
                         row_dict['yearmanuf'] = 0
                     a = self.model.objects.get(**row_dict)
                     e_created = 0
