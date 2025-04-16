@@ -3154,7 +3154,10 @@ class UploadingModel(object):
                     value = instance
                 row_dict[field_name] = value
             try:
-                if row_dict['calinterval']:
+                try:
+                    row_dict['calinterval']:
+                    if not row_dict['calinterval']:
+                        row_dict['calinterval'] = 00                        
                     row_dict['calinterval'] = row_dict['calinterval'][:3]
                 if row_dict['needsetplace'] != 0  or row_dict['needsetplace'] != 1 or row_dict['needsetplace'] != "0"  or row_dict['needsetplace'] != "1":
                     row_dict['needsetplace'] = 0
