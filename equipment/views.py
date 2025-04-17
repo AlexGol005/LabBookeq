@@ -3358,8 +3358,7 @@ class UploadingTwoModels(object):
                 row_dict_person['equipment'] = a
                 self.number_objects+=1
             else:
-                raise
-                # pass
+                pass
 
             if e_created:    
                 try:
@@ -4187,6 +4186,7 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
             except:
+                
                 messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
 
