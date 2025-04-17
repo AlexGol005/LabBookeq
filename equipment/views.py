@@ -3358,7 +3358,8 @@ class UploadingTwoModels(object):
                 row_dict_person['equipment'] = a
                 self.number_objects+=1
             else:
-                pass
+                raise
+                # pass
 
             if e_created:    
                 try:
