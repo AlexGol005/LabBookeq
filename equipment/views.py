@@ -3227,8 +3227,7 @@ class UploadingTwoModels(object):
                 l_verbose_name.append(f.verbose_name)
                 m_name.append(f.name)
             except:
-                raise
-                # pass
+                pass
         s = self.s
         headers = dict()
         for column in range(self.num_hc, self.num_e):
