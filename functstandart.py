@@ -178,7 +178,7 @@ def get_round_signif_digit(x_avg: Decimal, numdig: int) -> Decimal:
 def get_rid_point(value):
     a = str(value)
     b = a.find('.')
-    if b != -1:
+    if b != -1 and len(a[b:]) <= 2:
         value = str(value)[0:b]  
     return value
 
