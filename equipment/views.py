@@ -4275,6 +4275,7 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_HelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file_del})
             except:
+                raise
                 messages.success(request, "Неверно заполнен файл 'Характеристики ВО' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
                 
