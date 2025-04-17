@@ -3828,6 +3828,7 @@ class DeleteTwoModels(UploadingTwoModels):
                 b = self.model2.objects.filter(pointer=pointer).get(**row_dict_characters)
                 row_dict_item_metehe['charakters'] = b
             except:
+                pass
                 raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
@@ -3857,6 +3858,7 @@ class DeleteTwoModels(UploadingTwoModels):
                 a = self.model.objects.filter(pointer=pointer).get(**row_dict)
                 row_dict_item_metehe['equipment'] = a
             except:
+                pass
                 raise Exception(f"проблема в нахождении ЛО: {row_dict}")
             try:
                 c = self.model3.objects.get(**row_dict_item_metehe)
@@ -3864,6 +3866,7 @@ class DeleteTwoModels(UploadingTwoModels):
                 a.delete()
                 self.number_objects_del+=1
             except:
+                pass
                 raise Exception(f"проблема в удалении единицы {self.kategory_e}: {row_dict_item_metehe}")
                     
         self.number_objects_del = f'{self.number_objects_del} единиц ЛО, удалено {self.number_objects_del} единиц {self.kategory_e}'
