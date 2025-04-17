@@ -3829,7 +3829,7 @@ class DeleteTwoModels(UploadingTwoModels):
                 row_dict_item_metehe['charakters'] = b
             except:
                 pass
-                raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+                # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
@@ -3855,11 +3855,12 @@ class DeleteTwoModels(UploadingTwoModels):
                 del row_dict['price']
                 del row_dict['invnumber']
                 del row_dict['pravo']
+                del row_dict['standard_number']
                 a = self.model.objects.filter(pointer=pointer).get(**row_dict)
                 row_dict_item_metehe['equipment'] = a
             except:
                 pass
-                raise Exception(f"проблема в нахождении ЛО: {row_dict}")
+                # raise Exception(f"проблема в нахождении ЛО: {row_dict}")
             try:
                 c = self.model3.objects.get(**row_dict_item_metehe)
                 c.delete()
@@ -3867,7 +3868,7 @@ class DeleteTwoModels(UploadingTwoModels):
                 self.number_objects_del+=1
             except:
                 pass
-                raise Exception(f"проблема в удалении единицы {self.kategory_e}: {row_dict_item_metehe}")
+                # raise Exception(f"проблема в удалении единицы {self.kategory_e}: {row_dict_item_metehe}")
                     
         self.number_objects_del = f'{self.number_objects_del} единиц ЛО, удалено {self.number_objects_del} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
