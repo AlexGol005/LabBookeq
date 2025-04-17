@@ -3343,6 +3343,10 @@ class UploadingTwoModels(object):
                     del row_dict['price']
                     del row_dict['invnumber']
                     del row_dict['pravo']
+                    try:
+                        del row_dict['standard_number']
+                    except:
+                        pass
                     
                     
                     a = self.model.objects.get(**row_dict)
@@ -3858,7 +3862,10 @@ class DeleteTwoModels(UploadingTwoModels):
                 del row_dict['price']
                 del row_dict['invnumber']
                 del row_dict['pravo']
-                del row_dict['standard_number']
+                try:
+                    del row_dict['standard_number']
+                except:
+                    pass
                 a = self.model.objects.filter(pointer=pointer).get(**row_dict)
                 row_dict_item_metehe['equipment'] = a
             except:
