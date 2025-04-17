@@ -470,8 +470,7 @@ class HelpingEquipment(models.Model):
     updated_by = CurrentUserField(related_name='updatorhe', editable=True)
     charakters = models.ForeignKey(HelpingEquipmentCharakters,  on_delete=models.PROTECT,
                                    verbose_name='Характеристики ВО', blank=True, null=True)
-    equipment = models.OneToOneField(Equipment, on_delete=models.CASCADE, blank=True, null=True,
-                                  verbose_name='Оборудование')
+    
     pointer =  models.CharField('ID организации', max_length=500, blank=True, null=True)  
     aim = models.CharField('Назначение',  max_length=500, blank=True, null=True)
                           
