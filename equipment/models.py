@@ -152,7 +152,7 @@ class Equipment(models.Model):
     exnumber = models.CharField('Внутренний номер', max_length=100, default='', blank=True, null=True)
 
         
-    lot = models.CharField('Заводской номер', max_length=100, default='')
+    lot = models.CharField('Заводской номер', max_length=10000, default='')
     yearmanuf = models.IntegerField('Год выпуска', default=0, blank=True, null=True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, verbose_name='Название компании-производителя')
     new = models.CharField('Новый или б/у (указать: "новый" или "б/у")', max_length=100, default='новый')
@@ -217,8 +217,8 @@ class MeasurEquipmentCharakters(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatormec', editable=True)
     updated_by = CurrentUserField(related_name='updatormec', editable=True)
-    name = models.CharField('Название прибора', max_length=1000, default='')
-    reestr = models.CharField('Номер в Госреестре', max_length=1000, default='', blank=True, null=True)
+    name = models.CharField('Название прибора', max_length=10000, default='')
+    reestr = models.CharField('Номер в Госреестре', max_length=10000, default='', blank=True, null=True)
     calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
     typename = models.CharField('Тип/модификация', max_length=1000, default='', blank=True, null=True)
     measurydiapason = models.CharField('Диапазон измерений', max_length=1000, default='', blank=True, null=True)
@@ -261,9 +261,9 @@ class TestingEquipmentCharakters(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatortec', editable=True)
     updated_by = CurrentUserField(related_name='updatortec', editable=True)
-    name = models.CharField('Название прибора', max_length=1000, default='')
+    name = models.CharField('Название прибора', max_length=10000, default='')
     calinterval = models.IntegerField('МежМетрологический интервал, месяцев', default=12, blank=True, null=True)
-    typename = models.CharField('Тип/модификация', max_length=1000, default='', blank=True, null=True)
+    typename = models.CharField('Тип/модификация', max_length=10000, default='', blank=True, null=True)
         
     main_technical_characteristics = models.CharField('Основные технические характеристики', max_length=1000,  blank=True, null=True)
         
