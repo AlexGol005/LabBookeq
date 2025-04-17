@@ -3293,8 +3293,8 @@ class UploadingTwoModels(object):
                 if created:
                     self.number_objects_char+=1
             except:
-                pass
-                # raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+                # pass
+                raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
@@ -3347,14 +3347,15 @@ class UploadingTwoModels(object):
                     try:
                         del row_dict['standard_number']
                     except:
-                        pass
+                        raise
+                        # pass
                     
                     
                     a = self.model.objects.get(**row_dict)
                     e_created = 0
                 except:
-                    pass
-                    # raise Exception(f"проблема в создании ЛО: {row_dict}")
+                    # pass
+                    raise Exception(f"проблема в создании ЛО: {row_dict}")
                     
 
             if e_created:
@@ -3373,8 +3374,8 @@ class UploadingTwoModels(object):
                     else:
                         pass
                 except:
-                    pass
-                    # raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
+                    # pass
+                    raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
 
             if e_created:
                 for column in range(self.num_e, self.num_e + 1):
