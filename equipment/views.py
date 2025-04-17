@@ -3226,7 +3226,8 @@ class UploadingTwoModels(object):
                 l_verbose_name.append(f.verbose_name)
                 m_name.append(f.name)
             except:
-                pass
+                raise
+                # pass
         s = self.s
         headers = dict()
         for column in range(self.num_hc, self.num_e):
@@ -3248,7 +3249,8 @@ class UploadingTwoModels(object):
                 l_verbose_name.append(f.verbose_name)
                 m_name.append(f.name)
             except:
-                pass
+                raise
+                # pass
         s = self.s
         headers_characters = dict()
         for column in range(self.num_hc):
@@ -3309,7 +3311,8 @@ class UploadingTwoModels(object):
                             value = value.replace(",", ".")
                         value = Decimal(value)
                 except:
-                    pass
+                    raise
+                    # pass
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e
                 ahe = row_dict_characters['name'] 
@@ -3389,7 +3392,8 @@ class UploadingTwoModels(object):
                         row_dict_person[field_name] = instance_user
                         Personchange.objects.get_or_create(**row_dict_person)
                     except:
-                        pass
+                        raise
+                        # pass
 
                 for column in range(self.num_e + 2, self.num_e + 3):
                     value = s.cell(row, column).value
@@ -3410,7 +3414,8 @@ class UploadingTwoModels(object):
                             с.analited_objects = value
                             с.save()
                 except:
-                    pass
+                    raise
+                    # pass
                     
 
                              
@@ -4191,6 +4196,7 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingEquipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file})
             except:
+                raise
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
