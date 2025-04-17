@@ -3331,6 +3331,7 @@ class UploadingTwoModels(object):
                 statuses = ['Э', 'РЕ', 'С', 'Р', 'Д']
                 if row_dict['status'] not in statuses:
                     row_dict['status'] = 'Э'
+    
                 e_created = self.model.objects.filter(pointer=pointer).create(**row_dict)
             except:
                 try:
@@ -3347,8 +3348,8 @@ class UploadingTwoModels(object):
                     try:
                         del row_dict['standard_number']
                     except:
-                        raise
-                        # pass
+                        # raise
+                        pass
                     
                     
                     a = self.model.objects.get(**row_dict)
