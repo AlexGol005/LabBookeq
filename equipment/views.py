@@ -3170,7 +3170,7 @@ class UploadingModel(object):
 
                 a, i = self.model.objects.get_or_create(**row_dict)
 
-                if a.id:
+                if i:
                     self.number_objects+=1
                 else:
                     pass
