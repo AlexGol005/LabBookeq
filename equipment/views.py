@@ -3293,7 +3293,8 @@ class UploadingTwoModels(object):
                 if created:
                     self.number_objects_char+=1
             except:
-                raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+                pass
+                # raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
@@ -3310,8 +3311,8 @@ class UploadingTwoModels(object):
                             value = value.replace(",", ".")
                         value = Decimal(value)
                 except:
-                    raise
-                    # pass
+                    # raise
+                    pass
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e
                 ahe = row_dict_characters['name'] 
@@ -3352,8 +3353,8 @@ class UploadingTwoModels(object):
                     a = self.model.objects.get(**row_dict)
                     e_created = 0
                 except:
-                    # pass
-                    raise Exception(f"проблема в создании ЛО: {row_dict}")
+                    pass
+                    # raise Exception(f"проблема в создании ЛО: {row_dict}")
                     
 
             if e_created:
@@ -3372,7 +3373,8 @@ class UploadingTwoModels(object):
                     else:
                         pass
                 except:
-                    raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
+                    pass
+                    # raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
 
             if e_created:
                 for column in range(self.num_e, self.num_e + 1):
@@ -3387,7 +3389,8 @@ class UploadingTwoModels(object):
                     try:
                         Roomschange.objects.get_or_create(**row_dict_room)
                     except:
-                        raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
+                        pass
+                        # raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
 
                 for column in range(self.num_e + 1, self.num_e + 2):
                     value = s.cell(row, column).value
