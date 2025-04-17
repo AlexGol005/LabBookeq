@@ -3345,7 +3345,8 @@ class UploadingTwoModels(object):
                     a = self.model.objects.get(**row_dict)
                     e_created = 0
                 except:
-                    raise Exception(f"проблема в создании ЛО: {row_dict}")
+                    pass
+                    # raise Exception(f"проблема в создании ЛО: {row_dict}")
                     
 
             if e_created:
