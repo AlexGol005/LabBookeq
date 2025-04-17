@@ -1598,7 +1598,7 @@ class SearchResultHelpingEquipmentView(LoginRequiredMixin, TemplateView):
     """ выводит результаты поиска по списку вспомогательного оборудования """ 
     """path('helpingequipmentallsearres/', views.SearchResultHelpingEquipmentView.as_view(), name='helpingequipmentallsearres'),"""
     
-    template_name = URL + '/TEequipmentLIST.html'
+    template_name = URL + '/HEequipmentLIST.html'
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultHelpingEquipmentView, self).get_context_data(**kwargs)
