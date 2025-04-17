@@ -3167,10 +3167,9 @@ class UploadingModel(object):
                     row_dict['power'] = 0
                 if row_dict['expresstest'] != 0  or row_dict['expresstest'] != 1 or row_dict['expresstest'] != "0"  or row_dict['expresstest'] != "1":
                     row_dict['expresstest'] = 0
-                try:
-                    a = self.model.objects.create(**row_dict)
-                except:
-                    pass
+
+                a, i = self.model.objects.get_or_create(**row_dict)
+
                 if a.id:
                     self.number_objects+=1
                 else:
@@ -3178,8 +3177,7 @@ class UploadingModel(object):
                 self.number_rows = s.nrows - 1
                 
             except:
-                raise
-                # pass
+                pass
         return True
 
 class UploadingMeasurEquipmentCharakters(UploadingModel):
