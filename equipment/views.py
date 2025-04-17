@@ -3412,8 +3412,7 @@ class UploadingTwoModels(object):
                             с.analited_objects = value
                             с.save()
                 except:
-                    raise
-                    # pass
+                    pass
                     
 
                              
