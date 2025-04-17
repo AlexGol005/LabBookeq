@@ -415,6 +415,11 @@ class EquipmentUpdateForm(forms.ModelForm):
                             choices=( ('собственность', 'собственность'),
                                      ('аренда', 'аренда')), widget=forms.Select(attrs={'class': 'form-control'}))
     serviceneed = forms.BooleanField(label='Включать в график ТОиР при автоформировании графика', required=False, initial=True)
+
+    yearmanuf = forms.CharField(label='Год выпуска прибора', max_length=10000, initial=datetime.now().year,
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
+    yearintoservice = forms.CharField(label='Год ввода в эксплуатацию', max_length=10000, initial=datetime.now().year,
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
                                     
 
     class Meta:
@@ -426,8 +431,12 @@ class EquipmentUpdateForm(forms.ModelForm):
              'invnumber',
             'repair', 'notemetrology',
             'standard_number', 'pravo_have',
-               'serviceneed',
+               'serviceneed', 'yearmanuf', 'yearintoservice', 'manufacturer'
                   ]
+        widgets = {
+
+               'manufacturer': autocomplete.ModelSelect2(url='manufacturer-autocomplete'),
+          }
 
 
 
