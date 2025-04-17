@@ -1598,7 +1598,7 @@ class SearchResultHelpingEquipmentView(LoginRequiredMixin, TemplateView):
     """ выводит результаты поиска по списку вспомогательного оборудования """ 
     """path('helpingequipmentallsearres/', views.SearchResultHelpingEquipmentView.as_view(), name='helpingequipmentallsearres'),"""
     
-    template_name = URL + '/HEequipmentLIST.html'
+    template_name = URL + '/TEequipmentLIST.html'
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultHelpingEquipmentView, self).get_context_data(**kwargs)
@@ -3167,17 +3167,16 @@ class UploadingModel(object):
                     row_dict['power'] = 0
                 if row_dict['expresstest'] != 0  or row_dict['expresstest'] != 1 or row_dict['expresstest'] != "0"  or row_dict['expresstest'] != "1":
                     row_dict['expresstest'] = 0
-
-                a, i = self.model.objects.get_or_create(**row_dict)
-
-                if i:
+                a = self.model.objects.create(**row_dict)
+                if a.id:
                     self.number_objects+=1
                 else:
                     pass
                 self.number_rows = s.nrows - 1
                 
             except:
-                pass
+                raise
+                # pass
         return True
 
 class UploadingMeasurEquipmentCharakters(UploadingModel):
@@ -3248,7 +3247,7 @@ class UploadingTwoModels(object):
             try:
                 l_verbose_name.append(f.verbose_name)
                 m_name.append(f.name)
-            except:                
+            except:
                 pass
         s = self.s
         headers_characters = dict()
@@ -3293,7 +3292,6 @@ class UploadingTwoModels(object):
                 if created:
                     self.number_objects_char+=1
             except:
-                # pass
                 raise Exception(f"проблема в создании/нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
@@ -3301,7 +3299,7 @@ class UploadingTwoModels(object):
                 value = get_rid_point(value)
                 field_name = headers[column]
                 if field_name in self.foreing_key_fields:
-                    related_model = self.getting_related_model(field_name) 
+                    related_model = self.getting_related_model(field_name)                 
                     instance, created = related_model.objects.get_or_create(companyName=value)
                     value = instance
                 try:
@@ -3311,7 +3309,6 @@ class UploadingTwoModels(object):
                             value = value.replace(",", ".")
                         value = Decimal(value)
                 except:
-                    # raise
                     pass
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e
@@ -3328,11 +3325,7 @@ class UploadingTwoModels(object):
                     row_dict['price'] = 0
                 if row_dict['serviceneed'] != 0  or row_dict['serviceneed'] != 1 or row_dict['serviceneed'] != "0"  or row_dict['serviceneed'] != "1":
                     row_dict['serviceneed'] = 0
-                statuses = ['Э', 'РЕ', 'С', 'Р', 'Д']
-                if row_dict['status'] not in statuses:
-                    row_dict['status'] = 'Э'
-    
-                e_created = self.model.objects.filter(pointer=pointer).create(**row_dict)
+                a, e_created = self.model.objects.filter(pointer=pointer).get_or_create(**row_dict)
             except:
                 try:
                     del row_dict['exnumber']
@@ -3345,17 +3338,11 @@ class UploadingTwoModels(object):
                     del row_dict['price']
                     del row_dict['invnumber']
                     del row_dict['pravo']
-                    try:
-                        del row_dict['standard_number']
-                    except:
-                        # raise
-                        pass
                     
                     
                     a = self.model.objects.get(**row_dict)
                     e_created = 0
                 except:
-                    # pass
                     raise Exception(f"проблема в создании ЛО: {row_dict}")
                     
 
@@ -3375,7 +3362,6 @@ class UploadingTwoModels(object):
                     else:
                         pass
                 except:
-                    # pass
                     raise Exception(f"проблема в создании единицы {self.kategory_e}: {row_dict_item_metehe}")
 
             if e_created:
@@ -3391,8 +3377,7 @@ class UploadingTwoModels(object):
                     try:
                         Roomschange.objects.get_or_create(**row_dict_room)
                     except:
-                        pass
-                        # raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
+                        raise Exception(f"проблема в создании Комнаты: {row_dict_room}")
 
                 for column in range(self.num_e + 1, self.num_e + 2):
                     value = s.cell(row, column).value
@@ -3840,8 +3825,7 @@ class DeleteTwoModels(UploadingTwoModels):
                 b = self.model2.objects.filter(pointer=pointer).get(**row_dict_characters)
                 row_dict_item_metehe['charakters'] = b
             except:
-                pass
-                # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+                raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
@@ -3859,31 +3843,17 @@ class DeleteTwoModels(UploadingTwoModels):
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e                     
             try:
-                del row_dict['new']
-                del row_dict['pravo_have']
-                del row_dict['yearintoservice']
-                del row_dict['status']
-                del row_dict['serviceneed']
-                del row_dict['price']
-                del row_dict['invnumber']
-                del row_dict['pravo']
-                try:
-                    del row_dict['standard_number']
-                except:
-                    pass
                 a = self.model.objects.filter(pointer=pointer).get(**row_dict)
                 row_dict_item_metehe['equipment'] = a
             except:
-                pass
-                # raise Exception(f"проблема в нахождении ЛО: {row_dict}")
+                raise Exception(f"проблема в нахождении ЛО: {row_dict}")
             try:
                 c = self.model3.objects.get(**row_dict_item_metehe)
                 c.delete()
                 a.delete()
                 self.number_objects_del+=1
             except:
-                pass
-                # raise Exception(f"проблема в удалении единицы {self.kategory_e}: {row_dict_item_metehe}")
+                raise Exception(f"проблема в удалении единицы {self.kategory_e}: {row_dict_item_metehe}")
                     
         self.number_objects_del = f'{self.number_objects_del} единиц ЛО, удалено {self.number_objects_del} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
@@ -4198,7 +4168,6 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingTestingEquipmentCharakters({'file': TestingEquipmentCharakters_file})
             except:
-                
                 messages.success(request, "Неверно заполнен файл 'Характеристики ИО' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
 
@@ -4222,7 +4191,6 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingEquipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file})
             except:
-                raise
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4287,7 +4255,6 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_HelpingEquipmentCharakters({'file': HelpingEquipmentCharakters_file_del})
             except:
-                raise
                 messages.success(request, "Неверно заполнен файл 'Характеристики ВО' (вероятно проблема в названиях столбцов)")
                 return redirect('bulkdownload')
                 
@@ -4302,7 +4269,6 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_Equipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file_del})
             except:
-                raise
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4386,6 +4352,7 @@ def BulkDownload(request):
                 elif number_objects_del and number_rows:
                     messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
                 else:
+                    raise
                     messages.success(request, f"Ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")      
 
             else:
