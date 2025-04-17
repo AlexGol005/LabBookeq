@@ -3391,8 +3391,7 @@ class UploadingTwoModels(object):
                         row_dict_person[field_name] = instance_user
                         Personchange.objects.get_or_create(**row_dict_person)
                     except:
-                        raise
-                        # pass
+                        pass
 
                 for column in range(self.num_e + 2, self.num_e + 3):
                     value = s.cell(row, column).value
