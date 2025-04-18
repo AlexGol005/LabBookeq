@@ -3050,7 +3050,25 @@ def DocumentsDeleteView(request, str):
         return redirect(reverse('docsreg', kwargs={'str': a}))
 
 
-
+@login_required
+def RoomDeleteView(request, str):
+    """для кнопки удаления комнаты"""
+    """не выводит страницу, выполняет действие"""
+    """path('roomdelete/<str:str>/', views.RoomDeleteView, name='roomdelete'),"""
+    ruser=request.user.profile.userid
+    if request.user.has_perm('equipment.add_equipment') or request.user.is_superuser:
+        try:
+            ruser=request.user.profile.userid
+            note = Rooms.objects.filter(pointer=ruser).get(pk=str)
+            note.delete()
+            messages.success(request, 'Комната удалена!')
+            return redirect('rooms')            
+        except:
+            messages.success(request, 'Невозможно удалить, возможно уже добавлен прибор с этой комнатой')
+            return redirect('rooms')
+    else:
+        messages.success(self.request, "Раздел доступен только продвинутому пользователю")
+        return redirect('manufacturerlist')
 # блок 15 - массовая загрузка через EXEL
 
 
