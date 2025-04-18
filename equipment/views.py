@@ -3559,7 +3559,9 @@ class UploadingMetrologyForEquipment(object):
                     instance = related_model.objects.get(companyName=value)
                     value = instance                          
                 row_dict_equipment[field_name] = value
-            try:   
+            try:
+                if not row_dict_equipment['yearmanuf']:
+                    row_dict_equipment['yearmanuf'] = "0"
                 find_equipment = Equipment.objects.filter(pointer=pointer).get(**row_dict_equipment)
                 row_dict_METEHE['equipment'] = find_equipment
                 find_equipment_bool = True
