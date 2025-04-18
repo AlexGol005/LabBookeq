@@ -3821,7 +3821,8 @@ class DeleteTwoModels(UploadingTwoModels):
                 a.delete()
                 self.number_objects_del+=1
             except:
-                raise Exception(f"проблема в удалении единицы {self.kategory_e}: {row_dict_item_metehe}")
+                pass
+                # raise Exception(f"проблема в удалении единицы {self.kategory_e}: {row_dict_item_metehe}")
                     
         self.number_objects_del = f'{self.number_objects_del} единиц ЛО, удалено {self.number_objects_del} единиц {self.kategory_e}'
         self.number_rows = s.nrows - 1
