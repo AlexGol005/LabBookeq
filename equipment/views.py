@@ -3795,8 +3795,18 @@ class DeleteTwoModels(UploadingTwoModels):
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e                     
             try:
+                del row_dict['exnumber']
+                del row_dict['new']
+                del row_dict['pravo_have']
+                del row_dict['yearintoservice']
+                del row_dict['status']
+                del row_dict['serviceneed']
+                del row_dict['price']
+                del row_dict['invnumber']
+                del row_dict['pravo']
                 a = self.model.objects.filter(pointer=pointer).get(**row_dict)
                 row_dict_item_metehe['equipment'] = a
+
             except:
                 raise Exception(f"проблема в нахождении ЛО: {row_dict}")
             try:
