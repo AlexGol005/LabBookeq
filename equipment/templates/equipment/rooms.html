@@ -37,7 +37,7 @@
             <td>{{ r.person.profile.name }}</td>
             {% if USER_HAVE_RIGHTS  %}  
             <td> <a href="{% url 'roomupdate' r.pk %}"  class="btn btn-outline-info mt-3">ред</a></td>  
-            <td> <a href="{% url 'roomdelete' obj.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td>
+            <td> <a href="{% url 'roomdelete' r.pk %}"  class="btn btn-outline-primary mt-3">удал</a></td>
             {% endif %}
         </tr>
         {% endfor %}
