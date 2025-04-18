@@ -3294,7 +3294,7 @@ class UploadingTwoModels(object):
             if not row_dict['price'] or not str(row_dict['price']).isdigit():
                 row_dict['price'] = 0
             if row_dict['serviceneed'] != 0  or row_dict['serviceneed'] != 1 or row_dict['serviceneed'] != "0"  or row_dict['serviceneed'] != "1":
-                row_dict['serviceneed'] = 0
+                row_dict['serviceneed'] = 1
             statuses = ['Э', 'РЕ', 'С', 'Р', 'Д']
             if row_dict['status'] not in statuses:
                 row_dict['status'] = 'Э'
