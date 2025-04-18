@@ -30,7 +30,7 @@ def get_dateformat_django(date):
             date = f'{year}-{month}-{day}'
     
         dates = ['09-31', '02-30', '02-31', '04-31', '06-31', '11-31']
-        if date[5:] in dates
+        if date[5:] in dates:
             dyy = str(int(date[8:]) - 1)
             date = date[8:] + dyy
 
