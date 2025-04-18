@@ -6387,7 +6387,7 @@ def export_me_xls(request):
         'charakters__calinterval',
         'equipment__invnumber',
         'charakters__main_technical_characteristics',
-        'charakters__analises_types',
+        'charakters__aim',
         'equipmentSM_att__extra'
     )
     for row in rows:
