@@ -4236,6 +4236,7 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_Equipment_TestingEquipment({'file': TestingEquipment_Equipment_file_del})
             except:
+                raise
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
