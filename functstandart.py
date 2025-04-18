@@ -18,9 +18,8 @@ def get_dateformat_django(date):
             dateformat = str(date)
             y = dateformat[1]
             if not y.isdigit():
-                day = "0" + dateformat[:1]
-            else:
-                day = dateformat[:2]
+                dateformat = "0" + dateformat
+            day = dateformat[:2]
             month = dateformat[3:5]
             year = dateformat[6:]
             a = int(str(now.year)[:2]) + 10
