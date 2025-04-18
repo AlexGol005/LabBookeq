@@ -3443,8 +3443,8 @@ class UploadingMetrologyForEquipment(object):
             related_model = model._meta.get_field(field_name).related_model
             return related_model
         except:
-            pass
-            # raise Exception(f'проблема с производителем {field_name}')
+            # pass
+            raise Exception(f'проблема с производителем {field_name}')
 
     def getting_headers_model_metrology(self):
         l_verbose_name = []
@@ -3454,7 +3454,8 @@ class UploadingMetrologyForEquipment(object):
                 l_verbose_name.append(f.verbose_name)
                 m_name.append(f.name)
             except:
-                pass
+                raise
+                # pass
         s = self.s
         headers_model_metrology = dict()
         for column in range(self.num_e, s.ncols):
@@ -3464,8 +3465,8 @@ class UploadingMetrologyForEquipment(object):
                 a = l_verbose_name.index(value)
                 value = m_name[a] 
             except:
-                pass
-                # raise KeyError(value)
+                # pass
+                raise KeyError(value)
             headers_model_metrology[column] = value
         return headers_model_metrology
 
@@ -3542,8 +3543,8 @@ class UploadingMetrologyForEquipment(object):
                 find_charakters_bool = True
             except:
                 find_charakters_bool = False
-                pass
-                # raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
+                # pass
+                raise Exception(f"проблема в нахождении характеристик {self.kategory_e}: {row_dict_characters}")
 
             for column in range(self.num_hc, self.num_e):                  
                 value = s.cell(row, column).value
@@ -3561,8 +3562,8 @@ class UploadingMetrologyForEquipment(object):
                 find_equipment_bool = True
             except:
                 find_equipment_bool = False
-                pass
-                # raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
+                # pass
+                raise Exception(f"проблема в нахождении единицы ЛО: {row_dict_equipment}")
 
             if find_equipment_bool and find_charakters_bool:
                 try:
@@ -3570,8 +3571,8 @@ class UploadingMetrologyForEquipment(object):
                     equipmentSM_bool = True
                 except:
                     equipmentSM_bool = False
-                    pass
-                    # raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
+                    # pass
+                    raise Exception(f"проблема в нахождении единицы {self.kategory_e}: {row_dict_METEHE}")
             
             if find_equipment_bool and find_charakters_bool and equipmentSM_bool:
                 for column in range(self.num_e, s.ncols):                  
@@ -3599,8 +3600,8 @@ class UploadingMetrologyForEquipment(object):
                     if m_created:
                         self.number_objects+=1
                 except:
-                    pass
-                    # raise Exception(f"проблема в добавлении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
+                    # pass
+                    raise Exception(f"проблема в добавлении сведений о поверке/калибровке/аттестации: {row_dict_metrology}")
                                         
         self.number_rows = s.nrows - 1
         return True
@@ -4183,7 +4184,7 @@ def BulkDownload(request):
             try:
                 uploading_file = Uploading_Verificationequipment({'file': Verificationequipment_file})
             except:
-                
+                raise
                 messages.success(request, "Неверно заполнен файл 'Поверка СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
