@@ -4168,7 +4168,7 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingEquipment_TestingEquipment({'file': TestingEquipment_Equipment_file})
             except:
-                raise
+                
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4183,7 +4183,7 @@ def BulkDownload(request):
             try:
                 uploading_file = Uploading_Verificationequipment({'file': Verificationequipment_file})
             except:
-                raise
+                
                 messages.success(request, "Неверно заполнен файл 'Поверка СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4191,7 +4191,7 @@ def BulkDownload(request):
             try:
                 uploading_file = Uploading_Calibrationequipment({'file': Calibrationequipment_file})
             except:
-                raise
+                
                 messages.success(request, "Неверно заполнен файл 'Калибровка СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4199,7 +4199,7 @@ def BulkDownload(request):
             try:
                 uploading_file = Uploading_Attestationequipment({'file': Attestationequipment_file})
             except:
-                raise
+                
                 messages.success(request, "Неверно заполнен файл 'Аттестация ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4207,7 +4207,7 @@ def BulkDownload(request):
             try:
                 uploading_file = Uploading_ServiceEquipment_MeasurEquipment({'file': ServiceEquipment_MeasurEquipment_file})
             except:
-                raise
+                
                 messages.success(request, "Неверно заполнен файл 'ТО СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4215,7 +4215,7 @@ def BulkDownload(request):
             try:
                 uploading_file = Uploading_ServiceEquipment_TestingEquipment({'file': ServiceEquipment_TestingEquipment_file})
             except:
-                raise
+                
                 messages.success(request, "Неверно заполнен файл 'ТО ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4223,7 +4223,6 @@ def BulkDownload(request):
             try:
                 uploading_file = Uploading_ServiceEquipment_HelpingEquipment({'file': ServiceEquipment_HelpingEquipment_file})
             except:
-                raise
                 messages.success(request, "Неверно заполнен файл 'ТО ВО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4261,7 +4260,6 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_Equipment_TestingEquipment({'file': TestingEquipment_Equipment_file_del})
             except:
-                raise
                 messages.success(request, "Неверно заполнен файл 'единица ЛО и ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4269,15 +4267,13 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_Equipment_HelpingEquipment({'file': HelpingEquipment_Equipment_file_del})
             except:
-                raise
-                # messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
-                # return redirect('bulkdownload')
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и ВО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
 
         elif Verificationequipment_file_del:
             try:
                 uploading_file = Delete_Verificationequipment({'file': Verificationequipment_file_del})
             except:
-                raise
                 messages.success(request, "Неверно заполнен файл 'Поверка СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4300,7 +4296,6 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_ServiceEquipment_MeasurEquipment({'file': ServiceEquipment_MeasurEquipment_file_del})
             except:
-                raise
                 messages.success(request, "Неверно заполнен файл 'ТО СИ' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4308,7 +4303,6 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_ServiceEquipment_TestingEquipment({'file': ServiceEquipment_TestingEquipment_file_del})
             except:
-                raise
                 messages.success(request, "Неверно заполнен файл 'ТО ИО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
 
@@ -4316,7 +4310,6 @@ def BulkDownload(request):
             try:
                 uploading_file = Delete_ServiceEquipment_HelpingEquipment({'file': ServiceEquipment_HelpingEquipment_file_del})
             except:
-                raise
                 messages.success(request, "Неверно заполнен файл 'ТО ВО' (вероятно проблема в названиях или в порядке столбцов)")
                 return redirect('bulkdownload')
                 
