@@ -16,7 +16,11 @@ def get_dateformat_django(date):
     try:
         if not pattern.match(date):
             dateformat = str(date)
-            day = dateformat[:2]
+            y = dateformat[2]
+            if not y.isdigit():
+                day = "0" + dateformat[:1]
+            else:
+                day = dateformat[:2]
             month = dateformat[3:5]
             year = dateformat[6:]
             a = int(str(now.year)[:2]) + 10
