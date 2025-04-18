@@ -3265,12 +3265,33 @@ class UploadingTwoModels(object):
                 ahe = row_dict_characters['name'] 
                 aheone = str(ahe)[0].upper()
                 have_exnumber = aheone
-                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)                     
+                row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)
+                if row_dict['yearintoservice'] == "" or row_dict['yearintoservice'] == " " or len(row_dict['yearintoservice']) > 4 or not row_dict['yearintoservice'].isdigit():
+                    row_dict['yearintoservice'] = 0
+                if not row_dict['yearmanuf'] or row_dict['yearmanuf'] == " " or len(row_dict['yearmanuf']) > 4 or not row_dict['yearmanuf'].isdigit():
+                    row_dict['yearmanuf'] = 0
+                if not row_dict['price'] or not row_dict['price'].isdigit():
+                    row_dict['price'] = 0
+                if row_dict['serviceneed'] != 0  or row_dict['serviceneed'] != 1 or row_dict['serviceneed'] != "0"  or row_dict['serviceneed'] != "1":
+                    row_dict['serviceneed'] = 0
+                statuses = ['Э', 'РЕ', 'С', 'Р', 'Д']
+                if row_dict['status'] not in statuses:
+                    row_dict['status'] = 'Э'
+
             try:
                 a, e_created = self.model.objects.filter(pointer=pointer).get_or_create(**row_dict)
             except:
                 try:
                     del row_dict['exnumber']
+                    del row_dict['new']
+                    del row_dict['pravo_have']
+                    del row_dict['yearintoservice']
+                    del row_dict['status']
+                    del row_dict['serviceneed']
+                    del row_dict['price']
+                    del row_dict['invnumber']
+                    del row_dict['pravo']
+                    
                     a = self.model.objects.get(**row_dict)
                     e_created = 0
                 except:
