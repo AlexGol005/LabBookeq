@@ -3795,7 +3795,6 @@ class DeleteTwoModels(UploadingTwoModels):
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e                     
             try:
-                del row_dict['exnumber']
                 del row_dict['new']
                 del row_dict['pravo_have']
                 del row_dict['yearintoservice']
