@@ -3266,8 +3266,8 @@ class UploadingTwoModels(object):
                 aheone = str(ahe)[0].upper()
                 have_exnumber = aheone
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)
-                if row_dict['yearintoservice'] == "" or row_dict['yearintoservice'] == " " or len(row_dict['yearintoservice']) > 4 or not row_dict['yearintoservice'].isdigit():
-                    row_dict['yearintoservice'] = 0
+                # if row_dict['yearintoservice'] == "" or row_dict['yearintoservice'] == " " or len(row_dict['yearintoservice']) > 4 or not row_dict['yearintoservice'].isdigit():
+                #     row_dict['yearintoservice'] = 0
                 if not row_dict['yearmanuf'] or row_dict['yearmanuf'] == " " or len(row_dict['yearmanuf']) > 4 or not row_dict['yearmanuf'].isdigit():
                     row_dict['yearmanuf'] = 0
                 if not row_dict['price'] or not row_dict['price'].isdigit():
