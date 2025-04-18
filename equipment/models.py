@@ -85,9 +85,9 @@ class Manufacturer(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=True)
     created_by = CurrentUserField(related_name='creatorman')
     updated_by = CurrentUserField(related_name='updatorman')
-    companyName = models.CharField('Производитель', max_length=100, unique=True)
-    companyAdress = models.CharField('Адрес', max_length=200, default='', blank=True)
-    country = models.CharField('Страна', max_length=200, default='Россия', blank=True)
+    companyName = models.CharField('Производитель', max_length=10000, unique=True)
+    companyAdress = models.CharField('Адрес', max_length=20000, default='', blank=True)
+    country = models.CharField('Страна', max_length=20000, default='Россия', blank=True)
     telnumber = models.CharField('Телефон', max_length=200, default='', blank=True)
     telnumberhelp = models.CharField('Телефон техподдержки для вопросов по оборудованию',
                                      max_length=200, default='', blank=True)
