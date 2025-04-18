@@ -1134,18 +1134,8 @@ class MeasureequipmentregView(LoginRequiredMixin, CreateView):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                
-                try:
-                    order.save()
-                    return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
-                except:
-                    messages.success(self.request, "Ошибка")
-                    return redirect('equipmentreg')
-                    
-            else:
-                messages.success(self.request, "Ошибка")
-                return redirect('equipment/equipmentreg/')
-                
+                order.save()
+                return redirect(f'/equipment/measureequipment/{self.kwargs["str"]}')
         else:
             messages.success(self.request, "Раздел доступен только продвинутому пользователю")
             return redirect('/equipment/measureequipment/{self.kwargs["str"]}')
@@ -1194,16 +1184,8 @@ class TestingequipmentregView(LoginRequiredMixin, CreateView):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                
-                try:
-                    order.save()
-                    return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
-                except:
-                    messages.success(self.request, "Ошибка")
-                    return redirect('equipmentreg')
-            else:
-                messages.success(self.request, "Ошибка")
-                return redirect('equipmentreg')
+                order.save()
+                return redirect(f'/equipment/testequipment/{self.kwargs["str"]}')
 
 
 @login_required
@@ -1249,16 +1231,8 @@ class HelpingequipmentregView(LoginRequiredMixin, CreateView):
             if form.is_valid():
                 order = form.save(commit=False)
                 order.equipment = Equipment.objects.get(exnumber=self.kwargs['str'])
-                
-                try:
-                    order.save()
-                    return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
-                except:
-                    messages.success(self.request, "Ошибка")
-                    return redirect('equipment/equipmentreg/')
-            else:
-                messages.success(self.request, "Ошибка")
-                return redirect('equipment/equipmentreg/')
+                order.save()
+                return redirect(f'/equipment/helpequipment/{self.kwargs["str"]}')
 
 
 @login_required
@@ -1399,7 +1373,6 @@ class SearchResultEquipmentView(LoginRequiredMixin, TemplateView):
             context['objects'] = objects
             
         context['form'] = SearchEqForm(initial={'lot': lot, 'exnumber': exnumber})
-        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1433,7 +1406,6 @@ class ReestrsearresView(LoginRequiredMixin, TemplateView):
         context['form'] = Searchreestrform(initial={'name': name, 'reestr': reestr})
         context['URL'] = URL
         context['title'] = 'Госреестры, типы, модификации средств измерений'
-        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1455,7 +1427,6 @@ class TEcharacterssearresView(LoginRequiredMixin, TemplateView):
         context['form'] = Searchtestingform(initial={'name': name})
         context['URL'] = URL
         context['title'] = 'Характеристики, типы, испытательного оборудования'
-        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1477,7 +1448,6 @@ class HEcharacterssearresView(LoginRequiredMixin, TemplateView):
         context['form'] = Searchtestingform(initial={'name': name})
         context['URL'] = URL
         context['title'] = 'Характеристики, типы, вспомогательного оборудования'
-        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1534,7 +1504,6 @@ class SearchResultMeasurEquipmentView(LoginRequiredMixin, TemplateView):
             context['objects'] = objects
         context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber})
         context['URL'] = URL
-        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1590,7 +1559,6 @@ class SearchResultTestingEquipmentView(LoginRequiredMixin, TemplateView):
             context['objects'] = objects
         context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber})
         context['URL'] = URL
-        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -1640,7 +1608,6 @@ class SearchResultHelpingEquipmentView(LoginRequiredMixin, TemplateView):
             context['objects'] = objects
         context['form'] = SearchMEForm(initial={'name': name, 'lot': lot, 'exnumber': exnumber})
         context['URL'] = URL
-        context['POINTER'] = self.request.user.profile.userid
         return context
 
 
@@ -3304,10 +3271,6 @@ class UploadingTwoModels(object):
             except:
                 try:
                     del row_dict['exnumber']
-                    if not row_dict['yearintoservice']:
-                        row_dict['yearintoservice'] = 0
-                    if not row_dict['yearmanuf']:
-                        row_dict['yearmanuf'] = 0
                     a = self.model.objects.get(**row_dict)
                     e_created = 0
                 except:
@@ -4142,9 +4105,8 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingEquipment_MeasurEquipment({'file': MeasurEquipment_Equipment_file})
             except:
-                raise
-                # messages.success(request, "Неверно заполнен файл 'единица ЛО и СИ' (вероятно проблема в названиях или в порядке столбцов)")
-                # return redirect('bulkdownload')
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и СИ' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
 
         elif TestingEquipment_Equipment_file:
             try:
