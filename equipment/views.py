@@ -3268,15 +3268,15 @@ class UploadingTwoModels(object):
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)
                 # if row_dict['yearintoservice'] == "" or row_dict['yearintoservice'] == " " or len(row_dict['yearintoservice']) > 4 or not row_dict['yearintoservice'].isdigit():
                 #     row_dict['yearintoservice'] = 0
-                if not row_dict['yearmanuf'] or row_dict['yearmanuf'] == " " or len(row_dict['yearmanuf']) > 4 or not row_dict['yearmanuf'].isdigit():
-                    row_dict['yearmanuf'] = 0
-                if not row_dict['price'] or not row_dict['price'].isdigit():
-                    row_dict['price'] = 0
-                if row_dict['serviceneed'] != 0  or row_dict['serviceneed'] != 1 or row_dict['serviceneed'] != "0"  or row_dict['serviceneed'] != "1":
-                    row_dict['serviceneed'] = 0
-                statuses = ['Э', 'РЕ', 'С', 'Р', 'Д']
-                if row_dict['status'] not in statuses:
-                    row_dict['status'] = 'Э'
+                # if not row_dict['yearmanuf'] or row_dict['yearmanuf'] == " " or len(row_dict['yearmanuf']) > 4 or not row_dict['yearmanuf'].isdigit():
+                #     row_dict['yearmanuf'] = 0
+                # if not row_dict['price'] or not row_dict['price'].isdigit():
+                #     row_dict['price'] = 0
+                # if row_dict['serviceneed'] != 0  or row_dict['serviceneed'] != 1 or row_dict['serviceneed'] != "0"  or row_dict['serviceneed'] != "1":
+                #     row_dict['serviceneed'] = 0
+                # statuses = ['Э', 'РЕ', 'С', 'Р', 'Д']
+                # if row_dict['status'] not in statuses:
+                #     row_dict['status'] = 'Э'
 
             try:
                 a, e_created = self.model.objects.filter(pointer=pointer).get_or_create(**row_dict)
