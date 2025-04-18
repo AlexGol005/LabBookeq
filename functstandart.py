@@ -26,7 +26,7 @@ def get_dateformat_django(date):
                 year = f'19{year}'            
             date = f'{year}-{month}-{day}'
     except:
-        date = now
+        date = None
     return date
 
 def rounder(value: Decimal, m: str) -> Decimal:
