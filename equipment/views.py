@@ -3794,7 +3794,10 @@ class DeleteTwoModels(UploadingTwoModels):
                     ind = value.find(",")
                     if ind != -1:
                         value = value.replace(",", ".")
-                    value = Decimal(value)
+                    try:
+                        value = Decimal(value)
+                    except:
+                        value = 0
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e                     
             try:
