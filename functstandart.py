@@ -31,8 +31,8 @@ def get_dateformat_django(date):
     
     dates = ['09-31', '02-30', '02-31', '04-31', '06-31', '11-31']
     if date[5:] in dates
-    dyy = str(int(date[8:]) - 1)
-    date = date[8:] + dyy
+        dyy = str(int(date[8:]) - 1)
+        date = date[8:] + dyy
 
     except:
         date = None
