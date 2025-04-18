@@ -3813,7 +3813,8 @@ class DeleteTwoModels(UploadingTwoModels):
                 row_dict_item_metehe['equipment'] = a
 
             except:
-                raise Exception(f"проблема в нахождении ЛО: {row_dict}")
+                pass
+                # raise Exception(f"проблема в нахождении ЛО: {row_dict}")
             try:
                 c = self.model3.objects.get(**row_dict_item_metehe)
                 c.delete()
