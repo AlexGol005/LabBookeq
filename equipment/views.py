@@ -3154,19 +3154,6 @@ class UploadingModel(object):
                     value = instance
                 row_dict[field_name] = value
             try:
-                try:
-                    row_dict['calinterval']
-                    if not row_dict['calinterval']:
-                        row_dict['calinterval'] = 00                        
-                    row_dict['calinterval'] = row_dict['calinterval'][:3]
-                except:
-                    pass
-                if row_dict['needsetplace'] != 0  or row_dict['needsetplace'] != 1 or row_dict['needsetplace'] != "0"  or row_dict['needsetplace'] != "1":
-                    row_dict['needsetplace'] = 0
-                if row_dict['power'] != 0  or row_dict['power'] != 1 or row_dict['power'] != "0"  or row_dict['power'] != "1":
-                    row_dict['power'] = 0
-                if row_dict['expresstest'] != 0  or row_dict['expresstest'] != 1 or row_dict['expresstest'] != "0"  or row_dict['expresstest'] != "1":
-                    row_dict['expresstest'] = 0
                 a = self.model.objects.create(**row_dict)
                 if a.id:
                     self.number_objects+=1
@@ -3175,8 +3162,7 @@ class UploadingModel(object):
                 self.number_rows = s.nrows - 1
                 
             except:
-                raise
-                # pass
+                pass
         return True
 
 class UploadingMeasurEquipmentCharakters(UploadingModel):
@@ -3302,14 +3288,11 @@ class UploadingTwoModels(object):
                     related_model = self.getting_related_model(field_name)                 
                     instance, created = related_model.objects.get_or_create(companyName=value)
                     value = instance
-                try:
-                    if field_name in ["price"] and value:
-                        ind = value.find(",")
-                        if ind != -1:
-                            value = value.replace(",", ".")
-                        value = Decimal(value)
-                except:
-                    pass
+                if field_name in ["price"] and value:
+                    ind = value.find(",")
+                    if ind != -1:
+                        value = value.replace(",", ".")
+                    value = Decimal(value)
                 row_dict[field_name] = value
                 row_dict['kategory'] = self.kategory_e
                 ahe = row_dict_characters['name'] 
@@ -3317,29 +3300,14 @@ class UploadingTwoModels(object):
                 have_exnumber = aheone
                 row_dict['exnumber'] = get_exnumber(have_exnumber, pointer)                     
             try:
-                if row_dict['yearintoservice'] == "" or row_dict['yearintoservice'] == " " or len(row_dict['yearintoservice']) > 4 or not row_dict['yearintoservice'].isdigit():
-                    row_dict['yearintoservice'] = 0
-                if not row_dict['yearmanuf'] or row_dict['yearmanuf'] == " " or len(row_dict['yearmanuf']) > 4 or not row_dict['yearmanuf'].isdigit():
-                    row_dict['yearmanuf'] = 0
-                if not row_dict['price'] or not row_dict['price'].isdigit():
-                    row_dict['price'] = 0
-                if row_dict['serviceneed'] != 0  or row_dict['serviceneed'] != 1 or row_dict['serviceneed'] != "0"  or row_dict['serviceneed'] != "1":
-                    row_dict['serviceneed'] = 0
                 a, e_created = self.model.objects.filter(pointer=pointer).get_or_create(**row_dict)
             except:
                 try:
                     del row_dict['exnumber']
-                    del row_dict['yearmanuf']
-                    del row_dict['new']
-                    del row_dict['pravo_have']
-                    del row_dict['yearintoservice']
-                    del row_dict['status']
-                    del row_dict['serviceneed']
-                    del row_dict['price']
-                    del row_dict['invnumber']
-                    del row_dict['pravo']
-                    
-                    
+                    if not row_dict['yearintoservice']:
+                        row_dict['yearintoservice'] = 0
+                    if not row_dict['yearmanuf']:
+                        row_dict['yearmanuf'] = 0
                     a = self.model.objects.get(**row_dict)
                     e_created = 0
                 except:
@@ -4152,9 +4120,8 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingMeasurEquipmentCharakters({'file': MeasurEquipmentCharakters_file})
             except:
-                raise
-                # messages.success(request, "Неверно заполнен файл 'Характеристики СИ' (вероятно проблема в названиях столбцов)")
-                # return redirect('bulkdownload')
+                messages.success(request, "Неверно заполнен файл 'Характеристики СИ' (вероятно проблема в названиях столбцов)")
+                return redirect('bulkdownload')
                 
 
         elif HelpingEquipmentCharakters_file:
@@ -4183,9 +4150,8 @@ def BulkDownload(request):
             try:
                 uploading_file = UploadingEquipment_TestingEquipment({'file': TestingEquipment_Equipment_file})
             except:
-                raise
-                # messages.success(request, "Неверно заполнен файл 'единица ЛО и ИО' (вероятно проблема в названиях или в порядке столбцов)")
-                # return redirect('bulkdownload')
+                messages.success(request, "Неверно заполнен файл 'единица ЛО и ИО' (вероятно проблема в названиях или в порядке столбцов)")
+                return redirect('bulkdownload')
 
         elif HelpingEquipment_Equipment_file:
             try:
@@ -4352,7 +4318,6 @@ def BulkDownload(request):
                 elif number_objects_del and number_rows:
                     messages.success(request, f"Файл успешно загружен, удалено {number_objects_del} записей из бд -  из {number_rows} строк файла EXEL")
                 else:
-                    raise
                     messages.success(request, f"Ничего не добавилось (так как файл пустой,  не заполнены или неверно заполнены обязательные столбцы или такие объекты уже есть в базе данных)")      
 
             else:
