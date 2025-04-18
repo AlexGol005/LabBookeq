@@ -3659,7 +3659,10 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
             
             for column in range(self.num_hc):
                 value = s.cell(row, column).value
-                value = get_rid_point(value)
+                a = str(value)
+                b = a.find('.')
+                if b != -1:
+                    value = str(value)[0:b]
                 field_name_characters = headers_characters[column]
                 row_dict_characters[field_name_characters] = value
             try:   
@@ -3681,7 +3684,9 @@ class DeleteMetrologyForEquipment(UploadingMetrologyForEquipment):
                     instance = related_model.objects.get(companyName=value)
                     value = instance                          
                 row_dict_equipment[field_name] = value
-            try:   
+            try:
+                if not row_dict_equipment['yearmanuf']:
+                    row_dict_equipment['yearmanuf'] = "0"
                 find_equipment = Equipment.objects.filter(pointer=pointer).get(**row_dict_equipment)
                 row_dict_METEHE['equipment'] = find_equipment
                 find_equipment_bool = True
